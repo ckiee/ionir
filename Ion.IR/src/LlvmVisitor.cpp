@@ -2,7 +2,7 @@
 
 class LlvmVisitor {
 private:
-    llvm::Module module;
+   llvm::Module &module;
 
 protected:
     llvm::Module &getModule() {
@@ -10,7 +10,7 @@ protected:
     }
 
 public:
-    LlvmVisitor(llvm::Module module) {
-        this->module = module;
+    LlvmVisitor(llvm::Module module) : module(module) {
+        //
     }
 };
