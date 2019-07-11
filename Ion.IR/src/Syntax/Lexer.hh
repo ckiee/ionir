@@ -4,21 +4,25 @@
 
 using namespace std;
 
-class Lexer {
+class Lexer
+{
 private:
     std::string input;
 
 protected:
-    std::string getInput() {
+    std::string getInput()
+    {
         return this->input;
     }
 
 public:
-    Lexer(std::string input) {
+    Lexer(std::string input)
+    {
         this->input = input;
     }
 
-    std::vector<Token> tokenize() {
+    std::vector<Token> tokenize()
+    {
         // TODO
         std::vector<Token> tokens = {};
 

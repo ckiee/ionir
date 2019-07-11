@@ -1,4 +1,5 @@
-enum TokenType {
+enum TokenType
+{
 	Unknown,
 
 	Identifier,

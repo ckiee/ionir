@@ -1,46 +1,54 @@
+#include <vector>
+
 using namespace std;
 
 template <typename T>
 class Stream
 {
 protected:
-	int index;
+    int index;
 
-	std::array<T> items;
+    std::vector<T> items;
 
-	int size;
+    int size;
 
-	int resolvePosition(int index) {
-		if (this->size > index || this->size == index) {
+    int resolvePosition(int index)
+    {
+        if (this->size > index || this->size == index)
+        {
             return index;
         }
-        
+
         return this->size;
-	}
+    }
 
 public:
-	Stream(T items[]) {
-		this->items = items;
-		this->size = this->items.size();
+    Stream(T items[])
+    {
+        this->items = items;
+        this->size = this->items.size();
 
         // Ensure items array contains at least one item.
-        if (this->size == 0) {
+        if (this->size == 0)
+        {
             throw "Items array cannot be empty";
         }
 
         // Set the initial index to the first item.
         this->index = 0;
-	}
+    }
 
-	T next() {
+    T next()
+    {
         // Resolve the next index to ensure its bounds.
         int nextIndex = this->resolveIndex(this->index + 1);
 
         // Retrieve and return the item.
         return this->items[nextIndex];
-	}
+    }
 
-    T get() {
+    T get()
+    {
         // Return the item at the current index.
         return this->items[this->index];
     }

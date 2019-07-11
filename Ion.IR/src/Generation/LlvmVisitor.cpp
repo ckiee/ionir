@@ -1,21 +1,25 @@
 #include "llvm/IR/Module.h"
 #include "Construct.hh"
 
-class LlvmVisitor {
+class LlvmVisitor
+{
 private:
-   llvm::Module &module;
+    llvm::Module &module;
 
 protected:
-    llvm::Module &getModule() {
+    llvm::Module &getModule()
+    {
         return this->module;
     }
 
 public:
-    LlvmVisitor(llvm::Module module) : module(module) {
+    LlvmVisitor(llvm::Module module) : module(module)
+    {
         //
     }
 
-    Construct visit(Construct construct) {
+    Construct visit(Construct construct)
+    {
         return construct.accept(this);
     }
 };

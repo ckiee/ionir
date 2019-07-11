@@ -13,20 +13,24 @@ private:
 	int position;
 
 public:
-	Token(TokenType type, std::string value) {
+	Token(TokenType type, std::string value)
+	{
 		this->type = type;
 		this->value = value;
 	}
 
-	int getEndPosition() {
+	int getEndPosition()
+	{
 		return this->position + this->value.length();
 	}
 
-	TokenType getType() {
+	TokenType getType()
+	{
 		return this->type;
 	}
 
-	std::string getValue() {
+	std::string getValue()
+	{
 		return this->value;
 	}
 };

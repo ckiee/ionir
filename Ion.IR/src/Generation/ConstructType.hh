@@ -1,3 +1,4 @@
-enum ConstructType {
+enum ConstructType
+{
     // TODO
 };
