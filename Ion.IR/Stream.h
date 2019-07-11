@@ -5,6 +5,7 @@ class Stream
 {
 protected:
 	int position;
+
 	T items[];
 
 public:
