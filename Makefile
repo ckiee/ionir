@@ -8,4 +8,4 @@ main: $(OBJ_FILES)
 	clang -o $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	clang -c -o $@ $<
+	clang -IIon.IR/include -c -o $@ $<
