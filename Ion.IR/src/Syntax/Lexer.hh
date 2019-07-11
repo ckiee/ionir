@@ -2,8 +2,6 @@
 #include <vector>
 #include "Token.hh"
 
-using namespace std;
-
 class Lexer
 {
 private:
