@@ -5,13 +5,14 @@
 
 class Token
 {
-public:
+private:
 	TokenType type;
 
 	std::string value;
 
 	int position;
 
+public:
 	Token(TokenType type, std::string value) {
 		this->type = type;
 		this->value = value;
@@ -19,5 +20,13 @@ public:
 
 	int getEndPosition() {
 		return this->position + this->value.length();
+	}
+
+	TokenType getType() {
+		return this->type;
+	}
+
+	std::string getValue() {
+		return this->value;
 	}
 };
