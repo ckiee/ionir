@@ -154,6 +154,7 @@
     <ClCompile Include="Ion.IR.cpp" />
     <ClCompile Include="Stream.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TokenType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stream.h" />
