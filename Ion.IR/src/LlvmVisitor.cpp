@@ -1,4 +1,5 @@
 #include "llvm/IR/Module.h"
+#include "Construct.hh"
 
 class LlvmVisitor {
 private:
@@ -12,5 +13,9 @@ protected:
 public:
     LlvmVisitor(llvm::Module module) : module(module) {
         //
+    }
+
+    Construct visit(Construct construct) {
+        return construct.accept(this);
     }
 };

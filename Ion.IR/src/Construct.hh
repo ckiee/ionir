@@ -1,6 +1,7 @@
 #include "ConstructType.hh"
+#include "Visitable.hh"
 
-class Construct {
+class Construct : public Visitable<Construct, LlvmVisitor> {
 private:
     ConstructType type;
 
