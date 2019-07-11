@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "TokenType.cpp"
+#include "TokenType.h"
 
 class Token
 {
