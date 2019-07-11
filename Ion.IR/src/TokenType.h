@@ -1,5 +1,7 @@
 enum TokenType {
 	Unknown,
 
-	Identifier
+	Identifier,
+
+	Whitespace
 };

@@ -1,0 +1,3 @@
+[submodule "Ion.IR/src/llvm"]
+	path = Ion.IR/src/llvm
+	url = https://github.com/ionlang/llvm.git
