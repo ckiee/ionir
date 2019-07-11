@@ -24,4 +24,9 @@ public:
         // TODO
         this->visitor.visit(node);
     }
+
+    void exitExtern(Prototype node)
+    {
+        // TODO
+    }
 };
