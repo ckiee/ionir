@@ -1,6 +1,12 @@
 #### Getting started
 
-First off, you'd want to invoke the Makefile to automatically build and compile the project:
+Prepare the project, initialize and update required Git submodules:
+
+```shell
+$ make prepare
+```
+
+Then, you'd want to invoke the Makefile to automatically build and compile the project:
 
 ```shell
 $ make
