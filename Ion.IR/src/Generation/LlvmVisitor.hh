@@ -5,6 +5,7 @@
 #include "Construct.hh"
 #include "Constructs/Type.hh"
 #include "Constructs/Block.hh"
+#include "Constructs/BinaryExpr.hh"
 #include "Generation/ConstructType.hh"
 
 class LlvmVisitor
@@ -67,6 +68,34 @@ public:
         }
 
         this->typeStack.push(*type);
+
+        return *node;
+    }
+
+    Construct visitBinaryExpr(BinaryExpr *node)
+    {
+        // Visit sides.
+        this->visit((*node).getLeftSide());
+        this->visit((*node).getRightSide());
+
+        // Pop and retrieve right side.
+        this->valueStack.pop();
+
+        llvm::Value &rightSide = this->valueStack.top();
+
+        // Pop and retrieve left side.
+        this->valueStack.pop();
+
+        llvm::Value &leftSide = this->valueStack.top();
+
+        // TODO: Finish implementation.
+
+        return *node;
+    }
+
+    Construct visitPrototype(Prototype *node)
+    {
+        // TODO: Finish implementation.
 
         return *node;
     }

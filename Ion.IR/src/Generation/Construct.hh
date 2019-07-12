@@ -17,7 +17,7 @@ public:
 
     virtual Construct accept(LlvmVisitor *visitor);
 
-    ConstructType getType()
+    ConstructType getConstructType()
     {
         return this->type;
     }

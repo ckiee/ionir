@@ -4,5 +4,8 @@
 
 class Prototype : public Construct
 {
-    // TODO
+    Construct accept(LlvmVisitor *visitor)
+    {
+        return (*visitor).visitPrototype(this);
+    }
 };
