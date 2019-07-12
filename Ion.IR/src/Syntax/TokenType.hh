@@ -1,8 +1,8 @@
 enum TokenType
 {
-	Unknown,
+	UNKNOWN,
 
-	Identifier,
+	IDENTIFIER,
 
-	Whitespace
+	WHITESPACE
 };
