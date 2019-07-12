@@ -28,7 +28,7 @@ protected:
     }
 
 public:
-    Stream(T items[])
+    Stream(std::vector<T> items)
     {
         this->items = items;
         this->size = this->items.size();
