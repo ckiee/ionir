@@ -4,6 +4,7 @@
 #include "llvm/IR/Module.h"
 #include "Construct.hh"
 #include "Constructs/Type.hh"
+#include "Generation/ConstructType.hh"
 
 class LlvmVisitor
 {
@@ -36,7 +37,14 @@ public:
     Construct visitType(Type node)
     {
         // TODO: Hard-coded double type.
-        llvm::Type::getDoubleTy(this->context);
+        llvm::Type *type = llvm::Type::getDoubleTy(this->context);
+
+        bool isPointer = node.getIsPointer();
+
+        if (isPointer)
+        {
+            // TODO: Convert type to pointer.
+        }
 
         return node;
     }

@@ -1,4 +1,4 @@
 enum ConstructType
 {
-    Type
+    TYPE
 };
