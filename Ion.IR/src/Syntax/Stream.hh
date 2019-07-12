@@ -12,12 +12,19 @@ protected:
 
     int resolvePosition(int index)
     {
-        if (this->size > index || this->size == index)
+        // Index cannot be negative.
+        if (index < 0)
+        {
+            throw "Index cannot be negative";
+        }
+        // Provided index is within bounds.
+        else if (this->size > index || this->size == index)
         {
             return index;
         }
 
-        return this->size;
+        // Index is out-of-bounds, return the last valid index.
+        return this->size - 1;
     }
 
 public:

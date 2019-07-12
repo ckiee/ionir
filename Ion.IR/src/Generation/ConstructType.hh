@@ -1,4 +1,6 @@
 enum ConstructType
 {
-    TYPE
+    TYPE,
+
+    BLOCK
 };

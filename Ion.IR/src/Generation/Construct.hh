@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ConstructType.hh"
+#include "Generation/ConstructType.hh"
 #include "Visitable.hh"
 #include "Generation/LlvmVisitor.hh"
 
@@ -14,6 +14,8 @@ public:
     {
         this->type = type;
     }
+
+    virtual Construct accept(LlvmVisitor *visitor);
 
     ConstructType getType()
     {
