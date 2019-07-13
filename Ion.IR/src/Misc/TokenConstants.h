@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include <regex>
-#include "Syntax/TokenType.hh"
+#include "Syntax/TokenType.h"
 
 class TokenConstants
 {

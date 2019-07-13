@@ -1,6 +1,0 @@
-enum ConstructType
-{
-    TYPE,
-
-    BLOCK
-};

@@ -1,4 +1,0 @@
-class Listener
-{
-    // TODO
-};
