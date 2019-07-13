@@ -4,7 +4,45 @@ enum class TokenType
 
 	Identifier,
 
+	String,
+
+	Decimal,
+
+	Integer,
+
+	Character,
+
 	Whitespace,
 
-	Symbol
+	SymbolAt,
+
+	SymbolColon,
+
+	SymbolDollar,
+
+	SymbolHash,
+
+	SymbolParenthesesL,
+
+	SymbolParenthesesR,
+
+	SymbolBracketL,
+
+	SymbolBracketR,
+
+	SymbolComma,
+
+	SymbolTilde,
+
+	SymbolEqual,
+
+	SymbolPercent,
+
+	InstCreate,
+
+	InstCall,
+
+	InstSet,
+
+	InstEnd
 };

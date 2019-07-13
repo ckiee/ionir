@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Generation/ConstructType.hh"
-#include "Visitable.hh"
+#include "Generation/Visitable.hh"
 #include "Generation/LlvmVisitor.hh"
 
 class Construct : public Visitable<Construct, LlvmVisitor>
