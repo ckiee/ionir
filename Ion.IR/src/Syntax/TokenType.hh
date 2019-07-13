@@ -1,8 +1,10 @@
-enum TokenType
+enum class TokenType
 {
-	UNKNOWN,
+	Unknown,
 
-	IDENTIFIER,
+	Identifier,
 
-	WHITESPACE
+	Whitespace,
+
+	Symbol
 };
