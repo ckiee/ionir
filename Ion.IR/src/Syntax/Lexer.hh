@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
+#include <map>
 #include "Token.hh"
+#include "Misc/TokenConstants.hh"
 
 class Lexer
 {
@@ -10,6 +12,8 @@ private:
     uint32_t length;
 
     uint32_t index;
+
+	TokenConstants constants;
 
 protected:
     char get()
@@ -71,7 +75,7 @@ protected:
             return nullptr;
         }
 
-        Token *token = new Token(TokenType::UNKNOWN, this->getAsString());
+        Token *token = new Token(TokenType::Unknown, this->getAsString());
         char character = this->get();
 
         // Ignore whitespace.
@@ -83,13 +87,22 @@ protected:
             }
         }
 
+		std::map<char, TokenType> symbols = this->constants.getSymbols();
+		std::map<char, TokenType>::iterator i;
+
+		for (i = symbols.begin(); i != symbols.end(); i++) {
+			if ((*token).getValue().rfind(i->first(), 0) == 0) {
+				// TODO
+			}
+		}
+
         // TODO: Complete implementation.
 
         return *token;
     }
 
 public:
-    Lexer(std::string input)
+    Lexer(std::string input) : constants()
     {
         this->input = input;
         this->length = this->input.length();
@@ -98,7 +111,6 @@ public:
         {
             throw "Input must be a string with one or more character(s)";
         }
-
         this->resetIndex();
     }
 

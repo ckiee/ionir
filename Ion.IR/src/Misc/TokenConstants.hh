@@ -46,4 +46,16 @@ public:
 		this->complex[std::regex("'([^'\\\n]|\\.)'")] = TokenType::Character;
 		this->complex[std::regex("([\s]+)")] = TokenType::Whitespace;
     }
+
+	std::map<char, TokenType> getSymbols() {
+		return this->symbols;
+	}
+
+	std::map<std::string, TokenType> getInsts() {
+		return this->insts;
+	}
+
+	std::map<std::regex, TokenType> getComplex() {
+		return this->complex;
+	}
 };
