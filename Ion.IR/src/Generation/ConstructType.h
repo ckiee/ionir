@@ -1,6 +1,8 @@
-enum ConstructType
+enum class ConstructType
 {
-    TYPE,
+    Type,
 
-    BLOCK
+    Block,
+
+	Prototype
 };
