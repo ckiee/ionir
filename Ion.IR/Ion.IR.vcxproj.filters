@@ -35,53 +35,59 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Constructs\BinaryExpr.hh">
-      <Filter>Source Files\Constructs</Filter>
+    <ClInclude Include="src\Parsing\GenerationListener.h">
+      <Filter>Source Files\Parsing</Filter>
     </ClInclude>
-    <ClInclude Include="src\Constructs\Block.hh">
-      <Filter>Source Files\Constructs</Filter>
+    <ClInclude Include="src\Parsing\Listener.h">
+      <Filter>Source Files\Parsing</Filter>
     </ClInclude>
-    <ClInclude Include="src\Constructs\Prototype.hh">
-      <Filter>Source Files\Constructs</Filter>
+    <ClInclude Include="src\Syntax\TokenType.h">
+      <Filter>Source Files\Syntax</Filter>
     </ClInclude>
-    <ClInclude Include="src\Constructs\Type.hh">
-      <Filter>Source Files\Constructs</Filter>
+    <ClInclude Include="src\Syntax\TokenStream.h">
+      <Filter>Source Files\Syntax</Filter>
     </ClInclude>
-    <ClInclude Include="src\Generation\Construct.hh">
-      <Filter>Source Files\Generation</Filter>
+    <ClInclude Include="src\Syntax\Token.h">
+      <Filter>Source Files\Syntax</Filter>
     </ClInclude>
-    <ClInclude Include="src\Generation\ConstructType.hh">
-      <Filter>Source Files\Generation</Filter>
+    <ClInclude Include="src\Syntax\Stream.h">
+      <Filter>Source Files\Syntax</Filter>
     </ClInclude>
-    <ClInclude Include="src\Generation\LlvmVisitor.hh">
-      <Filter>Source Files\Generation</Filter>
+    <ClInclude Include="src\Syntax\Lexer.h">
+      <Filter>Source Files\Syntax</Filter>
     </ClInclude>
-    <ClInclude Include="src\Generation\Visitable.hh">
-      <Filter>Source Files\Generation</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Misc\TokenConstants.hh">
+    <ClInclude Include="src\Misc\TokenConstants.h">
       <Filter>Source Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="src\Parsing\GenerationListener.hh">
-      <Filter>Source Files\Parsing</Filter>
+    <ClInclude Include="src\Generation\Visitable.h">
+      <Filter>Source Files\Generation</Filter>
     </ClInclude>
-    <ClInclude Include="src\Parsing\Listener.hh">
-      <Filter>Source Files\Parsing</Filter>
+    <ClInclude Include="src\Generation\LlvmVisitor.h">
+      <Filter>Source Files\Generation</Filter>
     </ClInclude>
-    <ClInclude Include="src\Syntax\Lexer.hh">
-      <Filter>Source Files\Syntax</Filter>
+    <ClInclude Include="src\Generation\ConstructType.h">
+      <Filter>Source Files\Generation</Filter>
     </ClInclude>
-    <ClInclude Include="src\Syntax\Stream.hh">
-      <Filter>Source Files\Syntax</Filter>
+    <ClInclude Include="src\Generation\Construct.h">
+      <Filter>Source Files\Generation</Filter>
     </ClInclude>
-    <ClInclude Include="src\Syntax\Token.hh">
-      <Filter>Source Files\Syntax</Filter>
+    <ClInclude Include="src\Constructs\Type.h">
+      <Filter>Source Files\Constructs</Filter>
     </ClInclude>
-    <ClInclude Include="src\Syntax\TokenStream.hh">
-      <Filter>Source Files\Syntax</Filter>
+    <ClInclude Include="src\Constructs\Prototype.h">
+      <Filter>Source Files\Constructs</Filter>
     </ClInclude>
-    <ClInclude Include="src\Syntax\TokenType.hh">
-      <Filter>Source Files\Syntax</Filter>
+    <ClInclude Include="src\Constructs\Block.h">
+      <Filter>Source Files\Constructs</Filter>
     </ClInclude>
+    <ClInclude Include="src\Constructs\BinaryExpr.h">
+      <Filter>Source Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Misc\Util.h">
+      <Filter>Source Files\Misc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
   </ItemGroup>
 </Project>

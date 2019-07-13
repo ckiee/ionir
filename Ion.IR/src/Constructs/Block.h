@@ -9,7 +9,7 @@ private:
     std::string identifier;
 
 public:
-    Block(std::string identifier) : Construct(ConstructType::BLOCK)
+    Block(std::string identifier) : Construct(ConstructType::Block)
     {
         this->identifier = identifier;
     }

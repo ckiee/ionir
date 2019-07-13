@@ -30,22 +30,26 @@
     <ClCompile Include="src\Ion.IR.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Constructs\BinaryExpr.hh" />
-    <ClInclude Include="src\Constructs\Block.hh" />
-    <ClInclude Include="src\Constructs\Prototype.hh" />
-    <ClInclude Include="src\Constructs\Type.hh" />
-    <ClInclude Include="src\Generation\Construct.hh" />
-    <ClInclude Include="src\Generation\ConstructType.hh" />
-    <ClInclude Include="src\Generation\LlvmVisitor.hh" />
-    <ClInclude Include="src\Generation\Visitable.hh" />
-    <ClInclude Include="src\Misc\TokenConstants.hh" />
-    <ClInclude Include="src\Parsing\GenerationListener.hh" />
-    <ClInclude Include="src\Parsing\Listener.hh" />
-    <ClInclude Include="src\Syntax\Lexer.hh" />
-    <ClInclude Include="src\Syntax\Stream.hh" />
-    <ClInclude Include="src\Syntax\Token.hh" />
-    <ClInclude Include="src\Syntax\TokenStream.hh" />
-    <ClInclude Include="src\Syntax\TokenType.hh" />
+    <ClInclude Include="src\Constructs\BinaryExpr.h" />
+    <ClInclude Include="src\Constructs\Block.h" />
+    <ClInclude Include="src\Constructs\Prototype.h" />
+    <ClInclude Include="src\Constructs\Type.h" />
+    <ClInclude Include="src\Generation\Construct.h" />
+    <ClInclude Include="src\Generation\ConstructType.h" />
+    <ClInclude Include="src\Generation\LlvmVisitor.h" />
+    <ClInclude Include="src\Generation\Visitable.h" />
+    <ClInclude Include="src\Misc\TokenConstants.h" />
+    <ClInclude Include="src\Misc\Util.h" />
+    <ClInclude Include="src\Parsing\GenerationListener.h" />
+    <ClInclude Include="src\Parsing\Listener.h" />
+    <ClInclude Include="src\Syntax\Lexer.h" />
+    <ClInclude Include="src\Syntax\Stream.h" />
+    <ClInclude Include="src\Syntax\Token.h" />
+    <ClInclude Include="src\Syntax\TokenStream.h" />
+    <ClInclude Include="src\Syntax\TokenType.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

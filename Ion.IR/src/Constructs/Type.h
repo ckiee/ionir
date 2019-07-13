@@ -9,7 +9,7 @@ private:
     bool isPointer;
 
 public:
-    Type(bool isPointer) : Construct(ConstructType::TYPE)
+    Type(bool isPointer) : Construct(ConstructType::Type)
     {
         this->isPointer = isPointer;
     }
