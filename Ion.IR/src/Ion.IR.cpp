@@ -11,8 +11,13 @@ int main()
 	// Create a string to serve as iteration input buffer.
 	std::string input;
 
-	while (input != "^") {
+	while (true) {
 		std::cin >> input;
+
+		if (input == "^") {
+			break;
+		}
+
 		std::cout << "input >> " << input << std::endl;
 		std::cout << "output >> ";
 

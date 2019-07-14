@@ -185,8 +185,8 @@ public:
 		// Iterate through all possible tokens.
 		for (Token token = this->next(); this->index <= this->length; token = this->next()) {
 			if (token.getType() == TokenType::Unknown) {
-				// TODO
-				std::cout << "Warning: Unknown token encountered";
+				// TODO: Issue warning instead of plain cout.
+				std::cout << "Warning: Unknown token encountered" << std::endl;
 			}
 
 			// Append the token to the result.
