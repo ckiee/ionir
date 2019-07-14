@@ -7,14 +7,14 @@ class Prototype : public Construct
 private:
 	std::string identifier;
 
-	std::vector<std::tuple<Type, std::string>> arguments;
+	std::vector<std::pair<Type, std::string>> arguments;
 
 	Type returnType;
 
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::tuple<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Construct(ConstructType::Prototype), returnType(returnType)
+	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Construct(ConstructType::Prototype), returnType(returnType)
 	{
 		this->identifier = identifier;
 		this->arguments = arguments;
@@ -31,7 +31,7 @@ public:
 		return this->identifier;
 	}
 
-	std::vector<std::tuple<Type, std::string>> getArguments()
+	std::vector<std::pair<Type, std::string>> getArguments()
 	{
 		return this->arguments;
 	}

@@ -49,10 +49,10 @@ public:
 
 	Construct visitFunction(Function *node)
 	{
-		if (node->getBody() == nullptr) {
+		if (&node->getBody() == nullptr) {
 			throw "Unexpected function body to be null";
 		}
-		else if (node->getPrototype() == nullptr) {
+		else if (&node->getPrototype() == nullptr) {
 			throw "Unexpected function prototype to be null";
 		}
 		else if (this->module->getFunction(node->getPrototype().getIdentifier()) != nullptr) {
@@ -62,11 +62,28 @@ public:
 		// Clear named values.
 		this->namedValues.clear();
 
-		// Create an argument buffer vector.
-		std::vector<llvm::Type> arguments = {};
+		// Visit the prototype.
+		this->visitPrototype(&node->getPrototype());
 
-		// Process the prototype's arguments.
-		// TODO
+		// Pop the resulting function off the stack.
+		this->valueStack.pop();
+
+		llvm::Function* function = (llvm::Function*)this->valueStack.top();
+
+		// Set the function buffer.
+		this->function = function;
+
+		// Visit the body.
+		this->visitBlock(&node->getBody());
+
+		// TODO: Verify the function.
+
+		// Pop off the body to clean the stack.
+		this->valueStack.pop();
+
+		this->valueStack.push(function);
+
+		return *node;
 	}
 
     Construct visitBlock(Block *node)
@@ -74,7 +91,7 @@ public:
         // Function buffer must not be null.
         if (&this->function == nullptr)
         {
-            throw "Expected the function buffer to be set, but was null";
+			throw std::runtime_error("Expected the function buffer to be set, but was null");
         }
 
         // Create the basic block and at the same time register it under the buffer function.
@@ -86,10 +103,11 @@ public:
 		// Visit and append instructions.
 		std::vector<Construct> insts = node->getInsts();
 
+		// Process instructions.
 		for (std::vector<Construct>::iterator iterator = insts.begin(); iterator != insts.end(); iterator++)
 		{
 			// Visit the instruction.
-			this->visit(iterator);
+			this->visit(&*iterator);
 
 			// Clean the stack off the result.
 			this->valueStack.pop();
@@ -134,7 +152,10 @@ public:
 
         llvm::Value *leftSide = this->valueStack.top();
 
-        // TODO: Finish implementation.
+		// Create the binary expression LLVM value.
+		llvm::Value *binaryExpr = this->builder->CreateAdd(leftSide, rightSide);
+
+		this->valueStack.push(binaryExpr);
 
         return *node;
     }
@@ -154,12 +175,12 @@ public:
 			// Function already has a body, disallow re-definition.
 			if (function->getBasicBlockList().size() > 0)
 			{
-				throw "Cannot re-define function: {node.Identifier}";
+				throw std::runtime_error("Cannot re-define function");
 			}
 			// If the function takes a different number of arguments, reject.
 			else if (function->arg_size() != argumentCount)
 			{
-				throw "Re-definition of function with a different amount arguments";
+				throw std::runtime_error("Re-definition of function with a different amount arguments");
 			}
 		}
 		else {
@@ -183,7 +204,7 @@ public:
 		for (int i = 0; i < argumentCount; ++i)
 		{
 			// Retrieve the name element from the argument tuple.
-			std::string name = std::get<1>(node->getArguments()[i]);
+			std::string name = node->getArguments()[i].second;
 
 			// Retrieve the argument at the current index iterator.
 			llvm::Value *argument = function->args[i];
