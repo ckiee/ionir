@@ -8,9 +8,4 @@ public:
 	{
 		return subject.rfind(test, 0) == 0;
 	}
-
-	static std::regex createRegex(std::string pattern)
-	{
-		// TODO
-	}
 };

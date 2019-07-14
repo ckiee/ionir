@@ -48,3 +48,7 @@ enum class TokenType
 
 	InstEnd
 };
+
+std::ostream &operator<<(std::ostream &stream, const TokenType &tokenType) {
+	return stream << "TokenType(" << (int)tokenType << ")";
+}

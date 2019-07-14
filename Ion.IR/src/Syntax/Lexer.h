@@ -17,15 +17,19 @@ private:
 
 	TokenConstants constants;
 
+	std::map<char, TokenType> symbolMap;
+
+	std::map<char, TokenType>::iterator symbolIterator;
+
 protected:
-    char get()
+    char getChar()
     {
         return this->input[this->index];
     }
 
-    std::string getAsString()
+    std::string getCharAsString()
     {
-        return std::string(1, this->get());
+        return std::string(1, this->getChar());
     }
 
     uint32_t getIndex()
@@ -50,9 +54,9 @@ protected:
         {
             index = 0;
         }
-        else if (index >= this->length)
+        else if (index > this->length)
         {
-            index = this->length - 1;
+            index = this->length + 1;
         }
 
         this->index = index;
@@ -83,7 +87,7 @@ protected:
 			std::string value = match[0];
 
 			// Modify the result.
-			token = new Token(type, value, token->getStartPosition());
+			*token = *new Token(type, value, token->getStartPosition());
 
 			// Skip the capture value's amount.
 			this->skip(value.length());
@@ -98,40 +102,38 @@ protected:
 
     Token next()
     {
-        Token *token = new Token(TokenType::Unknown, this->getAsString(), this->index);
-        char character = this->get();
+        Token *token = new Token(TokenType::Unknown, this->getCharAsString(), this->index);
+        char character = this->getChar();
 
         // Ignore whitespace.
         if (isspace(character))
         {
-            while (isspace(this->get()))
+            while (isspace(this->getChar()))
             {
                 this->skip(1);
             }
         }
 
-		std::map<char, TokenType> symbolMap = this->constants.getSymbols();
-		std::map<char, TokenType>::iterator symbolIterator;
 		std::string tokenValue = token->getValue();
 
-		for (symbolIterator = symbolMap.begin(); symbolIterator != symbolMap.end(); symbolIterator++) {
-			if (tokenValue[0] == symbolIterator->first) {
+		for (this->symbolIterator = symbolMap.begin(); this->symbolIterator != symbolMap.end(); this->symbolIterator++) {
+			if (tokenValue[0] == this->symbolIterator->first) {
 				// Create the initial regex.
-				std::regex regex = std::regex(std::string(1, symbolIterator->first));
+				std::regex regex = std::regex(std::string(1, this->symbolIterator->first));
 
 				// If the match starts with a letter, modify the regex to force either whitespace or EOF at the end.
 				if (std::regex_match(tokenValue, Regex::identifier)) {
 					// TODO: Missing initial part to be regex escaped.
-					regex = Util::createRegex(symbolIterator->first + "([^a-zA-Z_0-9])");
+					regex = std::regex(this->symbolIterator->first + "([^a-zA-Z_0-9])");
 				}
 
-				if (this->matchExpression(token, symbolIterator->second, regex)) {
+				if (this->matchExpression(token, this->symbolIterator->second, regex)) {
 					// Reduce the position.
 					// TODO: Causing problems, works when commented HERE.
 					//this.SetPosition(this.Position - token.Value.Length - pair.Key.Length);
 
 					// Skim the last character off.
-					token = new Token(token->getType(), std::string(1, symbolIterator->first), token->getStartPosition());
+					token = new Token(token->getType(), std::string(1, this->symbolIterator->first), token->getStartPosition());
 
 					// Return the token.
 					return *token;
@@ -139,8 +141,8 @@ protected:
 			}
 		}
 
-		std::map<std::regex, TokenType> complexMap = this->constants.getComplex();
-		std::map<std::regex, TokenType>::iterator complexIterator;
+		std::vector<std::pair<std::regex, TokenType>> complexMap = this->constants.getComplex();
+		std::vector<std::pair<std::regex, TokenType>>::iterator complexIterator;
 
 		// Complex types support.
 		for (complexIterator = complexMap.begin(); complexIterator != complexMap.end(); complexIterator++) {
@@ -168,6 +170,7 @@ public:
             throw "Input must be a string with one or more character(s)";
         }
 
+		this->symbolMap = this->constants.getSymbols();
         this->resetIndex();
     }
 
@@ -180,7 +183,7 @@ public:
         std::vector<Token> tokens = {};
 
 		// Iterate through all possible tokens.
-		for (Token token = this->next(); this->index < this->length - 1; token = this->next()) {
+		for (Token token = this->next(); this->index <= this->length; token = this->next()) {
 			if (token.getType() == TokenType::Unknown) {
 				// TODO
 				std::cout << "Warning: Unknown token encountered";

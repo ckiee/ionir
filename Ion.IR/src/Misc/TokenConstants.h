@@ -5,6 +5,7 @@
 #include <string>
 #include <regex>
 #include "Syntax/TokenType.h"
+#include "Misc/Regex.h"
 
 class TokenConstants
 {
@@ -13,7 +14,12 @@ private:
 
 	std::map<std::string, TokenType> insts;
 
-	std::map<std::regex, TokenType> complex;
+	std::vector<std::pair<std::regex, TokenType>> complex;
+
+	void pushComplex(std::regex regex, TokenType tokenType)
+	{
+		this->complex.push_back(std::make_pair(regex, tokenType));
+	}
 
 public:
     TokenConstants()
@@ -39,12 +45,12 @@ public:
 		this->insts["end"] = TokenType::InstEnd;
 
 		// Initialize complex map.
-		this->complex[std::regex("([_a-z]+[_a-z0-9]*)")] = TokenType::Identifier;
-		this->complex[std::regex("\"\"(\\.|[^\\""\\])* \"\"")] = TokenType::String;
-		this->complex[std::regex("(-?[0-9]+\\.[0-9]+)")] = TokenType::Decimal;
-		this->complex[std::regex("(-?[0-9]+)")] = TokenType::Integer;
-		this->complex[std::regex("'([^'\\\n]|\\.)'")] = TokenType::Character;
-		this->complex[std::regex("([\\s]+)")] = TokenType::Whitespace;
+		this->pushComplex(Regex::identifier, TokenType::Identifier);
+		this->pushComplex(Regex::string, TokenType::String);
+		this->pushComplex(Regex::decimal, TokenType::Decimal);
+		this->pushComplex(Regex::integer, TokenType::Integer);
+		this->pushComplex(Regex::character, TokenType::Character);
+		this->pushComplex(Regex::whitespace, TokenType::Whitespace);
     }
 
 	std::map<char, TokenType> getSymbols() {
@@ -55,7 +61,7 @@ public:
 		return this->insts;
 	}
 
-	std::map<std::regex, TokenType> getComplex() {
+	std::vector<std::pair<std::regex, TokenType>> getComplex() {
 		return this->complex;
 	}
 };

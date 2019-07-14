@@ -39,7 +39,6 @@ public:
 	}
 };
 
-std::ostream &operator<<(std::ostream &stream, const Token &token) {
-	// TODO
-	return stream << "Token(" << std::string("test") << ")";
+std::ostream &operator<<(std::ostream &stream, Token &token) {
+	return stream << "Token(" << token.getValue() << ", " << token.getType() << ")";
 }
