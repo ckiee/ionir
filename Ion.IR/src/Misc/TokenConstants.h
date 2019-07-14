@@ -41,10 +41,10 @@ public:
 		// Initialize complex map.
 		this->complex[std::regex("([_a-z]+[_a-z0-9]*)")] = TokenType::Identifier;
 		this->complex[std::regex("\"\"(\\.|[^\\""\\])* \"\"")] = TokenType::String;
-		this->complex[std::regex("(-?[0-9]+\.[0-9]+)")] = TokenType::Decimal;
+		this->complex[std::regex("(-?[0-9]+\\.[0-9]+)")] = TokenType::Decimal;
 		this->complex[std::regex("(-?[0-9]+)")] = TokenType::Integer;
 		this->complex[std::regex("'([^'\\\n]|\\.)'")] = TokenType::Character;
-		this->complex[std::regex("([\s]+)")] = TokenType::Whitespace;
+		this->complex[std::regex("([\\s]+)")] = TokenType::Whitespace;
     }
 
 	std::map<char, TokenType> getSymbols() {

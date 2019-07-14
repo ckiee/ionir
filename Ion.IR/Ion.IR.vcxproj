@@ -31,13 +31,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Constructs\BinaryExpr.h" />
+    <ClInclude Include="src\Constructs\BinaryExpr.hh" />
     <ClInclude Include="src\Constructs\Block.h" />
+    <ClInclude Include="src\Constructs\Extern.h" />
+    <ClInclude Include="src\Constructs\Function.h" />
     <ClInclude Include="src\Constructs\Prototype.h" />
     <ClInclude Include="src\Constructs\Type.h" />
     <ClInclude Include="src\Generation\Construct.h" />
     <ClInclude Include="src\Generation\ConstructType.h" />
     <ClInclude Include="src\Generation\LlvmVisitor.h" />
     <ClInclude Include="src\Generation\Visitable.h" />
+    <ClInclude Include="src\Misc\Regex.h" />
     <ClInclude Include="src\Misc\TokenConstants.h" />
     <ClInclude Include="src\Misc\Util.h" />
     <ClInclude Include="src\Parsing\GenerationListener.h" />

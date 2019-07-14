@@ -98,11 +98,6 @@ protected:
 
     Token next()
     {
-        if (this->index == this->length)
-        {
-            return nullptr;
-        }
-
         Token *token = new Token(TokenType::Unknown, this->getAsString(), this->index);
         char character = this->get();
 
@@ -172,6 +167,7 @@ public:
         {
             throw "Input must be a string with one or more character(s)";
         }
+
         this->resetIndex();
     }
 
@@ -180,9 +176,19 @@ public:
         // Reset index to avoid carrying over previous information.
         this->resetIndex();
 
+		// TODO: Should be a list, then converted to a vector.
         std::vector<Token> tokens = {};
 
-        // TODO: Complete implementation.
+		// Iterate through all possible tokens.
+		for (Token token = this->next(); this->index < this->length - 1; token = this->next()) {
+			if (token.getType() == TokenType::Unknown) {
+				// TODO
+				std::cout << "Warning: Unknown token encountered";
+			}
+
+			// Append the token to the result.
+			tokens.push_back(token);
+		}
 
         return tokens;
     }
