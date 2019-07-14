@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename TResult, typename TVisitor>
 class Visitable
 {

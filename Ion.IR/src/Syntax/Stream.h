@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 
 template <typename T>
@@ -42,6 +44,13 @@ public:
         // Set the initial index to the first item.
         this->index = 0;
     }
+
+	bool hasNext()
+	{
+		// TODO: Implement.
+
+		return false;
+	}
 
     T next()
     {

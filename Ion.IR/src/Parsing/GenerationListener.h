@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Listener.h"
 #include "Generation/LlvmVisitor.h"
 #include "Constructs/Prototype.h"

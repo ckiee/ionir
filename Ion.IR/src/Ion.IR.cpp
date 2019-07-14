@@ -22,7 +22,7 @@ int main()
 		std::cout << "output >> ";
 
 		// Create a new lexer.
-		Lexer* lexer = new Lexer(input);
+		Lexer *lexer = new Lexer(input);
 
 		// Tokenize the input.
 		std::vector<Token> tokens = lexer->tokenize();
