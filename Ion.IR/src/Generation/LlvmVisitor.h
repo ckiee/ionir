@@ -8,6 +8,7 @@
 #include "Constructs/Block.h"
 #include "Constructs/BinaryExpr.h"
 #include "Constructs/Function.h"
+#include "Constructs/Extern.h"
 #include "Generation/ConstructType.h"
 #include "Constructs/Prototype.h"
 
@@ -83,6 +84,22 @@ public:
 
 		this->valueStack.push(function);
 
+		return *node;
+	}
+
+	Construct visitExtern(Extern* node)
+	{
+		if (&node->getPrototype() == nullptr) {
+			throw std::runtime_error("Unexpected external definition's prototype to be null");
+		}
+		else if (this->module->getFunction(node->getPrototype().getIdentifier()) != nullptr) {
+			throw std::runtime_error("Re-definition of extern not allowed");
+		}
+
+		// Visit the prototype.
+		this->visitPrototype(&node->getPrototype());
+
+		// No need to push the resulting function onto the stack.
 		return *node;
 	}
 
@@ -169,7 +186,7 @@ public:
 		std::vector<llvm::Type*> arguments = {};
 
 		// Attempt to retrieve an existing function.
-		llvm::Function *function = (*this->module).getFunction(node->getIdentifier());
+		llvm::Function *function = this->module->getFunction(node->getIdentifier());
 
 		if (function != nullptr) {
 			// Function already has a body, disallow re-definition.
@@ -194,7 +211,7 @@ public:
 			// Create the function type.
 			llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getHasInfiniteArguments());
 
-			function = (*this->module).functions.getOrInsertFunction(node->getIdentifier(), type);
+			function = this->module->functions.getOrInsertFunction(node->getIdentifier(), type);
 
 			// Set the function's linkage.
 			function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);

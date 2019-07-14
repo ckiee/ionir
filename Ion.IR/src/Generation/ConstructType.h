@@ -6,5 +6,7 @@ enum class ConstructType
 
 	Prototype,
 
-	Function
+	Function,
+
+	Extern
 };

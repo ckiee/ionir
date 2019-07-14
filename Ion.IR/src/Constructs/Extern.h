@@ -3,29 +3,20 @@
 #include "Generation/Construct.h"
 #include "Generation/ConstructType.h"
 #include "Constructs/Prototype.h"
-#include "Constructs/Block.h"
 
-class Function : public Construct
+class Extern : public Construct
 {
 private:
 	Prototype prototype;
 
-	Block body;
-
 public:
-	Function(Prototype prototype, Block body) : Construct(ConstructType::Function), prototype(prototype), body(body)
+	Extern(Prototype prototype) : Construct(ConstructType::Extern)
 	{
 		this->prototype = prototype;
-		this->body = body;
 	}
 
 	Prototype getPrototype()
 	{
 		return this->prototype;
-	}
-
-	Block getBody()
-	{
-		return this->body;
 	}
 };
