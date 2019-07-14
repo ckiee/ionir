@@ -2,42 +2,72 @@
 
 #include <stack>
 #include "llvm/IR/Module.h"
+#include "llvm/IR/IRBuilder.h"
 #include "Construct.h"
 #include "Constructs/Type.h"
 #include "Constructs/Block.h"
 #include "Constructs/BinaryExpr.h"
+#include "Constructs/Function.h"
 #include "Generation/ConstructType.h"
 #include "Constructs/Prototype.h"
 
 class LlvmVisitor
 {
 private:
-    llvm::LLVMContext &context;
+    llvm::LLVMContext *context;
 
-    llvm::Module &module;
+    llvm::Module *module;
 
     std::stack<llvm::Value*> valueStack;
 
     std::stack<llvm::Type*> typeStack;
 
-    llvm::Function &function;
+    llvm::Function *function;
+
+	llvm::IRBuilder<> *builder;
+
+	std::map<std::string, llvm::Value> namedValues;
 
 protected:
-    llvm::Module &getModule()
+    llvm::Module *getModule()
     {
         return this->module;
     }
 
 public:
-    LlvmVisitor(llvm::Module module) : module(module), context(module.getContext()), function(nullptr)
+    LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr), builder(nullptr)
     {
-        //
+		this->valueStack = {};
+		this->typeStack = {};
+		this->namedValues = {};
     }
 
-    Construct visit(Construct construct)
+    Construct visit(Construct *node)
     {
-        return construct.accept(this);
+        return node->accept(this);
     }
+
+	Construct visitFunction(Function *node)
+	{
+		if (node->getBody() == nullptr) {
+			throw "Unexpected function body to be null";
+		}
+		else if (node->getPrototype() == nullptr) {
+			throw "Unexpected function prototype to be null";
+		}
+		else if (this->module->getFunction(node->getPrototype().getIdentifier()) != nullptr) {
+			throw "A function with the same identifier has been already previously defined";
+		}
+
+		// Clear named values.
+		this->namedValues.clear();
+
+		// Create an argument buffer vector.
+		std::vector<llvm::Type> arguments = {};
+
+		// Process the prototype's arguments.
+		// TODO
+	}
 
     Construct visitBlock(Block *node)
     {
@@ -48,9 +78,24 @@ public:
         }
 
         // Create the basic block and at the same time register it under the buffer function.
-        llvm::BasicBlock *block = llvm::BasicBlock::Create(this->context, node->getIdentifier(), &this->function);
+        llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getIdentifier(), this->function);
 
-        // TODO: Complete implementation
+		// Create and assign the builder.
+		this->builder = &llvm::IRBuilder<>(*this->context);
+
+		// Visit and append instructions.
+		std::vector<Construct> insts = node->getInsts();
+
+		for (std::vector<Construct>::iterator iterator = insts.begin(); iterator != insts.end(); iterator++)
+		{
+			// Visit the instruction.
+			this->visit(iterator);
+
+			// Clean the stack off the result.
+			this->valueStack.pop();
+		}
+
+		this->valueStack.push(block);
 
         return *node;
     }
@@ -58,7 +103,7 @@ public:
     Construct visitType(Type *node)
     {
         // TODO: Hard-coded double type.
-        llvm::Type *type = llvm::Type::getDoubleTy(this->context);
+        llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
 
         bool isPointer = node->getIsPointer();
 
@@ -76,8 +121,8 @@ public:
     Construct visitBinaryExpr(BinaryExpr *node)
     {
         // Visit sides.
-        this->visit(node->getLeftSide());
-        this->visit(node->getRightSide());
+        this->visit(&node->getLeftSide());
+        this->visit(&node->getRightSide());
 
         // Pop and retrieve right side.
         this->valueStack.pop();
@@ -103,7 +148,7 @@ public:
 		std::vector<llvm::Type*> arguments = {};
 
 		// Attempt to retrieve an existing function.
-		llvm::Function *function = this->module.getFunction(node->getIdentifier());
+		llvm::Function *function = (*this->module).getFunction(node->getIdentifier());
 
 		if (function != nullptr) {
 			// Function already has a body, disallow re-definition.
@@ -121,14 +166,14 @@ public:
 			for (int i = 0; i < argumentCount; ++i)
 			{
 				// TODO: Wrong type.
-				arguments.push_back(llvm::Type::getDoubleTy(this->context));
+				arguments.push_back(llvm::Type::getDoubleTy(*this->context));
 			}
 
 			// TODO: Support for infinite arguments and hard-coded return type.
 			// Create the function type.
-			llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(this->context), arguments, node->getHasInfiniteArguments());
+			llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getHasInfiniteArguments());
 
-			function = this->module.functions.getOrInsertFunction(node->getIdentifier(), type);
+			function = (*this->module).functions.getOrInsertFunction(node->getIdentifier(), type);
 
 			// Set the function's linkage.
 			function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);

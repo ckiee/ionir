@@ -4,5 +4,7 @@ enum class ConstructType
 
     Block,
 
-	Prototype
+	Prototype,
+
+	Function
 };
