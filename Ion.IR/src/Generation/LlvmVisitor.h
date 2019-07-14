@@ -137,14 +137,14 @@ public:
 		// Process arguments.
 		for (int i = 0; i < argumentCount; ++i)
 		{
-			// Retrieve the argument name.
-			std::string argumentName = node->arguments[i].Item2.Value;
+			// Retrieve the name element from the argument tuple.
+			std::string name = std::get<1>(node->getArguments()[i]);
 
 			// Retrieve the argument at the current index iterator.
 			llvm::Value *argument = function->args[i];
 
 			// Name the argument.
-			argument->setName(argumentName);
+			argument->setName(name);
 		}
 
 		this->valueStack.push(function);
