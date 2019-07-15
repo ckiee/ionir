@@ -10,7 +10,7 @@ private:
 	Prototype prototype;
 
 public:
-	Extern(Prototype prototype) : Construct(ConstructType::Extern)
+	Extern(Prototype prototype) : Construct(ConstructType::Extern), prototype(prototype)
 	{
 		this->prototype = prototype;
 	}
