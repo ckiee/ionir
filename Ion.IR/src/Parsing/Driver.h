@@ -3,22 +3,23 @@
 #include "llvm/IR/Module.h"
 #include "Syntax/TokenStream.h"
 
-class Driver {
+class Driver
+{
 private:
-	TokenStream stream;
+	TokenStream *stream;
 
-	llvm::Module module;
+	llvm::Module *module;
 
 public:
-	Driver(llvm::Module module, TokenStream stream)
+	Driver(llvm::Module *module, TokenStream *stream) : module(module)
 	{
-		this->module = module;
 		this->stream = stream;
 	}
 
 	void invoke()
 	{
-		while (this->stream.hasNext()) {
+		while (this->stream.hasNext())
+		{
 			this->next();
 		}
 	}
