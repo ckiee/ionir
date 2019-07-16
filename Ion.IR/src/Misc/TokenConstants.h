@@ -53,15 +53,18 @@ public:
 		this->pushComplex(Regex::whitespace, TokenType::Whitespace);
     }
 
-	std::map<char, TokenType> getSymbols() {
+	std::map<char, TokenType> getSymbols()
+	{
 		return this->symbols;
 	}
 
-	std::map<std::string, TokenType> getInsts() {
+	std::map<std::string, TokenType> getInsts()
+	{
 		return this->insts;
 	}
 
-	std::vector<std::pair<std::regex, TokenType>> getComplex() {
+	std::vector<std::pair<std::regex, TokenType>> getComplex()
+	{
 		return this->complex;
 	}
 };

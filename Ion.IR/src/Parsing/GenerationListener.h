@@ -21,13 +21,13 @@ public:
         //
     }
 
-    void enterExtern(Prototype node)
+    void enterExtern(Prototype *node)
     {
         // TODO
         this->visitor.visit(node);
     }
 
-    void exitExtern(Prototype node)
+    void exitExtern(Prototype *node)
     {
         // TODO
     }

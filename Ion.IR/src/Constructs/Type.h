@@ -16,7 +16,7 @@ public:
 
     Construct accept(LlvmVisitor *visitor)
     {
-        return (*visitor).visitType(this);
+        return visitor->visitType(this);
     }
 
     bool getIsPointer()
