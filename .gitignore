@@ -3,3 +3,6 @@ Debug/
 obj/
 .DS_Store
 Release/
+out/
+cmake-build-debug/
+.idea/
