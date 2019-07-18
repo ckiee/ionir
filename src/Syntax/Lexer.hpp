@@ -131,7 +131,7 @@ protected:
                 if (std::regex_match(tokenValue, Regex::identifier))
                 {
                     // TODO: Missing initial part to be regex escaped.
-                    regex = std::regex(this->symbolIterator->first + "([^a-zA-Z_0-9])");
+                    regex = std::regex(std::string(&this->symbolIterator->first) + "([^a-zA-Z_0-9])");
                 }
 
                 if (this->matchExpression(token, this->symbolIterator->second, regex))

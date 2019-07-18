@@ -7,5 +7,6 @@ set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
 set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 include_directories($(PROJECT_SOURCE_DIR)/include)
+include_directories($(PROJECT_SOURCE_DIR)/src)
 
-add_executable(ion_ir "./Ion.IR/src/Ion.IR.cpp")
+add_executable(ion_ir "./src/Ion.IR.cpp")
