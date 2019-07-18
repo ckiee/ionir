@@ -29,6 +29,7 @@ int main()
 		// Tokenize the input.
 		std::vector<Token> tokens = lexer->tokenize();
 
+		// Iterate and output resulting tokens.
 		for (auto iterator = tokens.begin(); iterator != tokens.end(); iterator++)
 		{
 			std::cout << *iterator;
