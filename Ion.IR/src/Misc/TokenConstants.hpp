@@ -4,13 +4,13 @@
 #include <map>
 #include <string>
 #include <regex>
-#include "Syntax/TokenType.h"
-#include "Misc/Regex.h"
+#include "Syntax/TokenType.hpp"
+#include "Misc/Regex.hpp"
 
 class TokenConstants
 {
 private:
-    std::map<char, TokenType> symbols;
+	std::map<char, TokenType> symbols;
 
 	std::map<std::string, TokenType> insts;
 
@@ -22,9 +22,9 @@ private:
 	}
 
 public:
-    TokenConstants()
-    {
-        // Initialize symbols map.
+	TokenConstants()
+	{
+		// Initialize symbols map.
 		this->symbols['@'] = TokenType::SymbolAt;
 		this->symbols[':'] = TokenType::SymbolColon;
 		this->symbols['$'] = TokenType::SymbolDollar;
@@ -51,7 +51,7 @@ public:
 		this->pushComplex(Regex::integer, TokenType::Integer);
 		this->pushComplex(Regex::character, TokenType::Character);
 		this->pushComplex(Regex::whitespace, TokenType::Whitespace);
-    }
+	}
 
 	std::map<char, TokenType> getSymbols()
 	{

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Generation/Construct.h"
-#include "Generation/ConstructType.h"
-#include "Constructs/Prototype.h"
+#include "Generation/Construct.hpp"
+#include "Generation/ConstructType.hpp"
+#include "Constructs/Prototype.hpp"
 
 class Extern : public Construct
 {

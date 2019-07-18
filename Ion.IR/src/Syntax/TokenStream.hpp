@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Stream.h"
-#include "Token.h"
+#include "Stream.hpp"
+#include "Token.hpp"
 
 class TokenStream : public Stream<Token>
 {

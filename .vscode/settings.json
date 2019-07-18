@@ -73,5 +73,6 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": true
 }

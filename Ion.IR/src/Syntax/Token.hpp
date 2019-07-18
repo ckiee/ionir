@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "TokenType.h"
+#include "TokenType.hpp"
 
 class Token
 {
@@ -19,7 +19,8 @@ public:
 		this->value = value;
 	}
 
-	uint32_t getStartPosition() {
+	uint32_t getStartPosition()
+	{
 		return this->startPosition;
 	}
 
@@ -39,6 +40,7 @@ public:
 	}
 };
 
-std::ostream &operator<<(std::ostream &stream, Token &token) {
+std::ostream &operator<<(std::ostream &stream, Token &token)
+{
 	return stream << "Token(" << token.getValue() << ", " << token.getType() << ")";
 }

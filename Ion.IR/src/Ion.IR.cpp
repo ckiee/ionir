@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <vector>
-#include "Syntax/Lexer.h"
+#include "Syntax/Lexer.hpp"
 
 int main()
 {
@@ -11,10 +11,12 @@ int main()
 	// Create a string to serve as iteration input buffer.
 	std::string input;
 
-	while (true) {
+	while (true)
+	{
 		std::cin >> input;
 
-		if (input == "^") {
+		if (input == "^")
+		{
 			break;
 		}
 
@@ -27,7 +29,8 @@ int main()
 		// Tokenize the input.
 		std::vector<Token> tokens = lexer->tokenize();
 
-		for (auto iterator = tokens.begin(); iterator != tokens.end(); iterator++) {
+		for (auto iterator = tokens.begin(); iterator != tokens.end(); iterator++)
+		{
 			std::cout << *iterator;
 		}
 

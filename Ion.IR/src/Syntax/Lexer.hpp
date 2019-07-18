@@ -4,10 +4,10 @@
 #include <vector>
 #include <map>
 #include <iostream>
-#include "Token.h"
-#include "Misc/TokenConstants.h"
-#include "Misc/Util.h"
-#include "Misc/Regex.h"
+#include "Token.hpp"
+#include "Misc/TokenConstants.hpp"
+#include "Misc/Util.hpp"
+#include "Misc/Regex.hpp"
 
 class Lexer
 {

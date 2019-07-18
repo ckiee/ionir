@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Generation/Construct.h"
+#include "Generation/Construct.hpp"
 
 class Prototype : public Construct
 {

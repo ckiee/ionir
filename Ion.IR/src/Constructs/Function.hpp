@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Generation/Construct.h"
-#include "Generation/ConstructType.h"
-#include "Constructs/Prototype.h"
-#include "Constructs/Block.h"
+#include "Generation/Construct.hpp"
+#include "Generation/ConstructType.hpp"
+#include "Constructs/Prototype.hpp"
+#include "Constructs/Block.hpp"
 
 class Function : public Construct
 {

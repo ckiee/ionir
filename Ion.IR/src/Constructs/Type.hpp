@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Generation/Construct.h"
-#include "Generation/ConstructType.h"
+#include "Generation/Construct.hpp"
+#include "Generation/ConstructType.hpp"
 
 class Type : public Construct
 {

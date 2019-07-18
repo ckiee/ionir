@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Listener.h"
-#include "Generation/LlvmVisitor.h"
-#include "Constructs/Prototype.h"
+#include "Listener.hpp"
+#include "Generation/LlvmVisitor.hpp"
+#include "Constructs/Prototype.hpp"
 
 class GenerationListener
 {

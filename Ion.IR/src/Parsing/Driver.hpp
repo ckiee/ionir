@@ -1,7 +1,7 @@
 #pragma once
 
 #include "llvm/IR/Module.h"
-#include "Syntax/TokenStream.h"
+#include "Syntax/TokenStream.hpp"
 
 class Driver
 {

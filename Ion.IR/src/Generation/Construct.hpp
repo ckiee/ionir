@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Generation/ConstructType.h"
-#include "Generation/Visitable.h"
-#include "Generation/LlvmVisitor.h"
+#include "Generation/ConstructType.hpp"
+#include "Generation/Visitable.hpp"
+#include "Generation/LlvmVisitor.hpp"
 
 class Construct : public Visitable<Construct, LlvmVisitor>
 {
