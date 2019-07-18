@@ -19,7 +19,7 @@ int main()
 		}
 
 		std::cout << "input >> " << input << std::endl;
-		std::cout << "output >> ";
+		std::cout << "output >> " << std::endl;
 
 		// Create a new lexer.
 		Lexer *lexer = new Lexer(input);
@@ -30,10 +30,8 @@ int main()
 		// Iterate and output resulting tokens.
 		for (auto iterator = tokens.begin(); iterator != tokens.end(); iterator++)
 		{
-			std::cout << *iterator;
+			std::cout << *iterator << std::endl;
 		}
-
-		std::cout << std::endl;
 	}
 
 	return 0;
