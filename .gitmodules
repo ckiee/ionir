@@ -1,5 +1,5 @@
-[submodule "src/llvm"]
-	path = src/llvm
+[submodule "include/llvm"]
+	path = include/llvm
 	url = https://github.com/ionlang/llvm.git
 [submodule "include/llvm-c"]
 	path = include/llvm-c
