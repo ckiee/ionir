@@ -1,28 +1,28 @@
 #pragma once
 
-#include "Generation/Construct.hpp"
-#include "Generation/ConstructType.hpp"
+#include "Generation/Expr.hpp"
+#include "Generation/ExprType.hpp"
 
-class Block : public Construct
+class Block : public Expr
 {
 private:
     std::string identifier;
 
-    std::vector<Construct> insts;
+    std::vector<Expr> insts;
 
 public:
-    Block(std::string identifier, std::vector<Construct> insts) : Construct(ConstructType::Block)
+    Block(std::string identifier, std::vector<Expr> insts) : Expr(ExprType::Block)
     {
         this->identifier = identifier;
         this->insts = insts;
     }
 
-    Construct accept(LlvmVisitor *visitor)
+    Expr accept(LlvmVisitor *visitor)
     {
         return (*visitor).visitBlock(this);
     }
 
-    std::vector<Construct> getInsts()
+    std::vector<Expr> getInsts()
     {
         return this->insts;
     }

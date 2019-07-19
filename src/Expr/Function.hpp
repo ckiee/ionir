@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Generation/Construct.hpp"
-#include "Generation/ConstructType.hpp"
+#include "Generation/Expr.hpp"
+#include "Generation/ExprType.hpp"
 #include "Constructs/Prototype.hpp"
 #include "Constructs/Block.hpp"
 
-class Function : public Construct
+class Function : public Expr
 {
 private:
 	Prototype prototype;
@@ -13,7 +13,7 @@ private:
 	Block body;
 
 public:
-	Function(Prototype prototype, Block body) : Construct(ConstructType::Function), prototype(prototype), body(body)
+	Function(Prototype prototype, Block body) : Expr(ExprType::Function), prototype(prototype), body(body)
 	{
 		this->prototype = prototype;
 		this->body = body;

@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ConstructType
+enum class ExprType
 {
     Type,
 

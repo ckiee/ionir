@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Generation/Construct.hpp"
+#include "Generation/Expr.hpp"
 
-class Prototype : public Construct
+class Prototype : public Expr
 {
 private:
 	std::string identifier;
@@ -14,14 +14,14 @@ private:
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Construct(ConstructType::Prototype), returnType(returnType)
+	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Expr(ExprType::Prototype), returnType(returnType)
 	{
 		this->identifier = identifier;
 		this->arguments = arguments;
 		this->hasInfiniteArguments = hasInfiniteArguments;
 	}
 
-    Construct accept(LlvmVisitor *visitor)
+    Expr accept(LlvmVisitor *visitor)
     {
         return visitor->visitPrototype(this);
     }

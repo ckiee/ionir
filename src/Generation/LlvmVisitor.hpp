@@ -3,13 +3,13 @@
 #include <stack>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
-#include "Generation/Construct.hpp"
+#include "Generation/Expr.hpp"
 #include "Constructs/Type.hpp"
 #include "Constructs/Block.hpp"
 #include "Constructs/BinaryExpr.hpp"
 #include "Constructs/Function.hpp"
 #include "Constructs/Extern.hpp"
-#include "Generation/ConstructType.hpp"
+#include "Generation/ExprType.hpp"
 #include "Constructs/Prototype.hpp"
 
 class LlvmVisitor
@@ -43,12 +43,12 @@ public:
 		this->namedValues = {};
 	}
 
-	Construct visit(Construct *node)
+	Expr visit(Expr *node)
 	{
 		return node->accept(this);
 	}
 
-	Construct visitFunction(Function *node)
+	Expr visitFunction(Function *node)
 	{
 		if (&node->getBody() == nullptr)
 		{
@@ -90,7 +90,7 @@ public:
 		return *node;
 	}
 
-	Construct visitExtern(Extern *node)
+	Expr visitExtern(Extern *node)
 	{
 		if (&node->getPrototype() == nullptr)
 		{
@@ -108,7 +108,7 @@ public:
 		return *node;
 	}
 
-	Construct visitBlock(Block *node)
+	Expr visitBlock(Block *node)
 	{
 		// Function buffer must not be null.
 		if (&this->function == nullptr)
@@ -123,10 +123,10 @@ public:
 		this->builder = &llvm::IRBuilder<>(*this->context);
 
 		// Visit and append instructions.
-		std::vector<Construct> insts = node->getInsts();
+		std::vector<Expr> insts = node->getInsts();
 
 		// Process instructions.
-		for (std::vector<Construct>::iterator iterator = insts.begin(); iterator != insts.end(); iterator++)
+		for (std::vector<Expr>::iterator iterator = insts.begin(); iterator != insts.end(); iterator++)
 		{
 			// Visit the instruction.
 			this->visit(&*iterator);
@@ -140,7 +140,7 @@ public:
 		return *node;
 	}
 
-	Construct visitType(Type *node)
+	Expr visitType(Type *node)
 	{
 		// TODO: Hard-coded double type.
 		llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
@@ -158,7 +158,7 @@ public:
 		return *node;
 	}
 
-	Construct visitBinaryExpr(BinaryExpr *node)
+	Expr visitBinaryExpr(BinaryExpr *node)
 	{
 		// Visit sides.
 		this->visit(&node->getLeftSide());
@@ -182,7 +182,7 @@ public:
 		return *node;
 	}
 
-	Construct visitPrototype(Prototype *node)
+	Expr visitPrototype(Prototype *node)
 	{
 		// Retrieve argument count from the argument vector.
 		uint32_t argumentCount = node->getArguments().size();

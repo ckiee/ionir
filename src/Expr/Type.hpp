@@ -1,20 +1,20 @@
 #pragma once
 
-#include "Generation/Construct.hpp"
+#include "Generation/Expr.hpp"
 #include "Generation/ConstructType.hpp"
 
-class Type : public Construct
+class Type : public Expr
 {
 private:
     bool isPointer;
 
 public:
-    Type(bool isPointer) : Construct(ConstructType::Type)
+    Type(bool isPointer) : Expr(ExprType::Type)
     {
         this->isPointer = isPointer;
     }
 
-    Construct accept(LlvmVisitor *visitor)
+    Expr accept(LlvmVisitor *visitor)
     {
         return visitor->visitType(this);
     }
