@@ -2,8 +2,8 @@
 
 #include "Generation/Expr.hpp"
 #include "Generation/ExprType.hpp"
-#include "Constructs/Prototype.hpp"
-#include "Constructs/Block.hpp"
+#include "Expression/Prototype.hpp"
+#include "Expression/Block.hpp"
 
 class Function : public Expr
 {

@@ -2,7 +2,7 @@
 
 #include "Generation/Expr.hpp"
 #include "Generation/ExprType.hpp"
-#include "Constructs/Prototype.hpp"
+#include "Expression/Prototype.hpp"
 
 class Extern : public Expr
 {

@@ -2,7 +2,7 @@
 
 #include "Listener.hpp"
 #include "Generation/LlvmVisitor.hpp"
-#include "Constructs/Prototype.hpp"
+#include "Expression/Prototype.hpp"
 
 class GenerationListener
 {
