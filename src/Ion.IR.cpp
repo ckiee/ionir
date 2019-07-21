@@ -11,7 +11,7 @@ void processTokens(std::vector<Token> tokens)
 	llvm::Module *module = llvm::Module();
 
 	// Create the driver.
-	Driver *driver = new Driver(*module, &tokens);
+	Driver *driver = Driver(module, &tokens);
 
 	// Invoke the driver.
 	driver->invoke();

@@ -1,23 +1,23 @@
 #pragma once
 
-#include "Generation/ConstructType.hpp"
+#include "Generation/ExprType.hpp"
 #include "Generation/Visitable.hpp"
 #include "Generation/LlvmVisitor.hpp"
 
-class Construct : public Visitable<Construct, LlvmVisitor>
+class Expr : public Visitable<Expr, LlvmVisitor>
 {
 private:
-    ConstructType type;
+    ExprType type;
 
 public:
-    Construct(ConstructType type)
+    Expr(ExprType type)
     {
         this->type = type;
     }
 
-    virtual Construct accept(LlvmVisitor *visitor);
+    virtual Expr accept(LlvmVisitor *visitor);
 
-    ConstructType getConstructType()
+    ExprType getExprType()
     {
         return this->type;
     }

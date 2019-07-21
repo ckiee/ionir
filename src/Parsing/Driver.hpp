@@ -2,6 +2,7 @@
 
 #include "llvm/IR/Module.h"
 #include "Syntax/TokenStream.hpp"
+#include "Syntax/Token.hpp"
 
 class Driver
 {
@@ -11,14 +12,14 @@ private:
 	llvm::Module *module;
 
 public:
-	Driver(llvm::Module *module, TokenStream *stream) : module(module)
+	Driver(llvm::Module *module, TokenStream *stream) : module(module), stream(stream)
 	{
-		this->stream = stream;
+		//
 	}
 
 	void invoke()
 	{
-		while (this->stream.hasNext())
+		while (this->stream->hasNext())
 		{
 			this->next();
 		}
@@ -26,7 +27,7 @@ public:
 
 	bool next()
 	{
-		Token token = this->stream.get();
+		Token token = this->stream->get();
 
 		// TODO: Continue implementation.
 
