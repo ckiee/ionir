@@ -18,7 +18,7 @@ public:
 
     Expr accept(LlvmVisitor *visitor)
     {
-        return (*visitor).visitBinaryExpr(this);
+        return visitor->visitBinaryExpr(this);
     }
 
     Expr getLeftSide()

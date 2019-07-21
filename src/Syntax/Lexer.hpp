@@ -91,7 +91,7 @@ protected:
             std::string value = match[0];
 
             // Modify the result.
-            *token = *new Token(type, value, token->getStartPosition());
+            *token = *Token(type, value, token->getStartPosition());
 
             // Skip the capture value's amount.
             this->skip(value.length());
@@ -106,7 +106,7 @@ protected:
 
     Token next()
     {
-        Token *token = new Token(TokenType::Unknown, this->getCharAsString(), this->index);
+        Token *token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
         char character = this->getChar();
 
         // Ignore whitespace.

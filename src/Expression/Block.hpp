@@ -19,7 +19,7 @@ public:
 
     Expr accept(LlvmVisitor *visitor)
     {
-        return (*visitor).visitBlock(this);
+        return visitor->visitBlock(this);
     }
 
     std::vector<Expr> getInsts()
