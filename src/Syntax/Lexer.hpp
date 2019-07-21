@@ -106,7 +106,7 @@ protected:
 
     Token next()
     {
-        Token *token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
+        Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
         char character = this->getChar();
 
         // Ignore whitespace.
