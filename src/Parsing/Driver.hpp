@@ -7,19 +7,19 @@
 class Driver
 {
 private:
-	TokenStream *stream;
+	TokenStream stream;
 
 	llvm::Module *module;
 
 public:
-	Driver(llvm::Module *module, TokenStream *stream) : module(module), stream(stream)
+	Driver(llvm::Module *module, TokenStream stream) : module(module), stream(stream)
 	{
 		//
 	}
 
 	void invoke()
 	{
-		while (this->stream->hasNext())
+		while (this->stream.hasNext())
 		{
 			this->next();
 		}
@@ -27,7 +27,7 @@ public:
 
 	bool next()
 	{
-		Token token = this->stream->get();
+		Token token = this->stream.get();
 
 		// TODO: Continue implementation.
 

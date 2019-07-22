@@ -3,15 +3,18 @@
 #include "llvm/IR/Module.h"
 #include "Syntax/Lexer.hpp"
 #include "Parsing/Driver.hpp"
+#include "Syntax/TokenStream.hpp"
 
-void processTokens(std::vector<Token> tokens)
+void processStream(TokenStream stream)
 {
+	llvm::LLVMContext context = llvm::LLVMContext();
+
 	// TODO
 	// Create the module.
-	llvm::Module *module = llvm::Module();
+	llvm::Module *module = new llvm::Module("entry", context);
 
 	// Create the driver.
-	Driver *driver = Driver(module, &tokens);
+	Driver *driver = Driver(*module, stream);
 
 	// Invoke the driver.
 	driver->invoke();
@@ -40,7 +43,7 @@ int main()
 		else if (input == "&")
 		{
 			// Delegate to process tokens.
-			processTokens(tokens);
+			processStream(TokenStream(tokens));
 
 			// Flush tokens.
 			tokens.clear();

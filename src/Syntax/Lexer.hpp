@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
-#include "Token.hpp"
+#include "Syntax/Token.hpp"
 #include "Misc/TokenConstants.hpp"
 #include "Misc/Util.hpp"
 #include "Misc/Regex.hpp"
@@ -118,7 +118,7 @@ protected:
             }
         }
 
-        std::string tokenValue = token->getValue();
+        std::string tokenValue = token.getValue();
 
         for (this->symbolIterator = symbolMap.begin(); this->symbolIterator != symbolMap.end(); this->symbolIterator++)
         {
@@ -141,10 +141,10 @@ protected:
                     //this.SetPosition(this.Position - token.Value.Length - pair.Key.Length);
 
                     // Skim the last character off.
-                    token = new Token(token->getType(), std::string(1, this->symbolIterator->first), token->getStartPosition());
+                    token = new Token(token.getType(), std::string(1, this->symbolIterator->first), token->getStartPosition());
 
                     // Return the token.
-                    return *token;
+                    return token;
                 }
             }
         }
@@ -158,7 +158,7 @@ protected:
             // If it matches, return the token (already modified by the function).
             if (this->matchExpression(token, complexIterator->second, complexIterator->first))
             {
-                return *token;
+                return token;
             }
         }
 
@@ -166,7 +166,7 @@ protected:
         this->skip(tokenValue.length());
 
         // Return the default token. The token type defaults to unknown.
-        return *token;
+        return token;
     }
 
 public:

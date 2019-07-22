@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Stream.hpp"
-#include "Token.hpp"
+#include "Syntax/Stream.hpp"
+#include "Syntax/Token.hpp"
 
 class TokenStream : public Stream<Token>
 {
