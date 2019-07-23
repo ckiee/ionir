@@ -91,7 +91,7 @@ protected:
             std::string value = match[0];
 
             // Modify the result.
-            *token = *Token(type, value, token->getStartPosition());
+            *token = Token(type, value, token->getStartPosition());
 
             // Skip the capture value's amount.
             this->skip(value.length());
@@ -134,14 +134,14 @@ protected:
                     regex = std::regex(std::string(&this->symbolIterator->first) + "([^a-zA-Z_0-9])");
                 }
 
-                if (this->matchExpression(token, this->symbolIterator->second, regex))
+                if (this->matchExpression(&token, this->symbolIterator->second, regex))
                 {
                     // Reduce the position.
                     // TODO: Causing problems, works when commented HERE.
                     //this.SetPosition(this.Position - token.Value.Length - pair.Key.Length);
 
                     // Skim the last character off.
-                    token = new Token(token.getType(), std::string(1, this->symbolIterator->first), token->getStartPosition());
+                    token = Token(token.getType(), std::string(1, this->symbolIterator->first), token.getStartPosition());
 
                     // Return the token.
                     return token;
@@ -156,7 +156,7 @@ protected:
         for (complexIterator = complexMap.begin(); complexIterator != complexMap.end(); complexIterator++)
         {
             // If it matches, return the token (already modified by the function).
-            if (this->matchExpression(token, complexIterator->second, complexIterator->first))
+            if (this->matchExpression(&token, complexIterator->second, complexIterator->first))
             {
                 return token;
             }
