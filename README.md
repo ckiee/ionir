@@ -17,9 +17,10 @@ $ make
 A general usage example is provided below.
 
 ```cpp
-#include "Ion.IR/Driver.cpp"
-#include "Ion.IR/Lexer.cpp"
-#include "Ion.IR/TokenStream.cpp"
+#include "Generation/Driver.hpp"
+#include "Syntax/Lexer.hpp"
+#include "Syntax/Stream.hpp"
+#include "Syntax/Token.hpp"
 
 using namespace std;
 
@@ -28,7 +29,7 @@ int main() {
     Lexer lexer = new Lexer(...);
 
     // Tokenize the input.
-    TokenStream stream = lexer.tokenize();
+    Stream<Token> stream = lexer.tokenize();
 
     // Create a driver to handle code generation.
     Driver driver = new Driver(stream);

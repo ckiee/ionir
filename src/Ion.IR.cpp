@@ -2,10 +2,10 @@
 #include <vector>
 #include "llvm/IR/Module.h"
 #include "Syntax/Lexer.hpp"
+#include "Syntax/Stream.hpp"
 #include "Parsing/Driver.hpp"
-#include "Syntax/TokenStream.hpp"
 
-void processStream(TokenStream stream)
+void processStream(Stream<Token> stream)
 {
 	llvm::LLVMContext context = llvm::LLVMContext();
 
@@ -14,7 +14,7 @@ void processStream(TokenStream stream)
 	llvm::Module *module = new llvm::Module("entry", context);
 
 	// Create the driver.
-	Driver *driver = Driver(*module, stream);
+	Driver *driver = new Driver(module, stream);
 
 	// Invoke the driver.
 	driver->invoke();
@@ -43,7 +43,7 @@ int main()
 		else if (input == "&")
 		{
 			// Delegate to process tokens.
-			processStream(TokenStream(tokens));
+			processStream(Stream<Token>(tokens));
 
 			// Flush tokens.
 			tokens.clear();

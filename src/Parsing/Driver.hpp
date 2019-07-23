@@ -1,18 +1,18 @@
 #pragma once
 
 #include "llvm/IR/Module.h"
-#include "Syntax/TokenStream.hpp"
 #include "Syntax/Token.hpp"
+#include "Syntax/Stream.hpp"
 
 class Driver
 {
 private:
-	TokenStream stream;
+	Stream<Token> stream;
 
 	llvm::Module *module;
 
 public:
-	Driver(llvm::Module *module, TokenStream stream) : module(module), stream(stream)
+	Driver(llvm::Module *module, Stream<Token> stream) : module(module), stream(stream)
 	{
 		//
 	}
