@@ -29,7 +29,9 @@ public:
 	{
 		Token token = this->stream.get();
 
-		// TODO: Continue implementation.
+		if (token.getType())
+		{
+		}
 
 		return false;
 	}

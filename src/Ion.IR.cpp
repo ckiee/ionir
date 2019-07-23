@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
 #include "Syntax/Lexer.hpp"
 #include "Syntax/Stream.hpp"

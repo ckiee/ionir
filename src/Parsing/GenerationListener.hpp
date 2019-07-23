@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Listener.hpp"
 #include "Generation/LlvmVisitor.hpp"
-#include "Expression/Prototype.hpp"
+#include "Expression/Extern.hpp"
+#include "Expression/Function.hpp"
 
 class GenerationListener
 {
 private:
-    LlvmVisitor visitor;
+    LlvmVisitor *visitor;
 
 protected:
     LlvmVisitor getVisitor()
@@ -16,18 +16,28 @@ protected:
     }
 
 public:
-    GenerationListener(LlvmVisitor visitor) : visitor(visitor)
+    GenerationListener(LlvmVisitor *visitor) : visitor(visitor)
     {
         //
     }
 
-    void enterExtern(Prototype *node)
+    void enterFunction(Function *node)
+    {
+        this->visitor.visit(node);
+    }
+
+    void exitFunction(Function *node)
+    {
+        //
+    }
+
+    void enterExtern(Extern *node)
     {
         // TODO
         this->visitor.visit(node);
     }
 
-    void exitExtern(Prototype *node)
+    void exitExtern(Extern *node)
     {
         // TODO
     }
