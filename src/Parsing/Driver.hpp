@@ -29,8 +29,10 @@ public:
 	{
 		Token token = this->stream.get();
 
-		if (token.getType())
+		// Function definition (token should be a type name).
+		if (token.getType() == TokenType::Identifier)
 		{
+			
 		}
 
 		return false;

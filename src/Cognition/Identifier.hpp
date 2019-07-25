@@ -1,22 +1,28 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include "Syntax/TokenType.hpp"
 
 class Identifier
 {
 private:
-    std::vector<TokenType> *primitiveTypes;
+    std::map<std::string, TokenType> *primitiveTypes;
 
 public:
     Identifier()
     {
-        this->primitiveTypes = {
-            TokenType::
-        };
+        // Register primitive types.
+        this->primitiveTypes.insert(std::make_pair("void", PrimitiveType::Void));
+        this->primitiveTypes.insert(std::make_pair("int", PrimitiveType::Integer32));
+        this->primitiveTypes.insert(std::make_pair("string", PrimitiveType::String));
+        this->primitiveTypes.insert(std::make_pair("char", PrimitiveType::Character));
     }
 
-    bool isPrimitiveType()
+    bool isPrimitive(std::string value)
     {
+        // TODO
+
+        return false;
     }
 };
