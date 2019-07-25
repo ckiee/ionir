@@ -32,7 +32,7 @@ public:
 		// Function definition (token should be a type name).
 		if (token.getType() == TokenType::Identifier)
 		{
-			
+			// TODO
 		}
 
 		return false;
