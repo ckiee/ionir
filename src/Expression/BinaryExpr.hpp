@@ -11,7 +11,7 @@ private:
     Expr rightSide;
 
 public:
-    BinaryExpr(Expr leftSide, Construct rightSide) : Expr(ExprType::Block), leftSide(leftSide), rightSide(rightSide)
+    BinaryExpr(Expr leftSide, Expr rightSide) : Expr(ExprType::Block), leftSide(leftSide), rightSide(rightSide)
     {
         //
     }

@@ -10,7 +10,7 @@ private:
     LlvmVisitor *visitor;
 
 protected:
-    LlvmVisitor getVisitor()
+    LlvmVisitor *getVisitor()
     {
         return this->visitor;
     }
@@ -23,7 +23,7 @@ public:
 
     void enterFunction(Function *node)
     {
-        this->visitor.visit(node);
+        this->visitor->visit(node);
     }
 
     void exitFunction(Function *node)
@@ -34,7 +34,7 @@ public:
     void enterExtern(Extern *node)
     {
         // TODO
-        this->visitor.visit(node);
+        this->visitor->visit(node);
     }
 
     void exitExtern(Extern *node)
