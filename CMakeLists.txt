@@ -9,4 +9,9 @@ set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 include_directories(include)
 include_directories(src)
 
+# Disable warnings from includes.
+add_library(llvm INTERFACE)
+target_sources(llvm INTERFACE)
+target_include_directories(llvm PRIVATE include/ SYSTEM INTERFACE include/)
+
 add_executable(ion_ir "./src/Ion.IR.cpp")
