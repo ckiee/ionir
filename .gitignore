@@ -7,3 +7,5 @@ out/
 cmake-build-debug/
 .idea/
 build/
+CMakeCache.txt
+CMakeFiles/
