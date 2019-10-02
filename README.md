@@ -44,3 +44,7 @@ int main() {
     return 0;
 }
 ```
+
+#### Style Guide
+
+This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
