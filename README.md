@@ -45,6 +45,24 @@ int main() {
 }
 ```
 
+#### Requirements
+
+* CMake >=v3.13.X
+* Python =2.7
+* Visual Studio 2019 with C++ Tools
+* LLVM >=v9.0.0 (must build from source, see section below)
+
+#### Building LLVM
+
+1. Download and extract sources.
+
+2. Build sources using a Windows command prompt with administrator privileges.
+```
+> cd <sources directory>
+> cmake .
+> cmake --build . --config Release --target INSTALL
+```
+
 #### Style Guide
 
 This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).

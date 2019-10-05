@@ -4,8 +4,8 @@
 #include <map>
 #include <string>
 #include <regex>
-#include "Syntax/TokenType.hpp"
-#include "Misc/Regex.hpp"
+#include "syntax/token_type.hpp"
+#include "misc/regex.hpp"
 
 class TokenConstants
 {

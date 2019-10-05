@@ -3,14 +3,14 @@
 #include <stack>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
-#include "Generation/Expr.hpp"
-#include "Expression/Type.hpp"
-#include "Expression/Block.hpp"
-#include "Expression/BinaryExpr.hpp"
-#include "Expression/Function.hpp"
-#include "Expression/Extern.hpp"
-#include "Generation/ExprType.hpp"
-#include "Expression/Prototype.hpp"
+#include "generation/expr.hpp"
+#include "expression/type.hpp"
+#include "expression/block.hpp"
+#include "expression/binary_expr.hpp"
+#include "expression/function.hpp"
+#include "expression/extern.hpp"
+#include "generation/expr_type.hpp"
+#include "expression/prototype.hpp"
 
 class LlvmVisitor
 {

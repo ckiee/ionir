@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Generation/Expr.hpp"
-#include "Generation/ExprType.hpp"
-#include "Expression/Prototype.hpp"
+#include "generation/expr.hpp"
+#include "generation/expr_type.hpp"
+#include "expression/prototype.hpp"
 
 class Extern : public Expr
 {

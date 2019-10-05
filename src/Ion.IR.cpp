@@ -2,23 +2,23 @@
 #include <vector>
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
-#include "Syntax/Lexer.hpp"
-#include "Syntax/Stream.hpp"
-#include "Parsing/Driver.hpp"
+#include "syntax/lexer.hpp"
+#include "syntax/stream.hpp"
+#include "parsing/driver.hpp"
 
 void processStream(Stream<Token> stream)
 {
-	llvm::LLVMContext context = llvm::LLVMContext();
+	// llvm::LLVMContext context = llvm::LLVMContext();
 
-	// TODO
-	// Create the module.
-	llvm::Module *module = new llvm::Module("entry", context);
+	// // TODO
+	// // Create the module.
+	// llvm::Module *module = new llvm::Module("entry", context);
 
-	// Create the driver.
-	Driver *driver = new Driver(module, stream);
+	// // Create the driver.
+	// Driver *driver = new Driver(module, stream);
 
-	// Invoke the driver.
-	driver->invoke();
+	// // Invoke the driver.
+	// driver->invoke();
 
 	// TODO: Display result(s).
 }

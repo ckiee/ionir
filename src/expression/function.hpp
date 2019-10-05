@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Generation/Expr.hpp"
-#include "Generation/ExprType.hpp"
-#include "Expression/Prototype.hpp"
-#include "Expression/Block.hpp"
+#include "generation/expr.hpp"
+#include "generation/expr_type.hpp"
+#include "expression/prototype.hpp"
+#include "expression/block.hpp"
 
 class Function : public Expr
 {

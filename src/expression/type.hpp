@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Generation/Expr.hpp"
-#include "Generation/ExprType.hpp"
+#include "generation/expr.hpp"
+#include "generation/expr_type.hpp"
 
 class Type : public Expr
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Generation/Expr.hpp"
+#include "generation/expr.hpp"
 
 class Prototype : public Expr
 {
@@ -21,10 +21,10 @@ public:
 		this->hasInfiniteArguments = hasInfiniteArguments;
 	}
 
-    Expr accept(LlvmVisitor *visitor)
-    {
-        return visitor->visitPrototype(this);
-    }
+	Expr accept(LlvmVisitor *visitor)
+	{
+		return visitor->visitPrototype(this);
+	}
 
 	std::string getIdentifier()
 	{

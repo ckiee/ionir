@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Generation/ExprType.hpp"
-#include "Generation/Visitable.hpp"
-#include "Generation/LlvmVisitor.hpp"
+#include "generation/expr_type.hpp"
+#include "generation/visitable.hpp"
+#include "generation/llvm_visitor.hpp"
 
 class Expr : public Visitable<Expr, LlvmVisitor>
 {
