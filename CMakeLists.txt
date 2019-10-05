@@ -15,10 +15,11 @@ set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 
 # Provide include directories to be used in the build command.
 include_directories(include)
-include_directories(src)
 
-# Provide additional libraries' path.
-#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/modules/")
+# Set source file(s).
+set(SOURCES
+    src/Ion.IR.cpp
+)
 
 # Specify executable(s).
-add_executable(${PROJECT_NAME} src/Ion.IR.cpp)
+add_executable(${PROJECT_NAME} ${SOURCES})

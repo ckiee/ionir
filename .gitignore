@@ -12,3 +12,5 @@ CMakeFiles/
 *.cmake
 *.vcxproj*
 *.sln
+x64
+ion_ir.dir
