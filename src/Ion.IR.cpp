@@ -8,7 +8,7 @@
 
 void processStream(Stream<Token> stream)
 {
-	// llvm::LLVMContext context = llvm::LLVMContext();
+	llvm::LLVMContext context = llvm::LLVMContext();
 
 	// // TODO
 	// // Create the module.
