@@ -18,12 +18,7 @@ include_directories(include)
 include_directories(src)
 
 # Provide additional libraries' path.
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/modules/")
-
-# Disable warnings from includes.
-add_library(llvm INTERFACE)
-target_sources(llvm INTERFACE)
-target_include_directories(llvm PRIVATE include/ SYSTEM INTERFACE include/)
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/modules/")
 
 # Specify executable(s).
-add_executable(${PROJECT_NAME} ${SOURCE_DIR})
+add_executable(${PROJECT_NAME} src/Ion.IR.cpp)

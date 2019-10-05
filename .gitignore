@@ -9,3 +9,6 @@ cmake-build-debug/
 build/
 CMakeCache.txt
 CMakeFiles/
+*.cmake
+*.vcxproj*
+*.sln
