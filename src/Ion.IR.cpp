@@ -6,21 +6,23 @@
 #include "syntax/stream.hpp"
 #include "parsing/driver.hpp"
 
+using namespace llvm;
+
 void processStream(Stream<Token> stream)
 {
 	llvm::LLVMContext context = llvm::LLVMContext();
 
-	// // TODO
-	// // Create the module.
-	// llvm::Module *module = new llvm::Module("entry", context);
+	// TODO
+	// Create the module.
+	llvm::Module *module = new llvm::Module("entry", context);
 
-	// // Create the driver.
-	// Driver *driver = new Driver(module, stream);
+	// Create the driver.
+	Driver *driver = new Driver(module, stream);
 
-	// // Invoke the driver.
-	// driver->invoke();
+	// Invoke the driver.
+	driver->invoke();
 
-	// TODO: Display result(s).
+	//TODO: Display result(s).
 }
 
 int main()

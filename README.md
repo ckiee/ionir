@@ -3,13 +3,13 @@
 Prepare the project, initialize and update required Git submodules:
 
 ```shell
-$ make prepare
+$ git submodule update --init --recursive
 ```
 
-Then, you'd want to invoke the Makefile to automatically build and compile the project:
+Then, you'd want to invoke CMake to automatically build and compile the project:
 
 ```shell
-$ make
+$ cmake --build .
 ```
 
 #### Usage
@@ -17,12 +17,10 @@ $ make
 A general usage example is provided below.
 
 ```cpp
-#include "Generation/Driver.hpp"
-#include "Syntax/Lexer.hpp"
-#include "Syntax/Stream.hpp"
-#include "Syntax/Token.hpp"
-
-using namespace std;
+#include "ion_ir/generation/driver.hpp"
+#include "ion_ir/syntax/lexer.hpp"
+#include "ion_ir/syntax/stream.hpp"
+#include "ion_ir/syntax/token.hpp"
 
 int main() {
     // Create a lexer to tokenize input.
