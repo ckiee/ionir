@@ -27,7 +27,7 @@ void processStream(Stream<Token> stream)
 
 int main()
 {
-	std::cout << "Type ^ then ENTER to terminate, & to invoke driver." << std::endl;
+	std::cout << "Instructions: Type '^<ENTER>' to terminate and '&' to invoke driver." << std::endl;
 
 	// Create a string to serve as iteration input buffer.
 	std::string input;
