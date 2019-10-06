@@ -64,7 +64,9 @@ int main() {
 > cmake --build . --config Release --target INSTALL
 ```
 
-3. Use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
+#### Building project
+
+* Use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
 
 #### Style Guide
 
