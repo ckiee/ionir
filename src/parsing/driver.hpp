@@ -33,7 +33,10 @@ public:
 		if (token.getType() == TokenType::Identifier)
 		{
 			// TODO
+			std::cout << "Identifier token detected" << std::endl;
 		}
+
+		std::cout << "Token type:" << token.getType() << std::endl;
 
 		return false;
 	}

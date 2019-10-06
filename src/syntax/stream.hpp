@@ -45,12 +45,12 @@ public:
         this->index = 0;
     }
 
-	bool hasNext()
-	{
-		// TODO: Implement.
-
-		return false;
-	}
+    bool hasNext()
+    {
+        // TODO: Causing infinite loop.
+        // TODO: Ensure this actually works out for the last item.
+        return this->index <= this->size;
+    }
 
     T next()
     {

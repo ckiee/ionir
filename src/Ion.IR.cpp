@@ -23,11 +23,12 @@ void processStream(Stream<Token> stream)
 	driver->invoke();
 
 	//TODO: Display result(s).
+	std::cout << "Driver has been invoked." << std::endl;
 }
 
 int main()
 {
-	std::cout << "Instructions: Type '^<ENTER>' to terminate and '&' to invoke driver." << std::endl;
+	std::cout << "Instructions: Type '^<ENTER>' to terminate and '&<ENTER>' to invoke driver." << std::endl;
 
 	// Create a string to serve as iteration input buffer.
 	std::string input;
