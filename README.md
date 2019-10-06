@@ -52,14 +52,40 @@ int main() {
 
 #### Building LLVM
 
-1. Download and extract sources.
+0. Ensure you have _all_ the requirements (excluding LLVM) installed, as the build process for LLVM will require Python, CMake and others.
 
-2. Build sources using a Windows command prompt with administrator privileges.
+1. Download and extract sources ([Visit LLVM's downloads page](http://releases.llvm.org/download.html)).
+
+2. Build sources using a Windows command prompt with administrator privileges by issuing the following commands:
 
 ```
 > cd <sources directory>
 > cmake .
 > cmake --build . --config Release --target INSTALL
+```
+
+3. LLVM sources, which are exclusively compatibly with CMake, shold now be available to be included in your `CMakeLists.txt` file. See example below:
+
+```cmake
+...
+find_package(LLVM REQUIRED CONFIG)
+
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+
+include_directories(${LLVM_INCLUDE_DIRS})
+add_definitions(${LLVM_DEFINITIONS})
+
+# Specify executable(s).
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Find the libraries that correspond to the LLVM components
+# that we wish to use
+llvm_map_components_to_libnames(llvm_libs support core irreader)
+
+# Link against LLVM libraries.
+target_link_libraries(${PROJECT_NAME} ${llvm_libs})
+...
 ```
 
 #### Building project
