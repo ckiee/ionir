@@ -57,11 +57,14 @@ int main() {
 1. Download and extract sources.
 
 2. Build sources using a Windows command prompt with administrator privileges.
+
 ```
 > cd <sources directory>
 > cmake .
 > cmake --build . --config Release --target INSTALL
 ```
+
+3. Use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
 
 #### Style Guide
 
