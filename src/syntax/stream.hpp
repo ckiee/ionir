@@ -15,6 +15,17 @@ protected:
 
     int size;
 
+	int nextIndex() {
+		// Resolve the next index safely.
+		int index = this->resolveIndex(this->index + 1);
+
+		// Set the index.
+		this->index = index;
+
+		// Return the current index.
+		return this->index;
+	}
+
     int resolveIndex(int index)
     {
         // Index cannot be negative.
@@ -59,8 +70,8 @@ public:
 
     T next()
     {
-        // Resolve the next index to ensure its bounds.
-        int nextIndex = this->resolveIndex(this->index + 1);
+        // Resolve the next index safely.
+		int nextIndex = this->nextIndex();
 
         // Retrieve and return the item.
         return this->items[nextIndex];
