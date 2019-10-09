@@ -25,6 +25,10 @@ public:
 		}
 	}
 
+	/**
+	 * Processed the current Stream item and increments the
+	 * Stream's index if applicable.
+	 */
 	bool next()
 	{
 		Token token = this->stream.get();
@@ -37,6 +41,8 @@ public:
 		}
 
 		std::cout << "Token type:" << token.getType() << std::endl;
+
+		this->stream.next();
 
 		return false;
 	}

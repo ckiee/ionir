@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <map>
-#include "Syntax/TokenType.hpp"
-#include "TypeSystem/PrimitiveType.hpp"
+#include "syntax/token_type.hpp"
+#include "type_system/primitive_type.hpp"
 
 class Identifier
 {

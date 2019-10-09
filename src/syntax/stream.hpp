@@ -6,13 +6,16 @@ template <typename T>
 class Stream
 {
 protected:
+    /**
+     * Signifies the current item position of the stream.
+     */
     int index;
 
     std::vector<T> items;
 
     int size;
 
-    int resolvePosition(int index)
+    int resolveIndex(int index)
     {
         // Index cannot be negative.
         if (index < 0)
@@ -47,9 +50,11 @@ public:
 
     bool hasNext()
     {
+        std::cout << "Index:" << this->index << "Size" << this->size;
+
         // TODO: Causing infinite loop.
         // TODO: Ensure this actually works out for the last item.
-        return this->index <= this->size;
+        return this->index <= this->size - 1;
     }
 
     T next()
