@@ -19,7 +19,7 @@ void processStream(Stream<Token> stream)
 	// Create the driver.
 	Driver *driver = new Driver(module, stream);
 
-	// Invoke the driver.
+	// Consume the driver, processing all the Stream's tokens.
 	driver->consume();
 
 	//TODO: Display result(s).
