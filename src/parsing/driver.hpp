@@ -17,10 +17,15 @@ public:
 		//
 	}
 
-	void invoke()
+	void consume()
 	{
 		while (this->stream.hasNext())
 		{
+			this->next();
+		}
+
+		// Process the last item.
+		if (this->stream.getSize()) {
 			this->next();
 		}
 	}

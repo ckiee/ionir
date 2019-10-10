@@ -20,7 +20,7 @@ void processStream(Stream<Token> stream)
 	Driver *driver = new Driver(module, stream);
 
 	// Invoke the driver.
-	driver->invoke();
+	driver->consume();
 
 	//TODO: Display result(s).
 	std::cout << "Driver has been invoked." << std::endl;

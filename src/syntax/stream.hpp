@@ -34,7 +34,7 @@ protected:
             throw "Index cannot be negative";
         }
         // Provided index is within bounds.
-        else if (this->size > index || this->size == index)
+        else if (this->size - 1 > index)
         {
             return index;
         }
@@ -59,13 +59,13 @@ public:
         this->index = 0;
     }
 
+	/**
+	 * Whether the current index points to the last item
+	 * on the Stream. A Stream always contains at least one item.
+	 */
     bool hasNext()
     {
-        std::cout << "Index:" << this->index << "Size" << this->size;
-
-        // TODO: Causing infinite loop.
-        // TODO: Ensure this actually works out for the last item.
-        return this->index <= this->size - 1;
+        return this->index < this->size - 1;
     }
 
     T next()
@@ -82,4 +82,8 @@ public:
         // Return the item at the current index.
         return this->items[this->index];
     }
+
+	int getSize() {
+		return this->size;
+	}
 };
