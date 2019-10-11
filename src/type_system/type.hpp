@@ -14,16 +14,4 @@ public:
 		this->value = value;
 		this->id = id;
 	}
-
-	T getValue() {
-		return this->value;
-	}
-
-	int getId() {
-		return this->id;
-	}
-
-	bool isPrimitive() {
-		return this->id < PrimitiveTypeKind::LastEnumValue;
-	}
 };
