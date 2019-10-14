@@ -12,7 +12,7 @@ class TokenConstants
 private:
 	std::map<char, TokenType> symbols;
 
-	std::map<std::string, TokenType> insts;
+	std::map<std::string, TokenType> simple;
 
 	std::vector<std::pair<std::regex, TokenType>> complex;
 
@@ -38,11 +38,12 @@ public:
 		this->symbols['='] = TokenType::SymbolEqual;
 		this->symbols['%'] = TokenType::SymbolPercent;
 
-		// Initialize instruction map.
-		this->insts["create"] = TokenType::InstCreate;
-		this->insts["call"] = TokenType::InstCall;
-		this->insts["set"] = TokenType::InstSet;
-		this->insts["end"] = TokenType::InstEnd;
+		// Initialize simple map.
+		this->simple["create"] = TokenType::InstCreate;
+		this->simple["call"] = TokenType::InstCall;
+		this->simple["set"] = TokenType::InstSet;
+		this->simple["end"] = TokenType::InstEnd;
+		this->simple["func"] = TokenType::KeywordFunction;
 
 		// Initialize complex map.
 		this->pushComplex(Regex::identifier, TokenType::Identifier);
@@ -60,7 +61,7 @@ public:
 
 	std::map<std::string, TokenType> getInsts()
 	{
-		return this->insts;
+		return this->simple;
 	}
 
 	std::vector<std::pair<std::regex, TokenType>> getComplex()

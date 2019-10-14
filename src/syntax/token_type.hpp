@@ -48,7 +48,9 @@ enum class TokenType
 
 	InstSet,
 
-	InstEnd
+	InstEnd,
+
+	KeywordFunction
 };
 
 std::ostream &operator<<(std::ostream &stream, const TokenType &tokenType) {
