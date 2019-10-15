@@ -55,8 +55,7 @@ int main()
 			continue;
 		}
 
-		std::cout << "input >> " << input << std::endl;
-		std::cout << "output >> " << std::endl;
+		std::cout << "[!] input >> " << input << std::endl;
 
 		// Create a new lexer.
 		Lexer *lexer = new Lexer(input);

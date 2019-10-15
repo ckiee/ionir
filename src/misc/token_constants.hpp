@@ -10,8 +10,6 @@
 class TokenConstants
 {
 private:
-	std::map<char, TokenType> symbols;
-
 	std::map<std::string, TokenType> simple;
 
 	std::vector<std::pair<std::regex, TokenType>> complex;
@@ -24,25 +22,27 @@ private:
 public:
 	TokenConstants()
 	{
-		// Initialize symbols map.
-		this->symbols['@'] = TokenType::SymbolAt;
-		this->symbols[':'] = TokenType::SymbolColon;
-		this->symbols['$'] = TokenType::SymbolDollar;
-		this->symbols['#'] = TokenType::SymbolHash;
-		this->symbols['('] = TokenType::SymbolParenthesesL;
-		this->symbols[')'] = TokenType::SymbolParenthesesR;
-		this->symbols['['] = TokenType::SymbolBracketL;
-		this->symbols[']'] = TokenType::SymbolBracketR;
-		this->symbols[','] = TokenType::SymbolComma;
-		this->symbols['~'] = TokenType::SymbolTilde;
-		this->symbols['='] = TokenType::SymbolEqual;
-		this->symbols['%'] = TokenType::SymbolPercent;
+		// Register symbols.
+		this->simple["@"] = TokenType::SymbolAt;
+		this->simple[":"] = TokenType::SymbolColon;
+		this->simple["$"] = TokenType::SymbolDollar;
+		this->simple["#"] = TokenType::SymbolHash;
+		this->simple["("] = TokenType::SymbolParenthesesL;
+		this->simple[")"] = TokenType::SymbolParenthesesR;
+		this->simple["["] = TokenType::SymbolBracketL;
+		this->simple["]"] = TokenType::SymbolBracketR;
+		this->simple[","] = TokenType::SymbolComma;
+		this->simple["~"] = TokenType::SymbolTilde;
+		this->simple["="] = TokenType::SymbolEqual;
+		this->simple["%"] = TokenType::SymbolPercent;
 
-		// Initialize simple map.
+		// Register instructions.
 		this->simple["create"] = TokenType::InstCreate;
 		this->simple["call"] = TokenType::InstCall;
 		this->simple["set"] = TokenType::InstSet;
 		this->simple["end"] = TokenType::InstEnd;
+
+		// Register keywords.
 		this->simple["func"] = TokenType::KeywordFunction;
 
 		// Initialize complex map.
@@ -54,17 +54,12 @@ public:
 		this->pushComplex(Regex::whitespace, TokenType::Whitespace);
 	}
 
-	std::map<char, TokenType> getSymbols()
-	{
-		return this->symbols;
-	}
-
-	std::map<std::string, TokenType> getInsts()
+	std::map<std::string, TokenType> getSimpleIdentifiers()
 	{
 		return this->simple;
 	}
 
-	std::vector<std::pair<std::regex, TokenType>> getComplex()
+	std::vector<std::pair<std::regex, TokenType>> getComplexIdentifiers()
 	{
 		return this->complex;
 	}
