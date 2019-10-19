@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "../../src/syntax/stream.hpp"
-#include "../../src/syntax/token_type.hpp"
+#include "../src/syntax/stream.hpp"
+#include "../src/syntax/token_type.hpp"
 
 Token createTestToken(int id) {
 	Token token = Token(TokenType::Unknown, std::string("test_" + std::to_string(id)), id);
