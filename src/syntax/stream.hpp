@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "token.hpp"
 
 template <typename T>
 class Stream
@@ -87,3 +88,5 @@ public:
 		return this->size;
 	}
 };
+
+typedef Stream<Token> TokenStream;

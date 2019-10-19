@@ -7,12 +7,12 @@
 class Driver
 {
 private:
-	Stream<Token> stream;
+	TokenStream stream;
 
 	llvm::Module *module;
 
 public:
-	Driver(llvm::Module *module, Stream<Token> stream) : module(module), stream(stream)
+	Driver(llvm::Module *module, TokenStream stream) : module(module), stream(stream)
 	{
 		//
 	}

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "syntax/token_type.hpp"
+#include "token_type.hpp"
 
 class Token
 {
@@ -10,23 +10,24 @@ private:
 
 	std::string value;
 
-	uint32_t startPosition;
+	int startPosition;
 
 public:
-	Token(TokenType type, std::string value, uint32_t startPosition)
+	Token(TokenType type, std::string value, int startPosition)
 	{
 		this->type = type;
 		this->value = value;
+		this->startPosition = startPosition;
 	}
 
-	uint32_t getStartPosition()
+	int getStartPosition()
 	{
 		return this->startPosition;
 	}
 
-	uint32_t getEndPosition()
+	int getEndPosition()
 	{
-		return this->startPosition + (uint32_t)this->value.length();
+		return this->startPosition + this->value.length();
 	}
 
 	TokenType getType()
