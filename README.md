@@ -91,7 +91,8 @@ target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 #### Building project
 
 * In Visual Studio Code, use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
-* When using CMake, first configure the project using `cmake --config Debug` then build the executable using `cmake --build .`.
+* When using CMake, first configure the project using `cmake --config Debug .` then build the executable using `cmake --build .`.
+* Alternatively, configure the project using `cmake --config .` then build the executable with the default options using `cmake --build .`.
 
 #### Style Guide
 

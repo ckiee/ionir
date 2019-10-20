@@ -9,6 +9,13 @@ set(PROJECT_URL "https://github.com/ionlang/ir-c")
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
+option(USE_MD "Use MD instead of MTd" OFF)
+
+if (USE_MD)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
+    #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+endif(USE_MD)
+
 # Setup versions.
 set(CMAKE_CXX_STANDARD 17)
 set(VERSION_MAJOR "1")
@@ -47,3 +54,13 @@ llvm_map_components_to_libnames(llvm_libs support core irreader)
 
 # Link against LLVM libraries.
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})
+
+# Setup unit testing using Google Test (GTest).
+#enable_testing()
+#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+#add_executable(tests "test/main.cpp")
+
+# Link test executable against GTest.
+#target_link_libraries(tests gtest gtest_main)
+#add_test(tests tests)
