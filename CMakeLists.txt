@@ -2,6 +2,9 @@
 cmake_minimum_required(VERSION 3.13.1)
 project(ion_ir)
 
+# Specify standard(s).
+set(CMAKE_CXX_STANDARD 11)
+
 # General project information.
 set(PROJECT_URL "https://github.com/ionlang/ir-c")
 
@@ -56,11 +59,5 @@ llvm_map_components_to_libnames(llvm_libs support core irreader)
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 
 # Setup unit testing using Google Test (GTest).
-#enable_testing()
-#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-
-#add_executable(tests "test/main.cpp")
-
-# Link test executable against GTest.
-#target_link_libraries(tests gtest gtest_main)
-#add_test(tests tests)
+enable_testing()
+add_subdirectory(test)

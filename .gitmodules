@@ -4,3 +4,6 @@
 [submodule "include/llvm-c"]
 	path = include/llvm-c
 	url = https://github.com/ionlang/llvm-c.git
+[submodule "test/googletest"]
+	path = test/googletest
+	url = https://github.com/google/googletest
