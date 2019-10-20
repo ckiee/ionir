@@ -2,6 +2,9 @@
 cmake_minimum_required(VERSION 3.13.1)
 project(ion_ir)
 
+# General project information.
+set(PROJECT_URL "https://github.com/ionlang/ir-c")
+
 # Setup source and build directories.
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
