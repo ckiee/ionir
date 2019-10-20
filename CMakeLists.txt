@@ -12,7 +12,7 @@ set(PROJECT_URL "https://github.com/ionlang/ir-c")
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
-option(USE_MD "Use MD instead of MTd" OFF)
+option(USE_MD "Use MD instead of MTd" ON)
 
 if (USE_MD)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
@@ -58,7 +58,6 @@ llvm_map_components_to_libnames(llvm_libs support core irreader)
 # Link against LLVM libraries.
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 
-# Setup unit testing using Google Test (GTest).
-enable_testing()
+# Setup unit testing using Google Test (GTest). This binds the CMakeLists.txt on the test project(s).
 add_subdirectory(test/googletest)
 add_subdirectory(test)
