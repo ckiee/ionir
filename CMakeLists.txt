@@ -60,4 +60,5 @@ target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 
 # Setup unit testing using Google Test (GTest).
 enable_testing()
+add_subdirectory(test/googletest)
 add_subdirectory(test)

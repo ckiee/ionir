@@ -14,9 +14,9 @@ class Lexer
 private:
     std::string input;
 
-	int length;
+    size_t length;
 
-	int index;
+    size_t index;
 
     TokenConstants constants;
 
@@ -24,9 +24,9 @@ private:
 
     std::map<std::string, TokenType>::iterator simpleIterator;
 
-	std::vector<std::pair<std::regex, TokenType>> complexIdentifiers;
+    std::vector<std::pair<std::regex, TokenType>> complexIdentifiers;
 
-	std::vector<std::pair<std::regex, TokenType>>::iterator complexIterator;
+    std::vector<std::pair<std::regex, TokenType>>::iterator complexIterator;
 
 protected:
     char getChar()
@@ -39,12 +39,12 @@ protected:
         return std::string(1, this->getChar());
     }
 
-	int getIndex()
+    size_t getIndex()
     {
         return this->index;
     }
 
-	int getLength()
+    size_t getLength()
     {
         return this->length;
     }
@@ -54,14 +54,14 @@ protected:
         this->index = 0;
     }
 
-    int setIndex(int index)
+    size_t setIndex(size_t index)
     {
         // Index cannot be negative.
         if (index < 0)
         {
             index = 0;
         }
-		// Keep index within bounds.
+        // Keep index within bounds.
         else if (index > this->length - 1)
         {
             index = this->length - 1;
@@ -77,7 +77,7 @@ protected:
         return this->input;
     }
 
-    int skip(int amount = 1)
+    size_t skip(size_t amount = 1)
     {
         return this->setIndex(this->index + amount);
     }
@@ -90,12 +90,12 @@ protected:
 
         bool success = std::regex_search(input, match, regex);
 
-		std::cout << "Test input :: " << input << " (" << input.length() << ") :: " << success << std::endl;
+        std::cout << "Test input :: " << input << " (" << input.length() << ") :: " << success << std::endl;
 
         // If successful, return a new token with different value and type.
         if (success)
         {
-			// Extract the captured value from the match.
+            // Extract the captured value from the match.
             std::string value = match[0];
 
             // Modify the result.
@@ -114,8 +114,8 @@ protected:
 
     Token next()
     {
-		std::cout << "[!] next" << std::endl;
-		// Set the initial Token buffer as Unknown.
+        std::cout << "[!] next" << std::endl;
+        // Set the initial Token buffer as Unknown.
         Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
         char character = this->getChar();
 
@@ -132,7 +132,7 @@ protected:
 
         for (this->simpleIterator = simpleIdentifiers.begin(); this->simpleIterator != simpleIdentifiers.end(); this->simpleIterator++)
         {
-			// Test the first letter of the subject to continue.
+            // Test the first letter of the subject to continue.
             if (tokenValue[0] == this->simpleIterator->first[0])
             {
                 // Produce a regex to match the exact value of the simple identifier.
@@ -141,7 +141,7 @@ protected:
                 // If the match starts with a letter, modify the regex to force either whitespace or EOF at the end.
                 if (std::regex_match(tokenValue, Regex::identifier))
                 {
-					// Modify the plain regex to meet requirements at the end.
+                    // Modify the plain regex to meet requirements at the end.
                     regex = std::regex(this->simpleIterator->first + "(\\s|$)");
                 }
 
@@ -160,7 +160,7 @@ protected:
             }
         }
 
-		// Begin iteration through complex identifiers.
+        // Begin iteration through complex identifiers.
         for (this->complexIterator = this->complexIdentifiers.begin(); this->complexIterator != this->complexIdentifiers.end(); this->complexIterator++)
         {
             // If it matches, return the token (already modified by the matchExpression function).
@@ -177,20 +177,21 @@ protected:
         return token;
     }
 
-	void processIteration(std::vector<Token> tokens, Token token) {
-		std::cout << "Loop ; " << this->index << std::endl;
+    void processIteration(std::vector<Token> tokens, Token token)
+    {
+        std::cout << "Loop ; " << this->index << std::endl;
 
-		if (token.getType() == TokenType::Unknown)
-		{
-			// TODO: Issue warning instead of plain cout.
-			std::cout << "Warning: Unknown token encountered" << std::endl;
-		}
+        if (token.getType() == TokenType::Unknown)
+        {
+            // TODO: Issue warning instead of plain cout.
+            std::cout << "Warning: Unknown token encountered" << std::endl;
+        }
 
-		std::cout << "Got token :: ~~> " << token << std::endl;
+        std::cout << "Got token :: ~~> " << token << std::endl;
 
-		// Append the token to the result.
-		tokens.push_back(token);
-	}
+        // Append the token to the result.
+        tokens.push_back(token);
+    }
 
 public:
     Lexer(std::string input) : constants()
@@ -203,11 +204,11 @@ public:
             throw "Input must be a string with one or more character(s)";
         }
 
-		// Initialize local simple & complex identifiers map.
+        // Initialize local simple & complex identifiers map.
         this->simpleIdentifiers = this->constants.getSimpleIdentifiers();
-		this->complexIdentifiers = this->constants.getComplexIdentifiers();
+        this->complexIdentifiers = this->constants.getComplexIdentifiers();
 
-		// Reset the index, setting its initial value.
+        // Reset the index, setting its initial value.
         this->resetIndex();
     }
 
@@ -219,18 +220,18 @@ public:
         // TODO: Should be a list, then converted to a vector.
         std::vector<Token> tokens = {};
 
-		Token initialToken = Token(TokenType::Unknown, "", this->index);
+        Token initialToken = Token(TokenType::Unknown, "", this->index);
 
         // Iterate through all possible tokens.
         for (Token token = this->next(); this->index < this->length - 1; token = this->next())
         {
-			this->processIteration(tokens, token);
+            this->processIteration(tokens, token);
         }
 
-		// Iterate over the last token.
-		Token lastToken = this->next();
+        // Iterate over the last token.
+        Token lastToken = this->next();
 
-		this->processIteration(tokens, lastToken);
+        this->processIteration(tokens, lastToken);
 
         return tokens;
     }

@@ -10,24 +10,25 @@ protected:
     /**
      * Signifies the current item position of the stream.
      */
-    int index;
+    size_t index;
 
     std::vector<T> items;
 
-    int size;
+    size_t size;
 
-	int nextIndex() {
-		// Resolve the next index safely.
-		int index = this->resolveIndex(this->index + 1);
+    size_t nextIndex()
+    {
+        // Resolve the next index safely.
+        size_t index = this->resolveIndex(this->index + 1);
 
-		// Set the index.
-		this->index = index;
+        // Set the index.
+        this->index = index;
 
-		// Return the current index.
-		return this->index;
-	}
+        // Return the current index.
+        return this->index;
+    }
 
-    int resolveIndex(int index)
+    size_t resolveIndex(size_t index)
     {
         // Index cannot be negative.
         if (index < 0)
@@ -60,7 +61,7 @@ public:
         this->index = 0;
     }
 
-	/**
+    /**
 	 * Whether the current index points to the last item
 	 * on the Stream. A Stream always contains at least one item.
 	 */
@@ -72,7 +73,7 @@ public:
     T next()
     {
         // Resolve the next index safely.
-		int nextIndex = this->nextIndex();
+        size_t nextIndex = this->nextIndex();
 
         // Retrieve and return the item.
         return this->items[nextIndex];
@@ -84,9 +85,10 @@ public:
         return this->items[this->index];
     }
 
-	int getSize() {
-		return this->size;
-	}
+    size_t getSize()
+    {
+        return this->size;
+    }
 };
 
 typedef Stream<Token> TokenStream;

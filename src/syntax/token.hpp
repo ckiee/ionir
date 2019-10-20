@@ -10,22 +10,22 @@ private:
 
 	std::string value;
 
-	int startPosition;
+	size_t startPosition;
 
 public:
-	Token(TokenType type, std::string value, int startPosition)
+	Token(TokenType type, std::string value, size_t startPosition)
 	{
 		this->type = type;
 		this->value = value;
 		this->startPosition = startPosition;
 	}
 
-	int getStartPosition()
+	size_t getStartPosition()
 	{
 		return this->startPosition;
 	}
 
-	int getEndPosition()
+	size_t getEndPosition()
 	{
 		return this->startPosition + this->value.length();
 	}
