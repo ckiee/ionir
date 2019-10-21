@@ -95,13 +95,17 @@
     "cmake.configureOnOpen": true,
     "C_Cpp.configurationWarnings": "Disabled",
     "cpp.buildConfigurations": [
-        {
-            "name": "",
-            "directory": ""
-        },
-        {
-            "name": "",
-            "directory": ""
-        }
-    ]
+      {
+         "name": "",
+         "directory": ""
+      },
+      {
+         "name": "",
+         "directory": ""
+      },
+      {
+         "name": "",
+         "directory": ""
+      }
+   ]
 }
