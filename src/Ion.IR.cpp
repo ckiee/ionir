@@ -8,7 +8,7 @@
 
 using namespace llvm;
 
-void processStream(Stream<Token> stream)
+void processStream(TokenStream stream)
 {
 	llvm::LLVMContext context = llvm::LLVMContext();
 
@@ -47,7 +47,7 @@ int main()
 		else if (input == "&")
 		{
 			// Delegate to process tokens.
-			processStream(Stream<Token>(tokens));
+			processStream(TokenStream(tokens));
 
 			// Flush tokens.
 			tokens.clear();
