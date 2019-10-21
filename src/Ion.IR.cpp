@@ -6,8 +6,6 @@
 #include "syntax/stream.hpp"
 #include "parsing/driver.hpp"
 
-using namespace llvm;
-
 void processStream(TokenStream stream)
 {
 	llvm::LLVMContext context = llvm::LLVMContext();
