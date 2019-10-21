@@ -59,5 +59,5 @@ llvm_map_components_to_libnames(llvm_libs support core irreader)
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 
 # Setup unit testing using Google Test (GTest). This binds the CMakeLists.txt on the test project(s).
-add_subdirectory(test/googletest)
+add_subdirectory(libs/googletest)
 add_subdirectory(test)
