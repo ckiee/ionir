@@ -8,13 +8,25 @@ jobs:
       - checkout
 
       - run:
+          name: Update packages
+          command: "apt-get update"
+
+      - run:
+          name: Install GCC
+          command: "sudo apt-get install -y gcc g++"
+
+      - run:
+          name: Install CMake
+          command: "sudo apt-get install -y cmake"
+
+      - run:
           name: Configure project
-          command: cmake --config Debug .
+          command: "cmake --config Debug ."
 
       - run:
           name: Build project
-          command: cmake --build .
+          command: "cmake --build ."
 
       - run:
           name: Run tests
-          command: ./test/Debug/IonIrTests
+          command: "./test/Debug/IonIrTests"
