@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+
+    steps:
+      - checkout
+
+      - run:
+          name: Configure project
+          command: cmake --config Debug .
+
+      - run:
+          name: Build project
+          command: cmake --build .
+
+      - run:
+          name: Run tests
+          command: ./test/Debug/IonIrTests
