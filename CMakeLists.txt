@@ -28,8 +28,8 @@ set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
 set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 
-# Configure and use LLVM.
-find_package(LLVM REQUIRED CONFIG)
+# Configure and use LLVM. Also ensures LLVM 8.0.0 is installed.
+find_package(LLVM 8.0 EXACT REQUIRED CONFIG)
 
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
