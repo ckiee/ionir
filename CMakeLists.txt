@@ -28,10 +28,6 @@ set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
 set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 
-# Provide include directories to be used in the build command.
-#target_include_directories(${PROJECT_NAME} PRIVATE "src")
-include_directories("src")
-
 # Configure and use LLVM.
 find_package(LLVM REQUIRED CONFIG)
 
@@ -54,6 +50,10 @@ set(SOURCES
 
 # Specify that this project is a library.
 add_library(${PROJECT_NAME} ${SOURCES})
+
+# Provide include directories to be used in the build command. Position in file matters.
+#target_include_directories(${PROJECT_NAME} PRIVATE "src")
+include_directories("src")
 
 # Find the libraries that correspond to the LLVM components
 # that we wish to use
