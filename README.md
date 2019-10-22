@@ -94,6 +94,10 @@ target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 * When using CMake, first configure the project using `cmake --config Debug .` then build the executable using `cmake --build .`.
 * Alternatively, configure the project using `cmake --config .` then build the executable with the default options using `cmake --build .`.
 
+#### Running tests
+
+Use the `ctest` command bundled with CMake to run tests.
+
 #### Style Guide
 
 This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).

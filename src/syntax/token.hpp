@@ -43,8 +43,5 @@ public:
 	}
 };
 
-std::ostream &operator<<(std::ostream &stream, Token &token)
-{
-	return stream << "Token(" << token.getValue() << ", " << token.getType() << ")";
-}
+std::ostream &operator<<(std::ostream &stream, Token &token);
 } // namespace ionir
