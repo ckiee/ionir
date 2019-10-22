@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
-#include "../syntax/token.hpp"
+#include "../syntax/token.h"
 #include "../misc/token_constants.hpp"
 #include "../misc/util.hpp"
 #include "../misc/regex.hpp"

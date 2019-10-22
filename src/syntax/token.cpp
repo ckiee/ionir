@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "token.hpp"
+#include "token.h"
 
 namespace ionir
 {

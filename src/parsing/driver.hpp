@@ -1,7 +1,7 @@
 #pragma once
 
 #include "llvm/IR/Module.h"
-#include "syntax/token.hpp"
+#include "syntax/token.h"
 #include "syntax/stream.hpp"
 
 namespace ionir

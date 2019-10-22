@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <map>
-#include "syntax/token_type.hpp"
+#include "syntax/token_type.h"
 #include "type_system/primitive_type.hpp"
 
 namespace ionir

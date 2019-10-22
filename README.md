@@ -20,7 +20,7 @@ A general usage example is provided below.
 #include "ion_ir/generation/driver.hpp"
 #include "ion_ir/syntax/lexer.hpp"
 #include "ion_ir/syntax/stream.hpp"
-#include "ion_ir/syntax/token.hpp"
+#include "ion_ir/syntax/token.h"
 
 int main() {
     // Create a lexer to tokenize input.

@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include <regex>
-#include "../syntax/token_type.hpp"
+#include "../syntax/token_type.h"
 #include "../misc/regex.hpp"
 
 namespace ionir

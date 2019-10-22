@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "token.hpp"
+#include "token.h"
 
 namespace ionir
 {
@@ -93,5 +93,8 @@ public:
     }
 };
 
+/**
+ * A Stream containing Tokens as items.
+ */
 typedef Stream<Token> TokenStream;
 } // namespace ionir
