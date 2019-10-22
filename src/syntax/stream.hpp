@@ -81,12 +81,28 @@ public:
         return this->items[nextIndex];
     }
 
+    /**
+     * Retrieve the current item on the Stream by
+     * the current index.
+     */
     T get()
     {
         // Return the item at the current index.
         return this->items[this->index];
     }
 
+    /**
+     * Retrieve the index of the Stream. Indicates the location
+     * of the current item.
+     */
+    size_t getIndex()
+    {
+        return this->index;
+    }
+
+    /**
+     * The amount of items in the Stream.
+     */
     size_t getSize()
     {
         return this->size;
