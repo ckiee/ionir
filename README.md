@@ -98,6 +98,8 @@ target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 
 Use the `ctest` command bundled with CMake to run tests.
 
+Alternatively, build project & tests and run the tests executable generated.
+
 #### Style Guide
 
 This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
