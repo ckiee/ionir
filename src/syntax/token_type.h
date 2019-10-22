@@ -55,5 +55,8 @@ enum class TokenType
 	KeywordFunction
 };
 
-std::ostream &operator<<(std::ostream &stream, const TokenType &tokenType);
+inline std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType)
+{
+	return stream << "TokenType(" << (int)tokenType << ")";
+}
 } // namespace ionir
