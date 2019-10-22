@@ -12,12 +12,14 @@ set(PROJECT_URL "https://github.com/ionlang/ir-c")
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
-option(USE_MD "Use MD instead of MTd" ON)
+option(USE_MD "Use MD instead of MTd" OFF)
 
 if (USE_MD)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
     #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 endif(USE_MD)
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 # Setup versions.
 set(CMAKE_CXX_STANDARD 17)
@@ -48,8 +50,8 @@ set(SOURCES
     src/Ion.IR.cpp
 )
 
-# Specify executable(s).
-add_executable(${PROJECT_NAME} ${SOURCES})
+# Specify that this project is a library.
+add_library(${PROJECT_NAME} ${SOURCES})
 
 # Find the libraries that correspond to the LLVM components
 # that we wish to use

@@ -1,10 +1,12 @@
 #pragma once
 
+namespace ionir
+{
 enum class ExprType
 {
-    Type,
+	Type,
 
-    Block,
+	Block,
 
 	Prototype,
 
@@ -12,3 +14,4 @@ enum class ExprType
 
 	Extern
 };
+}

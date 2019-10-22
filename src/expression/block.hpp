@@ -3,6 +3,8 @@
 #include "generation/expr.hpp"
 #include "generation/expr_type.hpp"
 
+namespace ionir
+{
 class Block : public Expr
 {
 private:
@@ -32,3 +34,4 @@ public:
         return this->identifier;
     }
 };
+} // namespace ionir

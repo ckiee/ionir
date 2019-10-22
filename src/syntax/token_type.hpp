@@ -1,7 +1,7 @@
 #pragma once
 
-#include <iostream>
-
+namespace ionir
+{
 enum class TokenType
 {
 	Unknown,
@@ -53,6 +53,5 @@ enum class TokenType
 	KeywordFunction
 };
 
-std::ostream &operator<<(std::ostream &stream, const TokenType &tokenType) {
-	return stream << "TokenType(" << (int)tokenType << ")";
-}
+std::ostream &operator<<(std::ostream &stream, const TokenType &tokenType);
+} // namespace ionir

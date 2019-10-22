@@ -2,13 +2,16 @@
 
 #include <map>
 
-template typename<TKey>
-template typename<TValue>
-class Map {
+namespace ionir
+{
+template typename<TKey> template typename<TValue> class Map
+{
 public:
 	std::map<TKey, TValue> innerMap;
 
-	bool contains(TKey key) {
+	bool contains(TKey key)
+	{
 		return this
 	}
 };
+} // namespace ionir

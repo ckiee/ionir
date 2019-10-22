@@ -12,6 +12,8 @@
 #include "generation/expr_type.hpp"
 #include "expression/prototype.hpp"
 
+namespace ionir
+{
 class LlvmVisitor
 {
 private:
@@ -242,3 +244,4 @@ public:
 		return *node;
 	}
 };
+}

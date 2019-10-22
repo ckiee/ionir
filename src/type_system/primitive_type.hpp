@@ -1,5 +1,7 @@
 #pragma once
 
+namespace ionir
+{
 enum class PrimitiveType
 {
     Void,
@@ -10,5 +12,6 @@ enum class PrimitiveType
 
     Character,
 
-	Boolean
+    Boolean
 };
+}

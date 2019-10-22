@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/libs",
-                "${workspaceFolder}/src"
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/libs/googletest/googletest/include"
             ],
             "defines": [],
             "macFrameworkPath": [

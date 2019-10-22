@@ -4,6 +4,8 @@
 #include "generation/visitable.hpp"
 #include "generation/llvm_visitor.hpp"
 
+namespace ionir
+{
 class Expr : public Visitable<Expr, LlvmVisitor>
 {
 private:
@@ -22,3 +24,4 @@ public:
         return this->type;
     }
 };
+} // namespace ionir

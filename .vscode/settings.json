@@ -90,7 +90,10 @@
       "xstring": "cpp",
       "xtr1common": "cpp",
       "xtree": "cpp",
-      "xutility": "cpp"
+      "xutility": "cpp",
+      "concepts": "cpp",
+      "fstream": "cpp",
+      "iomanip": "cpp"
    },
    "cmake.configureOnOpen": true,
    "C_Cpp.configurationWarnings": "Disabled",

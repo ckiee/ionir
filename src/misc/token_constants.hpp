@@ -7,6 +7,8 @@
 #include "../syntax/token_type.hpp"
 #include "../misc/regex.hpp"
 
+namespace ionir
+{
 class TokenConstants
 {
 private:
@@ -64,3 +66,4 @@ public:
 		return this->complex;
 	}
 };
+} // namespace ionir

@@ -4,6 +4,8 @@
 #include "generation/expr_type.hpp"
 #include "expression/prototype.hpp"
 
+namespace ionir
+{
 class Extern : public Expr
 {
 private:
@@ -20,3 +22,4 @@ public:
 		return this->prototype;
 	}
 };
+} // namespace ionir

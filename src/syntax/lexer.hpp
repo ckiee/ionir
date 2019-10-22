@@ -9,6 +9,8 @@
 #include "../misc/util.hpp"
 #include "../misc/regex.hpp"
 
+namespace ionir
+{
 class Lexer
 {
 private:
@@ -236,3 +238,4 @@ public:
         return tokens;
     }
 };
+} // namespace ionir

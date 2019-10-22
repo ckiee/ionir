@@ -3,6 +3,8 @@
 #include "generation/expr.hpp"
 #include "generation/expr_type.hpp"
 
+namespace ionir
+{
 class BinaryExpr : public Expr
 {
 private:
@@ -31,3 +33,4 @@ public:
         return this->rightSide;
     }
 };
+} // namespace ionir

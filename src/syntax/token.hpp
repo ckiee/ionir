@@ -3,6 +3,8 @@
 #include <string>
 #include "token_type.hpp"
 
+namespace ionir
+{
 class Token
 {
 private:
@@ -45,3 +47,4 @@ std::ostream &operator<<(std::ostream &stream, Token &token)
 {
 	return stream << "Token(" << token.getValue() << ", " << token.getType() << ")";
 }
+} // namespace ionir

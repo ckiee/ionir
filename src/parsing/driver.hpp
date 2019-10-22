@@ -4,6 +4,8 @@
 #include "syntax/token.hpp"
 #include "syntax/stream.hpp"
 
+namespace ionir
+{
 class Driver
 {
 private:
@@ -25,7 +27,8 @@ public:
 		}
 
 		// Process the last item.
-		if (this->stream.getSize()) {
+		if (this->stream.getSize())
+		{
 			this->next();
 		}
 	}
@@ -54,3 +57,4 @@ public:
 		return false;
 	}
 };
+} // namespace ionir

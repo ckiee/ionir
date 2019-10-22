@@ -2,6 +2,8 @@
 
 #include "generation/expr.hpp"
 
+namespace ionir
+{
 class Prototype : public Expr
 {
 private:
@@ -46,3 +48,4 @@ public:
 		return this->hasInfiniteArguments;
 	}
 };
+} // namespace ionir

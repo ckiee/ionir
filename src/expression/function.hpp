@@ -5,6 +5,8 @@
 #include "expression/prototype.hpp"
 #include "expression/block.hpp"
 
+namespace ionir
+{
 class Function : public Expr
 {
 private:
@@ -29,3 +31,4 @@ public:
 		return this->body;
 	}
 };
+} // namespace ionir

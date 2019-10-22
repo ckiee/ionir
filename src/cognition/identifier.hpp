@@ -5,6 +5,8 @@
 #include "syntax/token_type.hpp"
 #include "type_system/primitive_type.hpp"
 
+namespace ionir
+{
 class Identifier
 {
 private:
@@ -27,3 +29,4 @@ public:
         return false;
     }
 };
+} // namespace ionir

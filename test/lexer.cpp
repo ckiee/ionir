@@ -1,6 +1,11 @@
-#include "pch.h"
-#include "../src/syntax/token_type.hpp"
+#pragma once
 
-TEST(LexSymbols, LexerTest) {
+#include "pch.h"
+#include "syntax/token.hpp"
+
+using namespace ::testing;
+
+TEST(LexSymbols, LexerTest)
+{
 	EXPECT_TRUE(true);
 }

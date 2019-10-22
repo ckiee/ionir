@@ -3,6 +3,8 @@
 #include <vector>
 #include "token.hpp"
 
+namespace ionir
+{
 template <typename T>
 class Stream
 {
@@ -92,3 +94,4 @@ public:
 };
 
 typedef Stream<Token> TokenStream;
+} // namespace ionir

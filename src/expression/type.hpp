@@ -3,6 +3,8 @@
 #include "generation/expr.hpp"
 #include "generation/expr_type.hpp"
 
+namespace ionir
+{
 class Type : public Expr
 {
 private:
@@ -24,3 +26,4 @@ public:
         return this->isPointer;
     }
 };
+} // namespace ionir
