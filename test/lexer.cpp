@@ -1,5 +1,3 @@
-#pragma once
-
 #include "pch.h"
 #include "syntax/token.h"
 

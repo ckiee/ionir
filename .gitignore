@@ -17,3 +17,6 @@ ion_ir.dir
 packages/
 .gitpod.yml
 Testing/
+Makefile
+test/IonIrTests
+lib/
