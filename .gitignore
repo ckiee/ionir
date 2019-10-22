@@ -20,3 +20,4 @@ Testing/
 Makefile
 test/IonIrTests
 lib/
+libion_ir.a
