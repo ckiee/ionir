@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "token.h"
+#include "token_type.cpp"
 
 namespace ionir
 {

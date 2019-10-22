@@ -26,3 +26,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE "../src")
 
 # Add tests.
 #add_test(AllTestsInFoo ${PROJECT_NAME})
+
+#set(GTEST_ROOT "c:/path/to/gtest/root" CACHE PATH "path to gtest") (Helps find gtest through find_package)
