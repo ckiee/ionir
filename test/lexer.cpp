@@ -5,7 +5,7 @@
 
 using namespace ::testing;
 
-TEST(LexSymbols, LexerTest)
+TEST(LexerTest, LexSymbols)
 {
 	EXPECT_TRUE(true);
 }

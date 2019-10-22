@@ -37,6 +37,7 @@ find_package(LLVM REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
+# Include LLVM source directories (for syntax support, etc.).
 include_directories(${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
@@ -60,6 +61,10 @@ llvm_map_components_to_libnames(llvm_libs support core irreader)
 # Link against LLVM libraries.
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 
-# Setup unit testing using Google Test (GTest). This binds the CMakeLists.txt on the test project(s).
-add_subdirectory(libs/googletest)
-add_subdirectory(test)
+# Setup unit testing using Google Test (GTest) if applicable. This binds the CMakeLists.txt on the test project.
+option(PACKAGE_TESTS "Build tests" ON)
+
+if (PACKAGE_TESTS)
+    add_subdirectory(libs/googletest)
+    add_subdirectory(test)
+endif()
