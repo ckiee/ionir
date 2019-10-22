@@ -21,3 +21,5 @@ script:
   - cmake --config Debug .
   - cmake --build .
   - ./test/Debug/IonIrTests
+notifications:
+  email: false
