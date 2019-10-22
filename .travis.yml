@@ -20,7 +20,7 @@ install:
 script:
   - sudo apt-get --purge remove -y llvm
   - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 8
-  - cmake --config .
+  - cmake --config Debug .
   - cmake --build .
   - ./test/IonIrTests
 notifications:
