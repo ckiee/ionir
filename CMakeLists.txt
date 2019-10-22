@@ -29,7 +29,7 @@ set(VERSION_PATCH "0")
 set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 
 # Provide include directories to be used in the build command.
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR} include)
+target_include_directories(${PROJECT_NAME} PRIVATE "src")
 
 # Configure and use LLVM.
 find_package(LLVM REQUIRED CONFIG)
