@@ -47,8 +47,8 @@ int main() {
 
 * CMake >=v3.13.X
 * Python =v2.7
-* Visual Studio 2019 with C++ tools
-* LLVM >=v9.0.0 (must build from source, see section below)
+* Visual Studio 2019 with C++ tools (Windows)
+* LLVM >=v9.0.0 (must build from source on Windows, see section below)
 
 #### Building LLVM
 
