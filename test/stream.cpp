@@ -50,7 +50,7 @@ TEST(StreamTest, HandleNext)
 	size_t index = stream.getIndex();
 
 	// Compare tokens. They should be the same since it is the only item on the Stream.
-	//EXPECT_EQ(stream.next(), token);
+	EXPECT_EQ(stream.next(), token);
 
 	// Index should also be the same.
 	EXPECT_EQ(stream.getIndex(), index);

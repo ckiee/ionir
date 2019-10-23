@@ -41,6 +41,11 @@ public:
 	{
 		return this->value;
 	}
+
+	bool operator==(const Token &rhs) const
+	{
+		return true;
+	}
 };
 
 inline std::ostream &operator<<(std::ostream &stream, Token &token)
