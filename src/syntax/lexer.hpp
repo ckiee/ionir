@@ -74,11 +74,6 @@ protected:
         return this->index;
     }
 
-    std::string getInput()
-    {
-        return this->input;
-    }
-
     size_t skip(size_t amount = 1)
     {
         return this->setIndex(this->index + amount);
@@ -212,6 +207,11 @@ public:
 
         // Reset the index, setting its initial value.
         this->resetIndex();
+    }
+
+    std::string getInput()
+    {
+        return this->input;
     }
 
     std::vector<Token> tokenize()
