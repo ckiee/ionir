@@ -15,9 +15,6 @@ TEST(LexerTest, GetInput)
 
 TEST(LexerTest, TokenizeSymbols)
 {
-	// TODO: Lexing stuck in an infinite loop.
-	return;
-
 	// Create the Lexer instance with all the existing symbols.
 	ionir::Lexer lexer = ionir::Lexer("@:$#()[],~=%");
 

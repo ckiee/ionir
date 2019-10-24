@@ -41,11 +41,6 @@ protected:
         return std::string(1, this->getChar());
     }
 
-    size_t getIndex()
-    {
-        return this->index;
-    }
-
     size_t getLength()
     {
         return this->length;
@@ -87,7 +82,7 @@ protected:
 
         bool success = std::regex_search(input, match, regex);
 
-        std::cout << "Test input :: " << input << " (" << input.length() << ") :: " << success << std::endl;
+        std::cout << "@matchExpression: Test input :: ' " << input << " ' (len:" << input.length() << ") :: success:" << success << std::endl;
 
         // If successful, return a new token with different value and type.
         if (success)
@@ -97,6 +92,8 @@ protected:
 
             // Modify the result.
             *token = Token(type, value, token->getStartPosition());
+
+            std::cout << "Skipping len: " << value.length() << " (" << value << ")" << std::endl;
 
             // Skip the capture value's amount.
             this->skip(value.length());
@@ -109,9 +106,32 @@ protected:
         return false;
     }
 
+    void processIteration(std::vector<Token> tokens, Token token)
+    {
+        std::cout << "Loop ; " << this->index << std::endl;
+
+        if (token.getType() == TokenType::Unknown)
+        {
+            // TODO: Issue warning instead of plain cout.
+            std::cout << "Warning: Unknown token encountered" << std::endl;
+        }
+
+        std::cout << "Got token :: ~~> " << token << std::endl;
+
+        // Append the token to the result.
+        tokens.push_back(token);
+    }
+
+public:
+    size_t getIndex()
+    {
+        return this->index;
+    }
+
     Token next()
     {
         std::cout << "[!] next" << std::endl;
+
         // Set the initial Token buffer as Unknown.
         Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
         char character = this->getChar();
@@ -132,14 +152,17 @@ protected:
             // Test the first letter of the subject to continue.
             if (tokenValue[0] == this->simpleIterator->first[0])
             {
-                // Produce a regex to match the exact value of the simple identifier.
-                std::regex regex = std::regex(this->simpleIterator->first);
+                // Produce a Regex instance to match the exact value of the simple identifier. It is important that the initial value is escaped of any Regex special characters.
+                std::regex regex = Util::createPureRegex(this->simpleIterator->first);
+
+                std::cout << "Using initial regex: " << Util::escapeRegex(this->simpleIterator->first) << std::endl;
 
                 // If the match starts with a letter, modify the regex to force either whitespace or EOF at the end.
                 if (std::regex_match(tokenValue, Regex::identifier))
                 {
                     // Modify the plain regex to meet requirements at the end.
-                    regex = std::regex(this->simpleIterator->first + "(\\s|$)");
+                    regex = std::regex(this->simpleIterator->first + "(?:\\s|$)");
+                    std::cout << "---- REGEX HAS BEEN MODIFIED ---" << std::endl;
                 }
 
                 if (this->matchExpression(&token, this->simpleIterator->second, regex))
@@ -174,23 +197,6 @@ protected:
         return token;
     }
 
-    void processIteration(std::vector<Token> tokens, Token token)
-    {
-        std::cout << "Loop ; " << this->index << std::endl;
-
-        if (token.getType() == TokenType::Unknown)
-        {
-            // TODO: Issue warning instead of plain cout.
-            std::cout << "Warning: Unknown token encountered" << std::endl;
-        }
-
-        std::cout << "Got token :: ~~> " << token << std::endl;
-
-        // Append the token to the result.
-        tokens.push_back(token);
-    }
-
-public:
     Lexer(std::string input) : constants()
     {
         this->input = input;
@@ -227,6 +233,8 @@ public:
         // Iterate through all possible tokens.
         for (Token token = this->next(); this->index < this->length - 1; token = this->next())
         {
+            std::cout << "Loop ..."
+                      << "@" << this->index << " until >= " << this->length - 1 << std::endl;
             this->processIteration(tokens, token);
         }
 

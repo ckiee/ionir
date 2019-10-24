@@ -93,7 +93,12 @@
       "xutility": "cpp",
       "concepts": "cpp",
       "fstream": "cpp",
-      "iomanip": "cpp"
+      "iomanip": "cpp",
+      "__memory": "cpp",
+      "__functional_base_03": "cpp",
+      "*.tcc": "cpp",
+      "clocale": "cpp",
+      "memory_resource": "cpp"
    },
    "cmake.configureOnOpen": true,
    "C_Cpp.configurationWarnings": "Disabled",
