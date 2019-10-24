@@ -26,8 +26,6 @@ public:
 			// Determine if the character is denoted special.
 			if (Util::specialChars.find(character) != Util::specialChars.npos)
 			{
-				std::cout << "@ ESCAPE REGEX : "
-						  << "Encounteres special char: " << character << std::endl;
 				// If so, escape the character and append it to the result.
 				result += "\\" + std::string(1, character);
 
