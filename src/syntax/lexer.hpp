@@ -236,11 +236,8 @@ public:
         // Iterate through all possible tokens.
         for (Token token = this->next(); this->index < this->length - 1; token = this->next())
         {
-            std::cout << "Loop ..."
-                      << "@" << this->index << " until >= " << this->length - 1 << std::endl;
+            std::cout << "Loop ... @" << this->index << " until >= " << this->length - 1 << std::endl;
             this->processIteration(tokens, token);
-
-            break;
         }
 
         // Iterate over the last token.
