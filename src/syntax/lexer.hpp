@@ -122,6 +122,15 @@ protected:
         tokens.push_back(token);
     }
 
+    void processWhitespace()
+    {
+        // Ignore whitespace.
+        while (isspace(this->getChar()))
+        {
+            this->skip();
+        }
+    }
+
 public:
     size_t getIndex()
     {
@@ -136,14 +145,8 @@ public:
         Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
         char character = this->getChar();
 
-        // Ignore whitespace.
-        if (isspace(character))
-        {
-            while (isspace(this->getChar()))
-            {
-                this->skip();
-            }
-        }
+        // Ignore whitespace if applicable.
+        this->processWhitespace();
 
         std::string tokenValue = token.getValue();
 
@@ -236,6 +239,8 @@ public:
             std::cout << "Loop ..."
                       << "@" << this->index << " until >= " << this->length - 1 << std::endl;
             this->processIteration(tokens, token);
+
+            break;
         }
 
         // Iterate over the last token.

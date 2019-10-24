@@ -9,7 +9,7 @@ namespace ionir
 class Util
 {
 private:
-	static constexpr std::string_view specialCharacters{"{}&^.?\\[]()*+|<>-&"};
+	static constexpr std::string_view specialChars{"{}&^.?\\[]()*+|<>-&"};
 
 public:
 	static bool stringStartsWith(std::string subject, std::string test)
@@ -24,7 +24,7 @@ public:
 		for (auto character : subject)
 		{
 			// Determine if the character is denoted special.
-			if (Util::specialCharacters.find(character) != specialCharacters.npos)
+			if (Util::specialChars.find(character) != Util::specialChars.npos)
 			{
 				// If so, escape the character and append it to the result.
 				result += '\\' + character;
