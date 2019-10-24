@@ -15,6 +15,11 @@ private:
 	size_t startPosition;
 
 public:
+	static Token createDummy(size_t startPosition)
+	{
+		return Token(TokenType::Unknown, "", startPosition);
+	}
+
 	Token(TokenType type, std::string value, size_t startPosition)
 	{
 		this->type = type;
@@ -40,6 +45,11 @@ public:
 	std::string getValue()
 	{
 		return this->value;
+	}
+
+	bool isDummy()
+	{
+		return this->value == "" && this->type == TokenType::Unknown;
 	}
 
 	bool operator==(const Token &rhs) const

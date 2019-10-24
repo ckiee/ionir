@@ -106,7 +106,7 @@ protected:
         return false;
     }
 
-    void processIteration(std::vector<Token> tokens, Token token)
+    void processIteration(std::vector<Token> &tokens, Token token)
     {
         std::cout << "Loop ; " << this->index << std::endl;
 
@@ -231,12 +231,11 @@ public:
         // TODO: Should be a list, then converted to a vector.
         std::vector<Token> tokens = {};
 
-        Token initialToken = Token(TokenType::Unknown, "", this->index);
+        Token initialToken = Token::createDummy(this->index);
 
         // Iterate through all possible tokens.
         for (Token token = this->next(); this->index < this->length - 1; token = this->next())
         {
-            std::cout << "Loop ... @" << this->index << " until >= " << this->length - 1 << std::endl;
             this->processIteration(tokens, token);
         }
 
