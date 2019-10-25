@@ -19,7 +19,7 @@ public:
 
     virtual Expr accept(LlvmVisitor *visitor);
 
-    ExprType getExprType()
+    ExprType getExprType() const
     {
         return this->type;
     }

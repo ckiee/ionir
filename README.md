@@ -61,7 +61,7 @@ Please refer to [this link](http://apt.llvm.org/) for instructions on installing
 
 1. Download and extract sources ([Visit LLVM's downloads page](http://releases.llvm.org/download.html)).
 
-2. Build sources using a Windows command prompt with administrator privileges by issuing the following commands:
+2. Build sources using a Windows command prompt with **administrator privileges** by issuing the following commands:
 
 ```
 > cd <sources directory>
@@ -69,7 +69,7 @@ Please refer to [this link](http://apt.llvm.org/) for instructions on installing
 > cmake --build . --config Release --target INSTALL
 ```
 
-3. LLVM sources, which are exclusively compatibly with CMake, shold now be available to be included in your `CMakeLists.txt` file. See example below:
+3. LLVM sources, which are exclusively compatible with CMake, shold now be ready to be included in your `CMakeLists.txt` file. See example below:
 
 ```cmake
 ...
@@ -126,7 +126,7 @@ Alternatively, build project & tests and run the tests executable generated.
 
 If intelli-sense is failing in Visual Studio Code, there may be a few reasons behind it:
 
-* Try re-installing plugin.
+* Try re-installing plugin (usually fixes the problem).
 * Compile project and its dependencies in your platform (ex. avoid using WSL on Windows).
 * Ensure dependencies are properly installed and have correct versions.
 

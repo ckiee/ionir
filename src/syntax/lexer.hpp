@@ -31,17 +31,17 @@ private:
     std::vector<std::pair<std::regex, TokenType>>::iterator complexIterator;
 
 protected:
-    char getChar()
+    char getChar() const
     {
         return this->input[this->index];
     }
 
-    std::string getCharAsString()
+    std::string getCharAsString() const
     {
         return std::string(1, this->getChar());
     }
 
-    size_t getLength()
+    size_t getLength() const
     {
         return this->length;
     }
@@ -82,8 +82,6 @@ protected:
 
         bool success = std::regex_search(input, match, regex);
 
-        std::cout << "@matchExpression: Test input :: ' " << input << " ' (len:" << input.length() << ") :: success:" << success << std::endl;
-
         // If successful, return a new token with different value and type.
         if (success)
         {
@@ -92,8 +90,6 @@ protected:
 
             // Modify the result.
             *token = Token(type, value, token->getStartPosition());
-
-            std::cout << "Skipping len: " << value.length() << " (" << value << ")" << std::endl;
 
             // Skip the capture value's amount.
             this->skip(value.length());
@@ -108,15 +104,11 @@ protected:
 
     void processIteration(std::vector<Token> &tokens, Token token)
     {
-        std::cout << "Loop ; " << this->index << std::endl;
-
         if (token.getType() == TokenType::Unknown)
         {
             // TODO: Issue warning instead of plain cout.
             std::cout << "Warning: Unknown token encountered" << std::endl;
         }
-
-        std::cout << "Got token :: ~~> " << token << std::endl;
 
         // Append the token to the result.
         tokens.push_back(token);
@@ -139,8 +131,6 @@ public:
 
     Token next()
     {
-        std::cout << "[!] next" << std::endl;
-
         // Set the initial Token buffer as Unknown.
         Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
         char character = this->getChar();
@@ -165,7 +155,6 @@ public:
                 {
                     // Modify the plain regex to meet requirements at the end.
                     regex = std::regex(this->simpleIterator->first + "(?:\\s|$)");
-                    std::cout << "---- REGEX HAS BEEN MODIFIED ---" << std::endl;
                 }
 
                 if (this->matchExpression(&token, this->simpleIterator->second, regex))
@@ -218,7 +207,7 @@ public:
         this->resetIndex();
     }
 
-    std::string getInput()
+    std::string getInput() const
     {
         return this->input;
     }
@@ -232,17 +221,25 @@ public:
         std::vector<Token> tokens = {};
 
         Token initialToken = Token::createDummy(this->index);
+        Token token = this->next();
 
-        // Iterate through all possible tokens.
-        for (Token token = this->next(); this->index < this->length - 1; token = this->next())
+        // Iterate through all possible tokens. Does not process iteration >= length - 1.
+        for (; this->index < this->length - 1; token = this->next())
         {
             this->processIteration(tokens, token);
         }
 
-        // Iterate over the last token.
-        Token lastToken = this->next();
+        // Process the pre-last token. Loop stops before running body (which contains processIteration()) for the pre-last token.
+        this->processIteration(tokens, token);
 
-        this->processIteration(tokens, lastToken);
+        // Only proceed if length is higher than one, to avoid having doubles.
+        if (this->length > 1)
+        {
+            // Iterate over the last Token.
+            Token lastToken = this->next();
+
+            this->processIteration(tokens, lastToken);
+        }
 
         return tokens;
     }

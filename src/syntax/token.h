@@ -7,7 +7,7 @@ namespace ionir
 {
 class Token
 {
-private:
+protected:
 	TokenType type;
 
 	std::string value;
@@ -27,34 +27,36 @@ public:
 		this->startPosition = startPosition;
 	}
 
-	size_t getStartPosition()
+	size_t getStartPosition() const
 	{
 		return this->startPosition;
 	}
 
-	size_t getEndPosition()
+	size_t getEndPosition() const
 	{
 		return this->startPosition + this->value.length();
 	}
 
-	TokenType getType()
+	TokenType getType() const
 	{
 		return this->type;
 	}
 
-	std::string getValue()
+	std::string getValue() const
 	{
 		return this->value;
 	}
 
-	bool isDummy()
+	bool isDummy() const
 	{
 		return this->value == "" && this->type == TokenType::Unknown;
 	}
 
-	bool operator==(const Token &rhs) const
+	bool operator==(const Token &other) const
 	{
-		return true;
+		return this->value == other.value &&
+			   this->type == other.type &&
+			   this->startPosition == other.startPosition;
 	}
 };
 

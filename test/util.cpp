@@ -11,5 +11,5 @@ TEST(UtilEscapeRegex, IgnoreNonSpecialCharacters)
 
 TEST(UtilEscapeRegex, EscapeSpecialCharacters)
 {
-    EXPECT_EQ(ionir::Util::escapeRegex("$"), "\\$");
+    EXPECT_EQ(ionir::Util::escapeRegex("$^"), "\\$\\^");
 }

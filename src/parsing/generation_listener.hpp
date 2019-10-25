@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Generation/LlvmVisitor.hpp"
-#include "Expression/Extern.hpp"
-#include "Expression/Function.hpp"
+#include "generation/llvm_visitor.hpp"
+#include "expression/extern.hpp"
+#include "expression/function.hpp"
 
 class GenerationListener
 {

@@ -13,28 +13,67 @@ TEST(LexerTest, GetInput)
 	EXPECT_EQ(lexer.getInput(), "test input");
 }
 
-TEST(LexerTest, TokenizeSymbols)
+TEST(LexerTest, TokenizeOneSymbol)
 {
-	// Create the Lexer instance with all the existing symbols.
-	ionir::Lexer lexer = ionir::Lexer("@=:$#()[],~%");
+	// Create the Lexer instance with a single symbol to tokenize.
+	ionir::Lexer lexer = ionir::Lexer("$");
 
 	// Tokenize input and begin inspection.
 	std::vector<ionir::Token> tokens = lexer.tokenize();
 
-	// Create a list of expected Token types.
-	std::array<ionir::TokenType, 12> expected = {
-		ionir::TokenType::SymbolAt,
-		ionir::TokenType::SymbolEqual,
-		ionir::TokenType::SymbolColon,
-		ionir::TokenType::SymbolDollar,
-		ionir::TokenType::SymbolHash,
-		ionir::TokenType::SymbolParenthesesL,
-		ionir::TokenType::SymbolParenthesesR,
-		ionir::TokenType::SymbolBracketL,
-		ionir::TokenType::SymbolBracketR,
-		ionir::TokenType::SymbolComma,
-		ionir::TokenType::SymbolTilde,
-		ionir::TokenType::SymbolPercent,
+	// Create the expected token.
+	ionir::Token expected = ionir::Token(ionir::TokenType::SymbolDollar, "$", 0);
+
+	// Resulting vector must contain one item.
+	EXPECT_EQ(tokens.size(), 1);
+
+	// Compare result with expected.
+	EXPECT_EQ(expected, tokens.at(0));
+}
+
+TEST(LexerTest, TokenizeTwoSymbols)
+{
+	// Create the Lexer instance with two symbols to tokenize.
+	ionir::Lexer lexer = ionir::Lexer("$#");
+
+	// Tokenize input and begin inspection.
+	std::vector<ionir::Token> tokens = lexer.tokenize();
+
+	// Create the expected tokens.
+	ionir::Token expected1 = ionir::Token(ionir::TokenType::SymbolDollar, "$", 0);
+	ionir::Token expected2 = ionir::Token(ionir::TokenType::SymbolHash, "#", 1);
+
+	// Resulting vector must contain two items.
+	EXPECT_EQ(tokens.size(), 2);
+
+	// Compare results with expected tokens.
+	EXPECT_EQ(expected1, tokens.at(0));
+	EXPECT_EQ(expected2, tokens.at(1));
+}
+
+TEST(LexerTest, TokenizeSymbols)
+{
+	// Create the Lexer instance with all the existing symbols.
+	ionir::Lexer lexer = ionir::Lexer("@=:$#()[],~%;");
+
+	// Tokenize input and begin inspection.
+	std::vector<ionir::Token> tokens = lexer.tokenize();
+
+	// Create a list of expected tokens.
+	std::array<ionir::Token, 13> expected = {
+		ionir::Token(ionir::TokenType::SymbolAt, "@", 0),
+		ionir::Token(ionir::TokenType::SymbolEqual, "=", 1),
+		ionir::Token(ionir::TokenType::SymbolColon, ":", 2),
+		ionir::Token(ionir::TokenType::SymbolDollar, "$", 3),
+		ionir::Token(ionir::TokenType::SymbolHash, "#", 4),
+		ionir::Token(ionir::TokenType::SymbolParenthesesL, "(", 5),
+		ionir::Token(ionir::TokenType::SymbolParenthesesR, ")", 6),
+		ionir::Token(ionir::TokenType::SymbolBracketL, "[", 7),
+		ionir::Token(ionir::TokenType::SymbolBracketR, "]", 8),
+		ionir::Token(ionir::TokenType::SymbolComma, ",", 9),
+		ionir::Token(ionir::TokenType::SymbolTilde, "~", 10),
+		ionir::Token(ionir::TokenType::SymbolPercent, "%", 11),
+		ionir::Token(ionir::TokenType::SymbolSemiColon, ";", 12),
 	};
 
 	// Ensure both sets' length are equal.
@@ -45,11 +84,8 @@ TEST(LexerTest, TokenizeSymbols)
 
 	for (auto iterator = tokens.begin(); iterator != tokens.end(); ++iterator)
 	{
-		EXPECT_EQ((*iterator).getType(), expected[i]);
-
-		// TODO
-		std::cout << "Token :: " << *iterator << std::endl;
-
+		// Compare iterator value with its corresponding expected token type.
+		EXPECT_EQ(*iterator, expected[i]);
 		i++;
 	}
 }

@@ -44,6 +44,8 @@ enum class TokenType
 
 	SymbolPercent,
 
+	SymbolSemiColon,
+
 	InstCreate,
 
 	InstCall,

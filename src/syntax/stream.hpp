@@ -67,7 +67,7 @@ public:
 	 * Whether the current index points to the last item
 	 * on the Stream. A Stream always contains at least one item.
 	 */
-    bool hasNext()
+    bool hasNext() const
     {
         return this->index < this->size - 1;
     }
@@ -85,7 +85,7 @@ public:
      * Retrieve the current item on the Stream by
      * the current index.
      */
-    T get()
+    T get() const
     {
         // Return the item at the current index.
         return this->items[this->index];
@@ -95,7 +95,7 @@ public:
      * Retrieve the index of the Stream. Indicates the location
      * of the current item.
      */
-    size_t getIndex()
+    size_t getIndex() const
     {
         return this->index;
     }
@@ -103,7 +103,7 @@ public:
     /**
      * The amount of items in the Stream.
      */
-    size_t getSize()
+    size_t getSize() const
     {
         return this->size;
     }

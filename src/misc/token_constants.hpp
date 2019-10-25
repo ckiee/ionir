@@ -37,6 +37,7 @@ public:
 		this->simple["~"] = TokenType::SymbolTilde;
 		this->simple["="] = TokenType::SymbolEqual;
 		this->simple["%"] = TokenType::SymbolPercent;
+		this->simple[";"] = TokenType::SymbolSemiColon;
 
 		// Register instructions.
 		this->simple["create"] = TokenType::InstCreate;
