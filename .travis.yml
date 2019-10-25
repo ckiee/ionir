@@ -13,7 +13,7 @@ script:
   - sudo apt-get --purge remove -y llvm clang
   - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 8
   - cmake --config Debug .
-  - clang --version && cmake --build .
+  - cmake --build .
   - ./test/IonIrTests
 notifications:
   email: false
