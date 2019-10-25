@@ -2,8 +2,9 @@
 cmake_minimum_required(VERSION 3.12.4)
 project(ion_ir)
 
-# Specify standard(s).
+# Setup compiler flags.
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -stdlib=libc++")
 
 # General project information.
 set(PROJECT_URL "https://github.com/ionlang/ir-c")
