@@ -4,16 +4,16 @@
 
 namespace ionir::testing
 {
-ionir::Token bootstrapToken(int id)
+Token bootstrapToken(int id)
 {
-    ionir::Token token = ionir::Token(ionir::TokenType::Unknown, std::string("test_" + std::to_string(id)), id);
+    Token token = Token(TokenType::Unknown, std::string("test_" + std::to_string(id)), id);
 
     return token;
 }
 
-ionir::TokenStream bootstrapTokenStream(int amountOfItems = 1)
+TokenStream bootstrapTokenStream(int amountOfItems = 1)
 {
-    std::vector<ionir::Token> tokens = {};
+    std::vector<Token> tokens = {};
 
     // Populate the tokens vector.
     for (int i = 0; i < amountOfItems; i++)
@@ -22,7 +22,7 @@ ionir::TokenStream bootstrapTokenStream(int amountOfItems = 1)
     }
 
     // Create the Stream and provide the tokens.
-    ionir::TokenStream stream = ionir::TokenStream(tokens);
+    TokenStream stream = TokenStream(tokens);
 
     return stream;
 }

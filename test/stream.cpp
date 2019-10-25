@@ -5,9 +5,11 @@
 
 using namespace ::testing;
 
+namespace test = ionir::testing;
+
 TEST(StreamTest, HandleGet)
 {
-	ionir::TokenStream stream = ionir::testing::bootstrapTokenStream();
+	ionir::TokenStream stream = test::bootstrapTokenStream();
 	ionir::Token currentToken = stream.get();
 
 	EXPECT_EQ(currentToken.getValue(), "test_0");
@@ -19,13 +21,13 @@ TEST(StreamTest, HandleGet)
 TEST(StreamTest, HandleSize)
 {
 	// Create the intial Stream instance.
-	ionir::TokenStream stream = ionir::testing::bootstrapTokenStream();
+	ionir::TokenStream stream = test::bootstrapTokenStream();
 
 	// Should contain one item.
 	EXPECT_EQ(stream.getSize(), 1);
 
 	// Create a new Stream with more than one item.
-	stream = ionir::testing::bootstrapTokenStream(2);
+	stream = test::bootstrapTokenStream(2);
 
 	// New stream instance should contain two items.
 	EXPECT_EQ(stream.getSize(), 2);
@@ -34,7 +36,7 @@ TEST(StreamTest, HandleSize)
 TEST(StreamTest, HandleHasNext)
 {
 	// Create the intial Stream instance.
-	ionir::TokenStream stream = ionir::testing::bootstrapTokenStream();
+	ionir::TokenStream stream = test::bootstrapTokenStream();
 
 	// Stream with one item should not indicate next.
 	EXPECT_FALSE(stream.hasNext());
@@ -43,7 +45,7 @@ TEST(StreamTest, HandleHasNext)
 TEST(StreamTest, HandleNext)
 {
 	// Create the intial Stream instance.
-	ionir::TokenStream stream = ionir::testing::bootstrapTokenStream();
+	ionir::TokenStream stream = test::bootstrapTokenStream();
 
 	// Extract the current item & index for comparison.
 	ionir::Token token = stream.get();
