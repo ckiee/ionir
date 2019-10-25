@@ -106,6 +106,10 @@ It's because both IonIR and LLVM incorporate Google Test, therefore building the
 $ cmake ... -DLLVM_INCLUDE_TESTS=OFF ...
 ```
 
+#### LLVM notes
+
+If CMake is having a hard time finding your LLVM installation, try setting the `LLVM_DIR` environment variable to the root folder of the installation. Example: If you build LLVM from source and have it located on your Downloads folder.
+
 #### Building project
 
 * In Visual Studio Code, use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
