@@ -1,20 +1,16 @@
 dist: cosmic
 sudo: require
 language: cpp
-compiler:
-  - clang
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
-    - llvm-toolchain-precise-3.8
     - kalakris-cmake
     packages:
     - g++-6
-    - clang-3.8
     - cmake
 script:
-  - sudo apt-get --purge remove -y llvm
+  - sudo apt-get --purge remove -y llvm clang
   - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 8
   - cmake --config Debug .
   - clang --version && cmake --build .
