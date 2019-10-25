@@ -93,6 +93,19 @@ target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 ...
 ```
 
+If you're running into trouble after building LLVM with Google Test (gtest) and getting the following error:
+
+```
+add_library cannot create target "gtest" because an imported target with
+the same name already exists.
+```
+
+It's because both IonIR and LLVM incorporate Google Test, therefore building the Google Test project should be disabled when building LLVM from source:
+
+```bash
+$ cmake ... -DLLVM_INCLUDE_TESTS=OFF ...
+```
+
 #### Building project
 
 * In Visual Studio Code, use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
@@ -104,6 +117,14 @@ target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 Use the `ctest` command bundled with CMake to run tests.
 
 Alternatively, build project & tests and run the tests executable generated.
+
+#### Visual Studio Code notes
+
+If intelli-sense is failing in Visual Studio Code, there may be a few reasons behind it:
+
+* Try re-installing plugin.
+* Compile project and its dependencies in your platform (ex. avoid using WSL on Windows).
+* Ensure dependencies are properly installed and have correct versions.
 
 #### Style Guide
 
