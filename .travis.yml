@@ -14,6 +14,7 @@ addons:
     - clang-8
     - libc++
 script:
+  - sudo apt-get install -y libc++
   - sudo apt-get --purge remove -y llvm
   - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 8
   - cmake --config Debug .
