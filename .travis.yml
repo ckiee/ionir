@@ -1,6 +1,8 @@
 dist: cosmic
 sudo: require
 language: cpp
+compiler:
+  - clang
 addons:
   apt:
     sources:

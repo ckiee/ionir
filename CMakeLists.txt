@@ -21,8 +21,7 @@ endif(USE_MD)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
-# Setup versions.
-set(CMAKE_CXX_STANDARD 17)
+# Setup versioning.
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
