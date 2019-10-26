@@ -8,7 +8,7 @@
 namespace ionir
 {
 template <typename T>
-class Stream : Iterable<T>
+class Stream : public Iterable<T>
 {
 protected:
     /**
@@ -62,7 +62,7 @@ public:
         }
 
         // Set the initial index to the first item.
-        this->index = 0;
+        this->begin();
     }
 
     /**
@@ -81,6 +81,11 @@ public:
 
         // Retrieve and return the item.
         return this->items[nextIndex];
+    }
+
+    virtual void begin()
+    {
+        this->index = 0;
     }
 
     /**

@@ -10,10 +10,11 @@
 #include "misc/token_constants.hpp"
 #include "misc/util.hpp"
 #include "misc/regex.hpp"
+#include "misc/iterable.h"
 
 namespace ionir
 {
-class Lexer
+class Lexer : public Iterable<Token>
 {
 private:
     std::string input;
@@ -53,11 +54,6 @@ protected:
     size_t getLength() const
     {
         return this->length;
-    }
-
-    void resetIndex()
-    {
-        this->index = 0;
     }
 
     size_t setIndex(size_t index)
@@ -121,23 +117,28 @@ protected:
     }
 
 public:
-    /**
-     * Whether the index has not reached the input's length.
-     */
-    bool hasNext() const
-    {
-        return this->index != this->length;
-    }
-
     size_t getIndex() const
     {
         return this->index;
     }
 
+    virtual void begin()
+    {
+        this->index = 0;
+    }
+
+    /**
+     * Whether the index has not reached the input's length.
+     */
+    virtual bool hasNext() const
+    {
+        return this->index < this->length;
+    }
+
     /**
      * Process the next token.
      */
-    std::optional<Token> next()
+    virtual std::optional<Token> next()
     {
         // No more possible tokens to retrieve.
         if (!this->hasNext())
@@ -217,7 +218,7 @@ public:
         this->complexIdentifiers = this->constants.getComplexIdentifiers();
 
         // Reset the index, setting its initial value.
-        this->resetIndex();
+        this->begin();
     }
 
     std::string getInput() const
@@ -228,7 +229,7 @@ public:
     std::vector<Token> tokenize()
     {
         // Reset index to avoid carrying over previous information.
-        this->resetIndex();
+        this->begin();
 
         // TODO: Should be a list, then converted to a vector.
         std::vector<Token> tokens = {};
