@@ -14,7 +14,7 @@
 
 namespace ionir
 {
-class Lexer : public Iterable<Token>
+class Lexer : public Generator<Token>
 {
 private:
     std::string input;

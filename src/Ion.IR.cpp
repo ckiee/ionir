@@ -3,7 +3,6 @@
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
 #include "syntax/lexer.hpp"
-#include "syntax/stream.hpp"
 #include "parsing/driver.hpp"
 
 using namespace ionir;

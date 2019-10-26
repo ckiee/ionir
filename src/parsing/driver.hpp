@@ -2,11 +2,12 @@
 
 #include "llvm/IR/Module.h"
 #include "syntax/token.h"
-#include "syntax/stream.hpp"
+#include "misc/iterable.h"
+#include "misc/generator.h"
 
 namespace ionir
 {
-class Driver
+class Driver : Generator<void>
 {
 private:
 	TokenStream stream;
@@ -33,11 +34,22 @@ public:
 		}
 	}
 
+	virtual void begin()
+	{
+		this->stream.begin();
+	}
+
+	virtual bool hasNext()
+	{
+		// TODO
+		return false;
+	}
+
 	/**
 	 * Processed the current Stream item and increments the
 	 * Stream's index if applicable.
 	 */
-	bool next()
+	virtual void next()
 	{
 		// Retrieve the current item (Token) from the Stream.
 		Token token = this->stream.get();
