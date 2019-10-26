@@ -58,6 +58,11 @@ public:
 			   this->type == other.type &&
 			   this->startPosition == other.startPosition;
 	}
+
+	bool operator!=(const Token &other) const
+	{
+		return !(*this == other);
+	}
 };
 
 inline std::ostream &operator<<(std::ostream &stream, Token &token)

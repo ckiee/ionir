@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <stdexcept>
 #include "../syntax/token.h"
 #include "../misc/token_constants.hpp"
 #include "../misc/util.hpp"
@@ -148,8 +149,6 @@ public:
                 // Produce a Regex instance to match the exact value of the simple identifier. It is important that the initial value is escaped of any Regex special characters.
                 std::regex regex = Util::createPureRegex(this->simpleIterator->first);
 
-                std::cout << "Using initial regex: " << Util::escapeRegex(this->simpleIterator->first) << std::endl;
-
                 // If the match starts with a letter, modify the regex to force either whitespace or EOF at the end.
                 if (std::regex_match(tokenValue, Regex::identifier))
                 {
@@ -194,9 +193,10 @@ public:
         this->input = input;
         this->length = this->input.length();
 
+        // Input string must contain at least one character.
         if (!this->length || this->length < 1)
         {
-            throw "Input must be a string with one or more character(s)";
+            throw std::invalid_argument("Input must be a string with one or more character(s)");
         }
 
         // Initialize local simple & complex identifiers map.
