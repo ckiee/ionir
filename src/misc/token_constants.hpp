@@ -4,8 +4,8 @@
 #include <map>
 #include <string>
 #include <regex>
-#include "../syntax/token_type.h"
-#include "../misc/regex.hpp"
+#include "syntax/token_type.h"
+#include "misc/regex.hpp"
 
 namespace ionir
 {
@@ -57,12 +57,12 @@ public:
 		this->pushComplex(Regex::whitespace, TokenType::Whitespace);
 	}
 
-	std::map<std::string, TokenType> getSimpleIdentifiers()
+	std::map<std::string, TokenType> getSimpleIdentifiers() const
 	{
 		return this->simple;
 	}
 
-	std::vector<std::pair<std::regex, TokenType>> getComplexIdentifiers()
+	std::vector<std::pair<std::regex, TokenType>> getComplexIdentifiers() const
 	{
 		return this->complex;
 	}

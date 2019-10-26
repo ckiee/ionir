@@ -17,7 +17,7 @@ public:
 		this->prototype = prototype;
 	}
 
-	Prototype getPrototype()
+	Prototype getPrototype() const
 	{
 		return this->prototype;
 	}

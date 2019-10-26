@@ -21,7 +21,7 @@ public:
         return visitor->visitType(this);
     }
 
-    bool getIsPointer()
+    bool getIsPointer() const
     {
         return this->isPointer;
     }

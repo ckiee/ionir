@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include "generation/expr.hpp"
 
 namespace ionir
 {
@@ -11,8 +12,9 @@ private:
 	std::map<std::string, Expr> variables;
 
 public:
-	bool hasVariable(std::string name)
+	bool hasVariable(std::string name) const
 	{
+		// TODO: Finish implementation.
 		return this->variables.get
 	}
 };

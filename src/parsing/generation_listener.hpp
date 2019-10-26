@@ -4,6 +4,8 @@
 #include "expression/extern.hpp"
 #include "expression/function.hpp"
 
+namespace ionir
+{
 class GenerationListener
 {
 private:
@@ -42,3 +44,4 @@ public:
         // TODO
     }
 };
+} // namespace ionir

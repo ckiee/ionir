@@ -5,10 +5,11 @@
 #include <map>
 #include <iostream>
 #include <stdexcept>
-#include "../syntax/token.h"
-#include "../misc/token_constants.hpp"
-#include "../misc/util.hpp"
-#include "../misc/regex.hpp"
+#include <optional>
+#include "syntax/token.h"
+#include "misc/token_constants.hpp"
+#include "misc/util.hpp"
+#include "misc/regex.hpp"
 
 namespace ionir
 {
@@ -34,6 +35,13 @@ private:
 protected:
     char getChar() const
     {
+        // Return null character if reached end of input.
+        if (!this->hasNext())
+        {
+            return '\0';
+        }
+
+        // Otherwise, return the corresponding character.
         return this->input[this->index];
     }
 
@@ -60,9 +68,9 @@ protected:
             index = 0;
         }
         // Keep index within bounds.
-        else if (index > this->length - 1)
+        else if (index >= this->length - 1)
         {
-            index = this->length - 1;
+            index = this->length;
         }
 
         this->index = index;
@@ -103,18 +111,6 @@ protected:
         return false;
     }
 
-    void processIteration(std::vector<Token> &tokens, Token token)
-    {
-        if (token.getType() == TokenType::Unknown)
-        {
-            // TODO: Issue warning instead of plain cout.
-            std::cout << "Warning: Unknown token encountered" << std::endl;
-        }
-
-        // Append the token to the result.
-        tokens.push_back(token);
-    }
-
     void processWhitespace()
     {
         // Ignore whitespace.
@@ -125,13 +121,30 @@ protected:
     }
 
 public:
-    size_t getIndex()
+    /**
+     * Whether the index has not reached the input's length.
+     */
+    bool hasNext() const
+    {
+        return this->index != this->length;
+    }
+
+    size_t getIndex() const
     {
         return this->index;
     }
 
-    Token next()
+    /**
+     * Process the next token.
+     */
+    std::optional<Token> next()
     {
+        // No more possible tokens to retrieve.
+        if (!this->hasNext())
+        {
+            return std::nullopt;
+        }
+
         // Set the initial Token buffer as Unknown.
         Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
         char character = this->getChar();
@@ -220,26 +233,32 @@ public:
         // TODO: Should be a list, then converted to a vector.
         std::vector<Token> tokens = {};
 
-        Token initialToken = Token::createDummy(this->index);
-        Token token = this->next();
+        std::optional<Token> token;
 
-        // Iterate through all possible tokens. Does not process iteration >= length - 1.
-        for (; this->index < this->length - 1; token = this->next())
+        while (this->hasNext())
         {
-            this->processIteration(tokens, token);
+            token = this->next();
+
+            // No more tokens to process.
+            if (!token.has_value())
+            {
+                break;
+            }
+
+            std::cout << "Has next.: " << *token << std::endl;
+
+            // Display a warning if the token's type is unknown.
+            if ((*token).getType() == TokenType::Unknown)
+            {
+                // TODO: Issue warning instead of plain cout.
+                std::cout << "Warning: Unknown token encountered" << std::endl;
+            }
+
+            // Append the token to the result.
+            tokens.push_back(*token);
         }
 
-        // Process the pre-last token. Loop stops before running body (which contains processIteration()) for the pre-last token.
-        this->processIteration(tokens, token);
-
-        // Only proceed if length is higher than one, to avoid having doubles.
-        if (this->length > 1)
-        {
-            // Iterate over the last Token.
-            Token lastToken = this->next();
-
-            this->processIteration(tokens, lastToken);
-        }
+        std::cout << "Final len: " << tokens.size() << std::endl;
 
         return tokens;
     }

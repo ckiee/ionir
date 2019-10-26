@@ -21,12 +21,12 @@ public:
 		this->body = body;
 	}
 
-	Prototype getPrototype()
+	Prototype getPrototype() const
 	{
 		return this->prototype;
 	}
 
-	Block getBody()
+	Block getBody() const
 	{
 		return this->body;
 	}

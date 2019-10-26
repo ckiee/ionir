@@ -32,7 +32,7 @@ private:
 	std::map<std::string, llvm::Value> namedValues;
 
 protected:
-	llvm::Module *getModule()
+	llvm::Module *getModule() const
 	{
 		return this->module;
 	}
@@ -244,4 +244,4 @@ public:
 		return *node;
 	}
 };
-}
+} // namespace ionir

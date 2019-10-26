@@ -112,6 +112,6 @@ TEST(LexerTest, LexIdentifiers)
 	EXPECT_EQ(tokens.size(), 2);
 
 	// Compare results.
-	EXPECT_EQ(tokens.at(0).getType(), ionir::TokenType::Identifier);
-	EXPECT_EQ(tokens.at(1).getType(), ionir::TokenType::Identifier);
+	EXPECT_EQ(tokens.at(0), ionir::Token(ionir::TokenType::Identifier, "hello", 0));
+	EXPECT_EQ(tokens.at(1), ionir::Token(ionir::TokenType::Identifier, "world", 6));
 }

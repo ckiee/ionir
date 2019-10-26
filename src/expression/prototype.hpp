@@ -28,22 +28,22 @@ public:
 		return visitor->visitPrototype(this);
 	}
 
-	std::string getIdentifier()
+	std::string getIdentifier() const
 	{
 		return this->identifier;
 	}
 
-	std::vector<std::pair<Type, std::string>> getArguments()
+	std::vector<std::pair<Type, std::string>> getArguments() const
 	{
 		return this->arguments;
 	}
 
-	Type getReturnType()
+	Type getReturnType() const
 	{
 		return this->returnType;
 	}
 
-	bool getHasInfiniteArguments()
+	bool getHasInfiniteArguments() const
 	{
 		return this->hasInfiniteArguments;
 	}

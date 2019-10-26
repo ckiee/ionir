@@ -24,12 +24,12 @@ public:
         return visitor->visitBlock(this);
     }
 
-    std::vector<Expr> getInsts()
+    std::vector<Expr> getInsts() const
     {
         return this->insts;
     }
 
-    std::string getIdentifier()
+    std::string getIdentifier() const
     {
         return this->identifier;
     }

@@ -23,12 +23,12 @@ public:
         return visitor->visitBinaryExpr(this);
     }
 
-    Expr getLeftSide()
+    Expr getLeftSide() const
     {
         return this->leftSide;
     }
 
-    Expr getRightSide()
+    Expr getRightSide() const
     {
         return this->rightSide;
     }

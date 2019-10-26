@@ -1,12 +1,14 @@
 #pragma once
 
 #include <vector>
+#include <optional>
 #include "token.h"
+#include "misc/iterable.h"
 
 namespace ionir
 {
 template <typename T>
-class Stream
+class Stream : Iterable<T>
 {
 protected:
     /**
@@ -67,12 +69,12 @@ public:
 	 * Whether the current index points to the last item
 	 * on the Stream. A Stream always contains at least one item.
 	 */
-    bool hasNext() const
+    virtual bool hasNext() const
     {
         return this->index < this->size - 1;
     }
 
-    T next()
+    virtual std::optional<T> next()
     {
         // Resolve the next index safely.
         size_t nextIndex = this->nextIndex();
