@@ -2,7 +2,7 @@
 
 #include <map>
 #include <string>
-#include "generation/expr.hpp"
+#include "generation/expr.h"
 
 namespace ionir
 {

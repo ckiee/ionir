@@ -1,8 +1,8 @@
 #pragma once
 
-#include "generation/expr.hpp"
-#include "generation/expr_type.hpp"
-#include "expression/prototype.hpp"
+#include "generation/expr.h"
+#include "generation/expr_type.h"
+#include "expression/prototype.h"
 
 namespace ionir
 {

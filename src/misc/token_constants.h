@@ -5,7 +5,7 @@
 #include <string>
 #include <regex>
 #include "syntax/token_type.h"
-#include "misc/regex.hpp"
+#include "misc/regex.h"
 
 namespace ionir
 {
