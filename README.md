@@ -51,11 +51,6 @@ int main() {
 * Visual Studio 2019 with C++ tools (Windows)
 * LLVM >=v9.0.0 (must build from source on Windows, see section below)
 
-
-#### Installing LLVM (Linux)
-
-Please refer to [this link](http://apt.llvm.org/) for instructions on installing LLVM on Linux systems. It is recommended to use the automatic installation script provided there.
-
 #### Building LLVM
 
 0. Ensure you have _all_ the requirements (excluding LLVM) installed, as the build process for LLVM will require Python, CMake and others.
@@ -106,6 +101,10 @@ It's because both IonIR and LLVM incorporate Google Test, therefore building the
 ```bash
 $ cmake ... -DLLVM_INCLUDE_TESTS=OFF ...
 ```
+
+#### Installing LLVM (Linux)
+
+Please refer to [this link](http://apt.llvm.org/) for instructions on installing LLVM on Linux systems. It is recommended to use the automatic installation script provided there.
 
 #### LLVM notes
 
