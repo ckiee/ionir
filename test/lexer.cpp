@@ -3,7 +3,7 @@
 #include <array>
 #include "pch.h"
 #include "syntax/token.h"
-#include "syntax/lexer.hpp"
+#include "syntax/lexer.h"
 
 using namespace ::testing;
 

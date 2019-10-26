@@ -1,13 +1,14 @@
 #pragma once
 
+#include <optional>
 #include "llvm/IR/Module.h"
 #include "syntax/token.h"
 #include "misc/iterable.h"
-#include "misc/generator.h"
+#include "misc/loose_generator.h"
 
 namespace ionir
 {
-class Driver : Generator<void>
+class Driver : public LooseGenerator
 {
 private:
 	TokenStream stream;
@@ -46,12 +47,12 @@ public:
 	}
 
 	/**
-	 * Processed the current Stream item and increments the
-	 * Stream's index if applicable.
+	 * Processed the current iterable item and increments the
+	 * list's index if applicable.
 	 */
 	virtual void next()
 	{
-		// Retrieve the current item (Token) from the Stream.
+		// Retrieve the current token from the token stream.
 		Token token = this->stream.get();
 
 		// Function definition (Token should be a type name representing the function's return type).
@@ -65,8 +66,6 @@ public:
 
 		// Advance the Stream's index if applicable.
 		this->stream.next();
-
-		return false;
 	}
 };
 } // namespace ionir

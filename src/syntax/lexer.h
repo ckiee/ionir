@@ -7,9 +7,9 @@
 #include <stdexcept>
 #include <optional>
 #include "syntax/token.h"
-#include "misc/token_constants.hpp"
-#include "misc/util.hpp"
-#include "misc/regex.hpp"
+#include "misc/token_constants.h"
+#include "misc/util.h"
+#include "misc/regex.h"
 #include "misc/iterable.h"
 
 namespace ionir

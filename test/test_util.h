@@ -1,6 +1,6 @@
 #pragma once
 
-#include "syntax/stream.hpp"
+#include "syntax/iterable.h"
 
 namespace ionir::testing
 {

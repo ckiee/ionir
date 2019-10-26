@@ -1,8 +1,8 @@
 #pragma once
 
-#include "generation/llvm_visitor.hpp"
-#include "expression/extern.hpp"
-#include "expression/function.hpp"
+#include "generation/llvm_visitor.h"
+#include "expression/extern.h"
+#include "expression/function.h"
 
 namespace ionir
 {

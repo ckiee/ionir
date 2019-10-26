@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <optional>
-#include "token.h"
+#include "syntax/token.h"
 #include "misc/generator.h"
 
 namespace ionir

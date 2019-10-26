@@ -1,6 +1,6 @@
 #pragma once
 
-#include "generation/expr.hpp"
+#include "generation/expr.h"
 
 namespace ionir
 {

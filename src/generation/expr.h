@@ -1,8 +1,8 @@
 #pragma once
 
-#include "generation/expr_type.hpp"
-#include "generation/visitable.hpp"
-#include "generation/llvm_visitor.hpp"
+#include "generation/expr_type.h"
+#include "generation/visitable.h"
+#include "generation/llvm_visitor.h"
 
 namespace ionir
 {

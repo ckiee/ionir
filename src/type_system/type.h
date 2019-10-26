@@ -1,6 +1,6 @@
 #pragma once
 
-#include "primitive_type.hpp"
+#include "primitive_type.h"
 
 namespace ionir
 {

@@ -2,8 +2,8 @@
 #include <vector>
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
-#include "syntax/lexer.hpp"
-#include "parsing/driver.hpp"
+#include "syntax/lexer.h"
+#include "parsing/driver.h"
 
 using namespace ionir;
 

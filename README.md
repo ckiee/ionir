@@ -17,26 +17,27 @@ $ cmake --build .
 A general usage example is provided below.
 
 ```cpp
-#include "ion_ir/generation/driver.hpp"
-#include "ion_ir/syntax/lexer.hpp"
-#include "ion_ir/syntax/stream.hpp"
-#include "ion_ir/syntax/token.h"
+#include <string>
+#include "ionir/generation/driver.h"
+#include "ionir/syntax/lexer.h"
+#include "ionir/syntax/token.h"
+#include "ionir/misc/iterator.h"
 
 int main() {
     // Create a lexer to tokenize input.
-    Lexer lexer = new Lexer(...);
+    Lexer lexer = new Lexer("hello world");
 
     // Tokenize the input.
-    Stream<Token> stream = lexer.tokenize();
+    TokenStream stream = lexer.tokenize();
 
     // Create a driver to handle code generation.
     Driver driver = new Driver(stream);
 
     // Invoke the driver and capture its resulting LLVM IR code.
-    std::string ir = driver.invoke();
+    std::string llvmIr = driver.invoke();
 
     // Print out the resulting IR code.
-    std::cout << ir;
+    std::cout << llvmIr << std::endl;
 
     // Finish program.
     return 0;
@@ -130,6 +131,6 @@ If intelli-sense is failing in Visual Studio Code, there may be a few reasons be
 * Compile project and its dependencies in your platform (ex. avoid using WSL on Windows).
 * Ensure dependencies are properly installed and have correct versions.
 
-#### Style Guide
+#### Style guide
 
 This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).

@@ -1,18 +1,17 @@
 #pragma once
 
+#include "basic_generator.h"
+
 namespace ionir
 {
+/**
+ * A generic generator which may return an
+ * item after each iteration. However, it is not
+ * guaranteed to do so.
+ */
 template <typename T>
-class Generator
+class Generator : public BasicGenerator<std::optional<T>>
 {
-    /**
-	 * Whether the current index points to the last item
-	 * on the Stream. A Stream always contains at least one item.
-	 */
-    virtual bool hasNext() const = 0;
-
-    virtual std::optional<T> next() = 0;
-
-    virtual void begin() = 0;
+    //
 };
 } // namespace ionir
