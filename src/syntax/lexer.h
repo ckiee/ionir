@@ -64,7 +64,7 @@ protected:
             index = 0;
         }
         // Keep index within bounds.
-        else if (index >= this->length - 1)
+        else if (index >= this->length)
         {
             index = this->length;
         }
@@ -246,8 +246,6 @@ public:
                 break;
             }
 
-            std::cout << "Has next.: " << *token << std::endl;
-
             // Display a warning if the token's type is unknown.
             if ((*token).getType() == TokenType::Unknown)
             {
@@ -258,8 +256,6 @@ public:
             // Append the token to the result.
             tokens.push_back(*token);
         }
-
-        std::cout << "Final len: " << tokens.size() << std::endl;
 
         return tokens;
     }

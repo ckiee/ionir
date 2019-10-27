@@ -67,6 +67,6 @@ public:
 
 inline std::ostream &operator<<(std::ostream &stream, Token &token)
 {
-	return stream << "Token(" << token.getValue() << ", " << token.getType() << ")";
+	return stream << "Token(" << token.getValue() << ", " << token.getType() << ", " << token.getStartPosition() << "-" << token.getEndPosition() << ")";
 }
 } // namespace ionir

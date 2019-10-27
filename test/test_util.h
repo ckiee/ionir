@@ -1,6 +1,8 @@
 #pragma once
 
-#include "syntax/iterable.h"
+#include <array>
+#include <vector>
+#include "misc/iterable.h"
 
 namespace ionir::testing
 {
@@ -25,5 +27,24 @@ inline TokenStream bootstrapTokenStream(int amountOfItems = 1)
     TokenStream stream = TokenStream(tokens);
 
     return stream;
+}
+
+template <unsigned int N>
+inline void compareTokenSets(std::array<Token, N> expected, std::vector<Token> actual)
+{
+    // Both sets should have the same length.
+    EXPECT_EQ(expected.size(), actual.size());
+
+    // Compare results by iterating over both expected and actual, resulting tokens.
+    int i = 0;
+
+    for (auto &token : actual)
+    {
+        // Compare iterator value with its corresponding expected token type.
+        EXPECT_EQ(expected[i], token);
+
+        // Increment counter to prepare for next iteration.
+        i++;
+    }
 }
 } // namespace ionir::testing

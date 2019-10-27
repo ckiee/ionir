@@ -20,7 +20,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 #target_link_libraries(${PROJECT_NAME} GTest::GTest GTest::Main)
 target_link_libraries(${PROJECT_NAME} PUBLIC
     gtest_main
-    ion_ir
+    ionir
 )
 
 # Specify additional include directories to look for imports.

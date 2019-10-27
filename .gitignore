@@ -13,11 +13,11 @@ CMakeFiles/
 *.vcxproj*
 *.sln
 x64
-ion_ir.dir
+ionir.dir
 packages/
 .gitpod.yml
 Testing/
 Makefile
 test/IonIrTests
 lib/
-libion_ir.a
+*.a

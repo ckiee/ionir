@@ -35,12 +35,12 @@ public:
 		}
 	}
 
-	virtual void begin()
+	void begin() override
 	{
 		this->stream.begin();
 	}
 
-	virtual bool hasNext()
+	bool hasNext() const override
 	{
 		// TODO
 		return false;
@@ -50,7 +50,7 @@ public:
 	 * Processed the current iterable item and increments the
 	 * list's index if applicable.
 	 */
-	virtual void next()
+	void next() override
 	{
 		// Retrieve the current token from the token stream.
 		Token token = this->stream.get();

@@ -4,8 +4,11 @@
 #include "pch.h"
 #include "syntax/token.h"
 #include "syntax/lexer.h"
+#include "test_util.h"
 
 using namespace ::testing;
+
+namespace test = ionir::testing;
 
 TEST(LexerTest, GetInput)
 {
@@ -43,18 +46,15 @@ TEST(LexerTest, LexTwoSymbols)
 	ionir::Lexer lexer = ionir::Lexer("$#");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> tokens = lexer.tokenize();
+	std::vector<ionir::Token> actual = lexer.tokenize();
 
-	// Create the expected tokens.
-	ionir::Token expected1 = ionir::Token(ionir::TokenType::SymbolDollar, "$", 0);
-	ionir::Token expected2 = ionir::Token(ionir::TokenType::SymbolHash, "#", 1);
+	std::array<ionir::Token, 2> expected = {
+		ionir::Token(ionir::TokenType::SymbolDollar, "$", 0),
+		ionir::Token(ionir::TokenType::SymbolHash, "#", 1),
+	};
 
-	// Resulting vector should contain two items.
-	EXPECT_EQ(tokens.size(), 2);
-
-	// Compare results with expected tokens.
-	EXPECT_EQ(expected1, tokens.at(0));
-	EXPECT_EQ(expected2, tokens.at(1));
+	// Compare result with expected.
+	test::compareTokenSets(expected, actual);
 }
 
 TEST(LexerTest, LexSymbols)
@@ -63,7 +63,7 @@ TEST(LexerTest, LexSymbols)
 	ionir::Lexer lexer = ionir::Lexer("@=:$#()[],~%;");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> tokens = lexer.tokenize();
+	std::vector<ionir::Token> actual = lexer.tokenize();
 
 	// Create a list of expected tokens.
 	std::array<ionir::Token, 13> expected = {
@@ -82,18 +82,8 @@ TEST(LexerTest, LexSymbols)
 		ionir::Token(ionir::TokenType::SymbolSemiColon, ";", 12),
 	};
 
-	// Ensure both sets' length are equal.
-	EXPECT_EQ(expected.size(), tokens.size());
-
-	// Begin comparing tokens.
-	int i = 0;
-
-	for (auto iterator = tokens.begin(); iterator != tokens.end(); ++iterator)
-	{
-		// Compare iterator value with its corresponding expected token type.
-		EXPECT_EQ(*iterator, expected[i]);
-		i++;
-	}
+	// Compare result with expected.
+	test::compareTokenSets(expected, actual);
 }
 
 TEST(LexerTest, LexIdentifiers)
@@ -101,17 +91,13 @@ TEST(LexerTest, LexIdentifiers)
 	ionir::Lexer lexer = ionir::Lexer("hello world");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> tokens = lexer.tokenize();
+	std::vector<ionir::Token> actual = lexer.tokenize();
 
-	for (auto iterator = tokens.begin(); iterator != tokens.end(); ++iterator)
-	{
-		std::cout << *iterator << std::endl;
-	}
+	std::array<ionir::Token, 2> expected = {
+		ionir::Token(ionir::TokenType::Identifier, "hello", 0),
+		ionir::Token(ionir::TokenType::Identifier, "world", 5),
+	};
 
-	// Tokens vector should contain two items.
-	EXPECT_EQ(tokens.size(), 2);
-
-	// Compare results.
-	EXPECT_EQ(tokens.at(0), ionir::Token(ionir::TokenType::Identifier, "hello", 0));
-	EXPECT_EQ(tokens.at(1), ionir::Token(ionir::TokenType::Identifier, "world", 6));
+	// Compare result with expected.
+	test::compareTokenSets(expected, actual);
 }

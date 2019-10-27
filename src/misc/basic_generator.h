@@ -14,5 +14,7 @@ public:
     virtual T next() = 0;
 
     virtual void begin() = 0;
+
+    virtual ~BasicGenerator() = default;
 };
 } // namespace ionir
