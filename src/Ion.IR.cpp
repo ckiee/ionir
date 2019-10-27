@@ -1,76 +1,76 @@
-#include <iostream>
-#include <vector>
-#include "llvm/IR/LLVMContext.h"
-#include "llvm/IR/Module.h"
-#include "syntax/lexer.h"
-#include "parsing/driver.h"
+// #include <iostream>
+// #include <vector>
+// #include "llvm/IR/LLVMContext.h"
+// #include "llvm/IR/Module.h"
+// #include "syntax/lexer.h"
+// #include "parsing/driver.h"
 
-using namespace ionir;
+// using namespace ionir;
 
-void processStream(TokenStream stream)
-{
-    llvm::LLVMContext context = llvm::LLVMContext();
+// void processStream(TokenStream stream)
+// {
+//     llvm::LLVMContext context = llvm::LLVMContext();
 
-    // TODO
-    // Create the module.
-    llvm::Module *module = new llvm::Module("entry", context);
+//     // TODO
+//     // Create the module.
+//     llvm::Module *module = new llvm::Module("entry", context);
 
-    // Create the driver.
-    Driver *driver = new Driver(module, stream);
+//     // Create the driver.
+//     Driver *driver = new Driver(module, stream);
 
-    // Consume the driver, processing all the Stream's tokens.
-    driver->consume();
+//     // Consume the driver, processing all the Stream's tokens.
+//     driver->consume();
 
-    //TODO: Display result(s).
-    std::cout << "Driver has been invoked." << std::endl;
-}
+//     //TODO: Display result(s).
+//     std::cout << "Driver has been invoked." << std::endl;
+// }
 
-int main()
-{
-    std::cout << "Instructions: Type '^<ENTER>' to terminate and '&<ENTER>' to invoke driver." << std::endl;
+// int main()
+// {
+//     std::cout << "Instructions: Type '^<ENTER>' to terminate and '&<ENTER>' to invoke driver." << std::endl;
 
-    // Create a string to serve as iteration input buffer.
-    std::string input;
+//     // Create a string to serve as iteration input buffer.
+//     std::string input;
 
-    // Create a vector for the resulting tokens.
-    std::vector<Token> tokens;
+//     // Create a vector for the resulting tokens.
+//     std::vector<Token> tokens;
 
-    while (true)
-    {
-        std::cin >> input;
+//     while (true)
+//     {
+//         std::cin >> input;
 
-        if (input == "^")
-        {
-            break;
-        }
-        else if (input == "&")
-        {
-            // Delegate to process tokens.
-            processStream(TokenStream(tokens));
+//         if (input == "^")
+//         {
+//             break;
+//         }
+//         else if (input == "&")
+//         {
+//             // Delegate to process tokens.
+//             processStream(TokenStream(tokens));
 
-            // Flush tokens.
-            tokens.clear();
+//             // Flush tokens.
+//             tokens.clear();
 
-            continue;
-        }
+//             continue;
+//         }
 
-        std::cout << "[!] input >> " << input << std::endl;
+//         std::cout << "[!] input >> " << input << std::endl;
 
-        // Create a new lexer.
-        Lexer *lexer = new Lexer(input);
+//         // Create a new lexer.
+//         Lexer *lexer = new Lexer(input);
 
-        // Tokenize the input.
-        std::vector<Token> batch = lexer->tokenize();
+//         // Tokenize the input.
+//         std::vector<Token> batch = lexer->tokenize();
 
-        // Iterate and output resulting tokens.
-        for (auto &token : batch)
-        {
-            std::cout << token << std::endl;
+//         // Iterate and output resulting tokens.
+//         for (auto &token : batch)
+//         {
+//             std::cout << token << std::endl;
 
-            // Append the token onto the result.
-            tokens.push_back(token);
-        }
-    }
+//             // Append the token onto the result.
+//             tokens.push_back(token);
+//         }
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
