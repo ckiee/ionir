@@ -63,12 +63,12 @@ int main()
         std::vector<Token> batch = lexer->tokenize();
 
         // Iterate and output resulting tokens.
-        for (auto iterator = batch.begin(); iterator != batch.end(); iterator++)
+        for (auto &token : batch)
         {
-            std::cout << *iterator << std::endl;
+            std::cout << token << std::endl;
 
             // Append the token onto the result.
-            tokens.push_back(*iterator);
+            tokens.push_back(token);
         }
     }
 
