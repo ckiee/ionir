@@ -3,20 +3,20 @@
 #include <stack>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
-#include "code_gen/expr.h"
+#include "code_gen/node.h"
 #include "ast_nodes/type.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
 #include "ast_nodes/function.h"
 #include "ast_nodes/extern.h"
-#include "code_gen/expr_type.h"
+#include "code_gen/node_type.h"
 #include "ast_nodes/prototype.h"
 
 namespace ionir
 {
 class LlvmVisitor
 {
-private:
+protected:
 	llvm::LLVMContext *context;
 
 	llvm::Module *module;
@@ -31,7 +31,6 @@ private:
 
 	std::map<std::string, llvm::Value> namedValues;
 
-protected:
 	llvm::Module *getModule() const
 	{
 		return this->module;
@@ -45,12 +44,12 @@ public:
 		this->namedValues = {};
 	}
 
-	Expr visit(Expr *node)
+	Node visit(Node *node)
 	{
 		return node->accept(this);
 	}
 
-	Expr visitFunction(Function *node)
+	Node visitFunction(Function *node)
 	{
 		if (&node->getBody() == nullptr)
 		{
@@ -92,7 +91,7 @@ public:
 		return *node;
 	}
 
-	Expr visitExtern(Extern *node)
+	Node visitExtern(Extern *node)
 	{
 		if (&node->getPrototype() == nullptr)
 		{
@@ -110,7 +109,7 @@ public:
 		return *node;
 	}
 
-	Expr visitBlock(Block *node)
+	Node visitBlock(Block *node)
 	{
 		// Function buffer must not be null.
 		if (&this->function == nullptr)
@@ -142,7 +141,7 @@ public:
 		return *node;
 	}
 
-	Expr visitType(Type *node)
+	Node visitType(Type *node)
 	{
 		// TODO: Hard-coded double type.
 		llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
@@ -160,7 +159,7 @@ public:
 		return *node;
 	}
 
-	Expr visitBinaryExpr(BinaryExpr *node)
+	Node visitBinaryExpr(BinaryExpr *node)
 	{
 		// Visit sides.
 		this->visit(&node->getLeftSide());
@@ -184,7 +183,7 @@ public:
 		return *node;
 	}
 
-	Expr visitPrototype(Prototype *node)
+	Node visitPrototype(Prototype *node)
 	{
 		// Retrieve argument count from the argument vector.
 		uint32_t argumentCount = node->getArguments().size();

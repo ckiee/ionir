@@ -21,6 +21,11 @@ public:
 		this->body = body;
 	}
 
+	Node accept(LlvmVisitor *visitor) override
+	{
+		return visitor->visitFunction(this);
+	}
+
 	Prototype getPrototype() const
 	{
 		return this->prototype;
