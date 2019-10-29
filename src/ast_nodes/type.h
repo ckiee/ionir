@@ -16,7 +16,7 @@ public:
         this->isPointer = isPointer;
     }
 
-    Node accept(LlvmVisitor *visitor)
+    Node accept(LlvmVisitor *visitor) override
     {
         return visitor->visitType(this);
     }

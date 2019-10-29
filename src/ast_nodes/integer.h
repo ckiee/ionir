@@ -16,9 +16,9 @@ public:
         this->value;
     }
 
-    Node accept(LlvmVisitor *visitor)
+    Node accept(LlvmVisitor *visitor) override
     {
-        return visitor->visitBlock(this);
+        return visitor->visitInteger(this);
     }
 };
 } // namespace ionir

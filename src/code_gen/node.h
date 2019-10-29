@@ -17,7 +17,7 @@ public:
         this->type = type;
     }
 
-    virtual Node accept(LlvmVisitor *visitor);
+    virtual Node accept(LlvmVisitor *visitor) = 0;
 
     NodeType getNodeType() const
     {

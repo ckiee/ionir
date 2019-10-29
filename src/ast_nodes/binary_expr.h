@@ -18,7 +18,7 @@ public:
         //
     }
 
-    Node accept(LlvmVisitor *visitor)
+    Node accept(LlvmVisitor *visitor) override
     {
         return visitor->visitBinaryExpr(this);
     }

@@ -21,7 +21,7 @@ public:
         this->insts = insts;
     }
 
-    Node accept(LlvmVisitor *visitor)
+    Node accept(LlvmVisitor *visitor) override
     {
         return visitor->visitBlock(this);
     }
