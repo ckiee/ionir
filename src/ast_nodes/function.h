@@ -2,8 +2,8 @@
 
 #include "code_gen/node.h"
 #include "code_gen/node_type.h"
-#include "nodes/prototype.h"
-#include "nodes/block.h"
+#include "ast_nodes/prototype.h"
+#include "ast_nodes/block.h"
 
 namespace ionir
 {

@@ -4,13 +4,13 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
 #include "code_gen/expr.h"
-#include "nodes/type.h"
-#include "nodes/block.h"
-#include "nodes/binary_expr.h"
-#include "nodes/function.h"
-#include "nodes/extern.h"
+#include "ast_nodes/type.h"
+#include "ast_nodes/block.h"
+#include "ast_nodes/binary_expr.h"
+#include "ast_nodes/function.h"
+#include "ast_nodes/extern.h"
 #include "code_gen/expr_type.h"
-#include "nodes/prototype.h"
+#include "ast_nodes/prototype.h"
 
 namespace ionir
 {
