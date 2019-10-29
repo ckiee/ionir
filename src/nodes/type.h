@@ -1,22 +1,22 @@
 #pragma once
 
-#include "generation/expr.h"
-#include "generation/expr_type.h"
+#include "code_gen/node.h"
+#include "code_gen/node_type.h"
 
 namespace ionir
 {
-class Type : public Expr
+class Type : public Node
 {
 private:
     bool isPointer;
 
 public:
-    Type(bool isPointer) : Expr(ExprType::Type)
+    Type(bool isPointer) : Node(NodeType::Type)
     {
         this->isPointer = isPointer;
     }
 
-    Expr accept(LlvmVisitor *visitor)
+    Node accept(LlvmVisitor *visitor)
     {
         return visitor->visitType(this);
     }

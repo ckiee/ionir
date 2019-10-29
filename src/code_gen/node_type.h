@@ -2,7 +2,7 @@
 
 namespace ionir
 {
-enum class ExprType
+enum class NodeType
 {
 	Type,
 
@@ -12,6 +12,8 @@ enum class ExprType
 
 	Function,
 
-	Extern
+	Extern,
+
+	LiteralInteger
 };
 }

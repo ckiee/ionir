@@ -1,10 +1,11 @@
 #pragma once
 
-#include "generation/expr.h"
+#include "code_gen/node.h"
+#include "code_gen/node_type.h"
 
 namespace ionir
 {
-class Prototype : public Expr
+class Prototype : public Node
 {
 private:
 	std::string identifier;
@@ -16,14 +17,14 @@ private:
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Expr(ExprType::Prototype), returnType(returnType)
+	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Node(NodeType::Prototype), returnType(returnType)
 	{
 		this->identifier = identifier;
 		this->arguments = arguments;
 		this->hasInfiniteArguments = hasInfiniteArguments;
 	}
 
-	Expr accept(LlvmVisitor *visitor)
+	Node accept(LlvmVisitor *visitor)
 	{
 		return visitor->visitPrototype(this);
 	}

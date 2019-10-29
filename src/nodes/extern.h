@@ -1,18 +1,18 @@
 #pragma once
 
-#include "generation/expr.h"
-#include "generation/expr_type.h"
-#include "expression/prototype.h"
+#include "code_gen/node.h"
+#include "code_gen/node_type.h"
+#include "nodes/prototype.h"
 
 namespace ionir
 {
-class Extern : public Expr
+class Extern : public Node
 {
 private:
 	Prototype prototype;
 
 public:
-	Extern(Prototype prototype) : Expr(ExprType::Extern), prototype(prototype)
+	Extern(Prototype prototype) : Node(NodeType::Extern), prototype(prototype)
 	{
 		this->prototype = prototype;
 	}

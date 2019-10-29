@@ -1,21 +1,21 @@
 #pragma once
 
-#include "generation/expr.h"
-#include "generation/expr_type.h"
-#include "expression/prototype.h"
-#include "expression/block.h"
+#include "code_gen/node.h"
+#include "code_gen/node_type.h"
+#include "nodes/prototype.h"
+#include "nodes/block.h"
 
 namespace ionir
 {
-class Function : public Expr
+class Function : public Node
 {
-private:
+protected:
 	Prototype prototype;
 
 	Block body;
 
 public:
-	Function(Prototype prototype, Block body) : Expr(ExprType::Function), prototype(prototype), body(body)
+	Function(Prototype prototype, Block body) : Node(NodeType::Function), prototype(prototype), body(body)
 	{
 		this->prototype = prototype;
 		this->body = body;

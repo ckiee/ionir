@@ -3,14 +3,14 @@
 #include <stack>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
-#include "generation/expr.h"
-#include "expression/type.h"
-#include "expression/block.h"
-#include "expression/binary_expr.h"
-#include "expression/function.h"
-#include "expression/extern.h"
-#include "generation/expr_type.h"
-#include "expression/prototype.h"
+#include "code_gen/expr.h"
+#include "nodes/type.h"
+#include "nodes/block.h"
+#include "nodes/binary_expr.h"
+#include "nodes/function.h"
+#include "nodes/extern.h"
+#include "code_gen/expr_type.h"
+#include "nodes/prototype.h"
 
 namespace ionir
 {
