@@ -13,9 +13,10 @@ protected:
     Node rightSide;
 
 public:
-    BinaryExpr(Node leftSide, Node rightSide) : Node(NodeType::Block), leftSide(leftSide), rightSide(rightSide)
+    BinaryExpr(Node leftSide, Node rightSide) : Node(NodeType::Block)
     {
-        //
+        this->leftSide = leftSide;
+        this->rightSide = rightSide;
     }
 
     Node accept(LlvmVisitor *visitor) override

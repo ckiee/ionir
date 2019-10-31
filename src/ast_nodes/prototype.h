@@ -17,10 +17,11 @@ private:
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Node(NodeType::Prototype), returnType(returnType)
+	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Node(NodeType::Prototype)
 	{
 		this->identifier = identifier;
 		this->arguments = arguments;
+		this->returnType = returnType;
 		this->hasInfiniteArguments = hasInfiniteArguments;
 	}
 

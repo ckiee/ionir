@@ -55,7 +55,7 @@ int main() {
 
 0. Ensure you have _all_ the requirements (excluding LLVM) installed, as the build process for LLVM will require Python, CMake and others.
 
-1. Download and extract sources ([Visit LLVM's downloads page](http://releases.llvm.org/download.html)).
+1. Download and extract sources ([Visit LLVM's downloads page](http://releases.llvm.org/download.html)) for LLVM 9.0.0 (or [click here](http://releases.llvm.org/9.0.0/llvm-9.0.0.src.tar.xz) to download them directly).
 
 2. Build sources using a Windows command prompt with **administrator privileges** by issuing the following commands:
 

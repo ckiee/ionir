@@ -7,7 +7,7 @@ namespace ionir
 {
 class Type : public Node
 {
-private:
+protected:
     bool isPointer;
 
 public:

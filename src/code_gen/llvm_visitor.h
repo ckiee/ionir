@@ -7,6 +7,7 @@
 #include "ast_nodes/type.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
+#include "ast_nodes/integer.h"
 #include "ast_nodes/function.h"
 #include "ast_nodes/extern.h"
 #include "code_gen/node_type.h"

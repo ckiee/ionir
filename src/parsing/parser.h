@@ -12,9 +12,9 @@ protected:
     TokenStream stream;
 
 public:
-    Parser(TokenStream stream)
+    Parser(TokenStream stream) : stream(stream)
     {
-        this->stream = stream;
+        //
     }
 
     void parseInteger()
