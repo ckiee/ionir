@@ -13,6 +13,7 @@ set(SOURCES
     lexer.cpp
     token.cpp
     util.cpp
+    ast.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

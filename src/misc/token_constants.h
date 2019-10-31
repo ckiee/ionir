@@ -50,10 +50,10 @@ public:
 
 		// Initialize complex map.
 		this->pushComplex(Regex::identifier, TokenType::Identifier);
-		this->pushComplex(Regex::string, TokenType::String);
-		this->pushComplex(Regex::decimal, TokenType::Decimal);
-		this->pushComplex(Regex::integer, TokenType::Integer);
-		this->pushComplex(Regex::character, TokenType::Character);
+		this->pushComplex(Regex::string, TokenType::LiteralString);
+		this->pushComplex(Regex::decimal, TokenType::LiteralDecimal);
+		this->pushComplex(Regex::integer, TokenType::LiteralInteger);
+		this->pushComplex(Regex::character, TokenType::LiteralCharacter);
 		this->pushComplex(Regex::whitespace, TokenType::Whitespace);
 	}
 

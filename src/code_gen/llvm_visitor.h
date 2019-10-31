@@ -242,5 +242,12 @@ public:
 
 		return *node;
 	}
+
+	Node visitInteger(LiteralInteger *node)
+	{
+		this->valueStack.push(node->getValue());
+
+		return *node;
+	}
 };
 } // namespace ionir

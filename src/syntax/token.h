@@ -1,10 +1,16 @@
 #pragma once
 
 #include <string>
+#include "misc/iterable.h"
 #include "token_type.h"
 
 namespace ionir
 {
+/**
+ * An iterable list of tokens.
+ */
+typedef Iterable<Token> TokenStream;
+
 class Token
 {
 protected:

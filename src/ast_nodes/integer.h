@@ -5,13 +5,13 @@
 
 namespace ionir
 {
-class Integer : public Node
+class LiteralInteger : public Node
 {
 protected:
     long value;
 
 public:
-    Integer(long value) : Node(NodeType::LiteralInteger)
+    LiteralInteger(long value) : Node(NodeType::LiteralInteger)
     {
         this->value;
     }
@@ -19,6 +19,11 @@ public:
     Node accept(LlvmVisitor *visitor) override
     {
         return visitor->visitInteger(this);
+    }
+
+    long getValue()
+    {
+        return this->value;
     }
 };
 } // namespace ionir

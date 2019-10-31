@@ -10,13 +10,13 @@ enum class TokenType
 
 	Identifier,
 
-	String,
+	LiteralString,
 
-	Decimal,
+	LiteralDecimal,
 
-	Integer,
+	LiteralInteger,
 
-	Character,
+	LiteralCharacter,
 
 	Whitespace,
 
