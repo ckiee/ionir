@@ -1,14 +1,18 @@
 #pragma once
 
+#include <memory>
 #include "code_gen/node_type.h"
-#include "code_gen/visitable.h"
-#include "code_gen/llvm_visitor.h"
+#include "code_gen/visitor.h"
 
 namespace ionir
 {
-class Node : public Visitable<Node, LlvmVisitor>
+typedef Visitor<Node *> NodeVisitor;
+
+typedef std::unique_ptr<Node> NodePtr;
+
+class Node
 {
-private:
+protected:
     NodeType type;
 
 public:
@@ -17,7 +21,7 @@ public:
         this->type = type;
     }
 
-    virtual Node accept(LlvmVisitor *visitor) = 0;
+    virtual Node *accept(LlvmVisitor *visitor) = 0;
 
     NodeType getNodeType() const
     {

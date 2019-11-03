@@ -8,28 +8,28 @@ namespace ionir
 class BinaryExpr : public Node
 {
 protected:
-    Node leftSide;
+    NodePtr leftSide;
 
-    Node rightSide;
+    NodePtr rightSide;
 
 public:
-    BinaryExpr(Node leftSide, Node rightSide) : Node(NodeType::Block)
+    BinaryExpr(NodePtr leftSide, NodePtr rightSide) : Node(NodeType::Block)
     {
         this->leftSide = leftSide;
         this->rightSide = rightSide;
     }
 
-    Node accept(LlvmVisitor *visitor) override
+    NodePtr accept(LlvmVisitor *visitor) override
     {
         return visitor->visitBinaryExpr(this);
     }
 
-    Node getLeftSide() const
+    NodePtr getLeftSide() const
     {
         return this->leftSide;
     }
 
-    Node getRightSide() const
+    NodePtr getRightSide() const
     {
         return this->rightSide;
     }

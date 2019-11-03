@@ -65,7 +65,14 @@ int main() {
 > cmake --build . --config Release --target INSTALL
 ```
 
-3. LLVM sources, which are exclusively compatible with CMake, shold now be ready to be included in your `CMakeLists.txt` file. See example below:
+3. After this, LLVM will be installed to your machine and some required include files (ex. `IntrinsicEnums.inc`) will be generated under your installation directory, (on Windows it's usually `C:\Program Files (x86)\LLVM\include`). Copy these required files onto the local git submodule directories, and you should be good to go. Skipping this step may cause include errors, as some of LLVM's header files `#include` these generated files. Additionally, you can find out which generated files are missing by simply following include errors. Below is a list of possible generated files you might have to copy over (may not be all):
+    * `llvm/Config/llvm-config.h`
+    * `llvm/Config/abi-breaking.h`
+    * `llvm/IR/IntrinsicEnums.inc`
+    * `llvm/IR/Attributes.inc`
+    
+
+4. LLVM sources, which are exclusively compatible with CMake, shold now be ready to be included in your `CMakeLists.txt` file. See example below:
 
 ```cmake
 ...

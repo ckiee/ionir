@@ -2,6 +2,7 @@
 
 #include "code_gen/node.h"
 #include "code_gen/node_type.h"
+#include "code_gen/llvm_visitor.h"
 
 namespace ionir
 {
@@ -16,7 +17,7 @@ public:
         this->value;
     }
 
-    Node accept(LlvmVisitor *visitor) override
+    NodePtr accept(LlvmVisitor *visitor) override
     {
         return visitor->visitInteger(this);
     }

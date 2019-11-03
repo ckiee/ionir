@@ -1,5 +1,6 @@
 #pragma once
 
+#include "code_gen/llvm_visitor.h"
 #include "code_gen/node.h"
 #include "code_gen/node_type.h"
 
@@ -16,7 +17,7 @@ public:
         this->isPointer = isPointer;
     }
 
-    Node accept(LlvmVisitor *visitor) override
+    NodePtr accept(LlvmVisitor *visitor) override
     {
         return visitor->visitType(this);
     }

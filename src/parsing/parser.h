@@ -12,9 +12,9 @@ protected:
     TokenStream stream;
 
 public:
-    Parser(TokenStream stream) : stream(stream)
+    Parser(TokenStream stream)
     {
-        //
+        this->stream = stream;
     }
 
     void parseInteger()
@@ -24,7 +24,7 @@ public:
         // Attempt to convert token's value to a long.
         long value = std::stol(tokenValue);
 
-        LiteralInteger result = new LiteralInteger(value);
+        LiteralInteger result = LiteralInteger(value);
 
         this->stream.next();
     }

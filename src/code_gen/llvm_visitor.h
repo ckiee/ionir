@@ -4,18 +4,18 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
 #include "code_gen/node.h"
+#include "code_gen/node_type.h"
 #include "ast_nodes/type.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
 #include "ast_nodes/integer.h"
 #include "ast_nodes/function.h"
 #include "ast_nodes/extern.h"
-#include "code_gen/node_type.h"
 #include "ast_nodes/prototype.h"
 
 namespace ionir
 {
-class LlvmVisitor
+class LlvmVisitor : public NodeVisitor
 {
 protected:
 	llvm::LLVMContext *context;
@@ -45,12 +45,12 @@ public:
 		this->namedValues = {};
 	}
 
-	Node visit(Node *node)
+	Node *visit(Node *node)
 	{
 		return node->accept(this);
 	}
 
-	Node visitFunction(Function *node)
+	Node *visitFunction(Function *node)
 	{
 		if (&node->getBody() == nullptr)
 		{
@@ -89,10 +89,10 @@ public:
 
 		this->valueStack.push(function);
 
-		return *node;
+		return node;
 	}
 
-	Node visitExtern(Extern *node)
+	Node *visitExtern(Extern *node)
 	{
 		if (&node->getPrototype() == nullptr)
 		{
@@ -107,10 +107,10 @@ public:
 		this->visitPrototype(&node->getPrototype());
 
 		// No need to push the resulting function onto the stack.
-		return *node;
+		return node;
 	}
 
-	Node visitBlock(Block *node)
+	Node *visitBlock(Block *node)
 	{
 		// Function buffer must not be null.
 		if (&this->function == nullptr)
@@ -125,10 +125,10 @@ public:
 		this->builder = &llvm::IRBuilder<>(*this->context);
 
 		// Visit and append instructions.
-		std::vector<Expr> insts = node->getInsts();
+		std::vector<Node> insts = node->getInsts();
 
 		// Process instructions.
-		for (std::vector<Expr>::iterator iterator = insts.begin(); iterator != insts.end(); iterator++)
+		for (std::vector<Node>::iterator iterator = insts.begin(); iterator != insts.end(); iterator++)
 		{
 			// Visit the instruction.
 			this->visit(&*iterator);
@@ -139,10 +139,10 @@ public:
 
 		this->valueStack.push(block);
 
-		return *node;
+		return node;
 	}
 
-	Node visitType(Type *node)
+	Node *visitType(Type *node)
 	{
 		// TODO: Hard-coded double type.
 		llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
@@ -157,10 +157,10 @@ public:
 
 		this->typeStack.push(type);
 
-		return *node;
+		return node;
 	}
 
-	Node visitBinaryExpr(BinaryExpr *node)
+	Node *visitBinaryExpr(BinaryExpr *node)
 	{
 		// Visit sides.
 		this->visit(&node->getLeftSide());
@@ -181,10 +181,10 @@ public:
 
 		this->valueStack.push(binaryExpr);
 
-		return *node;
+		return node;
 	}
 
-	Node visitPrototype(Prototype *node)
+	Node *visitPrototype(Prototype *node)
 	{
 		// Retrieve argument count from the argument vector.
 		uint32_t argumentCount = node->getArguments().size();
@@ -241,14 +241,14 @@ public:
 
 		this->valueStack.push(function);
 
-		return *node;
+		return node;
 	}
 
-	Node visitInteger(LiteralInteger *node)
+	Node *visitInteger(LiteralInteger *node)
 	{
 		this->valueStack.push(node->getValue());
 
-		return *node;
+		return node;
 	}
 };
 } // namespace ionir

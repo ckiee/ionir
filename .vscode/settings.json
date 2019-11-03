@@ -98,7 +98,8 @@
       "__functional_base_03": "cpp",
       "*.tcc": "cpp",
       "clocale": "cpp",
-      "memory_resource": "cpp"
+      "memory_resource": "cpp",
+      "*.inc": "cpp"
    },
    "cmake.configureOnOpen": true,
    "C_Cpp.configurationWarnings": "Disabled",
