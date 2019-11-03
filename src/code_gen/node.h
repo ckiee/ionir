@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "code_gen/node_type.h"
+#include "code_gen/node_kind.h"
 #include "code_gen/visitor.h"
 
 namespace ionir
@@ -13,17 +13,17 @@ typedef std::unique_ptr<Node> NodePtr;
 class Node
 {
 protected:
-    NodeType type;
+    NodeKind type;
 
 public:
-    Node(NodeType type)
+    Node(NodeKind type)
     {
         this->type = type;
     }
 
     virtual Node *accept(LlvmVisitor *visitor) = 0;
 
-    NodeType getNodeType() const
+    NodeKind getNodeKind() const
     {
         return this->type;
     }

@@ -1,10 +1,11 @@
 #pragma once
 
+#include <optional>
 #include <stack>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
 #include "code_gen/node.h"
-#include "code_gen/node_type.h"
+#include "code_gen/node_kind.h"
 #include "ast_nodes/type.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
@@ -246,7 +247,60 @@ public:
 
 	Node *visitInteger(LiteralInteger *node)
 	{
-		this->valueStack.push(node->getValue());
+		// Create the APInt to provide. Acts sort of an LLVM integer value wrapper. Default to being signed to allow for a larger range of values.
+		llvm::APInt apInt = llvm::APInt(node->getValue(), true);
+
+		// TODO: Process correct int. type based on IntegerKind.
+		std::optional<llvm::IntegerType> type;
+
+		// Create the corresponding LLVM integer type based off the node's integer kind.
+		switch (node->getKind())
+		{
+		case IntegerKind::Int1:
+		{
+			type.value = *llvm::Type::getInt1Ty(*this->context);
+
+			break;
+		}
+
+		case IntegerKind::Int32:
+		{
+			type.value = *llvm::Type::getInt32Ty(*this->context);
+
+			break;
+		}
+
+		case IntegerKind::Int64:
+		{
+			type.value = *llvm::Type::getInt64Ty(*this->context);
+
+			break;
+		}
+
+		case IntegerKind::Int128:
+		{
+			type.value = *llvm::Type::getInt128Ty(*this->context);
+
+			break;
+		}
+
+		default:
+		{
+			throw std::exception("An unrecognized integer kind was provided");
+		}
+		}
+
+		// At this point, type must be defined.
+		if (!type.has_value())
+		{
+			throw std::exception("Expected type to be defined");
+		}
+
+		// Finally, create the LLVM value constant.
+		llvm::Constant *value = llvm::ConstantInt::get(&*type, apInt);
+
+		// Push the value onto the value stack.
+		this->valueStack.push(value);
 
 		return node;
 	}

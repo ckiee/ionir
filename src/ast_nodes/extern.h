@@ -1,7 +1,7 @@
 #pragma once
 
 #include "code_gen/node.h"
-#include "code_gen/node_type.h"
+#include "code_gen/node_kind.h"
 #include "ast_nodes/prototype.h"
 
 namespace ionir
@@ -12,7 +12,7 @@ private:
 	Prototype prototype;
 
 public:
-	Extern(Prototype prototype) : Node(NodeType::Extern), prototype(prototype)
+	Extern(Prototype prototype) : Node(NodeKind::Extern), prototype(prototype)
 	{
 		this->prototype = prototype;
 	}

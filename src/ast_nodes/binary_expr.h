@@ -1,35 +1,35 @@
 #pragma once
 
 #include "code_gen/node.h"
-#include "code_gen/node_type.h"
+#include "code_gen/node_kind.h"
 
 namespace ionir
 {
 class BinaryExpr : public Node
 {
 protected:
-    NodePtr leftSide;
+    Node *leftSide;
 
-    NodePtr rightSide;
+    Node *rightSide;
 
 public:
-    BinaryExpr(NodePtr leftSide, NodePtr rightSide) : Node(NodeType::Block)
+    BinaryExpr(Node *leftSide, Node *rightSide) : Node(NodeKind::Block)
     {
         this->leftSide = leftSide;
         this->rightSide = rightSide;
     }
 
-    NodePtr accept(LlvmVisitor *visitor) override
+    Node *accept(LlvmVisitor *visitor) override
     {
         return visitor->visitBinaryExpr(this);
     }
 
-    NodePtr getLeftSide() const
+    Node *getLeftSide() const
     {
         return this->leftSide;
     }
 
-    NodePtr getRightSide() const
+    Node *getRightSide() const
     {
         return this->rightSide;
     }

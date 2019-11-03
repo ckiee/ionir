@@ -1,7 +1,7 @@
 #pragma once
 
 #include "code_gen/node.h"
-#include "code_gen/node_type.h"
+#include "code_gen/node_kind.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/block.h"
 
@@ -15,7 +15,7 @@ protected:
 	Block body;
 
 public:
-	Function(Prototype prototype, Block body) : Node(NodeType::Function), prototype(prototype), body(body)
+	Function(Prototype prototype, Block body) : Node(NodeKind::Function), prototype(prototype), body(body)
 	{
 		this->prototype = prototype;
 		this->body = body;

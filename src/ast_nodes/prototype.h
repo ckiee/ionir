@@ -1,7 +1,7 @@
 #pragma once
 
 #include "code_gen/node.h"
-#include "code_gen/node_type.h"
+#include "code_gen/node_kind.h"
 
 namespace ionir
 {
@@ -17,7 +17,7 @@ private:
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, std::unique_ptr<Type> returnType, bool hasInfiniteArguments) : Node(NodeType::Prototype)
+	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, std::unique_ptr<Type> returnType, bool hasInfiniteArguments) : Node(NodeKind::Prototype)
 	{
 		this->identifier = identifier;
 		this->arguments = arguments;
