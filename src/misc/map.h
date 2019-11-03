@@ -1,17 +1,60 @@
 #pragma once
 
+#include <optional>
 #include <map>
+#include "misc/wrapper.h"
 
 namespace ionir
 {
-template typename<TKey> template typename<TValue> class Map
+template <typename TKey, typename TValue>
+class Map : public Wrapper<std::map<TKey, TValue>>
 {
-public:
+protected:
 	std::map<TKey, TValue> innerMap;
+
+public:
+	std::map<TKey, TValue> unwrap() const override
+	{
+		return this->innerMap;
+	}
 
 	bool contains(TKey key) const
 	{
-		return this
+		auto it = this->innerMap.find(key);
+
+		if (it != this->innerMap.end())
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	void insert(TKey key, TValue value)
+	{
+		this->innerMap.insert(key, value);
+	}
+
+	std::optional<TValue> tryGet(TKey key)
+	{
+		if (this->contains(key))
+		{
+			return this->innerMap[key];
+		}
+
+		return std::nullopt;
+	}
+
+	TValue getOrDefault(TKey key, TValue defaultValue)
+	{
+		std::optional<TValue> value = this->tryGet(key);
+
+		if (value.has_value())
+		{
+			return value;
+		}
+
+		return defaultValue;
 	}
 };
 } // namespace ionir
