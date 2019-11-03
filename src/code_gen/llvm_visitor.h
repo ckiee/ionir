@@ -164,8 +164,8 @@ public:
 	Node *visitBinaryExpr(BinaryExpr *node)
 	{
 		// Visit sides.
-		this->visit(&node->getLeftSide());
-		this->visit(&node->getRightSide());
+		this->visit(node->getLeftSide());
+		this->visit(node->getRightSide());
 
 		// Pop and retrieve right side.
 		this->valueStack.pop();
@@ -234,7 +234,7 @@ public:
 			std::string name = node->getArguments()[i].second;
 
 			// Retrieve the argument at the current index iterator.
-			llvm::Value *argument = function->args[i];
+			llvm::Value *argument = &function->args[i];
 
 			// Name the argument.
 			argument->setName(name);

@@ -21,7 +21,7 @@ public:
 		this->body = body;
 	}
 
-	NodePtr accept(LlvmVisitor *visitor) override
+	Node *accept(LlvmVisitor *visitor) override
 	{
 		return visitor->visitFunction(this);
 	}

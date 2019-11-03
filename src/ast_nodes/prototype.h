@@ -12,20 +12,19 @@ private:
 
 	std::vector<std::pair<Type, std::string>> arguments;
 
-	std::unique_ptr<Type> returnType;
+	Type returnType;
 
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, std::unique_ptr<Type> returnType, bool hasInfiniteArguments) : Node(NodeKind::Prototype)
+	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Node(NodeKind::Prototype), returnType(returnType)
 	{
 		this->identifier = identifier;
 		this->arguments = arguments;
-		this->returnType = returnType;
 		this->hasInfiniteArguments = hasInfiniteArguments;
 	}
 
-	NodePtr accept(LlvmVisitor *visitor) override
+	Node *accept(LlvmVisitor *visitor) override
 	{
 		return visitor->visitPrototype(this);
 	}
@@ -40,7 +39,7 @@ public:
 		return this->arguments;
 	}
 
-	std::unique_ptr<Type> getReturnType() const
+	Type getReturnType() const
 	{
 		return this->returnType;
 	}
