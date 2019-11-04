@@ -10,6 +10,8 @@ enum class IntegerKind
 {
     Int1,
 
+    Int16,
+
     Int32,
 
     Int64,
@@ -36,14 +38,14 @@ public:
         return visitor->visitInteger(this);
     }
 
-    long getValue() const
-    {
-        return this->value;
-    }
-
     IntegerKind getKind() const
     {
         return this->kind;
+    }
+
+    long getValue() const
+    {
+        return this->value;
     }
 };
 } // namespace ionir
