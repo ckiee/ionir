@@ -59,7 +59,7 @@ public:
         // At this point, kind must be set.
         if (!kind.has_value())
         {
-            throw std::exception("Expected kind to contain a value");
+            throw std::exception("Expected kind to be defined");
         }
 
         // Create the integer instance.
