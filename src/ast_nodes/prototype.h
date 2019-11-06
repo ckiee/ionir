@@ -1,8 +1,5 @@
 #pragma once
 
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
-
 namespace ionir
 {
 class Prototype : public Node
@@ -17,36 +14,16 @@ private:
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments) : Node(NodeKind::Prototype), returnType(returnType)
-	{
-		this->identifier = identifier;
-		this->arguments = arguments;
-		this->hasInfiniteArguments = hasInfiniteArguments;
-	}
+	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments);
 
-	Node *accept(LlvmVisitor *visitor) override
-	{
-		return visitor->visitPrototype(this);
-	}
+	Node *accept(LlvmVisitor *visitor) override;
 
-	std::string getIdentifier() const
-	{
-		return this->identifier;
-	}
+	std::string getIdentifier() const;
 
-	std::vector<std::pair<Type, std::string>> getArguments() const
-	{
-		return this->arguments;
-	}
+	std::vector<std::pair<Type, std::string>> getArguments() const;
 
-	Type getReturnType() const
-	{
-		return this->returnType;
-	}
+	Type getReturnType() const;
 
-	bool getHasInfiniteArguments() const
-	{
-		return this->hasInfiniteArguments;
-	}
+	bool getHasInfiniteArguments() const;
 };
 } // namespace ionir

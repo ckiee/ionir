@@ -1,10 +1,5 @@
 #pragma once
 
-#include <vector>
-#include <string>
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
-
 namespace ionir
 {
 class Block : public Node
@@ -15,25 +10,12 @@ private:
     std::vector<Node> insts;
 
 public:
-    Block(std::string identifier, std::vector<Node> insts) : Node(NodeKind::Block)
-    {
-        this->identifier = identifier;
-        this->insts = insts;
-    }
+    Block(std::string identifier, std::vector<Node> insts);
 
-    Node *accept(LlvmVisitor *visitor) override
-    {
-        return visitor->visitBlock(this);
-    }
+    Node *accept(LlvmVisitor *visitor) override;
 
-    std::vector<Node> getInsts() const
-    {
-        return this->insts;
-    }
+    std::vector<Node> getInsts() const;
 
-    std::string getIdentifier() const
-    {
-        return this->identifier;
-    }
+    std::string getIdentifier() const;
 };
 } // namespace ionir

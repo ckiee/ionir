@@ -1,9 +1,5 @@
 #pragma once
 
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
-#include "code_gen/llvm_visitor.h"
-
 namespace ionir
 {
 enum class IntegerKind
@@ -27,25 +23,12 @@ protected:
     long value;
 
 public:
-    LiteralInteger(IntegerKind kind, long value) : Node(NodeKind::LiteralInteger)
-    {
-        this->kind = kind;
-        this->value;
-    }
+    LiteralInteger(IntegerKind kind, long value);
 
-    Node *accept(LlvmVisitor *visitor) override
-    {
-        return visitor->visitInteger(this);
-    }
+    Node *accept(LlvmVisitor *visitor) override;
 
-    IntegerKind getKind() const
-    {
-        return this->kind;
-    }
+    IntegerKind getKind() const;
 
-    long getValue() const
-    {
-        return this->value;
-    }
+    long getValue() const;
 };
 } // namespace ionir

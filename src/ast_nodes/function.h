@@ -1,10 +1,5 @@
 #pragma once
 
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
-#include "ast_nodes/prototype.h"
-#include "ast_nodes/block.h"
-
 namespace ionir
 {
 class Function : public Node
@@ -15,25 +10,12 @@ protected:
 	Block body;
 
 public:
-	Function(Prototype prototype, Block body) : Node(NodeKind::Function), prototype(prototype), body(body)
-	{
-		this->prototype = prototype;
-		this->body = body;
-	}
+	Function(Prototype prototype, Block body);
 
-	Node *accept(LlvmVisitor *visitor) override
-	{
-		return visitor->visitFunction(this);
-	}
+	Node *accept(LlvmVisitor *visitor) override;
 
-	Prototype getPrototype() const
-	{
-		return this->prototype;
-	}
+	Prototype getPrototype() const;
 
-	Block getBody() const
-	{
-		return this->body;
-	}
+	Block getBody() const;
 };
 } // namespace ionir

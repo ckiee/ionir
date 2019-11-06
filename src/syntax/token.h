@@ -6,11 +6,6 @@
 
 namespace ionir
 {
-/**
- * An iterable list of tokens.
- */
-typedef Iterable<Token> TokenStream;
-
 class Token
 {
 protected:
@@ -21,58 +16,29 @@ protected:
 	size_t startPosition;
 
 public:
-	static Token createDummy(size_t startPosition)
-	{
-		return Token(TokenType::Unknown, "", startPosition);
-	}
+	static Token createDummy(size_t startPosition);
 
-	Token(TokenType type, std::string value, size_t startPosition)
-	{
-		this->type = type;
-		this->value = value;
-		this->startPosition = startPosition;
-	}
+	Token(TokenType type, std::string value, size_t startPosition);
 
-	size_t getStartPosition() const
-	{
-		return this->startPosition;
-	}
+	size_t getStartPosition() const;
 
-	size_t getEndPosition() const
-	{
-		return this->startPosition + this->value.length();
-	}
+	size_t getEndPosition() const;
 
-	TokenType getType() const
-	{
-		return this->type;
-	}
+	TokenType getType() const;
 
-	std::string getValue() const
-	{
-		return this->value;
-	}
+	std::string getValue() const;
 
-	bool isDummy() const
-	{
-		return this->value == "" && this->type == TokenType::Unknown;
-	}
+	bool isDummy() const;
 
-	bool operator==(const Token &other) const
-	{
-		return this->value == other.value &&
-			   this->type == other.type &&
-			   this->startPosition == other.startPosition;
-	}
+	bool operator==(const Token &other) const;
 
-	bool operator!=(const Token &other) const
-	{
-		return !(*this == other);
-	}
+	bool operator!=(const Token &other) const;
 };
 
-inline std::ostream &operator<<(std::ostream &stream, Token &token)
-{
-	return stream << "Token(" << token.getValue() << ", " << token.getType() << ", " << token.getStartPosition() << "-" << token.getEndPosition() << ")";
-}
+inline std::ostream &operator<<(std::ostream &stream, Token &token);
+
+/**
+ * An iterable list of tokens.
+ */
+typedef Iterable<Token> TokenStream;
 } // namespace ionir

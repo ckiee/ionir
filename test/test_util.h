@@ -2,6 +2,7 @@
 
 #include <array>
 #include <vector>
+#include "syntax/token.h"
 #include "misc/iterable.h"
 
 namespace ionir::testing

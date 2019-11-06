@@ -1,8 +1,5 @@
 #pragma once
 
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
-
 namespace ionir
 {
 class BinaryExpr : public Node
@@ -13,25 +10,12 @@ protected:
     Node *rightSide;
 
 public:
-    BinaryExpr(Node *leftSide, Node *rightSide) : Node(NodeKind::Block)
-    {
-        this->leftSide = leftSide;
-        this->rightSide = rightSide;
-    }
+    BinaryExpr(Node *leftSide, Node *rightSide);
 
-    Node *accept(LlvmVisitor *visitor) override
-    {
-        return visitor->visitBinaryExpr(this);
-    }
+    Node *accept(LlvmVisitor *visitor) override;
 
-    Node *getLeftSide() const
-    {
-        return this->leftSide;
-    }
+    Node *getLeftSide() const;
 
-    Node *getRightSide() const
-    {
-        return this->rightSide;
-    }
+    Node *getRightSide() const;
 };
 } // namespace ionir

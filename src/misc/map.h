@@ -1,9 +1,5 @@
 #pragma once
 
-#include <optional>
-#include <map>
-#include "misc/wrapper.h"
-
 namespace ionir
 {
 template <typename TKey, typename TValue>
@@ -13,48 +9,14 @@ protected:
 	std::map<TKey, TValue> innerMap;
 
 public:
-	std::map<TKey, TValue> unwrap() const override
-	{
-		return this->innerMap;
-	}
+	std::map<TKey, TValue> unwrap() const override;
 
-	bool contains(TKey key) const
-	{
-		auto it = this->innerMap.find(key);
+	bool contains(TKey key) const;
 
-		if (it != this->innerMap.end())
-		{
-			return true;
-		}
+	void insert(TKey key, TValue value);
 
-		return false;
-	}
+	std::optional<TValue> tryGet(TKey key);
 
-	void insert(TKey key, TValue value)
-	{
-		this->innerMap.insert(key, value);
-	}
-
-	std::optional<TValue> tryGet(TKey key)
-	{
-		if (this->contains(key))
-		{
-			return this->innerMap[key];
-		}
-
-		return std::nullopt;
-	}
-
-	TValue getOrDefault(TKey key, TValue defaultValue)
-	{
-		std::optional<TValue> value = this->tryGet(key);
-
-		if (value.has_value())
-		{
-			return value;
-		}
-
-		return defaultValue;
-	}
+	TValue getOrDefault(TKey key, TValue defaultValue);
 };
 } // namespace ionir
