@@ -60,7 +60,7 @@
 //         Lexer *lexer = new Lexer(input);
 
 //         // Tokenize the input.
-//         std::vector<Token> batch = lexer->tokenize();
+//         std::vector<Token> batch = lexer->scan();
 
 //         // Iterate and output resulting tokens.
 //         for (auto &token : batch)

@@ -187,7 +187,7 @@ std::string Lexer::getInput() const
     return this->input;
 }
 
-std::vector<Token> Lexer::tokenize()
+std::vector<Token> Lexer::scan()
 {
     // Reset index to avoid carrying over previous information.
     this->begin();

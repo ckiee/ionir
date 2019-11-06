@@ -67,6 +67,6 @@ public:
 
     std::string getInput() const;
 
-    std::vector<Token> tokenize();
+    std::vector<Token> scan();
 };
 } // namespace ionir
