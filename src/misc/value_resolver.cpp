@@ -1,8 +1,4 @@
-#include <optional>
-#include "llvm/IR/LLVMContext.h"
 #include "value_resolver.h"
-#include "ast_nodes/integer.h"
-#include "misc/constants.h"
 
 namespace ionir
 {

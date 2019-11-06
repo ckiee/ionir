@@ -1,5 +1,9 @@
 #pragma once
 
+#include "code_gen/llvm_visitor.h"
+#include "ast_nodes/extern.h"
+#include "ast_nodes/function.h"
+
 namespace ionir
 {
 class GenerationListener

@@ -1,10 +1,4 @@
-#include <vector>
-#include <map>
-#include <string>
-#include <regex>
 #include "token_constants.h"
-#include "syntax/token_type.h"
-#include "misc/regex.h"
 
 namespace ionir
 {

@@ -1,5 +1,4 @@
 #include "token_identifier.h"
-#include "syntax/token_type.h"
 
 namespace ionir
 {

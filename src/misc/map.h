@@ -1,5 +1,9 @@
 #pragma once
 
+#include <optional>
+#include <map>
+#include "misc/wrapper.h"
+
 namespace ionir
 {
 template <typename TKey, typename TValue>

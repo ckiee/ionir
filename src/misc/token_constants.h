@@ -1,5 +1,12 @@
 #pragma once
 
+#include <vector>
+#include <map>
+#include <string>
+#include <regex>
+#include "syntax/token_type.h"
+#include "misc/regex.h"
+
 namespace ionir
 {
 class TokenConstants

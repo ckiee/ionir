@@ -1,5 +1,12 @@
 #pragma once
 
+#include <exception>
+#include <limits>
+#include <string>
+#include "syntax/token.h"
+#include "ast_nodes/integer.h"
+#include "ast_nodes/extern.h"
+
 namespace ionir
 {
 class Parser

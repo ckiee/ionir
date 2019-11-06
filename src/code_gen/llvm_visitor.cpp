@@ -1,18 +1,4 @@
-#include <exception>
-#include <optional>
-#include <stack>
-#include "llvm/IR/Module.h"
-#include "llvm/IR/IRBuilder.h"
 #include "llvm_visitor.h"
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
-#include "ast_nodes/type.h"
-#include "ast_nodes/block.h"
-#include "ast_nodes/binary_expr.h"
-#include "ast_nodes/integer.h"
-#include "ast_nodes/function.h"
-#include "ast_nodes/extern.h"
-#include "ast_nodes/prototype.h"
 
 namespace ionir
 {

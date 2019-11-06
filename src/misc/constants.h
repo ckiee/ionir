@@ -1,5 +1,12 @@
 #pragma once
 
+#include <map>
+#include <optional>
+#include "llvm/IR/DerivedTypes.h"
+#include "llvm/IR/LLVMContext.h"
+#include "ast_nodes/integer.h"
+#include "misc/map.h"
+
 namespace ionir
 {
 typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMContext &context);

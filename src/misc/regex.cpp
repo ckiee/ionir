@@ -1,4 +1,3 @@
-#include <regex>
 #include "regex.h"
 
 namespace ionir

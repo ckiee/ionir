@@ -1,5 +1,11 @@
 #pragma once
 
+#include <optional>
+#include "llvm/IR/Module.h"
+#include "syntax/token.h"
+#include "misc/iterable.h"
+#include "misc/loose_generator.h"
+
 namespace ionir
 {
 class Driver : public LooseGenerator

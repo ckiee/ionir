@@ -1,5 +1,7 @@
 #pragma once
 
+#include <regex>
+
 namespace ionir
 {
 class Regex

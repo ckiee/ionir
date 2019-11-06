@@ -1,5 +1,9 @@
 #pragma once
 
+#include <map>
+#include <string>
+#include "code_gen/node.h"
+
 namespace ionir
 {
 class GlobalSpace

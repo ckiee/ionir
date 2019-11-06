@@ -1,7 +1,4 @@
 #include "extern.h"
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
-#include "ast_nodes/prototype.h"
 
 namespace ionir
 {

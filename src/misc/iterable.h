@@ -1,5 +1,10 @@
 #pragma once
 
+#include <vector>
+#include <optional>
+#include "syntax/token.h"
+#include "misc/generator.h"
+
 namespace ionir
 {
 template <typename T>

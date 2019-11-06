@@ -1,5 +1,7 @@
 #pragma once
 
+#include "syntax/token_type.h"
+
 namespace ionir
 {
 class TokenIdentifier

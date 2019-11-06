@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+#include <regex>
+#include <string_view>
+
 namespace ionir
 {
 class Util

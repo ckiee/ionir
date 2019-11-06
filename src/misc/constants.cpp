@@ -1,10 +1,4 @@
-#include <map>
-#include <optional>
-#include "llvm/IR/DerivedTypes.h"
-#include "llvm/IR/LLVMContext.h"
 #include "constants.h"
-#include "ast_nodes/integer.h"
-#include "misc/map.h"
 
 namespace ionir
 {

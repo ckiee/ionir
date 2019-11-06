@@ -1,7 +1,4 @@
-#include <map>
-#include <string>
 #include "global_space.h"
-#include "code_gen/node.h"
 
 namespace ionir
 {

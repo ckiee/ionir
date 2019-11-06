@@ -1,15 +1,4 @@
-#include <string>
-#include <vector>
-#include <map>
-#include <iostream>
-#include <stdexcept>
-#include <optional>
 #include "lexer.h"
-#include "syntax/token.h"
-#include "misc/token_constants.h"
-#include "misc/util.h"
-#include "misc/regex.h"
-#include "misc/iterable.h"
 
 namespace ionir
 {

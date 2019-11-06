@@ -1,5 +1,10 @@
 #pragma once
 
+#include <optional>
+#include "llvm/IR/LLVMContext.h"
+#include "ast_nodes/integer.h"
+#include "misc/constants.h"
+
 namespace ionir
 {
 class ValueResolver
