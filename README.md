@@ -17,6 +17,7 @@ $ cmake --build .
 A general usage example is provided below.
 
 ```cpp
+#include <iostream>
 #include <string>
 #include "ionir/generation/driver.h"
 #include "ionir/syntax/lexer.h"
@@ -28,7 +29,7 @@ int main() {
     Lexer lexer = new Lexer("hello world");
 
     // Tokenize the input.
-    TokenStream stream = lexer.tokenize();
+    TokenStream stream = lexer.scan();
 
     // Create a driver to handle code generation.
     Driver driver = new Driver(stream);
