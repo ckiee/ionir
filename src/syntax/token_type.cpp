@@ -2,7 +2,7 @@
 
 namespace ionir
 {
-inline std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType)
+std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType)
 {
     return stream << "TokenType(" << (int)tokenType << ")";
 }

@@ -28,7 +28,7 @@ TEST(LexerTest, LexOneSymbol)
 	ionir::Lexer lexer = ionir::Lexer("$");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> tokens = lexer.tokenize();
+	std::vector<ionir::Token> tokens = lexer.scan();
 
 	// Create the expected token.
 	ionir::Token expected = ionir::Token(ionir::TokenType::SymbolDollar, "$", 0);
@@ -46,7 +46,7 @@ TEST(LexerTest, LexTwoSymbols)
 	ionir::Lexer lexer = ionir::Lexer("$#");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> actual = lexer.tokenize();
+	std::vector<ionir::Token> actual = lexer.scan();
 
 	std::array<ionir::Token, 2> expected = {
 		ionir::Token(ionir::TokenType::SymbolDollar, "$", 0),
@@ -63,7 +63,7 @@ TEST(LexerTest, LexSymbols)
 	ionir::Lexer lexer = ionir::Lexer("@=:$#()[],~%;");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> actual = lexer.tokenize();
+	std::vector<ionir::Token> actual = lexer.scan();
 
 	// Create a list of expected tokens.
 	std::array<ionir::Token, 13> expected = {
@@ -91,7 +91,7 @@ TEST(LexerTest, LexIdentifiers)
 	ionir::Lexer lexer = ionir::Lexer("hello world");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> actual = lexer.tokenize();
+	std::vector<ionir::Token> actual = lexer.scan();
 
 	std::array<ionir::Token, 2> expected = {
 		ionir::Token(ionir::TokenType::Identifier, "hello", 0),

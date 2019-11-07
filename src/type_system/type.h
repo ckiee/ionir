@@ -13,10 +13,6 @@ protected:
 	int id;
 
 public:
-	Type(T value, int id)
-	{
-		this->value = value;
-		this->id = id;
-	}
+	Type(T value, int id);
 };
 } // namespace ionir

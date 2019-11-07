@@ -35,7 +35,7 @@ public:
 	bool operator!=(const Token &other) const;
 };
 
-inline std::ostream &operator<<(std::ostream &stream, Token &token);
+std::ostream &operator<<(std::ostream &stream, Token &token);
 
 /**
  * An iterable list of tokens.

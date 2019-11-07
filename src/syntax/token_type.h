@@ -59,5 +59,5 @@ enum class TokenType
 	KeywordExtern
 };
 
-inline std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);
+std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);
 } // namespace ionir

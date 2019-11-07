@@ -50,7 +50,7 @@ bool Token::operator!=(const Token &other) const
     return !(*this == other);
 }
 
-inline std::ostream &operator<<(std::ostream &stream, Token &token)
+std::ostream &operator<<(std::ostream &stream, Token &token)
 {
     return stream << "Token(" << token.getValue() << ", " << token.getType() << ", " << token.getStartPosition() << "-" << token.getEndPosition() << ")";
 }
