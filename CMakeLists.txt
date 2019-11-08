@@ -33,8 +33,8 @@ find_package(LLVM 9.0.0 EXACT REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
-# Include LLVM source directories (for syntax support, etc.).
-include_directories(${LLVM_INCLUDE_DIRS})
+# Include LLVM source directories (for syntax support, etc.). The SYSTEM symbol supposedly marks the directory to supress warnings.
+include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
 # Disable warnings from includes.
@@ -43,8 +43,8 @@ add_definitions(${LLVM_DEFINITIONS})
 #target_include_directories(llvm PRIVATE include/ SYSTEM INTERFACE include/)
 
 # Set source file(s).
-set(SOURCES
-    src/Ion.IR.cpp
+file(GLOB_RECURSE SOURCES
+    "src/*.cpp"
 )
 
 # Specify that this project is a library.

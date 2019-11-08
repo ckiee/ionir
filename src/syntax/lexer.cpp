@@ -42,7 +42,7 @@ size_t Lexer::setIndex(size_t index)
     return this->index;
 }
 
-size_t Lexer::skip(size_t amount = 1)
+size_t Lexer::skip(size_t amount)
 {
     return this->setIndex(this->index + amount);
 }
