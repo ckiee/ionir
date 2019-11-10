@@ -13,14 +13,53 @@ protected:
 	std::map<TKey, TValue> innerMap;
 
 public:
-	std::map<TKey, TValue> unwrap() const override;
+	Map::Map()
+	{
+		// TODO: Initialize 'innerMap.'
+	}
 
-	bool contains(TKey key) const;
+	std::map<TKey, TValue> Map::unwrap() const
+	{
+		return this->innerMap;
+	}
 
-	void insert(TKey key, TValue value);
+	bool Map::contains(TKey key) const
+	{
+		auto it = this->innerMap.find(key);
 
-	std::optional<TValue> tryGet(TKey key);
+		if (it != this->innerMap.end())
+		{
+			return true;
+		}
 
-	TValue getOrDefault(TKey key, TValue defaultValue);
+		return false;
+	}
+
+	void Map::insert(TKey key, TValue value)
+	{
+		this->innerMap.insert(key, value);
+	}
+
+	std::optional<TValue> Map::tryGet(TKey key)
+	{
+		if (this->contains(key))
+		{
+			return this->innerMap[key];
+		}
+
+		return std::nullopt;
+	}
+
+	TValue Map::getOrDefault(TKey key, TValue defaultValue)
+	{
+		std::optional<TValue> value = this->tryGet(key);
+
+		if (value.has_value())
+		{
+			return value;
+		}
+
+		return defaultValue;
+	}
 };
 } // namespace ionir
