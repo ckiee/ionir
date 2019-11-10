@@ -7,6 +7,8 @@
 
 namespace ionir
 {
+class LlvmVisitor;
+
 class Function : public Node
 {
 protected:

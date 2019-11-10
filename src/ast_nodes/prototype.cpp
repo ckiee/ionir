@@ -1,4 +1,5 @@
 #include "prototype.h"
+#include "code_gen/llvm_visitor.h"
 
 namespace ionir
 {

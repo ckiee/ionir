@@ -1,4 +1,5 @@
 #include "binary_expr.h"
+#include "code_gen/llvm_visitor.h"
 
 namespace ionir
 {

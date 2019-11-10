@@ -81,5 +81,6 @@ Extern *Parser::parseExtern()
     this->stream.next();
 
     // TODO: Finish implementation.
+    return nullptr;
 }
 } // namespace ionir

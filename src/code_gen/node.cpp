@@ -1,4 +1,5 @@
 #include "node.h"
+#include "llvm_visitor.h"
 
 namespace ionir
 {

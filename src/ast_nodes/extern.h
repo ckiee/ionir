@@ -3,10 +3,11 @@
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 #include "ast_nodes/prototype.h"
-#include "code_gen/llvm_visitor.h"
 
 namespace ionir
 {
+class LlvmVisitor;
+
 class Extern : public Node
 {
 private:
