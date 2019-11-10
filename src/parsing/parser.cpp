@@ -1,3 +1,4 @@
+#include <exception>
 #include "parser.h"
 
 namespace ionir
@@ -13,7 +14,7 @@ void Parser::expect(TokenType type)
 
     if (current.getType() != type)
     {
-        throw std::exception("Expected current token type to be: " + std::to_string(type));
+        throw std::exception("Unexpected token type");
     }
 }
 

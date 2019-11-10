@@ -1,6 +1,5 @@
 #pragma once
 
-#include <exception>
 #include <limits>
 #include <string>
 #include "syntax/token.h"
