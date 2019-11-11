@@ -226,35 +226,35 @@ Node *LlvmVisitor::visitInteger(LiteralInteger *node)
     llvm::APInt apInt = llvm::APInt(node->getValue(), true);
 
     // TODO: Process correct int. type based on IntegerKind.
-    std::optional<llvm::IntegerType> type;
+    std::optional<llvm::IntegerType *> type;
 
     // Create the corresponding LLVM integer type based off the node's integer kind.
     switch (node->getKind())
     {
     case IntegerKind::Int1:
     {
-        type.value = *llvm::Type::getInt1Ty(*this->context);
+        type = llvm::Type::getInt1Ty(*this->context);
 
         break;
     }
 
     case IntegerKind::Int32:
     {
-        type.value = *llvm::Type::getInt32Ty(*this->context);
+        type = llvm::Type::getInt32Ty(*this->context);
 
         break;
     }
 
     case IntegerKind::Int64:
     {
-        type.value = *llvm::Type::getInt64Ty(*this->context);
+        type = llvm::Type::getInt64Ty(*this->context);
 
         break;
     }
 
     case IntegerKind::Int128:
     {
-        type.value = *llvm::Type::getInt128Ty(*this->context);
+        type = llvm::Type::getInt128Ty(*this->context);
 
         break;
     }

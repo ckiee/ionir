@@ -8,7 +8,7 @@ ValueResolver::ValueResolver(llvm::Module *module, Constants *constants)
     this->constants = constants;
 }
 
-std::optional<llvm::Constant *> ValueResolver::tryResolveInt(IntegerKind kind, long value, bool isSigned = true)
+std::optional<llvm::Constant *> ValueResolver::tryResolveInt(IntegerKind kind, long value, bool isSigned)
 {
     std::optional<LlvmIntTypeResolver> resolver = this->constants->tryGetIntTypeResolver(kind);
 
@@ -19,6 +19,9 @@ std::optional<llvm::Constant *> ValueResolver::tryResolveInt(IntegerKind kind, l
 
     llvm::APInt apInt = llvm::APInt(value, isSigned);
 
-    return llvm::ConstantInt::get(resolver(this->context), apInt);
+    // TODO
+    return std::nullopt;
+
+    //return llvm::ConstantInt::get(resolver(this->context), apInt);
 }
 } // namespace ionir
