@@ -189,7 +189,8 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
         // Create the function type.
         llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getHasInfiniteArguments());
 
-        function = this->module->functions.getOrInsertFunction(node->getIdentifier(), type);
+        // Cast the value to a function, since we know getCallee() will return a function.
+        function = (llvm::Function *)this->module->getOrInsertFunction(node->getIdentifier(), type).getCallee();
 
         // Set the function's linkage.
         function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
@@ -272,7 +273,7 @@ Node *LlvmVisitor::visitInteger(LiteralInteger *node)
     }
 
     // Finally, create the LLVM value constant.
-    llvm::Constant *value = llvm::ConstantInt::get(&*type, apInt);
+    llvm::Constant *value = llvm::ConstantInt::get(*type, apInt);
 
     // Push the value onto the value stack.
     this->valueStack.push(value);
