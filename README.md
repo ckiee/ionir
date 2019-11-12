@@ -138,6 +138,13 @@ If intelli-sense is failing in Visual Studio Code, there may be a few reasons be
 * Compile project and its dependencies in your platform (ex. avoid using WSL on Windows).
 * Ensure dependencies are properly installed and have correct versions.
 
+#### Developer notes
+
+* [libTooling](https://clang.llvm.org/docs/LibTooling.html)
+* [libClang](https://clang.llvm.org/doxygen/group__CINDEX.html)
+
+[Click here](https://clang.llvm.org/docs/Tooling.html) for more information.
+
 #### Style guide
 
 This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).

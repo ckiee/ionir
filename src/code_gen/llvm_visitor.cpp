@@ -94,13 +94,13 @@ Node *LlvmVisitor::visitBlock(Block *node)
     this->builder = &llvm::IRBuilder<>(*this->context);
 
     // Visit and append instructions.
-    std::vector<Node> insts = node->getInsts();
+    std::vector<Node *> insts = node->getInsts();
 
     // Process instructions.
-    for (std::vector<Node>::iterator iterator = insts.begin(); iterator != insts.end(); iterator++)
+    for (auto iterator = insts.begin(); iterator != insts.end(); iterator++)
     {
         // Visit the instruction.
-        this->visit(&*iterator);
+        this->visit(*iterator);
 
         // Clean the stack off the result.
         this->valueStack.pop();

@@ -32,7 +32,7 @@ protected:
 
 	llvm::IRBuilder<> *builder;
 
-	std::map<std::string, llvm::Value> namedValues;
+	std::map<std::string, llvm::Value *> namedValues;
 
 	llvm::Module *getModule() const;
 
