@@ -29,11 +29,17 @@ protected:
 
 	llvm::Function *function;
 
-	llvm::IRBuilder<> *builder;
+	std::optional<llvm::IRBuilder<> *> builder;
 
 	std::map<std::string, llvm::Value *> namedValues;
 
 	llvm::Module *getModule() const;
+
+	/**
+	 * Ensures that the builder is instantiated, otherwise
+	 * throws a runtime error.
+	 */
+	void requireBuilder();
 
 public:
 	LlvmVisitor(llvm::Module *module);

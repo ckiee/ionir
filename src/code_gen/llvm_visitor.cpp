@@ -8,7 +8,17 @@ llvm::Module *LlvmVisitor::getModule() const
     return this->module;
 }
 
-LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr), builder(nullptr)
+void LlvmVisitor::requireBuilder()
+{
+    // Builder must be instantiated.
+    if (!this->builder.has_value())
+    {
+        // Otherwise, throw a runtime error.
+        throw std::runtime_error("Expected builder to be instantiated");
+    }
+}
+
+LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr)
 {
     this->valueStack = {};
     this->typeStack = {};
@@ -91,8 +101,8 @@ Node *LlvmVisitor::visitBlock(Block *node)
     // Create the basic block and at the same time register it under the buffer function.
     llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getIdentifier(), this->function);
 
-    // Create and assign the builder.
-    this->builder = &llvm::IRBuilder<>(*this->context);
+    // Create and assign the block to the builder.
+    this->builder = &llvm::IRBuilder<>(block);
 
     // Visit and append instructions.
     std::vector<Node *> insts = node->getInsts();
@@ -132,6 +142,9 @@ Node *LlvmVisitor::visitType(Type *node)
 
 Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
 {
+    // Ensure builder is instantiated.
+    this->requireBuilder();
+
     // Visit sides.
     this->visit(node->getLeftSide());
     this->visit(node->getRightSide());
@@ -147,7 +160,7 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
     llvm::Value *leftSide = this->valueStack.top();
 
     // Create the binary expression LLVM value.
-    llvm::Value *binaryExpr = this->builder->CreateAdd(leftSide, rightSide);
+    llvm::Value *binaryExpr = (*this->builder)->CreateAdd(leftSide, rightSide);
 
     this->valueStack.push(binaryExpr);
 
