@@ -10,10 +10,12 @@ if %errorlevel% EQU 0 (
         exit
     )
 
-    start /wait %testExec%
+    %testExec%
 
     if %errorlevel% NEQ 0 (
         echo Tests appear to have failed.
+    ) Else (
+        echo Tests passed successfully.
     )
 ) Else (
     echo Build did not exit successfully, test executable will not be run.
