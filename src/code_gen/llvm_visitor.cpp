@@ -1,3 +1,4 @@
+#include <exception>
 #include "llvm_visitor.h"
 
 namespace ionir

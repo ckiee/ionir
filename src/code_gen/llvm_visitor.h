@@ -1,6 +1,5 @@
 #pragma once
 
-#include <exception>
 #include <optional>
 #include <stack>
 #include "llvm/IR/Module.h"
