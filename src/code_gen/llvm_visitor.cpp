@@ -23,15 +23,15 @@ Node *LlvmVisitor::visitFunction(Function *node)
 {
     if (node->getBody() == nullptr)
     {
-        throw std::exception("Unexpected function body to be null");
+        throw std::runtime_error("Unexpected function body to be null");
     }
     else if (node->getPrototype() == nullptr)
     {
-        throw std::exception("Unexpected function prototype to be null");
+        throw std::runtime_error("Unexpected function prototype to be null");
     }
     else if (this->module->getFunction(node->getPrototype()->getIdentifier()) != nullptr)
     {
-        throw std::exception("A function with the same identifier has been already previously defined");
+        throw std::runtime_error("A function with the same identifier has been already previously defined");
     }
 
     // Clear named values.
@@ -65,11 +65,11 @@ Node *LlvmVisitor::visitExtern(Extern *node)
 {
     if (node->getPrototype() == nullptr)
     {
-        throw std::exception("Unexpected external definition's prototype to be null");
+        throw std::runtime_error("Unexpected external definition's prototype to be null");
     }
     else if (this->module->getFunction(node->getPrototype()->getIdentifier()) != nullptr)
     {
-        throw std::exception("Re-definition of extern not allowed");
+        throw std::runtime_error("Re-definition of extern not allowed");
     }
 
     // Visit the prototype.
@@ -84,7 +84,7 @@ Node *LlvmVisitor::visitBlock(Block *node)
     // Function buffer must not be null.
     if (this->function == nullptr)
     {
-        throw std::exception("Expected the function buffer to be set, but was null");
+        throw std::runtime_error("Expected the function buffer to be set, but was null");
     }
 
     // Create the basic block and at the same time register it under the buffer function.
@@ -169,12 +169,12 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
         // Function already has a body, disallow re-definition.
         if (function->getBasicBlockList().size() > 0)
         {
-            throw std::exception("Cannot re-define function");
+            throw std::runtime_error("Cannot re-define function");
         }
         // If the function takes a different number of arguments, reject.
         else if (function->arg_size() != argumentCount)
         {
-            throw std::exception("Re-definition of function with a different amount arguments");
+            throw std::runtime_error("Re-definition of function with a different amount arguments");
         }
     }
     else
@@ -199,7 +199,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
     // Begin processing arguments. Argument count must be the same.
     if (argumentCount != function->arg_size())
     {
-        throw std::exception("Expected argument count to be the same as the function's argument count");
+        throw std::runtime_error("Expected argument count to be the same as the function's argument count");
     }
 
     int i = 0;
@@ -262,14 +262,14 @@ Node *LlvmVisitor::visitInteger(LiteralInteger *node)
 
     default:
     {
-        throw std::exception("An unrecognized integer kind was provided");
+        throw std::runtime_error("An unrecognized integer kind was provided");
     }
     }
 
     // At this point, type must be defined.
     if (!type.has_value())
     {
-        throw std::exception("Expected type to be defined");
+        throw std::runtime_error("Expected type to be defined");
     }
 
     // Finally, create the LLVM value constant.

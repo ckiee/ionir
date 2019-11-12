@@ -14,7 +14,7 @@ void Parser::expect(TokenType type)
 
     if (current.getType() != type)
     {
-        throw std::exception("Unexpected token type");
+        throw std::runtime_error("Unexpected token type");
     }
 }
 
@@ -54,13 +54,13 @@ LiteralInteger *Parser::parseInteger()
     // TODO: Missing Int128.
     else
     {
-        throw std::exception("Unable to identify integer kind for value");
+        throw std::runtime_error("Unable to identify integer kind for value");
     }
 
     // At this point, kind must be set.
     if (!kind.has_value())
     {
-        throw std::exception("Expected kind to be defined");
+        throw std::runtime_error("Expected kind to be defined");
     }
 
     // Create the integer instance.
