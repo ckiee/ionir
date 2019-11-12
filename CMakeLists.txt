@@ -28,7 +28,7 @@ set(VERSION_PATCH "0")
 set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 
 # Configure and use LLVM. Also ensures LLVM 9.0.0 is installed.
-find_package(LLVM 9.0.0 EXACT REQUIRED CONFIG)
+find_package(LLVM 9.0.0 REQUIRED CONFIG)
 
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
