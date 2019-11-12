@@ -9,7 +9,6 @@ addons:
     - ubuntu-toolchain-r-test
     - kalakris-cmake
     packages:
-    - g++-6
     - cmake
     - clang-8
 script:
