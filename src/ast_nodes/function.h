@@ -12,17 +12,17 @@ class LlvmVisitor;
 class Function : public Node
 {
 protected:
-	Prototype prototype;
+	Prototype *prototype;
 
-	Block body;
+	Block *body;
 
 public:
-	Function(Prototype prototype, Block body);
+	Function(Prototype *prototype, Block *body);
 
 	Node *accept(LlvmVisitor *visitor) override;
 
-	Prototype getPrototype() const;
+	Prototype *getPrototype() const;
 
-	Block getBody() const;
+	Block *getBody() const;
 };
 } // namespace ionir

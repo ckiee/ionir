@@ -21,15 +21,15 @@ Node *LlvmVisitor::visit(Node *node)
 
 Node *LlvmVisitor::visitFunction(Function *node)
 {
-    if (&node->getBody() == nullptr)
+    if (node->getBody() == nullptr)
     {
         throw std::exception("Unexpected function body to be null");
     }
-    else if (&node->getPrototype() == nullptr)
+    else if (node->getPrototype() == nullptr)
     {
         throw std::exception("Unexpected function prototype to be null");
     }
-    else if (this->module->getFunction(node->getPrototype().getIdentifier()) != nullptr)
+    else if (this->module->getFunction(node->getPrototype()->getIdentifier()) != nullptr)
     {
         throw std::exception("A function with the same identifier has been already previously defined");
     }
@@ -38,7 +38,7 @@ Node *LlvmVisitor::visitFunction(Function *node)
     this->namedValues.clear();
 
     // Visit the prototype.
-    this->visitPrototype(&node->getPrototype());
+    this->visitPrototype(node->getPrototype());
 
     // Pop the resulting function off the stack.
     this->valueStack.pop();
@@ -49,7 +49,7 @@ Node *LlvmVisitor::visitFunction(Function *node)
     this->function = function;
 
     // Visit the body.
-    this->visitBlock(&node->getBody());
+    this->visitBlock(node->getBody());
 
     // TODO: Verify the function.
 
@@ -63,17 +63,17 @@ Node *LlvmVisitor::visitFunction(Function *node)
 
 Node *LlvmVisitor::visitExtern(Extern *node)
 {
-    if (&node->getPrototype() == nullptr)
+    if (node->getPrototype() == nullptr)
     {
         throw std::exception("Unexpected external definition's prototype to be null");
     }
-    else if (this->module->getFunction(node->getPrototype().getIdentifier()) != nullptr)
+    else if (this->module->getFunction(node->getPrototype()->getIdentifier()) != nullptr)
     {
         throw std::exception("Re-definition of extern not allowed");
     }
 
     // Visit the prototype.
-    this->visitPrototype(&node->getPrototype());
+    this->visitPrototype(node->getPrototype());
 
     // No need to push the resulting function onto the stack.
     return node;
@@ -82,7 +82,7 @@ Node *LlvmVisitor::visitExtern(Extern *node)
 Node *LlvmVisitor::visitBlock(Block *node)
 {
     // Function buffer must not be null.
-    if (&this->function == nullptr)
+    if (this->function == nullptr)
     {
         throw std::exception("Expected the function buffer to be set, but was null");
     }
@@ -97,10 +97,10 @@ Node *LlvmVisitor::visitBlock(Block *node)
     std::vector<Node *> insts = node->getInsts();
 
     // Process instructions.
-    for (auto iterator = insts.begin(); iterator != insts.end(); iterator++)
+    for (const auto node : insts)
     {
         // Visit the instruction.
-        this->visit(*iterator);
+        this->visit(node);
 
         // Clean the stack off the result.
         this->valueStack.pop();

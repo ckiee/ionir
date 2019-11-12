@@ -11,13 +11,13 @@ class LlvmVisitor;
 class Extern : public Node
 {
 private:
-	Prototype prototype;
+	Prototype* prototype;
 
 public:
-	Extern(Prototype prototype);
+	Extern(Prototype* prototype);
 
 	Node *accept(LlvmVisitor *visitor) override;
 
-	Prototype getPrototype() const;
+	Prototype *getPrototype() const;
 };
 } // namespace ionir
