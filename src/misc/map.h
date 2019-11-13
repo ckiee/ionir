@@ -13,17 +13,17 @@ protected:
 	std::map<TKey, TValue> innerMap;
 
 public:
-	Map::Map()
+	Map()
 	{
 		// TODO: Initialize 'innerMap.'
 	}
 
-	std::map<TKey, TValue> Map::unwrap() const
+	std::map<TKey, TValue> unwrap() const
 	{
 		return this->innerMap;
 	}
 
-	bool Map::contains(TKey key) const
+	bool contains(TKey key) const
 	{
 		auto it = this->innerMap.find(key);
 
@@ -35,12 +35,12 @@ public:
 		return false;
 	}
 
-	void Map::insert(TKey key, TValue value)
+	void insert(TKey key, TValue value)
 	{
 		this->innerMap.insert(key, value);
 	}
 
-	std::optional<TValue> Map::tryGet(TKey key)
+	std::optional<TValue> tryGet(TKey key)
 	{
 		if (this->contains(key))
 		{
@@ -50,7 +50,7 @@ public:
 		return std::nullopt;
 	}
 
-	TValue Map::getOrDefault(TKey key, TValue defaultValue)
+	TValue getOrDefault(TKey key, TValue defaultValue)
 	{
 		std::optional<TValue> value = this->tryGet(key);
 
