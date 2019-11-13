@@ -102,7 +102,7 @@ Node *LlvmVisitor::visitBlock(Block *node)
     llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getIdentifier(), this->function);
 
     // Create and assign the block to the builder.
-    this->builder = &llvm::IRBuilder<>(block);
+    this->builder.emplace(llvm::IRBuilder<>(block));
 
     // Visit and append instructions.
     std::vector<Node *> insts = node->getInsts();
@@ -160,7 +160,7 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
     llvm::Value *leftSide = this->valueStack.top();
 
     // Create the binary expression LLVM value.
-    llvm::Value *binaryExpr = (*this->builder)->CreateAdd(leftSide, rightSide);
+    llvm::Value *binaryExpr = this->builder->CreateAdd(leftSide, rightSide);
 
     this->valueStack.push(binaryExpr);
 

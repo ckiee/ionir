@@ -29,7 +29,7 @@ protected:
 
 	llvm::Function *function;
 
-	std::optional<llvm::IRBuilder<> *> builder;
+	std::optional<llvm::IRBuilder<>> builder;
 
 	std::map<std::string, llvm::Value *> namedValues;
 
