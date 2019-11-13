@@ -4,6 +4,7 @@
 #include <stack>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/Type.h"
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 #include "ast_nodes/type.h"

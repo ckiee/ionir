@@ -1,5 +1,9 @@
 #include <exception>
 #include "llvm_visitor.h"
+#include "llvm/ADT/APInt.h"
+#include "llvm/IR/DerivedTypes.h"
+#include "llvm/IR/BasicBlock.h"
+#include "llvm/IR/Constant.h"
 
 namespace ionir
 {
