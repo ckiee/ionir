@@ -92,7 +92,7 @@ public:
      * Retrieve the current item on the Stream by
      * the current index.
      */
-    T Iterable::get() const
+    T get() const
     {
         // Return the item at the current index.
         return this->items[this->index];
