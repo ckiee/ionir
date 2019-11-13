@@ -6,7 +6,6 @@ Release/
 out/
 cmake-build-debug/
 .idea/
-build/
 CMakeCache.txt
 CMakeFiles/
 *.cmake
@@ -23,3 +22,5 @@ lib/
 *.a
 index
 *.log
+build/*
+!build/test.bat

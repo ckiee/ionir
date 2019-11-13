@@ -8,7 +8,7 @@ using namespace ::testing;
 
 namespace test = ionir::testing;
 
-TEST(AstTest, GetInput)
+TEST(ParserTest, TTTd)
 {
     std::vector<ionir::Token> tokens = {
         ionir::Token(ionir::TokenType::LiteralInteger, "5", 0),

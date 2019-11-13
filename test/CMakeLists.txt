@@ -8,12 +8,8 @@ enable_testing()
 
 set(PROJECT_NAME IonIrTests)
 
-set(SOURCES
-    stream.cpp
-    lexer.cpp
-    token.cpp
-    util.cpp
-    ast.cpp
+file(GLOB SOURCES
+    "*.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
