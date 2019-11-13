@@ -7,14 +7,14 @@
 
 namespace ionir::testing
 {
-Token bootstrapToken(int id)
+inline Token bootstrapToken(int id)
 {
     Token token = Token(TokenType::Unknown, std::string("test_" + std::to_string(id)), id);
 
     return token;
 }
 
-TokenStream bootstrapTokenStream(int amountOfItems = 1)
+inline TokenStream bootstrapTokenStream(int amountOfItems = 1)
 {
     std::vector<Token> tokens = {};
 
@@ -31,7 +31,7 @@ TokenStream bootstrapTokenStream(int amountOfItems = 1)
 }
 
 template <unsigned int N>
-void compareTokenSets(std::array<Token, N> expected, std::vector<Token> actual)
+inline void compareTokenSets(std::array<Token, N> expected, std::vector<Token> actual)
 {
     // Both sets should have the same length.
     EXPECT_EQ(expected.size(), actual.size());
