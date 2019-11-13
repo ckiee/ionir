@@ -54,7 +54,7 @@ TEST(LexerTest, LexTwoSymbols)
 	};
 
 	// Compare result with expected.
-	test::compareTokenSets(expected, actual);
+	test::compareTokenSets<2>(expected, actual);
 }
 
 TEST(LexerTest, LexSymbols)
@@ -83,7 +83,7 @@ TEST(LexerTest, LexSymbols)
 	};
 
 	// Compare result with expected.
-	test::compareTokenSets(expected, actual);
+	test::compareTokenSets<13>(expected, actual);
 }
 
 TEST(LexerTest, LexIdentifiers)
@@ -99,5 +99,5 @@ TEST(LexerTest, LexIdentifiers)
 	};
 
 	// Compare result with expected.
-	test::compareTokenSets(expected, actual);
+	test::compareTokenSets<2>(expected, actual);
 }
