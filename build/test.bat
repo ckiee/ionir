@@ -1,5 +1,7 @@
 @echo off
 
+cmake --config ..
+cmake ..
 cmake --build .
 
 SET testExec=test\Debug\IonIrTests.exe
