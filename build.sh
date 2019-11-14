@@ -1,7 +1,6 @@
 #!/bin/sh
 mkdir -p build
 cd build
-cmake --config ..
 cmake ..
-cmake --build .
+cmake --build . --config Release
 cd ..
