@@ -13,14 +13,18 @@ set(PROJECT_URL "https://github.com/ionlang/ir-c")
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
+# Setup default build flags.
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} /MT")
+
+# Option to use MD.
 option(USE_MD "Use MD instead of MTd" OFF)
 
 if (USE_MD)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
-    #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+    message(STATUS "Using /MD flag")
 endif(USE_MD)
-
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 # Options.
 option(USE_CLANG "Use Clang and Clang++ as compilers")
@@ -46,6 +50,13 @@ message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 include_directories(SYSTEM ${LLVM_INCLUDE_DIRS}) #---> COMMENTED TO SOLVE CIRCULAR DEPS. PROBLEM.
 add_definitions(${LLVM_DEFINITIONS})
 
+# Prepare .libs (implementations).
+# link_directories("C:/Program Files (x86)/LLVM/lib")
+
+# file(GLOB LIB_SOURCES
+#     "C:/Program Files (x86)/LLVM/lib/*.lib"
+# )
+
 # Disable warnings from includes.
 #add_library(llvm INTERFACE)
 #target_sources(llvm INTERFACE)
@@ -60,13 +71,16 @@ file(GLOB_RECURSE SOURCES
 # Specify that this project is a library.
 add_library(${PROJECT_NAME} ${SOURCES})
 
+# Link .libs (same functionality handled by llvm_map_components_to_libnames().)
+#target_link_libraries(${PROJECT_NAME} ${LIB_SOURCES})
+
 # Provide include directories to be used in the build command. Position in file matters.
 #target_include_directories(${PROJECT_NAME} PRIVATE "src")
 include_directories("src")
 
 # Find the libraries that correspond to the LLVM components
-# that we wish to use
-# llvm_map_components_to_libnames(llvm_libs support core irreader)
+# that we wish to use.
+llvm_map_components_to_libnames(llvm_libs support core irreader)
 
 # Link against LLVM libraries.
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})
