@@ -22,6 +22,14 @@ endif(USE_MD)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
+# Options.
+option(USE_CLANG "Use Clang and Clang++ as compilers")
+
+if (USE_CLANG)
+    # TODO
+    set(T "")
+endif(USE_CLANG)
+
 # Setup versioning.
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")

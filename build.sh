@@ -1,6 +1,5 @@
-@echo off
-
-mkdir build
+#!/bin/sh
+mkdir -p build
 cd build
 cmake --config ..
 cmake ..

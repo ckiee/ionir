@@ -140,10 +140,37 @@ If intelli-sense is failing in Visual Studio Code, there may be a few reasons be
 
 #### Developer notes
 
+1. Additional tools
+
 * [libTooling](https://clang.llvm.org/docs/LibTooling.html)
 * [libClang](https://clang.llvm.org/doxygen/group__CINDEX.html)
 
 [Click here](https://clang.llvm.org/docs/Tooling.html) for more information.
+
+2. Recommended use of Clang/Clang++
+
+It is recommended to use the Clang-9 compiler to build this project. You can specify the compiler to CMake using the environment variables of `CC` and `CXX` like so:
+
+```bash
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+```
+
+Then running CMake.
+
+Alternatively, you can also try running:
+
+```bash
+$ sudo update-alternatives --config c++
+```
+
+Then selecting `/usr/bin/clang++`.
+
+#### Type theory resources
+
+1. [LEAN tutorial](https://leanprover.github.io/tutorial/tutorial.pdf)
+2. [LEAN tutorial playground](https://leanprover.github.io/tutorial/)
+3. [LEAN web editor](https://leanprover.github.io/live/latest/)
 
 #### Style guide
 
