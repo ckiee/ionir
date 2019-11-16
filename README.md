@@ -52,7 +52,7 @@ int main() {
 * Visual Studio 2019 with C++ tools (Windows)
 * LLVM >=v9.0.0 (must build from source on Windows, see section below)
 
-#### Building LLVM
+#### Building LLVM from source (Windows)
 
 0. Ensure you have _all_ the requirements (excluding LLVM) installed, as the build process for LLVM will require Python, CMake and others.
 

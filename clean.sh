@@ -3,6 +3,8 @@ rm *.vcxproj.*
 rm *.sln
 rm *.log
 rm *.cmake
+rm makefile
+rm *.a
 rm CMakeCache.txt
 rm -rf build
 rm -rf CMakeFiles
