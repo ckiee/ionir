@@ -71,7 +71,6 @@ int main() {
     * `llvm/Config/abi-breaking.h`
     * `llvm/IR/IntrinsicEnums.inc`
     * `llvm/IR/Attributes.inc`
-    
 
 4. LLVM sources, which are exclusively compatible with CMake, shold now be ready to be included in your `CMakeLists.txt` file. See example below:
 
