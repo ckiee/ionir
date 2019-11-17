@@ -47,7 +47,7 @@ message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
 # Include LLVM source directories (for syntax support, etc.). The SYSTEM symbol supposedly marks the directory to supress warnings.
-include_directories(SYSTEM ${LLVM_INCLUDE_DIRS}) #---> COMMENTED TO SOLVE CIRCULAR DEPS. PROBLEM.
+include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
 # Prepare .libs (implementations).

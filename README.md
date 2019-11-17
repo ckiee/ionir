@@ -63,16 +63,26 @@ int main() {
 ```
 > cd <sources directory>
 > cmake .
-> cmake --build . --config Release --target INSTALL
+> cmake -j8 --build . --config Release --target INSTALL -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF
 ```
 
-3. After this, LLVM will be installed to your machine and some required include files (ex. `IntrinsicEnums.inc`) will be generated under your installation directory, (on Windows it's usually `C:\Program Files (x86)\LLVM\include`). Copy these required files onto the local git submodule directories, and you should be good to go. Skipping this step may cause include errors, as some of LLVM's header files `#include` these generated files. Additionally, you can find out which generated files are missing by simply following include errors. Below is a list of possible generated files you might have to copy over (may not be all):
+The `j8` flag instructs CMake to use parallel builds, so as to not take up 100% CPU usage.
+
+The `LLVM_BUILD_LLVM_DYLIB` option will instruct the compiler to add the shared library target `libLLVM` which is required since the project is built dynamically on Windows, not statically.
+
+The `LLVM_INCLUDE_TESTS=OFF` will instruct CMake to omit building tests, which would conflict with the existing Google Test project on IonIR.
+
+For more information on building LLVM with CMake, [view the LLVM docs](https://llvm.org/docs/CMake.html).
+
+**Additional notes**
+
+* After this, LLVM will be installed to your machine and some required include files (ex. `IntrinsicEnums.inc`) will be generated under your installation directory, (on Windows it's usually `C:\Program Files (x86)\LLVM\include`). Copy these required files onto the local git submodule directories, and you should be good to go. Skipping this step may cause include errors, as some of LLVM's header files `#include` these generated files. Additionally, you can find out which generated files are missing by simply following include errors. Below is a list of possible generated files you might have to copy over (may not be all):
     * `llvm/Config/llvm-config.h`
     * `llvm/Config/abi-breaking.h`
     * `llvm/IR/IntrinsicEnums.inc`
     * `llvm/IR/Attributes.inc`
 
-4. LLVM sources, which are exclusively compatible with CMake, shold now be ready to be included in your `CMakeLists.txt` file. See example below:
+* LLVM sources, which are exclusively compatible with CMake, shold now be ready to be included in your `CMakeLists.txt` file. See example below:
 
 ```cmake
 ...
@@ -94,19 +104,6 @@ llvm_map_components_to_libnames(llvm_libs support core irreader)
 # Link against LLVM libraries.
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 ...
-```
-
-If you're running into trouble after building LLVM with Google Test (gtest) and getting the following error:
-
-```
-add_library cannot create target "gtest" because an imported target with
-the same name already exists.
-```
-
-It's because both IonIR and LLVM incorporate Google Test, therefore building the Google Test project should be disabled when building LLVM from source:
-
-```bash
-$ cmake ... -DLLVM_INCLUDE_TESTS=OFF ...
 ```
 
 #### Installing LLVM (Linux)
