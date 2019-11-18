@@ -20,7 +20,7 @@ if not exist CMakeLists.txt (
     cmake -G "MinGW Makefiles" .. -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF
 
     rem Build & install.
-    cmake -DCMAKE_BUILD_TYPE=Release -j4 --target install --build .
+    cmake --build . --config Release --target install -j4
 
     rem Exit build directory.
     cd ..

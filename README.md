@@ -80,7 +80,7 @@ int main() {
 > mkdir build
 > cd build
 > cmake -G "MinGW Makefiles" .. -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF
-> cmake -DCMAKE_BUILD_TYPE=Release -j4 --target install --build .
+> cmake --build . --config Release --target install -j4
 > cd ..
 ```
 
