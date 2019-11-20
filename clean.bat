@@ -15,3 +15,4 @@ rmdir /s /q Debug
 rmdir /s /q lib
 rmdir /s /q ionir.dir
 rmdir /s /q bin
+rmdir /s /q out

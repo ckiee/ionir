@@ -47,11 +47,16 @@ int main() {
 
 #### Requirements
 
+* [zlib](https://zlib.net/)
 * [CMake >=v3.13.X](https://cmake.org/download/)
 * [Python =v2.7](https://www.python.org/download/releases/2.7/)
 * [Visual Studio 2019 with C++ tools (Windows)](https://visualstudio.microsoft.com/downloads/)
 * [MinGW (Windows)](https://osdn.net/projects/mingw/releases/)
-* [LLVM >=v9.0.0](http://releases.llvm.org/download.html) (must build from source on Windows, see section below)
+* [LLVM >=v9.0.0](https://releases.llvm.org/download.html) (must build from source on Windows, see section below)
+
+#### Installing zlib on Windows
+
+1. Download 
 
 #### (Recommended) Automatically building LLVM from source (Windows)
 
@@ -80,6 +85,7 @@ int main() {
 > mkdir build
 > cd build
 > cmake -G "MinGW Makefiles" .. -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF
+     -DLLVM_ENABLE_ZLIB=OFF -A x64 -Thost=x64
 > cmake --build . --config Release --target install -j4
 > cd ..
 ```
