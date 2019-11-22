@@ -74,6 +74,12 @@ int main() {
 
 0. Ensure you have _all_ the requirements (excluding LLVM) properly installed, as the build process for LLVM on Windows will require Python, CMake and MinGW.
 
+Additionally, install the following packages using the MinGW Installation Manager if not already installed:
+
+* `mingw-developer-toolkit-bin`
+* `mingw32-gcc-bin`
+* `mingw32-gcc-g++-bin`
+
 1. Download sources ([Visit LLVM's downloads page](http://releases.llvm.org/download.html)) for LLVM 9.0.0 (or [click here](http://releases.llvm.org/9.0.0/llvm-9.0.0.src.tar.xz) to download them directly).
 
 2. Extract sources onto a directory whose absolute path contains no spaces. For example, use `C:/LLVM_BUILD` instead of `C:/LLVM BUILD`. This will prevent the CMake build from failing, since it seems that a certain project has a hard time with paths with spaces.
@@ -84,8 +90,7 @@ int main() {
 > cd <sources directory>
 > mkdir build
 > cd build
-> cmake -G "MinGW Makefiles" .. -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF
-     -DLLVM_ENABLE_ZLIB=OFF -A x64 -Thost=x64
+> cmake -G "MinGW Makefiles" .. -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_ZLIB=OFF
 > cmake --build . --config Release --target install -j4
 > cd ..
 ```
@@ -96,7 +101,7 @@ It must be specified to CMake (through `-G "MinGW Makefiles`) to use MinGW on Wi
 
 A build directory is required by MinGW, this is why the `build` directory is created and used.
 
-The `-j4` flag instructs CMake to use parallel builds (or concurrent jobs), so as to not take up 100% CPU usage. Beware that the more jobs specified, the more RAM that may be used. Specifying too many jobs may cause memory exhaustion. If you feel that you have complient hardware, you may make this flag `-j8` instead.
+The `-j4` flag instructs CMake to use parallel builds (or concurrent jobs), so as to not take up 100% CPU usage. Beware that the more jobs specified, the more RAM that may be used. Note that specifying too many jobs may cause memory exhaustion. If you feel that you have complient hardware, you may make this flag `-j8` instead.
 
 The `LLVM_BUILD_LLVM_DYLIB=ON` option will instruct the compiler to add the shared library target `libLLVM` which is required since the project is built dynamically on Windows, not statically.
 

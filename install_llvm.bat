@@ -27,6 +27,6 @@ if not exist CMakeLists.txt (
 
     rem Inform of build status.
     if %errorlevel% not equ 0 (
-        echo Build seems to have failed.
+        echo Build process appears to have failed.
     )
 )

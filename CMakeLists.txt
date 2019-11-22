@@ -40,10 +40,6 @@ set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
 set(VERSION "$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)")
 
-# Find & link zlib (dependency of LLVM).
-find_package(ZLIB REQUIRED)
-include_directories(${ZLIB_INCLUDE_DIRS})
-
 # Configure and use LLVM. Also ensures LLVM 9.0.0 is installed.
 find_package(LLVM 9.0.0 REQUIRED CONFIG)
 
@@ -81,9 +77,6 @@ add_library(${PROJECT_NAME} ${SOURCES})
 # Provide include directories to be used in the build command. Position in file matters.
 #target_include_directories(${PROJECT_NAME} PRIVATE "src")
 include_directories("src")
-
-# Link against zlib.
-target_link_libraries(${PROJECT_NAME} ${ZLIB_LIBRARIES})
 
 # Find the libraries that correspond to the LLVM components
 # that we wish to use.
