@@ -42,7 +42,7 @@ Parser::Parser(TokenStream stream) : stream(stream)
     //
 }
 
-std::vector<Notice> getNotices() const
+std::vector<Notice> Parser::getNotices() const
 {
     return this->notices;
 }
