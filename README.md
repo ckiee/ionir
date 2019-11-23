@@ -85,8 +85,8 @@ Additionally, install the following packages using the MinGW Installation Manage
 > cd <sources directory>
 > mkdir build
 > cd build
-> cmake -G "MinGW Makefiles" .. -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_ZLIB=OFF
-> cmake --build . --config Release --target install -j4
+> cmake -G "MinGW Makefiles" .. -DCMAKE_BUILD_TYPE=Release -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_ZLIB=OFF
+> cmake --build . --config Release --target install -j8
 > cd ..
 ```
 
@@ -96,7 +96,7 @@ It must be specified to CMake (through `-G "MinGW Makefiles`) to use MinGW on Wi
 
 A build directory is required by MinGW, this is why the `build` directory is created and used.
 
-The `-j4` flag instructs CMake to use parallel builds (or concurrent jobs), so as to not take up 100% CPU usage. Beware that the more jobs specified, the more RAM that may be used. Note that specifying too many jobs may cause memory exhaustion. If you feel that you have complient hardware, you may make this flag `-j8` instead.
+The `-j8` flag instructs CMake to use 8 parallel builds (or concurrent jobs), so as to not take up 100% CPU usage. Beware that the more jobs specified, the more RAM that may be used. Note that specifying too many jobs may cause memory exhaustion. If you feel that you have complient hardware, you may adjust this flag accordingly.
 
 The `LLVM_BUILD_LLVM_DYLIB=ON` option will instruct the compiler to add the shared library target `libLLVM` which is required since the project is built dynamically on Windows, not statically.
 
