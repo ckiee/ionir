@@ -59,6 +59,6 @@ public:
 
 	Node *visitPrototype(Prototype *node);
 
-	Node *visitInteger(LiteralInteger *node);
+	Node *visitInteger(LiteralInt *node);
 };
 } // namespace ionir

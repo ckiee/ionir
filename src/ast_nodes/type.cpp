@@ -3,7 +3,8 @@
 
 namespace ionir
 {
-Type::Type(bool isPointer) : Node(NodeKind::Type), isPointer(isPointer)
+Type::Type(std::string identifier, bool isPointer)
+    : Node(NodeKind::Type), identifier(identifier), isPointer(isPointer)
 {
     //
 }
@@ -11,6 +12,11 @@ Type::Type(bool isPointer) : Node(NodeKind::Type), isPointer(isPointer)
 Node *Type::accept(LlvmVisitor *visitor)
 {
     return visitor->visitType(this);
+}
+
+std::string Type::getIdentifier() const
+{
+    return this->identifier;
 }
 
 bool Type::getIsPointer() const

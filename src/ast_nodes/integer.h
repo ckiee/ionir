@@ -20,7 +20,7 @@ enum class IntegerKind
     Int128
 };
 
-class LiteralInteger : public Node
+class LiteralInt : public Node
 {
 protected:
     IntegerKind kind;
@@ -28,7 +28,7 @@ protected:
     long value;
 
 public:
-    LiteralInteger(IntegerKind kind, long value);
+    LiteralInt(IntegerKind kind, long value);
 
     Node *accept(LlvmVisitor *visitor) override;
 

@@ -14,7 +14,7 @@ enum class TokenType
 
 	LiteralDecimal,
 
-	LiteralInteger,
+	LiteralInt,
 
 	LiteralCharacter,
 
@@ -45,6 +45,8 @@ enum class TokenType
 	SymbolPercent,
 
 	SymbolSemiColon,
+
+	SymbolStar,
 
 	InstCreate,
 

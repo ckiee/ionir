@@ -20,7 +20,7 @@ TEST(StreamTest, HandleGet)
 
 TEST(StreamTest, HandleSize)
 {
-	// Create the intial Stream instance.
+	// Create the initial Stream instance.
 	ionir::TokenStream stream = test::bootstrapTokenStream();
 
 	// Should contain one item.
@@ -35,7 +35,7 @@ TEST(StreamTest, HandleSize)
 
 TEST(StreamTest, HandleHasNext)
 {
-	// Create the intial Stream instance.
+	// Create the initial Stream instance.
 	ionir::TokenStream stream = test::bootstrapTokenStream();
 
 	// Stream with one item should not indicate next.
@@ -44,7 +44,7 @@ TEST(StreamTest, HandleHasNext)
 
 TEST(StreamTest, HandleNext)
 {
-	// Create the intial Stream instance.
+	// Create the initial Stream instance.
 	ionir::TokenStream stream = test::bootstrapTokenStream();
 
 	// Extract the current item & index for comparison.

@@ -3,23 +3,23 @@
 
 namespace ionir
 {
-LiteralInteger::LiteralInteger(IntegerKind kind, long value)
-    : Node(NodeKind::LiteralInteger), kind(kind), value(value)
+LiteralInt::LiteralInt(IntegerKind kind, long value)
+    : Node(NodeKind::LiteralInt), kind(kind), value(value)
 {
     //
 }
 
-Node *LiteralInteger::accept(LlvmVisitor *visitor)
+Node *LiteralInt::accept(LlvmVisitor *visitor)
 {
     return visitor->visitInteger(this);
 }
 
-IntegerKind LiteralInteger::getKind() const
+IntegerKind LiteralInt::getKind() const
 {
     return this->kind;
 }
 
-long LiteralInteger::getValue() const
+long LiteralInt::getValue() const
 {
     return this->value;
 }

@@ -51,12 +51,8 @@ int main() {
 * [CMake >=v3.13.X](https://cmake.org/download/)
 * [Python =v2.7](https://www.python.org/download/releases/2.7/)
 * [Visual Studio 2019 with C++ tools (Windows)](https://visualstudio.microsoft.com/downloads/)
-* [MinGW (Windows)](https://osdn.net/projects/mingw/releases/)
+* [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe)
 * [LLVM >=v9.0.0](https://releases.llvm.org/download.html) (must build from source on Windows, see section below)
-
-#### Installing zlib on Windows
-
-1. Download 
 
 #### (Recommended) Automatically building LLVM from source (Windows)
 
@@ -76,7 +72,6 @@ int main() {
 
 Additionally, install the following packages using the MinGW Installation Manager if not already installed:
 
-* `mingw-developer-toolkit-bin`
 * `mingw32-gcc-bin`
 * `mingw32-gcc-g++-bin`
 

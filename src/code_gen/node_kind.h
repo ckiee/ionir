@@ -27,6 +27,6 @@ enum class NodeKind
 	/**
 	 * An unsigned integer literal.
 	 */
-	LiteralInteger
+	LiteralInt
 };
 }

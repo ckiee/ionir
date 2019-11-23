@@ -47,6 +47,6 @@ void Driver::next()
     std::cout << "Token type:" << token.getType() << std::endl;
 
     // Advance the Stream's index if applicable.
-    this->stream.next();
+    this->stream.tryNext();
 }
 } // namespace ionir

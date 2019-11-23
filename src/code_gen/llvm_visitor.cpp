@@ -239,7 +239,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
     return node;
 }
 
-Node *LlvmVisitor::visitInteger(LiteralInteger *node)
+Node *LlvmVisitor::visitInteger(LiteralInt *node)
 {
     // Create the APInt to provide. Acts sort of an LLVM integer value wrapper. Default to being signed to allow for a larger range of values.
     llvm::APInt apInt = llvm::APInt(node->getValue(), true);

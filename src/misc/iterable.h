@@ -20,13 +20,15 @@ protected:
 
     size_t size;
 
+    size_t resolveNextIndex()
+    {
+        return this->resolveIndex(this->index + 1);
+    }
+
     size_t nextIndex()
     {
-        // Resolve the next index safely.
-        size_t index = this->resolveIndex(this->index + 1);
-
-        // Set the index.
-        this->index = index;
+        // Resolve and set the next index safely.
+        this->index = this->resolveNextIndex();
 
         // Return the current index.
         return this->index;
@@ -49,6 +51,13 @@ protected:
         return this->size - 1;
     }
 
+    size_t setIndex(size_t index)
+    {
+        this->index = this->resolveIndex(index);
+
+        return this->index;
+    }
+
 public:
     Iterable(std::vector<T> items)
     {
@@ -69,12 +78,12 @@ public:
 	 * Whether the current index points to the last item
 	 * on the Stream. A Stream always contains at least one item.
 	 */
-    virtual bool hasNext() const
+    virtual bool hasNext() const override
     {
         return this->index < this->size - 1;
     }
 
-    virtual std::optional<T> next()
+    virtual std::optional<T> tryNext() override
     {
         // Resolve the next index safely.
         size_t nextIndex = this->nextIndex();
@@ -83,7 +92,48 @@ public:
         return this->items[nextIndex];
     }
 
-    virtual void begin()
+    virtual T next() override
+    {
+        std::optional<T> item = this->next();
+
+        if (!item.has_value())
+        {
+            throw std::runtime_exception("No more items in iterable");
+        }
+
+        return *item;
+    }
+
+    void skip(int amount = 1)
+    {
+        if (amount < 1)
+        {
+            throw std::out_of_range("Amount must greater than zero");
+        }
+
+        this->setIndex(this->index + amount);
+    }
+
+    /**
+     * Access the next item (if any) without altering the
+     * index.
+     */
+    virtual std::optional<T> peek()
+    {
+        // No more items to process.
+        if (!this->hasNext())
+        {
+            return std::nullopt;
+        }
+
+        // Return the next item without altering the index.
+        return this->items[this->resolveNextIndex()];
+    }
+
+    /**
+     * Reset the index to its initial value (0).
+     */
+    virtual void begin() override
     {
         this->index = 0;
     }

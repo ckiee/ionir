@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "ast_nodes/type.h"
+#include "ast_nodes/args.h"
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 
@@ -15,20 +16,20 @@ class Prototype : public Node
 private:
 	std::string identifier;
 
-	std::vector<std::pair<Type, std::string>> arguments;
+	Args arguments;
 
 	Type returnType;
 
 	bool hasInfiniteArguments;
 
 public:
-	Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments);
+	Prototype(std::string identifier, Args arguments, Type returnType, bool hasInfiniteArguments);
 
 	Node *accept(LlvmVisitor *visitor) override;
 
 	std::string getIdentifier() const;
 
-	std::vector<std::pair<Type, std::string>> getArguments() const;
+	Args getArguments() const;
 
 	Type getReturnType() const;
 

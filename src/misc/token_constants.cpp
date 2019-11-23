@@ -40,6 +40,7 @@ TokenConstants::TokenConstants()
     this->pushSymbol("=", TokenType::SymbolEqual);
     this->pushSymbol("%", TokenType::SymbolPercent);
     this->pushSymbol(";", TokenType::SymbolSemiColon);
+    this->pushSymbol("*", TokenType::SymbolStar);
 
     // Register keywords.
     this->pushKeyword("create", TokenType::InstCreate);
@@ -53,7 +54,7 @@ TokenConstants::TokenConstants()
     this->pushComplex(Regex::identifier, TokenType::Identifier);
     this->pushComplex(Regex::string, TokenType::LiteralString);
     this->pushComplex(Regex::decimal, TokenType::LiteralDecimal);
-    this->pushComplex(Regex::integer, TokenType::LiteralInteger);
+    this->pushComplex(Regex::integer, TokenType::LiteralInt);
     this->pushComplex(Regex::character, TokenType::LiteralCharacter);
     this->pushComplex(Regex::whitespace, TokenType::Whitespace);
 }
