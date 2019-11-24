@@ -36,8 +36,6 @@ protected:
 
 	std::map<std::string, llvm::Value *> namedValues;
 
-	llvm::Module *getModule() const;
-
 	/**
 	 * Ensures that the builder is instantiated, otherwise
 	 * throws a runtime error.
@@ -46,6 +44,8 @@ protected:
 
 public:
 	LlvmVisitor(llvm::Module *module);
+
+	llvm::Module *getModule() const;
 
 	Node *visit(Node *node);
 

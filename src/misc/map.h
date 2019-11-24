@@ -9,25 +9,17 @@ namespace ionir
 template <typename TKey, typename TValue>
 class Map : public Wrapper<std::map<TKey, TValue>>
 {
-protected:
-	std::map<TKey, TValue> innerMap;
-
 public:
-	Map()
+	Map() : Wrapper<std::map<TKey, TValue>>({})
 	{
-		// TODO: Initialize 'innerMap.'
-	}
-
-	std::map<TKey, TValue> unwrap() const
-	{
-		return this->innerMap;
+		//
 	}
 
 	bool contains(TKey key) const
 	{
-		auto it = this->innerMap.find(key);
+		auto it = this->value.find(key);
 
-		if (it != this->innerMap.end())
+		if (it != this->value.end())
 		{
 			return true;
 		}
@@ -37,14 +29,14 @@ public:
 
 	void insert(TKey key, TValue value)
 	{
-		this->innerMap.insert(key, value);
+		this->value.insert(key, value);
 	}
 
 	std::optional<TValue> tryGet(TKey key)
 	{
 		if (this->contains(key))
 		{
-			return this->innerMap[key];
+			return this->value[key];
 		}
 
 		return std::nullopt;

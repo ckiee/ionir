@@ -5,6 +5,9 @@
 #include "syntax/token.h"
 #include "misc/iterable.h"
 #include "parsing/parser.h"
+#include "llvm/module.h"
+#include "llvm/context.h"
+#include "code_gen/llvm_visitor.h"
 
 namespace ionir::testing
 {
@@ -32,6 +35,19 @@ inline Parser bootstrapParser(std::vector<Token> tokens)
     ionir::TokenStream stream = ionir::TokenStream(tokens);
 
     return ionir::Parser(stream);
+}
+
+inline Module *bootstrapModule(std::string identifier = "test")
+{
+    llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
+    llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);
+
+    return new Module(llvmModule);
+}
+
+inline LlvmVisitor *bootstrapLlvmVisitor()
+{
+    return new LlvmVisitor(bootstrapModule()->unwrap());
 }
 
 template <unsigned int N>
