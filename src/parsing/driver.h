@@ -8,7 +8,8 @@
 
 namespace ionir
 {
-class Driver : public LooseGenerator
+// TODO
+class Driver // : public LooseGenerator
 {
 private:
 	TokenStream stream;
@@ -20,14 +21,14 @@ public:
 
 	void consume();
 
-	void begin() override;
+	void begin(); // override;
 
-	bool hasNext() const override;
+	bool hasNext() const; // override;
 
 	/**
 	 * Processed the current iterable item and increments the
 	 * list's index if applicable.
 	 */
-	void next() override;
+	void tryNext(); // override;
 };
 } // namespace ionir

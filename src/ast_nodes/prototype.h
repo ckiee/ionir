@@ -18,10 +18,10 @@ private:
 
 	Args arguments;
 
-	Type returnType;
+	Type *returnType;
 
 public:
-	Prototype(std::string identifier, Args arguments, Type returnType);
+	Prototype(std::string identifier, Args arguments, Type *returnType);
 
 	Node *accept(LlvmVisitor *visitor) override;
 
@@ -29,6 +29,6 @@ public:
 
 	Args getArguments() const;
 
-	Type getReturnType() const;
+	Type *getReturnType() const;
 };
 } // namespace ionir

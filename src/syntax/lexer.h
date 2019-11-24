@@ -61,7 +61,7 @@ public:
     /**
      * Process the next token.
      */
-    virtual std::optional<Token> next();
+    virtual std::optional<Token> tryNext();
 
     Lexer(std::string input);
 

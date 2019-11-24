@@ -205,7 +205,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
 
         // TODO: Support for infinite arguments and hard-coded return type.
         // Create the function type.
-        llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getHasInfiniteArguments());
+        llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getArguments().getIsInfinite());
 
         // Cast the value to a function, since we know getCallee() will return a function.
         function = (llvm::Function *)this->module->getOrInsertFunction(node->getIdentifier(), type).getCallee();
@@ -225,7 +225,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
     for (auto &arg : function->args())
     {
         // Retrieve the name element from the argument tuple.
-        std::string name = node->getArguments()[i].second;
+        std::string name = node->getArguments().getItems()[i].second;
 
         // Name the argument.
         arg.setName(name);
@@ -300,6 +300,13 @@ Node *LlvmVisitor::visitInteger(LiteralInt *node)
 }
 
 Node *LlvmVisitor::visitInstruction(Inst *node)
+{
+    // TODO
+
+    return node;
+}
+
+Node *LlvmVisitor::visitChar(LiteralChar *node)
 {
     // TODO
 

@@ -11,13 +11,13 @@ void Driver::consume()
 {
     while (this->stream.hasNext())
     {
-        this->next();
+        this->tryNext();
     }
 
     // Process the last item.
     if (this->stream.getSize())
     {
-        this->next();
+        this->tryNext();
     }
 }
 
@@ -32,7 +32,7 @@ bool Driver::hasNext() const
     return false;
 }
 
-void Driver::next()
+void Driver::tryNext()
 {
     // Retrieve the current token from the token stream.
     Token token = this->stream.get();

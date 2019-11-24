@@ -91,13 +91,13 @@ LiteralInt *Parser::parseInt()
     }
 
     // Create the integer instance.
-    LiteralInt integer = LiteralInt(*kind, value);
+    LiteralInt *integer = new LiteralInt(*kind, value);
 
     // Skip current token.
     this->stream.tryNext();
 
     // Finally, return the result.
-    return &integer;
+    return integer;
 }
 
 LiteralChar *Parser::parseChar()
@@ -121,7 +121,7 @@ LiteralChar *Parser::parseChar()
     }
 
     // Create the character construct with the first and only character of the captured value.
-    return &LiteralChar(stringValue[0]);
+    return new LiteralChar(stringValue[0]);
 }
 
 std::string Parser::parseIdentifier()
@@ -137,7 +137,7 @@ std::string Parser::parseIdentifier()
     return identifier.getValue();
 }
 
-Type Parser::parseType()
+Type *Parser::parseType()
 {
     std::string identifier = this->parseIdentifier();
 
@@ -156,13 +156,13 @@ Type Parser::parseType()
     }
 
     // Create and return the resulting type construct.
-    return Type(identifier, isPointer);
+    return new Type(identifier, isPointer);
 }
 
 Arg Parser::parseArg()
 {
     std::string identifier = this->parseIdentifier();
-    Type type = this->parseType();
+    Type *type = this->parseType();
 
     return std::make_pair(type, identifier);
 }
@@ -198,7 +198,7 @@ Args Parser::parseArgs()
 
 Prototype *Parser::parsePrototype()
 {
-    Type returnType = this->parseType();
+    Type *returnType = this->parseType();
     std::string identifier = this->parseIdentifier();
 
     this->skipOver(TokenType::SymbolParenthesesL);
@@ -207,7 +207,7 @@ Prototype *Parser::parsePrototype()
 
     this->skipOver(TokenType::SymbolParenthesesR);
 
-    return &Prototype(identifier, args, returnType);
+    return new Prototype(identifier, args, returnType);
 }
 
 Extern *Parser::parseExtern()
@@ -215,11 +215,11 @@ Extern *Parser::parseExtern()
     this->skipOver(TokenType::KeywordExtern);
 
     Prototype *prototype = this->parsePrototype();
-    Extern externNode = Extern(prototype);
+    Extern *externNode = new Extern(prototype);
 
     this->skipOver(TokenType::SymbolSemiColon);
 
-    return &externNode;
+    return externNode;
 }
 
 Value *Parser::parseValue()
@@ -278,7 +278,7 @@ Inst *Parser::parseInst()
 
     this->skipOver(TokenType::SymbolParenthesesR);
 
-    return &Inst(identifier, args);
+    return new Inst(identifier, args);
 }
 
 Block *Parser::parseBlock()
@@ -297,6 +297,6 @@ Block *Parser::parseBlock()
 
     this->skipOver(TokenType::SymbolBraceR);
 
-    return &Block(identifier, insts);
+    return new Block(identifier, insts);
 }
 } // namespace ionir

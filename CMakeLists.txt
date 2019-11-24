@@ -4,7 +4,6 @@ project(ionir)
 
 # Setup compiler flag(s) & standard(s).
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 
 # General project information.
 set(PROJECT_URL "https://github.com/ionlang/ir-c")
@@ -80,7 +79,7 @@ include_directories("src")
 
 # Find the libraries that correspond to the LLVM components
 # that we wish to use.
-llvm_map_components_to_libnames(llvm_libs support core irreader)
+llvm_map_components_to_libnames(llvm_libs all)
 
 # Link against LLVM libraries.
 target_link_libraries(${PROJECT_NAME} ${llvm_libs})

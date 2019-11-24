@@ -118,7 +118,7 @@ bool Lexer::hasNext() const
     return this->index < this->length;
 }
 
-std::optional<Token> Lexer::next()
+std::optional<Token> Lexer::tryNext()
 {
     // No more possible tokens to retrieve.
     if (!this->hasNext())
@@ -199,7 +199,7 @@ std::vector<Token> Lexer::scan()
 
     while (this->hasNext())
     {
-        token = this->next();
+        token = this->tryNext();
 
         // No more tokens to process.
         if (!token.has_value())

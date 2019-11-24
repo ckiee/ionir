@@ -1,5 +1,6 @@
 #pragma once
 
+#include <exception>
 #include <vector>
 #include <optional>
 #include "syntax/token.h"
@@ -83,7 +84,7 @@ public:
         return this->index < this->size - 1;
     }
 
-    virtual std::optional<T> tryNext()
+    virtual std::optional<T> tryNext() override
     {
         // Resolve the next index safely.
         size_t nextIndex = this->nextIndex();
@@ -92,13 +93,13 @@ public:
         return this->items[nextIndex];
     }
 
-    virtual T next() override
+    virtual T next()
     {
-        std::optional<T> item = this->next();
+        std::optional<T> item = this->tryNext();
 
         if (!item.has_value())
         {
-            throw std::runtime_exception("No more items in iterable");
+            throw std::runtime_error("No more items in iterable");
         }
 
         return *item;

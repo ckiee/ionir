@@ -1,6 +1,6 @@
 #pragma once
 
-#include "basic_generator.h"
+#include "generator.h"
 
 namespace ionir
 {
@@ -8,7 +8,7 @@ namespace ionir
  * A generator which returns no items during each
  * iteration.
  */
-class LooseGenerator : BasicGenerator<void>
+class LooseGenerator : Generator<void>
 {
     //
 };

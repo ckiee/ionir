@@ -53,7 +53,7 @@ public:
 
     std::string parseIdentifier();
 
-    Type parseType();
+    Type *parseType();
 
     Arg parseArg();
 

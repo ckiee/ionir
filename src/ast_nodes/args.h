@@ -7,7 +7,7 @@
 
 namespace ionir
 {
-typedef std::pair<Type, std::string> Arg;
+typedef std::pair<Type *, std::string> Arg;
 
 class Args
 {

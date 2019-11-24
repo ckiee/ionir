@@ -3,7 +3,7 @@
 
 namespace ionir
 {
-Prototype::Prototype(std::string identifier, Args arguments, Type returnType)
+Prototype::Prototype(std::string identifier, Args arguments, Type *returnType)
     : Node(NodeKind::Prototype), identifier(identifier), arguments(arguments), returnType(returnType)
 {
     //
@@ -24,7 +24,7 @@ Args Prototype::getArguments() const
     return this->arguments;
 }
 
-Type Prototype::getReturnType() const
+Type *Prototype::getReturnType() const
 {
     return this->returnType;
 }

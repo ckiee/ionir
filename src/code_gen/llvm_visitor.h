@@ -7,10 +7,11 @@
 #include "llvm/IR/Type.h"
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
+#include "ast_nodes/values/integer.h"
+#include "ast_nodes/values/char.h"
 #include "ast_nodes/type.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
-#include "ast_nodes/values/integer.h"
 #include "ast_nodes/function.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/prototype.h"
@@ -63,5 +64,7 @@ public:
 	Node *visitInteger(LiteralInt *node);
 
 	Node *visitInstruction(Inst *node);
+
+	Node *visitChar(LiteralChar *node);
 };
 } // namespace ionir

@@ -11,7 +11,7 @@ namespace test = ionir::testing;
 TEST(ParserTest, TTTd)
 {
     std::vector<ionir::Token> tokens = {
-        ionir::Token(ionir::TokenType::LiteralInteger, "5", 0),
+        ionir::Token(ionir::TokenType::LiteralInt, "5", 0),
     };
 
     ionir::TokenStream stream = ionir::TokenStream(tokens);

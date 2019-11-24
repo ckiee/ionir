@@ -2,6 +2,6 @@
 
 mkdir build
 cd build
-cmake ..
+cmake -G "MinGW Makefiles" ..
 cmake --build . --config Release
 cd ..

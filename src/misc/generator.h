@@ -1,6 +1,6 @@
 #pragma once
 
-#include "basic_generator.h"
+#include <optional>
 
 namespace ionir
 {
@@ -10,8 +10,15 @@ namespace ionir
  * guaranteed to do so.
  */
 template <typename T>
-class Generator : public BasicGenerator<std::optional<T>>
+class Generator
 {
-    //
+public:
+    virtual bool hasNext() const = 0;
+
+    virtual std::optional<T> tryNext() = 0;
+
+    virtual void begin() = 0;
+
+    virtual ~Generator() = default;
 };
 } // namespace ionir
