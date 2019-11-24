@@ -1,3 +1,4 @@
+#include <vector>
 #include <exception>
 #include "parser.h"
 
@@ -8,6 +9,11 @@ bool Parser::withinRange(long value, long from, long to)
     return value >= from && value <= to;
 }
 
+bool Parser::is(TokenType type)
+{
+    return this->stream.get().getType() == type;
+}
+
 void Parser::expect(TokenType type)
 {
     if (!this->is(type))
@@ -16,9 +22,10 @@ void Parser::expect(TokenType type)
     }
 }
 
-bool Parser::is(TokenType type)
+void Parser::skipOver(TokenType type)
 {
-    return this->stream.get().getType() == type;
+    this->expect(type);
+    this->stream.skip();
 }
 
 NoticeContext Parser::createNoticeContext()
@@ -47,10 +54,6 @@ std::vector<Notice> Parser::getNotices() const
     return this->notices;
 }
 
-/**
- * Parses a literal integer in the form of
- * long (or integer 64).
- */
 LiteralInt *Parser::parseInt()
 {
     this->expect(TokenType::LiteralInt);
@@ -88,13 +91,37 @@ LiteralInt *Parser::parseInt()
     }
 
     // Create the integer instance.
-    LiteralInt result = LiteralInt(*kind, value);
+    LiteralInt integer = LiteralInt(*kind, value);
 
     // Skip current token.
     this->stream.tryNext();
 
     // Finally, return the result.
-    return &result;
+    return &integer;
+}
+
+LiteralChar *Parser::parseChar()
+{
+    this->skipOver(TokenType::SymbolSingleQuote);
+    this->expect(TokenType::LiteralCharacter);
+
+    // Extract the value from the character token.
+    std::string stringValue = this->stream.get().getValue();
+
+    // Skip over character token.
+    this->stream.skip();
+
+    // Skip over single quote after character.
+    this->skipOver(TokenType::SymbolSingleQuote);
+
+    // Ensure extracted value only contains a single character.
+    if (stringValue.length() > 1)
+    {
+        throw std::runtime_error("Expected character value length to be 1 character");
+    }
+
+    // Create the character construct with the first and only character of the captured value.
+    return &LiteralChar(stringValue[0]);
 }
 
 std::string Parser::parseIdentifier()
@@ -169,19 +196,107 @@ Args Parser::parseArgs()
     return Args(args, isInfinite);
 }
 
+Prototype *Parser::parsePrototype()
+{
+    Type returnType = this->parseType();
+    std::string identifier = this->parseIdentifier();
+
+    this->skipOver(TokenType::SymbolParenthesesL);
+
+    Args args = this->parseArgs();
+
+    this->skipOver(TokenType::SymbolParenthesesR);
+
+    return &Prototype(identifier, args, returnType);
+}
+
 Extern *Parser::parseExtern()
 {
-    this->expect(TokenType::KeywordExtern);
-    this->stream.next();
-    this->expect(TokenType::Identifier);
+    this->skipOver(TokenType::KeywordExtern);
 
-    Token identifier = this->stream.next();
+    Prototype *prototype = this->parsePrototype();
+    Extern externNode = Extern(prototype);
 
-    Prototype prototype = Prototype(identifier.getValue(), nullptr, nullptr, false);
+    this->skipOver(TokenType::SymbolSemiColon);
 
-    Extern externNode = Extern();
+    return &externNode;
+}
 
-    // TODO: Finish implementation.
-    return nullptr;
+Value *Parser::parseValue()
+{
+    Token token = this->stream.get();
+
+    switch (token.getType())
+    {
+    case TokenType::LiteralInt:
+    {
+        return this->parseInt();
+    }
+
+    case TokenType::LiteralCharacter:
+    {
+        return this->parseChar();
+    }
+
+        // TODO: Missing values.
+
+    default:
+    {
+        throw std::runtime_error("Expected valid value token");
+    }
+    }
+}
+
+Inst *Parser::parseInst()
+{
+    std::string identifier = this->parseIdentifier();
+
+    this->skipOver(TokenType::SymbolParenthesesL);
+
+    std::vector<Value *> args = {};
+
+    do
+    {
+        // Skip comma token if applicable.
+        if (this->is(TokenType::SymbolComma))
+        {
+            // Prevent leading, lonely comma.
+            if (args.size() == 0)
+            {
+                // TODO: Add as notice.
+                // this->pushNotice(NoticeType::Error, "Leading comma in argument list is not allowed");
+                throw std::runtime_error("Leading comma in argument list is not allowed");
+            }
+
+            // Skip over comma token.
+            this->stream.next();
+        }
+
+        // Parse value and push onto the vector.
+        args.push_back(this->parseValue());
+    } while (this->is(TokenType::SymbolComma));
+
+    this->skipOver(TokenType::SymbolParenthesesR);
+
+    return &Inst(identifier, args);
+}
+
+Block *Parser::parseBlock()
+{
+    std::string identifier = this->parseIdentifier();
+
+    this->skipOver(TokenType::SymbolColon);
+    this->skipOver(TokenType::SymbolBraceL);
+
+    std::vector<Inst *> insts = {};
+
+    while (!this->is(TokenType::SymbolBraceR))
+    {
+        insts.push_back(this->parseInst());
+    }
+
+    this->skipOver(TokenType::SymbolBraceR);
+
+    return &Block(identifier, insts);
 }
 } // namespace ionir

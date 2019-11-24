@@ -83,7 +83,7 @@ public:
         return this->index < this->size - 1;
     }
 
-    virtual std::optional<T> tryNext() override
+    virtual std::optional<T> tryNext()
     {
         // Resolve the next index safely.
         size_t nextIndex = this->nextIndex();

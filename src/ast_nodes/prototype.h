@@ -20,10 +20,8 @@ private:
 
 	Type returnType;
 
-	bool hasInfiniteArguments;
-
 public:
-	Prototype(std::string identifier, Args arguments, Type returnType, bool hasInfiniteArguments);
+	Prototype(std::string identifier, Args arguments, Type returnType);
 
 	Node *accept(LlvmVisitor *visitor) override;
 
@@ -32,7 +30,5 @@ public:
 	Args getArguments() const;
 
 	Type getReturnType() const;
-
-	bool getHasInfiniteArguments() const;
 };
 } // namespace ionir

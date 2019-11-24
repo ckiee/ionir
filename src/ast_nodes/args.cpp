@@ -7,6 +7,11 @@ Args::Args(std::vector<Arg> items, bool isInfinite) : items(items), isInfinite(i
     //
 }
 
+std::vector<Arg> Args::getItems() const
+{
+    return this->items;
+}
+
 bool Args::getIsInfinite() const
 {
     return this->isInfinite;

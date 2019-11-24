@@ -109,7 +109,7 @@ Node *LlvmVisitor::visitBlock(Block *node)
     this->builder.emplace(llvm::IRBuilder<>(block));
 
     // Visit and append instructions.
-    std::vector<Node *> insts = node->getInsts();
+    std::vector<Inst *> insts = node->getInsts();
 
     // Process instructions.
     for (const auto node : insts)
@@ -174,7 +174,7 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
 Node *LlvmVisitor::visitPrototype(Prototype *node)
 {
     // Retrieve argument count from the argument vector.
-    uint32_t argumentCount = node->getArguments().size();
+    uint32_t argumentCount = node->getArguments().getItems().size();
 
     // Create the argument buffer vector.
     std::vector<llvm::Type *> arguments = {};
@@ -295,6 +295,13 @@ Node *LlvmVisitor::visitInteger(LiteralInt *node)
 
     // Push the value onto the value stack.
     this->valueStack.push(value);
+
+    return node;
+}
+
+Node *LlvmVisitor::visitInstruction(Inst *node)
+{
+    // TODO
 
     return node;
 }

@@ -24,9 +24,8 @@ enum class NodeKind
 	 */
 	Extern,
 
-	/**
-	 * An unsigned integer literal.
-	 */
-	LiteralInt
+	Instruction,
+
+	Value
 };
 }

@@ -1,10 +1,11 @@
 #include "integer.h"
 #include "code_gen/llvm_visitor.h"
+#include "ast_nodes/value_kind.h"
 
 namespace ionir
 {
 LiteralInt::LiteralInt(IntegerKind kind, long value)
-    : Node(NodeKind::LiteralInt), kind(kind), value(value)
+    : Value(ValueKind::Integer), kind(kind), value(value)
 {
     //
 }

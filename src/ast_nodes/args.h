@@ -18,6 +18,8 @@ class Args
 public:
     Args(std::vector<Arg> items, bool isInfinite);
 
+    std::vector<Arg> getItems() const;
+
     bool getIsInfinite() const;
 };
 } // namespace ionir

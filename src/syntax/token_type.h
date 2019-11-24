@@ -48,6 +48,14 @@ enum class TokenType
 
 	SymbolStar,
 
+	SymbolBraceL,
+
+	SymbolBraceR,
+
+	SymbolSingleQuote,
+
+	SymbolDoubleQuote,
+
 	InstCreate,
 
 	InstCall,

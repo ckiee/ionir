@@ -4,7 +4,7 @@
 #include <optional>
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/LLVMContext.h"
-#include "ast_nodes/integer.h"
+#include "ast_nodes/values/integer.h"
 #include "misc/map.h"
 
 namespace ionir

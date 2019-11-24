@@ -1,29 +1,29 @@
 #pragma once
 
-#include <vector>
 #include <string>
-#include "ast_nodes/inst.h"
+#include <vector>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
+#include "value.h"
 
 namespace ionir
 {
 class LlvmVisitor;
 
-class Block : public Node
+class Inst : public Node
 {
-private:
+protected:
     std::string identifier;
 
-    std::vector<Inst *> insts;
+    std::vector<Value *> args;
 
 public:
-    Block(std::string identifier, std::vector<Inst *> insts);
+    Inst(std::string identifier, std::vector<Value *> args);
 
     Node *accept(LlvmVisitor *visitor) override;
 
-    std::vector<Inst *> getInsts() const;
-
     std::string getIdentifier() const;
+
+    std::vector<Value *> getArgs() const;
 };
 } // namespace ionir

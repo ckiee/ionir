@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 

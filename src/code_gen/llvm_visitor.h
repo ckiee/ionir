@@ -10,10 +10,11 @@
 #include "ast_nodes/type.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
-#include "ast_nodes/integer.h"
+#include "ast_nodes/values/integer.h"
 #include "ast_nodes/function.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/prototype.h"
+#include "ast_nodes/inst.h"
 
 namespace ionir
 {
@@ -60,5 +61,7 @@ public:
 	Node *visitPrototype(Prototype *node);
 
 	Node *visitInteger(LiteralInt *node);
+
+	Node *visitInstruction(Inst *node);
 };
 } // namespace ionir

@@ -1,26 +1,13 @@
 #pragma once
 
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
+#include "ast_nodes/value.h"
+#include "integer_kind.h"
 
 namespace ionir
 {
 class LlvmVisitor;
 
-enum class IntegerKind
-{
-    Int1,
-
-    Int16,
-
-    Int32,
-
-    Int64,
-
-    Int128
-};
-
-class LiteralInt : public Node
+class LiteralInt : public Value
 {
 protected:
     IntegerKind kind;

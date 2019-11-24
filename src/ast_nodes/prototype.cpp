@@ -3,8 +3,8 @@
 
 namespace ionir
 {
-Prototype::Prototype(std::string identifier, std::vector<std::pair<Type, std::string>> arguments, Type returnType, bool hasInfiniteArguments)
-    : Node(NodeKind::Prototype), identifier(identifier), arguments(arguments), hasInfiniteArguments(hasInfiniteArguments), returnType(returnType)
+Prototype::Prototype(std::string identifier, Args arguments, Type returnType)
+    : Node(NodeKind::Prototype), identifier(identifier), arguments(arguments), returnType(returnType)
 {
     //
 }
@@ -19,7 +19,7 @@ std::string Prototype::getIdentifier() const
     return this->identifier;
 }
 
-std::vector<std::pair<Type, std::string>> Prototype::getArguments() const
+Args Prototype::getArguments() const
 {
     return this->arguments;
 }
@@ -27,10 +27,5 @@ std::vector<std::pair<Type, std::string>> Prototype::getArguments() const
 Type Prototype::getReturnType() const
 {
     return this->returnType;
-}
-
-bool Prototype::getHasInfiniteArguments() const
-{
-    return this->hasInfiniteArguments;
 }
 } // namespace ionir

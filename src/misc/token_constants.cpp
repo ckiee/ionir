@@ -41,6 +41,10 @@ TokenConstants::TokenConstants()
     this->pushSymbol("%", TokenType::SymbolPercent);
     this->pushSymbol(";", TokenType::SymbolSemiColon);
     this->pushSymbol("*", TokenType::SymbolStar);
+    this->pushSymbol("{", TokenType::SymbolBraceL);
+    this->pushSymbol("{", TokenType::SymbolBraceR);
+    this->pushSymbol("'", TokenType::SymbolSingleQuote);
+    this->pushSymbol("\"", TokenType::SymbolDoubleQuote);
 
     // Register keywords.
     this->pushKeyword("create", TokenType::InstCreate);
