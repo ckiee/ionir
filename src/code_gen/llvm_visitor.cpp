@@ -12,6 +12,16 @@ llvm::Module *LlvmVisitor::getModule() const
     return this->module;
 }
 
+std::stack<llvm::Value *> LlvmVisitor::getValueStack() const
+{
+    return this->valueStack;
+}
+
+std::stack<llvm::Type *> LlvmVisitor::getTypeStack() const
+{
+    return this->typeStack;
+}
+
 void LlvmVisitor::requireBuilder()
 {
     // Builder must be instantiated.
