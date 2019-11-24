@@ -143,11 +143,11 @@ Type *Parser::parseType()
 
     bool isPointer = false;
 
-    // Peek at next token.
-    std::optional<Token> nextToken = this->stream.peek();
+    // Retrieve the current token.
+    Token token = this->stream.get();
 
     // Type is a pointer.
-    if (nextToken.has_value() && (*nextToken).getType() == TokenType::SymbolStar)
+    if (token.getType() == TokenType::SymbolStar)
     {
         isPointer = true;
 
@@ -161,8 +161,8 @@ Type *Parser::parseType()
 
 Arg Parser::parseArg()
 {
-    std::string identifier = this->parseIdentifier();
     Type *type = this->parseType();
+    std::string identifier = this->parseIdentifier();
 
     return std::make_pair(type, identifier);
 }
@@ -203,7 +203,13 @@ Prototype *Parser::parsePrototype()
 
     this->skipOver(TokenType::SymbolParenthesesL);
 
-    Args args = this->parseArgs();
+    Args args = Args({}, false);
+
+    // Parse arguments if applicable.
+    if (!this->is(TokenType::SymbolParenthesesR))
+    {
+        args = this->parseArgs();
+    }
 
     this->skipOver(TokenType::SymbolParenthesesR);
 
@@ -255,26 +261,30 @@ Inst *Parser::parseInst()
 
     std::vector<Value *> args = {};
 
-    do
+    // Parse argument values if applicable.
+    if (!this->is(TokenType::SymbolParenthesesR))
     {
-        // Skip comma token if applicable.
-        if (this->is(TokenType::SymbolComma))
+        do
         {
-            // Prevent leading, lonely comma.
-            if (args.size() == 0)
+            // Skip comma token if applicable.
+            if (this->is(TokenType::SymbolComma))
             {
-                // TODO: Add as notice.
-                // this->pushNotice(NoticeType::Error, "Leading comma in argument list is not allowed");
-                throw std::runtime_error("Leading comma in argument list is not allowed");
+                // Prevent leading, lonely comma.
+                if (args.size() == 0)
+                {
+                    // TODO: Add as notice.
+                    // this->pushNotice(NoticeType::Error, "Leading comma in argument list is not allowed");
+                    throw std::runtime_error("Leading comma in argument list is not allowed");
+                }
+
+                // Skip over comma token.
+                this->stream.next();
             }
 
-            // Skip over comma token.
-            this->stream.next();
-        }
-
-        // Parse value and push onto the vector.
-        args.push_back(this->parseValue());
-    } while (this->is(TokenType::SymbolComma));
+            // Parse value and push onto the vector.
+            args.push_back(this->parseValue());
+        } while (this->is(TokenType::SymbolComma));
+    }
 
     this->skipOver(TokenType::SymbolParenthesesR);
 
