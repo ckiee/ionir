@@ -223,8 +223,6 @@ Extern *Parser::parseExtern()
     Prototype *prototype = this->parsePrototype();
     Extern *externNode = new Extern(prototype);
 
-    this->skipOver(TokenType::SymbolSemiColon);
-
     return externNode;
 }
 

@@ -141,9 +141,10 @@ TEST(ParserTest, ParseExtern)
 {
     ionir::Parser parser = test::bootstrapParser({
         ionir::Token(ionir::TokenType::KeywordExtern, "extern", 0),
-        ionir::Token(ionir::TokenType::Identifier, "test", 0),
-        ionir::Token(ionir::TokenType::SymbolParenthesesL, "(", 1),
-        ionir::Token(ionir::TokenType::SymbolParenthesesR, ")", 2),
+        ionir::Token(ionir::TokenType::Identifier, "type", 1),
+        ionir::Token(ionir::TokenType::Identifier, "test", 2),
+        ionir::Token(ionir::TokenType::SymbolParenthesesL, "(", 3),
+        ionir::Token(ionir::TokenType::SymbolParenthesesR, ")", 4),
     });
 
     ionir::Extern *externNode = parser.parseExtern();
