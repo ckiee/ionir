@@ -4,14 +4,13 @@
 #include <vector>
 #include "syntax/token.h"
 #include "misc/iterable.h"
+#include "parsing/parser.h"
 
 namespace ionir::testing
 {
 inline Token bootstrapToken(int id)
 {
-    Token token = Token(TokenType::Unknown, std::string("test_" + std::to_string(id)), id);
-
-    return token;
+    return Token(TokenType::Unknown, std::string("test_" + std::to_string(id)), id);
 }
 
 inline TokenStream bootstrapTokenStream(int amountOfItems = 1)
@@ -25,9 +24,14 @@ inline TokenStream bootstrapTokenStream(int amountOfItems = 1)
     }
 
     // Create the Stream and provide the tokens.
-    TokenStream stream = TokenStream(tokens);
+    return TokenStream(tokens);
+}
 
-    return stream;
+inline Parser bootstrapParser(std::vector<Token> tokens)
+{
+    ionir::TokenStream stream = ionir::TokenStream(tokens);
+
+    return ionir::Parser(stream);
 }
 
 template <unsigned int N>
