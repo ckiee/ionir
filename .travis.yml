@@ -20,6 +20,7 @@ script:
   - sudo apt-get install -y gcc-8 g++-8
   - sudo rm /usr/bin/g++
   - sudo ln /usr/bin/g++-8 /usr/bin/g++
+  - sudo apt-get install -y libedit-dev
   - cmake --config Debug .
   - cmake --build .
   - ./test/IonIrTests
