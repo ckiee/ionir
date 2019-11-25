@@ -204,6 +204,26 @@ Then selecting `/usr/bin/clang++`.
 2. [LEAN tutorial playground](https://leanprover.github.io/tutorial/)
 3. [LEAN web editor](https://leanprover.github.io/live/latest/)
 
+#### Common problems
+
+* Linux: `/usr/bin/ld: cannot find -ledit`:
+
+Install the `libedit-dev` package:
+
+```bash
+$ sudo apt-get install -y libedit-dev
+```
+
+* Linux: `Cannot open file 'optional.h'`:
+
+Upgrade your `g++` package to `g++-8`, then replace the symbolic link with the executable of the updated package (using `ln`):
+
+```bash
+sudo apt-get install -y g++-8
+sudo rm /usr/bin/g++
+sudo ln /usr/bin/g++-8 /usr/bin/g++
+```
+
 #### Style guide
 
 This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
