@@ -163,20 +163,27 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
 
     // Visit sides.
     this->visit(node->getLeftSide());
-    this->visit(node->getRightSide());
 
-    // Pop and retrieve right side.
-    this->valueStack.pop();
+    std::optional<llvm::Value *> rightSide;
 
-    llvm::Value *rightSide = this->valueStack.top();
+    if (node->getRightSide().has_value())
+    {
+        this->visit(*node->getRightSide());
+
+        // Pop and retrieve right side.
+        this->valueStack.pop();
+
+        rightSide = this->valueStack.top();
+    }
 
     // Pop and retrieve left side.
     this->valueStack.pop();
 
     llvm::Value *leftSide = this->valueStack.top();
 
+    // TODO: Hard-coded add instruction.
     // Create the binary expression LLVM value.
-    llvm::Value *binaryExpr = this->builder->CreateAdd(leftSide, rightSide);
+    llvm::Value *binaryExpr = this->builder->CreateAdd(leftSide, *rightSide);
 
     this->valueStack.push(binaryExpr);
 

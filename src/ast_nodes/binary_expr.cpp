@@ -3,7 +3,7 @@
 
 namespace ionir
 {
-BinaryExpr::BinaryExpr(Node *leftSide, Node *rightSide)
+BinaryExpr::BinaryExpr(Node *leftSide, std::optional<Node *> rightSide)
     : Node(NodeKind::Block), leftSide(leftSide), rightSide(rightSide)
 {
     //
@@ -19,7 +19,7 @@ Node *BinaryExpr::getLeftSide() const
     return this->leftSide;
 }
 
-Node *BinaryExpr::getRightSide() const
+std::optional<Node *> BinaryExpr::getRightSide() const
 {
     return this->rightSide;
 }

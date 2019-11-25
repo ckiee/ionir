@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 
@@ -12,15 +13,15 @@ class BinaryExpr : public Node
 protected:
     Node *leftSide;
 
-    Node *rightSide;
+    std::optional<Node *> rightSide;
 
 public:
-    BinaryExpr(Node *leftSide, Node *rightSide);
+    BinaryExpr(Node *leftSide, std::optional<Node *> rightSide = std::nullopt);
 
     Node *accept(LlvmVisitor *visitor) override;
 
     Node *getLeftSide() const;
 
-    Node *getRightSide() const;
+    std::optional<Node *> getRightSide() const;
 };
 } // namespace ionir
