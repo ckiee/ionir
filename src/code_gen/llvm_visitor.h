@@ -17,6 +17,7 @@
 #include "ast_nodes/extern.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/inst.h"
+#include "ast_nodes/instructions/alloca.h"
 
 namespace ionir
 {
@@ -68,8 +69,10 @@ public:
 
 	Node *visitInteger(LiteralInt *node);
 
-	Node *visitInstruction(Inst *node);
-
 	Node *visitChar(LiteralChar *node);
+
+	Node *visitAllocaInst(AllocaInst *node);
+
+	Node *visitInst(Inst *node);
 };
 } // namespace ionir

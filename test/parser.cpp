@@ -4,6 +4,7 @@
 #include "test_util.h"
 #include "parsing/parser.h"
 #include "syntax/token.h"
+#include "ast_nodes/inst_kind.h"
 
 using namespace ::testing;
 
@@ -126,14 +127,14 @@ TEST(ParserTest, ParseEmptyPrototype)
 TEST(ParserTest, ParseEmptyInst)
 {
     ionir::Parser parser = test::bootstrapParser({
-        ionir::Token(ionir::TokenType::Identifier, "test", 0),
+        ionir::Token(ionir::TokenType::Identifier, "alloca", 0),
         ionir::Token(ionir::TokenType::SymbolParenthesesL, "(", 1),
         ionir::Token(ionir::TokenType::SymbolParenthesesR, ")", 2),
     });
 
     ionir::Inst *inst = parser.parseInst();
 
-    EXPECT_EQ(inst->getIdentifier(), "test");
+    EXPECT_EQ(inst->getKind(), ionir::InstKind::Alloca);
     EXPECT_EQ(inst->getArgs().size(), 0);
 }
 

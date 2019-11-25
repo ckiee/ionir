@@ -4,6 +4,8 @@
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Constant.h"
+#include "ast_nodes/inst_kind.h"
+#include "ast_nodes/value.h"
 
 namespace ionir
 {
@@ -32,7 +34,7 @@ void LlvmVisitor::requireBuilder()
     }
 }
 
-LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr)
+LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr), block(std::nullopt)
 {
     this->valueStack = {};
     this->typeStack = {};
@@ -192,6 +194,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
     // Attempt to retrieve an existing function.
     llvm::Function *function = this->module->getFunction(node->getIdentifier());
 
+    // A function with a matching identifier already exists.
     if (function != nullptr)
     {
         // Function already has a body, disallow re-definition.
@@ -205,6 +208,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
             throw std::runtime_error("Re-definition of function with a different amount arguments");
         }
     }
+    // Otherwise, function will be created.
     else
     {
         for (int i = 0; i < argumentCount; ++i)
@@ -309,16 +313,68 @@ Node *LlvmVisitor::visitInteger(LiteralInt *node)
     return node;
 }
 
-Node *LlvmVisitor::visitInstruction(Inst *node)
+Node *LlvmVisitor::visitChar(LiteralChar *node)
 {
     // TODO
 
     return node;
 }
 
-Node *LlvmVisitor::visitChar(LiteralChar *node)
+Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
 {
-    // TODO
+    // Ensure correct amount of argument values were provided.
+    if (args.size() != 3)
+    {
+        throw std::runtime_error("Alloca instruction's arguments must be exactly 3 values");
+    }
+
+    // TODO: This is invalid. Args is a vector of IONIR::VALUE, not llvm-visitable constructs? Investigate. ---
+    // Visit the type.
+    this->visit(args[0]);
+
+    llvm::Type *type = this->typeStack.top();
+
+    this->typeStack.pop();
+
+    // ---
+
+    Value *identifier = args[1];
+
+    if (identifier->getValueKind() != ValueKind::String)
+    {
+        throw std::runtime_error("Alloca instruction's identifier must be a string");
+    }
+
+    // TODO: 'string' value class has not been created yet. Needed to get it's value. (Alloca id. is currently hard-coded).
+
+    // TODO: Support for array allocas (middle arg.).
+    // Create the LLVM equivalent alloca instruction using the buffered builder.
+    llvm::AllocaInst *allocaInst = this->builder->CreateAlloca(type, (llvm::Value *)nullptr, "test");
+
+    this->valueStack.push(allocaInst);
+
+    return node;
+}
+
+Node *LlvmVisitor::visitInst(Inst *node)
+{
+    this->requireBuilder();
+
+    // Abstract the instruction's argument values.
+    std::vector<Value *> args = node->getArgs();
+
+    switch (node->getKind())
+    {
+    case InstKind::Alloca:
+    {
+        this->visitAllocaInst((AllocaInst *)node);
+    }
+
+    default:
+    {
+        throw std::runtime_error("Unrecognized instruction kind");
+    }
+    }
 
     return node;
 }

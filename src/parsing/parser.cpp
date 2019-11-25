@@ -253,7 +253,8 @@ Value *Parser::parseValue()
 
 Inst *Parser::parseInst()
 {
-    std::string identifier = this->parseIdentifier();
+    // TODO: Not being used. Should be used to determine the inst's kind.
+    std::string kindIdentifier = this->parseIdentifier();
 
     this->skipOver(TokenType::SymbolParenthesesL);
 
@@ -286,7 +287,8 @@ Inst *Parser::parseInst()
 
     this->skipOver(TokenType::SymbolParenthesesR);
 
-    return new Inst(identifier, args);
+    // TODO: Hard-coded type, should be determined from kindIdentifier.
+    return new Inst(InstKind::Alloca, args);
 }
 
 Block *Parser::parseBlock()
