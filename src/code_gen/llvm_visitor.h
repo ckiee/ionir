@@ -15,6 +15,7 @@
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
 #include "ast_nodes/function.h"
+#include "ast_nodes/if_stmt.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/inst.h"
@@ -80,5 +81,7 @@ public:
 	Node *visitReturnInst(ReturnInst *node);
 
 	Node *visitInst(Inst *node);
+
+	Node *visitIfStmt(IfStmt *node);
 };
 } // namespace ionir

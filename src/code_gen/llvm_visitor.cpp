@@ -384,4 +384,11 @@ Node *LlvmVisitor::visitInst(Inst *node)
 
     return node;
 }
+
+Node *visitIfStmt(IfStmt *node)
+{
+    // TODO
+
+    return node;
+}
 } // namespace ionir

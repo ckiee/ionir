@@ -26,6 +26,8 @@ enum class NodeKind
 
 	Instruction,
 
-	Value
+	Value,
+
+	IfStatement
 };
 }
