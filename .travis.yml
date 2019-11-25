@@ -15,6 +15,11 @@ script:
   - sudo apt-get install -y libc++1 libc++abi1
   - sudo apt-get --purge remove -y llvm
   - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 9
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update
+  - sudo apt-get install gcc-8 g++-8
+  - sudo rm /usr/bin/g++
+  - sudo ln /usr/bin/g++-8 /usr/bin/g++
   - cmake --config Debug .
   - cmake --build .
   - ./test/IonIrTests
