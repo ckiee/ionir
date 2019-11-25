@@ -15,7 +15,7 @@ Node *LiteralInt::accept(LlvmVisitor *visitor)
     return visitor->visitInteger(this);
 }
 
-IntegerKind LiteralInt::getKind() const
+IntegerKind LiteralInt::getIntKind() const
 {
     return this->kind;
 }

@@ -34,7 +34,7 @@ void LlvmVisitor::requireBuilder()
     }
 }
 
-LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr), block(std::nullopt)
+LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr)
 {
     this->valueStack = {};
     this->typeStack = {};
@@ -262,7 +262,7 @@ Node *LlvmVisitor::visitInteger(LiteralInt *node)
     std::optional<llvm::IntegerType *> type;
 
     // Create the corresponding LLVM integer type based off the node's integer kind.
-    switch (node->getKind())
+    switch (node->getIntKind())
     {
     case IntegerKind::Int1:
     {
@@ -320,54 +320,60 @@ Node *LlvmVisitor::visitChar(LiteralChar *node)
     return node;
 }
 
+Node *LlvmVisitor::visitString(StringValue *node)
+{
+    // TODO
+
+    return node;
+}
+
 Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
 {
-    // Ensure correct amount of argument values were provided.
-    if (args.size() != 3)
-    {
-        throw std::runtime_error("Alloca instruction's arguments must be exactly 3 values");
-    }
-
-    // TODO: This is invalid. Args is a vector of IONIR::VALUE, not llvm-visitable constructs? Investigate. ---
-    // Visit the type.
-    this->visit(args[0]);
+    this->visit(node->getType());
 
     llvm::Type *type = this->typeStack.top();
 
     this->typeStack.pop();
 
-    // ---
-
-    Value *identifier = args[1];
-
-    if (identifier->getValueKind() != ValueKind::String)
-    {
-        throw std::runtime_error("Alloca instruction's identifier must be a string");
-    }
-
-    // TODO: 'string' value class has not been created yet. Needed to get it's value. (Alloca id. is currently hard-coded).
-
-    // TODO: Support for array allocas (middle arg.).
     // Create the LLVM equivalent alloca instruction using the buffered builder.
-    llvm::AllocaInst *allocaInst = this->builder->CreateAlloca(type, (llvm::Value *)nullptr, "test");
+    llvm::AllocaInst *allocaInst = this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getIdentifier());
 
     this->valueStack.push(allocaInst);
 
     return node;
 }
 
+Node *LlvmVisitor::visitReturnInst(ReturnInst *node)
+{
+    this->visit(node->getValue());
+
+    llvm::Value *value = this->valueStack.top();
+
+    this->valueStack.pop();
+
+    // Create the LLVM equivalent return instruction using the buffered builder.
+    llvm::ReturnInst *returnInst = this->builder->CreateRet(value);
+
+    this->valueStack.push(returnInst);
+
+    return node;
+}
+
+// TODO: Re-write.
 Node *LlvmVisitor::visitInst(Inst *node)
 {
     this->requireBuilder();
 
-    // Abstract the instruction's argument values.
-    std::vector<Value *> args = node->getArgs();
-
-    switch (node->getKind())
+    switch (node->getInstKind())
     {
     case InstKind::Alloca:
     {
         this->visitAllocaInst((AllocaInst *)node);
+    }
+
+    case InstKind::Return:
+    {
+        this->visitReturnInst((ReturnInst *)node);
     }
 
     default:

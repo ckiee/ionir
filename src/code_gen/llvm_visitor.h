@@ -10,6 +10,7 @@
 #include "code_gen/node_kind.h"
 #include "ast_nodes/values/integer.h"
 #include "ast_nodes/values/char.h"
+#include "ast_nodes/values/string.h"
 #include "ast_nodes/type.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
@@ -17,7 +18,8 @@
 #include "ast_nodes/extern.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/inst.h"
-#include "ast_nodes/instructions/alloca.h"
+#include "ast_nodes/insts/alloca.h"
+#include "ast_nodes/insts/return.h"
 
 namespace ionir
 {
@@ -71,7 +73,11 @@ public:
 
 	Node *visitChar(LiteralChar *node);
 
+	Node *visitString(StringValue *node);
+
 	Node *visitAllocaInst(AllocaInst *node);
+
+	Node *visitReturnInst(ReturnInst *node);
 
 	Node *visitInst(Inst *node);
 };

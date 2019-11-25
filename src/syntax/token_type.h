@@ -52,10 +52,6 @@ enum class TokenType
 
 	SymbolBraceR,
 
-	SymbolSingleQuote,
-
-	SymbolDoubleQuote,
-
 	InstCreate,
 
 	InstCall,

@@ -19,7 +19,7 @@ public:
 
     Node *accept(LlvmVisitor *visitor) override;
 
-    IntegerKind getKind() const;
+    IntegerKind getIntKind() const;
 
     long getValue() const;
 };

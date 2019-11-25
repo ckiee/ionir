@@ -102,7 +102,6 @@ LiteralInt *Parser::parseInt()
 
 LiteralChar *Parser::parseChar()
 {
-    this->skipOver(TokenType::SymbolSingleQuote);
     this->expect(TokenType::LiteralCharacter);
 
     // Extract the value from the character token.
@@ -110,9 +109,6 @@ LiteralChar *Parser::parseChar()
 
     // Skip over character token.
     this->stream.skip();
-
-    // Skip over single quote after character.
-    this->skipOver(TokenType::SymbolSingleQuote);
 
     // Ensure extracted value only contains a single character.
     if (stringValue.length() > 1)
@@ -122,6 +118,19 @@ LiteralChar *Parser::parseChar()
 
     // Create the character construct with the first and only character of the captured value.
     return new LiteralChar(stringValue[0]);
+}
+
+StringValue *Parser::parseString()
+{
+    this->expect(TokenType::LiteralString);
+
+    // Extract the value from the string token.
+    std::string value = this->stream.get().getValue();
+
+    // Skip over string token.
+    this->stream.skip();
+
+    return new StringValue(value);
 }
 
 std::string Parser::parseIdentifier()
@@ -251,44 +260,46 @@ Value *Parser::parseValue()
     }
 }
 
-Inst *Parser::parseInst()
+AllocaInst *Parser::parseAllocaInst()
 {
-    // TODO: Not being used. Should be used to determine the inst's kind.
-    std::string kindIdentifier = this->parseIdentifier();
+    Value *identifierValue = this->parseValue();
 
-    this->skipOver(TokenType::SymbolParenthesesL);
-
-    std::vector<Value *> args = {};
-
-    // Parse argument values if applicable.
-    if (!this->is(TokenType::SymbolParenthesesR))
+    if (identifierValue->getValueKind() != ValueKind::String)
     {
-        do
-        {
-            // Skip comma token if applicable.
-            if (this->is(TokenType::SymbolComma))
-            {
-                // Prevent leading, lonely comma.
-                if (args.size() == 0)
-                {
-                    // TODO: Add as notice.
-                    // this->pushNotice(NoticeType::Error, "Leading comma in argument list is not allowed");
-                    throw std::runtime_error("Leading comma in argument list is not allowed");
-                }
-
-                // Skip over comma token.
-                this->stream.next();
-            }
-
-            // Parse value and push onto the vector.
-            args.push_back(this->parseValue());
-        } while (this->is(TokenType::SymbolComma));
+        throw std::runtime_error("The alloca instruction's resulting identifier must be a string value");
     }
 
-    this->skipOver(TokenType::SymbolParenthesesR);
+    std::string identifier = ((StringValue *)identifierValue)->getValue();
+    Type *type = this->parseType();
 
-    // TODO: Hard-coded type, should be determined from kindIdentifier.
-    return new Inst(InstKind::Alloca, args);
+    return new AllocaInst(identifier, type);
+}
+
+ReturnInst *Parser::parseReturnInst()
+{
+    Value *value = this->parseValue();
+
+    return new ReturnInst(value);
+}
+
+Inst *Parser::parseInst()
+{
+    // Parse the instruction's name to determine which argument parser to invoke.
+    std::string identifier = this->parseIdentifier();
+
+    // TODO: Hard-coded strings. Should be mapped into InstKind enum.
+    if (identifier == "alloca")
+    {
+        return this->parseAllocaInst();
+    }
+    else if (identifier == "return")
+    {
+        return this->parseReturnInst();
+    }
+    else
+    {
+        throw std::runtime_error("Unrecognized instruction name");
+    }
 }
 
 Block *Parser::parseBlock()

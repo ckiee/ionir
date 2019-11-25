@@ -3,23 +3,18 @@
 
 namespace ionir
 {
-Inst::Inst(InstKind kind, std::vector<Value *> args) : Node(NodeKind::Instruction), kind(kind), args(args)
+Inst::Inst(InstKind kind) : Node(NodeKind::Instruction), kind(kind)
 {
     //
 }
 
 Node *Inst::accept(LlvmVisitor *visitor)
 {
-    return visitor->visitInstruction(this);
+    return visitor->visitInst(this);
 }
 
-InstKind Inst::getKind() const
+InstKind Inst::getInstKind() const
 {
     return this->kind;
-}
-
-std::vector<Value *> Inst::getArgs() const
-{
-    return this->args;
 }
 } // namespace ionir

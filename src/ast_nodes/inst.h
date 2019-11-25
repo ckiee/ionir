@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 #include "value.h"
@@ -15,15 +14,11 @@ class Inst : public Node
 protected:
     InstKind kind;
 
-    std::vector<Value *> args;
-
 public:
-    Inst(InstKind kind, std::vector<Value *> args);
+    Inst(InstKind kind);
 
     Node *accept(LlvmVisitor *visitor) override;
 
-    InstKind getKind() const;
-
-    std::vector<Value *> getArgs() const;
+    InstKind getInstKind() const;
 };
 } // namespace ionir

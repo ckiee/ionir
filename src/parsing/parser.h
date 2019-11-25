@@ -6,6 +6,7 @@
 #include "syntax/token.h"
 #include "ast_nodes/values/integer.h"
 #include "ast_nodes/values/char.h"
+#include "ast_nodes/values/string.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/args.h"
 #include "ast_nodes/prototype.h"
@@ -14,6 +15,8 @@
 #include "misc/notice.h"
 #include "misc/notice_context.h"
 #include "misc/notice_type.h"
+#include "ast_nodes/insts/alloca.h"
+#include "ast_nodes/insts/return.h"
 
 namespace ionir
 {
@@ -51,6 +54,8 @@ public:
 
     LiteralChar *parseChar();
 
+    StringValue *parseString();
+
     std::string parseIdentifier();
 
     Type *parseType();
@@ -67,6 +72,15 @@ public:
 
     Value *parseValue();
 
+    AllocaInst *parseAllocaInst();
+
+    ReturnInst *parseReturnInst();
+
+    /**
+     * Parses an instruction, consuming its identifier.
+     * Invokes the corresponding parser depending on its
+     * identifier.
+     */
     Inst *parseInst();
 };
 } // namespace ionir
