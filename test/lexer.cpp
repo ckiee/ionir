@@ -4,11 +4,9 @@
 #include "pch.h"
 #include "syntax/token.h"
 #include "syntax/lexer.h"
-#include "test_util.h"
+#include "test_api/misc.h"
 
-using namespace ::testing;
-
-namespace test = ionir::testing;
+using namespace ionir::test;
 
 TEST(LexerTest, GetInput)
 {
@@ -54,7 +52,7 @@ TEST(LexerTest, LexTwoSymbols)
 	};
 
 	// Compare result with expected.
-	test::compareTokenSets<2>(expected, actual);
+	misc::compareTokenSets<2>(expected, actual);
 }
 
 TEST(LexerTest, LexSymbols)
@@ -83,7 +81,7 @@ TEST(LexerTest, LexSymbols)
 	};
 
 	// Compare result with expected.
-	test::compareTokenSets<13>(expected, actual);
+	misc::compareTokenSets<13>(expected, actual);
 }
 
 TEST(LexerTest, LexIdentifiers)
@@ -99,5 +97,5 @@ TEST(LexerTest, LexIdentifiers)
 	};
 
 	// Compare result with expected.
-	test::compareTokenSets<2>(expected, actual);
+	misc::compareTokenSets<2>(expected, actual);
 }

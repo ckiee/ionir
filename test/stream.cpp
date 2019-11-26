@@ -1,15 +1,13 @@
-#include "pch.h"
 #include <string>
 #include <vector>
-#include "test_util.h"
+#include "pch.h"
+#include "test_api/bootstrap.h"
 
-using namespace ::testing;
-
-namespace test = ionir::testing;
+using namespace ionir::test;
 
 TEST(StreamTest, HandleGet)
 {
-	ionir::TokenStream stream = test::bootstrapTokenStream();
+	ionir::TokenStream stream = bootstrap::tokenStream();
 	ionir::Token currentToken = stream.get();
 
 	EXPECT_EQ(currentToken.getValue(), "test_0");
@@ -21,13 +19,13 @@ TEST(StreamTest, HandleGet)
 TEST(StreamTest, HandleSize)
 {
 	// Create the initial Stream instance.
-	ionir::TokenStream stream = test::bootstrapTokenStream();
+	ionir::TokenStream stream = bootstrap::tokenStream();
 
 	// Should contain one item.
 	EXPECT_EQ(stream.getSize(), 1);
 
 	// Create a new Stream with more than one item.
-	stream = test::bootstrapTokenStream(2);
+	stream = bootstrap::tokenStream(2);
 
 	// New stream instance should contain two items.
 	EXPECT_EQ(stream.getSize(), 2);
@@ -36,7 +34,7 @@ TEST(StreamTest, HandleSize)
 TEST(StreamTest, HandleHasNext)
 {
 	// Create the initial Stream instance.
-	ionir::TokenStream stream = test::bootstrapTokenStream();
+	ionir::TokenStream stream = bootstrap::tokenStream();
 
 	// Stream with one item should not indicate next.
 	EXPECT_FALSE(stream.hasNext());
@@ -45,7 +43,7 @@ TEST(StreamTest, HandleHasNext)
 TEST(StreamTest, HandleNext)
 {
 	// Create the initial Stream instance.
-	ionir::TokenStream stream = test::bootstrapTokenStream();
+	ionir::TokenStream stream = bootstrap::tokenStream();
 
 	// Extract the current item & index for comparison.
 	ionir::Token token = stream.get();

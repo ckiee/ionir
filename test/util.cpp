@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "misc/util.h"
 
-using namespace ::testing;
-
 TEST(UtilEscapeRegex, IgnoreNonSpecialCharacters)
 {
     EXPECT_EQ(ionir::Util::escapeRegex("abc"), "abc");

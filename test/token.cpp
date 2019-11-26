@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "syntax/token.h"
-#include "test_util.h"
+#include "test_api/bootstrap.h"
 
-using namespace ::testing;
+using namespace ionir::test;
 
 TEST(TokenTest, CorrectProperties)
 {
@@ -27,7 +27,7 @@ TEST(TokenTest, CreateDummy)
 TEST(TokenTest, DetermineWhetherIsDummy)
 {
     ionir::Token dummy = ionir::Token::createDummy(0);
-    ionir::Token token = ionir::testing::bootstrapToken(0);
+    ionir::Token token = bootstrap::token(0);
 
     EXPECT_TRUE(dummy.isDummy());
     EXPECT_FALSE(token.isDummy());

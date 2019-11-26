@@ -1,18 +1,16 @@
 #include <string>
 #include <vector>
 #include "pch.h"
-#include "test_util.h"
 #include "parsing/parser.h"
 #include "syntax/token.h"
 #include "ast_nodes/inst_kind.h"
+#include "test_api/bootstrap.h"
 
-using namespace ::testing;
-
-namespace test = ionir::testing;
+using namespace ionir::test;
 
 TEST(ParserTest, ParseInt)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::LiteralInt, "5", 0),
     });
 
@@ -23,7 +21,7 @@ TEST(ParserTest, ParseInt)
 
 TEST(ParserTest, ParseChar)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::LiteralCharacter, "a", 1),
     });
 
@@ -34,7 +32,7 @@ TEST(ParserTest, ParseChar)
 
 TEST(ParserTest, ParseIdentifier)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::Identifier, "test", 0),
     });
 
@@ -45,7 +43,7 @@ TEST(ParserTest, ParseIdentifier)
 
 TEST(ParserTest, ParseType)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::Identifier, "type", 0),
     });
 
@@ -57,7 +55,7 @@ TEST(ParserTest, ParseType)
 
 TEST(ParserTest, ParsePointerType)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::Identifier, "type", 0),
         ionir::Token(ionir::TokenType::SymbolStar, "*", 1),
     });
@@ -70,7 +68,7 @@ TEST(ParserTest, ParsePointerType)
 
 TEST(ParserTest, ParseArg)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::Identifier, "type", 0),
         ionir::Token(ionir::TokenType::Identifier, "test", 1),
     });
@@ -84,7 +82,7 @@ TEST(ParserTest, ParseArg)
 
 TEST(ParserTest, ParseEmptyBlock)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::Identifier, "entry", 0),
         ionir::Token(ionir::TokenType::SymbolColon, ":", 1),
         ionir::Token(ionir::TokenType::SymbolBraceL, "{", 2),
@@ -99,7 +97,7 @@ TEST(ParserTest, ParseEmptyBlock)
 
 TEST(ParserTest, ParseEmptyPrototype)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::Identifier, "type", 0),
         ionir::Token(ionir::TokenType::Identifier, "test", 1),
         ionir::Token(ionir::TokenType::SymbolParenthesesL, "(", 2),
@@ -125,7 +123,7 @@ TEST(ParserTest, ParseEmptyPrototype)
 // TODO: Alloca inst changed.
 // TEST(ParserTest, ParseEmptyInst)
 // {
-//     ionir::Parser parser = test::bootstrapParser({
+//     ionir::Parser parser = bootstrap::parser({
 //         ionir::Token(ionir::TokenType::Identifier, "alloca", 0),
 //         ionir::Token(ionir::TokenType::SymbolParenthesesL, "(", 1),
 //         ionir::Token(ionir::TokenType::SymbolParenthesesR, ")", 2),
@@ -138,7 +136,7 @@ TEST(ParserTest, ParseEmptyPrototype)
 
 TEST(ParserTest, ParseExtern)
 {
-    ionir::Parser parser = test::bootstrapParser({
+    ionir::Parser parser = bootstrap::parser({
         ionir::Token(ionir::TokenType::KeywordExtern, "extern", 0),
         ionir::Token(ionir::TokenType::Identifier, "type", 1),
         ionir::Token(ionir::TokenType::Identifier, "test", 2),

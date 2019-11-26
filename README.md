@@ -50,8 +50,8 @@ int main() {
 * [zlib](https://zlib.net/)
 * [CMake >=v3.13.X](https://cmake.org/download/)
 * [Python =v2.7](https://www.python.org/download/releases/2.7/)
-* [Visual Studio 2019 with C++ tools (Windows)](https://visualstudio.microsoft.com/downloads/)
-* [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe)
+* ~~[Visual Studio 2019 with C++ tools (Windows)](https://visualstudio.microsoft.com/downloads/)~~
+* [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) with GNU >=v8.1.0
 * [LLVM >=v9.0.0](https://releases.llvm.org/download.html) (must build from source on Windows, see section below)
 
 #### (Recommended) Automatically building LLVM from source (Windows)
@@ -60,7 +60,7 @@ int main() {
 
 1. Download sources ([Visit LLVM's downloads page](http://releases.llvm.org/download.html)) for LLVM 9.0.0 (or [click here](http://releases.llvm.org/9.0.0/llvm-9.0.0.src.tar.xz) to download them directly).
 
-2. Extract sources onto a directory whose absolute path contains no spaces. For example, use `C:/LLVM_BUILD` instead of `C:/LLVM BUILD`. This will prevent the CMake build from failing, since it seems that a certain project has a hard time with paths with spaces.
+2. Extract sources onto a directory whose absolute path contains no spaces. For example, use `C:/LLVM_BUILD` instead of `C:/LLVM BUILD`. This will prevent the CMake build from failing, since it seems that certain project(s) have a hard time with paths containing spaces in Windows.
 
 3. Copy the `install_llvm.bat` file in this folder to the folder where you extracted the sources.
 
