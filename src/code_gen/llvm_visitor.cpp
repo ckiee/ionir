@@ -329,7 +329,11 @@ Node *LlvmVisitor::visitChar(LiteralChar *node)
 
 Node *LlvmVisitor::visitString(StringValue *node)
 {
-    // TODO
+    // Create the global string pointer.
+    llvm::Constant *value = this->builder->CreateGlobalStringPtr(node->getValue());
+
+    // Push the value onto the value stack.
+    this->valueStack.push(value);
 
     return node;
 }
@@ -392,9 +396,63 @@ Node *LlvmVisitor::visitInst(Inst *node)
     return node;
 }
 
-Node *visitIfStmt(IfStmt *node)
+Node *LlvmVisitor::visitIfStmt(IfStmt *node)
 {
-    // TODO
+    // Visit condition.
+    this->visit(node->getCondition());
+
+    llvm::Value *condition = this->valueStack.top();
+
+    this->valueStack.pop();
+
+    // Visit body.
+    this->visit(node->getBody());
+
+    llvm::BasicBlock *body = (llvm::BasicBlock *)this->valueStack.top();
+
+    this->valueStack.pop();
+
+    // Prepare otherwise block with a default value.
+    llvm::BasicBlock *otherwise = nullptr;
+
+    // Visit otherwise block if applicable.
+    if (node->getOtherwise().has_value())
+    {
+        this->visit(*node->getOtherwise());
+        otherwise = (llvm::BasicBlock *)this->valueStack.top();
+        this->valueStack.pop();
+    }
+
+    // Create the LLVM branch instruction.
+    this->builder->CreateCondBr(condition, body, otherwise);
+
+    return node;
+}
+
+Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
+{
+    this->visit(node->getType());
+
+    llvm::Type *type = this->typeStack.top();
+
+    this->typeStack.pop();
+
+    llvm::GlobalVariable *globalVar = (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getIdentifier(), type);
+
+    // Assign value if applicable.
+    if (node->getValue().has_value())
+    {
+        // Visit global variable value.
+        this->visit(*node->getValue());
+
+        llvm::Value *value = this->valueStack.top();
+
+        this->valueStack.pop();
+
+        // TODO: Value needs to be verified to be llvm::Constant?
+
+        globalVar->setInitializer((llvm::Constant *)value);
+    }
 
     return node;
 }

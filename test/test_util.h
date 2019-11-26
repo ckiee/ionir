@@ -1,5 +1,7 @@
 #pragma once
 
+#include <filesystem>
+#include <iosfwd>
 #include <array>
 #include <vector>
 #include "syntax/token.h"
@@ -8,6 +10,8 @@
 #include "llvm/module.h"
 #include "llvm/context.h"
 #include "code_gen/llvm_visitor.h"
+
+namespace fs = std::filesystem;
 
 namespace ionir::testing
 {
@@ -48,6 +52,32 @@ inline Module *bootstrapModule(std::string identifier = "test")
 inline LlvmVisitor *bootstrapLlvmVisitor()
 {
     return new LlvmVisitor(bootstrapModule()->unwrap());
+}
+
+inline bool compareStrings(std::string expected, std::string actual)
+{
+    return expected == actual;
+}
+
+inline std::filesystem::path resolveIrFile(std::string fileName)
+{
+    return std::filesystem::path("ir").append(fileName);
+}
+
+inline std::string readFileContents(std::string path)
+{
+    std::ifstream stream = std::ifstream(path);
+    std::string content = std::string((std::istreambuf_iterator<char>(stream)), (std::istreambuf_iterator<char>());
+
+    return content;
+}
+
+inline std::string loadIr(std::string fileName)
+{
+    std::filesystem::path fullPath = resolveIrFile(fileName);
+
+    // TODO: Trim whitespace chars.
+    return readFileContents(fullPath);
 }
 
 template <unsigned int N>

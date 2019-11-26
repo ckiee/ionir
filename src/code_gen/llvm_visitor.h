@@ -18,6 +18,7 @@
 #include "ast_nodes/if_stmt.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/prototype.h"
+#include "ast_nodes/global_var.h"
 #include "ast_nodes/inst.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
@@ -83,5 +84,7 @@ public:
 	Node *visitInst(Inst *node);
 
 	Node *visitIfStmt(IfStmt *node);
+
+	Node *visitGlobalVar(GlobalVar *node);
 };
 } // namespace ionir

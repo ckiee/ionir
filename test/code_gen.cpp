@@ -13,16 +13,17 @@ namespace test = ionir::testing;
 
 TEST(CodeGenTest, VisitExtern)
 {
-    // TODO: Program suddenly exits on test::bootstrapLlvmVisitor(), needs to be debugged.
-    // ionir::LlvmVisitor *visitor = test::bootstrapLlvmVisitor();
+    ionir::LlvmVisitor *visitor = test::bootstrapLlvmVisitor();
 
-    // ionir::Type *returnType = new ionir::Type("void", false);
-    // ionir::Prototype *prototype = new ionir::Prototype("testExtern", ionir::Args({}, false), returnType);
-    // ionir::Extern *externNode = new ionir::Extern(prototype);
+    ionir::Type *returnType = new ionir::Type("void", false);
+    ionir::Prototype *prototype = new ionir::Prototype("testExtern", ionir::Args({}, false), returnType);
+    ionir::Extern *externNode = new ionir::Extern(prototype);
 
-    // visitor->visitExtern(externNode);
+    visitor->visitExtern(externNode);
 
-    // ionir::Module *module = new ionir::Module(visitor->getModule());
+    ionir::Module *module = new ionir::Module(visitor->getModule());
 
-    // module->print();
+    module->print();
+
+    EXPECT_TRUE(test::compareStrings());
 }

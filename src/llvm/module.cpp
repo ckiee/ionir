@@ -10,7 +10,7 @@ Module::Module(llvm::Module *module, Context *context) : Wrapper(module), contex
 }
 
 Module::Module(llvm::Module *module)
-    : Module(module, new Context(&(this->value->getContext())))
+    : Module(module, new Context(&module->getContext()))
 {
     //
 }
