@@ -1,8 +1,4 @@
-#pragma once
-
 #include "bootstrap.h"
-
-namespace fs = std::filesystem;
 
 namespace ionir::test::bootstrap
 {
@@ -11,7 +7,7 @@ Token token(int id)
     return Token(TokenType::Unknown, std::string("test_" + std::to_string(id)), id);
 }
 
-TokenStream tokenStream(int amountOfItems = 1)
+TokenStream tokenStream(int amountOfItems)
 {
     std::vector<Token> tokens = {};
 
@@ -32,7 +28,7 @@ Parser parser(std::vector<Token> tokens)
     return ionir::Parser(stream);
 }
 
-Module *module(std::string identifier = "test")
+Module *module(std::string identifier)
 {
     llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
     llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);

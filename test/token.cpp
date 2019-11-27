@@ -2,14 +2,14 @@
 #include "syntax/token.h"
 #include "test_api/bootstrap.h"
 
-using namespace ionir::test;
+using namespace ionir;
 
 TEST(TokenTest, CorrectProperties)
 {
-    ionir::Token token = ionir::Token(ionir::TokenType::Identifier, std::string("hello_world"), 123);
+    Token token = Token(TokenType::Identifier, std::string("hello_world"), 123);
 
     EXPECT_EQ(token.getValue(), "hello_world");
-    EXPECT_EQ(token.getType(), ionir::TokenType::Identifier);
+    EXPECT_EQ(token.getType(), TokenType::Identifier);
     EXPECT_EQ(token.getStartPosition(), 123);
 
     // End position must be 123 + len("hello_world") (11) = 134.
@@ -18,16 +18,16 @@ TEST(TokenTest, CorrectProperties)
 
 TEST(TokenTest, CreateDummy)
 {
-    ionir::Token token = ionir::Token::createDummy(0);
-    ionir::Token expected = ionir::Token(ionir::TokenType::Unknown, "", 0);
+    Token token = Token::createDummy(0);
+    Token expected = Token(TokenType::Unknown, "", 0);
 
     EXPECT_EQ(expected, token);
 }
 
 TEST(TokenTest, DetermineWhetherIsDummy)
 {
-    ionir::Token dummy = ionir::Token::createDummy(0);
-    ionir::Token token = bootstrap::token(0);
+    Token dummy = Token::createDummy(0);
+    Token token = test::bootstrap::token(0);
 
     EXPECT_TRUE(dummy.isDummy());
     EXPECT_FALSE(token.isDummy());
@@ -36,9 +36,9 @@ TEST(TokenTest, DetermineWhetherIsDummy)
 TEST(TokenTest, EqualityAndDifference)
 {
     // Create test tokens.
-    ionir::Token token1 = ionir::Token(ionir::TokenType::SymbolColon, ":", 5);
-    ionir::Token token2 = ionir::Token(ionir::TokenType::SymbolColon, ":", 5);
-    ionir::Token token3 = ionir::Token(ionir::TokenType::SymbolColon, "~", 5);
+    Token token1 = Token(TokenType::SymbolColon, ":", 5);
+    Token token2 = Token(TokenType::SymbolColon, ":", 5);
+    Token token3 = Token(TokenType::SymbolColon, "~", 5);
 
     // Expect equal.
     EXPECT_EQ(token1, token2);

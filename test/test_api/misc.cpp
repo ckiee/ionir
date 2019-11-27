@@ -4,28 +4,28 @@
 
 namespace ionir::test::misc
 {
-bool compareStrings(std::string expected, std::string actual)
-{
-    return expected == actual;
-}
+// bool compareStrings(std::string expected, std::string actual)
+// {
+//     return expected == actual;
+// }
 
-std::filesystem::path resolveIrFile(std::string fileName)
-{
-    return std::filesystem::path("ir").append(fileName);
-}
+// std::filesystem::path resolveIrFile(std::string fileName)
+// {
+//     return std::filesystem::path("ir").append(fileName);
+// }
 
-std::string readFileContents(std::string path)
-{
-    std::ifstream stream = std::ifstream(path);
-    std::string content = std::string(std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>());
+// std::string readFileContents(std::string path)
+// {
+//     std::ifstream stream = std::ifstream(path);
+//     std::string content = std::string(std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>());
 
-    return content;
-}
+//     return content;
+// }
 
-std::string loadIr(std::string fileName)
-{
-    std::filesystem::path fullPath = resolveIrFile(fileName);
+// std::string loadIr(std::string fileName)
+// {
+//     std::filesystem::path fullPath = resolveIrFile(fileName);
 
-    return readFileContents(util::trimString(fullPath.string()));
-}
+//     return readFileContents(util::trimString(fullPath.string()));
+// }
 } // namespace ionir::test::misc

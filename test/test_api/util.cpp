@@ -1,33 +1,26 @@
 #include <algorithm>
-#include <string_view>
 #include "util.h"
 
 namespace ionir::test::util
 {
-std::string_view trim(std::string_view subject)
+const char *whitespace = " \t\n\r\f\v";
+
+std::string rightTrim(std::string subject)
 {
-    // String is empty. Do not continue.
-    if (subject.empty())
-    {
-        return {};
-    }
+    subject.erase(subject.find_last_not_of(whitespace) + 1);
 
-    // Define the callback lambda.
-    auto isws = [](char c) {
-        return isspace(c);
-    };
+    return subject;
+}
 
-    // Begin iterating through the subject string.
-    auto pos_begin = std::find_if_not(subject.cbegin(), subject.cend(), isws);
+std::string leftTrim(std::string subject)
+{
+    subject.erase(0, subject.find_first_not_of(whitespace));
 
-    if (pos_begin == subject.end())
-    {
-        return {};
-    }
+    return subject;
+}
 
-    auto pos_end = std::find_if_not(subject.crbegin(), subject.crend(), isws);
-
-    // Return the resulting set of characters (string).
-    return {&*pos_begin, &*pos_end - &*pos_begin};
+std::string trim(std::string subject)
+{
+    return leftTrim(rightTrim(subject));
 }
 } // namespace ionir::test::util

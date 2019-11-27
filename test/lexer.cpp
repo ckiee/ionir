@@ -6,30 +6,30 @@
 #include "syntax/lexer.h"
 #include "test_api/misc.h"
 
-using namespace ionir::test;
+using namespace ionir;
 
 TEST(LexerTest, GetInput)
 {
-	ionir::Lexer lexer = ionir::Lexer("test input");
+	Lexer lexer = Lexer("test input");
 
 	EXPECT_EQ(lexer.getInput(), "test input");
 }
 
 TEST(LexerTest, TokenizeThrowOnEmptyInput)
 {
-	EXPECT_THROW(ionir::Lexer(""), std::invalid_argument);
+	EXPECT_THROW(Lexer(""), std::invalid_argument);
 }
 
 TEST(LexerTest, LexOneSymbol)
 {
 	// Create the Lexer instance with a single symbol to tokenize.
-	ionir::Lexer lexer = ionir::Lexer("$");
+	Lexer lexer = Lexer("$");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> tokens = lexer.scan();
+	std::vector<Token> tokens = lexer.scan();
 
 	// Create the expected token.
-	ionir::Token expected = ionir::Token(ionir::TokenType::SymbolDollar, "$", 0);
+	Token expected = Token(TokenType::SymbolDollar, "$", 0);
 
 	// Resulting vector should contain one item.
 	EXPECT_EQ(tokens.size(), 1);
@@ -41,61 +41,61 @@ TEST(LexerTest, LexOneSymbol)
 TEST(LexerTest, LexTwoSymbols)
 {
 	// Create the Lexer instance with two symbols to tokenize.
-	ionir::Lexer lexer = ionir::Lexer("$#");
+	Lexer lexer = Lexer("$#");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> actual = lexer.scan();
+	std::vector<Token> actual = lexer.scan();
 
-	std::array<ionir::Token, 2> expected = {
-		ionir::Token(ionir::TokenType::SymbolDollar, "$", 0),
-		ionir::Token(ionir::TokenType::SymbolHash, "#", 1),
+	std::array<Token, 2> expected = {
+		Token(TokenType::SymbolDollar, "$", 0),
+		Token(TokenType::SymbolHash, "#", 1),
 	};
 
 	// Compare result with expected.
-	misc::compareTokenSets<2>(expected, actual);
+	test::misc::compareTokenSets<2>(expected, actual);
 }
 
 TEST(LexerTest, LexSymbols)
 {
 	// Create the Lexer instance with all the existing symbols.
-	ionir::Lexer lexer = ionir::Lexer("@=:$#()[],~%;");
+	Lexer lexer = Lexer("@=:$#()[],~%;");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> actual = lexer.scan();
+	std::vector<Token> actual = lexer.scan();
 
 	// Create a list of expected tokens.
-	std::array<ionir::Token, 13> expected = {
-		ionir::Token(ionir::TokenType::SymbolAt, "@", 0),
-		ionir::Token(ionir::TokenType::SymbolEqual, "=", 1),
-		ionir::Token(ionir::TokenType::SymbolColon, ":", 2),
-		ionir::Token(ionir::TokenType::SymbolDollar, "$", 3),
-		ionir::Token(ionir::TokenType::SymbolHash, "#", 4),
-		ionir::Token(ionir::TokenType::SymbolParenthesesL, "(", 5),
-		ionir::Token(ionir::TokenType::SymbolParenthesesR, ")", 6),
-		ionir::Token(ionir::TokenType::SymbolBracketL, "[", 7),
-		ionir::Token(ionir::TokenType::SymbolBracketR, "]", 8),
-		ionir::Token(ionir::TokenType::SymbolComma, ",", 9),
-		ionir::Token(ionir::TokenType::SymbolTilde, "~", 10),
-		ionir::Token(ionir::TokenType::SymbolPercent, "%", 11),
-		ionir::Token(ionir::TokenType::SymbolSemiColon, ";", 12),
+	std::array<Token, 13> expected = {
+		Token(TokenType::SymbolAt, "@", 0),
+		Token(TokenType::SymbolEqual, "=", 1),
+		Token(TokenType::SymbolColon, ":", 2),
+		Token(TokenType::SymbolDollar, "$", 3),
+		Token(TokenType::SymbolHash, "#", 4),
+		Token(TokenType::SymbolParenthesesL, "(", 5),
+		Token(TokenType::SymbolParenthesesR, ")", 6),
+		Token(TokenType::SymbolBracketL, "[", 7),
+		Token(TokenType::SymbolBracketR, "]", 8),
+		Token(TokenType::SymbolComma, ",", 9),
+		Token(TokenType::SymbolTilde, "~", 10),
+		Token(TokenType::SymbolPercent, "%", 11),
+		Token(TokenType::SymbolSemiColon, ";", 12),
 	};
 
 	// Compare result with expected.
-	misc::compareTokenSets<13>(expected, actual);
+	test::misc::compareTokenSets<13>(expected, actual);
 }
 
 TEST(LexerTest, LexIdentifiers)
 {
-	ionir::Lexer lexer = ionir::Lexer("hello world");
+	Lexer lexer = Lexer("hello world");
 
 	// Tokenize input and begin inspection.
-	std::vector<ionir::Token> actual = lexer.scan();
+	std::vector<Token> actual = lexer.scan();
 
-	std::array<ionir::Token, 2> expected = {
-		ionir::Token(ionir::TokenType::Identifier, "hello", 0),
-		ionir::Token(ionir::TokenType::Identifier, "world", 5),
+	std::array<Token, 2> expected = {
+		Token(TokenType::Identifier, "hello", 0),
+		Token(TokenType::Identifier, "world", 5),
 	};
 
 	// Compare result with expected.
-	misc::compareTokenSets<2>(expected, actual);
+	test::misc::compareTokenSets<2>(expected, actual);
 }

@@ -8,7 +8,8 @@ enable_testing()
 
 set(PROJECT_NAME IonIrTests)
 
-file(GLOB SOURCES
+file(GLOB_RECURSE SOURCES
+    "*.h"
     "*.cpp"
 )
 

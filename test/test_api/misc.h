@@ -1,19 +1,20 @@
 #pragma once
 
+#include <array>
 #include <string>
-#include <filesystem>
+// #include <filesystem>
 #include "util.h"
 #include "syntax/token.h"
 
 namespace ionir::test::misc
 {
-bool compareStrings(std::string expected, std::string actual);
+// bool compareStrings(std::string expected, std::string actual);
 
-std::filesystem::path resolveIrFile(std::string fileName);
+// std::filesystem::path resolveIrFile(std::string fileName);
 
-std::string readFileContents(std::string path);
+// std::string readFileContents(std::string path);
 
-std::string loadIr(std::string fileName);
+// std::string loadIr(std::string fileName);
 
 template <unsigned int N>
 void compareTokenSets(std::array<Token, N> expected, std::vector<Token> actual)

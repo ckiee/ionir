@@ -1,25 +1,25 @@
-#include "pch.h"
 #include "llvm/IR/Module.h"
 #include "llvm/IR/LLVMContext.h"
+#include "pch.h"
 #include "code_gen/llvm_visitor.h"
 #include "ast_nodes/values/integer_kind.h"
 #include "ast_nodes/values/integer.h"
 #include "llvm/module.h"
 #include "test_api/bootstrap.h"
 
-using namespace ionir::test;
+using namespace ionir;
 
 TEST(CodeGenTest, VisitExtern)
 {
-    ionir::LlvmVisitor *visitor = bootstrap::llvmVisitor();
+    LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
 
-    ionir::Type *returnType = new ionir::Type("void", false);
-    ionir::Prototype *prototype = new ionir::Prototype("testExtern", ionir::Args({}, false), returnType);
-    ionir::Extern *externNode = new ionir::Extern(prototype);
+    Type *returnType = new Type("void", false);
+    Prototype *prototype = new Prototype("testExtern", Args({}, false), returnType);
+    Extern *externNode = new Extern(prototype);
 
     visitor->visitExtern(externNode);
 
-    ionir::Module *module = new ionir::Module(visitor->getModule());
+    Module *module = new Module(visitor->getModule());
 
     module->print();
 
