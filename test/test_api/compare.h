@@ -6,18 +6,24 @@
 #include "util.h"
 #include "syntax/token.h"
 
-namespace ionir::test::misc
+namespace ionir::test::compare
 {
-// bool compareStrings(std::string expected, std::string actual);
+/**
+ * Compare 2 strings. Both strings are trimmed
+ * before comparison.
+ */
+bool strings(std::string expected, std::string actual);
 
-// std::filesystem::path resolveIrFile(std::string fileName);
-
-// std::string readFileContents(std::string path);
-
-// std::string loadIr(std::string fileName);
+/**
+ * Compare an LLVM IR output string with
+ * a stored LLVM IR file. Both inputs are trimmed
+ * before comparison. Returns false if the stored
+ * LLVM IR file does not exist.
+ */
+bool ir(std::string output, std::string fileName);
 
 template <unsigned int N>
-void compareTokenSets(std::array<Token, N> expected, std::vector<Token> actual)
+void tokenSets(std::array<Token, N> expected, std::vector<Token> actual)
 {
     // Both sets should have the same length.
     EXPECT_EQ(expected.size(), actual.size());
@@ -34,4 +40,4 @@ void compareTokenSets(std::array<Token, N> expected, std::vector<Token> actual)
         i++;
     }
 }
-} // namespace ionir::test::misc
+} // namespace ionir::test::compare

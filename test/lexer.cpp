@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "syntax/token.h"
 #include "syntax/lexer.h"
-#include "test_api/misc.h"
+#include "test_api/compare.h"
 
 using namespace ionir;
 
@@ -52,7 +52,7 @@ TEST(LexerTest, LexTwoSymbols)
 	};
 
 	// Compare result with expected.
-	test::misc::compareTokenSets<2>(expected, actual);
+	test::compare::tokenSets<2>(expected, actual);
 }
 
 TEST(LexerTest, LexSymbols)
@@ -81,7 +81,7 @@ TEST(LexerTest, LexSymbols)
 	};
 
 	// Compare result with expected.
-	test::misc::compareTokenSets<13>(expected, actual);
+	test::compare::tokenSets<13>(expected, actual);
 }
 
 TEST(LexerTest, LexIdentifiers)
@@ -97,5 +97,5 @@ TEST(LexerTest, LexIdentifiers)
 	};
 
 	// Compare result with expected.
-	test::misc::compareTokenSets<2>(expected, actual);
+	test::compare::tokenSets<2>(expected, actual);
 }

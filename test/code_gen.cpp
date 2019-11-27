@@ -6,6 +6,7 @@
 #include "ast_nodes/values/integer.h"
 #include "llvm/module.h"
 #include "test_api/bootstrap.h"
+#include "test_api/compare.h"
 
 using namespace ionir;
 
@@ -21,8 +22,5 @@ TEST(CodeGenTest, VisitExtern)
 
     Module *module = new Module(visitor->getModule());
 
-    module->print();
-
-    // TODO
-    EXPECT_TRUE(true);
+    EXPECT_TRUE(test::compare::ir(module->getAsString(), "simple_extern"));
 }
