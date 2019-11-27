@@ -3,8 +3,8 @@
 
 namespace ionir
 {
-GlobalVar::GlobalVar(Type *type, std::string identifier, std::optional<Value *> value = std::nullopt)
-    : Node(NodeKind::GlobalVariable), type(type), value(value)
+GlobalVar::GlobalVar(Type *type, std::string identifier, std::optional<Value *> value)
+    : Node(NodeKind::GlobalVariable), type(type), identifier(identifier), value(value)
 {
     //
 }

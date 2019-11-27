@@ -16,7 +16,7 @@ protected:
     bool isPointer;
 
 public:
-    Type(std::string identifier, bool isPointer);
+    Type(std::string identifier, bool isPointer = false);
 
     Node *accept(LlvmVisitor *visitor) override;
 

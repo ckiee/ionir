@@ -21,7 +21,7 @@ protected:
     std::optional<Value *> value;
 
 public:
-    GlobalVar(Type *type, std::string identifier, std::optional<Value *> value);
+    GlobalVar(Type *type, std::string identifier, std::optional<Value *> value = std::nullopt);
 
     Node *accept(LlvmVisitor *visitor) override;
 

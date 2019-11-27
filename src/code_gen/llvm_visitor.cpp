@@ -449,8 +449,10 @@ Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
 
         this->valueStack.pop();
 
-        // TODO: Value needs to be verified to be llvm::Constant?
+        // TODO: Value needs to be created from below commented statement.
+        // llvm::Constant* initializerValue = llvm::Constant::getIntegerValue(llvm::Type);
 
+        // You can't just cast llvm::value to constant! See above.
         globalVar->setInitializer((llvm::Constant *)value);
     }
 
