@@ -18,7 +18,7 @@ private:
     std::vector<Inst *> insts;
 
 public:
-    Block(std::string identifier, std::vector<Inst *> insts);
+    Block(std::string identifier, std::vector<Inst *> insts = {});
 
     Node *accept(LlvmVisitor *visitor) override;
 

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <exception>
 #include "llvm_visitor.h"
 #include "llvm/ADT/APInt.h"
@@ -67,10 +68,11 @@ Node *LlvmVisitor::visitFunction(Function *node)
     // Visit the prototype.
     this->visitPrototype(node->getPrototype());
 
-    // Pop the resulting function off the stack.
-    this->valueStack.pop();
-
+    // Retrieve the resulting function off the stack.
     llvm::Function *function = (llvm::Function *)this->valueStack.top();
+
+    // Pop the function off the value stack.
+    this->valueStack.pop();
 
     // Set the function buffer.
     this->function = function;
@@ -133,6 +135,12 @@ Node *LlvmVisitor::visitBlock(Block *node)
         this->valueStack.pop();
     }
 
+    // Body contains no instructions, add a mandatory return void instruction at the end.
+    if (insts.size() == 0)
+    {
+        this->builder->CreateRetVoid();
+    }
+
     this->valueStack.push(block);
 
     return node;
@@ -166,20 +174,21 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
 
     std::optional<llvm::Value *> rightSide;
 
+    // Process right side if applicable.
     if (node->getRightSide().has_value())
     {
         this->visit(*node->getRightSide());
 
-        // Pop and retrieve right side.
-        this->valueStack.pop();
-
+        // Retrieve and pop right side.
         rightSide = this->valueStack.top();
+        this->valueStack.pop();
     }
 
-    // Pop and retrieve left side.
-    this->valueStack.pop();
-
+    // Retrieve left side before popping.
     llvm::Value *leftSide = this->valueStack.top();
+
+    // Pop left side.
+    this->valueStack.pop();
 
     // TODO: Hard-coded add instruction.
     // Create the binary expression LLVM value.
