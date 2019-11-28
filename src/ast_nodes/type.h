@@ -6,7 +6,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Type : public Node
 {
@@ -18,7 +18,7 @@ protected:
 public:
     Type(std::string identifier, bool isPointer = false);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     std::string getIdentifier() const;
 

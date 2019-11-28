@@ -1,5 +1,5 @@
 #include "type.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -9,7 +9,7 @@ Type::Type(std::string identifier, bool isPointer)
     //
 }
 
-Node *Type::accept(LlvmVisitor *visitor)
+Node *Type::accept(Pass *visitor)
 {
     return visitor->visitType(this);
 }
