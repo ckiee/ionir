@@ -72,3 +72,20 @@ TEST(CodeGenTest, VisitGlobalVar)
 
     EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_var"));
 }
+
+TEST(CodeGenTest, VisitIfStmt)
+{
+    LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
+
+    Type *returnType = new Type("void");
+    Prototype *prototype = new Prototype("foobar", Args({}, false), returnType);
+    Function *function = new Function(prototype, new Block("entry"));
+
+    visitor->visitFunction(function);
+
+    Module *module = new Module(visitor->getModule());
+
+    module->print();
+
+    // EXPECT_TRUE(test::compare::ir(module->getAsString(), "function_empty"));
+}

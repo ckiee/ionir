@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include "syntax/token.h"
 #include "ast_nodes/values/integer.h"
@@ -15,6 +16,7 @@
 #include "misc/notice_type.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
+#include "ast_nodes/insts/branch.h"
 
 namespace ionir
 {
@@ -70,9 +72,15 @@ public:
 
     Value *parseValue();
 
+    std::optional<Node *> parsePrimaryExpr();
+
+    Node *parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence);
+
     AllocaInst *parseAllocaInst();
 
     ReturnInst *parseReturnInst();
+
+    BranchInst *parseBranchInst();
 
     /**
      * Parses an instruction, consuming its identifier.

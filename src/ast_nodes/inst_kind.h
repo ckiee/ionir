@@ -10,6 +10,10 @@ enum class InstKind
 
     Call,
 
-    Return
+    Return,
+
+    Break,
+
+    Branch
 };
 } // namespace ionir

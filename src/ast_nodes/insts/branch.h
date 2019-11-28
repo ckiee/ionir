@@ -1,8 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
+#include "ast_nodes/inst.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
 
@@ -10,7 +9,7 @@ namespace ionir
 {
 class LlvmVisitor;
 
-class IfStmt : public Node
+class BranchInst : public Inst
 {
 private:
     BinaryExpr *condition;
@@ -20,7 +19,7 @@ private:
     std::optional<Block *> otherwise;
 
 public:
-    IfStmt(Block *body, std::optional<Block *> otherwise = std::nullopt);
+    BranchInst(Block *body, std::optional<Block *> otherwise = std::nullopt);
 
     Node *accept(LlvmVisitor *visitor) override;
 

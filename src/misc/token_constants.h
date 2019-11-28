@@ -20,6 +20,8 @@ protected:
 
     std::vector<TokenType> keywords;
 
+    std::vector<TokenType> operators;
+
     void pushComplex(std::regex regex, TokenType tokenType);
 
     void pushSimple(std::string value, TokenType type);
@@ -28,11 +30,19 @@ protected:
 
     void pushKeyword(std::string value, TokenType type);
 
+    void pushOperator(std::string value, TokenType type);
+
 public:
     TokenConstants();
 
     std::map<std::string, TokenType> getSimpleIdentifiers() const;
 
     std::vector<std::pair<std::regex, TokenType>> getComplexIdentifiers() const;
+
+    std::vector<TokenType> getSymbols() const;
+
+    std::vector<TokenType> getKeywords() const;
+
+    std::vector<TokenType> getOperators() const;
 };
 } // namespace ionir

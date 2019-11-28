@@ -15,11 +15,11 @@
 #include "ast_nodes/block.h"
 #include "ast_nodes/binary_expr.h"
 #include "ast_nodes/function.h"
-#include "ast_nodes/if_stmt.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/global_var.h"
 #include "ast_nodes/inst.h"
+#include "ast_nodes/insts/branch.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
 
@@ -83,7 +83,7 @@ public:
 
 	Node *visitInst(Inst *node);
 
-	Node *visitIfStmt(IfStmt *node);
+	Node *visitBranchInst(BranchInst *node);
 
 	Node *visitGlobalVar(GlobalVar *node);
 };

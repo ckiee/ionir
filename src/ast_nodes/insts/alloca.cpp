@@ -3,7 +3,8 @@
 namespace ionir
 {
 // TODO: Finish init. implementation.
-AllocaInst::AllocaInst(std::string identifier, Type *type) : Inst(InstKind::Alloca), identifier(identifier), type(type)
+AllocaInst::AllocaInst(std::string identifier, Type *type)
+    : Inst(InstKind::Alloca), identifier(identifier), type(type)
 {
     //
 }

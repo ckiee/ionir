@@ -2,6 +2,7 @@
 #include <utility>
 #include <vector>
 #include <exception>
+#include "ast_nodes/binary_expr.h"
 #include "parser.h"
 
 namespace ionir
@@ -262,6 +263,101 @@ Value *Parser::parseValue()
     }
 }
 
+std::optional<Node *> Parser::parsePrimaryExpr()
+{
+    switch (this->stream.get().getType())
+    {
+    // Parentheses expression.
+    case TokenType::SymbolParenthesesL:
+    {
+        // TODO
+        return nullptr;
+    }
+
+    // At this point, return null.
+    default:
+    {
+        return std::nullopt;
+    }
+    }
+}
+
+Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
+{
+    // If this is a binary operation, find it's precedence.
+    while (true)
+    {
+        // Capture the current token.
+        Token token = this->stream.get();
+
+        // Calculate precedence for the current token.
+        int firstPrecedence = Precedence.Get(token);
+
+        /**
+         * If this is a binary operation that binds at least as tightly
+         * as the current binary operation, consume it. Otherwise, the process
+         * is complete.
+         */
+        if (firstPrecedence < minimalPrecedence)
+        {
+            // TODO: This should throw error? Research.
+            return leftSide;
+        }
+
+        // At this point, it's a binary operation.
+        TokenType binaryOperator = token.getType();
+
+        // TODO: Should check if it's a BINARY operator, not just an operator.
+        // Ensure the captured operator is validated.
+        if (!TokenIdentifier.IsOperator(binaryOperator))
+        {
+            throw std::runtime_error("Expected token to be a binary operator");
+        }
+
+        // Skip operator.
+        this->stream.skip();
+
+        // Parse the right-side.
+        std::optional<Node *> rightSide = this->parsePrimaryExpr();
+
+        // Ensure that the right-side was successfully parsed.
+        if (!rightSide.has_value())
+        {
+            throw std::runtime_error("Unable to parse the right-side of the binary expression");
+        }
+
+        // Determine the token precedence of the current token.
+        int secondPrecedence = Precedence.Get(token);
+
+        /**
+         * If binary operator binds less tightly with the right-side than
+         * the operator after right-side, let the pending operator take the
+         * right-side as its left-side.
+         */
+        if (firstPrecedence < secondPrecedence)
+        {
+            // Invoke the right-side parser.
+            rightSide = this->parseBinaryExprRightSide(*rightSide, firstPrecedence + 1);
+
+            // Ensure the right-side was successfully parsed.
+            if (rightSide == nullptr)
+            {
+                throw std::runtime_error("Unable to parse the right-side of the binary expression");
+            }
+        }
+
+        // Create the binary expression entity.
+        BinaryExpr *binaryExpr = new BinaryExpr(binaryOperator, leftSide, *rightSide, firstPrecedence);
+
+        // TODO: Name is temporary?
+        // Set the name of the binary expression's output.
+        binaryExpr.SetName("tmp");
+
+        // Merge left-side/right-side.
+        leftSide = binaryExpr;
+    }
+}
+
 AllocaInst *Parser::parseAllocaInst()
 {
     Value *identifierValue = this->parseValue();
@@ -279,9 +375,15 @@ AllocaInst *Parser::parseAllocaInst()
 
 ReturnInst *Parser::parseReturnInst()
 {
+    // TODO: Return inst does not necessarily take a value. Instead, it should be allowed to return without value, signaling void.
     Value *value = this->parseValue();
 
     return new ReturnInst(value);
+}
+
+BranchInst *Parser::parseBranchInst()
+{
+    //
 }
 
 Inst *Parser::parseInst()

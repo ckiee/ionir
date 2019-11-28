@@ -62,7 +62,17 @@ enum class TokenType
 
 	KeywordFunction,
 
-	KeywordExtern
+	KeywordExtern,
+
+	OperatorAdd,
+
+	OperatorSub,
+
+	OperatorMultiply,
+
+	OperatorDivide,
+
+	OperatorModulo
 };
 
 std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);

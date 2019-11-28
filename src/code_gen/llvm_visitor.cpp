@@ -405,7 +405,7 @@ Node *LlvmVisitor::visitInst(Inst *node)
     return node;
 }
 
-Node *LlvmVisitor::visitIfStmt(IfStmt *node)
+Node *LlvmVisitor::visitBranchInst(BranchInst *node)
 {
     // Visit condition.
     this->visit(node->getCondition());

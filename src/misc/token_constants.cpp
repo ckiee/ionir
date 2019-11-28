@@ -70,4 +70,19 @@ std::vector<std::pair<std::regex, TokenType>> TokenConstants::getComplexIdentifi
 {
     return this->complex;
 }
+
+std::vector<TokenType> TokenConstants::getSymbols() const
+{
+    return this->symbols;
+}
+
+std::vector<TokenType> TokenConstants::getKeywords() const
+{
+    return this->keywords;
+}
+
+std::vector<TokenType> TokenConstants::getOperators() const
+{
+    return this->operators;
+}
 } // namespace ionir
