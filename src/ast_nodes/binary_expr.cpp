@@ -1,5 +1,5 @@
 #include "binary_expr.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -9,7 +9,7 @@ BinaryExpr::BinaryExpr(Node *leftSide, std::optional<Node *> rightSide)
     //
 }
 
-Node *BinaryExpr::accept(LlvmVisitor *visitor)
+Node *BinaryExpr::accept(Pass *visitor)
 {
     return visitor->visitBinaryExpr(this);
 }

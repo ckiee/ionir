@@ -51,6 +51,7 @@ TokenConstants::TokenConstants()
     this->pushKeyword("end", TokenType::InstEnd);
     this->pushKeyword("func", TokenType::KeywordFunction);
     this->pushKeyword("extern", TokenType::KeywordExtern);
+    this->pushKeyword("else", TokenType::KeywordElse);
 
     // Initialize complex map.
     this->pushComplex(Regex::identifier, TokenType::Identifier);

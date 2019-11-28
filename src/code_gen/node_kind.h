@@ -30,6 +30,8 @@ enum class NodeKind
 
 	IfStatement,
 
-	GlobalVariable
+	GlobalVariable,
+
+	Section
 };
 }

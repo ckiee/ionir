@@ -9,7 +9,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class GlobalVar : public Node
 {
@@ -23,7 +23,7 @@ protected:
 public:
     GlobalVar(Type *type, std::string identifier, std::optional<Value *> value = std::nullopt);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     Type *getType() const;
 

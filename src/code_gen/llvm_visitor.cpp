@@ -1,4 +1,3 @@
-#include <iostream>
 #include <exception>
 #include "llvm_visitor.h"
 #include "llvm/ADT/APInt.h"
@@ -123,13 +122,19 @@ Node *LlvmVisitor::visitBlock(Block *node)
     this->builder.emplace(llvm::IRBuilder<>(block));
 
     // Visit and append instructions.
-    std::vector<Inst *> insts = node->getInsts();
+    std::vector<PartialInst *> insts = node->getInsts();
 
     // Process instructions.
-    for (const auto node : insts)
+    for (const auto inst : insts)
     {
+        // Instruction must be resolved at this point.
+        if (!inst->isResolved())
+        {
+            throw std::runtime_error("Encountered unexpected partial instruction");
+        }
+
         // Visit the instruction.
-        this->visit(node);
+        this->visit(*inst->getInst());
 
         // Clean the stack off the result.
         this->valueStack.pop();

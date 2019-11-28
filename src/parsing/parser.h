@@ -17,6 +17,8 @@
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
 #include "ast_nodes/insts/branch.h"
+#include "ast_nodes/insts/goto.h"
+#include "partial_inst.h"
 
 namespace ionir
 {
@@ -82,11 +84,13 @@ public:
 
     BranchInst *parseBranchInst();
 
+    GotoInst *parseGotoInst();
+
     /**
      * Parses an instruction, consuming its identifier.
      * Invokes the corresponding parser depending on its
      * identifier.
      */
-    Inst *parseInst();
+    PartialInst *parseInst();
 };
 } // namespace ionir

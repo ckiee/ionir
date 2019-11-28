@@ -1,5 +1,5 @@
 #include "function.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -9,7 +9,7 @@ Function::Function(Prototype *prototype, Block *body)
     //
 }
 
-Node *Function::accept(LlvmVisitor *visitor)
+Node *Function::accept(Pass *visitor)
 {
     return visitor->visitFunction(this);
 }

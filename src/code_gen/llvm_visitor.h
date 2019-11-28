@@ -22,10 +22,11 @@
 #include "ast_nodes/insts/branch.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
-class LlvmVisitor
+class LlvmVisitor : public Pass
 {
 protected:
 	llvm::LLVMContext *context;
@@ -57,34 +58,32 @@ public:
 
 	std::stack<llvm::Type *> getTypeStack() const;
 
-	Node *visit(Node *node);
+	Node *visitFunction(Function *node) override;
 
-	Node *visitFunction(Function *node);
+	Node *visitExtern(Extern *node) override;
 
-	Node *visitExtern(Extern *node);
+	Node *visitBlock(Block *node) override;
 
-	Node *visitBlock(Block *node);
+	Node *visitType(Type *node) override;
 
-	Node *visitType(Type *node);
+	Node *visitBinaryExpr(BinaryExpr *node) override;
 
-	Node *visitBinaryExpr(BinaryExpr *node);
+	Node *visitPrototype(Prototype *node) override;
 
-	Node *visitPrototype(Prototype *node);
+	Node *visitInteger(LiteralInt *node) override;
 
-	Node *visitInteger(LiteralInt *node);
+	Node *visitChar(LiteralChar *node) override;
 
-	Node *visitChar(LiteralChar *node);
+	Node *visitString(StringValue *node) override;
 
-	Node *visitString(StringValue *node);
+	Node *visitAllocaInst(AllocaInst *node) override;
 
-	Node *visitAllocaInst(AllocaInst *node);
+	Node *visitReturnInst(ReturnInst *node) override;
 
-	Node *visitReturnInst(ReturnInst *node);
+	Node *visitInst(Inst *node) override;
 
-	Node *visitInst(Inst *node);
+	Node *visitBranchInst(BranchInst *node) override;
 
-	Node *visitBranchInst(BranchInst *node);
-
-	Node *visitGlobalVar(GlobalVar *node);
+	Node *visitGlobalVar(GlobalVar *node) override;
 };
 } // namespace ionir

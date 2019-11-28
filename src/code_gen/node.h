@@ -4,7 +4,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Node
 {
@@ -14,8 +14,15 @@ protected:
 public:
     Node(NodeKind type);
 
-    virtual Node *accept(LlvmVisitor *visitor) = 0;
+    virtual Node *accept(Pass *visitor) = 0;
 
     NodeKind getNodeKind() const;
+
+    /**
+     * Verify the members and properties of the node.
+     * Without an implementation by the derived class,
+     * this will always return true.
+     */
+    virtual bool verify() const;
 };
 } // namespace ionir

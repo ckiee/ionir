@@ -5,7 +5,6 @@
 #include "ast_nodes/type.h"
 #include "ast_nodes/args.h"
 #include "code_gen/node.h"
-#include "code_gen/node_kind.h"
 
 namespace ionir
 {
@@ -13,7 +12,7 @@ class LlvmVisitor;
 
 class Prototype : public Node
 {
-private:
+protected:
 	std::string identifier;
 
 	Args arguments;

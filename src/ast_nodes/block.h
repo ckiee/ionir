@@ -2,27 +2,26 @@
 
 #include <vector>
 #include <string>
-#include "ast_nodes/inst.h"
 #include "code_gen/node.h"
-#include "code_gen/node_kind.h"
+#include "section.h"
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Block : public Node
 {
-private:
+protected:
     std::string identifier;
 
-    std::vector<Inst *> insts;
+    std::vector<Section *> insts;
 
 public:
-    Block(std::string identifier, std::vector<Inst *> insts = {});
+    Block(std::string identifier, std::vector<Section *> sections = {});
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
-    std::vector<Inst *> getInsts() const;
+    std::vector<PartialInst *> getInsts() const;
 
     std::string getIdentifier() const;
 };

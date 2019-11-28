@@ -11,6 +11,7 @@ typedef std::pair<Type *, std::string> Arg;
 
 class Args
 {
+protected:
     std::vector<Arg> items;
 
     bool isInfinite;

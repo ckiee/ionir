@@ -6,17 +6,17 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Extern : public Node
 {
 private:
-	Prototype* prototype;
+	Prototype *prototype;
 
 public:
-	Extern(Prototype* prototype);
+	Extern(Prototype *prototype);
 
-	Node *accept(LlvmVisitor *visitor) override;
+	Node *accept(Pass *visitor) override;
 
 	Prototype *getPrototype() const;
 };

@@ -1,5 +1,5 @@
 #include "global_var.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -9,7 +9,7 @@ GlobalVar::GlobalVar(Type *type, std::string identifier, std::optional<Value *> 
     //
 }
 
-Node *GlobalVar::accept(LlvmVisitor *visitor)
+Node *GlobalVar::accept(Pass *visitor)
 {
     return visitor->visitGlobalVar(this);
 }

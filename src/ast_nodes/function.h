@@ -7,7 +7,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Function : public Node
 {
@@ -19,7 +19,7 @@ protected:
 public:
 	Function(Prototype *prototype, Block *body);
 
-	Node *accept(LlvmVisitor *visitor) override;
+	Node *accept(Pass *visitor) override;
 
 	Prototype *getPrototype() const;
 

@@ -6,7 +6,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class BinaryExpr : public Node
 {
@@ -18,7 +18,7 @@ protected:
 public:
     BinaryExpr(Node *leftSide, std::optional<Node *> rightSide = std::nullopt);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     Node *getLeftSide() const;
 

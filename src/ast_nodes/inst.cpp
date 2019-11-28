@@ -1,5 +1,5 @@
 #include "inst.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -8,7 +8,7 @@ Inst::Inst(InstKind kind) : Node(NodeKind::Instruction), kind(kind)
     //
 }
 
-Node *Inst::accept(LlvmVisitor *visitor)
+Node *Inst::accept(Pass *visitor)
 {
     return visitor->visitInst(this);
 }

@@ -64,6 +64,8 @@ enum class TokenType
 
 	KeywordExtern,
 
+	KeywordElse,
+
 	OperatorAdd,
 
 	OperatorSub,

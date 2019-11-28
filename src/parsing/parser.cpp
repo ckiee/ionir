@@ -383,10 +383,31 @@ ReturnInst *Parser::parseReturnInst()
 
 BranchInst *Parser::parseBranchInst()
 {
-    //
+    std::optional<Node *> condition = this->parsePrimaryExpr();
+
+    // Condition must be set.
+    if (!condition.has_value())
+    {
+        throw std::runtime_error("Expected branch instruction to have a condition");
+    }
+
+    Block *body = this->parseBlock();
+    std::optional<Block *> otherwise = std::nullopt;
+
+    // Parse the otherwise block if applicable.
+    if (this->is(TokenType::KeywordElse))
+    {
+        // Skip over the else keyword.
+        this->stream.skip();
+
+        // Parse the otherwise block.
+        otherwise = this->parseBlock();
+    }
+
+    return new BranchInst(body, *otherwise);
 }
 
-Inst *Parser::parseInst()
+PartialInst *Parser::parseInst()
 {
     // Parse the instruction's name to determine which argument parser to invoke.
     std::string identifier = this->parseIdentifier();
@@ -399,6 +420,10 @@ Inst *Parser::parseInst()
     else if (identifier == "return")
     {
         return this->parseReturnInst();
+    }
+    else if (identifier == "goto")
+    {
+        // TODO
     }
     else
     {
@@ -413,7 +438,7 @@ Block *Parser::parseBlock()
     this->skipOver(TokenType::SymbolColon);
     this->skipOver(TokenType::SymbolBraceL);
 
-    std::vector<Inst *> insts = {};
+    std::vector<PartialInst *> insts = {};
 
     while (!this->is(TokenType::SymbolBraceR))
     {
@@ -423,5 +448,12 @@ Block *Parser::parseBlock()
     this->skipOver(TokenType::SymbolBraceR);
 
     return new Block(identifier, insts);
+}
+
+GotoInst *Parser::parseGotoInst()
+{
+    // TODO
+
+    return nullptr;
 }
 } // namespace ionir

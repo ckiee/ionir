@@ -1,5 +1,5 @@
 #include "extern.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -8,7 +8,7 @@ Extern::Extern(Prototype *prototype) : Node(NodeKind::Extern), prototype(prototy
     //
 }
 
-Node *Extern::accept(LlvmVisitor *visitor)
+Node *Extern::accept(Pass *visitor)
 {
     return visitor->visitExtern(this);
 }

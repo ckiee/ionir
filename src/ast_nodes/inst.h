@@ -7,7 +7,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Inst : public Node
 {
@@ -17,7 +17,7 @@ protected:
 public:
     Inst(InstKind kind);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     InstKind getInstKind() const;
 };
