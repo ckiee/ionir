@@ -1,5 +1,5 @@
 #include "code_gen/node_kind.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 #include "prototype.h"
 
 namespace ionir
@@ -10,7 +10,7 @@ Prototype::Prototype(std::string identifier, Args arguments, Type *returnType)
     //
 }
 
-Node *Prototype::accept(LlvmVisitor *visitor)
+Node *Prototype::accept(Pass *visitor)
 {
     return visitor->visitPrototype(this);
 }

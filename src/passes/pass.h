@@ -35,7 +35,7 @@ public:
 
     virtual Node *visitPrototype(Prototype *node);
 
-    virtual Node *visitInteger(LiteralInt *node);
+    virtual Node *visitInteger(IntValue *node);
 
     virtual Node *visitChar(LiteralChar *node);
 

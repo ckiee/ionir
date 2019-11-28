@@ -70,7 +70,7 @@ public:
 
 	Node *visitPrototype(Prototype *node) override;
 
-	Node *visitInteger(LiteralInt *node) override;
+	Node *visitInteger(IntValue *node) override;
 
 	Node *visitChar(LiteralChar *node) override;
 

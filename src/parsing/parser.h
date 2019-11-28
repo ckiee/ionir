@@ -52,7 +52,7 @@ public:
      * Parses a integer literal in the form of
      * long (or integer 64).
      */
-    LiteralInt *parseInt();
+    IntValue *parseInt();
 
     LiteralChar *parseChar();
 

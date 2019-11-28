@@ -6,7 +6,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Value : public Node
 {
@@ -16,7 +16,7 @@ private:
 public:
     Value(ValueKind kind);
 
-    virtual Node *accept(LlvmVisitor *visitor) = 0;
+    virtual Node *accept(Pass *visitor) = 0;
 
     ValueKind getValueKind() const;
 };

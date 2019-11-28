@@ -1,26 +1,26 @@
-#include "integer.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 #include "ast_nodes/value_kind.h"
+#include "integer.h"
 
 namespace ionir
 {
-LiteralInt::LiteralInt(IntegerKind kind, long value)
+IntValue::IntValue(IntegerKind kind, long value)
     : Value(ValueKind::Integer), kind(kind), value(value)
 {
     //
 }
 
-Node *LiteralInt::accept(LlvmVisitor *visitor)
+Node *IntValue::accept(Pass *visitor)
 {
     return visitor->visitInteger(this);
 }
 
-IntegerKind LiteralInt::getIntKind() const
+IntegerKind IntValue::getIntKind() const
 {
     return this->kind;
 }
 
-long LiteralInt::getValue() const
+long IntValue::getValue() const
 {
     return this->value;
 }

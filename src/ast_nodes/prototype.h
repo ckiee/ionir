@@ -8,7 +8,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Prototype : public Node
 {
@@ -22,7 +22,7 @@ protected:
 public:
 	Prototype(std::string identifier, Args arguments, Type *returnType);
 
-	Node *accept(LlvmVisitor *visitor) override;
+	Node *accept(Pass *visitor) override;
 
 	std::string getIdentifier() const;
 

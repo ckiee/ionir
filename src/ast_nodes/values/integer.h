@@ -5,9 +5,9 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
-class LiteralInt : public Value
+class IntValue : public Value
 {
 protected:
     IntegerKind kind;
@@ -15,9 +15,9 @@ protected:
     long value;
 
 public:
-    LiteralInt(IntegerKind kind, long value);
+    IntValue(IntegerKind kind, long value);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     IntegerKind getIntKind() const;
 

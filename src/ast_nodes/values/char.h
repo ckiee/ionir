@@ -4,7 +4,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class LiteralChar : public Value
 {
@@ -14,7 +14,7 @@ protected:
 public:
     LiteralChar(char value);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     char getValue() const;
 };

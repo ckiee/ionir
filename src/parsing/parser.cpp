@@ -57,7 +57,7 @@ std::vector<Notice> Parser::getNotices() const
     return this->notices;
 }
 
-LiteralInt *Parser::parseInt()
+IntValue *Parser::parseInt()
 {
     this->expect(TokenType::LiteralInt);
 
@@ -94,7 +94,7 @@ LiteralInt *Parser::parseInt()
     }
 
     // Create the integer instance.
-    LiteralInt *integer = new LiteralInt(*kind, value);
+    IntValue *integer = new IntValue(*kind, value);
 
     // Skip current token.
     this->stream.tryNext();
