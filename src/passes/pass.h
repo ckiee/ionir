@@ -27,6 +27,8 @@ public:
 
     virtual Node *visitExtern(Extern *node);
 
+    virtual Node *visitSection(Section *node);
+
     virtual Node *visitBlock(Block *node);
 
     virtual Node *visitType(Type *node);
@@ -37,7 +39,7 @@ public:
 
     virtual Node *visitInteger(IntValue *node);
 
-    virtual Node *visitChar(LiteralChar *node);
+    virtual Node *visitChar(CharValue *node);
 
     virtual Node *visitString(StringValue *node);
 

@@ -41,11 +41,6 @@ LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module
     this->namedValues = {};
 }
 
-Node *LlvmVisitor::visit(Node *node)
-{
-    return node->accept(this);
-}
-
 Node *LlvmVisitor::visitFunction(Function *node)
 {
     if (node->getBody() == nullptr)
@@ -76,10 +71,10 @@ Node *LlvmVisitor::visitFunction(Function *node)
     // Set the function buffer.
     this->function = function;
 
-    // Visit the body.
+    // Visit the function's body.
     this->visitBlock(node->getBody());
 
-    // TODO: Verify the function.
+    // TODO: Verify the function (through LLVM).
 
     // Pop off the body to clean the stack.
     this->valueStack.pop();
@@ -107,7 +102,7 @@ Node *LlvmVisitor::visitExtern(Extern *node)
     return node;
 }
 
-Node *LlvmVisitor::visitBlock(Block *node)
+Node *LlvmVisitor::visitSection(Section *node)
 {
     // Function buffer must not be null.
     if (this->function == nullptr)
@@ -140,13 +135,45 @@ Node *LlvmVisitor::visitBlock(Block *node)
         this->valueStack.pop();
     }
 
-    // Body contains no instructions, add a mandatory return void instruction at the end.
-    if (insts.size() == 0)
+    this->valueStack.push(block);
+
+    return node;
+}
+
+Node *LlvmVisitor::visitBlock(Block *node)
+{
+    // Verify the block before continuing.
+    if (!node->verify())
+    {
+        throw std::runtime_error("Block failed to be verified");
+    }
+
+    /**
+     * Retrieve the entry section from the block.
+     * At this point, it should be guaranteed to be set.
+     */
+    std::optional<Section *> entry = node->getEntrySection();
+
+    /**
+     * Entry section must be set. Redundant check,
+     * since the verify function ensures that the
+     * block contains a single entry section, but
+     * just to make sure.
+     */
+    if (!entry.has_value())
+    {
+        throw std::runtime_error("No entry section exists for block");
+    }
+    /**
+     * Entry section contains no instructions, add 
+     * a mandatory return void instruction at the end.
+     */
+    else if ((*entry)->getInsts().size() == 0)
     {
         this->builder->CreateRetVoid();
     }
 
-    this->valueStack.push(block);
+    // TODO: Visit section(s).
 
     return node;
 }
@@ -276,13 +303,20 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
 
 Node *LlvmVisitor::visitInteger(IntValue *node)
 {
-    // Create the APInt to provide. Acts sort of an LLVM integer value wrapper. Default to being signed to allow for a larger range of values.
+    /**
+     * Create the APInt to provide. Acts sort of an
+     * LLVM integer value wrapper. Default to being
+     * signed to allow for a larger range of values.
+     */
     llvm::APInt apInt = llvm::APInt(node->getValue(), true);
 
     // TODO: Process correct int. type based on IntegerKind.
     std::optional<llvm::IntegerType *> type;
 
-    // Create the corresponding LLVM integer type based off the node's integer kind.
+    /**
+     * Create the corresponding LLVM integer type
+     * based off the node's integer kind.
+     */
     switch (node->getIntKind())
     {
     case IntegerKind::Int1:
@@ -334,7 +368,7 @@ Node *LlvmVisitor::visitInteger(IntValue *node)
     return node;
 }
 
-Node *LlvmVisitor::visitChar(LiteralChar *node)
+Node *LlvmVisitor::visitChar(CharValue *node)
 {
     // TODO
 
@@ -360,7 +394,10 @@ Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
 
     this->typeStack.pop();
 
-    // Create the LLVM equivalent alloca instruction using the buffered builder.
+    /**
+     * Create the LLVM equivalent alloca instruction
+     * using the buffered builder.
+     */
     llvm::AllocaInst *allocaInst = this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getIdentifier());
 
     this->valueStack.push(allocaInst);
@@ -376,7 +413,10 @@ Node *LlvmVisitor::visitReturnInst(ReturnInst *node)
 
     this->valueStack.pop();
 
-    // Create the LLVM equivalent return instruction using the buffered builder.
+    /**
+     * Create the LLVM equivalent return instruction
+     * using the buffered builder.
+     */
     llvm::ReturnInst *returnInst = this->builder->CreateRet(value);
 
     this->valueStack.push(returnInst);
@@ -466,7 +506,7 @@ Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
         // TODO: Value needs to be created from below commented statement.
         // llvm::Constant* initializerValue = llvm::Constant::getIntegerValue(llvm::Type);
 
-        // You can't just cast llvm::value to constant! See above.
+        // TODO: You can't just cast llvm::value to constant! See above.
         globalVar->setInitializer((llvm::Constant *)value);
     }
 

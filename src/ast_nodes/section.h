@@ -10,7 +10,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class Section : public Node
 {
@@ -23,6 +23,8 @@ protected:
 
 public:
     Section(SectionKind kind, std::string identifier, std::vector<PartialInst *> insts = {});
+
+    Node *accept(Pass *visitor) override;
 
     SectionKind getKind() const;
 

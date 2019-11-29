@@ -3,6 +3,9 @@
 #include <vector>
 #include <exception>
 #include "ast_nodes/binary_expr.h"
+#include "ast_nodes/section_kind.h"
+#include "misc/util.h"
+#include "misc/constants.h"
 #include "parser.h"
 
 namespace ionir
@@ -103,7 +106,7 @@ IntValue *Parser::parseInt()
     return integer;
 }
 
-LiteralChar *Parser::parseChar()
+CharValue *Parser::parseChar()
 {
     this->expect(TokenType::LiteralCharacter);
 
@@ -120,7 +123,7 @@ LiteralChar *Parser::parseChar()
     }
 
     // Create the character construct with the first and only character of the captured value.
-    return new LiteralChar(stringValue[0]);
+    return new CharValue(stringValue[0]);
 }
 
 StringValue *Parser::parseString()
@@ -431,7 +434,7 @@ PartialInst *Parser::parseInst()
     }
 }
 
-Block *Parser::parseBlock()
+Section *Parser::parseSection()
 {
     std::string identifier = this->parseIdentifier();
 
@@ -447,7 +450,36 @@ Block *Parser::parseBlock()
 
     this->skipOver(TokenType::SymbolBraceR);
 
-    return new Block(identifier, insts);
+    SectionKind kind = SectionKind::Label;
+
+    if (identifier == Constants::sectionInternalPrefix + Constants::sectionEntryIdentifier)
+    {
+        kind = SectionKind::Entry;
+    }
+
+    else if (Util::stringStartsWith(identifier, Constants::sectionInternalPrefix))
+    {
+        kind = SectionKind::Internal;
+    }
+
+    return new Section(kind, identifier, insts);
+}
+
+Block *Parser::parseBlock()
+{
+    this->skipOver(TokenType::SymbolBraceL);
+
+    std::vector<Section *> sections = {};
+
+    while (this->is(TokenType::SymbolBraceR))
+    {
+        sections.push_back(this->parseSection());
+    }
+
+    // Skip over right brace token.
+    this->stream.skip();
+
+    return new Block(sections);
 }
 
 GotoInst *Parser::parseGotoInst()

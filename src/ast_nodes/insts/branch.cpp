@@ -1,4 +1,4 @@
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 #include "ast_nodes/inst_kind.h"
 #include "branch.h"
 
@@ -10,7 +10,7 @@ BranchInst::BranchInst(Block *body, std::optional<Block *> otherwise)
     //
 }
 
-Node *BranchInst::accept(LlvmVisitor *visitor)
+Node *BranchInst::accept(Pass *visitor)
 {
     return visitor->visitBranchInst(this);
 }

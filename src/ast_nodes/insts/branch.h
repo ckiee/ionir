@@ -7,7 +7,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class BranchInst : public Inst
 {
@@ -21,7 +21,7 @@ private:
 public:
     BranchInst(Block *body, std::optional<Block *> otherwise = std::nullopt);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     BinaryExpr *getCondition() const;
 

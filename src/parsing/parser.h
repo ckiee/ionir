@@ -10,6 +10,7 @@
 #include "ast_nodes/args.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/block.h"
+#include "ast_nodes/section.h"
 #include "ast_nodes/inst.h"
 #include "misc/notice.h"
 #include "misc/notice_context.h"
@@ -54,7 +55,7 @@ public:
      */
     IntValue *parseInt();
 
-    LiteralChar *parseChar();
+    CharValue *parseChar();
 
     StringValue *parseString();
 
@@ -69,6 +70,8 @@ public:
     Prototype *parsePrototype();
 
     Extern *parseExtern();
+
+    Section *parseSection();
 
     Block *parseBlock();
 

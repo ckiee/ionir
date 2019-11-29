@@ -5,7 +5,7 @@
 
 namespace ionir
 {
-class LlvmVisitor;
+class Pass;
 
 class StringValue : public Value
 {
@@ -15,7 +15,7 @@ protected:
 public:
     StringValue(std::string value);
 
-    Node *accept(LlvmVisitor *visitor) override;
+    Node *accept(Pass *visitor) override;
 
     std::string getValue() const;
 };

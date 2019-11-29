@@ -62,6 +62,8 @@ public:
 
 	Node *visitExtern(Extern *node) override;
 
+	Node *visitSection(Section *node) override;
+
 	Node *visitBlock(Block *node) override;
 
 	Node *visitType(Type *node) override;
@@ -72,7 +74,7 @@ public:
 
 	Node *visitInteger(IntValue *node) override;
 
-	Node *visitChar(LiteralChar *node) override;
+	Node *visitChar(CharValue *node) override;
 
 	Node *visitString(StringValue *node) override;
 

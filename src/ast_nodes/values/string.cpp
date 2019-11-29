@@ -1,6 +1,6 @@
 #include "string.h"
 #include "ast_nodes/value_kind.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -9,7 +9,7 @@ StringValue::StringValue(std::string value) : Value(ValueKind::String), value(va
     //
 }
 
-Node *StringValue::accept(LlvmVisitor *visitor)
+Node *StringValue::accept(Pass *visitor)
 {
     return visitor->visitString(this);
 }

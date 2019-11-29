@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <map>
 #include <optional>
 #include "llvm/IR/DerivedTypes.h"
@@ -19,6 +20,10 @@ protected:
     Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
 
 public:
+    static const std::string sectionInternalPrefix;
+
+    static const std::string sectionEntryIdentifier;
+
     Constants(llvm::Module *module);
 
     std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);

@@ -1,7 +1,7 @@
 #pragma once
 
+#include <optional>
 #include <vector>
-#include <string>
 #include "code_gen/node.h"
 #include "section.h"
 
@@ -12,17 +12,19 @@ class Pass;
 class Block : public Node
 {
 protected:
-    std::string identifier;
+    std::vector<Section *> sections;
 
-    std::vector<Section *> insts;
+    std::optional<Section *> cachedEntry;
 
 public:
-    Block(std::string identifier, std::vector<Section *> sections = {});
+    Block(std::vector<Section *> sections = {});
 
     Node *accept(Pass *visitor) override;
 
-    std::vector<PartialInst *> getInsts() const;
+    bool verify() const override;
 
-    std::string getIdentifier() const;
+    std::optional<Section *> getEntrySection();
+
+    std::vector<Section *> getSections() const;
 };
 } // namespace ionir

@@ -2,6 +2,10 @@
 
 namespace ionir
 {
+const std::string Constants::sectionInternalPrefix = ".";
+
+const std::string Constants::sectionEntryIdentifier = Constants::sectionInternalPrefix + "entry";
+
 Constants::Constants(llvm::Module *module)
 {
     this->module = module;

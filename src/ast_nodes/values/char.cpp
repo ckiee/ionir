@@ -4,17 +4,17 @@
 
 namespace ionir
 {
-LiteralChar::LiteralChar(char value) : Value(ValueKind::Character), value(value)
+CharValue::CharValue(char value) : Value(ValueKind::Character), value(value)
 {
     //
 }
 
-Node *LiteralChar::accept(Pass *visitor)
+Node *CharValue::accept(Pass *visitor)
 {
     return visitor->visitChar(this);
 }
 
-char LiteralChar::getValue() const
+char CharValue::getValue() const
 {
     return this->value;
 }

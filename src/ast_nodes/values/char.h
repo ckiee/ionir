@@ -6,13 +6,13 @@ namespace ionir
 {
 class Pass;
 
-class LiteralChar : public Value
+class CharValue : public Value
 {
 protected:
     char value;
 
 public:
-    LiteralChar(char value);
+    CharValue(char value);
 
     Node *accept(Pass *visitor) override;
 

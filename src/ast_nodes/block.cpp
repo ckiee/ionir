@@ -1,26 +1,73 @@
 #include "block.h"
-#include "code_gen/llvm_visitor.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
-Block::Block(std::string identifier, std::vector<PartialInst *> insts)
-    : Node(NodeKind::Block), identifier(identifier), insts(insts)
+Block::Block(std::vector<Section *> sections)
+    : Node(NodeKind::Block), sections(sections), cachedEntry(std::nullopt)
 {
     //
 }
 
-Node *Block::accept(LlvmVisitor *visitor)
+Node *Block::accept(Pass *visitor)
 {
     return visitor->visitBlock(this);
 }
 
-std::vector<PartialInst *> Block::getInsts() const
+bool Block::verify() const
 {
-    return this->insts;
+    bool entryFound = false;
+
+    /**
+     * Loop through all sections to determine
+     * whether multiple entry sections exist.
+     */
+    for (const auto section : this->sections)
+    {
+        if (section->getKind() == SectionKind::Entry)
+        {
+            // Multiple entry sections exist.
+            if (entryFound)
+            {
+                return false;
+            }
+
+            // Raise the flag.
+            entryFound = true;
+        }
+    }
+
+    return true;
 }
 
-std::string Block::getIdentifier() const
+std::optional<Section *> Block::getEntrySection()
 {
-    return this->identifier;
+    /**
+     * Entry section has already been previously
+     * found, return the cached value.
+     */
+    if (this->cachedEntry.has_value())
+    {
+        return *this->cachedEntry;
+    }
+
+    for (auto section : this->sections)
+    {
+        if (section->getKind() == SectionKind::Entry)
+        {
+            // Save the result for faster subsequent access.
+            this->cachedEntry = section;
+
+            return this->cachedEntry;
+        }
+    }
+
+    // Entry section was neither cached nor found.
+    return std::nullopt;
+}
+
+std::vector<Section *> Block::getSections() const
+{
+    return this->sections;
 }
 } // namespace ionir
