@@ -3,6 +3,7 @@
 #include <optional>
 #include <string>
 #include "syntax/token.h"
+#include "syntax/token_identifier.h"
 #include "ast_nodes/values/integer.h"
 #include "ast_nodes/values/char.h"
 #include "ast_nodes/values/string.h"
@@ -29,6 +30,8 @@ protected:
     TokenStream stream;
 
     std::vector<Notice> notices;
+
+    TokenIdentifier tokenIdentifier;
 
     bool withinRange(long value, long from, long to);
 

@@ -10,6 +10,7 @@
 
 namespace ionir
 {
+// TODO: Consider moving to Util class.
 bool Parser::withinRange(long value, long from, long to)
 {
     return value >= from && value <= to;
