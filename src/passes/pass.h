@@ -47,9 +47,9 @@ public:
 
     virtual Node *visitReturnInst(ReturnInst *node);
 
-    virtual Node *visitInst(Inst *node);
-
     virtual Node *visitBranchInst(BranchInst *node);
+
+    virtual Node *visitGotoInst(GotoInst *node);
 
     virtual Node *visitGlobalVar(GlobalVar *node);
 };

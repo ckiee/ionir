@@ -1,18 +1,20 @@
 #pragma once
 
-#include "ast_nodes/inst.h"
+#include "parsing/partial_inst.h"
+#include "parsing/scope.h"
 #include "ast_nodes/block.h"
 
 namespace ionir
 {
-class GotoInst : public Inst
+class Pass;
+
+class GotoInst : public PartialInst<Block *>
 {
-protected:
-    Block *block;
-
 public:
-    GotoInst(Block *block);
+    GotoInst(Scope *scope, std::optional<Block *> block = std::nullopt);
 
-    Block *getBlock() const;
+    Node *accept(Pass *visitor) override;
+
+    std::optional<Block *> getBlock() const;
 };
 } // namespace ionir

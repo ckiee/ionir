@@ -51,7 +51,8 @@ void Parser::pushNotice(NoticeType type, std::string message)
     this->notices.push_back(this->createNotice(type, message));
 }
 
-Parser::Parser(TokenStream stream) : stream(stream)
+Parser::Parser(TokenStream *stream)
+    : stream(stream), tokenIdentifier(new TokenConstants())
 {
     //
 }
@@ -416,23 +417,29 @@ PartialInst *Parser::parseInst()
     // Parse the instruction's name to determine which argument parser to invoke.
     std::string identifier = this->parseIdentifier();
 
+    Inst *inst;
+
     // TODO: Hard-coded strings. Should be mapped into InstKind enum.
     if (identifier == "alloca")
     {
-        return this->parseAllocaInst();
+        inst = this->parseAllocaInst();
     }
     else if (identifier == "return")
     {
-        return this->parseReturnInst();
+        inst = this->parseReturnInst();
     }
     else if (identifier == "goto")
     {
-        // TODO
+        // TODO: Value?
+        return this->parseGotoInst();
     }
     else
     {
         throw std::runtime_error("Unrecognized instruction name");
     }
+
+    // TODO: Value?
+    return new PartialInst(new Scope(nullptr, ScopeKind::Function), inst);
 }
 
 Section *Parser::parseSection()
@@ -483,10 +490,11 @@ Block *Parser::parseBlock()
     return new Block(sections);
 }
 
-GotoInst *Parser::parseGotoInst()
+PartialInst *Parser::parseGotoInst()
 {
     // TODO
 
-    return nullptr;
+    // TODO: Value?
+    return new PartialInst(new Scope(nullptr, ScopeKind::Function), );
 }
 } // namespace ionir

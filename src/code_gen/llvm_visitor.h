@@ -82,8 +82,6 @@ public:
 
 	Node *visitReturnInst(ReturnInst *node) override;
 
-	Node *visitInst(Inst *node) override;
-
 	Node *visitBranchInst(BranchInst *node) override;
 
 	Node *visitGlobalVar(GlobalVar *node) override;

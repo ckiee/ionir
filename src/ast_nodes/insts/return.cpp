@@ -1,4 +1,5 @@
 #include "return.h"
+#include "passes/pass.h"
 
 namespace ionir
 {

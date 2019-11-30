@@ -424,32 +424,6 @@ Node *LlvmVisitor::visitReturnInst(ReturnInst *node)
     return node;
 }
 
-// TODO: Re-write.
-Node *LlvmVisitor::visitInst(Inst *node)
-{
-    this->requireBuilder();
-
-    switch (node->getInstKind())
-    {
-    case InstKind::Alloca:
-    {
-        this->visitAllocaInst((AllocaInst *)node);
-    }
-
-    case InstKind::Return:
-    {
-        this->visitReturnInst((ReturnInst *)node);
-    }
-
-    default:
-    {
-        throw std::runtime_error("Unrecognized instruction kind");
-    }
-    }
-
-    return node;
-}
-
 Node *LlvmVisitor::visitBranchInst(BranchInst *node)
 {
     // Visit condition.

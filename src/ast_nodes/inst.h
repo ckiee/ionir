@@ -17,7 +17,7 @@ protected:
 public:
     Inst(InstKind kind);
 
-    Node *accept(Pass *visitor) override;
+    virtual Node *accept(Pass *visitor) = 0;
 
     InstKind getInstKind() const;
 };

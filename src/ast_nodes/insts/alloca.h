@@ -18,6 +18,8 @@ public:
     // TODO: Missing support for array type allocas.
     AllocaInst(std::string identifier, Type *type);
 
+    Node *accept(Pass *visitor) override;
+
     std::string getIdentifier() const;
 
     Type *getType() const;

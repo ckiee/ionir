@@ -27,7 +27,7 @@ namespace ionir
 class Parser
 {
 protected:
-    TokenStream stream;
+    TokenStream *stream;
 
     std::vector<Notice> notices;
 
@@ -48,7 +48,7 @@ protected:
     void pushNotice(NoticeType type, std::string message);
 
 public:
-    Parser(TokenStream stream);
+    Parser(TokenStream *stream);
 
     std::vector<Notice> getNotices() const;
 
@@ -90,7 +90,7 @@ public:
 
     BranchInst *parseBranchInst();
 
-    GotoInst *parseGotoInst();
+    PartialInst *parseGotoInst();
 
     /**
      * Parses an instruction, consuming its identifier.

@@ -1,15 +1,25 @@
 #include "goto.h"
 #include "ast_nodes/inst_kind.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
-GotoInst::GotoInst(Block *block) : Inst(InstKind::Goto), block(block)
+GotoInst::GotoInst(Scope *scope, std::optional<Block *> block = std::nullopt)
+    : PartialInst(InstKind::Goto, scope)
 {
-    //
+    if (block.has_value())
+    {
+        this->resolve(*block);
+    }
 }
 
-Block *GotoInst::getBlock() const
+Node *GotoInst::accept(Pass *visitor)
 {
-    return this->block;
+    return visitor->visitGotoInst(this);
+}
+
+std::optional<Block *> GotoInst::getBlock() const
+{
+    return this->getValue();
 }
 } // namespace ionir

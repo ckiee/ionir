@@ -1,4 +1,5 @@
 #include "alloca.h"
+#include "passes/pass.h"
 
 namespace ionir
 {
@@ -7,6 +8,11 @@ AllocaInst::AllocaInst(std::string identifier, Type *type)
     : Inst(InstKind::Alloca), identifier(identifier), type(type)
 {
     //
+}
+
+Node *AllocaInst::accept(Pass *visitor)
+{
+    return visitor->visitAllocaInst(this);
 }
 
 std::string AllocaInst::getIdentifier() const

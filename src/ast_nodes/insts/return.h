@@ -8,6 +8,8 @@
 
 namespace ionir
 {
+class Pass;
+
 class ReturnInst : public Inst
 {
 protected:
@@ -15,6 +17,8 @@ protected:
 
 public:
     ReturnInst(Value *value);
+
+    Node *accept(Pass *visitor) override;
 
     Value *getValue() const;
 };
