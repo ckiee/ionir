@@ -24,7 +24,36 @@ Node *PartialResolverPass::visitGotoInst(GotoInst *node)
         return node;
     }
 
-    // TODO
+    Scope *scope = node->getScope();
+
+    switch (scope->getKind())
+    {
+    case ScopeKind::Block:
+    {
+        Block *block = (Block *)scope->unwrap();
+        std::vector<Section *> sections = block->getSections();
+
+        for (auto section : sections)
+        {
+            // Resolve goto instruction with target section if applicable.
+            if (section->getIdentifier() == node->getTarget())
+            {
+                node->resolve(section);
+
+                // Return resolved node, no need to continue.
+                return node;
+            }
+        }
+
+        // No such target was encountered.
+        throw std::runtime_error("No block target was encountered for goto instruction");
+    }
+
+    default:
+    {
+        throw std::runtime_error("Encountered unsupported scope kind");
+    }
+    }
 
     return node;
 }

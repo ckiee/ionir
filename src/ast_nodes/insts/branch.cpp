@@ -4,7 +4,7 @@
 
 namespace ionir
 {
-BranchInst::BranchInst(Block *body, std::optional<Block *> otherwise)
+BranchInst::BranchInst(Section *body, std::optional<Section *> otherwise)
     : Inst(InstKind::Branch), body(body), otherwise(otherwise)
 {
     //
@@ -20,12 +20,12 @@ BinaryExpr *BranchInst::getCondition() const
     return this->condition;
 }
 
-Block *BranchInst::getBody() const
+Section *BranchInst::getBody() const
 {
     return this->body;
 }
 
-std::optional<Block *> BranchInst::getOtherwise() const
+std::optional<Section *> BranchInst::getOtherwise() const
 {
     return this->otherwise;
 }

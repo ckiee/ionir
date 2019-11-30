@@ -444,8 +444,8 @@ BranchInst *Parser::parseBranchInst()
         throw std::runtime_error("Expected branch instruction to have a condition");
     }
 
-    Block *body = this->parseBlock();
-    std::optional<Block *> otherwise = std::nullopt;
+    Section *body = this->parseBlock();
+    std::optional<Section *> otherwise = std::nullopt;
 
     // Parse the otherwise block if applicable.
     if (this->is(TokenType::KeywordElse))
@@ -462,9 +462,11 @@ BranchInst *Parser::parseBranchInst()
 
 GotoInst *Parser::parseGotoInst()
 {
-    std::string identifier = this->parseIdentifier();
+    std::string target = this->parseIdentifier();
+    GotoInst *gotoInst = new GotoInst(this->createScope(), target);
 
-    return new GotoInst(this->createScope());
+    // TODO: createScope has not been defined yet.
+    return;
 }
 
 Inst *Parser::parseInst()

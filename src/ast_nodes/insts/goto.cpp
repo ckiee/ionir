@@ -4,12 +4,12 @@
 
 namespace ionir
 {
-GotoInst::GotoInst(Scope *scope, std::optional<Block *> block = std::nullopt)
-    : PartialInst(InstKind::Goto, scope)
+GotoInst::GotoInst(Scope *scope, std::string target, std::optional<Section *> section = std::nullopt)
+    : PartialInst(InstKind::Goto, scope), target(target)
 {
-    if (block.has_value())
+    if (section.has_value())
     {
-        this->resolve(*block);
+        this->resolve(*section);
     }
 }
 
@@ -18,7 +18,12 @@ Node *GotoInst::accept(Pass *visitor)
     return visitor->visitGotoInst(this);
 }
 
-std::optional<Block *> GotoInst::getBlock() const
+std::string GotoInst::getTarget() const
+{
+    return this->target;
+}
+
+std::optional<Section *> GotoInst::getSection() const
 {
     return this->getValue();
 }
