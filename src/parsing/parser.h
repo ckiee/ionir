@@ -74,15 +74,15 @@ public:
 
     Extern *parseExtern();
 
-    Section *parseSection();
-
-    Block *parseBlock();
-
     Value *parseValue();
 
     std::optional<Node *> parsePrimaryExpr();
 
     Node *parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence);
+
+    Section *parseSection();
+
+    Block *parseBlock();
 
     AllocaInst *parseAllocaInst();
 
@@ -90,13 +90,13 @@ public:
 
     BranchInst *parseBranchInst();
 
-    PartialInst *parseGotoInst();
+    GotoInst *parseGotoInst();
 
     /**
      * Parses an instruction, consuming its identifier.
      * Invokes the corresponding parser depending on its
      * identifier.
      */
-    PartialInst *parseInst();
+    Inst *parseInst();
 };
 } // namespace ionir

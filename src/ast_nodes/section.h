@@ -4,8 +4,8 @@
 #include <vector>
 #include "ast_nodes/type.h"
 #include "ast_nodes/args.h"
+#include "ast_nodes/inst.h"
 #include "code_gen/node.h"
-#include "parsing/partial_inst.h"
 #include "section_kind.h"
 
 namespace ionir
@@ -19,10 +19,10 @@ protected:
 
     std::string identifier;
 
-    std::vector<PartialInst *> insts;
+    std::vector<Inst *> insts;
 
 public:
-    Section(SectionKind kind, std::string identifier, std::vector<PartialInst *> insts = {});
+    Section(SectionKind kind, std::string identifier, std::vector<Inst *> insts = {});
 
     Node *accept(Pass *visitor) override;
 
@@ -30,6 +30,6 @@ public:
 
     std::string getIdentifier() const;
 
-    std::vector<PartialInst *> getInsts() const;
+    std::vector<Inst *> getInsts() const;
 };
 } // namespace ionir

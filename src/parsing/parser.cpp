@@ -18,7 +18,7 @@ bool Parser::withinRange(long value, long from, long to)
 
 bool Parser::is(TokenType type)
 {
-    return this->stream.get().getType() == type;
+    return this->stream->get().getType() == type;
 }
 
 void Parser::expect(TokenType type)
@@ -32,7 +32,7 @@ void Parser::expect(TokenType type)
 void Parser::skipOver(TokenType type)
 {
     this->expect(type);
-    this->stream.skip();
+    this->stream->skip();
 }
 
 NoticeContext Parser::createNoticeContext()
@@ -67,7 +67,7 @@ IntValue *Parser::parseInt()
     this->expect(TokenType::LiteralInt);
 
     // Abstract the token's value to be used in the string -> long conversion.
-    std::string tokenValue = this->stream.get().getValue();
+    std::string tokenValue = this->stream->get().getValue();
 
     // Attempt to convert token's value to a long.
     long value = std::stol(tokenValue);
@@ -102,7 +102,7 @@ IntValue *Parser::parseInt()
     IntValue *integer = new IntValue(*kind, value);
 
     // Skip current token.
-    this->stream.tryNext();
+    this->stream->tryNext();
 
     // Finally, return the result.
     return integer;
@@ -113,10 +113,10 @@ CharValue *Parser::parseChar()
     this->expect(TokenType::LiteralCharacter);
 
     // Extract the value from the character token.
-    std::string stringValue = this->stream.get().getValue();
+    std::string stringValue = this->stream->get().getValue();
 
     // Skip over character token.
-    this->stream.skip();
+    this->stream->skip();
 
     // Ensure extracted value only contains a single character.
     if (stringValue.length() > 1)
@@ -133,22 +133,22 @@ StringValue *Parser::parseString()
     this->expect(TokenType::LiteralString);
 
     // Extract the value from the string token.
-    std::string value = this->stream.get().getValue();
+    std::string value = this->stream->get().getValue();
 
     // Skip over string token.
-    this->stream.skip();
+    this->stream->skip();
 
     return new StringValue(value);
 }
 
 std::string Parser::parseIdentifier()
 {
-    Token identifier = this->stream.get();
+    Token identifier = this->stream->get();
 
     this->expect(TokenType::Identifier);
 
     // Skip over identifier token.
-    this->stream.tryNext();
+    this->stream->tryNext();
 
     // Return the identifier's value.
     return identifier.getValue();
@@ -161,7 +161,7 @@ Type *Parser::parseType()
     bool isPointer = false;
 
     // Retrieve the current token.
-    Token token = this->stream.get();
+    Token token = this->stream->get();
 
     // Type is a pointer.
     if (token.getType() == TokenType::SymbolStar)
@@ -169,7 +169,7 @@ Type *Parser::parseType()
         isPointer = true;
 
         // Skip onto and from star token.
-        this->stream.skip(2);
+        this->stream->skip(2);
     }
 
     // Create and return the resulting type construct.
@@ -203,7 +203,7 @@ Args Parser::parseArgs()
             }
 
             // Skip over comma token.
-            this->stream.next();
+            this->stream->next();
         }
 
         // Parse arg and push onto the vector.
@@ -245,7 +245,7 @@ Extern *Parser::parseExtern()
 
 Value *Parser::parseValue()
 {
-    Token token = this->stream.get();
+    Token token = this->stream->get();
 
     switch (token.getType())
     {
@@ -270,7 +270,7 @@ Value *Parser::parseValue()
 
 std::optional<Node *> Parser::parsePrimaryExpr()
 {
-    switch (this->stream.get().getType())
+    switch (this->stream->get().getType())
     {
     // Parentheses expression.
     case TokenType::SymbolParenthesesL:
@@ -293,7 +293,7 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
     while (true)
     {
         // Capture the current token.
-        Token token = this->stream.get();
+        Token token = this->stream->get();
 
         // Calculate precedence for the current token.
         int firstPrecedence = Precedence.Get(token);
@@ -320,7 +320,7 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
         }
 
         // Skip operator.
-        this->stream.skip();
+        this->stream->skip();
 
         // Parse the right-side.
         std::optional<Node *> rightSide = this->parsePrimaryExpr();
@@ -363,6 +363,54 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
     }
 }
 
+Section *Parser::parseSection()
+{
+    std::string identifier = this->parseIdentifier();
+
+    this->skipOver(TokenType::SymbolColon);
+    this->skipOver(TokenType::SymbolBraceL);
+
+    std::vector<Inst *> insts = {};
+
+    while (!this->is(TokenType::SymbolBraceR))
+    {
+        insts.push_back(this->parseInst());
+    }
+
+    this->skipOver(TokenType::SymbolBraceR);
+
+    SectionKind kind = SectionKind::Label;
+
+    if (identifier == Constants::sectionInternalPrefix + Constants::sectionEntryIdentifier)
+    {
+        kind = SectionKind::Entry;
+    }
+
+    else if (Util::stringStartsWith(identifier, Constants::sectionInternalPrefix))
+    {
+        kind = SectionKind::Internal;
+    }
+
+    return new Section(kind, identifier, insts);
+}
+
+Block *Parser::parseBlock()
+{
+    this->skipOver(TokenType::SymbolBraceL);
+
+    std::vector<Section *> sections = {};
+
+    while (this->is(TokenType::SymbolBraceR))
+    {
+        sections.push_back(this->parseSection());
+    }
+
+    // Skip over right brace token.
+    this->stream->skip();
+
+    return new Block(sections);
+}
+
 AllocaInst *Parser::parseAllocaInst()
 {
     Value *identifierValue = this->parseValue();
@@ -403,7 +451,7 @@ BranchInst *Parser::parseBranchInst()
     if (this->is(TokenType::KeywordElse))
     {
         // Skip over the else keyword.
-        this->stream.skip();
+        this->stream->skip();
 
         // Parse the otherwise block.
         otherwise = this->parseBlock();
@@ -412,7 +460,12 @@ BranchInst *Parser::parseBranchInst()
     return new BranchInst(body, *otherwise);
 }
 
-PartialInst *Parser::parseInst()
+GotoInst *Parser::parseGotoInst()
+{
+    // TODO
+}
+
+Inst *Parser::parseInst()
 {
     // Parse the instruction's name to determine which argument parser to invoke.
     std::string identifier = this->parseIdentifier();
@@ -422,79 +475,19 @@ PartialInst *Parser::parseInst()
     // TODO: Hard-coded strings. Should be mapped into InstKind enum.
     if (identifier == "alloca")
     {
-        inst = this->parseAllocaInst();
+        return this->parseAllocaInst();
     }
     else if (identifier == "return")
     {
-        inst = this->parseReturnInst();
+        return this->parseReturnInst();
     }
     else if (identifier == "goto")
     {
-        // TODO: Value?
         return this->parseGotoInst();
     }
     else
     {
         throw std::runtime_error("Unrecognized instruction name");
     }
-
-    // TODO: Value?
-    return new PartialInst(new Scope(nullptr, ScopeKind::Function), inst);
-}
-
-Section *Parser::parseSection()
-{
-    std::string identifier = this->parseIdentifier();
-
-    this->skipOver(TokenType::SymbolColon);
-    this->skipOver(TokenType::SymbolBraceL);
-
-    std::vector<PartialInst *> insts = {};
-
-    while (!this->is(TokenType::SymbolBraceR))
-    {
-        insts.push_back(this->parseInst());
-    }
-
-    this->skipOver(TokenType::SymbolBraceR);
-
-    SectionKind kind = SectionKind::Label;
-
-    if (identifier == Constants::sectionInternalPrefix + Constants::sectionEntryIdentifier)
-    {
-        kind = SectionKind::Entry;
-    }
-
-    else if (Util::stringStartsWith(identifier, Constants::sectionInternalPrefix))
-    {
-        kind = SectionKind::Internal;
-    }
-
-    return new Section(kind, identifier, insts);
-}
-
-Block *Parser::parseBlock()
-{
-    this->skipOver(TokenType::SymbolBraceL);
-
-    std::vector<Section *> sections = {};
-
-    while (this->is(TokenType::SymbolBraceR))
-    {
-        sections.push_back(this->parseSection());
-    }
-
-    // Skip over right brace token.
-    this->stream.skip();
-
-    return new Block(sections);
-}
-
-PartialInst *Parser::parseGotoInst()
-{
-    // TODO
-
-    // TODO: Value?
-    return new PartialInst(new Scope(nullptr, ScopeKind::Function), );
 }
 } // namespace ionir
