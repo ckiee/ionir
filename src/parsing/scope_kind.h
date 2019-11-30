@@ -4,6 +4,6 @@ namespace ionir
 {
 enum class ScopeKind
 {
-    Function
+    Block
 };
 } // namespace ionir

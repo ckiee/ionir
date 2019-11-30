@@ -5,25 +5,27 @@
 
 namespace ionir
 {
-void PartialResolverPass::resolvePartial(PartialInst *partial)
+PartialResolverPass::PartialResolverPass(std::vector<Inst *> partials)
+    : partials(partials)
 {
-    Scope *scope = partial->getScope();
+    //
+}
 
-    switch (scope->getKind())
+std::vector<Inst *> PartialResolverPass::getPartials() const
+{
+    return this->partials;
+}
+
+Node *PartialResolverPass::visitGotoInst(GotoInst *node)
+{
+    // Partial has already been resolved. Do not continue.
+    if (node->isResolved())
     {
-    case ScopeKind::Function:
-    {
-        Function *function = (Function *)scope->unwrap();
-
-        // TODO
-
-        throw std::runtime_error("Not implemented");
+        return node;
     }
 
-    default:
-    {
-        throw std::runtime_error("Encountered unknown scope kind");
-    }
-    }
+    // TODO
+
+    return node;
 }
 } // namespace ionir

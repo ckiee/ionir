@@ -462,7 +462,9 @@ BranchInst *Parser::parseBranchInst()
 
 GotoInst *Parser::parseGotoInst()
 {
-    // TODO
+    std::string identifier = this->parseIdentifier();
+
+    return new GotoInst(this->createScope());
 }
 
 Inst *Parser::parseInst()
