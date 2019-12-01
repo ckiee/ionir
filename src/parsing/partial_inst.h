@@ -23,22 +23,22 @@ protected:
     }
 
 public:
-    PartialInst::PartialInst(InstKind kind, Scope *scope, std::optional<T *> value = std::nullopt)
-        : Inst(kind), scope(scope), inst(inst), value(value)
+    PartialInst(InstKind kind, Scope *scope, std::optional<T *> value = std::nullopt)
+        : Inst(kind), scope(scope), value(value)
     {
         //
     }
 
     virtual Node *accept(Pass *visitor) = 0;
 
-    Scope *PartialInst::getScope() const
+    Scope *getScope() const
     {
         return this->scope;
     }
 
     bool isResolved() const
     {
-        return this->inst.has_value();
+        return this->value.has_value();
     }
 
     void resolve(T value)
