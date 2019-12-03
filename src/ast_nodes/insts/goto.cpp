@@ -4,8 +4,8 @@
 
 namespace ionir
 {
-GotoInst::GotoInst(Scope *scope, std::string target, std::optional<Section *> section = std::nullopt)
-    : PartialInst(InstKind::Goto, scope), target(target)
+GotoInst::GotoInst(Scope *scope, std::string target, std::optional<Section *> section)
+    : PartialInst<Section *>(InstKind::Goto, scope, section), target(target)
 {
     if (section.has_value())
     {

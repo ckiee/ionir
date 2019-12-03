@@ -21,5 +21,11 @@ public:
 	 * Escapes any special characters that may be present in the value.
 	 */
 	static std::regex createPureRegex(std::string value);
+
+	template <typename T, typename U>
+	static bool instanceOf(T *value)
+	{
+		return dynamic_cast<U *>(value) != nullptr;
+	}
 };
 } // namespace ionir

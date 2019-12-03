@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include "parsing/partial_inst.h"
 #include "parsing/scope.h"

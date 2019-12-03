@@ -6,6 +6,7 @@
 #include "llvm/IR/Constant.h"
 #include "ast_nodes/inst_kind.h"
 #include "ast_nodes/value.h"
+#include "misc/util.h"
 
 namespace ionir
 {
@@ -117,19 +118,13 @@ Node *LlvmVisitor::visitSection(Section *node)
     this->builder.emplace(llvm::IRBuilder<>(block));
 
     // Visit and append instructions.
-    std::vector<PartialInst *> insts = node->getInsts();
+    std::vector<Inst *> insts = node->getInsts();
 
     // Process instructions.
     for (const auto inst : insts)
     {
-        // Instruction must be resolved at this point.
-        if (!inst->isResolved())
-        {
-            throw std::runtime_error("Encountered unexpected partial instruction");
-        }
-
         // Visit the instruction.
-        this->visit(*inst->getInst());
+        this->visit(inst);
 
         // Clean the stack off the result.
         this->valueStack.pop();

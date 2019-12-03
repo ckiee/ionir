@@ -23,7 +23,7 @@ protected:
     }
 
 public:
-    PartialInst(InstKind kind, Scope *scope, std::optional<T *> value = std::nullopt)
+    PartialInst(InstKind kind, Scope *scope, std::optional<T> value = std::nullopt)
         : Inst(kind), scope(scope), value(value)
     {
         //
