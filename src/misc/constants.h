@@ -6,13 +6,14 @@
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/LLVMContext.h"
 #include "ast_nodes/values/integer.h"
+#include "syntax/token_type.h"
 #include "misc/map.h"
 
 namespace ionir
 {
 typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMContext &context);
 
-class Constants
+class Const
 {
 protected:
     llvm::Module *module;
@@ -22,19 +23,12 @@ protected:
 public:
     static const std::string sectionInternalPrefix;
 
-    static const std::string sectionEntryIdentifier;
+    static const std::string sectionEntryId;
 
-    Constants(llvm::Module *module);
+    Const(llvm::Module *module);
 
     std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
-    std::map<TokenType, int> tokenPrecedence = {
-        {TokenType::OperatorAdd, 20},
-        {TokenType::OperatorSub, 20},
-        {TokenType::OperatorMultiply, 40},
-        {TokenType::OperatorDivide, 40},
-        {TokenType::OperatorModulo, 40},
-        {TokenType::OperatorExponent, 80},
-    };
+    static const std::map<TokenType, int> tokenPrecedence;
 };
 } // namespace ionir

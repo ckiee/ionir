@@ -2,96 +2,107 @@
 
 namespace ionir
 {
-void TokenConstants::pushComplex(std::regex regex, TokenType tokenType)
+bool TokenConst::isInitialized = false;
+
+void TokenConst::pushComplex(std::regex regex, TokenType tokenType)
 {
-    this->complex.push_back(std::make_pair(regex, tokenType));
+    TokenConst::complex.push_back(std::make_pair(regex, tokenType));
 }
 
-void TokenConstants::pushSimple(std::string value, TokenType type)
+void TokenConst::pushSimple(std::string value, TokenType type)
 {
-    this->simple[value] = type;
+    TokenConst::simple[value] = type;
 }
 
-void TokenConstants::pushSymbol(std::string value, TokenType type)
+void TokenConst::pushSymbol(std::string value, TokenType type)
 {
-    this->pushSimple(value, type);
-    this->symbols.push_back(type);
+    TokenConst::pushSimple(value, type);
+    TokenConst::symbols.push_back(type);
 }
 
-void TokenConstants::pushKeyword(std::string value, TokenType type)
+void TokenConst::pushKeyword(std::string value, TokenType type)
 {
-    this->pushSimple(value, type);
-    this->keywords.push_back(type);
+    TokenConst::pushSimple(value, type);
+    TokenConst::keywords.push_back(type);
 }
 
-TokenConstants::TokenConstants()
+void TokenConst::init()
 {
+    // Static members have already been initialized. Do not continue.
+    if (TokenConst::isInitialized)
+    {
+        return;
+    }
+
     // Register symbols.
-    this->pushSymbol("@", TokenType::SymbolAt);
-    this->pushSymbol(":", TokenType::SymbolColon);
-    this->pushSymbol("$", TokenType::SymbolDollar);
-    this->pushSymbol("#", TokenType::SymbolHash);
-    this->pushSymbol("(", TokenType::SymbolParenthesesL);
-    this->pushSymbol(")", TokenType::SymbolParenthesesR);
-    this->pushSymbol("[", TokenType::SymbolBracketL);
-    this->pushSymbol("]", TokenType::SymbolBracketR);
-    this->pushSymbol(",", TokenType::SymbolComma);
-    this->pushSymbol("~", TokenType::SymbolTilde);
-    this->pushSymbol("=", TokenType::SymbolEqual);
-    this->pushSymbol("%", TokenType::SymbolPercent);
-    this->pushSymbol(";", TokenType::SymbolSemiColon);
-    this->pushSymbol("*", TokenType::SymbolStar);
-    this->pushSymbol("{", TokenType::SymbolBraceL);
-    this->pushSymbol("{", TokenType::SymbolBraceR);
+    TokenConst::pushSymbol("@", TokenType::SymbolAt);
+    TokenConst::pushSymbol(":", TokenType::SymbolColon);
+    TokenConst::pushSymbol("$", TokenType::SymbolDollar);
+    TokenConst::pushSymbol("#", TokenType::SymbolHash);
+    TokenConst::pushSymbol("(", TokenType::SymbolParenthesesL);
+    TokenConst::pushSymbol(")", TokenType::SymbolParenthesesR);
+    TokenConst::pushSymbol("[", TokenType::SymbolBracketL);
+    TokenConst::pushSymbol("]", TokenType::SymbolBracketR);
+    TokenConst::pushSymbol(",", TokenType::SymbolComma);
+    TokenConst::pushSymbol("~", TokenType::SymbolTilde);
+    TokenConst::pushSymbol("=", TokenType::SymbolEqual);
+    TokenConst::pushSymbol("%", TokenType::SymbolPercent);
+    TokenConst::pushSymbol(";", TokenType::SymbolSemiColon);
+    TokenConst::pushSymbol("*", TokenType::SymbolStar);
+    TokenConst::pushSymbol("{", TokenType::SymbolBraceL);
+    TokenConst::pushSymbol("{", TokenType::SymbolBraceR);
 
     // Register keywords.
-    this->pushKeyword("create", TokenType::InstCreate);
-    this->pushKeyword("call", TokenType::InstCall);
-    this->pushKeyword("set", TokenType::InstSet);
-    this->pushKeyword("end", TokenType::InstEnd);
-    this->pushKeyword("func", TokenType::KeywordFunction);
-    this->pushKeyword("extern", TokenType::KeywordExtern);
-    this->pushKeyword("else", TokenType::KeywordElse);
+    TokenConst::pushKeyword("create", TokenType::InstCreate);
+    TokenConst::pushKeyword("call", TokenType::InstCall);
+    TokenConst::pushKeyword("set", TokenType::InstSet);
+    TokenConst::pushKeyword("end", TokenType::InstEnd);
+    TokenConst::pushKeyword("func", TokenType::KeywordFunction);
+    TokenConst::pushKeyword("extern", TokenType::KeywordExtern);
+    TokenConst::pushKeyword("else", TokenType::KeywordElse);
 
     // Register operators.
-    this->pushOperator("+", TokenType::OperatorAdd);
-    this->pushOperator("-", TokenType::OperatorAdd);
-    this->pushOperator("*", TokenType::OperatorMultiply);
-    this->pushOperator("/", TokenType::OperatorDivide);
-    this->pushOperator("%", TokenType::OperatorModulo);
-    this->pushOperator("^", TokenType::OperatorExponent);
+    TokenConst::pushOperator("+", TokenType::OperatorAdd);
+    TokenConst::pushOperator("-", TokenType::OperatorAdd);
+    TokenConst::pushOperator("*", TokenType::OperatorMultiply);
+    TokenConst::pushOperator("/", TokenType::OperatorDivide);
+    TokenConst::pushOperator("%", TokenType::OperatorModulo);
+    TokenConst::pushOperator("^", TokenType::OperatorExponent);
 
     // Initialize complex map.
-    this->pushComplex(Regex::identifier, TokenType::Identifier);
-    this->pushComplex(Regex::string, TokenType::LiteralString);
-    this->pushComplex(Regex::decimal, TokenType::LiteralDecimal);
-    this->pushComplex(Regex::integer, TokenType::LiteralInt);
-    this->pushComplex(Regex::character, TokenType::LiteralCharacter);
-    this->pushComplex(Regex::whitespace, TokenType::Whitespace);
+    TokenConst::pushComplex(Regex::identifier, TokenType::Identifier);
+    TokenConst::pushComplex(Regex::string, TokenType::LiteralString);
+    TokenConst::pushComplex(Regex::decimal, TokenType::LiteralDecimal);
+    TokenConst::pushComplex(Regex::integer, TokenType::LiteralInt);
+    TokenConst::pushComplex(Regex::character, TokenType::LiteralCharacter);
+    TokenConst::pushComplex(Regex::whitespace, TokenType::Whitespace);
+
+    // Raise initialized flag to prevent further attempts to re-initialize.
+    TokenConst::isInitialized = true;
 }
 
-std::map<std::string, TokenType> TokenConstants::getSimpleIdentifiers() const
+std::map<std::string, TokenType> TokenConst::getSimpleIds()
 {
-    return this->simple;
+    return TokenConst::simple;
 }
 
-std::vector<std::pair<std::regex, TokenType>> TokenConstants::getComplexIdentifiers() const
+std::vector<std::pair<std::regex, TokenType>> TokenConst::getComplexIds()
 {
-    return this->complex;
+    return TokenConst::complex;
 }
 
-std::vector<TokenType> TokenConstants::getSymbols() const
+TokenTypeVector TokenConst::getSymbols()
 {
-    return this->symbols;
+    return TokenConst::symbols;
 }
 
-std::vector<TokenType> TokenConstants::getKeywords() const
+TokenTypeVector TokenConst::getKeywords()
 {
-    return this->keywords;
+    return TokenConst::keywords;
 }
 
-std::vector<TokenType> TokenConstants::getOperators() const
+TokenTypeVector TokenConst::getOperators()
 {
-    return this->operators;
+    return TokenConst::operators;
 }
 } // namespace ionir

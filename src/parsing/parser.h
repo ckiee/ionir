@@ -62,7 +62,7 @@ public:
 
     StringValue *parseString();
 
-    std::string parseIdentifier();
+    std::string parseId();
 
     Type *parseType();
 

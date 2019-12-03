@@ -13,18 +13,18 @@ class Pass;
 class Prototype : public Node
 {
 protected:
-	std::string identifier;
+	std::string id;
 
 	Args arguments;
 
 	Type *returnType;
 
 public:
-	Prototype(std::string identifier, Args arguments, Type *returnType);
+	Prototype(std::string id, Args arguments, Type *returnType);
 
 	Node *accept(Pass *visitor) override;
 
-	std::string getIdentifier() const;
+	std::string getId() const;
 
 	Args getArguments() const;
 

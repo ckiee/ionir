@@ -2,11 +2,20 @@
 
 namespace ionir
 {
-const std::string Constants::sectionInternalPrefix = ".";
+const std::string Const::sectionInternalPrefix = ".";
 
-const std::string Constants::sectionEntryIdentifier = Constants::sectionInternalPrefix + "entry";
+const std::map<TokenType, int> Const::tokenPrecedence = {
+    {TokenType::OperatorAdd, 20},
+    {TokenType::OperatorSub, 20},
+    {TokenType::OperatorMultiply, 40},
+    {TokenType::OperatorDivide, 40},
+    {TokenType::OperatorModulo, 40},
+    {TokenType::OperatorExponent, 80},
+};
 
-Constants::Constants(llvm::Module *module)
+const std::string Const::sectionEntryId = Const::sectionInternalPrefix + "entry";
+
+Const::Const(llvm::Module *module)
 {
     this->module = module;
 
@@ -20,7 +29,7 @@ Constants::Constants(llvm::Module *module)
     // map.insert(IntegerKind::Int128, &llvm::IntegerType::getInt128Ty);
 }
 
-std::optional<LlvmIntTypeResolver> Constants::tryGetIntTypeResolver(IntegerKind kind)
+std::optional<LlvmIntTypeResolver> Const::tryGetIntTypeResolver(IntegerKind kind)
 {
     return this->integerTypeResolverMap.tryGet(kind);
 }

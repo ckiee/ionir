@@ -11,16 +11,16 @@ class Pass;
 class Type : public Node
 {
 protected:
-    std::string identifier;
+    std::string id;
 
     bool isPointer;
 
 public:
-    Type(std::string identifier, bool isPointer = false);
+    Type(std::string id, bool isPointer = false);
 
     Node *accept(Pass *visitor) override;
 
-    std::string getIdentifier() const;
+    std::string getId() const;
 
     bool getIsPointer() const;
 };

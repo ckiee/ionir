@@ -96,8 +96,8 @@ Lexer::Lexer(std::string input) : constants()
     }
 
     // Initialize local simple & complex identifiers map.
-    this->simpleIdentifiers = this->constants.getSimpleIdentifiers();
-    this->complexIdentifiers = this->constants.getComplexIdentifiers();
+    this->simpleIdentifiers = this->constants.getSimpleIds();
+    this->complexIdentifiers = this->constants.getComplexIds();
 
     // Reset the index, setting its initial value.
     this->begin();

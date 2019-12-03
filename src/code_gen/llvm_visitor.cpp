@@ -52,7 +52,7 @@ Node *LlvmVisitor::visitFunction(Function *node)
     {
         throw std::runtime_error("Unexpected function prototype to be null");
     }
-    else if (this->module->getFunction(node->getPrototype()->getIdentifier()) != nullptr)
+    else if (this->module->getFunction(node->getPrototype()->getId()) != nullptr)
     {
         throw std::runtime_error("A function with the same identifier has been already previously defined");
     }
@@ -235,7 +235,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
     std::vector<llvm::Type *> arguments = {};
 
     // Attempt to retrieve an existing function.
-    llvm::Function *function = this->module->getFunction(node->getIdentifier());
+    llvm::Function *function = this->module->getFunction(node->getId());
 
     // A function with a matching identifier already exists.
     if (function != nullptr)

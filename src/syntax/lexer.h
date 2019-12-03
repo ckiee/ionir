@@ -23,7 +23,7 @@ private:
 
     size_t index;
 
-    TokenConstants constants;
+    TokenConst constants;
 
     std::map<std::string, TokenType> simpleIdentifiers;
 

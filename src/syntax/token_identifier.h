@@ -1,5 +1,6 @@
 #pragma once
 
+#include "misc/helpers.h"
 #include "misc/token_constants.h"
 
 namespace ionir
@@ -7,17 +8,13 @@ namespace ionir
 class TokenIdentifier
 {
 protected:
-    TokenConstants *constants;
-
-    bool contains(std::vector<TokenType> subject, TokenType item);
+    static bool contains(TokenTypeVector subject, TokenType item);
 
 public:
-    TokenIdentifier(TokenConstants *constants);
+    static bool isSymbol(TokenType type);
 
-    bool isSymbol(TokenType type);
+    static bool isNumeric(TokenType type);
 
-    bool isNumeric(TokenType type);
-
-    bool isOperator(TokenType type);
+    static bool isOperator(TokenType type);
 };
 } // namespace ionir

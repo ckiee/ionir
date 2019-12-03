@@ -4,8 +4,8 @@
 namespace ionir
 {
 // TODO: Finish init. implementation.
-AllocaInst::AllocaInst(std::string identifier, Type *type)
-    : Inst(InstKind::Alloca), identifier(identifier), type(type)
+AllocaInst::AllocaInst(std::string id, Type *type)
+    : Inst(InstKind::Alloca), id(id), type(type)
 {
     //
 }
@@ -15,9 +15,9 @@ Node *AllocaInst::accept(Pass *visitor)
     return visitor->visitAllocaInst(this);
 }
 
-std::string AllocaInst::getIdentifier() const
+std::string AllocaInst::getId() const
 {
-    return this->identifier;
+    return this->id;
 }
 
 Type *AllocaInst::getType() const

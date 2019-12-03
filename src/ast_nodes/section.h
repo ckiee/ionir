@@ -17,18 +17,18 @@ class Section : public Node
 protected:
     SectionKind kind;
 
-    std::string identifier;
+    std::string id;
 
     std::vector<Inst *> insts;
 
 public:
-    Section(SectionKind kind, std::string identifier, std::vector<Inst *> insts = {});
+    Section(SectionKind kind, std::string id, std::vector<Inst *> insts = {});
 
     Node *accept(Pass *visitor) override;
 
     SectionKind getKind() const;
 
-    std::string getIdentifier() const;
+    std::string getId() const;
 
     std::vector<Inst *> getInsts() const;
 };

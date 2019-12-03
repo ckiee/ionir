@@ -6,43 +6,46 @@
 #include <regex>
 #include "syntax/token_type.h"
 #include "misc/regex.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
-class TokenConstants
+class TokenConst
 {
 protected:
-    std::map<std::string, TokenType> simple;
+    static bool isInitialized;
 
-    std::vector<std::pair<std::regex, TokenType>> complex;
+    static std::map<std::string, TokenType> simple;
 
-    std::vector<TokenType> symbols;
+    static std::vector<std::pair<std::regex, TokenType>> complex;
 
-    std::vector<TokenType> keywords;
+    static TokenTypeVector symbols;
 
-    std::vector<TokenType> operators;
+    static TokenTypeVector keywords;
 
-    void pushComplex(std::regex regex, TokenType tokenType);
+    static TokenTypeVector operators;
 
-    void pushSimple(std::string value, TokenType type);
+    static void pushComplex(std::regex regex, TokenType tokenType);
 
-    void pushSymbol(std::string value, TokenType type);
+    static void pushSimple(std::string value, TokenType type);
 
-    void pushKeyword(std::string value, TokenType type);
+    static void pushSymbol(std::string value, TokenType type);
 
-    void pushOperator(std::string value, TokenType type);
+    static void pushKeyword(std::string value, TokenType type);
+
+    static void pushOperator(std::string value, TokenType type);
 
 public:
-    TokenConstants();
+    static void init();
 
-    std::map<std::string, TokenType> getSimpleIdentifiers() const;
+    static std::map<std::string, TokenType> getSimpleIds();
 
-    std::vector<std::pair<std::regex, TokenType>> getComplexIdentifiers() const;
+    static std::vector<std::pair<std::regex, TokenType>> getComplexIds();
 
-    std::vector<TokenType> getSymbols() const;
+    static TokenTypeVector getSymbols();
 
-    std::vector<TokenType> getKeywords() const;
+    static TokenTypeVector getKeywords();
 
-    std::vector<TokenType> getOperators() const;
+    static TokenTypeVector getOperators();
 };
 } // namespace ionir

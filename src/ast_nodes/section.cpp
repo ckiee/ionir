@@ -3,8 +3,8 @@
 
 namespace ionir
 {
-Section::Section(SectionKind kind, std::string identifier, std::vector<Inst *> insts)
-    : Node(NodeKind::Section), kind(kind), identifier(identifier), insts(insts)
+Section::Section(SectionKind kind, std::string id, std::vector<Inst *> insts)
+    : Node(NodeKind::Section), kind(kind), id(id), insts(insts)
 {
     //
 }
@@ -16,7 +16,7 @@ SectionKind Section::getKind() const
 
 std::string Section::getIdentifier() const
 {
-    return this->identifier;
+    return this->id;
 }
 
 std::vector<Inst *> Section::getInsts() const

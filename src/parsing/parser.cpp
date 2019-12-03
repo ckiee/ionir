@@ -52,7 +52,7 @@ void Parser::pushNotice(NoticeType type, std::string message)
 }
 
 Parser::Parser(TokenStream *stream)
-    : stream(stream), tokenIdentifier(new TokenConstants())
+    : stream(stream), tokenIdentifier()
 {
     //
 }
@@ -141,9 +141,9 @@ StringValue *Parser::parseString()
     return new StringValue(value);
 }
 
-std::string Parser::parseIdentifier()
+std::string Parser::parseId()
 {
-    Token identifier = this->stream->get();
+    Token id = this->stream->get();
 
     this->expect(TokenType::Identifier);
 
@@ -151,12 +151,12 @@ std::string Parser::parseIdentifier()
     this->stream->tryNext();
 
     // Return the identifier's value.
-    return identifier.getValue();
+    return id.getValue();
 }
 
 Type *Parser::parseType()
 {
-    std::string identifier = this->parseIdentifier();
+    std::string id = this->parseId();
 
     bool isPointer = false;
 
@@ -173,15 +173,15 @@ Type *Parser::parseType()
     }
 
     // Create and return the resulting type construct.
-    return new Type(identifier, isPointer);
+    return new Type(id, isPointer);
 }
 
 Arg Parser::parseArg()
 {
     Type *type = this->parseType();
-    std::string identifier = this->parseIdentifier();
+    std::string id = this->parseId();
 
-    return std::make_pair(type, identifier);
+    return std::make_pair(type, id);
 }
 
 Args Parser::parseArgs()
@@ -216,7 +216,7 @@ Args Parser::parseArgs()
 Prototype *Parser::parsePrototype()
 {
     Type *returnType = this->parseType();
-    std::string identifier = this->parseIdentifier();
+    std::string id = this->parseId();
 
     this->skipOver(TokenType::SymbolParenthesesL);
 
@@ -230,7 +230,7 @@ Prototype *Parser::parsePrototype()
 
     this->skipOver(TokenType::SymbolParenthesesR);
 
-    return new Prototype(identifier, args, returnType);
+    return new Prototype(id, args, returnType);
 }
 
 Extern *Parser::parseExtern()
@@ -293,10 +293,10 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
     while (true)
     {
         // Capture the current token.
-        Token token = this->stream->get();
+        Token type = this->stream->get().getType();
 
         // Calculate precedence for the current token.
-        int firstPrecedence = Precedence.Get(token);
+        int firstPrecedence = Const::tokenPrecedence.at(type);
 
         /**
          * If this is a binary operation that binds at least as tightly
@@ -310,11 +310,11 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
         }
 
         // At this point, it's a binary operation.
-        TokenType binaryOperator = token.getType();
+        TokenType binaryOperator = type;
 
         // TODO: Should check if it's a BINARY operator, not just an operator.
         // Ensure the captured operator is validated.
-        if (!TokenIdentifier.IsOperator(binaryOperator))
+        if (!TokenIdentifier::isOperator(binaryOperator))
         {
             throw std::runtime_error("Expected token to be a binary operator");
         }
@@ -332,7 +332,7 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
         }
 
         // Determine the token precedence of the current token.
-        int secondPrecedence = Precedence.Get(token);
+        int secondPrecedence = Const::tokenPrecedence.at(type);
 
         /**
          * If binary operator binds less tightly with the right-side than
@@ -365,7 +365,7 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
 
 Section *Parser::parseSection()
 {
-    std::string identifier = this->parseIdentifier();
+    std::string id = this->parseId();
 
     this->skipOver(TokenType::SymbolColon);
     this->skipOver(TokenType::SymbolBraceL);
@@ -381,17 +381,17 @@ Section *Parser::parseSection()
 
     SectionKind kind = SectionKind::Label;
 
-    if (identifier == Constants::sectionInternalPrefix + Constants::sectionEntryIdentifier)
+    if (id == Const::sectionInternalPrefix + Const::sectionEntryId)
     {
         kind = SectionKind::Entry;
     }
 
-    else if (Util::stringStartsWith(identifier, Constants::sectionInternalPrefix))
+    else if (Util::stringStartsWith(id, Const::sectionInternalPrefix))
     {
         kind = SectionKind::Internal;
     }
 
-    return new Section(kind, identifier, insts);
+    return new Section(kind, id, insts);
 }
 
 Block *Parser::parseBlock()
@@ -420,10 +420,10 @@ AllocaInst *Parser::parseAllocaInst()
         throw std::runtime_error("The alloca instruction's resulting identifier must be a string value");
     }
 
-    std::string identifier = ((StringValue *)identifierValue)->getValue();
+    std::string id = ((StringValue *)identifierValue)->getValue();
     Type *type = this->parseType();
 
-    return new AllocaInst(identifier, type);
+    return new AllocaInst(id, type);
 }
 
 ReturnInst *Parser::parseReturnInst()
@@ -444,6 +444,8 @@ BranchInst *Parser::parseBranchInst()
         throw std::runtime_error("Expected branch instruction to have a condition");
     }
 
+    // TODO: Use targets.
+
     Section *body = this->parseBlock();
     std::optional<Section *> otherwise = std::nullopt;
 
@@ -462,7 +464,7 @@ BranchInst *Parser::parseBranchInst()
 
 GotoInst *Parser::parseGotoInst()
 {
-    std::string target = this->parseIdentifier();
+    std::string target = this->parseId();
     GotoInst *gotoInst = new GotoInst(this->createScope(), target);
 
     // TODO: createScope has not been defined yet.
@@ -472,20 +474,20 @@ GotoInst *Parser::parseGotoInst()
 Inst *Parser::parseInst()
 {
     // Parse the instruction's name to determine which argument parser to invoke.
-    std::string identifier = this->parseIdentifier();
+    std::string id = this->parseId();
 
     Inst *inst;
 
     // TODO: Hard-coded strings. Should be mapped into InstKind enum.
-    if (identifier == "alloca")
+    if (id == "alloca")
     {
         return this->parseAllocaInst();
     }
-    else if (identifier == "return")
+    else if (id == "return")
     {
         return this->parseReturnInst();
     }
-    else if (identifier == "goto")
+    else if (id == "goto")
     {
         return this->parseGotoInst();
     }

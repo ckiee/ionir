@@ -8,13 +8,9 @@ bool TokenIdentifier::contains(std::vector<TokenType> subject, TokenType item)
     return std::find(subject.begin(), subject.end(), item) != subject.end();
 }
 
-TokenIdentifier::TokenIdentifier(TokenConstants *constants) : constants(constants)
-{
-}
-
 bool TokenIdentifier::isSymbol(TokenType type)
 {
-    return this->contains(this->constants->getSymbols(), type);
+    return TokenIdentifier::contains(TokenConst::getSymbols(), type);
 }
 
 bool TokenIdentifier::isNumeric(TokenType type)
@@ -25,6 +21,6 @@ bool TokenIdentifier::isNumeric(TokenType type)
 
 bool TokenIdentifier::isOperator(TokenType type)
 {
-    return this->contains(this->constants->getOperators(), type);
+    return TokenIdentifier::contains(TokenConst::getOperators(), type);
 }
 } // namespace ionir

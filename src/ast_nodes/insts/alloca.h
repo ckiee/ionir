@@ -10,17 +10,17 @@ namespace ionir
 class AllocaInst : public Inst
 {
 protected:
-    std::string identifier;
+    std::string id;
 
     Type *type;
 
 public:
     // TODO: Missing support for array type allocas.
-    AllocaInst(std::string identifier, Type *type);
+    AllocaInst(std::string id, Type *type);
 
     Node *accept(Pass *visitor) override;
 
-    std::string getIdentifier() const;
+    std::string getId() const;
 
     Type *getType() const;
 };
