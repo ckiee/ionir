@@ -53,6 +53,14 @@ TokenConstants::TokenConstants()
     this->pushKeyword("extern", TokenType::KeywordExtern);
     this->pushKeyword("else", TokenType::KeywordElse);
 
+    // Register operators.
+    this->pushOperator("+", TokenType::OperatorAdd);
+    this->pushOperator("-", TokenType::OperatorAdd);
+    this->pushOperator("*", TokenType::OperatorMultiply);
+    this->pushOperator("/", TokenType::OperatorDivide);
+    this->pushOperator("%", TokenType::OperatorModulo);
+    this->pushOperator("^", TokenType::OperatorExponent);
+
     // Initialize complex map.
     this->pushComplex(Regex::identifier, TokenType::Identifier);
     this->pushComplex(Regex::string, TokenType::LiteralString);

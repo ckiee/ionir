@@ -27,5 +27,14 @@ public:
     Constants(llvm::Module *module);
 
     std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
+
+    std::map<TokenType, int> tokenPrecedence = {
+        {TokenType::OperatorAdd, 20},
+        {TokenType::OperatorSub, 20},
+        {TokenType::OperatorMultiply, 40},
+        {TokenType::OperatorDivide, 40},
+        {TokenType::OperatorModulo, 40},
+        {TokenType::OperatorExponent, 80},
+    };
 };
 } // namespace ionir

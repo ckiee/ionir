@@ -74,7 +74,9 @@ enum class TokenType
 
 	OperatorDivide,
 
-	OperatorModulo
+	OperatorModulo,
+
+	OperatorExponent
 };
 
 std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);
