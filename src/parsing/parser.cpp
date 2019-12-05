@@ -46,6 +46,12 @@ Notice Parser::createNotice(NoticeType type, std::string message)
     return Notice(this->createNoticeContext(), type, message);
 }
 
+Scope *Parser::createScope()
+{
+    // TODO
+    return nullptr;
+}
+
 void Parser::pushNotice(NoticeType type, std::string message)
 {
     this->notices.push_back(this->createNotice(type, message));
@@ -293,10 +299,10 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
     while (true)
     {
         // Capture the current token.
-        Token type = this->stream->get().getType();
+        TokenType type = this->stream->get().getType();
 
         // Calculate precedence for the current token.
-        int firstPrecedence = Const::operatorPrecedence.at(type);
+        int firstPrecedence = Const::operatorPrecedence[type];
 
         /**
          * If this is a binary operation that binds at least as tightly
@@ -452,7 +458,7 @@ BranchInst *Parser::parseBranchInst()
 
     // TODO: Use targets.
 
-    Section *body = this->parseBlock();
+    Section *body = this->parseSection();
     std::optional<Section *> otherwise = std::nullopt;
 
     // Parse the otherwise block if applicable.
@@ -462,7 +468,7 @@ BranchInst *Parser::parseBranchInst()
         this->stream->skip();
 
         // Parse the otherwise block.
-        otherwise = this->parseBlock();
+        otherwise = this->parseSection();
     }
 
     return new BranchInst(body, *otherwise);

@@ -45,6 +45,8 @@ protected:
 
     Notice createNotice(NoticeType type, std::string message);
 
+    Scope *createScope();
+
     void pushNotice(NoticeType type, std::string message);
 
 public:
