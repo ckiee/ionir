@@ -11,7 +11,7 @@ using namespace ionir;
 TEST(ParserTest, ParseInt)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::LiteralInt, "5", 0),
+        Token(TokenType::LiteralInt, "5"),
     });
 
     IntValue *integer = parser.parseInt();
@@ -22,7 +22,7 @@ TEST(ParserTest, ParseInt)
 TEST(ParserTest, ParseChar)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::LiteralCharacter, "a", 1),
+        Token(TokenType::LiteralCharacter, "a"),
     });
 
     CharValue *character = parser.parseChar();
@@ -33,7 +33,7 @@ TEST(ParserTest, ParseChar)
 TEST(ParserTest, ParseIdentifier)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "test", 0),
+        Token(TokenType::Identifier, "test"),
     });
 
     std::string identifier = parser.parseId();
@@ -44,7 +44,7 @@ TEST(ParserTest, ParseIdentifier)
 TEST(ParserTest, ParseType)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type", 0),
+        Token(TokenType::Identifier, "type"),
     });
 
     Type *type = parser.parseType();
@@ -56,8 +56,8 @@ TEST(ParserTest, ParseType)
 TEST(ParserTest, ParsePointerType)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type", 0),
-        Token(TokenType::SymbolStar, "*", 1),
+        Token(TokenType::Identifier, "type"),
+        Token(TokenType::SymbolStar, "*"),
     });
 
     Type *type = parser.parseType();
@@ -69,8 +69,8 @@ TEST(ParserTest, ParsePointerType)
 TEST(ParserTest, ParseArg)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type", 0),
-        Token(TokenType::Identifier, "test", 1),
+        Token(TokenType::Identifier, "type"),
+        Token(TokenType::Identifier, "test"),
     });
 
     Arg arg = parser.parseArg();
@@ -83,8 +83,8 @@ TEST(ParserTest, ParseArg)
 TEST(ParserTest, ParseEmptyBlock)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::SymbolBraceL, "{", 0),
-        Token(TokenType::SymbolBraceR, "}", 1),
+        Token(TokenType::SymbolBraceL, "{"),
+        Token(TokenType::SymbolBraceR, "}"),
     });
 
     Block *block = parser.parseBlock();
@@ -95,26 +95,27 @@ TEST(ParserTest, ParseEmptyBlock)
 TEST(ParserTest, ParseEmptyPrototype)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type", 0),
-        Token(TokenType::Identifier, "test", 1),
-        Token(TokenType::SymbolParenthesesL, "(", 2),
-        Token(TokenType::SymbolParenthesesR, ")", 3),
+        Token(TokenType::Identifier, "foobar"),
+        Token(TokenType::SymbolParenthesesL, "("),
+        Token(TokenType::SymbolParenthesesR, ")"),
+        Token(TokenType::SymbolArrow, "->"),
+        Token(TokenType::Identifier, "type"),
     });
 
     Prototype *prototype = parser.parsePrototype();
     Type *returnType = prototype->getReturnType();
-    Args args = prototype->getArguments();
+    Args *args = prototype->getArgs();
 
     // Verify return type.
     EXPECT_EQ(returnType->getId(), "type");
     EXPECT_FALSE(returnType->getIsPointer());
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getId(), "test");
+    EXPECT_EQ(prototype->getId(), "foobar");
 
     // Verify prototype's arguments.
-    EXPECT_EQ(args.getItems().size(), 0);
-    EXPECT_FALSE(args.getIsInfinite());
+    EXPECT_EQ(args->getItems().size(), 0);
+    EXPECT_FALSE(args->getIsInfinite());
 }
 
 // TODO: Alloca inst changed.
@@ -134,21 +135,22 @@ TEST(ParserTest, ParseEmptyPrototype)
 TEST(ParserTest, ParseExtern)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::KeywordExtern, "extern", 0),
-        Token(TokenType::Identifier, "type", 1),
-        Token(TokenType::Identifier, "test", 2),
-        Token(TokenType::SymbolParenthesesL, "(", 3),
-        Token(TokenType::SymbolParenthesesR, ")", 4),
+        Token(TokenType::KeywordExtern, "extern"),
+        Token(TokenType::Identifier, "foobar"),
+        Token(TokenType::SymbolParenthesesL, "("),
+        Token(TokenType::SymbolParenthesesR, ")"),
+        Token(TokenType::SymbolArrow, "->"),
+        Token(TokenType::Identifier, "type"),
     });
 
     Extern *externNode = parser.parseExtern();
     Prototype *prototype = externNode->getPrototype();
-    Args args = prototype->getArguments();
+    Args *args = prototype->getArgs();
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getId(), "test");
+    EXPECT_EQ(prototype->getId(), "foobar");
 
     // Verify prototype's arguments.
-    EXPECT_EQ(args.getItems().size(), 0);
-    EXPECT_FALSE(args.getIsInfinite());
+    EXPECT_EQ(args->getItems().size(), 0);
+    EXPECT_FALSE(args->getIsInfinite());
 }

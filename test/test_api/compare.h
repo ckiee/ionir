@@ -1,10 +1,10 @@
 #pragma once
 
+#include <iostream>
 #include <array>
 #include <string>
-// #include <filesystem>
-#include "util.h"
 #include "syntax/token.h"
+#include "util.h"
 
 namespace ionir::test::compare
 {

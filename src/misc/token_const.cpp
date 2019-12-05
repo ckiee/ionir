@@ -1,4 +1,5 @@
-#include "token_constants.h"
+#include <algorithm>
+#include "token_const.h"
 
 namespace ionir
 {
@@ -42,6 +43,11 @@ void TokenConst::pushOperator(std::string value, TokenType type)
     TokenConst::operators.push_back(type);
 }
 
+bool TokenConst::sortByKeyLength(const std::pair<std::string, TokenType> &a, const std::pair<std::string, TokenType> &b)
+{
+    return a.first > b.first;
+}
+
 void TokenConst::init()
 {
     // Static members have already been initialized. Do not continue.
@@ -62,11 +68,11 @@ void TokenConst::init()
     TokenConst::pushSymbol(",", TokenType::SymbolComma);
     TokenConst::pushSymbol("~", TokenType::SymbolTilde);
     TokenConst::pushSymbol("=", TokenType::SymbolEqual);
-    TokenConst::pushSymbol("%", TokenType::SymbolPercent);
     TokenConst::pushSymbol(";", TokenType::SymbolSemiColon);
     TokenConst::pushSymbol("*", TokenType::SymbolStar);
     TokenConst::pushSymbol("{", TokenType::SymbolBraceL);
-    TokenConst::pushSymbol("{", TokenType::SymbolBraceR);
+    TokenConst::pushSymbol("}", TokenType::SymbolBraceR);
+    TokenConst::pushSymbol("->", TokenType::SymbolArrow);
 
     // Register keywords.
     TokenConst::pushKeyword("create", TokenType::InstCreate);
@@ -103,6 +109,20 @@ void TokenConst::init()
 std::map<std::string, TokenType> TokenConst::getSimpleIds()
 {
     return TokenConst::simple;
+}
+
+SimplePairVector TokenConst::getSortedSimpleIds()
+{
+    SimplePairVector result = {};
+
+    for (auto pair : TokenConst::simple)
+    {
+        result.push_back(pair);
+    }
+
+    std::sort(result.begin(), result.end(), TokenConst::sortByKeyLength);
+
+    return result;
 }
 
 std::vector<std::pair<std::regex, TokenType>> TokenConst::getComplexIds()

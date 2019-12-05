@@ -27,7 +27,7 @@ TEST(TokenTest, CreateDummy)
 TEST(TokenTest, DetermineWhetherIsDummy)
 {
     Token dummy = Token::createDummy(0);
-    Token token = test::bootstrap::token(0);
+    Token token = test::bootstrap::token();
 
     EXPECT_TRUE(dummy.isDummy());
     EXPECT_FALSE(token.isDummy());

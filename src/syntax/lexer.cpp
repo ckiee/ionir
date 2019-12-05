@@ -84,9 +84,9 @@ void Lexer::processWhitespace()
     }
 }
 
-Lexer::Lexer(std::string input) : constants()
+Lexer::Lexer(std::string input)
+    : input(input), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds())
 {
-    this->input = input;
     this->length = this->input.length();
 
     // Input string must contain at least one character.
@@ -94,10 +94,6 @@ Lexer::Lexer(std::string input) : constants()
     {
         throw std::invalid_argument("Input must be a string with one or more character(s)");
     }
-
-    // Initialize local simple & complex identifiers map.
-    this->simpleIdentifiers = this->constants.getSimpleIds();
-    this->complexIdentifiers = this->constants.getComplexIds();
 
     // Reset the index, setting its initial value.
     this->begin();
@@ -135,29 +131,29 @@ std::optional<Token> Lexer::tryNext()
 
     std::string tokenValue = token.getValue();
 
-    for (this->simpleIterator = simpleIdentifiers.begin(); this->simpleIterator != simpleIdentifiers.end(); this->simpleIterator++)
+    for (auto pair : this->simpleIds)
     {
         // Test the first letter of the subject to continue.
-        if (tokenValue[0] == this->simpleIterator->first[0])
+        if (tokenValue[0] == pair.first[0])
         {
             // Produce a Regex instance to match the exact value of the simple identifier. It is important that the initial value is escaped of any Regex special characters.
-            std::regex regex = Util::createPureRegex(this->simpleIterator->first);
+            std::regex regex = Util::createPureRegex(pair.first);
 
             // If the match starts with a letter, modify the regex to force either whitespace or EOF at the end.
             if (std::regex_match(tokenValue, Regex::identifier))
             {
                 // Modify the plain regex to meet requirements at the end.
-                regex = std::regex(this->simpleIterator->first + "(?:\\s|$)");
+                regex = std::regex(pair.first + "(?:\\s|$)");
             }
 
-            if (this->matchExpression(&token, this->simpleIterator->second, regex))
+            if (this->matchExpression(&token, pair.second, regex))
             {
                 // Reduce the position.
                 // TODO: Causing problems, works when commented HERE.
                 //this.SetPosition(this.Position - token.Value.Length - pair.Key.Length);
 
                 // Skim the last character off.
-                token = Token(token.getType(), this->simpleIterator->first, token.getStartPosition());
+                token = Token(token.getType(), pair.first, token.getStartPosition());
 
                 // Return the token, no need to skip its value.
                 return token;
@@ -166,10 +162,10 @@ std::optional<Token> Lexer::tryNext()
     }
 
     // Begin iteration through complex identifiers.
-    for (this->complexIterator = this->complexIdentifiers.begin(); this->complexIterator != this->complexIdentifiers.end(); this->complexIterator++)
+    for (auto pair : this->complexIds)
     {
         // If it matches, return the token (already modified by the matchExpression function).
-        if (this->matchExpression(&token, this->complexIterator->second, this->complexIterator->first))
+        if (this->matchExpression(&token, pair.second, pair.first))
         {
             return token;
         }
@@ -192,10 +188,10 @@ std::vector<Token> Lexer::scan()
     // Reset index to avoid carrying over previous information.
     this->begin();
 
-    // TODO: Should be a list, then converted to a vector.
+    // TODO: Should be a list, then converted to a vector?
     std::vector<Token> tokens = {};
 
-    std::optional<Token> token;
+    std::optional<Token> token = std::nullopt;
 
     while (this->hasNext())
     {

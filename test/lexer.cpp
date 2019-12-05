@@ -58,13 +58,15 @@ TEST(LexerTest, LexTwoSymbols)
 TEST(LexerTest, LexSymbols)
 {
 	// Create the Lexer instance with all the existing symbols.
-	Lexer lexer = Lexer("@=:$#()[],~%;");
+	Lexer lexer = Lexer("@=:$#()[],~;{}->");
 
 	// Tokenize input and begin inspection.
 	std::vector<Token> actual = lexer.scan();
 
+	const int amount = 15;
+
 	// Create a list of expected tokens.
-	std::array<Token, 13> expected = {
+	std::array<Token, amount> expected = {
 		Token(TokenType::SymbolAt, "@", 0),
 		Token(TokenType::SymbolEqual, "=", 1),
 		Token(TokenType::SymbolColon, ":", 2),
@@ -76,12 +78,14 @@ TEST(LexerTest, LexSymbols)
 		Token(TokenType::SymbolBracketR, "]", 8),
 		Token(TokenType::SymbolComma, ",", 9),
 		Token(TokenType::SymbolTilde, "~", 10),
-		Token(TokenType::SymbolPercent, "%", 11),
-		Token(TokenType::SymbolSemiColon, ";", 12),
+		Token(TokenType::SymbolSemiColon, ";", 11),
+		Token(TokenType::SymbolBraceL, "{", 12),
+		Token(TokenType::SymbolBraceR, "}", 13),
+		Token(TokenType::SymbolArrow, "->", 14),
 	};
 
 	// Compare result with expected.
-	test::compare::tokenSets<13>(expected, actual);
+	test::compare::tokenSets<amount>(expected, actual);
 }
 
 TEST(LexerTest, LexIdentifiers)

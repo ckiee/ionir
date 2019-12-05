@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <optional>
 #include "syntax/token.h"
-#include "misc/token_constants.h"
+#include "misc/token_const.h"
 #include "misc/util.h"
 #include "misc/regex.h"
 #include "misc/iterable.h"
@@ -23,15 +23,9 @@ private:
 
     size_t index;
 
-    TokenConst constants;
+    SimplePairVector simpleIds;
 
-    std::map<std::string, TokenType> simpleIdentifiers;
-
-    std::map<std::string, TokenType>::iterator simpleIterator;
-
-    std::vector<std::pair<std::regex, TokenType>> complexIdentifiers;
-
-    std::vector<std::pair<std::regex, TokenType>>::iterator complexIterator;
+    std::vector<std::pair<std::regex, TokenType>> complexIds;
 
 protected:
     char getChar() const;

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "syntax/token.h"
+#include "syntax/token_type.h"
 #include "parsing/parser.h"
 #include "llvm/module.h"
 #include "code_gen/llvm_visitor.h"
@@ -9,7 +10,7 @@
 
 namespace ionir::test::bootstrap
 {
-Token token(int id);
+Token token(TokenType type = TokenType::Unknown);
 
 TokenStream tokenStream(int amountOfItems = 1);
 

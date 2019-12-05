@@ -103,7 +103,5 @@ public:
      * identifier.
      */
     Inst *parseInst();
-
-    Type *parseReturnType();
 };
 } // namespace ionir

@@ -6,6 +6,8 @@ namespace ionir
 {
 enum class TokenType
 {
+	Dummy,
+
 	Unknown,
 
 	Identifier,
@@ -42,8 +44,6 @@ enum class TokenType
 
 	SymbolEqual,
 
-	SymbolPercent,
-
 	SymbolSemiColon,
 
 	SymbolStar,
@@ -51,6 +51,8 @@ enum class TokenType
 	SymbolBraceL,
 
 	SymbolBraceR,
+
+	SymbolArrow,
 
 	InstCreate,
 

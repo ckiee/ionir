@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include <vector>
 #include <map>
 #include <string>
@@ -35,10 +36,14 @@ protected:
 
     static void pushOperator(std::string value, TokenType type);
 
+    static bool sortByKeyLength(const std::pair<std::string, TokenType> &a, const std::pair<std::string, TokenType> &b);
+
 public:
     static void init();
 
     static std::map<std::string, TokenType> getSimpleIds();
+
+    static std::vector<std::pair<std::string, TokenType>> getSortedSimpleIds();
 
     static std::vector<std::pair<std::regex, TokenType>> getComplexIds();
 
@@ -48,4 +53,6 @@ public:
 
     static TokenTypeVector getOperators();
 };
+
+typedef std::vector<std::pair<std::string, TokenType>> SimplePairVector;
 } // namespace ionir

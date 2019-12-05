@@ -18,7 +18,7 @@ TEST(CodeGenTest, VisitExtern)
     LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
 
     Type *returnType = new Type("void");
-    Prototype *prototype = new Prototype("testExtern", Args({}, false), returnType);
+    Prototype *prototype = new Prototype("testExtern", new Args(), returnType);
     Extern *externNode = new Extern(prototype);
 
     visitor->visitExtern(externNode);
@@ -33,7 +33,7 @@ TEST(CodeGenTest, VisitEmptyFunction)
     LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
 
     Type *returnType = new Type("void");
-    Prototype *prototype = new Prototype("foobar", Args({}, false), returnType);
+    Prototype *prototype = new Prototype("foobar", new Args(), returnType);
     Function *function = new Function(prototype, new Block());
 
     visitor->visitFunction(function);
@@ -78,7 +78,7 @@ TEST(CodeGenTest, VisitIfStmt)
     LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
 
     Type *returnType = new Type("void");
-    Prototype *prototype = new Prototype("foobar", Args({}, false), returnType);
+    Prototype *prototype = new Prototype("foobar", new Args(), returnType);
     Function *function = new Function(prototype, new Block());
 
     visitor->visitFunction(function);

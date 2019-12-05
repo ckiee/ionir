@@ -1,0 +1,33 @@
+id := TODO
+
+type := id
+
+value_int = /[0-9]+/
+
+value_decimal = /[0-9]+\.[0-9]+/
+
+value := value_int | value_decimal
+
+stmt_decl := type id ['=' value]
+
+stmt := stmt_decl ';'
+
+section := '@' id ':' [stmt+]
+
+block := '{' [section+] '}'
+
+arg := type id
+
+args := arg [',' args]
+
+prototype := id '(' [args] ')' '->' type
+
+attribute := '@' id
+
+function := [attribute+] 'fn' prototype block
+
+struct_prop := type id ';'
+
+struct := 'struct' id '{' [struct_prop+] '}'
+
+@default := [function+ | struct+]+

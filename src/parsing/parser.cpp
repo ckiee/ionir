@@ -233,9 +233,10 @@ Prototype *Parser::parsePrototype()
         args = this->parseArgs();
     }
 
-    this->skipOver(TokenType::SymbolParenthesesR);
+    this->stream->skip();
+    this->skipOver(TokenType::SymbolArrow);
 
-    Type *returnType = this->parseReturnType();
+    Type *returnType = this->parseType();
 
     return new Prototype(id, args, returnType);
 }
@@ -387,19 +388,20 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
 
 Section *Parser::parseSection()
 {
+    this->skipOver(TokenType::SymbolAt);
+
     std::string id = this->parseId();
 
     this->skipOver(TokenType::SymbolColon);
-    this->skipOver(TokenType::SymbolBraceL);
 
     std::vector<Inst *> insts = {};
 
-    while (!this->is(TokenType::SymbolBraceR))
+    while (!this->is(TokenType::SymbolBraceR) && !this->is(TokenType::SymbolAt))
     {
         insts.push_back(this->parseInst());
     }
 
-    this->skipOver(TokenType::SymbolBraceR);
+    this->stream->skip();
 
     SectionKind kind = SectionKind::Label;
 
@@ -422,7 +424,7 @@ Block *Parser::parseBlock()
 
     std::vector<Section *> sections = {};
 
-    while (this->is(TokenType::SymbolBraceR))
+    while (!this->is(TokenType::SymbolBraceR))
     {
         sections.push_back(this->parseSection());
     }
@@ -517,13 +519,5 @@ Inst *Parser::parseInst()
     {
         throw std::runtime_error("Unrecognized instruction name");
     }
-}
-
-Type *Parser::parseReturnType()
-{
-    this->skipOver(TokenType::OperatorSub);
-    this->skipOver(TokenType::OperatorGreaterThan);
-
-    return this->parseType();
 }
 } // namespace ionir

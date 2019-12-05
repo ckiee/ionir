@@ -4,7 +4,7 @@ namespace ionir
 {
 Token Token::createDummy(size_t startPosition)
 {
-    return Token(TokenType::Unknown, "", startPosition);
+    return Token(TokenType::Dummy, "", startPosition);
 }
 
 Token::Token(TokenType type, std::string value, size_t startPosition)
@@ -35,7 +35,7 @@ std::string Token::getValue() const
 
 bool Token::isDummy() const
 {
-    return this->value == "" && this->type == TokenType::Unknown;
+    return this->type == TokenType::Dummy;
 }
 
 bool Token::operator==(const Token &other) const

@@ -18,7 +18,7 @@ protected:
 public:
 	static Token createDummy(size_t startPosition);
 
-	Token(TokenType type, std::string value, size_t startPosition);
+	Token(TokenType type, std::string value, size_t startPosition = 0);
 
 	size_t getStartPosition() const;
 
