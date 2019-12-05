@@ -73,8 +73,9 @@ void TokenConst::init()
     TokenConst::pushKeyword("call", TokenType::InstCall);
     TokenConst::pushKeyword("set", TokenType::InstSet);
     TokenConst::pushKeyword("end", TokenType::InstEnd);
-    TokenConst::pushKeyword("func", TokenType::KeywordFunction);
+    TokenConst::pushKeyword("fn", TokenType::KeywordFunction);
     TokenConst::pushKeyword("extern", TokenType::KeywordExtern);
+    TokenConst::pushKeyword("global", TokenType::KeywordGlobal);
     TokenConst::pushKeyword("else", TokenType::KeywordElse);
 
     // Register operators.

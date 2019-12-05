@@ -66,6 +66,8 @@ enum class TokenType
 
 	KeywordElse,
 
+	KeywordGlobal,
+
 	OperatorAdd,
 
 	OperatorSub,
