@@ -15,18 +15,18 @@ class Prototype : public Node
 protected:
 	std::string id;
 
-	Args arguments;
+	Args *args;
 
 	Type *returnType;
 
 public:
-	Prototype(std::string id, Args arguments, Type *returnType);
+	Prototype(std::string id, Args *args, Type *returnType);
 
 	Node *accept(Pass *visitor) override;
 
 	std::string getId() const;
 
-	Args getArguments() const;
+	Args *getArgs() const;
 
 	Type *getReturnType() const;
 };

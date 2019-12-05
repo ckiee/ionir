@@ -190,7 +190,7 @@ Arg Parser::parseArg()
     return std::make_pair(type, id);
 }
 
-Args Parser::parseArgs()
+Args *Parser::parseArgs()
 {
     std::vector<Arg> args = {};
     bool isInfinite = false;
@@ -216,17 +216,16 @@ Args Parser::parseArgs()
         args.push_back(this->parseArg());
     } while (this->is(TokenType::SymbolComma));
 
-    return Args(args, isInfinite);
+    return new Args(args, isInfinite);
 }
 
 Prototype *Parser::parsePrototype()
 {
-    Type *returnType = this->parseType();
     std::string id = this->parseId();
 
     this->skipOver(TokenType::SymbolParenthesesL);
 
-    Args args = Args({}, false);
+    Args *args = new Args();
 
     // Parse arguments if applicable.
     if (!this->is(TokenType::SymbolParenthesesR))
@@ -236,6 +235,8 @@ Prototype *Parser::parsePrototype()
 
     this->skipOver(TokenType::SymbolParenthesesR);
 
+    Type *returnType = this->parseReturnType();
+
     return new Prototype(id, args, returnType);
 }
 
@@ -244,9 +245,18 @@ Extern *Parser::parseExtern()
     this->skipOver(TokenType::KeywordExtern);
 
     Prototype *prototype = this->parsePrototype();
-    Extern *externNode = new Extern(prototype);
 
-    return externNode;
+    return new Extern(prototype);
+}
+
+Function *Parser::parseFunction()
+{
+    this->skipOver(TokenType::KeywordFunction);
+
+    Prototype *prototype = this->parsePrototype();
+    Block *body = this->parseBlock();
+
+    return new Function(prototype, body);
 }
 
 Value *Parser::parseValue()
@@ -507,5 +517,13 @@ Inst *Parser::parseInst()
     {
         throw std::runtime_error("Unrecognized instruction name");
     }
+}
+
+Type *Parser::parseReturnType()
+{
+    this->skipOver(TokenType::OperatorSub);
+    this->skipOver(TokenType::OperatorGreaterThan);
+
+    return this->parseType();
 }
 } // namespace ionir

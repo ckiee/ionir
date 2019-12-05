@@ -85,6 +85,8 @@ void TokenConst::init()
     TokenConst::pushOperator("/", TokenType::OperatorDivide);
     TokenConst::pushOperator("%", TokenType::OperatorModulo);
     TokenConst::pushOperator("^", TokenType::OperatorExponent);
+    TokenConst::pushOperator(">", TokenType::OperatorGreaterThan);
+    TokenConst::pushOperator("<", TokenType::OperatorLessThan);
 
     // Initialize complex map.
     TokenConst::pushComplex(Regex::identifier, TokenType::Identifier);

@@ -78,7 +78,11 @@ enum class TokenType
 
 	OperatorModulo,
 
-	OperatorExponent
+	OperatorExponent,
+
+	OperatorGreaterThan,
+
+	OperatorLessThan
 };
 
 std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);

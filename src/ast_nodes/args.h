@@ -17,7 +17,7 @@ protected:
     bool isInfinite;
 
 public:
-    Args(std::vector<Arg> items, bool isInfinite);
+    Args(std::vector<Arg> items = {}, bool isInfinite = false);
 
     std::vector<Arg> getItems() const;
 

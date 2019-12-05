@@ -8,6 +8,7 @@
 #include "ast_nodes/values/char.h"
 #include "ast_nodes/values/string.h"
 #include "ast_nodes/extern.h"
+#include "ast_nodes/function.h"
 #include "ast_nodes/args.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/block.h"
@@ -70,11 +71,13 @@ public:
 
     Arg parseArg();
 
-    Args parseArgs();
+    Args *parseArgs();
 
     Prototype *parsePrototype();
 
     Extern *parseExtern();
+
+    Function *parseFunction();
 
     Value *parseValue();
 
@@ -100,5 +103,7 @@ public:
      * identifier.
      */
     Inst *parseInst();
+
+    Type *parseReturnType();
 };
 } // namespace ionir

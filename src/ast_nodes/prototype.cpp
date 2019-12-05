@@ -4,8 +4,8 @@
 
 namespace ionir
 {
-Prototype::Prototype(std::string id, Args arguments, Type *returnType)
-    : Node(NodeKind::Prototype), id(id), arguments(arguments), returnType(returnType)
+Prototype::Prototype(std::string id, Args args, Type *returnType)
+    : Node(NodeKind::Prototype), id(id), args(args), returnType(returnType)
 {
     //
 }
@@ -20,9 +20,9 @@ std::string Prototype::getId() const
     return this->id;
 }
 
-Args Prototype::getArguments() const
+Args Prototype::getArgs() const
 {
-    return this->arguments;
+    return this->args;
 }
 
 Type *Prototype::getReturnType() const
