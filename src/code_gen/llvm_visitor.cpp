@@ -91,7 +91,7 @@ Node *LlvmVisitor::visitExtern(Extern *node)
     {
         throw std::runtime_error("Unexpected external definition's prototype to be null");
     }
-    else if (this->module->getFunction(node->getPrototype()->getIdentifier()) != nullptr)
+    else if (this->module->getFunction(node->getPrototype()->getId()) != nullptr)
     {
         throw std::runtime_error("Re-definition of extern not allowed");
     }
@@ -112,7 +112,7 @@ Node *LlvmVisitor::visitSection(Section *node)
     }
 
     // Create the basic block and at the same time register it under the buffer function.
-    llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getIdentifier(), this->function);
+    llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getId(), this->function);
 
     // Create and assign the block to the builder.
     this->builder.emplace(llvm::IRBuilder<>(block));
@@ -265,7 +265,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
         llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getArguments().getIsInfinite());
 
         // Cast the value to a function, since we know getCallee() will return a function.
-        function = (llvm::Function *)this->module->getOrInsertFunction(node->getIdentifier(), type).getCallee();
+        function = (llvm::Function *)this->module->getOrInsertFunction(node->getId(), type).getCallee();
 
         // Set the function's linkage.
         function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
@@ -393,7 +393,7 @@ Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
      * Create the LLVM equivalent alloca instruction
      * using the buffered builder.
      */
-    llvm::AllocaInst *allocaInst = this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getIdentifier());
+    llvm::AllocaInst *allocaInst = this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getId());
 
     this->valueStack.push(allocaInst);
 
@@ -460,7 +460,7 @@ Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
 
     this->typeStack.pop();
 
-    llvm::GlobalVariable *globalVar = (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getIdentifier(), type);
+    llvm::GlobalVariable *globalVar = (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), type);
 
     // Assign value if applicable.
     if (node->getValue().has_value())

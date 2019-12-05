@@ -1,16 +1,16 @@
+#include "misc/constants.h"
 #include "value_resolver.h"
 
 namespace ionir
 {
-ValueResolver::ValueResolver(llvm::Module *module, Constants *constants)
+ValueResolver::ValueResolver(llvm::Module *module) : module(module)
 {
-    this->module = module;
-    this->constants = constants;
+    //
 }
 
 std::optional<llvm::Constant *> ValueResolver::tryResolveInt(IntegerKind kind, long value, bool isSigned)
 {
-    std::optional<LlvmIntTypeResolver> resolver = this->constants->tryGetIntTypeResolver(kind);
+    std::optional<LlvmIntTypeResolver> resolver = Const::tryGetIntTypeResolver(kind);
 
     if (!resolver.has_value())
     {

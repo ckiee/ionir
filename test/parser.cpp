@@ -14,7 +14,7 @@ TEST(ParserTest, ParseInt)
         Token(TokenType::LiteralInt, "5", 0),
     });
 
-    LiteralInt *integer = parser.parseInt();
+    IntValue *integer = parser.parseInt();
 
     EXPECT_EQ(integer->getValue(), 5);
 }
@@ -25,7 +25,7 @@ TEST(ParserTest, ParseChar)
         Token(TokenType::LiteralCharacter, "a", 1),
     });
 
-    LiteralChar *character = parser.parseChar();
+    CharValue *character = parser.parseChar();
 
     EXPECT_EQ(character->getValue(), 'a');
 }
@@ -36,7 +36,7 @@ TEST(ParserTest, ParseIdentifier)
         Token(TokenType::Identifier, "test", 0),
     });
 
-    std::string identifier = parser.parseIdentifier();
+    std::string identifier = parser.parseId();
 
     EXPECT_EQ(identifier, "test");
 }
@@ -49,7 +49,7 @@ TEST(ParserTest, ParseType)
 
     Type *type = parser.parseType();
 
-    EXPECT_EQ(type->getIdentifier(), "type");
+    EXPECT_EQ(type->getId(), "type");
     EXPECT_FALSE(type->getIsPointer());
 }
 
@@ -62,7 +62,7 @@ TEST(ParserTest, ParsePointerType)
 
     Type *type = parser.parseType();
 
-    EXPECT_EQ(type->getIdentifier(), "type");
+    EXPECT_EQ(type->getId(), "type");
     EXPECT_TRUE(type->getIsPointer());
 }
 
@@ -75,7 +75,7 @@ TEST(ParserTest, ParseArg)
 
     Arg arg = parser.parseArg();
 
-    EXPECT_EQ(arg.first->getIdentifier(), "type");
+    EXPECT_EQ(arg.first->getId(), "type");
     EXPECT_FALSE(arg.first->getIsPointer());
     EXPECT_EQ(arg.second, "test");
 }
@@ -83,16 +83,13 @@ TEST(ParserTest, ParseArg)
 TEST(ParserTest, ParseEmptyBlock)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "entry", 0),
-        Token(TokenType::SymbolColon, ":", 1),
-        Token(TokenType::SymbolBraceL, "{", 2),
-        Token(TokenType::SymbolBraceR, "}", 3),
+        Token(TokenType::SymbolBraceL, "{", 0),
+        Token(TokenType::SymbolBraceR, "}", 1),
     });
 
     Block *block = parser.parseBlock();
 
-    EXPECT_EQ(block->getIdentifier(), "entry");
-    EXPECT_EQ(block->getInsts().size(), 0);
+    EXPECT_EQ(block->getSections().size(), 0);
 }
 
 TEST(ParserTest, ParseEmptyPrototype)
@@ -109,11 +106,11 @@ TEST(ParserTest, ParseEmptyPrototype)
     Args args = prototype->getArguments();
 
     // Verify return type.
-    EXPECT_EQ(returnType->getIdentifier(), "type");
+    EXPECT_EQ(returnType->getId(), "type");
     EXPECT_FALSE(returnType->getIsPointer());
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getIdentifier(), "test");
+    EXPECT_EQ(prototype->getId(), "test");
 
     // Verify prototype's arguments.
     EXPECT_EQ(args.getItems().size(), 0);
@@ -149,7 +146,7 @@ TEST(ParserTest, ParseExtern)
     Args args = prototype->getArguments();
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getIdentifier(), "test");
+    EXPECT_EQ(prototype->getId(), "test");
 
     // Verify prototype's arguments.
     EXPECT_EQ(args.getItems().size(), 0);

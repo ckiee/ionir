@@ -3,20 +3,37 @@
 #include <optional>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
+#include "syntax/token_type.h"
 
 namespace ionir
 {
 class Pass;
 
-class BinaryExpr : public Node
+// TODO: Should check un-initialized for properties?
+struct BinaryExprOpts
 {
-protected:
+    TokenType operation;
+
+    int precedence;
+
     Node *leftSide;
 
     std::optional<Node *> rightSide;
+};
+
+class BinaryExpr : public Node
+{
+protected:
+    TokenType operation;
+
+    int precedence;
+
+    Node *leftSide;
+
+    std::optional<Node *> rightSide = std::nullopt;
 
 public:
-    BinaryExpr(Node *leftSide, std::optional<Node *> rightSide = std::nullopt);
+    BinaryExpr(BinaryExprOpts opts);
 
     Node *accept(Pass *visitor) override;
 

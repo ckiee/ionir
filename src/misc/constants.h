@@ -16,19 +16,15 @@ typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMC
 class Const
 {
 protected:
-    llvm::Module *module;
-
-    Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
+    static Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
 
 public:
     static const std::string sectionInternalPrefix;
 
     static const std::string sectionEntryId;
 
-    Const(llvm::Module *module);
+    static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
-    std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
-
-    static const std::map<TokenType, int> tokenPrecedence;
+    static std::map<TokenType, int> operatorPrecedence;
 };
 } // namespace ionir

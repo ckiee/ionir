@@ -3,8 +3,8 @@
 
 namespace ionir
 {
-BinaryExpr::BinaryExpr(Node *leftSide, std::optional<Node *> rightSide)
-    : Node(NodeKind::Block), leftSide(leftSide), rightSide(rightSide)
+BinaryExpr::BinaryExpr(BinaryExprOpts opts)
+    : Node(NodeKind::Block), operation(opts.operation), precedence(opts.precedence), leftSide(opts.leftSide), rightSide(opts.rightSide)
 {
     //
 }

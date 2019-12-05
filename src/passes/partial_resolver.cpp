@@ -36,7 +36,7 @@ Node *PartialResolverPass::visitGotoInst(GotoInst *node)
         for (auto section : sections)
         {
             // Resolve goto instruction with target section if applicable.
-            if (section->getIdentifier() == node->getTarget())
+            if (section->getId() == node->getTarget())
             {
                 node->resolve(section);
 

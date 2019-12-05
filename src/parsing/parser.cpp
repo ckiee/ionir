@@ -296,7 +296,7 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
         Token type = this->stream->get().getType();
 
         // Calculate precedence for the current token.
-        int firstPrecedence = Const::tokenPrecedence.at(type);
+        int firstPrecedence = Const::operatorPrecedence.at(type);
 
         /**
          * If this is a binary operation that binds at least as tightly
@@ -332,7 +332,7 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
         }
 
         // Determine the token precedence of the current token.
-        int secondPrecedence = Const::tokenPrecedence.at(type);
+        int secondPrecedence = Const::operatorPrecedence[type];
 
         /**
          * If binary operator binds less tightly with the right-side than
@@ -351,12 +351,18 @@ Node *Parser::parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence)
             }
         }
 
-        // Create the binary expression entity.
-        BinaryExpr *binaryExpr = new BinaryExpr(binaryOperator, leftSide, *rightSide, firstPrecedence);
+        BinaryExprOpts opts = BinaryExprOpts{
+            binaryOperator,
+            firstPrecedence,
+            leftSide,
+            rightSide,
+        };
 
-        // TODO: Name is temporary?
-        // Set the name of the binary expression's output.
-        binaryExpr.SetName("tmp");
+        // Create the binary expression entity.
+        BinaryExpr *binaryExpr = new BinaryExpr(opts);
+
+        // TODO: Set the binaryExpr's name during codegen pass.
+        // binaryExpr.SetName("tmp");
 
         // Merge left-side/right-side.
         leftSide = binaryExpr;

@@ -14,7 +14,7 @@ SectionKind Section::getKind() const
     return this->kind;
 }
 
-std::string Section::getIdentifier() const
+std::string Section::getId() const
 {
     return this->id;
 }
