@@ -480,7 +480,7 @@ GotoInst *Parser::parseGotoInst()
     GotoInst *gotoInst = new GotoInst(this->createScope(), target);
 
     // TODO: createScope has not been defined yet.
-    return;
+    return gotoInst;
 }
 
 Inst *Parser::parseInst()

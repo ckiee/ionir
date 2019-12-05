@@ -34,7 +34,7 @@ TEST(CodeGenTest, VisitEmptyFunction)
 
     Type *returnType = new Type("void");
     Prototype *prototype = new Prototype("foobar", Args({}, false), returnType);
-    Function *function = new Function(prototype, new Block("entry"));
+    Function *function = new Function(prototype, new Block());
 
     visitor->visitFunction(function);
 
@@ -64,7 +64,7 @@ TEST(CodeGenTest, VisitGlobalVar)
 
     // TODO: GlobalVar's type is hardcoded to double.
     Type *type = new Type("int", false);
-    GlobalVar *globalVar = new GlobalVar(type, "test", new LiteralInt(IntegerKind::Int32, 123));
+    GlobalVar *globalVar = new GlobalVar(type, "test", new IntValue(IntegerKind::Int32, 123));
 
     visitor->visitGlobalVar(globalVar);
 
@@ -79,7 +79,7 @@ TEST(CodeGenTest, VisitIfStmt)
 
     Type *returnType = new Type("void");
     Prototype *prototype = new Prototype("foobar", Args({}, false), returnType);
-    Function *function = new Function(prototype, new Block("entry"));
+    Function *function = new Function(prototype, new Block());
 
     visitor->visitFunction(function);
 

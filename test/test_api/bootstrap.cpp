@@ -23,7 +23,7 @@ TokenStream tokenStream(int amountOfItems)
 
 Parser parser(std::vector<Token> tokens)
 {
-    ionir::TokenStream stream = ionir::TokenStream(tokens);
+    ionir::TokenStream *stream = new ionir::TokenStream(tokens);
 
     return ionir::Parser(stream);
 }

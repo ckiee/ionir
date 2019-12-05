@@ -2,6 +2,8 @@
 
 namespace ionir
 {
+Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};
+
 const std::string Const::sectionInternalPrefix = ".";
 
 std::map<TokenType, int> Const::operatorPrecedence = {

@@ -4,6 +4,16 @@ namespace ionir
 {
 bool TokenConst::isInitialized = false;
 
+std::map<std::string, TokenType> TokenConst::simple = {};
+
+std::vector<std::pair<std::regex, TokenType>> TokenConst::complex = {};
+
+TokenTypeVector TokenConst::keywords = {};
+
+TokenTypeVector TokenConst::symbols = {};
+
+TokenTypeVector TokenConst::operators = {};
+
 void TokenConst::pushComplex(std::regex regex, TokenType tokenType)
 {
     TokenConst::complex.push_back(std::make_pair(regex, tokenType));
@@ -24,6 +34,12 @@ void TokenConst::pushKeyword(std::string value, TokenType type)
 {
     TokenConst::pushSimple(value, type);
     TokenConst::keywords.push_back(type);
+}
+
+void TokenConst::pushOperator(std::string value, TokenType type)
+{
+    TokenConst::pushSimple(value, type);
+    TokenConst::operators.push_back(type);
 }
 
 void TokenConst::init()

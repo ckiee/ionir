@@ -1,3 +1,4 @@
+#include "passes/pass.h"
 #include "code_gen/node_kind.h"
 #include "section.h"
 
@@ -7,6 +8,11 @@ Section::Section(SectionKind kind, std::string id, std::vector<Inst *> insts)
     : Node(NodeKind::Section), kind(kind), id(id), insts(insts)
 {
     //
+}
+
+Node *Section::accept(Pass *visitor)
+{
+    return visitor->visitSection(this);
 }
 
 SectionKind Section::getKind() const
