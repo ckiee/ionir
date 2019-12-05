@@ -19,7 +19,7 @@ TEST(TokenTest, CorrectProperties)
 TEST(TokenTest, CreateDummy)
 {
     Token token = Token::createDummy(0);
-    Token expected = Token(TokenType::Unknown, "", 0);
+    Token expected = Token(TokenType::Dummy, "", 0);
 
     EXPECT_EQ(expected, token);
 }

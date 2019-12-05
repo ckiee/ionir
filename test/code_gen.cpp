@@ -1,6 +1,5 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/LLVMContext.h"
-#include "pch.h"
 #include "code_gen/llvm_visitor.h"
 #include "ast_nodes/values/integer_kind.h"
 #include "ast_nodes/values/integer.h"
@@ -10,6 +9,8 @@
 #include "llvm/module.h"
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
+#include "misc/constants.h"
+#include "pch.h"
 
 using namespace ionir;
 
@@ -34,7 +35,12 @@ TEST(CodeGenTest, VisitEmptyFunction)
 
     Type *returnType = new Type("void");
     Prototype *prototype = new Prototype("foobar", new Args(), returnType);
-    Function *function = new Function(prototype, new Block());
+
+    Block *body = new Block({
+        new Section(SectionKind::Entry, Const::sectionInternalPrefix),
+    });
+
+    Function *function = new Function(prototype, body);
 
     visitor->visitFunction(function);
 
