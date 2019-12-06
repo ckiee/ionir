@@ -82,7 +82,7 @@ include_directories("src")
 llvm_map_components_to_libnames(llvm_libs all)
 
 # Link against LLVM libraries.
-target_link_libraries(${PROJECT_NAME} ${llvm_libs})
+target_link_libraries(${PROJECT_NAME} LLVM)
 
 # Setup unit testing using Google Test (GTest) if applicable. This binds the CMakeLists.txt on the test project.
 option(BUILD_TESTS "Build tests" ON)
