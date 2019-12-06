@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 #include "filesystem.h"
 #include "util.h"
@@ -26,6 +27,8 @@ std::string joinPaths(std::string path1, std::string path2)
 
 std::optional<std::string> readFileContents(std::string filePath)
 {
+    std::cout << "Reading file: " << filePath << " | Exists: " << exists(filePath) << std::endl;
+
     // Target file does not exist, do not continue.
     if (!exists(filePath))
     {
