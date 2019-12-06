@@ -28,6 +28,9 @@ std::string Module::getAsString() const
     OS << *this->value;
     OS.flush();
 
+    // TODO: Debugging.
+    std::cout << "Resulting ir: " << result << " (" << result.length() << ")" << std::endl;
+
     return result;
 }
 
