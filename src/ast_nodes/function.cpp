@@ -23,4 +23,9 @@ Block *Function::getBody() const
 {
     return this->body;
 }
+
+bool Function::verify() const
+{
+    return this->body != nullptr && this->prototype != nullptr;
+}
 } // namespace ionir

@@ -22,6 +22,8 @@ protected:
 public:
 	Prototype(std::string id, Args *args, Type *returnType);
 
+	~Prototype();
+
 	Node *accept(Pass *visitor) override;
 
 	std::string getId() const;

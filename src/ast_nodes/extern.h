@@ -16,6 +16,8 @@ private:
 public:
 	Extern(Prototype *prototype);
 
+	~Extern();
+
 	Node *accept(Pass *visitor) override;
 
 	Prototype *getPrototype() const;

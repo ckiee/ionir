@@ -15,12 +15,12 @@ llvm::Module *LlvmVisitor::getModule() const
     return this->module;
 }
 
-std::stack<llvm::Value *> LlvmVisitor::getValueStack() const
+Stack<llvm::Value *> LlvmVisitor::getValueStack() const
 {
     return this->valueStack;
 }
 
-std::stack<llvm::Type *> LlvmVisitor::getTypeStack() const
+Stack<llvm::Type *> LlvmVisitor::getTypeStack() const
 {
     return this->typeStack;
 }
@@ -35,22 +35,27 @@ void LlvmVisitor::requireBuilder()
     }
 }
 
-LlvmVisitor::LlvmVisitor(llvm::Module *module) : module(module), context(&module->getContext()), function(nullptr)
+LlvmVisitor::LlvmVisitor(llvm::Module *module)
+    : module(module), context(&module->getContext()), function(nullptr), valueStack(), typeStack()
 {
-    this->valueStack = {};
-    this->typeStack = {};
     this->namedValues = {};
+}
+
+LlvmVisitor::~LlvmVisitor()
+{
+    std::stack<llvm::Value *> valueStackk = this->valueStack.unwrap();
+
+    for (const auto value : this->valueStack.unwrap())
+    {
+        delete value;
+    }
 }
 
 Node *LlvmVisitor::visitFunction(Function *node)
 {
-    if (node->getBody() == nullptr)
+    if (!node->verify())
     {
-        throw std::runtime_error("Unexpected function body to be null");
-    }
-    else if (node->getPrototype() == nullptr)
-    {
-        throw std::runtime_error("Unexpected function prototype to be null");
+        throw std::runtime_error("Function verification failed");
     }
     else if (this->module->getFunction(node->getPrototype()->getId()) != nullptr)
     {
@@ -64,10 +69,7 @@ Node *LlvmVisitor::visitFunction(Function *node)
     this->visitPrototype(node->getPrototype());
 
     // Retrieve the resulting function off the stack.
-    llvm::Function *function = (llvm::Function *)this->valueStack.top();
-
-    // Pop the function off the value stack.
-    this->valueStack.pop();
+    llvm::Function *function = (llvm::Function *)this->valueStack.pop();
 
     // Set the function buffer.
     this->function = function;
@@ -75,10 +77,7 @@ Node *LlvmVisitor::visitFunction(Function *node)
     // Visit the function's body.
     this->visitBlock(node->getBody());
 
-    // TODO: Verify the function (through LLVM).
-
-    // Pop off the body to clean the stack.
-    this->valueStack.pop();
+    // TODO: Verify the resulting LLVM function (through LLVM).
 
     this->valueStack.push(function);
 
@@ -170,7 +169,12 @@ Node *LlvmVisitor::visitBlock(Block *node)
         throw std::runtime_error("No entry section exists for block");
     }
 
-    // TODO: Visit section(s).
+    // Visit all the block's section(s).
+    for (const auto section : node->getSections())
+    {
+        this->visitSection(section);
+        this->valueStack.pop();
+    }
 
     return node;
 }
@@ -209,15 +213,11 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
         this->visit(*node->getRightSide());
 
         // Retrieve and pop right side.
-        rightSide = this->valueStack.top();
-        this->valueStack.pop();
+        rightSide = this->valueStack.pop();
     }
 
     // Retrieve left side before popping.
-    llvm::Value *leftSide = this->valueStack.top();
-
-    // Pop left side.
-    this->valueStack.pop();
+    llvm::Value *leftSide = this->valueStack.pop();
 
     // TODO: Hard-coded add instruction.
     // Create the binary expression LLVM value.
@@ -387,9 +387,7 @@ Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
 {
     this->visit(node->getType());
 
-    llvm::Type *type = this->typeStack.top();
-
-    this->typeStack.pop();
+    llvm::Type *type = this->typeStack.pop();
 
     /**
      * Create the LLVM equivalent alloca instruction
@@ -406,9 +404,7 @@ Node *LlvmVisitor::visitReturnInst(ReturnInst *node)
 {
     this->visit(node->getValue());
 
-    llvm::Value *value = this->valueStack.top();
-
-    this->valueStack.pop();
+    llvm::Value *value = this->valueStack.pop();
 
     /**
      * Create the LLVM equivalent return instruction
@@ -426,16 +422,12 @@ Node *LlvmVisitor::visitBranchInst(BranchInst *node)
     // Visit condition.
     this->visit(node->getCondition());
 
-    llvm::Value *condition = this->valueStack.top();
-
-    this->valueStack.pop();
+    llvm::Value *condition = this->valueStack.pop();
 
     // Visit body.
     this->visit(node->getBody());
 
-    llvm::BasicBlock *body = (llvm::BasicBlock *)this->valueStack.top();
-
-    this->valueStack.pop();
+    llvm::BasicBlock *body = (llvm::BasicBlock *)this->valueStack.pop();
 
     // Prepare otherwise block with a default value.
     llvm::BasicBlock *otherwise = nullptr;
@@ -444,8 +436,7 @@ Node *LlvmVisitor::visitBranchInst(BranchInst *node)
     if (node->getOtherwise().has_value())
     {
         this->visit(*node->getOtherwise());
-        otherwise = (llvm::BasicBlock *)this->valueStack.top();
-        this->valueStack.pop();
+        otherwise = (llvm::BasicBlock *)this->valueStack.pop();
     }
 
     // Create the LLVM branch instruction.
@@ -458,10 +449,7 @@ Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
 {
     this->visit(node->getType());
 
-    llvm::Type *type = this->typeStack.top();
-
-    this->typeStack.pop();
-
+    llvm::Type *type = this->typeStack.pop();
     llvm::GlobalVariable *globalVar = (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), type);
 
     // Assign value if applicable.
@@ -470,9 +458,7 @@ Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
         // Visit global variable value.
         this->visit(*node->getValue());
 
-        llvm::Value *value = this->valueStack.top();
-
-        this->valueStack.pop();
+        llvm::Value *value = this->valueStack.pop();
 
         // TODO: Value needs to be created from below commented statement.
         // llvm::Constant* initializerValue = llvm::Constant::getIntegerValue(llvm::Type);

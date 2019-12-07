@@ -17,6 +17,8 @@ public:
 
     Module(llvm::Module *module);
 
+    ~Module();
+
     Context *getContext() const;
 
     std::string getAsString() const;

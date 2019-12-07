@@ -24,5 +24,7 @@ public:
 	Prototype *getPrototype() const;
 
 	Block *getBody() const;
+
+	bool verify() const override;
 };
 } // namespace ionir

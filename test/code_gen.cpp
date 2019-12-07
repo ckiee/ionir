@@ -17,7 +17,6 @@ using namespace ionir;
 TEST(CodeGenTest, VisitExtern)
 {
     LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
-
     Type *returnType = new Type("void");
     Prototype *prototype = new Prototype("testExtern", new Args(), returnType);
     Extern *externNode = new Extern(prototype);
@@ -27,6 +26,8 @@ TEST(CodeGenTest, VisitExtern)
     Module *module = new Module(visitor->getModule());
 
     EXPECT_TRUE(test::compare::ir(module->getAsString(), "extern_simple"));
+
+    delete externNode;
 }
 
 TEST(CodeGenTest, VisitEmptyFunction)
@@ -44,6 +45,9 @@ TEST(CodeGenTest, VisitEmptyFunction)
 
     visitor->visitFunction(function);
 
+    EXPECT_TRUE(true);
+
+    // TODO
     // Module *module = new Module(visitor->getModule());
 
     // EXPECT_TRUE(test::compare::ir(module->getAsString(), "function_empty"));
@@ -85,7 +89,8 @@ TEST(CodeGenTest, VisitIfStmt)
 
     Type *returnType = new Type("void");
     Prototype *prototype = new Prototype("foobar", new Args(), returnType);
-    Function *function = new Function(prototype, new Block());
+    Block *functionBody = new Block({new Section(SectionKind::Entry, "entry")});
+    Function *function = new Function(prototype, functionBody);
 
     visitor->visitFunction(function);
 

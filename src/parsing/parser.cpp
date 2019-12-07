@@ -63,6 +63,11 @@ Parser::Parser(TokenStream *stream)
     //
 }
 
+Parser::~Parser()
+{
+    //
+}
+
 std::vector<Notice> Parser::getNotices() const
 {
     return this->notices;

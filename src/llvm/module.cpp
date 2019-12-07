@@ -15,6 +15,11 @@ Module::Module(llvm::Module *module)
     //
 }
 
+Module::~Module()
+{
+    delete this->context;
+}
+
 Context *Module::getContext() const
 {
     return this->context;

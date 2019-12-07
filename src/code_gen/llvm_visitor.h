@@ -22,6 +22,7 @@
 #include "ast_nodes/insts/branch.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
+#include "misc/stack.h"
 #include "passes/pass.h"
 
 namespace ionir
@@ -33,9 +34,9 @@ protected:
 
 	llvm::Module *module;
 
-	std::stack<llvm::Value *> valueStack;
+	Stack<llvm::Value *> valueStack;
 
-	std::stack<llvm::Type *> typeStack;
+	Stack<llvm::Type *> typeStack;
 
 	llvm::Function *function;
 
@@ -52,11 +53,13 @@ protected:
 public:
 	LlvmVisitor(llvm::Module *module);
 
+	~LlvmVisitor();
+
 	llvm::Module *getModule() const;
 
-	std::stack<llvm::Value *> getValueStack() const;
+	Stack<llvm::Value *> getValueStack() const;
 
-	std::stack<llvm::Type *> getTypeStack() const;
+	Stack<llvm::Type *> getTypeStack() const;
 
 	Node *visitFunction(Function *node) override;
 

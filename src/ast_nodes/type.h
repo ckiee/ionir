@@ -18,6 +18,8 @@ protected:
 public:
     Type(std::string id, bool isPointer = false);
 
+    ~Type();
+
     Node *accept(Pass *visitor) override;
 
     std::string getId() const;

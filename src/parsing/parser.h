@@ -53,6 +53,8 @@ protected:
 public:
     Parser(TokenStream *stream);
 
+    ~Parser();
+
     std::vector<Notice> getNotices() const;
 
     /**
