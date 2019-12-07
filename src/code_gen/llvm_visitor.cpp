@@ -130,6 +130,16 @@ Node *LlvmVisitor::visitSection(Section *node)
         this->valueStack.pop();
     }
 
+    /**
+     * Entry section contains no instructions, add 
+     * a mandatory return void instruction at the end.
+     */
+    if (node->getKind() == SectionKind::Entry && node->getInsts().size() == 0)
+    {
+        this->requireBuilder();
+        (*this->builder).CreateRetVoid();
+    }
+
     this->valueStack.push(block);
 
     return node;
@@ -151,21 +161,13 @@ Node *LlvmVisitor::visitBlock(Block *node)
 
     /**
      * Entry section must be set. Redundant check,
-     * since the verify function ensures that the
-     * block contains a single entry section, but
+     * since the verify should function ensure that 
+     * the block contains a single entry section, but
      * just to make sure.
      */
     if (!entry.has_value())
     {
         throw std::runtime_error("No entry section exists for block");
-    }
-    /**
-     * Entry section contains no instructions, add 
-     * a mandatory return void instruction at the end.
-     */
-    else if ((*entry)->getInsts().size() == 0)
-    {
-        this->builder->CreateRetVoid();
     }
 
     // TODO: Visit section(s).

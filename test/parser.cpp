@@ -118,19 +118,18 @@ TEST(ParserTest, ParseEmptyPrototype)
     EXPECT_FALSE(args->getIsInfinite());
 }
 
-// TODO: Alloca inst changed.
-// TEST(ParserTest, ParseEmptyInst)
-// {
-//     Parser parser = test::bootstrap::parser({
-//         Token(TokenType::Identifier, "alloca", 0),
-//         Token(TokenType::SymbolParenthesesL, "(", 1),
-//         Token(TokenType::SymbolParenthesesR, ")", 2),
-//     });
+TEST(ParserTest, ParseAllocaInst)
+{
+    Parser parser = test::bootstrap::parser({
+        Token(TokenType::Identifier, "alloca"),
+        Token(TokenType::Identifier, "foobar"),
+        Token(TokenType::Identifier, "int"),
+    });
 
-//     Inst *inst = parser.parseInst();
+    Inst *inst = parser.parseInst();
 
-//     EXPECT_EQ(inst->getInstKind(), InstKind::Alloca);
-// }
+    EXPECT_EQ(inst->getInstKind(), InstKind::Alloca);
+}
 
 TEST(ParserTest, ParseExtern)
 {
