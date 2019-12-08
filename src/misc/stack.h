@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <type_traits>
 #include <exception>
 #include <optional>
@@ -9,10 +10,11 @@
 namespace ionir
 {
 template <typename T>
-class Stack : public Wrapper<std::stack<T>>
+class Stack : public Wrapper<std::stack<std::unique_ptr<T>>>
 {
 public:
-    Stack() : Wrapper()
+    Stack(std::stack<std::unique_ptr<T>> value = std::stack<std::unique_ptr<T>>())
+        : Wrapper(value)
     {
         //
     }
@@ -24,24 +26,24 @@ public:
 
     void push(T item)
     {
-        this->value.push(item);
+        this->value.push(std::make_unique<T>(item));
     }
 
-    T pop()
+    std::unique_ptr<T> pop()
     {
-        std::optional<T> result = this->tryPop();
+        std::optional<std::unique_ptr<T>> result = this->tryPop();
 
         if (!result.has_value())
         {
-            throw std::runtime_error("No more items in stack to pop");
+            throw std::out_of_range("No more items in stack to pop");
         }
 
         return *result;
     }
 
-    T popOr(T alternative)
+    std::unique_ptr<T> popOr(std::unique_ptr<T> alternative)
     {
-        std::optional<T> existingItem = this->tryPop();
+        std::optional<std::unique_ptr<T>> existingItem = this->tryPop();
 
         if (existingItem.has_value())
         {
@@ -51,7 +53,7 @@ public:
         return alternative;
     }
 
-    std::optional<T> tryPop()
+    std::optional<std::unique_ptr<T>> tryPop()
     {
         // Underlying stack contains no more items to pop.
         if (this->value.empty())
@@ -59,7 +61,7 @@ public:
             return std::nullopt;
         }
 
-        T result = this->value.top();
+        std::unique_ptr<T> result = this->value.top();
 
         this->value.pop();
 
@@ -75,11 +77,12 @@ public:
     {
         while (!this->isEmpty())
         {
-            std::optional<T> item = this->tryPop();
+            std::optional<std::unique_ptr<T>> item = this->tryPop();
 
-            if constexpr (std::is_pointer<T>::value)
+            // TODO: Is value check necessary?
+            if (item.has_value())
             {
-                delete item.value_or(nullptr);
+                item.reset();
             }
         }
     }

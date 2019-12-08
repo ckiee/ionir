@@ -43,12 +43,8 @@ LlvmVisitor::LlvmVisitor(llvm::Module *module)
 
 LlvmVisitor::~LlvmVisitor()
 {
-    std::stack<llvm::Value *> valueStackk = this->valueStack.unwrap();
-
-    for (const auto value : this->valueStack.unwrap())
-    {
-        delete value;
-    }
+    this->valueStack.clear();
+    this->typeStack.clear();
 }
 
 Node *LlvmVisitor::visitFunction(Function *node)

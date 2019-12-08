@@ -1,4 +1,3 @@
-#include <iostream>
 #include "pch.h"
 #include "syntax/token.h"
 #include "test_api/util.h"
