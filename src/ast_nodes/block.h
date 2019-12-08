@@ -19,6 +19,8 @@ protected:
 public:
     Block(std::vector<Section *> sections = {});
 
+    ~Block();
+
     Node *accept(Pass *visitor) override;
 
     bool verify() const override;

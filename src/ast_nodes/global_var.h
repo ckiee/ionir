@@ -23,6 +23,8 @@ protected:
 public:
     GlobalVar(Type *type, std::string id, std::optional<Value *> value = std::nullopt);
 
+    ~GlobalVar();
+
     Node *accept(Pass *visitor) override;
 
     Type *getType() const;

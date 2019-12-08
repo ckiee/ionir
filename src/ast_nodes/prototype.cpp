@@ -10,6 +10,12 @@ Prototype::Prototype(std::string id, Args *args, Type *returnType)
     //
 }
 
+Prototype::~Prototype()
+{
+    delete this->args;
+    delete this->returnType;
+}
+
 Node *Prototype::accept(Pass *visitor)
 {
     return visitor->visitPrototype(this);

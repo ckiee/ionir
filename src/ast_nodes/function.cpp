@@ -9,6 +9,12 @@ Function::Function(Prototype *prototype, Block *body)
     //
 }
 
+Function::~Function()
+{
+    delete this->prototype;
+    delete this->body;
+}
+
 Node *Function::accept(Pass *visitor)
 {
     return visitor->visitFunction(this);

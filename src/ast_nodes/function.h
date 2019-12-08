@@ -19,6 +19,8 @@ protected:
 public:
 	Function(Prototype *prototype, Block *body);
 
+	~Function();
+
 	Node *accept(Pass *visitor) override;
 
 	Prototype *getPrototype() const;

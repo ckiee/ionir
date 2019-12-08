@@ -9,6 +9,11 @@ Block::Block(std::vector<Section *> sections)
     //
 }
 
+Block::~Block()
+{
+    // TODO
+}
+
 Node *Block::accept(Pass *visitor)
 {
     return visitor->visitBlock(this);

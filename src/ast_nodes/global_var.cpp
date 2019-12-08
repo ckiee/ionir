@@ -9,6 +9,12 @@ GlobalVar::GlobalVar(Type *type, std::string id, std::optional<Value *> value)
     //
 }
 
+GlobalVar::~GlobalVar()
+{
+    delete this->type;
+    delete this->value.value_or(nullptr);
+}
+
 Node *GlobalVar::accept(Pass *visitor)
 {
     return visitor->visitGlobalVar(this);

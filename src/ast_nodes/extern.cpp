@@ -8,6 +8,11 @@ Extern::Extern(Prototype *prototype) : Node(NodeKind::Extern), prototype(prototy
     //
 }
 
+Extern::~Extern()
+{
+    delete this->prototype;
+}
+
 Node *Extern::accept(Pass *visitor)
 {
     return visitor->visitExtern(this);
