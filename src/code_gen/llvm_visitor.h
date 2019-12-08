@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <optional>
 #include <stack>
 #include "llvm/IR/Module.h"
@@ -38,7 +39,7 @@ protected:
 
 	Stack<llvm::Type *> typeStack;
 
-	llvm::Function *function;
+	std::shared_ptr<llvm::Function *> function;
 
 	std::optional<llvm::IRBuilder<>> builder;
 

@@ -10,10 +10,10 @@
 namespace ionir
 {
 template <typename T>
-class Stack : public Wrapper<std::stack<std::unique_ptr<T>>>
+class Stack : public Wrapper<std::stack<std::shared_ptr<T>>>
 {
 public:
-    Stack(std::stack<std::unique_ptr<T>> value = std::stack<std::unique_ptr<T>>())
+    Stack(std::stack<std::shared_ptr<T>> value = std::stack<std::shared_ptr<T>>())
         : Wrapper(value)
     {
         //
@@ -26,12 +26,12 @@ public:
 
     void push(T item)
     {
-        this->value.push(std::make_unique<T>(item));
+        this->value.push(std::make_shared<T>(item));
     }
 
-    std::unique_ptr<T> pop()
+    std::shared_ptr<T> pop()
     {
-        std::optional<std::unique_ptr<T>> result = this->tryPop();
+        std::optional<std::shared_ptr<T>> result = this->tryPop();
 
         if (!result.has_value())
         {
@@ -41,9 +41,9 @@ public:
         return *result;
     }
 
-    std::unique_ptr<T> popOr(std::unique_ptr<T> alternative)
+    std::shared_ptr<T> popOr(std::shared_ptr<T> alternative)
     {
-        std::optional<std::unique_ptr<T>> existingItem = this->tryPop();
+        std::optional<std::shared_ptr<T>> existingItem = this->tryPop();
 
         if (existingItem.has_value())
         {
@@ -53,7 +53,7 @@ public:
         return alternative;
     }
 
-    std::optional<std::unique_ptr<T>> tryPop()
+    std::optional<std::shared_ptr<T>> tryPop()
     {
         // Underlying stack contains no more items to pop.
         if (this->value.empty())
@@ -61,7 +61,7 @@ public:
             return std::nullopt;
         }
 
-        std::unique_ptr<T> result = this->value.top();
+        std::shared_ptr<T> result = this->value.top();
 
         this->value.pop();
 
@@ -77,7 +77,7 @@ public:
     {
         while (!this->isEmpty())
         {
-            std::optional<std::unique_ptr<T>> item = this->tryPop();
+            std::optional<std::shared_ptr<T>> item = this->tryPop();
 
             // TODO: Is value check necessary?
             if (item.has_value())
