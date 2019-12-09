@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 #include "ast_nodes/prototype.h"
@@ -11,15 +12,13 @@ class Pass;
 class Extern : public Node
 {
 private:
-	Prototype *prototype;
+	std::shared_ptr<Prototype> prototype;
 
 public:
-	Extern(Prototype *prototype);
-
-	~Extern();
+	Extern(std::shared_ptr<Prototype> prototype);
 
 	Node *accept(Pass *visitor) override;
 
-	Prototype *getPrototype() const;
+	std::shared_ptr<Prototype> getPrototype() const;
 };
 } // namespace ionir

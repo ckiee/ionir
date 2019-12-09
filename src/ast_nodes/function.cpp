@@ -3,16 +3,10 @@
 
 namespace ionir
 {
-Function::Function(Prototype *prototype, Block *body)
+Function::Function(std::shared_ptr<Prototype> prototype, std::shared_ptr<Block> body)
     : Node(NodeKind::Function), prototype(prototype), body(body)
 {
     //
-}
-
-Function::~Function()
-{
-    delete this->prototype;
-    delete this->body;
 }
 
 Node *Function::accept(Pass *visitor)
@@ -20,12 +14,12 @@ Node *Function::accept(Pass *visitor)
     return visitor->visitFunction(this);
 }
 
-Prototype *Function::getPrototype() const
+std::shared_ptr<Prototype> Function::getPrototype() const
 {
     return this->prototype;
 }
 
-Block *Function::getBody() const
+std::shared_ptr<Block> Function::getBody() const
 {
     return this->body;
 }

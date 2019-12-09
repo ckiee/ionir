@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 #include "ast_nodes/prototype.h"
@@ -12,20 +13,18 @@ class Pass;
 class Function : public Node
 {
 protected:
-	Prototype *prototype;
+	std::shared_ptr<Prototype> prototype;
 
-	Block *body;
+	std::shared_ptr<Block> body;
 
 public:
-	Function(Prototype *prototype, Block *body);
-
-	~Function();
+	Function(std::shared_ptr<Prototype> prototype, std::shared_ptr<Block> body);
 
 	Node *accept(Pass *visitor) override;
 
-	Prototype *getPrototype() const;
+	std::shared_ptr<Prototype> getPrototype() const;
 
-	Block *getBody() const;
+	std::shared_ptr<Block> getBody() const;
 
 	bool verify() const override;
 };

@@ -3,14 +3,9 @@
 
 namespace ionir
 {
-Extern::Extern(Prototype *prototype) : Node(NodeKind::Extern), prototype(prototype)
+Extern::Extern(std::shared_ptr<Prototype> prototype) : Node(NodeKind::Extern), prototype(prototype)
 {
     //
-}
-
-Extern::~Extern()
-{
-    delete this->prototype;
 }
 
 Node *Extern::accept(Pass *visitor)
@@ -18,7 +13,7 @@ Node *Extern::accept(Pass *visitor)
     return visitor->visitExtern(this);
 }
 
-Prototype *Extern::getPrototype() const
+std::shared_ptr<Prototype> Extern::getPrototype() const
 {
     return this->prototype;
 }
