@@ -66,7 +66,7 @@ Node *LlvmVisitor::visitFunction(Function *node)
 
     // Retrieve the resulting function off the stack.
     std::shared_ptr<llvm::Function *> function =
-        (std::shared_ptr<llvm::Function *>)this->valueStack.pop();
+        std::static_pointer_cast<llvm::Function *>(this->valueStack.pop());
 
     // Set the function buffer.
     this->function = function;
@@ -109,7 +109,8 @@ Node *LlvmVisitor::visitSection(Section *node)
     }
 
     // Create the basic block and at the same time register it under the buffer function.
-    llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getId(), *this->function);
+    llvm::BasicBlock *block =
+        llvm::BasicBlock::Create(*this->context, node->getId(), *this->function);
 
     // Create and assign the block to the builder.
     this->builder.emplace(llvm::IRBuilder<>(block));
@@ -219,7 +220,8 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
 
     // TODO: Hard-coded add instruction.
     // Create the binary expression LLVM value.
-    llvm::Value *binaryExpr = this->builder->CreateAdd(*leftSide, **rightSide);
+    llvm::Value *binaryExpr =
+        this->builder->CreateAdd(*leftSide, **rightSide);
 
     this->valueStack.push(binaryExpr);
 
@@ -262,10 +264,12 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
 
         // TODO: Support for infinite arguments and hard-coded return type.
         // Create the function type.
-        llvm::FunctionType *type = llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getArgs()->getIsInfinite());
+        llvm::FunctionType *type =
+            llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getArgs()->getIsInfinite());
 
         // Cast the value to a function, since we know getCallee() will return a function.
-        function = (llvm::Function *)this->module->getOrInsertFunction(node->getId(), type).getCallee();
+        function =
+            (llvm::Function *)this->module->getOrInsertFunction(node->getId(), type).getCallee();
 
         // Set the function's linkage.
         function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
@@ -373,7 +377,8 @@ Node *LlvmVisitor::visitChar(CharValue *node)
 Node *LlvmVisitor::visitString(StringValue *node)
 {
     // Create the global string pointer.
-    llvm::Constant *value = this->builder->CreateGlobalStringPtr(node->getValue());
+    llvm::Constant *value =
+        this->builder->CreateGlobalStringPtr(node->getValue());
 
     // Push the value onto the value stack.
     this->valueStack.push(value);
@@ -391,7 +396,8 @@ Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
      * Create the LLVM equivalent alloca instruction
      * using the buffered builder.
      */
-    llvm::AllocaInst *allocaInst = this->builder->CreateAlloca(*type, (llvm::Value *)nullptr, node->getId());
+    llvm::AllocaInst *allocaInst =
+        this->builder->CreateAlloca(*type, (llvm::Value *)nullptr, node->getId());
 
     this->valueStack.push(allocaInst);
 
@@ -425,7 +431,8 @@ Node *LlvmVisitor::visitBranchInst(BranchInst *node)
     // Visit body.
     this->visit(node->getBody());
 
-    std::shared_ptr<llvm::BasicBlock *> body = (std::shared_ptr<llvm::BasicBlock *>)this->valueStack.pop();
+    std::shared_ptr<llvm::BasicBlock *> body =
+        std::static_pointer_cast<llvm::BasicBlock *>(this->valueStack.pop());
 
     // Prepare otherwise block with a default value.
     std::shared_ptr<llvm::BasicBlock *> otherwise = nullptr;
@@ -434,7 +441,7 @@ Node *LlvmVisitor::visitBranchInst(BranchInst *node)
     if (node->getOtherwise().has_value())
     {
         this->visit(*node->getOtherwise());
-        otherwise = (llvm::BasicBlock *)this->valueStack.pop();
+        otherwise = std::static_pointer_cast<llvm::BasicBlock *>(this->valueStack.pop());
     }
 
     // Create the LLVM branch instruction.
@@ -448,7 +455,9 @@ Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
     this->visit(node->getType());
 
     std::shared_ptr<llvm::Type *> type = this->typeStack.pop();
-    llvm::GlobalVariable *globalVar = (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), type);
+
+    llvm::GlobalVariable *globalVar =
+        (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), *type);
 
     // Assign value if applicable.
     if (node->getValue().has_value())
@@ -462,7 +471,7 @@ Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
         // llvm::Constant* initializerValue = llvm::Constant::getIntegerValue(llvm::Type);
 
         // TODO: You can't just cast llvm::value to constant! See above.
-        globalVar->setInitializer((llvm::Constant *)value);
+        globalVar->setInitializer((llvm::Constant *)*value);
     }
 
     return node;

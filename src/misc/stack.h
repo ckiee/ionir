@@ -14,7 +14,7 @@ class Stack : public Wrapper<std::stack<std::shared_ptr<T>>>
 {
 public:
     Stack(std::stack<std::shared_ptr<T>> value = std::stack<std::shared_ptr<T>>())
-        : Wrapper(value)
+        : Wrapper<std::stack<std::shared_ptr<T>>>(value)
     {
         //
     }
