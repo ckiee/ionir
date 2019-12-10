@@ -1,10 +1,10 @@
 #include <stdexcept>
 #include <vector>
 #include <array>
-#include "pch.h"
 #include "syntax/token.h"
 #include "syntax/lexer.h"
 #include "test_api/compare.h"
+#include "pch.h"
 
 using namespace ionir;
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <optional>
 #include <string>
 #include "code_gen/node.h"
@@ -14,23 +15,23 @@ class Pass;
 class GlobalVar : public Node
 {
 protected:
-    Type *type;
+    std::shared_ptr<Type> type;
 
     std::string id;
 
-    std::optional<Value *> value;
+    std::optional<std::shared_ptr<Value>> value;
 
 public:
-    GlobalVar(Type *type, std::string id, std::optional<Value *> value = std::nullopt);
+    GlobalVar(std::shared_ptr<Type> type, std::string id, std::optional<std::shared_ptr<Value>> value = std::nullopt);
 
     ~GlobalVar();
 
     Node *accept(Pass *visitor) override;
 
-    Type *getType() const;
+    std::shared_ptr<Type> getType() const;
 
     std::string getId() const;
 
-    std::optional<Value *> getValue() const;
+    std::optional<std::shared_ptr<Value>> getValue() const;
 };
 } // namespace ionir
