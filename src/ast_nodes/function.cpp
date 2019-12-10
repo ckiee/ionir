@@ -9,7 +9,7 @@ Function::Function(std::shared_ptr<Prototype> prototype, std::shared_ptr<Block> 
     //
 }
 
-Node *Function::accept(Pass *visitor)
+std::shared_ptr<Node> Function::accept(Pass *visitor)
 {
     return visitor->visitFunction(this);
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "code_gen/node.h"
 #include "ast_nodes/function.h"
 #include "ast_nodes/extern.h"
@@ -21,36 +22,36 @@ namespace ionir
 class Pass
 {
 public:
-    Node *visit(Node *node);
+    std::shared_ptr<Node> visit(std::shared_ptr<Node> node);
 
-    virtual Node *visitFunction(Function *node);
+    virtual std::shared_ptr<Node> visitFunction(std::shared_ptr<Function> node);
 
-    virtual Node *visitExtern(Extern *node);
+    virtual std::shared_ptr<Node> visitExtern(std::shared_ptr<Extern> node);
 
-    virtual Node *visitSection(Section *node);
+    virtual std::shared_ptr<Node> visitSection(std::shared_ptr<Section> node);
 
-    virtual Node *visitBlock(Block *node);
+    virtual std::shared_ptr<Node> visitBlock(std::shared_ptr<Block> node);
 
-    virtual Node *visitType(Type *node);
+    virtual std::shared_ptr<Node> visitType(std::shared_ptr<Type> node);
 
-    virtual Node *visitBinaryExpr(BinaryExpr *node);
+    virtual std::shared_ptr<Node> visitBinaryExpr(std::shared_ptr<BinaryExpr> node);
 
-    virtual Node *visitPrototype(Prototype *node);
+    virtual std::shared_ptr<Node> visitPrototype(std::shared_ptr<Prototype> node);
 
-    virtual Node *visitInteger(IntValue *node);
+    virtual std::shared_ptr<Node> visitInteger(std::shared_ptr<IntValue> node);
 
-    virtual Node *visitChar(CharValue *node);
+    virtual std::shared_ptr<Node> visitChar(std::shared_ptr<CharValue> node);
 
-    virtual Node *visitString(StringValue *node);
+    virtual std::shared_ptr<Node> visitString(std::shared_ptr<StringValue> node);
 
-    virtual Node *visitAllocaInst(AllocaInst *node);
+    virtual std::shared_ptr<Node> visitAllocaInst(std::shared_ptr<AllocaInst> node);
 
-    virtual Node *visitReturnInst(ReturnInst *node);
+    virtual std::shared_ptr<Node> visitReturnInst(std::shared_ptr<ReturnInst> node);
 
-    virtual Node *visitBranchInst(BranchInst *node);
+    virtual std::shared_ptr<Node> visitBranchInst(std::shared_ptr<BranchInst> node);
 
-    virtual Node *visitGotoInst(GotoInst *node);
+    virtual std::shared_ptr<Node> visitGotoInst(std::shared_ptr<GotoInst> node);
 
-    virtual Node *visitGlobalVar(GlobalVar *node);
+    virtual std::shared_ptr<Node> visitGlobalVar(std::shared_ptr<GlobalVar> node);
 };
 } // namespace ionir

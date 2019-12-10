@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 #include "ast_nodes/type.h"
@@ -15,21 +16,19 @@ class Prototype : public Node
 protected:
 	std::string id;
 
-	Args *args;
+	std::shared_ptr<Args> args;
 
-	Type *returnType;
+	std::shared_ptr<Type> returnType;
 
 public:
-	Prototype(std::string id, Args *args, Type *returnType);
+	Prototype(std::string id, std::shared_ptr<Args> args, std::shared_ptr<Type> returnType);
 
-	~Prototype();
-
-	Node *accept(Pass *visitor) override;
+	std::shared_ptr<Node> accept(Pass *visitor) override;
 
 	std::string getId() const;
 
-	Args *getArgs() const;
+	std::shared_ptr<Args> getArgs() const;
 
-	Type *getReturnType() const;
+	std::shared_ptr<Type> getReturnType() const;
 };
 } // namespace ionir

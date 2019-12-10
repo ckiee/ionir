@@ -8,7 +8,7 @@ Extern::Extern(std::shared_ptr<Prototype> prototype) : Node(NodeKind::Extern), p
     //
 }
 
-Node *Extern::accept(Pass *visitor)
+std::shared_ptr<Node> Extern::accept(Pass *visitor)
 {
     return visitor->visitExtern(this);
 }

@@ -26,7 +26,7 @@ public:
 
     ~GlobalVar();
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
     std::shared_ptr<Type> getType() const;
 

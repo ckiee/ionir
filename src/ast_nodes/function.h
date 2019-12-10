@@ -20,7 +20,7 @@ protected:
 public:
 	Function(std::shared_ptr<Prototype> prototype, std::shared_ptr<Block> body);
 
-	Node *accept(Pass *visitor) override;
+	std::shared_ptr<Node> accept(Pass *visitor) override;
 
 	std::shared_ptr<Prototype> getPrototype() const;
 

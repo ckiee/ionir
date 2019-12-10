@@ -47,7 +47,7 @@ LlvmVisitor::~LlvmVisitor()
     this->typeStack.clear();
 }
 
-Node *LlvmVisitor::visitFunction(Function *node)
+std::shared_ptr<Node> LlvmVisitor::visitFunction(std::shared_ptr<Function> node)
 {
     if (!node->verify())
     {
@@ -82,7 +82,7 @@ Node *LlvmVisitor::visitFunction(Function *node)
     return node;
 }
 
-Node *LlvmVisitor::visitExtern(Extern *node)
+std::shared_ptr<Node> LlvmVisitor::visitExtern(std::shared_ptr<Extern> node)
 {
     if (node->getPrototype() == nullptr)
     {
@@ -100,7 +100,7 @@ Node *LlvmVisitor::visitExtern(Extern *node)
     return node;
 }
 
-Node *LlvmVisitor::visitSection(Section *node)
+std::shared_ptr<Node> LlvmVisitor::visitSection(std::shared_ptr<Section> node)
 {
     // Function buffer must not be null.
     if (this->function == nullptr)
@@ -116,7 +116,7 @@ Node *LlvmVisitor::visitSection(Section *node)
     this->builder.emplace(llvm::IRBuilder<>(block));
 
     // Visit and append instructions.
-    std::vector<Inst *> insts = node->getInsts();
+    std::vector<std::shared_ptr<Inst>> insts = node->getInsts();
 
     // Process instructions.
     for (const auto inst : insts)
@@ -143,7 +143,7 @@ Node *LlvmVisitor::visitSection(Section *node)
     return node;
 }
 
-Node *LlvmVisitor::visitBlock(Block *node)
+std::shared_ptr<Node> LlvmVisitor::visitBlock(std::shared_ptr<Block> node)
 {
     // Verify the block before continuing.
     if (!node->verify())
@@ -178,7 +178,7 @@ Node *LlvmVisitor::visitBlock(Block *node)
     return node;
 }
 
-Node *LlvmVisitor::visitType(Type *node)
+std::shared_ptr<Node> LlvmVisitor::visitType(std::shared_ptr<Type> node)
 {
     // TODO: Hard-coded double type.
     llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
@@ -196,7 +196,7 @@ Node *LlvmVisitor::visitType(Type *node)
     return node;
 }
 
-Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
+std::shared_ptr<Node> LlvmVisitor::visitBinaryExpr(std::shared_ptr<BinaryExpr> node)
 {
     // Ensure builder is instantiated.
     this->requireBuilder();
@@ -228,7 +228,7 @@ Node *LlvmVisitor::visitBinaryExpr(BinaryExpr *node)
     return node;
 }
 
-Node *LlvmVisitor::visitPrototype(Prototype *node)
+std::shared_ptr<Node> LlvmVisitor::visitPrototype(std::shared_ptr<Prototype> node)
 {
     // Retrieve argument count from the argument vector.
     uint32_t argumentCount = node->getArgs()->getItems().size();
@@ -300,7 +300,7 @@ Node *LlvmVisitor::visitPrototype(Prototype *node)
     return node;
 }
 
-Node *LlvmVisitor::visitInteger(IntValue *node)
+std::shared_ptr<Node> LlvmVisitor::visitInteger(std::shared_ptr<IntValue> node)
 {
     /**
      * Create the APInt to provide. Acts sort of an
@@ -367,14 +367,14 @@ Node *LlvmVisitor::visitInteger(IntValue *node)
     return node;
 }
 
-Node *LlvmVisitor::visitChar(CharValue *node)
+std::shared_ptr<Node> LlvmVisitor::visitChar(std::shared_ptr<CharValue> node)
 {
     // TODO
 
     return node;
 }
 
-Node *LlvmVisitor::visitString(StringValue *node)
+std::shared_ptr<Node> LlvmVisitor::visitString(std::shared_ptr<StringValue> node)
 {
     // Create the global string pointer.
     llvm::Constant *value =
@@ -386,7 +386,7 @@ Node *LlvmVisitor::visitString(StringValue *node)
     return node;
 }
 
-Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
+std::shared_ptr<Node> LlvmVisitor::visitAllocaInst(std::shared_ptr<AllocaInst> node)
 {
     this->visit(node->getType());
 
@@ -404,7 +404,7 @@ Node *LlvmVisitor::visitAllocaInst(AllocaInst *node)
     return node;
 }
 
-Node *LlvmVisitor::visitReturnInst(ReturnInst *node)
+std::shared_ptr<Node> LlvmVisitor::visitReturnInst(std::shared_ptr<ReturnInst> node)
 {
     this->visit(node->getValue());
 
@@ -421,7 +421,7 @@ Node *LlvmVisitor::visitReturnInst(ReturnInst *node)
     return node;
 }
 
-Node *LlvmVisitor::visitBranchInst(BranchInst *node)
+std::shared_ptr<Node> LlvmVisitor::visitBranchInst(std::shared_ptr<BranchInst> node)
 {
     // Visit condition.
     this->visit(node->getCondition());
@@ -450,7 +450,7 @@ Node *LlvmVisitor::visitBranchInst(BranchInst *node)
     return node;
 }
 
-Node *LlvmVisitor::visitGlobalVar(GlobalVar *node)
+std::shared_ptr<Node> LlvmVisitor::visitGlobalVar(std::shared_ptr<GlobalVar> *node)
 {
     this->visit(node->getType());
 

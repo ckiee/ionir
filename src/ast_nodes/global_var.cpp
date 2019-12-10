@@ -9,7 +9,7 @@ GlobalVar::GlobalVar(std::shared_ptr<Type> type, std::string id, std::optional<s
     //
 }
 
-Node *GlobalVar::accept(Pass *visitor)
+std::shared_ptr<Node> GlobalVar::accept(Pass *visitor)
 {
     return visitor->visitGlobalVar(this);
 }

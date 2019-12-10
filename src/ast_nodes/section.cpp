@@ -4,13 +4,13 @@
 
 namespace ionir
 {
-Section::Section(SectionKind kind, std::string id, std::vector<Inst *> insts)
+Section::Section(SectionKind kind, std::string id, std::vector<std::shared_ptr<Inst>> insts)
     : Node(NodeKind::Section), kind(kind), id(id), insts(insts)
 {
     //
 }
 
-Node *Section::accept(Pass *visitor)
+std::shared_ptr<Node> Section::accept(Pass *visitor)
 {
     return visitor->visitSection(this);
 }
@@ -25,7 +25,7 @@ std::string Section::getId() const
     return this->id;
 }
 
-std::vector<Inst *> Section::getInsts() const
+std::vector<std::shared_ptr<Inst>> Section::getInsts() const
 {
     return this->insts;
 }

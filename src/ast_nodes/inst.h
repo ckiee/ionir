@@ -17,7 +17,7 @@ protected:
 public:
     Inst(InstKind kind);
 
-    virtual Node *accept(Pass *visitor) = 0;
+    virtual std::shared_ptr<Node> accept(Pass *visitor) = 0;
 
     InstKind getInstKind() const;
 };

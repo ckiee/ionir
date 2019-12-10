@@ -62,32 +62,32 @@ public:
 
 	Stack<llvm::Type *> getTypeStack() const;
 
-	Node *visitFunction(Function *node) override;
+	std::shared_ptr<Node> visitFunction(std::shared_ptr<Function> node) override;
 
-	Node *visitExtern(Extern *node) override;
+	std::shared_ptr<Node> visitExtern(std::shared_ptr<Extern> node) override;
 
-	Node *visitSection(Section *node) override;
+	std::shared_ptr<Node> visitSection(std::shared_ptr<Section> node) override;
 
-	Node *visitBlock(Block *node) override;
+	std::shared_ptr<Node> visitBlock(std::shared_ptr<Block> node) override;
 
-	Node *visitType(Type *node) override;
+	std::shared_ptr<Node> visitType(std::shared_ptr<Type> node) override;
 
-	Node *visitBinaryExpr(BinaryExpr *node) override;
+	std::shared_ptr<Node> visitBinaryExpr(std::shared_ptr<BinaryExpr> node) override;
 
-	Node *visitPrototype(Prototype *node) override;
+	std::shared_ptr<Node> visitPrototype(std::shared_ptr<Prototype> node) override;
 
-	Node *visitInteger(IntValue *node) override;
+	std::shared_ptr<Node> visitInteger(std::shared_ptr<IntValue> node) override;
 
-	Node *visitChar(CharValue *node) override;
+	std::shared_ptr<Node> visitChar(std::shared_ptr<CharValue> node) override;
 
-	Node *visitString(StringValue *node) override;
+	std::shared_ptr<Node> visitString(std::shared_ptr<StringValue> node) override;
 
-	Node *visitAllocaInst(AllocaInst *node) override;
+	std::shared_ptr<Node> visitAllocaInst(std::shared_ptr<AllocaInst> node) override;
 
-	Node *visitReturnInst(ReturnInst *node) override;
+	std::shared_ptr<Node> visitReturnInst(std::shared_ptr<ReturnInst> node) override;
 
-	Node *visitBranchInst(BranchInst *node) override;
+	std::shared_ptr<Node> visitBranchInst(std::shared_ptr<BranchInst> node) override;
 
-	Node *visitGlobalVar(GlobalVar *node) override;
+	std::shared_ptr<Node> visitGlobalVar(std::shared_ptr<GlobalVar> node) override;
 };
 } // namespace ionir

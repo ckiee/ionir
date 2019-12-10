@@ -17,7 +17,7 @@ private:
 public:
 	Extern(std::shared_ptr<Prototype> prototype);
 
-	Node *accept(Pass *visitor) override;
+	std::shared_ptr<Node> accept(Pass *visitor) override;
 
 	std::shared_ptr<Prototype> getPrototype() const;
 };

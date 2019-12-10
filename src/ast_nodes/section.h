@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 #include "ast_nodes/type.h"
@@ -19,17 +20,17 @@ protected:
 
     std::string id;
 
-    std::vector<Inst *> insts;
+    std::vector<std::shared_ptr<Inst>> insts;
 
 public:
-    Section(SectionKind kind, std::string id, std::vector<Inst *> insts = {});
+    Section(SectionKind kind, std::string id, std::vector<std::shared_ptr<Inst>> insts = {});
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
     SectionKind getKind() const;
 
     std::string getId() const;
 
-    std::vector<Inst *> getInsts() const;
+    std::vector<std::shared_ptr<Inst>> getInsts() const;
 };
 } // namespace ionir

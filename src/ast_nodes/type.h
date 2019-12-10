@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
@@ -18,7 +19,7 @@ protected:
 public:
     Type(std::string id, bool isPointer = false);
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
     std::string getId() const;
 

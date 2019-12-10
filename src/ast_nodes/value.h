@@ -16,7 +16,7 @@ private:
 public:
     Value(ValueKind kind);
 
-    virtual Node *accept(Pass *visitor) = 0;
+    virtual std::shared_ptr<Node> accept(Pass *visitor) = 0;
 
     ValueKind getValueKind() const;
 };
