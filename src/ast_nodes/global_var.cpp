@@ -19,9 +19,19 @@ std::shared_ptr<Type> GlobalVar::getType() const
     return this->type;
 }
 
+void GlobalVar::setType(std::shared_ptr<Type> type)
+{
+    this->type = type;
+}
+
 std::string GlobalVar::getId() const
 {
     return this->id;
+}
+
+void GlobalVar::setId(std::string id)
+{
+    this->id = id;
 }
 
 std::optional<std::shared_ptr<Value>> GlobalVar::getValue() const

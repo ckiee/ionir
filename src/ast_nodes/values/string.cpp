@@ -9,7 +9,7 @@ StringValue::StringValue(std::string value) : Value(ValueKind::String), value(va
     //
 }
 
-Node *StringValue::accept(Pass *visitor)
+std::shared_ptr<Node> StringValue::accept(Pass *visitor)
 {
     return visitor->visitString(this);
 }
@@ -17,5 +17,10 @@ Node *StringValue::accept(Pass *visitor)
 std::string StringValue::getValue() const
 {
     return this->value;
+}
+
+void StringValue::setValue(std::string value)
+{
+    this->value = value;
 }
 } // namespace ionir

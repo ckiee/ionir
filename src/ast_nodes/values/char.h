@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "ast_nodes/value.h"
 
 namespace ionir
@@ -14,8 +15,10 @@ protected:
 public:
     CharValue(char value);
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
     char getValue() const;
+
+    void setValue(char value);
 };
 } // namespace ionir

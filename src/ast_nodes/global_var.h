@@ -30,7 +30,11 @@ public:
 
     std::shared_ptr<Type> getType() const;
 
+    void setType(std::shared_ptr<Type> type);
+
     std::string getId() const;
+
+    void setId(std::string id);
 
     std::optional<std::shared_ptr<Value>> getValue() const;
 };

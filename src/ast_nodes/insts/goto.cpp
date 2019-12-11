@@ -4,8 +4,8 @@
 
 namespace ionir
 {
-GotoInst::GotoInst(Scope *scope, std::string target, std::optional<Section *> section)
-    : PartialInst<Section *>(InstKind::Goto, scope, section), target(target)
+GotoInst::GotoInst(Scope *scope, std::string target, std::optional<std::shared_ptr<Section>> section)
+    : PartialInst<std::shared_ptr<Section>>(InstKind::Goto, scope, section), target(target)
 {
     if (section.has_value())
     {
@@ -13,7 +13,7 @@ GotoInst::GotoInst(Scope *scope, std::string target, std::optional<Section *> se
     }
 }
 
-Node *GotoInst::accept(Pass *visitor)
+std::shared_ptr<Node> GotoInst::accept(Pass *visitor)
 {
     return visitor->visitGotoInst(this);
 }
@@ -23,8 +23,18 @@ std::string GotoInst::getTarget() const
     return this->target;
 }
 
-std::optional<Section *> GotoInst::getSection() const
+void GotoInst::setTarget(std::string target)
+{
+    this->target = target;
+}
+
+std::optional<std::shared_ptr<Section>> GotoInst::getSection() const
 {
     return this->getValue();
+}
+
+void GotoInst::setSection(std::shared_ptr<Section> section)
+{
+    this->resolve(section);
 }
 } // namespace ionir

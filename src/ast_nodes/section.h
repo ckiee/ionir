@@ -31,6 +31,10 @@ public:
 
     std::string getId() const;
 
+    void setId(std::string id);
+
     std::vector<std::shared_ptr<Inst>> getInsts() const;
+
+    void setInsts(std::vector<std::shared_ptr<Inst>> insts);
 };
 } // namespace ionir

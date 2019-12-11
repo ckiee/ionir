@@ -21,6 +21,7 @@ public:
 
     ~Stack()
     {
+        // TODO: Is there need clear an std::shared_ptr stack be?
         this->clear();
     }
 

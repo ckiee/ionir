@@ -17,10 +17,12 @@ protected:
 public:
     IntValue(IntegerKind kind, long value);
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
     IntegerKind getIntKind() const;
 
     long getValue() const;
+
+    void setValue(long value);
 };
 } // namespace ionir

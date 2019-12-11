@@ -27,8 +27,14 @@ public:
 
 	std::string getId() const;
 
+	void setId(std::string id);
+
 	std::shared_ptr<Args> getArgs() const;
 
+	void setArgs(std::shared_ptr<Args> args);
+
 	std::shared_ptr<Type> getReturnType() const;
+
+	void setReturnType(std::shared_ptr<Type> returnType);
 };
 } // namespace ionir

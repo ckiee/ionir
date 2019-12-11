@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <optional>
 #include <vector>
 #include "code_gen/node.h"
@@ -12,21 +13,23 @@ class Pass;
 class Block : public Node
 {
 protected:
-    std::vector<Section *> sections;
+    std::vector<std::shared_ptr<Section>> sections;
 
-    std::optional<Section *> cachedEntry;
+    std::optional<std::shared_ptr<Section>> cachedEntry;
 
 public:
-    Block(std::vector<Section *> sections = {});
+    Block(std::vector<std::shared_ptr<Section>> sections = {});
 
     ~Block();
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
     bool verify() const override;
 
-    std::optional<Section *> getEntrySection();
+    std::optional<std::shared_ptr<Section>> getEntrySection();
 
-    std::vector<Section *> getSections() const;
+    std::vector<std::shared_ptr<Section>> getSections() const;
+
+    void setSections(std::vector<std::shared_ptr<Section>> sections);
 };
 } // namespace ionir

@@ -24,7 +24,11 @@ public:
 
 	std::shared_ptr<Prototype> getPrototype() const;
 
+	void setPrototype(std::shared_ptr<Prototype> prototype);
+
 	std::shared_ptr<Block> getBody() const;
+
+	void setBody(std::shared_ptr<Block> body);
 
 	bool verify() const override;
 };

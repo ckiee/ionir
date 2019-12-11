@@ -20,5 +20,7 @@ public:
 	std::shared_ptr<Node> accept(Pass *visitor) override;
 
 	std::shared_ptr<Prototype> getPrototype() const;
+
+	void setPrototype(std::shared_ptr<Prototype> prototype);
 };
 } // namespace ionir

@@ -16,9 +16,9 @@ struct BinaryExprOpts
 
     int precedence;
 
-    Node *leftSide;
+    std::shared_ptr<Node> leftSide;
 
-    std::optional<Node *> rightSide;
+    std::optional<std::shared_ptr<Node>> rightSide;
 };
 
 class BinaryExpr : public Node
@@ -28,17 +28,24 @@ protected:
 
     int precedence;
 
-    Node *leftSide;
+    std::shared_ptr<Node> leftSide;
 
-    std::optional<Node *> rightSide = std::nullopt;
+    std::optional<std::shared_ptr<Node>> rightSide = std::nullopt;
 
 public:
     BinaryExpr(BinaryExprOpts opts);
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
-    Node *getLeftSide() const;
+    std::shared_ptr<Node> getLeftSide() const;
 
-    std::optional<Node *> getRightSide() const;
+    void setLeftSide(std::shared_ptr<Node> leftSide)
+    {
+        this->leftSide = leftSide;
+    }
+
+    std::optional<std::shared_ptr<Node>> getRightSide() const;
+
+    void BinaryExpr::setRightSide(std::optional<std::shared_ptr<Node>> rightSide);
 };
 } // namespace ionir

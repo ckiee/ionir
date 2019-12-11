@@ -19,9 +19,19 @@ std::shared_ptr<Prototype> Function::getPrototype() const
     return this->prototype;
 }
 
+void Function::setPrototype(std::shared_ptr<Prototype> prototype)
+{
+    this->prototype = prototype;
+}
+
 std::shared_ptr<Block> Function::getBody() const
 {
     return this->body;
+}
+
+void Function::setBody(std::shared_ptr<Block> body)
+{
+    this->body = body;
 }
 
 bool Function::verify() const

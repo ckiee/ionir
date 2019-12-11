@@ -4,29 +4,44 @@
 
 namespace ionir
 {
-BranchInst::BranchInst(Section *body, std::optional<Section *> otherwise)
+BranchInst::BranchInst(std::shared_ptr<Section> body, std::optional<std::shared_ptr<Section>> otherwise)
     : Inst(InstKind::Branch), body(body), otherwise(otherwise)
 {
     //
 }
 
-Node *BranchInst::accept(Pass *visitor)
+std::shared_ptr<Node> BranchInst::accept(Pass *visitor)
 {
     return visitor->visitBranchInst(this);
 }
 
-BinaryExpr *BranchInst::getCondition() const
+std::shared_ptr<BinaryExpr> BranchInst::getCondition() const
 {
     return this->condition;
 }
 
-Section *BranchInst::getBody() const
+void BranchInst::setCondition(std::shared_ptr<BinaryExpr> condition)
+{
+    this->condition = condition;
+}
+
+std::shared_ptr<Section> BranchInst::getBody() const
 {
     return this->body;
 }
 
-std::optional<Section *> BranchInst::getOtherwise() const
+void BranchInst::setBody(std::shared_ptr<Section> body)
+{
+    this->body = body;
+}
+
+std::optional<std::shared_ptr<Section>> BranchInst::getOtherwise() const
 {
     return this->otherwise;
+}
+
+void BranchInst::setOtherwise(std::optional<std::shared_ptr<Section>> otherwise)
+{
+    this->otherwise = otherwise;
 }
 } // namespace ionir

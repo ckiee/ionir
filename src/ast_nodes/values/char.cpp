@@ -9,7 +9,7 @@ CharValue::CharValue(char value) : Value(ValueKind::Character), value(value)
     //
 }
 
-Node *CharValue::accept(Pass *visitor)
+std::shared_ptr<Node> CharValue::accept(Pass *visitor)
 {
     return visitor->visitChar(this);
 }
@@ -17,5 +17,10 @@ Node *CharValue::accept(Pass *visitor)
 char CharValue::getValue() const
 {
     return this->value;
+}
+
+void CharValue::setValue(char value)
+{
+    this->value = value;
 }
 } // namespace ionir

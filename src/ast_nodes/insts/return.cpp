@@ -4,18 +4,23 @@
 namespace ionir
 {
 // TODO: Finish init. implementation.
-ReturnInst::ReturnInst(Value *value) : Inst(InstKind::Return), value(value)
+ReturnInst::ReturnInst(std::shared_ptr<Value> value) : Inst(InstKind::Return), value(value)
 {
     //
 }
 
-Node *ReturnInst::accept(Pass *visitor)
+std::shared_ptr<Node> ReturnInst::accept(Pass *visitor)
 {
     return visitor->visitReturnInst(this);
 }
 
-Value *ReturnInst::getValue() const
+std::shared_ptr<Value> ReturnInst::getValue() const
 {
     return this->value;
+}
+
+void ReturnInst::setValue(std::shared_ptr<Value> value)
+{
+    this->value = value;
 }
 } // namespace ionir

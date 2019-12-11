@@ -20,13 +20,28 @@ std::string Prototype::getId() const
     return this->id;
 }
 
+void Prototype::setId(std::string id)
+{
+    this->id = id;
+}
+
 std::shared_ptr<Args> Prototype::getArgs() const
 {
     return this->args;
 }
 
+void Prototype::setArgs(std::shared_ptr<Args> args)
+{
+    this->args = args;
+}
+
 std::shared_ptr<Type> Prototype::getReturnType() const
 {
     return this->returnType;
+}
+
+void Prototype::setReturnType(std::shared_ptr<Type> returnType)
+{
+    this->returnType = returnType;
 }
 } // namespace ionir

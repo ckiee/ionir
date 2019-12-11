@@ -9,18 +9,28 @@ BinaryExpr::BinaryExpr(BinaryExprOpts opts)
     //
 }
 
-Node *BinaryExpr::accept(Pass *visitor)
+std::shared_ptr<Node> BinaryExpr::accept(Pass *visitor)
 {
     return visitor->visitBinaryExpr(this);
 }
 
-Node *BinaryExpr::getLeftSide() const
+std::shared_ptr<Node> BinaryExpr::getLeftSide() const
 {
     return this->leftSide;
 }
 
-std::optional<Node *> BinaryExpr::getRightSide() const
+void BinaryExpr::setLeftSide(std::shared_ptr<Node> leftSide)
+{
+    this->leftSide = leftSide;
+}
+
+std::optional<std::shared_ptr<Node>> BinaryExpr::getRightSide() const
 {
     return this->rightSide;
+}
+
+void BinaryExpr::setRightSide(std::optional<std::shared_ptr<Node>> rightSide)
+{
+    this->rightSide = rightSide;
 }
 } // namespace ionir

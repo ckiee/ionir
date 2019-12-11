@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <optional>
 #include <string>
 #include "parsing/partial_inst.h"
@@ -10,18 +11,22 @@ namespace ionir
 {
 class Pass;
 
-class GotoInst : public PartialInst<Section *>
+class GotoInst : public PartialInst<std::shared_ptr<Section>>
 {
 protected:
     std::string target;
 
 public:
-    GotoInst(Scope *scope, std::string target, std::optional<Section *> section = std::nullopt);
+    GotoInst(Scope *scope, std::string target, std::optional<std::shared_ptr<Section>> section = std::nullopt);
 
-    Node *accept(Pass *visitor) override;
+    std::shared_ptr<Node> accept(Pass *visitor) override;
 
     std::string getTarget() const;
 
-    std::optional<Section *> getSection() const;
+    void setTarget(std::string target);
+
+    std::optional<std::shared_ptr<Section>> getSection() const;
+
+    void setSection(std::shared_ptr<Section> section);
 };
 } // namespace ionir

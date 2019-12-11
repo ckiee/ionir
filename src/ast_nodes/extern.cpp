@@ -17,4 +17,9 @@ std::shared_ptr<Prototype> Extern::getPrototype() const
 {
     return this->prototype;
 }
+
+void Extern::setPrototype(std::shared_ptr<Prototype> prototype)
+{
+    this->prototype = prototype;
+}
 } // namespace ionir
