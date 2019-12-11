@@ -6,7 +6,7 @@ enum class InstKind
 {
     Alloca,
 
-    Set,
+    Store,
 
     Call,
 

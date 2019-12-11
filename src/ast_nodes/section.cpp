@@ -12,7 +12,7 @@ Section::Section(SectionKind kind, std::string id, std::vector<std::shared_ptr<I
 
 std::shared_ptr<Node> Section::accept(Pass *visitor)
 {
-    return visitor->visitSection(this);
+    return visitor->visitSection(this->staticCast<Section>());
 }
 
 SectionKind Section::getKind() const

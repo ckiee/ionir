@@ -300,7 +300,7 @@ std::shared_ptr<Node> LlvmVisitor::visitPrototype(std::shared_ptr<Prototype> nod
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitInteger(std::shared_ptr<IntValue> node)
+std::shared_ptr<Node> LlvmVisitor::visitIntValue(std::shared_ptr<IntValue> node)
 {
     /**
      * Create the APInt to provide. Acts sort of an

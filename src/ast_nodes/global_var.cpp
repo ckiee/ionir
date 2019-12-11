@@ -11,7 +11,7 @@ GlobalVar::GlobalVar(std::shared_ptr<Type> type, std::string id, std::optional<s
 
 std::shared_ptr<Node> GlobalVar::accept(Pass *visitor)
 {
-    return visitor->visitGlobalVar(this);
+    return visitor->visitGlobalVar(this->staticCast<GlobalVar>());
 }
 
 std::shared_ptr<Type> GlobalVar::getType() const

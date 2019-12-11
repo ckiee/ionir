@@ -10,7 +10,7 @@ Extern::Extern(std::shared_ptr<Prototype> prototype) : Node(NodeKind::Extern), p
 
 std::shared_ptr<Node> Extern::accept(Pass *visitor)
 {
-    return visitor->visitExtern(this);
+    return visitor->visitExtern(this->staticCast<Extern>());
 }
 
 std::shared_ptr<Prototype> Extern::getPrototype() const

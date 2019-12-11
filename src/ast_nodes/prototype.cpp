@@ -12,7 +12,7 @@ Prototype::Prototype(std::string id, std::shared_ptr<Args> args, std::shared_ptr
 
 std::shared_ptr<Node> Prototype::accept(Pass *visitor)
 {
-    return visitor->visitPrototype(this);
+    return visitor->visitPrototype(this->staticCast<Prototype>());
 }
 
 std::string Prototype::getId() const

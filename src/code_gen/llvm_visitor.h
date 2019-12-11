@@ -76,11 +76,11 @@ public:
 
 	std::shared_ptr<Node> visitPrototype(std::shared_ptr<Prototype> node) override;
 
-	std::shared_ptr<Node> visitInteger(std::shared_ptr<IntValue> node) override;
+	std::shared_ptr<Node> visitIntValue(std::shared_ptr<IntValue> node) override;
 
-	std::shared_ptr<Node> visitChar(std::shared_ptr<CharValue> node) override;
+	std::shared_ptr<Node> visitCharValue(std::shared_ptr<CharValue> node) override;
 
-	std::shared_ptr<Node> visitString(std::shared_ptr<StringValue> node) override;
+	std::shared_ptr<Node> visitStringValue(std::shared_ptr<StringValue> node) override;
 
 	std::shared_ptr<Node> visitAllocaInst(std::shared_ptr<AllocaInst> node) override;
 

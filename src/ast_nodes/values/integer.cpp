@@ -12,7 +12,7 @@ IntValue::IntValue(IntegerKind kind, long value)
 
 std::shared_ptr<Node> IntValue::accept(Pass *visitor)
 {
-    return visitor->visitInteger(this);
+    return visitor->visitIntValue(this->staticCast<IntValue>());
 }
 
 IntegerKind IntValue::getIntKind() const

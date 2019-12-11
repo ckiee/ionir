@@ -7,11 +7,12 @@
 #include "ast_nodes/block.h"
 #include "ast_nodes/type.h"
 #include "ast_nodes/global_var.h"
-#include "ast_nodes/inst.h"
 #include "ast_nodes/binary_expr.h"
+#include "ast_nodes/value.h"
 #include "ast_nodes/values/integer.h"
 #include "ast_nodes/values/char.h"
 #include "ast_nodes/values/string.h"
+#include "ast_nodes/inst.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/branch.h"
 #include "ast_nodes/insts/goto.h"
@@ -38,11 +39,15 @@ public:
 
     virtual std::shared_ptr<Node> visitPrototype(std::shared_ptr<Prototype> node);
 
-    virtual std::shared_ptr<Node> visitInteger(std::shared_ptr<IntValue> node);
+    virtual std::shared_ptr<Node> visitValue(std::shared_ptr<Value> node);
 
-    virtual std::shared_ptr<Node> visitChar(std::shared_ptr<CharValue> node);
+    virtual std::shared_ptr<Node> visitIntValue(std::shared_ptr<IntValue> node);
 
-    virtual std::shared_ptr<Node> visitString(std::shared_ptr<StringValue> node);
+    virtual std::shared_ptr<Node> visitCharValue(std::shared_ptr<CharValue> node);
+
+    virtual std::shared_ptr<Node> visitStringValue(std::shared_ptr<StringValue> node);
+
+    virtual std::shared_ptr<Node> visitInst(std::shared_ptr<Inst> node);
 
     virtual std::shared_ptr<Node> visitAllocaInst(std::shared_ptr<AllocaInst> node);
 

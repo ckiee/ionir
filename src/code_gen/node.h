@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include "code_gen/node_kind.h"
 
 namespace ionir
 {
 class Pass;
 
-class Node
+class Node : public std::enable_shared_from_this<Node>
 {
 protected:
     NodeKind type;
@@ -24,5 +25,13 @@ public:
      * this will always return true.
      */
     virtual bool verify() const;
+
+    std::shared_ptr<Node> getPtr();
+
+    template <typename T>
+    std::shared_ptr<T> dynamicCast();
+
+    template <typename T>
+    std::shared_ptr<T> staticCast();
 };
 } // namespace ionir

@@ -11,7 +11,7 @@ Type::Type(std::string id, bool isPointer)
 
 std::shared_ptr<Node> Type::accept(Pass *visitor)
 {
-    return visitor->visitType(this);
+    return visitor->visitType(this->staticCast<Type>());
 }
 
 std::string Type::getId() const
