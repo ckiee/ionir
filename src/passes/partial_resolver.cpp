@@ -5,18 +5,18 @@
 
 namespace ionir
 {
-PartialResolverPass::PartialResolverPass(std::vector<Inst *> partials)
+PartialResolverPass::PartialResolverPass(std::vector<std::shared_ptr<Inst>> partials)
     : partials(partials)
 {
     //
 }
 
-std::vector<Inst *> PartialResolverPass::getPartials() const
+std::vector<std::shared_ptr<Inst>> PartialResolverPass::getPartials() const
 {
     return this->partials;
 }
 
-Node *PartialResolverPass::visitGotoInst(GotoInst *node)
+std::shared_ptr<Node> PartialResolverPass::visitGotoInst(std::shared_ptr<GotoInst> node)
 {
     // Partial has already been resolved. Do not continue.
     if (node->isResolved())
@@ -24,14 +24,14 @@ Node *PartialResolverPass::visitGotoInst(GotoInst *node)
         return node;
     }
 
-    Scope *scope = node->getScope();
+    std::shared_ptr<Scope> scope = node->getScope();
 
     switch (scope->getKind())
     {
     case ScopeKind::Block:
     {
-        Block *block = (Block *)scope->unwrap();
-        std::vector<Section *> sections = block->getSections();
+        std::shared_ptr<Block> block = scope->unwrap()->staticCast<Block>();
+        std::vector<std::shared_ptr<Section>> sections = block->getSections();
 
         for (auto section : sections)
         {

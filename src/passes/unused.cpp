@@ -2,7 +2,7 @@
 
 namespace ionir
 {
-Node *UnusedPass::visitFunction(Function *node)
+std::shared_ptr<Node> UnusedPass::visitFunction(std::shared_ptr<Function> node)
 {
     // TODO
 

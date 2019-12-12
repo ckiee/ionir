@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include "ast_nodes/insts/goto.h"
 #include "ast_nodes/inst.h"
@@ -10,15 +11,15 @@ namespace ionir
 class PartialResolverPass : public Pass
 {
 protected:
-    std::vector<Inst *> partials;
+    std::vector<std::shared_ptr<Inst>> partials;
 
-    void resolveGotoInst(GotoInst *partial);
+    void resolveGotoInst(std::shared_ptr<GotoInst> partial);
 
 public:
-    PartialResolverPass(std::vector<Inst *> partials);
+    PartialResolverPass(std::vector<std::shared_ptr<Inst>> partials);
 
-    std::vector<Inst *> getPartials() const;
+    std::vector<std::shared_ptr<Inst>> getPartials() const;
 
-    Node *visitGotoInst(GotoInst *node);
+    std::shared_ptr<Node> visitGotoInst(std::shared_ptr<GotoInst> node);
 };
 } // namespace ionir
