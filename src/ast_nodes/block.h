@@ -20,8 +20,6 @@ protected:
 public:
     Block(std::vector<std::shared_ptr<Section>> sections = {});
 
-    ~Block();
-
     std::shared_ptr<Node> accept(Pass *visitor) override;
 
     bool verify() const override;

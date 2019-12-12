@@ -2,7 +2,7 @@
 
 namespace ionir
 {
-Scope::Scope(Node *value, ScopeKind kind) : Wrapper(value), kind(kind)
+Scope::Scope(std::shared_ptr<Node> value, ScopeKind kind) : Wrapper(value), kind(kind)
 {
     //
 }

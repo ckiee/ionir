@@ -6,13 +6,13 @@
 
 namespace ionir
 {
-class Scope : public Wrapper<Node *>
+class Scope : public Wrapper<std::shared_ptr<Node>>
 {
 protected:
     ScopeKind kind;
 
 public:
-    Scope(Node *value, ScopeKind kind);
+    Scope(std::shared_ptr<Node> value, ScopeKind kind);
 
     ScopeKind getKind() const;
 };

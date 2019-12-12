@@ -12,7 +12,7 @@ BranchInst::BranchInst(std::shared_ptr<Section> body, std::optional<std::shared_
 
 std::shared_ptr<Node> BranchInst::accept(Pass *visitor)
 {
-    return visitor->visitBranchInst(this);
+    return visitor->visitBranchInst(this->staticCast<BranchInst>());
 }
 
 std::shared_ptr<BinaryExpr> BranchInst::getCondition() const

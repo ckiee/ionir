@@ -155,7 +155,7 @@ std::shared_ptr<Node> LlvmVisitor::visitBlock(std::shared_ptr<Block> node)
      * Retrieve the entry section from the block.
      * At this point, it should be guaranteed to be set.
      */
-    std::optional<Section *> entry = node->getEntrySection();
+    std::optional<std::shared_ptr<Section>> entry = node->getEntrySection();
 
     /**
      * Entry section must be set. Redundant check,
@@ -367,14 +367,14 @@ std::shared_ptr<Node> LlvmVisitor::visitIntValue(std::shared_ptr<IntValue> node)
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitChar(std::shared_ptr<CharValue> node)
+std::shared_ptr<Node> LlvmVisitor::visitCharValue(std::shared_ptr<CharValue> node)
 {
     // TODO
 
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitString(std::shared_ptr<StringValue> node)
+std::shared_ptr<Node> LlvmVisitor::visitStringValue(std::shared_ptr<StringValue> node)
 {
     // Create the global string pointer.
     llvm::Constant *value =
@@ -450,9 +450,9 @@ std::shared_ptr<Node> LlvmVisitor::visitBranchInst(std::shared_ptr<BranchInst> n
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitGlobalVar(std::shared_ptr<GlobalVar> *node)
+std::shared_ptr<Node> LlvmVisitor::visitGlobalVar(std::shared_ptr<GlobalVar> node)
 {
-    this->visit(node->getType());
+    this->visitType(node->getType());
 
     std::shared_ptr<llvm::Type *> type = this->typeStack.pop();
 

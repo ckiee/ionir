@@ -24,8 +24,6 @@ protected:
 public:
     GlobalVar(std::shared_ptr<Type> type, std::string id, std::optional<std::shared_ptr<Value>> value = std::nullopt);
 
-    ~GlobalVar();
-
     std::shared_ptr<Node> accept(Pass *visitor) override;
 
     std::shared_ptr<Type> getType() const;

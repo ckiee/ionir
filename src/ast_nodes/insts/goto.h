@@ -17,7 +17,7 @@ protected:
     std::string target;
 
 public:
-    GotoInst(Scope *scope, std::string target, std::optional<std::shared_ptr<Section>> section = std::nullopt);
+    GotoInst(std::shared_ptr<Scope> scope, std::string target, std::optional<std::shared_ptr<Section>> section = std::nullopt);
 
     std::shared_ptr<Node> accept(Pass *visitor) override;
 

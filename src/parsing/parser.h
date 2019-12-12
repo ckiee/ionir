@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <optional>
 #include <string>
 #include "syntax/token.h"
@@ -46,14 +47,12 @@ protected:
 
     Notice createNotice(NoticeType type, std::string message);
 
-    Scope *createScope();
+    std::shared_ptr<Scope> createScope();
 
     void pushNotice(NoticeType type, std::string message);
 
 public:
     Parser(TokenStream *stream);
-
-    ~Parser();
 
     std::vector<Notice> getNotices() const;
 
@@ -61,49 +60,49 @@ public:
      * Parses a integer literal in the form of
      * long (or integer 64).
      */
-    IntValue *parseInt();
+    std::shared_ptr<IntValue> parseInt();
 
-    CharValue *parseChar();
+    std::shared_ptr<CharValue> parseChar();
 
-    StringValue *parseString();
+    std::shared_ptr<StringValue> parseString();
 
     std::string parseId();
 
-    Type *parseType();
+    std::shared_ptr<Type> parseType();
 
     Arg parseArg();
 
-    Args *parseArgs();
+    std::shared_ptr<Args> parseArgs();
 
-    Prototype *parsePrototype();
+    std::shared_ptr<Prototype> parsePrototype();
 
-    Extern *parseExtern();
+    std::shared_ptr<Extern> parseExtern();
 
-    Function *parseFunction();
+    std::shared_ptr<Function> parseFunction();
 
-    Value *parseValue();
+    std::shared_ptr<Value> parseValue();
 
-    std::optional<Node *> parsePrimaryExpr();
+    std::optional<std::shared_ptr<Node>> parsePrimaryExpr();
 
-    Node *parseBinaryExprRightSide(Node *leftSide, int minimalPrecedence);
+    std::shared_ptr<Node> parseBinaryExprRightSide(std::shared_ptr<Node> leftSide, int minimalPrecedence);
 
-    Section *parseSection();
+    std::shared_ptr<Section> parseSection();
 
-    Block *parseBlock();
+    std::shared_ptr<Block> parseBlock();
 
-    AllocaInst *parseAllocaInst();
+    std::shared_ptr<AllocaInst> parseAllocaInst();
 
-    ReturnInst *parseReturnInst();
+    std::shared_ptr<ReturnInst> parseReturnInst();
 
-    BranchInst *parseBranchInst();
+    std::shared_ptr<BranchInst> parseBranchInst();
 
-    GotoInst *parseGotoInst();
+    std::shared_ptr<GotoInst> parseGotoInst();
 
     /**
      * Parses an instruction, consuming its identifier.
      * Invokes the corresponding parser depending on its
      * identifier.
      */
-    Inst *parseInst();
+    std::shared_ptr<Inst> parseInst();
 };
 } // namespace ionir

@@ -9,11 +9,6 @@ Block::Block(std::vector<std::shared_ptr<Section>> sections)
     //
 }
 
-Block::~Block()
-{
-    // TODO
-}
-
 std::shared_ptr<Node> Block::accept(Pass *visitor)
 {
     return visitor->visitBlock(this->staticCast<Block>());

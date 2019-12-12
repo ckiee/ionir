@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <exception>
 #include <optional>
 #include "ast_nodes/inst.h"
@@ -14,7 +15,7 @@ class PartialInst : public Inst
 private:
     std::optional<T> value;
 
-    Scope *scope;
+    std::shared_ptr<Scope> scope;
 
 protected:
     std::optional<T> getValue() const
@@ -23,15 +24,15 @@ protected:
     }
 
 public:
-    PartialInst(InstKind kind, Scope *scope, std::optional<T> value = std::nullopt)
+    PartialInst(InstKind kind, std::shared_ptr<Scope> scope, std::optional<T> value = std::nullopt)
         : Inst(kind), scope(scope), value(value)
     {
         //
     }
 
-    virtual Node *accept(Pass *visitor) = 0;
+    virtual std::shared_ptr<Node> accept(Pass *visitor) = 0;
 
-    Scope *getScope() const
+    std::shared_ptr<Scope> getScope() const
     {
         return this->scope;
     }

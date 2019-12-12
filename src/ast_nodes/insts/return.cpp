@@ -11,7 +11,7 @@ ReturnInst::ReturnInst(std::shared_ptr<Value> value) : Inst(InstKind::Return), v
 
 std::shared_ptr<Node> ReturnInst::accept(Pass *visitor)
 {
-    return visitor->visitReturnInst(this);
+    return visitor->visitReturnInst(this->staticCast<ReturnInst>());
 }
 
 std::shared_ptr<Value> ReturnInst::getValue() const

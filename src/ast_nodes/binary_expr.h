@@ -39,13 +39,10 @@ public:
 
     std::shared_ptr<Node> getLeftSide() const;
 
-    void setLeftSide(std::shared_ptr<Node> leftSide)
-    {
-        this->leftSide = leftSide;
-    }
+    void setLeftSide(std::shared_ptr<Node> leftSide);
 
     std::optional<std::shared_ptr<Node>> getRightSide() const;
 
-    void BinaryExpr::setRightSide(std::optional<std::shared_ptr<Node>> rightSide);
+    void setRightSide(std::optional<std::shared_ptr<Node>> rightSide);
 };
 } // namespace ionir
