@@ -7,8 +7,11 @@ Driver::Driver(llvm::Module *module, TokenStream stream) : module(module), strea
     //
 }
 
-void Driver::consume()
+Ast Driver::consume()
 {
+    // TODO: Actually process result.
+    Ast result = {};
+
     while (this->stream.hasNext())
     {
         this->tryNext();
@@ -19,6 +22,8 @@ void Driver::consume()
     {
         this->tryNext();
     }
+
+    return result;
 }
 
 void Driver::begin()
@@ -32,7 +37,7 @@ bool Driver::hasNext() const
     return false;
 }
 
-void Driver::tryNext()
+std::optional<std::shared_ptr<Node>> Driver::tryNext()
 {
     // Retrieve the current token from the token stream.
     Token token = this->stream.get();
@@ -48,5 +53,7 @@ void Driver::tryNext()
 
     // Advance the Stream's index if applicable.
     this->stream.tryNext();
+
+    // TODO: Return value.
 }
 } // namespace ionir

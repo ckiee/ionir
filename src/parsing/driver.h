@@ -1,10 +1,13 @@
 #pragma once
 
+#include <memory>
 #include <optional>
+#include "code_gen/node.h"
 #include "llvm/IR/Module.h"
 #include "syntax/token.h"
 #include "misc/iterable.h"
 #include "misc/loose_generator.h"
+#include "ast.h"
 
 namespace ionir
 {
@@ -19,7 +22,7 @@ private:
 public:
 	Driver(llvm::Module *module, TokenStream stream);
 
-	void consume();
+	Ast consume();
 
 	void begin(); // override;
 
@@ -29,6 +32,6 @@ public:
 	 * Processed the current iterable item and increments the
 	 * list's index if applicable.
 	 */
-	void tryNext(); // override;
+	std::optional<std::shared_ptr<Node>> tryNext(); // override;
 };
 } // namespace ionir

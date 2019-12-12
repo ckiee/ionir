@@ -68,6 +68,32 @@ std::vector<Notice> Parser::getNotices() const
     return this->notices;
 }
 
+std::shared_ptr<Node> Parser::parseTopLevel()
+{
+    switch (this->stream->get().getType())
+    {
+    case TokenType::KeywordFunction:
+    {
+        return this->parseFunction();
+    }
+
+    case TokenType::KeywordGlobal:
+    {
+        return this->parseGlobalVar();
+    }
+
+    case TokenType::KeywordExtern:
+    {
+        return this->parseExtern();
+    }
+
+    default:
+    {
+        throw std::runtime_error("Unknown top-level entity");
+    }
+    }
+}
+
 std::shared_ptr<IntValue> Parser::parseInt()
 {
     this->expect(TokenType::LiteralInt);
@@ -257,6 +283,15 @@ std::shared_ptr<Function> Parser::parseFunction()
     std::shared_ptr<Block> body = this->parseBlock();
 
     return std::make_shared<Function>(prototype, body);
+}
+
+std::shared_ptr<GlobalVar> Parser::parseGlobalVar()
+{
+    this->skipOver(TokenType::KeywordGlobal);
+
+    // TODO
+
+    return nullptr;
 }
 
 std::shared_ptr<Value> Parser::parseValue()

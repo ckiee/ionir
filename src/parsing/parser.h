@@ -10,6 +10,7 @@
 #include "ast_nodes/values/string.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/function.h"
+#include "ast_nodes/global_var.h"
 #include "ast_nodes/args.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/block.h"
@@ -56,6 +57,8 @@ public:
 
     std::vector<Notice> getNotices() const;
 
+    std::shared_ptr<Node> parseTopLevel();
+
     /**
      * Parses a integer literal in the form of
      * long (or integer 64).
@@ -79,6 +82,8 @@ public:
     std::shared_ptr<Extern> parseExtern();
 
     std::shared_ptr<Function> parseFunction();
+
+    std::shared_ptr<GlobalVar> parseGlobalVar();
 
     std::shared_ptr<Value> parseValue();
 
