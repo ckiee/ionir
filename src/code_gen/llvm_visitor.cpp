@@ -44,7 +44,7 @@ void LlvmVisitor::requireFunction()
 }
 
 LlvmVisitor::LlvmVisitor(llvm::Module *module)
-    : module(module), context(&module->getContext()), function(nullptr), valueStack(), typeStack()
+    : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack()
 {
     this->namedValues = {};
 }
