@@ -9,6 +9,11 @@ namespace ionir
 class PassManager
 {
 protected:
+    /**
+     * Internal container on which pass 
+     * manager items will be both stored
+     * and processed from.
+     */
     std::set<std::unique_ptr<PassManagerItem>> passes;
 
     void visitAstNode(std::shared_ptr<Node> node, Pass *visitor);
