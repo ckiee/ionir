@@ -184,7 +184,7 @@ std::shared_ptr<Node> LlvmVisitor::visitType(std::shared_ptr<Type> node)
         llvm::Type::getDoubleTy(this->context.get()));
 
     // Convert type to a pointer if applicable.
-    if (node->isPointer())
+    if (node->getIsPointer())
     {
         // TODO: Convert type to pointer.
     }
@@ -263,12 +263,12 @@ std::shared_ptr<Node> LlvmVisitor::visitPrototype(std::shared_ptr<Prototype> nod
 
         // TODO: Support for infinite arguments and hard-coded return type.
         // Create the function type.
-        llvm::FunctionType *type =
-            llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getArgs()->getIsInfinite());
+        std::shared_ptr<llvm::FunctionType> type(
+            llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments, node->getArgs()->getIsInfinite()));
 
         // Cast the value to a function, since we know getCallee() will return a function.
-        function =
-            (llvm::Function *)this->module->getOrInsertFunction(node->getId(), type).getCallee();
+        function.reset(
+            (llvm::Function *)this->module->getOrInsertFunction(node->getId(), type).getCallee());
 
         // Set the function's linkage.
         function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
@@ -319,28 +319,28 @@ std::shared_ptr<Node> LlvmVisitor::visitIntValue(std::shared_ptr<IntValue> node)
     {
     case IntegerKind::Int1:
     {
-        type = llvm::Type::getInt1Ty(*this->context);
+        type.reset(llvm::Type::getInt1Ty(*this->context));
 
         break;
     }
 
     case IntegerKind::Int32:
     {
-        type = llvm::Type::getInt32Ty(*this->context);
+        type.reset(llvm::Type::getInt32Ty(*this->context));
 
         break;
     }
 
     case IntegerKind::Int64:
     {
-        type = llvm::Type::getInt64Ty(*this->context);
+        type.reset(llvm::Type::getInt64Ty(*this->context));
 
         break;
     }
 
     case IntegerKind::Int128:
     {
-        type = llvm::Type::getInt128Ty(*this->context);
+        type.reset(llvm::Type::getInt128Ty(*this->context));
 
         break;
     }
