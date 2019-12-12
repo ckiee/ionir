@@ -10,17 +10,17 @@
 
 namespace ionir
 {
-llvm::Module *LlvmVisitor::getModule() const
+std::shared_ptr<llvm::Module> LlvmVisitor::getModule() const
 {
     return this->module;
 }
 
-Stack<llvm::Value *> LlvmVisitor::getValueStack() const
+Stack<std::shared_ptr<llvm::Value>> LlvmVisitor::getValueStack() const
 {
     return this->valueStack;
 }
 
-Stack<llvm::Type *> LlvmVisitor::getTypeStack() const
+Stack<std::shared_ptr<llvm::Type>> LlvmVisitor::getTypeStack() const
 {
     return this->typeStack;
 }
@@ -35,7 +35,7 @@ void LlvmVisitor::requireBuilder()
     }
 }
 
-LlvmVisitor::LlvmVisitor(llvm::Module *module)
+LlvmVisitor::LlvmVisitor(std::shared_ptr<llvm::Module> module)
     : module(module), context(&module->getContext()), function(nullptr), valueStack(), typeStack()
 {
     this->namedValues = {};
@@ -65,8 +65,8 @@ std::shared_ptr<Node> LlvmVisitor::visitFunction(std::shared_ptr<Function> node)
     this->visitPrototype(node->getPrototype());
 
     // Retrieve the resulting function off the stack.
-    std::shared_ptr<llvm::Function *> function =
-        std::static_pointer_cast<llvm::Function *>(this->valueStack.pop());
+    std::shared_ptr<llvm::Function> function =
+        std::static_pointer_cast<llvm::Function>(this->valueStack.pop());
 
     // Set the function buffer.
     this->function = function;
@@ -77,7 +77,7 @@ std::shared_ptr<Node> LlvmVisitor::visitFunction(std::shared_ptr<Function> node)
     // TODO: Verify the resulting LLVM function (through LLVM).
 
     // Push the function back onto the stack.
-    this->valueStack.push(*function);
+    this->valueStack.push(function);
 
     return node;
 }
@@ -109,11 +109,10 @@ std::shared_ptr<Node> LlvmVisitor::visitSection(std::shared_ptr<Section> node)
     }
 
     // Create the basic block and at the same time register it under the buffer function.
-    llvm::BasicBlock *block =
-        llvm::BasicBlock::Create(*this->context, node->getId(), *this->function);
+    std::shared_ptr<llvm::BasicBlock> block(llvm::BasicBlock::Create(*this->context, node->getId(), this->function.get()));
 
     // Create and assign the block to the builder.
-    this->builder.emplace(llvm::IRBuilder<>(block));
+    this->builder.emplace(llvm::IRBuilder<>(block.get()));
 
     // Visit and append instructions.
     std::vector<std::shared_ptr<Inst>> insts = node->getInsts();
@@ -181,12 +180,11 @@ std::shared_ptr<Node> LlvmVisitor::visitBlock(std::shared_ptr<Block> node)
 std::shared_ptr<Node> LlvmVisitor::visitType(std::shared_ptr<Type> node)
 {
     // TODO: Hard-coded double type.
-    llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
+    std::shared_ptr<llvm::Type> type(
+        llvm::Type::getDoubleTy(this->context.get()));
 
-    bool isPointer = node->getIsPointer();
-
-    // Convert type to a pointer.
-    if (isPointer)
+    // Convert type to a pointer if applicable.
+    if (node->isPointer())
     {
         // TODO: Convert type to pointer.
     }
@@ -204,7 +202,7 @@ std::shared_ptr<Node> LlvmVisitor::visitBinaryExpr(std::shared_ptr<BinaryExpr> n
     // Visit sides.
     this->visit(node->getLeftSide());
 
-    std::optional<std::shared_ptr<llvm::Value *>> rightSide;
+    std::optional<std::shared_ptr<llvm::Value>> rightSide = std::nullopt;
 
     // Process right side if applicable.
     if (node->getRightSide().has_value())
@@ -216,12 +214,12 @@ std::shared_ptr<Node> LlvmVisitor::visitBinaryExpr(std::shared_ptr<BinaryExpr> n
     }
 
     // Retrieve left side before popping.
-    std::shared_ptr<llvm::Value *> leftSide = this->valueStack.pop();
+    std::shared_ptr<llvm::Value> leftSide = this->valueStack.pop();
 
     // TODO: Hard-coded add instruction.
     // Create the binary expression LLVM value.
-    llvm::Value *binaryExpr =
-        this->builder->CreateAdd(*leftSide, **rightSide);
+    std::shared_ptr<llvm::Value> binaryExpr(
+        this->builder->CreateAdd(leftSide.get(), (*rightSide).get()));
 
     this->valueStack.push(binaryExpr);
 
@@ -234,10 +232,11 @@ std::shared_ptr<Node> LlvmVisitor::visitPrototype(std::shared_ptr<Prototype> nod
     uint32_t argumentCount = node->getArgs()->getItems().size();
 
     // Create the argument buffer vector.
-    std::vector<llvm::Type *> arguments = {};
+    std::vector<std::shared_ptr<llvm::Type>> arguments = {};
 
     // Attempt to retrieve an existing function.
-    llvm::Function *function = this->module->getFunction(node->getId());
+    std::shared_ptr<llvm::Function> function(
+        this->module->getFunction(node->getId()));
 
     // A function with a matching identifier already exists.
     if (function != nullptr)
@@ -310,7 +309,7 @@ std::shared_ptr<Node> LlvmVisitor::visitIntValue(std::shared_ptr<IntValue> node)
     llvm::APInt apInt = llvm::APInt(node->getValue(), true);
 
     // TODO: Process correct int. type based on IntegerKind.
-    std::optional<llvm::IntegerType *> type;
+    std::optional<std::shared_ptr<llvm::IntegerType>> type = std::nullopt;
 
     /**
      * Create the corresponding LLVM integer type
@@ -359,7 +358,8 @@ std::shared_ptr<Node> LlvmVisitor::visitIntValue(std::shared_ptr<IntValue> node)
     }
 
     // Finally, create the LLVM value constant.
-    llvm::Constant *value = llvm::ConstantInt::get(*type, apInt);
+    std::shared_ptr<llvm::Constant> value(
+        llvm::ConstantInt::get((*type).get(), apInt));
 
     // Push the value onto the value stack.
     this->valueStack.push(value);
@@ -377,8 +377,8 @@ std::shared_ptr<Node> LlvmVisitor::visitCharValue(std::shared_ptr<CharValue> nod
 std::shared_ptr<Node> LlvmVisitor::visitStringValue(std::shared_ptr<StringValue> node)
 {
     // Create the global string pointer.
-    llvm::Constant *value =
-        this->builder->CreateGlobalStringPtr(node->getValue());
+    std::shared_ptr<llvm::Constant> value(
+        this->builder->CreateGlobalStringPtr(node->getValue()));
 
     // Push the value onto the value stack.
     this->valueStack.push(value);
@@ -390,14 +390,14 @@ std::shared_ptr<Node> LlvmVisitor::visitAllocaInst(std::shared_ptr<AllocaInst> n
 {
     this->visit(node->getType());
 
-    std::shared_ptr<llvm::Type *> type = this->typeStack.pop();
+    std::shared_ptr<llvm::Type> type = this->typeStack.pop();
 
     /**
      * Create the LLVM equivalent alloca instruction
      * using the buffered builder.
      */
-    llvm::AllocaInst *allocaInst =
-        this->builder->CreateAlloca(*type, (llvm::Value *)nullptr, node->getId());
+    std::shared_ptr<llvm::AllocaInst> allocaInst(
+        this->builder->CreateAlloca(type.get(), (llvm::Value *)nullptr, node->getId()));
 
     this->valueStack.push(allocaInst);
 
@@ -408,13 +408,14 @@ std::shared_ptr<Node> LlvmVisitor::visitReturnInst(std::shared_ptr<ReturnInst> n
 {
     this->visit(node->getValue());
 
-    std::shared_ptr<llvm::Value *> value = this->valueStack.pop();
+    std::shared_ptr<llvm::Value> value = this->valueStack.pop();
 
     /**
      * Create the LLVM equivalent return instruction
      * using the buffered builder.
      */
-    llvm::ReturnInst *returnInst = this->builder->CreateRet(*value);
+    std::shared_ptr<llvm::ReturnInst> returnInst(
+        this->builder->CreateRet(value.get()));
 
     this->valueStack.push(returnInst);
 
@@ -426,16 +427,16 @@ std::shared_ptr<Node> LlvmVisitor::visitBranchInst(std::shared_ptr<BranchInst> n
     // Visit condition.
     this->visit(node->getCondition());
 
-    std::shared_ptr<llvm::Value *> condition = this->valueStack.pop();
+    std::shared_ptr<llvm::Value> condition = this->valueStack.pop();
 
     // Visit body.
     this->visit(node->getBody());
 
-    std::shared_ptr<llvm::BasicBlock *> body =
-        std::static_pointer_cast<llvm::BasicBlock *>(this->valueStack.pop());
+    std::shared_ptr<llvm::BasicBlock> body(
+        std::static_pointer_cast<llvm::BasicBlock>(this->valueStack.pop()));
 
     // Prepare otherwise block with a default value.
-    std::shared_ptr<llvm::BasicBlock *> otherwise = nullptr;
+    std::shared_ptr<llvm::BasicBlock> otherwise = nullptr;
 
     // Visit otherwise block if applicable.
     if (node->getOtherwise().has_value())
@@ -445,7 +446,7 @@ std::shared_ptr<Node> LlvmVisitor::visitBranchInst(std::shared_ptr<BranchInst> n
     }
 
     // Create the LLVM branch instruction.
-    this->builder->CreateCondBr(*condition, *body, *otherwise);
+    this->builder->CreateCondBr(condition.get(), body.get(), otherwise.get());
 
     return node;
 }
@@ -454,10 +455,10 @@ std::shared_ptr<Node> LlvmVisitor::visitGlobalVar(std::shared_ptr<GlobalVar> nod
 {
     this->visitType(node->getType());
 
-    std::shared_ptr<llvm::Type *> type = this->typeStack.pop();
+    std::shared_ptr<llvm::Type> type = this->typeStack.pop();
 
-    llvm::GlobalVariable *globalVar =
-        (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), *type);
+    std::shared_ptr<llvm::GlobalVariable> globalVar(
+        (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), type.get()));
 
     // Assign value if applicable.
     if (node->getValue().has_value())
@@ -465,13 +466,13 @@ std::shared_ptr<Node> LlvmVisitor::visitGlobalVar(std::shared_ptr<GlobalVar> nod
         // Visit global variable value.
         this->visit(*node->getValue());
 
-        std::shared_ptr<llvm::Value *> value = this->valueStack.pop();
+        std::shared_ptr<llvm::Value> value = this->valueStack.pop();
 
         // TODO: Value needs to be created from below commented statement.
         // llvm::Constant* initializerValue = llvm::Constant::getIntegerValue(llvm::Type);
 
         // TODO: You can't just cast llvm::value to constant! See above.
-        globalVar->setInitializer((llvm::Constant *)*value);
+        globalVar->setInitializer((llvm::Constant *)value.get());
     }
 
     return node;

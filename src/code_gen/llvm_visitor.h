@@ -31,19 +31,19 @@ namespace ionir
 class LlvmVisitor : public Pass
 {
 protected:
-	llvm::LLVMContext *context;
+	std::shared_ptr<llvm::LLVMContext> context;
 
-	llvm::Module *module;
+	std::shared_ptr<llvm::Module> module;
 
-	Stack<llvm::Value *> valueStack;
+	Stack<std::shared_ptr<llvm::Value>> valueStack;
 
-	Stack<llvm::Type *> typeStack;
+	Stack<std::shared_ptr<llvm::Type>> typeStack;
 
-	std::shared_ptr<llvm::Function *> function;
+	std::shared_ptr<llvm::Function> function;
 
 	std::optional<llvm::IRBuilder<>> builder;
 
-	std::map<std::string, llvm::Value *> namedValues;
+	std::map<std::string, std::shared_ptr<llvm::Value>> namedValues;
 
 	/**
 	 * Ensures that the builder is instantiated, otherwise
@@ -52,15 +52,15 @@ protected:
 	void requireBuilder();
 
 public:
-	LlvmVisitor(llvm::Module *module);
+	LlvmVisitor(std::shared_ptr<llvm::Module> module);
 
 	~LlvmVisitor();
 
-	llvm::Module *getModule() const;
+	std::shared_ptr<llvm::Module> getModule() const;
 
-	Stack<llvm::Value *> getValueStack() const;
+	Stack<std::shared_ptr<llvm::Value>> getValueStack() const;
 
-	Stack<llvm::Type *> getTypeStack() const;
+	Stack<std::shared_ptr<llvm::Type>> getTypeStack() const;
 
 	std::shared_ptr<Node> visitFunction(std::shared_ptr<Function> node) override;
 
