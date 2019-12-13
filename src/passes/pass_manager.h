@@ -1,7 +1,8 @@
 #pragma once
 
-#include <set>
+#include <vector>
 #include <memory>
+#include "parsing/ast.h"
 #include "pass_manager_item.h"
 
 namespace ionir
@@ -14,21 +15,18 @@ protected:
      * manager items will be both stored
      * and processed from.
      */
-    std::set<std::unique_ptr<PassManagerItem>> passes;
-
-    void visitAstNode(std::shared_ptr<Node> node, Pass *visitor);
+    std::vector<std::unique_ptr<PassManagerItem>> passes;
 
 public:
     PassManager();
 
     /**
-     * Attempt to register a pass in the set.
-     * Returns whether the provided pass was
-     * successfully registered in the internal
-     * set.
+     * Register a pass in the set. Returns whether
+     * the provided pass was successfully registered
+     * in the internal set.
      */
-    bool registerPass(std::unique_ptr<PassManagerItem> item);
+    void registerPass(std::unique_ptr<PassManagerItem> item);
 
-    void run();
+    void run(Ast ast);
 };
 } // namespace ionir

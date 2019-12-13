@@ -3,6 +3,7 @@
 #include <memory>
 #include "code_gen/node.h"
 #include "ast_nodes/function.h"
+#include "ast_nodes/prototype.h"
 #include "ast_nodes/extern.h"
 #include "ast_nodes/block.h"
 #include "ast_nodes/type.h"

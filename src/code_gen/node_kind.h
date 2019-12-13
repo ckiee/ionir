@@ -28,8 +28,6 @@ enum class NodeKind
 
 	Value,
 
-	IfStatement,
-
 	GlobalVariable,
 
 	Section
