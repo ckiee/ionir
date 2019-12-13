@@ -8,7 +8,5 @@ class TypeCheckerPass : public Pass
 {
 public:
     TypeCheckerPass();
-
-    
 };
 } // namespace ionir
