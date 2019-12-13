@@ -15,7 +15,7 @@ protected:
      * manager items will be both stored
      * and processed from.
      */
-    std::vector<std::unique_ptr<PassManagerItem>> passes;
+    std::vector<std::shared_ptr<PassManagerItem>> passes;
 
 public:
     PassManager();
@@ -25,7 +25,7 @@ public:
      * the provided pass was successfully registered
      * in the internal set.
      */
-    void registerPass(std::unique_ptr<PassManagerItem> item);
+    void registerPass(std::shared_ptr<PassManagerItem> item);
 
     void run(Ast ast);
 };

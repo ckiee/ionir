@@ -15,7 +15,7 @@ GotoInst::GotoInst(std::shared_ptr<Scope> scope, std::string target, std::option
 
 std::shared_ptr<Node> GotoInst::accept(Pass *visitor)
 {
-    return visitor->visitGotoInst(this->staticCast<GotoInst>());
+    return visitor->visitGotoInst(this->cast<GotoInst>());
 }
 
 std::string GotoInst::getTarget() const

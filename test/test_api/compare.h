@@ -5,6 +5,7 @@
 #include <string>
 #include "syntax/token.h"
 #include "util.h"
+#include "../pch.h"
 
 namespace ionir::test::compare
 {

@@ -30,7 +30,7 @@ std::shared_ptr<Node> PartialResolverPass::visitGotoInst(std::shared_ptr<GotoIns
     {
     case ScopeKind::Block:
     {
-        std::shared_ptr<Block> block = scope->unwrap()->staticCast<Block>();
+        std::shared_ptr<Block> block = scope->unwrap()->cast<Block>();
         std::vector<std::shared_ptr<Section>> sections = block->getSections();
 
         for (auto section : sections)
@@ -51,7 +51,7 @@ std::shared_ptr<Node> PartialResolverPass::visitGotoInst(std::shared_ptr<GotoIns
 
     default:
     {
-        throw std::runtime_error("Encountered unsupported scope kind");
+        throw std::runtime_error("Unknown scope kind");
     }
     }
 

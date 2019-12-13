@@ -29,9 +29,6 @@ public:
     std::shared_ptr<Node> getPtr();
 
     template <typename T>
-    std::shared_ptr<T> dynamicCast();
-
-    template <typename T>
-    std::shared_ptr<T> staticCast();
+    std::shared_ptr<T> cast();
 };
 } // namespace ionir

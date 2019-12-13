@@ -11,7 +11,7 @@ Function::Function(std::shared_ptr<Prototype> prototype, std::shared_ptr<Block> 
 
 std::shared_ptr<Node> Function::accept(Pass *visitor)
 {
-    return visitor->visitFunction(this->staticCast<Function>());
+    return visitor->visitFunction(this->cast<Function>());
 }
 
 std::shared_ptr<Prototype> Function::getPrototype() const

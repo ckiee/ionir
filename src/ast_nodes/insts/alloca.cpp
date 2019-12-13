@@ -12,7 +12,7 @@ AllocaInst::AllocaInst(std::string id, std::shared_ptr<Type> type)
 
 std::shared_ptr<Node> AllocaInst::accept(Pass *visitor)
 {
-    return visitor->visitAllocaInst(this->staticCast<AllocaInst>());
+    return visitor->visitAllocaInst(this->cast<AllocaInst>());
 }
 
 std::string AllocaInst::getId() const

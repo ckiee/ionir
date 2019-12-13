@@ -28,16 +28,16 @@ Parser parser(std::vector<Token> tokens)
     return ionir::Parser(stream);
 }
 
-Module *module(std::string identifier)
+std::shared_ptr<Module> module(std::string identifier)
 {
     llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
     llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);
 
-    return new Module(llvmModule);
+    return std::make_shared<Module>(llvmModule);
 }
 
-LlvmVisitor *llvmVisitor()
+std::shared_ptr<LlvmVisitor> llvmVisitor()
 {
-    return new LlvmVisitor(module()->unwrap());
+    return std::make_shared<LlvmVisitor>(module()->unwrap());
 }
 } // namespace ionir::test::bootstrap

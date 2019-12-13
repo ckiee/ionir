@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include "syntax/token.h"
 #include "syntax/token_type.h"
@@ -16,7 +17,7 @@ TokenStream tokenStream(int amountOfItems = 1);
 
 Parser parser(std::vector<Token> tokens);
 
-Module *module(std::string identifier = "test");
+std::shared_ptr<Module> module(std::string identifier = "test");
 
-LlvmVisitor *llvmVisitor();
+std::shared_ptr<LlvmVisitor> llvmVisitor();
 } // namespace ionir::test::bootstrap

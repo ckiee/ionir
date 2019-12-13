@@ -11,7 +11,7 @@ Block::Block(std::vector<std::shared_ptr<Section>> sections)
 
 std::shared_ptr<Node> Block::accept(Pass *visitor)
 {
-    return visitor->visitBlock(this->staticCast<Block>());
+    return visitor->visitBlock(this->cast<Block>());
 }
 
 bool Block::verify() const

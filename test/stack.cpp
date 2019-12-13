@@ -29,7 +29,7 @@ TEST(StackTest, TryPop)
 
     stack.push(0);
 
-    std::optional<std::unique_ptr<int>> result = stack.tryPop();
+    std::optional<int> result = stack.tryPop();
 
     EXPECT_TRUE(result.has_value());
     EXPECT_EQ(*result, 0);

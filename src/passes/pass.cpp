@@ -52,17 +52,17 @@ std::shared_ptr<Node> Pass::visitValue(std::shared_ptr<Value> node)
 
     case ValueKind::Character:
     {
-        return this->visitCharValue(node->staticCast<CharValue>());
+        return this->visitCharValue(node->cast<CharValue>());
     }
 
     case ValueKind::Integer:
     {
-        return this->visitIntValue(node->staticCast<IntValue>());
+        return this->visitIntValue(node->cast<IntValue>());
     }
 
     case ValueKind::String:
     {
-        return this->visitStringValue(node->staticCast<StringValue>());
+        return this->visitStringValue(node->cast<StringValue>());
     }
 
     default:
@@ -93,12 +93,12 @@ std::shared_ptr<Node> Pass::visitInst(std::shared_ptr<Inst> node)
     {
     case InstKind::Alloca:
     {
-        return this->visitAllocaInst(node->staticCast<AllocaInst>());
+        return this->visitAllocaInst(node->cast<AllocaInst>());
     }
 
     case InstKind::Branch:
     {
-        return this->visitBranchInst(node->staticCast<BranchInst>());
+        return this->visitBranchInst(node->cast<BranchInst>());
     }
 
         // TODO: Missing break inst.
@@ -107,12 +107,12 @@ std::shared_ptr<Node> Pass::visitInst(std::shared_ptr<Inst> node)
 
     case InstKind::Goto:
     {
-        return this->visitGotoInst(node->staticCast<GotoInst>());
+        return this->visitGotoInst(node->cast<GotoInst>());
     }
 
     case InstKind::Return:
     {
-        return this->visitReturnInst(node->staticCast<ReturnInst>());
+        return this->visitReturnInst(node->cast<ReturnInst>());
     }
 
         // TODO: Missing store inst.

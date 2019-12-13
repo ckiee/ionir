@@ -478,7 +478,7 @@ std::shared_ptr<AllocaInst> Parser::parseAllocaInst()
         throw std::runtime_error("The alloca instruction's resulting identifier must be a string value");
     }
 
-    std::string id = identifierValue->dynamicCast<StringValue>()->getValue();
+    std::string id = identifierValue->cast<StringValue>()->getValue();
     std::shared_ptr<Type> type = this->parseType();
 
     return std::make_shared<AllocaInst>(id, type);

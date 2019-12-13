@@ -14,7 +14,7 @@ TEST(ParserTest, ParseInt)
         Token(TokenType::LiteralInt, "5"),
     });
 
-    IntValue *integer = parser.parseInt();
+    auto integer = parser.parseInt();
 
     EXPECT_EQ(integer->getValue(), 5);
 }
@@ -25,7 +25,7 @@ TEST(ParserTest, ParseChar)
         Token(TokenType::LiteralCharacter, "a"),
     });
 
-    CharValue *character = parser.parseChar();
+    auto character = parser.parseChar();
 
     EXPECT_EQ(character->getValue(), 'a');
 }
@@ -47,7 +47,7 @@ TEST(ParserTest, ParseType)
         Token(TokenType::Identifier, "type"),
     });
 
-    Type *type = parser.parseType();
+    auto type = parser.parseType();
 
     EXPECT_EQ(type->getId(), "type");
     EXPECT_FALSE(type->getIsPointer());
@@ -60,7 +60,7 @@ TEST(ParserTest, ParsePointerType)
         Token(TokenType::SymbolStar, "*"),
     });
 
-    Type *type = parser.parseType();
+    auto type = parser.parseType();
 
     EXPECT_EQ(type->getId(), "type");
     EXPECT_TRUE(type->getIsPointer());
@@ -87,7 +87,7 @@ TEST(ParserTest, ParseEmptyBlock)
         Token(TokenType::SymbolBraceR, "}"),
     });
 
-    Block *block = parser.parseBlock();
+    auto block = parser.parseBlock();
 
     EXPECT_EQ(block->getSections().size(), 0);
 }
@@ -102,9 +102,9 @@ TEST(ParserTest, ParseEmptyPrototype)
         Token(TokenType::Identifier, "type"),
     });
 
-    Prototype *prototype = parser.parsePrototype();
-    Type *returnType = prototype->getReturnType();
-    Args *args = prototype->getArgs();
+    auto prototype = parser.parsePrototype();
+    auto returnType = prototype->getReturnType();
+    auto args = prototype->getArgs();
 
     // Verify return type.
     EXPECT_EQ(returnType->getId(), "type");
@@ -126,7 +126,7 @@ TEST(ParserTest, ParseAllocaInst)
         Token(TokenType::Identifier, "int"),
     });
 
-    Inst *inst = parser.parseInst();
+    auto inst = parser.parseInst();
 
     EXPECT_EQ(inst->getInstKind(), InstKind::Alloca);
 }
@@ -142,9 +142,9 @@ TEST(ParserTest, ParseExtern)
         Token(TokenType::Identifier, "type"),
     });
 
-    Extern *externNode = parser.parseExtern();
-    Prototype *prototype = externNode->getPrototype();
-    Args *args = prototype->getArgs();
+    auto externNode = parser.parseExtern();
+    auto prototype = externNode->getPrototype();
+    auto args = prototype->getArgs();
 
     // Verify prototype.
     EXPECT_EQ(prototype->getId(), "foobar");

@@ -11,7 +11,7 @@ BinaryExpr::BinaryExpr(BinaryExprOpts opts)
 
 std::shared_ptr<Node> BinaryExpr::accept(Pass *visitor)
 {
-    return visitor->visitBinaryExpr(this->staticCast<BinaryExpr>());
+    return visitor->visitBinaryExpr(this->cast<BinaryExpr>());
 }
 
 std::shared_ptr<Node> BinaryExpr::getLeftSide() const

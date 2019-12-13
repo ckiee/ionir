@@ -1,102 +1,105 @@
-#include "llvm/IR/Module.h"
-#include "llvm/IR/LLVMContext.h"
-#include "code_gen/llvm_visitor.h"
-#include "ast_nodes/values/integer_kind.h"
-#include "ast_nodes/values/integer.h"
-#include "ast_nodes/global_var.h"
-#include "ast_nodes/function.h"
-#include "ast_nodes/block.h"
-#include "llvm/module.h"
-#include "test_api/bootstrap.h"
-#include "test_api/compare.h"
-#include "misc/constants.h"
-#include "pch.h"
+// #include <memory>
+// #include "llvm/IR/Module.h"
+// #include "llvm/IR/LLVMContext.h"
+// #include "code_gen/llvm_visitor.h"
+// #include "ast_nodes/values/integer_kind.h"
+// #include "ast_nodes/values/integer.h"
+// #include "ast_nodes/global_var.h"
+// #include "ast_nodes/function.h"
+// #include "ast_nodes/block.h"
+// #include "llvm/module.h"
+// #include "test_api/bootstrap.h"
+// #include "test_api/compare.h"
+// #include "misc/constants.h"
+// #include "pch.h"
 
-using namespace ionir;
+// using namespace ionir;
 
-TEST(CodeGenTest, VisitExtern)
-{
-    LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
-    Type *returnType = new Type("void");
-    Prototype *prototype = new Prototype("testExtern", new Args(), returnType);
-    Extern *externNode = new Extern(prototype);
+// TEST(CodeGenTest, VisitExtern)
+// {
+//     std::shared_ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+//     std::shared_ptr<Type> returnType = std::make_shared<Type>("void");
+//     std::shared_ptr<Args> args = std::make_shared<Args>();
+//     std::shared_ptr<Prototype> prototype = std::make_shared<Prototype>("testExtern", args, returnType);
+//     std::shared_ptr<Extern> externNode = std::make_shared<Extern>(prototype);
 
-    visitor->visitExtern(externNode);
+//     visitor->visitExtern(externNode);
 
-    Module *module = new Module(visitor->getModule());
+//     std::shared_ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    EXPECT_TRUE(test::compare::ir(module->getAsString(), "extern_simple"));
+//     EXPECT_TRUE(test::compare::ir(module->getAsString(), "extern_simple"));
+// }
 
-    delete externNode;
-}
+// TEST(CodeGenTest, VisitEmptyFunction)
+// {
+//     std::shared_ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+//     std::shared_ptr<Type> returnType = std::make_shared<Type>("void");
+//     std::shared_ptr<Prototype> prototype = std::make_shared<Prototype>("foobar", new Args(), returnType);
 
-TEST(CodeGenTest, VisitEmptyFunction)
-{
-    LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
+//     std::shared_ptr<Block> body = std::make_shared<Block>({
+//         std::make_shared<Section>(SectionKind::Entry, Const::sectionEntryId),
+//     });
 
-    Type *returnType = new Type("void");
-    Prototype *prototype = new Prototype("foobar", new Args(), returnType);
+//     std::shared_ptr<Function> function = std::make_shared<Function>(prototype, body);
 
-    Block *body = new Block({
-        new Section(SectionKind::Entry, Const::sectionInternalPrefix),
-    });
+//     visitor->visitFunction(function);
 
-    Function *function = new Function(prototype, body);
+//     EXPECT_TRUE(true);
 
-    visitor->visitFunction(function);
+//     // TODO
+//     // Module *module = new Module(visitor->getModule());
 
-    EXPECT_TRUE(true);
+//     // EXPECT_TRUE(test::compare::ir(module->getAsString(), "function_empty"));
+// }
 
-    // TODO
-    // Module *module = new Module(visitor->getModule());
+// TEST(CodeGenTest, VisitEmptyGlobalVar)
+// {
+//     std::shared_ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
-    // EXPECT_TRUE(test::compare::ir(module->getAsString(), "function_empty"));
-}
+//     // TODO: GlobalVar's type is hardcoded to double.
+//     std::shared_ptr<Type> type = std::make_shared<Type>("int", false);
+//     std::shared_ptr<GlobalVar> globalVar = std::make_shared<GlobalVar>(type, "test");
 
-TEST(CodeGenTest, VisitEmptyGlobalVar)
-{
-    LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
+//     visitor->visitGlobalVar(globalVar);
 
-    // TODO: GlobalVar's type is hardcoded to double.
-    Type *type = new Type("int", false);
-    GlobalVar *globalVar = new GlobalVar(type, "test");
+//     std::shared_ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    visitor->visitGlobalVar(globalVar);
+//     EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_var_empty"));
+// }
 
-    Module *module = new Module(visitor->getModule());
+// TEST(CodeGenTest, VisitGlobalVar)
+// {
+//     std::shared_ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
-    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_var_empty"));
-}
+//     // TODO: GlobalVar's type is hardcoded to double.
+//     std::shared_ptr<Type> type = std::make_shared<Type>("int", false);
+//     std::shared_ptr<GlobalVar> globalVar = std::make_shared<GlobalVar>(type, "test", new IntValue(IntegerKind::Int32, 123));
 
-TEST(CodeGenTest, VisitGlobalVar)
-{
-    LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
+//     visitor->visitGlobalVar(globalVar);
 
-    // TODO: GlobalVar's type is hardcoded to double.
-    Type *type = new Type("int", false);
-    GlobalVar *globalVar = new GlobalVar(type, "test", new IntValue(IntegerKind::Int32, 123));
+//     std::shared_ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    visitor->visitGlobalVar(globalVar);
+//     EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_var"));
+// }
 
-    Module *module = new Module(visitor->getModule());
+// TEST(CodeGenTest, VisitBranchInst)
+// {
+//     std::shared_ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
-    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_var"));
-}
+//     std::shared_ptr<Type> returnType = std::make_shared<Type>("void");
+//     std::shared_ptr<Prototype> prototype = std::make_shared<Prototype>("foobar", new Args(), returnType);
 
-TEST(CodeGenTest, VisitIfStmt)
-{
-    LlvmVisitor *visitor = test::bootstrap::llvmVisitor();
+//     std::shared_ptr<Block> functionBody = std::make_shared<Block>({
+//         std::make_shared<Section>(SectionKind::Entry, "entry"),
+//     });
 
-    Type *returnType = new Type("void");
-    Prototype *prototype = new Prototype("foobar", new Args(), returnType);
-    Block *functionBody = new Block({new Section(SectionKind::Entry, "entry")});
-    Function *function = new Function(prototype, functionBody);
+//     std::shared_ptr<Function> function = std::make_shared<Function>(prototype, functionBody);
 
-    visitor->visitFunction(function);
+//     visitor->visitFunction(function);
 
-    Module *module = new Module(visitor->getModule());
+//     std::shared_ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    module->print();
+//     module->print();
 
-    // EXPECT_TRUE(test::compare::ir(module->getAsString(), "function_empty"));
-}
+//     // EXPECT_TRUE(test::compare::ir(module->getAsString(), "function_empty"));
+// }

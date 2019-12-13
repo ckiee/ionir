@@ -11,7 +11,7 @@ StringValue::StringValue(std::string value) : Value(ValueKind::String), value(va
 
 std::shared_ptr<Node> StringValue::accept(Pass *visitor)
 {
-    return visitor->visitStringValue(this->staticCast<StringValue>());
+    return visitor->visitStringValue(this->cast<StringValue>());
 }
 
 std::string StringValue::getValue() const
