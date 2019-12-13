@@ -523,7 +523,7 @@ std::shared_ptr<BranchInst> Parser::parseBranchInst()
 std::shared_ptr<GotoInst> Parser::parseGotoInst()
 {
     std::string target = this->parseId();
-    std::shared_ptr<GotoInst> gotoInst = std::make_shared<GotoInst>(this->createNotice, target);
+    std::shared_ptr<GotoInst> gotoInst = std::make_shared<GotoInst>(this->createScope(), target);
 
     // TODO: createScope has not been defined yet.
     return gotoInst;

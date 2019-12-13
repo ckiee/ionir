@@ -27,7 +27,7 @@ public:
 
     void push(T item)
     {
-        this->value.push(std::make_shared<T>(item));
+        this->value.push(item);
     }
 
     T pop()
