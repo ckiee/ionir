@@ -1,6 +1,3 @@
-// TODO: Do we need this?
-#include "passes/pass.h"
-
 #include "node.h"
 
 namespace ionir
