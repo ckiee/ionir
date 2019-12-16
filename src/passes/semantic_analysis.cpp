@@ -1,12 +1,12 @@
 #include <optional>
 #include "ast_nodes/section.h"
-#include "semantic_analysis.h"
 #include "ast_nodes/inst_kind.h"
 #include "ast_nodes/insts/return.h"
+#include "semantic_analysis.h"
 
 namespace ionir
 {
-std::shared_ptr<Node> SemanticAnalysisPass::visitFunction(std::shared_ptr<Function> node)
+void SemanticAnalysisPass::functionReturnCheck(std::shared_ptr<Function> node)
 {
     // TODO: Hard-coded id.
     if (node->getPrototype()->getReturnType()->getId() != "void")
@@ -31,5 +31,12 @@ std::shared_ptr<Node> SemanticAnalysisPass::visitFunction(std::shared_ptr<Functi
             }
         }
     }
+}
+
+std::shared_ptr<Node> SemanticAnalysisPass::visitFunction(std::shared_ptr<Function> node)
+{
+    this->functionReturnCheck(node);
+
+    return node;
 }
 } // namespace ionir

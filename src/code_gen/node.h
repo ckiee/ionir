@@ -28,7 +28,10 @@ public:
 
     std::shared_ptr<Node> getPtr();
 
-    template <typename T>
-    std::shared_ptr<T> cast();
+    template <class T>
+    std::shared_ptr<T> cast()
+    {
+        return std::static_pointer_cast<T>(this->shared_from_this());
+    }
 };
 } // namespace ionir

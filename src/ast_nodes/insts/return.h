@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <memory>
 #include <string>
 #include "ast_nodes/inst.h"

@@ -12,6 +12,8 @@ class SemanticAnalysisPass : public Pass
 public:
     SemanticAnalysisPass();
 
+    void functionReturnCheck(std::shared_ptr<Function> node);
+
     std::shared_ptr<Node> visitFunction(std::shared_ptr<Function> node) override;
 };
 } // namespace ionir

@@ -24,10 +24,4 @@ std::shared_ptr<Node> Node::getPtr()
 {
     return this->shared_from_this();
 }
-
-template <typename T>
-std::shared_ptr<T> Node::cast()
-{
-    return static_cast<T>(this);
-}
 } // namespace ionir

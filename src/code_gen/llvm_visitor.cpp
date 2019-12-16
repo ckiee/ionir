@@ -125,7 +125,7 @@ std::shared_ptr<Node> LlvmVisitor::visitSection(std::shared_ptr<Section> node)
     for (const auto inst : insts)
     {
         // Visit the instruction.
-        this->visit(inst);
+        this->visitInst(inst);
 
         // Clean the stack off the result.
         this->valueStack.pop();
@@ -391,7 +391,7 @@ std::shared_ptr<Node> LlvmVisitor::visitStringValue(std::shared_ptr<StringValue>
 
 std::shared_ptr<Node> LlvmVisitor::visitAllocaInst(std::shared_ptr<AllocaInst> node)
 {
-    this->visit(node->getType());
+    this->visitType(node->getType());
 
     llvm::Type *type = this->typeStack.pop();
 
@@ -409,16 +409,22 @@ std::shared_ptr<Node> LlvmVisitor::visitAllocaInst(std::shared_ptr<AllocaInst> n
 
 std::shared_ptr<Node> LlvmVisitor::visitReturnInst(std::shared_ptr<ReturnInst> node)
 {
-    this->visit(node->getValue());
+    std::optional<std::shared_ptr<Value>> value = node->getValue();
+    llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
 
-    llvm::Value *value = this->valueStack.pop();
+    if (value.has_value())
+    {
+        this->visit(*value);
 
-    /**
-     * Create the LLVM equivalent return instruction
-     * using the buffered builder.
-     */
-    llvm::ReturnInst *returnInst =
-        this->builder->CreateRet(value);
+        llvm::Value *value = this->valueStack.pop();
+
+        /**
+         * Create the LLVM equivalent return instruction
+         * using the buffered builder.
+         */
+        llvm::ReturnInst *returnInst =
+            this->builder->CreateRet(value);
+    }
 
     this->valueStack.push(returnInst);
 
