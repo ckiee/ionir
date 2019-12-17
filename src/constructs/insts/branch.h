@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <optional>
-#include "ast_constructs/inst.h"
-#include "ast_constructs/section.h"
-#include "ast_constructs/binary_expr.h"
+#include "constructs/inst.h"
+#include "constructs/section.h"
+#include "constructs/binary_expr.h"
 #include "misc/helpers.h"
 
 namespace ionir

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "code_gen/node.h"
-#include "ast_constructs/prototype.h"
+#include "constructs/prototype.h"
 #include "misc/helpers.h"
 #include "value_kind.h"
 

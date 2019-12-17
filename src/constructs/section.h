@@ -3,9 +3,9 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "ast_constructs/type.h"
-#include "ast_constructs/args.h"
-#include "ast_constructs/inst.h"
+#include "constructs/type.h"
+#include "constructs/args.h"
+#include "constructs/inst.h"
 #include "code_gen/node.h"
 #include "section_kind.h"
 #include "misc/helpers.h"

@@ -3,10 +3,10 @@
 #include <optional>
 #include <memory>
 #include <string>
-#include "ast_constructs/inst.h"
-#include "ast_constructs/inst_kind.h"
-#include "ast_constructs/type.h"
-#include "ast_constructs/value.h"
+#include "constructs/inst.h"
+#include "constructs/inst_kind.h"
+#include "constructs/type.h"
+#include "constructs/value.h"
 #include "misc/helpers.h"
 
 namespace ionir

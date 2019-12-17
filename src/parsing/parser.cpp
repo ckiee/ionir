@@ -2,8 +2,8 @@
 #include <utility>
 #include <vector>
 #include <exception>
-#include "ast_constructs/binary_expr.h"
-#include "ast_constructs/section_kind.h"
+#include "constructs/binary_expr.h"
+#include "constructs/section_kind.h"
 #include "misc/util.h"
 #include "constants/constants.h"
 #include "parser.h"

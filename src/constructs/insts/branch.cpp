@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "ast_constructs/inst_kind.h"
+#include "constructs/inst_kind.h"
 #include "branch.h"
 
 namespace ionir

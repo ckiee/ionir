@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ast_constructs/value.h"
+#include "constructs/value.h"
 #include "misc/helpers.h"
 #include "integer_kind.h"
 

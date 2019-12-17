@@ -3,8 +3,8 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "ast_constructs/type.h"
-#include "ast_constructs/args.h"
+#include "constructs/type.h"
+#include "constructs/args.h"
 #include "code_gen/node.h"
 #include "misc/helpers.h"
 

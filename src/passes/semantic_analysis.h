@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "code_gen/node.h"
-#include "ast_constructs/function.h"
+#include "constructs/function.h"
 #include "misc/helpers.h"
 #include "pass.h"
 

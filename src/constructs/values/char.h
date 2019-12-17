@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "ast_constructs/value.h"
+#include "constructs/value.h"
 #include "misc/helpers.h"
 
 namespace ionir

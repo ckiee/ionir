@@ -1,12 +1,12 @@
 #pragma once
 
-#include "ast_constructs/inst.h"
-#include "ast_constructs/section.h"
-#include "ast_constructs/insts/alloca.h"
-#include "ast_constructs/insts/branch.h"
-#include "ast_constructs/insts/goto.h"
-#include "ast_constructs/insts/return.h"
-#include "ast_constructs/insts/call.h"
+#include "constructs/inst.h"
+#include "constructs/section.h"
+#include "constructs/insts/alloca.h"
+#include "constructs/insts/branch.h"
+#include "constructs/insts/goto.h"
+#include "constructs/insts/return.h"
+#include "constructs/insts/call.h"
 #include "misc/helpers.h"
 
 namespace ionir

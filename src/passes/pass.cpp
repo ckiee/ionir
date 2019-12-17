@@ -1,6 +1,6 @@
 #include <iostream>
 #include <exception>
-#include "ast_constructs/value_kind.h"
+#include "constructs/value_kind.h"
 #include "pass.h"
 
 namespace ionir

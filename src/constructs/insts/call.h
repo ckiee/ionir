@@ -5,20 +5,20 @@
 #include <string>
 #include "parsing/partial_inst.h"
 #include "parsing/scope.h"
-#include "ast_constructs/section.h"
+#include "constructs/function.h"
 #include "misc/helpers.h"
 
 namespace ionir
 {
 class Pass;
 
-class GotoInst : public PartialInst<Ptr<Section>>
+class CallInst : public PartialInst<Ptr<Function>>
 {
 protected:
     std::string target;
 
 public:
-    GotoInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Section>> section = std::nullopt);
+    CallInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Function>> callee = std::nullopt);
 
     Ptr<Construct> accept(Pass *visitor) override;
 
@@ -26,8 +26,8 @@ public:
 
     void setTarget(std::string target);
 
-    std::optional<Ptr<Section>> getSection() const;
+    std::optional<Ptr<Function>> getCallee() const;
 
-    void setSection(Ptr<Section> section);
+    void setCallee(Ptr<Function> callee);
 };
 } // namespace ionir

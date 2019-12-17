@@ -3,7 +3,7 @@
 #include "pch.h"
 #include "parsing/parser.h"
 #include "syntax/token.h"
-#include "ast_constructs/inst_kind.h"
+#include "constructs/inst_kind.h"
 #include "test_api/bootstrap.h"
 
 using namespace ionir;

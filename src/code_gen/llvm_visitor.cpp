@@ -5,8 +5,8 @@
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Constant.h"
-#include "ast_constructs/inst_kind.h"
-#include "ast_constructs/value.h"
+#include "constructs/inst_kind.h"
+#include "constructs/value.h"
 #include "misc/util.h"
 
 namespace ionir

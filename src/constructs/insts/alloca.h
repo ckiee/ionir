@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <string>
-#include "ast_constructs/inst.h"
-#include "ast_constructs/inst_kind.h"
-#include "ast_constructs/type.h"
+#include "constructs/inst.h"
+#include "constructs/inst_kind.h"
+#include "constructs/type.h"
 #include "misc/helpers.h"
 
 namespace ionir
