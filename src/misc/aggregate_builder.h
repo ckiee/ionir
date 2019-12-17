@@ -3,15 +3,12 @@
 #include <vector>
 #include "code_gen/node.h"
 #include "misc/helpers.h"
-#include "builder.h"
 
 namespace ionir
 {
 class AggregateBuilder
 {
 protected:
-    Ptr<Builder> builder;
-
     std::vector<Construct> parts;
 
 public:
