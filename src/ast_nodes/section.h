@@ -34,7 +34,7 @@ public:
 
     void setId(std::string id);
 
-    std::vector<Ptr<Inst>> getInsts() const;
+    std::vector<Ptr<Inst>> &getInsts();
 
     void setInsts(std::vector<Ptr<Inst>> insts);
 };

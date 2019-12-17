@@ -1,14 +1,14 @@
 #pragma once
 
 #include "ast_nodes/value.h"
-#include "integer_kind.h"
 #include "misc/helpers.h"
+#include "integer_kind.h"
 
 namespace ionir
 {
 class Pass;
 
-class IntValue : public Value
+class IntegerValue : public Value
 {
 protected:
     IntegerKind kind;
@@ -16,7 +16,7 @@ protected:
     long value;
 
 public:
-    IntValue(IntegerKind kind, long value);
+    IntegerValue(IntegerKind kind, long value);
 
     Ptr<Node> accept(Pass *visitor) override;
 

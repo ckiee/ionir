@@ -13,6 +13,7 @@
 #include "ast_nodes/values/integer.h"
 #include "ast_nodes/values/char.h"
 #include "ast_nodes/values/string.h"
+#include "ast_nodes/values/boolean.h"
 #include "ast_nodes/inst.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/branch.h"
@@ -43,11 +44,13 @@ public:
 
     virtual Ptr<Node> visitValue(Ptr<Value> node);
 
-    virtual Ptr<Node> visitIntValue(Ptr<IntValue> node);
+    virtual Ptr<Node> visitIntegerValue(Ptr<IntegerValue> node);
 
     virtual Ptr<Node> visitCharValue(Ptr<CharValue> node);
 
     virtual Ptr<Node> visitStringValue(Ptr<StringValue> node);
+
+    virtual Ptr<Node> visitBooleanValue(Ptr<BooleanValue> node);
 
     virtual Ptr<Node> visitInst(Ptr<Inst> node);
 

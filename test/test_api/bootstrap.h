@@ -21,4 +21,6 @@ Parser parser(std::vector<Token> tokens);
 Ptr<Module> module(std::string identifier = "test");
 
 Ptr<LlvmVisitor> llvmVisitor();
+
+Ptr<Function> emptyFunction();
 } // namespace ionir::test::bootstrap

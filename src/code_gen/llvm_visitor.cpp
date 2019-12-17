@@ -1,3 +1,4 @@
+#include <iostream>
 #include <exception>
 #include "llvm_visitor.h"
 #include "llvm/ADT/APInt.h"
@@ -302,7 +303,7 @@ Ptr<Node> LlvmVisitor::visitPrototype(Ptr<Prototype> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitIntValue(Ptr<IntValue> node)
+Ptr<Node> LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node)
 {
     /**
      * Create the APInt to provide. Acts sort of an
@@ -433,10 +434,13 @@ Ptr<Node> LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
 
 Ptr<Node> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
 {
+    std::cout << "Visit branch inst" << std::endl;
     // Visit condition.
     this->visit(node->getCondition());
 
     llvm::Value *condition = this->valueStack.pop();
+
+    std::cout << "Visit branch inst (2)" << std::endl;
 
     // Visit body.
     this->visit(node->getBody());
@@ -454,8 +458,12 @@ Ptr<Node> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
         otherwise = (llvm::BasicBlock *)this->valueStack.pop();
     }
 
+    std::cout << "Visit branch inst (3)" << std::endl;
+
     // Create the LLVM branch instruction.
     this->builder->CreateCondBr(condition, body, otherwise.value_or(nullptr));
+
+    std::cout << "Visit branch inst (end)" << std::endl;
 
     return node;
 }

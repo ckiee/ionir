@@ -16,9 +16,9 @@
 #include "ast_nodes/block.h"
 #include "ast_nodes/section.h"
 #include "ast_nodes/inst.h"
-#include "misc/notice.h"
-#include "misc/notice_context.h"
-#include "misc/notice_type.h"
+#include "reporting/notice.h"
+#include "reporting/notice_context.h"
+#include "reporting/notice_type.h"
 #include "misc/helpers.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
@@ -64,7 +64,7 @@ public:
      * Parses a integer literal in the form of
      * long (or integer 64).
      */
-    Ptr<IntValue> parseInt();
+    Ptr<IntegerValue> parseInt();
 
     Ptr<CharValue> parseChar();
 

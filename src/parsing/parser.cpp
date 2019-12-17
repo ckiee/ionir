@@ -5,7 +5,7 @@
 #include "ast_nodes/binary_expr.h"
 #include "ast_nodes/section_kind.h"
 #include "misc/util.h"
-#include "misc/constants.h"
+#include "constants/constants.h"
 #include "parser.h"
 
 namespace ionir
@@ -94,7 +94,7 @@ Ptr<Node> Parser::parseTopLevel()
     }
 }
 
-Ptr<IntValue> Parser::parseInt()
+Ptr<IntegerValue> Parser::parseInt()
 {
     this->expect(TokenType::LiteralInt);
 
@@ -131,7 +131,7 @@ Ptr<IntValue> Parser::parseInt()
     }
 
     // Create the integer instance.
-    Ptr<IntValue> integer = std::make_shared<IntValue>(*kind, value);
+    Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(*kind, value);
 
     // Skip current token.
     this->stream->tryNext();

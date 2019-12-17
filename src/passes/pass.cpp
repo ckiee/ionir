@@ -1,3 +1,4 @@
+#include <iostream>
 #include <exception>
 #include "ast_nodes/value_kind.h"
 #include "pass.h"
@@ -57,7 +58,7 @@ Ptr<Node> Pass::visitValue(Ptr<Value> node)
 
     case ValueKind::Integer:
     {
-        return this->visitIntValue(node->cast<IntValue>());
+        return this->visitIntegerValue(node->cast<IntegerValue>());
     }
 
     case ValueKind::String:
@@ -72,7 +73,7 @@ Ptr<Node> Pass::visitValue(Ptr<Value> node)
     }
 }
 
-Ptr<Node> Pass::visitIntValue(Ptr<IntValue> node)
+Ptr<Node> Pass::visitIntegerValue(Ptr<IntegerValue> node)
 {
     return node;
 }
@@ -87,8 +88,15 @@ Ptr<Node> Pass::visitStringValue(Ptr<StringValue> node)
     return node;
 }
 
+Ptr<Node> visitBooleanValue(Ptr<BooleanValue> node)
+{
+    return node;
+}
+
 Ptr<Node> Pass::visitInst(Ptr<Inst> node)
 {
+    std::cout << "Visit inst" << std::endl;
+
     switch (node->getInstKind())
     {
     case InstKind::Alloca:

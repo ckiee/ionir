@@ -21,7 +21,7 @@ private:
     std::optional<Ptr<Section>> otherwise;
 
 public:
-    BranchInst(Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
+    BranchInst(Ptr<BinaryExpr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
 
     Ptr<Node> accept(Pass *visitor) override;
 

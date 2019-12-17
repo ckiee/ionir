@@ -79,7 +79,7 @@ public:
 
 	Ptr<Node> visitPrototype(Ptr<Prototype> node) override;
 
-	Ptr<Node> visitIntValue(Ptr<IntValue> node) override;
+	Ptr<Node> visitIntegerValue(Ptr<IntegerValue> node) override;
 
 	Ptr<Node> visitCharValue(Ptr<CharValue> node) override;
 

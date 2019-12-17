@@ -40,4 +40,19 @@ Ptr<LlvmVisitor> llvmVisitor()
 {
     return std::make_shared<LlvmVisitor>(module()->unwrap());
 }
+
+Ptr<Function> emptyFunction()
+{
+    Ptr<Type> returnType = std::make_shared<Type>("void");
+    Ptr<Prototype> prototype = std::make_shared<Prototype>("foobar", std::make_shared<Args>(), returnType);
+    Ptr<Section> entrySection = std::make_shared<Section>(SectionKind::Entry, "entry");
+
+    std::vector<Ptr<Section>> sections = {
+        entrySection,
+    };
+
+    Ptr<Block> functionBody = std::make_shared<Block>(sections);
+
+    return std::make_shared<Function>(prototype, functionBody);
+}
 } // namespace ionir::test::bootstrap

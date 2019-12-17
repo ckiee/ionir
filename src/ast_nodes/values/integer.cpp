@@ -4,28 +4,28 @@
 
 namespace ionir
 {
-IntValue::IntValue(IntegerKind kind, long value)
+IntegerValue::IntegerValue(IntegerKind kind, long value)
     : Value(ValueKind::Integer), kind(kind), value(value)
 {
     //
 }
 
-Ptr<Node> IntValue::accept(Pass *visitor)
+Ptr<Node> IntegerValue::accept(Pass *visitor)
 {
-    return visitor->visitIntValue(this->cast<IntValue>());
+    return visitor->visitIntegerValue(this->cast<IntegerValue>());
 }
 
-IntegerKind IntValue::getIntKind() const
+IntegerKind IntegerValue::getIntKind() const
 {
     return this->kind;
 }
 
-long IntValue::getValue() const
+long IntegerValue::getValue() const
 {
     return this->value;
 }
 
-void IntValue::setValue(long value)
+void IntegerValue::setValue(long value)
 {
     this->value = value;
 }
