@@ -4,12 +4,12 @@
 namespace ionir
 {
 GlobalVar::GlobalVar(Ptr<Type> type, std::string id, std::optional<Ptr<Value>> value)
-    : Node(NodeKind::GlobalVariable), type(type), id(id), value(value)
+    : Construct(ConstructKind::GlobalVariable), type(type), id(id), value(value)
 {
     //
 }
 
-Ptr<Node> GlobalVar::accept(Pass *visitor)
+Ptr<Construct> GlobalVar::accept(Pass *visitor)
 {
     return visitor->visitGlobalVar(this->cast<GlobalVar>());
 }

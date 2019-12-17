@@ -5,8 +5,8 @@
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Constant.h"
-#include "ast_nodes/inst_kind.h"
-#include "ast_nodes/value.h"
+#include "ast_constructs/inst_kind.h"
+#include "ast_constructs/value.h"
 #include "misc/util.h"
 
 namespace ionir
@@ -56,7 +56,7 @@ LlvmVisitor::~LlvmVisitor()
     this->typeStack.clear();
 }
 
-Ptr<Node> LlvmVisitor::visitFunction(Ptr<Function> node)
+Ptr<Construct> LlvmVisitor::visitFunction(Ptr<Function> node)
 {
     if (!node->verify())
     {
@@ -90,7 +90,7 @@ Ptr<Node> LlvmVisitor::visitFunction(Ptr<Function> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitExtern(Ptr<Extern> node)
+Ptr<Construct> LlvmVisitor::visitExtern(Ptr<Extern> node)
 {
     if (node->getPrototype() == nullptr)
     {
@@ -108,7 +108,7 @@ Ptr<Node> LlvmVisitor::visitExtern(Ptr<Extern> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitSection(Ptr<Section> node)
+Ptr<Construct> LlvmVisitor::visitSection(Ptr<Section> node)
 {
     // Function buffer must not be null.
     this->requireFunction();
@@ -147,7 +147,7 @@ Ptr<Node> LlvmVisitor::visitSection(Ptr<Section> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitBlock(Ptr<Block> node)
+Ptr<Construct> LlvmVisitor::visitBlock(Ptr<Block> node)
 {
     // Verify the block before continuing.
     if (!node->verify())
@@ -182,7 +182,7 @@ Ptr<Node> LlvmVisitor::visitBlock(Ptr<Block> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitType(Ptr<Type> node)
+Ptr<Construct> LlvmVisitor::visitType(Ptr<Type> node)
 {
     // TODO: Hard-coded double type.
     llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
@@ -198,7 +198,7 @@ Ptr<Node> LlvmVisitor::visitType(Ptr<Type> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
+Ptr<Construct> LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
 {
     // Ensure builder is instantiated.
     this->requireBuilder();
@@ -230,7 +230,7 @@ Ptr<Node> LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitPrototype(Ptr<Prototype> node)
+Ptr<Construct> LlvmVisitor::visitPrototype(Ptr<Prototype> node)
 {
     // Retrieve argument count from the argument vector.
     uint32_t argumentCount = node->getArgs()->getItems().size();
@@ -303,7 +303,7 @@ Ptr<Node> LlvmVisitor::visitPrototype(Ptr<Prototype> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node)
+Ptr<Construct> LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node)
 {
     /**
      * Create the APInt to provide. Acts sort of an
@@ -371,14 +371,14 @@ Ptr<Node> LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitCharValue(Ptr<CharValue> node)
+Ptr<Construct> LlvmVisitor::visitCharValue(Ptr<CharValue> node)
 {
     // TODO
 
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitStringValue(Ptr<StringValue> node)
+Ptr<Construct> LlvmVisitor::visitStringValue(Ptr<StringValue> node)
 {
     // Create the global string pointer.
     llvm::Constant *value =
@@ -390,7 +390,7 @@ Ptr<Node> LlvmVisitor::visitStringValue(Ptr<StringValue> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node)
+Ptr<Construct> LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node)
 {
     this->visitType(node->getType());
 
@@ -408,7 +408,7 @@ Ptr<Node> LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
+Ptr<Construct> LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
 {
     std::optional<Ptr<Value>> value = node->getValue();
     llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
@@ -432,7 +432,7 @@ Ptr<Node> LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
+Ptr<Construct> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
 {
     std::cout << "Visit branch inst" << std::endl;
     // Visit condition.
@@ -468,7 +468,7 @@ Ptr<Node> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
     return node;
 }
 
-Ptr<Node> LlvmVisitor::visitGlobalVar(Ptr<GlobalVar> node)
+Ptr<Construct> LlvmVisitor::visitGlobalVar(Ptr<GlobalVar> node)
 {
     this->visitType(node->getType());
 

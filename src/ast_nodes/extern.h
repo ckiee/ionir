@@ -3,14 +3,14 @@
 #include <memory>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
-#include "ast_nodes/prototype.h"
+#include "ast_constructs/prototype.h"
 #include "misc/helpers.h"
 
 namespace ionir
 {
 class Pass;
 
-class Extern : public Node
+class Extern : public Construct
 {
 private:
 	Ptr<Prototype> prototype;
@@ -18,7 +18,7 @@ private:
 public:
 	Extern(Ptr<Prototype> prototype);
 
-	Ptr<Node> accept(Pass *visitor) override;
+	Ptr<Construct> accept(Pass *visitor) override;
 
 	Ptr<Prototype> getPrototype() const;
 

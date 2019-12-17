@@ -5,25 +5,25 @@
 #include <string>
 #include "syntax/token.h"
 #include "syntax/token_identifier.h"
-#include "ast_nodes/values/integer.h"
-#include "ast_nodes/values/char.h"
-#include "ast_nodes/values/string.h"
-#include "ast_nodes/extern.h"
-#include "ast_nodes/function.h"
-#include "ast_nodes/global_var.h"
-#include "ast_nodes/args.h"
-#include "ast_nodes/prototype.h"
-#include "ast_nodes/block.h"
-#include "ast_nodes/section.h"
-#include "ast_nodes/inst.h"
+#include "ast_constructs/values/integer.h"
+#include "ast_constructs/values/char.h"
+#include "ast_constructs/values/string.h"
+#include "ast_constructs/extern.h"
+#include "ast_constructs/function.h"
+#include "ast_constructs/global_var.h"
+#include "ast_constructs/args.h"
+#include "ast_constructs/prototype.h"
+#include "ast_constructs/block.h"
+#include "ast_constructs/section.h"
+#include "ast_constructs/inst.h"
 #include "reporting/notice.h"
 #include "reporting/notice_context.h"
 #include "reporting/notice_type.h"
 #include "misc/helpers.h"
-#include "ast_nodes/insts/alloca.h"
-#include "ast_nodes/insts/return.h"
-#include "ast_nodes/insts/branch.h"
-#include "ast_nodes/insts/goto.h"
+#include "ast_constructs/insts/alloca.h"
+#include "ast_constructs/insts/return.h"
+#include "ast_constructs/insts/branch.h"
+#include "ast_constructs/insts/goto.h"
 #include "partial_inst.h"
 
 namespace ionir
@@ -58,7 +58,7 @@ public:
 
     std::vector<Notice> getNotices() const;
 
-    Ptr<Node> parseTopLevel();
+    Ptr<Construct> parseTopLevel();
 
     /**
      * Parses a integer literal in the form of
@@ -88,9 +88,9 @@ public:
 
     Ptr<Value> parseValue();
 
-    std::optional<Ptr<Node>> parsePrimaryExpr();
+    std::optional<Ptr<Construct>> parsePrimaryExpr();
 
-    Ptr<Node> parseBinaryExprRightSide(Ptr<Node> leftSide, int minimalPrecedence);
+    Ptr<Construct> parseBinaryExprRightSide(Ptr<Construct> leftSide, int minimalPrecedence);
 
     Ptr<Section> parseSection();
 

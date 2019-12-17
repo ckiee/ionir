@@ -9,20 +9,20 @@
 #include "llvm/IR/Value.h"
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
-#include "ast_nodes/values/integer.h"
-#include "ast_nodes/values/char.h"
-#include "ast_nodes/values/string.h"
-#include "ast_nodes/type.h"
-#include "ast_nodes/block.h"
-#include "ast_nodes/binary_expr.h"
-#include "ast_nodes/function.h"
-#include "ast_nodes/extern.h"
-#include "ast_nodes/prototype.h"
-#include "ast_nodes/global_var.h"
-#include "ast_nodes/inst.h"
-#include "ast_nodes/insts/branch.h"
-#include "ast_nodes/insts/alloca.h"
-#include "ast_nodes/insts/return.h"
+#include "ast_constructs/values/integer.h"
+#include "ast_constructs/values/char.h"
+#include "ast_constructs/values/string.h"
+#include "ast_constructs/type.h"
+#include "ast_constructs/block.h"
+#include "ast_constructs/binary_expr.h"
+#include "ast_constructs/function.h"
+#include "ast_constructs/extern.h"
+#include "ast_constructs/prototype.h"
+#include "ast_constructs/global_var.h"
+#include "ast_constructs/inst.h"
+#include "ast_constructs/insts/branch.h"
+#include "ast_constructs/insts/alloca.h"
+#include "ast_constructs/insts/return.h"
 #include "misc/stack.h"
 #include "misc/helpers.h"
 #include "passes/pass.h"
@@ -65,32 +65,32 @@ public:
 
 	Stack<llvm::Type *> getTypeStack() const;
 
-	Ptr<Node> visitFunction(Ptr<Function> node) override;
+	Ptr<Construct> visitFunction(Ptr<Function> node) override;
 
-	Ptr<Node> visitExtern(Ptr<Extern> node) override;
+	Ptr<Construct> visitExtern(Ptr<Extern> node) override;
 
-	Ptr<Node> visitSection(Ptr<Section> node) override;
+	Ptr<Construct> visitSection(Ptr<Section> node) override;
 
-	Ptr<Node> visitBlock(Ptr<Block> node) override;
+	Ptr<Construct> visitBlock(Ptr<Block> node) override;
 
-	Ptr<Node> visitType(Ptr<Type> node) override;
+	Ptr<Construct> visitType(Ptr<Type> node) override;
 
-	Ptr<Node> visitBinaryExpr(Ptr<BinaryExpr> node) override;
+	Ptr<Construct> visitBinaryExpr(Ptr<BinaryExpr> node) override;
 
-	Ptr<Node> visitPrototype(Ptr<Prototype> node) override;
+	Ptr<Construct> visitPrototype(Ptr<Prototype> node) override;
 
-	Ptr<Node> visitIntegerValue(Ptr<IntegerValue> node) override;
+	Ptr<Construct> visitIntegerValue(Ptr<IntegerValue> node) override;
 
-	Ptr<Node> visitCharValue(Ptr<CharValue> node) override;
+	Ptr<Construct> visitCharValue(Ptr<CharValue> node) override;
 
-	Ptr<Node> visitStringValue(Ptr<StringValue> node) override;
+	Ptr<Construct> visitStringValue(Ptr<StringValue> node) override;
 
-	Ptr<Node> visitAllocaInst(Ptr<AllocaInst> node) override;
+	Ptr<Construct> visitAllocaInst(Ptr<AllocaInst> node) override;
 
-	Ptr<Node> visitReturnInst(Ptr<ReturnInst> node) override;
+	Ptr<Construct> visitReturnInst(Ptr<ReturnInst> node) override;
 
-	Ptr<Node> visitBranchInst(Ptr<BranchInst> node) override;
+	Ptr<Construct> visitBranchInst(Ptr<BranchInst> node) override;
 
-	Ptr<Node> visitGlobalVar(Ptr<GlobalVar> node) override;
+	Ptr<Construct> visitGlobalVar(Ptr<GlobalVar> node) override;
 };
 } // namespace ionir

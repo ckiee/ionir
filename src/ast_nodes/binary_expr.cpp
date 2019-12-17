@@ -4,32 +4,32 @@
 namespace ionir
 {
 BinaryExpr::BinaryExpr(BinaryExprOpts opts)
-    : Node(NodeKind::Block), operation(opts.operation), precedence(opts.precedence), leftSide(opts.leftSide), rightSide(opts.rightSide)
+    : Construct(ConstructKind::Block), operation(opts.operation), precedence(opts.precedence), leftSide(opts.leftSide), rightSide(opts.rightSide)
 {
     //
 }
 
-Ptr<Node> BinaryExpr::accept(Pass *visitor)
+Ptr<Construct> BinaryExpr::accept(Pass *visitor)
 {
     return visitor->visitBinaryExpr(this->cast<BinaryExpr>());
 }
 
-Ptr<Node> BinaryExpr::getLeftSide() const
+Ptr<Construct> BinaryExpr::getLeftSide() const
 {
     return this->leftSide;
 }
 
-void BinaryExpr::setLeftSide(Ptr<Node> leftSide)
+void BinaryExpr::setLeftSide(Ptr<Construct> leftSide)
 {
     this->leftSide = leftSide;
 }
 
-std::optional<Ptr<Node>> BinaryExpr::getRightSide() const
+std::optional<Ptr<Construct>> BinaryExpr::getRightSide() const
 {
     return this->rightSide;
 }
 
-void BinaryExpr::setRightSide(std::optional<Ptr<Node>> rightSide)
+void BinaryExpr::setRightSide(std::optional<Ptr<Construct>> rightSide)
 {
     this->rightSide = rightSide;
 }

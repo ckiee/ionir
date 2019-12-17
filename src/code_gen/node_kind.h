@@ -2,7 +2,7 @@
 
 namespace ionir
 {
-enum class NodeKind
+enum class ConstructKind
 {
 	Type,
 

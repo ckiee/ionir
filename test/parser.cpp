@@ -3,7 +3,7 @@
 #include "pch.h"
 #include "parsing/parser.h"
 #include "syntax/token.h"
-#include "ast_nodes/inst_kind.h"
+#include "ast_constructs/inst_kind.h"
 #include "test_api/bootstrap.h"
 
 using namespace ionir;
@@ -142,8 +142,8 @@ TEST(ParserTest, ParseExtern)
         Token(TokenType::Identifier, "type"),
     });
 
-    auto externNode = parser.parseExtern();
-    auto prototype = externNode->getPrototype();
+    auto externConstruct = parser.parseExtern();
+    auto prototype = externConstruct->getPrototype();
     auto args = prototype->getArgs();
 
     // Verify prototype.

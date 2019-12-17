@@ -3,14 +3,14 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/LLVMContext.h"
 #include "code_gen/llvm_visitor.h"
-#include "ast_nodes/binary_expr.h"
-#include "ast_nodes/values/integer_kind.h"
-#include "ast_nodes/values/integer.h"
-#include "ast_nodes/insts/alloca.h"
-#include "ast_nodes/insts/branch.h"
-#include "ast_nodes/global_var.h"
-#include "ast_nodes/function.h"
-#include "ast_nodes/block.h"
+#include "ast_constructs/binary_expr.h"
+#include "ast_constructs/values/integer_kind.h"
+#include "ast_constructs/values/integer.h"
+#include "ast_constructs/insts/alloca.h"
+#include "ast_constructs/insts/branch.h"
+#include "ast_constructs/global_var.h"
+#include "ast_constructs/function.h"
+#include "ast_constructs/block.h"
 #include "llvm/module.h"
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
@@ -25,9 +25,9 @@ TEST(CodeGenTest, VisitExtern)
     Ptr<Type> returnType = std::make_shared<Type>("void");
     Ptr<Args> args = std::make_shared<Args>();
     Ptr<Prototype> prototype = std::make_shared<Prototype>("testExtern", args, returnType);
-    Ptr<Extern> externNode = std::make_shared<Extern>(prototype);
+    Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
 
-    visitor->visitExtern(externNode);
+    visitor->visitExtern(externConstruct);
 
     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 

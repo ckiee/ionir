@@ -1,4 +1,4 @@
-#include "ast_nodes/inst_kind.h"
+#include "ast_constructs/inst_kind.h"
 #include "passes/pass.h"
 #include "goto.h"
 
@@ -13,7 +13,7 @@ GotoInst::GotoInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Secti
     }
 }
 
-Ptr<Node> GotoInst::accept(Pass *visitor)
+Ptr<Construct> GotoInst::accept(Pass *visitor)
 {
     return visitor->visitGotoInst(this->cast<GotoInst>());
 }

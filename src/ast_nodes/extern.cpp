@@ -3,12 +3,12 @@
 
 namespace ionir
 {
-Extern::Extern(Ptr<Prototype> prototype) : Node(NodeKind::Extern), prototype(prototype)
+Extern::Extern(Ptr<Prototype> prototype) : Construct(ConstructKind::Extern), prototype(prototype)
 {
     //
 }
 
-Ptr<Node> Extern::accept(Pass *visitor)
+Ptr<Construct> Extern::accept(Pass *visitor)
 {
     return visitor->visitExtern(this->cast<Extern>());
 }

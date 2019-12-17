@@ -9,7 +9,7 @@ ReturnInst::ReturnInst(std::optional<Ptr<Value>> value) : Inst(InstKind::Return)
     //
 }
 
-Ptr<Node> ReturnInst::accept(Pass *visitor)
+Ptr<Construct> ReturnInst::accept(Pass *visitor)
 {
     return visitor->visitReturnInst(this->cast<ReturnInst>());
 }

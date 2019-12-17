@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "ast_nodes/value_kind.h"
+#include "ast_constructs/value_kind.h"
 #include "boolean.h"
 
 namespace ionir
@@ -10,7 +10,7 @@ BooleanValue::BooleanValue(bool value)
     //
 }
 
-Ptr<Node> BooleanValue::accept(Pass *visitor)
+Ptr<Construct> BooleanValue::accept(Pass *visitor)
 {
     return visitor->visitBooleanValue(this->cast<BooleanValue>());
 }

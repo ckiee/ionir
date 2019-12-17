@@ -3,8 +3,8 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "ast_nodes/type.h"
-#include "ast_nodes/args.h"
+#include "ast_constructs/type.h"
+#include "ast_constructs/args.h"
 #include "code_gen/node.h"
 #include "misc/helpers.h"
 
@@ -12,7 +12,7 @@ namespace ionir
 {
 class Pass;
 
-class Prototype : public Node
+class Prototype : public Construct
 {
 protected:
 	std::string id;
@@ -24,7 +24,7 @@ protected:
 public:
 	Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType);
 
-	Ptr<Node> accept(Pass *visitor) override;
+	Ptr<Construct> accept(Pass *visitor) override;
 
 	std::string getId() const;
 

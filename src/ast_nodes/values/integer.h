@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ast_nodes/value.h"
+#include "ast_constructs/value.h"
 #include "misc/helpers.h"
 #include "integer_kind.h"
 
@@ -18,7 +18,7 @@ protected:
 public:
     IntegerValue(IntegerKind kind, long value);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     IntegerKind getIntKind() const;
 

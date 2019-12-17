@@ -1,7 +1,7 @@
 #include <optional>
-#include "ast_nodes/section.h"
-#include "ast_nodes/inst_kind.h"
-#include "ast_nodes/insts/return.h"
+#include "ast_constructs/section.h"
+#include "ast_constructs/inst_kind.h"
+#include "ast_constructs/insts/return.h"
 #include "semantic_analysis.h"
 
 namespace ionir
@@ -33,7 +33,7 @@ void SemanticAnalysisPass::functionReturnCheck(Ptr<Function> node)
     }
 }
 
-Ptr<Node> SemanticAnalysisPass::visitFunction(Ptr<Function> node)
+Ptr<Construct> SemanticAnalysisPass::visitFunction(Ptr<Function> node)
 {
     this->functionReturnCheck(node);
 

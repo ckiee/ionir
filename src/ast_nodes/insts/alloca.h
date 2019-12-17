@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <string>
-#include "ast_nodes/inst.h"
-#include "ast_nodes/inst_kind.h"
-#include "ast_nodes/type.h"
+#include "ast_constructs/inst.h"
+#include "ast_constructs/inst_kind.h"
+#include "ast_constructs/type.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -20,7 +20,7 @@ public:
     // TODO: Missing support for array type allocas.
     AllocaInst(std::string id, Ptr<Type> type);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     std::string getId() const;
 

@@ -2,22 +2,22 @@
 
 namespace ionir
 {
-Node::Node(NodeKind type) : type(type)
+Construct::Construct(ConstructKind type) : type(type)
 {
     //
 }
 
-NodeKind Node::getNodeKind() const
+ConstructKind Construct::getConstructKind() const
 {
     return this->type;
 }
 
-bool Node::verify() const
+bool Construct::verify() const
 {
     return true;
 }
 
-Ptr<Node> Node::getPtr()
+Ptr<Construct> Construct::getPtr()
 {
     return this->shared_from_this();
 }

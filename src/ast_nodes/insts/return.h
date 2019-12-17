@@ -3,10 +3,10 @@
 #include <optional>
 #include <memory>
 #include <string>
-#include "ast_nodes/inst.h"
-#include "ast_nodes/inst_kind.h"
-#include "ast_nodes/type.h"
-#include "ast_nodes/value.h"
+#include "ast_constructs/inst.h"
+#include "ast_constructs/inst_kind.h"
+#include "ast_constructs/type.h"
+#include "ast_constructs/value.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -21,7 +21,7 @@ protected:
 public:
     ReturnInst(std::optional<Ptr<Value>> value = std::nullopt);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     std::optional<Ptr<Value>> getValue() const;
 

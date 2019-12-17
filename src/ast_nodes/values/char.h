@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "ast_nodes/value.h"
+#include "ast_constructs/value.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -16,7 +16,7 @@ protected:
 public:
     CharValue(char value);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     char getValue() const;
 

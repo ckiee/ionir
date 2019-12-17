@@ -12,25 +12,25 @@ class AggregateBuilder
 protected:
     Ptr<Builder> builder;
 
-    std::vector<Node> parts;
+    std::vector<Construct> parts;
 
 public:
     AggregateBuilder();
 
-    std::vector<Node> getParts() const;
+    std::vector<Construct> getParts() const;
 
-    template <class TNode, typename... TArgs>
+    template <class TConstruct, typename... TArgs>
     Ptr<AggregateBuilder> push(TArgs... args)
     {
-        // TODO: Ensure TNode inherits from Node or derived.
+        // TODO: Ensure TConstruct inherits from Construct or derived.
 
-        this->parts.push_back(std::make_shared<TNode>(args));
+        this->parts.push_back(std::make_shared<TConstruct>(args));
     }
 
     template <class T>
     Ptr<T> make()
     {
-        std::vector<Node> parts = this->parts;
+        std::vector<Construct> parts = this->parts;
 
         this->clear();
 

@@ -7,7 +7,7 @@ AggregateBuilder::AggregateBuilder() : builder()
     //
 }
 
-std::vector<Node> AggregateBuilder::getParts() const
+std::vector<Construct> AggregateBuilder::getParts() const
 {
     return this->parts;
 }

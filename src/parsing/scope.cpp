@@ -2,7 +2,7 @@
 
 namespace ionir
 {
-Scope::Scope(Ptr<Node> value, ScopeKind kind) : Wrapper(value), kind(kind)
+Scope::Scope(Ptr<Construct> value, ScopeKind kind) : Wrapper(value), kind(kind)
 {
     //
 }

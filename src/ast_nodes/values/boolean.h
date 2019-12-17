@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ast_nodes/value.h"
+#include "ast_constructs/value.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -15,7 +15,7 @@ protected:
 public:
     BooleanValue(bool value);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     bool getValue() const;
 

@@ -9,7 +9,7 @@ namespace ionir
 class GlobalSpace
 {
 private:
-	std::map<std::string, Node> variables;
+	std::map<std::string, Construct> variables;
 
 public:
 	bool hasVariable(std::string name) const;

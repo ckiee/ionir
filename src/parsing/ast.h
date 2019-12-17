@@ -7,5 +7,5 @@
 
 namespace ionir
 {
-typedef std::vector<Ptr<Node>> Ast;
+typedef std::vector<Ptr<Construct>> Ast;
 } // namespace ionir

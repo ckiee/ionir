@@ -4,12 +4,12 @@
 namespace ionir
 {
 Function::Function(Ptr<Prototype> prototype, Ptr<Block> body)
-    : Node(NodeKind::Function), prototype(prototype), body(body)
+    : Construct(ConstructKind::Function), prototype(prototype), body(body)
 {
     //
 }
 
-Ptr<Node> Function::accept(Pass *visitor)
+Ptr<Construct> Function::accept(Pass *visitor)
 {
     return visitor->visitFunction(this->cast<Function>());
 }

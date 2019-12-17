@@ -33,6 +33,6 @@ public:
 	 * Processed the current iterable item and increments the
 	 * list's index if applicable.
 	 */
-	std::optional<Ptr<Node>> tryNext(); // override;
+	std::optional<Ptr<Construct>> tryNext(); // override;
 };
 } // namespace ionir

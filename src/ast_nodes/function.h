@@ -3,15 +3,15 @@
 #include <memory>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
-#include "ast_nodes/prototype.h"
-#include "ast_nodes/block.h"
+#include "ast_constructs/prototype.h"
+#include "ast_constructs/block.h"
 #include "misc/helpers.h"
 
 namespace ionir
 {
 class Pass;
 
-class Function : public Node
+class Function : public Construct
 {
 protected:
 	Ptr<Prototype> prototype;
@@ -21,7 +21,7 @@ protected:
 public:
 	Function(Ptr<Prototype> prototype, Ptr<Block> body);
 
-	Ptr<Node> accept(Pass *visitor) override;
+	Ptr<Construct> accept(Pass *visitor) override;
 
 	Ptr<Prototype> getPrototype() const;
 

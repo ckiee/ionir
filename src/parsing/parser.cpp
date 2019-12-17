@@ -2,8 +2,8 @@
 #include <utility>
 #include <vector>
 #include <exception>
-#include "ast_nodes/binary_expr.h"
-#include "ast_nodes/section_kind.h"
+#include "ast_constructs/binary_expr.h"
+#include "ast_constructs/section_kind.h"
 #include "misc/util.h"
 #include "constants/constants.h"
 #include "parser.h"
@@ -68,7 +68,7 @@ std::vector<Notice> Parser::getNotices() const
     return this->notices;
 }
 
-Ptr<Node> Parser::parseTopLevel()
+Ptr<Construct> Parser::parseTopLevel()
 {
     switch (this->stream->get().getType())
     {
@@ -319,7 +319,7 @@ Ptr<Value> Parser::parseValue()
     }
 }
 
-std::optional<Ptr<Node>> Parser::parsePrimaryExpr()
+std::optional<Ptr<Construct>> Parser::parsePrimaryExpr()
 {
     switch (this->stream->get().getType())
     {
@@ -338,7 +338,7 @@ std::optional<Ptr<Node>> Parser::parsePrimaryExpr()
     }
 }
 
-Ptr<Node> Parser::parseBinaryExprRightSide(Ptr<Node> leftSide, int minimalPrecedence)
+Ptr<Construct> Parser::parseBinaryExprRightSide(Ptr<Construct> leftSide, int minimalPrecedence)
 {
     // If this is a binary operation, find it's precedence.
     while (true)
@@ -374,7 +374,7 @@ Ptr<Node> Parser::parseBinaryExprRightSide(Ptr<Node> leftSide, int minimalPreced
         this->stream->skip();
 
         // Parse the right-side.
-        std::optional<Ptr<Node>> rightSide = this->parsePrimaryExpr();
+        std::optional<Ptr<Construct>> rightSide = this->parsePrimaryExpr();
 
         // Ensure that the right-side was successfully parsed.
         if (!rightSide.has_value())
@@ -487,7 +487,7 @@ Ptr<ReturnInst> Parser::parseReturnInst()
 
 Ptr<BranchInst> Parser::parseBranchInst()
 {
-    std::optional<Ptr<Node>> condition = this->parsePrimaryExpr();
+    std::optional<Ptr<Construct>> condition = this->parsePrimaryExpr();
 
     // Condition must be set.
     if (!condition.has_value())

@@ -3,8 +3,8 @@
 #include <memory>
 #include <exception>
 #include <optional>
-#include "ast_nodes/inst.h"
-#include "ast_nodes/inst_kind.h"
+#include "ast_constructs/inst.h"
+#include "ast_constructs/inst_kind.h"
 #include "misc/helpers.h"
 #include "scope.h"
 
@@ -31,7 +31,7 @@ public:
         //
     }
 
-    virtual Ptr<Node> accept(Pass *visitor) = 0;
+    virtual Ptr<Construct> accept(Pass *visitor) = 0;
 
     Ptr<Scope> getScope() const
     {

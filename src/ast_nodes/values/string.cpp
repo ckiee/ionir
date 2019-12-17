@@ -1,5 +1,5 @@
 #include "string.h"
-#include "ast_nodes/value_kind.h"
+#include "ast_constructs/value_kind.h"
 #include "passes/pass.h"
 
 namespace ionir
@@ -9,7 +9,7 @@ StringValue::StringValue(std::string value) : Value(ValueKind::String), value(va
     //
 }
 
-Ptr<Node> StringValue::accept(Pass *visitor)
+Ptr<Construct> StringValue::accept(Pass *visitor)
 {
     return visitor->visitStringValue(this->cast<StringValue>());
 }

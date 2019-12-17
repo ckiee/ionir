@@ -10,7 +10,7 @@ namespace ionir
 {
 class Pass;
 
-class Inst : public Node
+class Inst : public Construct
 {
 protected:
     InstKind kind;
@@ -18,7 +18,7 @@ protected:
 public:
     Inst(InstKind kind);
 
-    virtual Ptr<Node> accept(Pass *visitor) = 0;
+    virtual Ptr<Construct> accept(Pass *visitor) = 0;
 
     InstKind getInstKind() const;
 };

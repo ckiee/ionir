@@ -2,8 +2,8 @@
 
 #include <memory>
 #include <vector>
-#include "ast_nodes/insts/goto.h"
-#include "ast_nodes/inst.h"
+#include "ast_constructs/insts/goto.h"
+#include "ast_constructs/inst.h"
 #include "misc/helpers.h"
 #include "pass.h"
 
@@ -21,6 +21,6 @@ public:
 
     std::vector<Ptr<Inst>> getPartials() const;
 
-    Ptr<Node> visitGotoInst(Ptr<GotoInst> node);
+    Ptr<Construct> visitGotoInst(Ptr<GotoInst> node);
 };
 } // namespace ionir

@@ -3,7 +3,7 @@
 
 namespace ionir
 {
-Inst::Inst(InstKind kind) : Node(NodeKind::Instruction), kind(kind)
+Inst::Inst(InstKind kind) : Construct(ConstructKind::Instruction), kind(kind)
 {
     //
 }

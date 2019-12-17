@@ -11,7 +11,7 @@ namespace ionir
 {
 class Pass;
 
-class Block : public Node
+class Block : public Construct
 {
 protected:
     std::vector<Ptr<Section>> sections;
@@ -21,7 +21,7 @@ protected:
 public:
     Block(std::vector<Ptr<Section>> sections = {});
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     bool verify() const override;
 

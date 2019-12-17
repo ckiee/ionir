@@ -4,12 +4,12 @@
 namespace ionir
 {
 Block::Block(std::vector<Ptr<Section>> sections)
-    : Node(NodeKind::Block), sections(sections), cachedEntry(std::nullopt)
+    : Construct(ConstructKind::Block), sections(sections), cachedEntry(std::nullopt)
 {
     //
 }
 
-Ptr<Node> Block::accept(Pass *visitor)
+Ptr<Construct> Block::accept(Pass *visitor)
 {
     return visitor->visitBlock(this->cast<Block>());
 }

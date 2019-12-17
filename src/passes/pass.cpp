@@ -1,51 +1,51 @@
 #include <iostream>
 #include <exception>
-#include "ast_nodes/value_kind.h"
+#include "ast_constructs/value_kind.h"
 #include "pass.h"
 
 namespace ionir
 {
-Ptr<Node> Pass::visit(Ptr<Node> node)
+Ptr<Construct> Pass::visit(Ptr<Construct> node)
 {
     return node->accept(this);
 }
 
-Ptr<Node> Pass::visitFunction(Ptr<Function> node)
+Ptr<Construct> Pass::visitFunction(Ptr<Function> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitExtern(Ptr<Extern> node)
+Ptr<Construct> Pass::visitExtern(Ptr<Extern> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitSection(Ptr<Section> node)
+Ptr<Construct> Pass::visitSection(Ptr<Section> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitBlock(Ptr<Block> node)
+Ptr<Construct> Pass::visitBlock(Ptr<Block> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitType(Ptr<Type> node)
+Ptr<Construct> Pass::visitType(Ptr<Type> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
+Ptr<Construct> Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitPrototype(Ptr<Prototype> node)
+Ptr<Construct> Pass::visitPrototype(Ptr<Prototype> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitValue(Ptr<Value> node)
+Ptr<Construct> Pass::visitValue(Ptr<Value> node)
 {
     switch (node->getValueKind())
     {
@@ -73,27 +73,27 @@ Ptr<Node> Pass::visitValue(Ptr<Value> node)
     }
 }
 
-Ptr<Node> Pass::visitIntegerValue(Ptr<IntegerValue> node)
+Ptr<Construct> Pass::visitIntegerValue(Ptr<IntegerValue> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitCharValue(Ptr<CharValue> node)
+Ptr<Construct> Pass::visitCharValue(Ptr<CharValue> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitStringValue(Ptr<StringValue> node)
+Ptr<Construct> Pass::visitStringValue(Ptr<StringValue> node)
 {
     return node;
 }
 
-Ptr<Node> visitBooleanValue(Ptr<BooleanValue> node)
+Ptr<Construct> visitBooleanValue(Ptr<BooleanValue> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitInst(Ptr<Inst> node)
+Ptr<Construct> Pass::visitInst(Ptr<Inst> node)
 {
     std::cout << "Visit inst" << std::endl;
 
@@ -132,27 +132,27 @@ Ptr<Node> Pass::visitInst(Ptr<Inst> node)
     }
 }
 
-Ptr<Node> Pass::visitAllocaInst(Ptr<AllocaInst> node)
+Ptr<Construct> Pass::visitAllocaInst(Ptr<AllocaInst> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitReturnInst(Ptr<ReturnInst> node)
+Ptr<Construct> Pass::visitReturnInst(Ptr<ReturnInst> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitBranchInst(Ptr<BranchInst> node)
+Ptr<Construct> Pass::visitBranchInst(Ptr<BranchInst> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitGotoInst(Ptr<GotoInst> node)
+Ptr<Construct> Pass::visitGotoInst(Ptr<GotoInst> node)
 {
     return node;
 }
 
-Ptr<Node> Pass::visitGlobalVar(Ptr<GlobalVar> node)
+Ptr<Construct> Pass::visitGlobalVar(Ptr<GlobalVar> node)
 {
     return node;
 }

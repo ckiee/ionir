@@ -10,7 +10,7 @@ AllocaInst::AllocaInst(std::string id, Ptr<Type> type)
     //
 }
 
-Ptr<Node> AllocaInst::accept(Pass *visitor)
+Ptr<Construct> AllocaInst::accept(Pass *visitor)
 {
     return visitor->visitAllocaInst(this->cast<AllocaInst>());
 }

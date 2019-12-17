@@ -3,9 +3,9 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "ast_nodes/type.h"
-#include "ast_nodes/args.h"
-#include "ast_nodes/inst.h"
+#include "ast_constructs/type.h"
+#include "ast_constructs/args.h"
+#include "ast_constructs/inst.h"
 #include "code_gen/node.h"
 #include "section_kind.h"
 #include "misc/helpers.h"
@@ -14,7 +14,7 @@ namespace ionir
 {
 class Pass;
 
-class Section : public Node
+class Section : public Construct
 {
 protected:
     SectionKind kind;
@@ -26,7 +26,7 @@ protected:
 public:
     Section(SectionKind kind, std::string id, std::vector<Ptr<Inst>> insts = {});
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     SectionKind getKind() const;
 

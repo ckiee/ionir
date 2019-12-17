@@ -37,7 +37,7 @@ bool Driver::hasNext() const
     return false;
 }
 
-std::optional<Ptr<Node>> Driver::tryNext()
+std::optional<Ptr<Construct>> Driver::tryNext()
 {
     // Retrieve the current token from the token stream.
     Token token = this->stream.get();

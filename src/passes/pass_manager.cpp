@@ -20,9 +20,9 @@ void PassManager::run(Ast ast)
     for (auto item : this->passes)
     {
         // TODO: Process priorities.
-        for (auto topLevelNode : ast)
+        for (auto topLevelConstruct : ast)
         {
-            item->pass->visit(topLevelNode);
+            item->pass->visit(topLevelConstruct);
         }
     }
 }

@@ -8,17 +8,17 @@ namespace ionir
 {
 class Pass;
 
-class Node : public std::enable_shared_from_this<Node>
+class Construct : public std::enable_shared_from_this<Construct>
 {
 protected:
-    NodeKind type;
+    ConstructKind type;
 
 public:
-    Node(NodeKind type);
+    Construct(ConstructKind type);
 
-    virtual Ptr<Node> accept(Pass *visitor) = 0;
+    virtual Ptr<Construct> accept(Pass *visitor) = 0;
 
-    NodeKind getNodeKind() const;
+    ConstructKind getConstructKind() const;
 
     /**
      * Verify the members and properties of the node.
@@ -27,7 +27,7 @@ public:
      */
     virtual bool verify() const;
 
-    Ptr<Node> getPtr();
+    Ptr<Construct> getPtr();
 
     template <class T>
     Ptr<T> cast()

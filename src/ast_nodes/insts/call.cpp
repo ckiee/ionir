@@ -1,4 +1,4 @@
-#include "ast_nodes/inst_kind.h"
+#include "ast_constructs/inst_kind.h"
 #include "passes/pass.h"
 #include "call.h"
 
@@ -13,7 +13,7 @@ CallInst::CallInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Funct
     }
 }
 
-Ptr<Node> CallInst::accept(Pass *visitor)
+Ptr<Construct> CallInst::accept(Pass *visitor)
 {
     return visitor->visitGotoInst(this->cast<GotoInst>());
 }

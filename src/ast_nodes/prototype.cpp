@@ -5,12 +5,12 @@
 namespace ionir
 {
 Prototype::Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType)
-    : Node(NodeKind::Prototype), id(id), args(args), returnType(returnType)
+    : Construct(ConstructKind::Prototype), id(id), args(args), returnType(returnType)
 {
     //
 }
 
-Ptr<Node> Prototype::accept(Pass *visitor)
+Ptr<Construct> Prototype::accept(Pass *visitor)
 {
     return visitor->visitPrototype(this->cast<Prototype>());
 }

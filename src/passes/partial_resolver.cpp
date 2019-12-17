@@ -1,7 +1,7 @@
 #include <exception>
 #include "partial_resolver.h"
 #include "parsing/scope.h"
-#include "ast_nodes/function.h"
+#include "ast_constructs/function.h"
 
 namespace ionir
 {
@@ -16,7 +16,7 @@ std::vector<Ptr<Inst>> PartialResolverPass::getPartials() const
     return this->partials;
 }
 
-Ptr<Node> PartialResolverPass::visitGotoInst(Ptr<GotoInst> node)
+Ptr<Construct> PartialResolverPass::visitGotoInst(Ptr<GotoInst> node)
 {
     // Partial has already been resolved. Do not continue.
     if (node->isResolved())

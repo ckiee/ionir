@@ -5,12 +5,12 @@
 namespace ionir
 {
 Section::Section(SectionKind kind, std::string id, std::vector<Ptr<Inst>> insts)
-    : Node(NodeKind::Section), kind(kind), id(id), insts(insts)
+    : Construct(ConstructKind::Section), kind(kind), id(id), insts(insts)
 {
     //
 }
 
-Ptr<Node> Section::accept(Pass *visitor)
+Ptr<Construct> Section::accept(Pass *visitor)
 {
     return visitor->visitSection(this->cast<Section>());
 }

@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <string>
-#include "ast_nodes/value.h"
+#include "ast_constructs/value.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -17,7 +17,7 @@ protected:
 public:
     StringValue(std::string value);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     std::string getValue() const;
 

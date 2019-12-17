@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "ast_nodes/inst_kind.h"
+#include "ast_constructs/inst_kind.h"
 #include "branch.h"
 
 namespace ionir
@@ -10,7 +10,7 @@ BranchInst::BranchInst(Ptr<BinaryExpr> condition, Ptr<Section> body, std::option
     //
 }
 
-Ptr<Node> BranchInst::accept(Pass *visitor)
+Ptr<Construct> BranchInst::accept(Pass *visitor)
 {
     return visitor->visitBranchInst(this->cast<BranchInst>());
 }

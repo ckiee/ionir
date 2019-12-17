@@ -4,12 +4,12 @@
 
 namespace ionir
 {
-Value::Value(ValueKind kind) : Node(NodeKind::Value), kind(kind)
+Value::Value(ValueKind kind) : Construct(ConstructKind::Value), kind(kind)
 {
     //
 }
 
-Ptr<Node> Value::accept(Pass *visitor)
+Ptr<Construct> Value::accept(Pass *visitor)
 {
     return visitor->visitValue(this->cast<Value>());
 }

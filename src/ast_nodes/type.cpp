@@ -4,12 +4,12 @@
 namespace ionir
 {
 Type::Type(std::string id, bool isPointer)
-    : Node(NodeKind::Type), id(id), isPointer(isPointer)
+    : Construct(ConstructKind::Type), id(id), isPointer(isPointer)
 {
     //
 }
 
-Ptr<Node> Type::accept(Pass *visitor)
+Ptr<Construct> Type::accept(Pass *visitor)
 {
     return visitor->visitType(this->cast<Type>());
 }

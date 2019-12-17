@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "ast_nodes/value_kind.h"
+#include "ast_constructs/value_kind.h"
 #include "integer.h"
 
 namespace ionir
@@ -10,7 +10,7 @@ IntegerValue::IntegerValue(IntegerKind kind, long value)
     //
 }
 
-Ptr<Node> IntegerValue::accept(Pass *visitor)
+Ptr<Construct> IntegerValue::accept(Pass *visitor)
 {
     return visitor->visitIntegerValue(this->cast<IntegerValue>());
 }

@@ -10,7 +10,7 @@ namespace ionir
 {
 class Pass;
 
-class Type : public Node
+class Type : public Construct
 {
 protected:
     std::string id;
@@ -20,7 +20,7 @@ protected:
 public:
     Type(std::string id, bool isPointer = false);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     std::string getId() const;
 

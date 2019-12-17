@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <optional>
-#include "ast_nodes/inst.h"
-#include "ast_nodes/section.h"
-#include "ast_nodes/binary_expr.h"
+#include "ast_constructs/inst.h"
+#include "ast_constructs/section.h"
+#include "ast_constructs/binary_expr.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -23,7 +23,7 @@ private:
 public:
     BranchInst(Ptr<BinaryExpr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     Ptr<BinaryExpr> getCondition() const;
 

@@ -5,7 +5,7 @@
 #include <string>
 #include "parsing/partial_inst.h"
 #include "parsing/scope.h"
-#include "ast_nodes/section.h"
+#include "ast_constructs/section.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -20,7 +20,7 @@ protected:
 public:
     GotoInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Section>> section = std::nullopt);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     std::string getTarget() const;
 

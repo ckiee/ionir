@@ -7,13 +7,13 @@
 
 namespace ionir
 {
-class Scope : public Wrapper<Ptr<Node>>
+class Scope : public Wrapper<Ptr<Construct>>
 {
 protected:
     ScopeKind kind;
 
 public:
-    Scope(Ptr<Node> value, ScopeKind kind);
+    Scope(Ptr<Construct> value, ScopeKind kind);
 
     ScopeKind getKind() const;
 };

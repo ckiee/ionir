@@ -13,7 +13,7 @@ namespace ionir
 {
 class Pass;
 
-class GlobalVar : public Node
+class GlobalVar : public Construct
 {
 protected:
     Ptr<Type> type;
@@ -25,7 +25,7 @@ protected:
 public:
     GlobalVar(Ptr<Type> type, std::string id, std::optional<Ptr<Value>> value = std::nullopt);
 
-    Ptr<Node> accept(Pass *visitor) override;
+    Ptr<Construct> accept(Pass *visitor) override;
 
     Ptr<Type> getType() const;
 

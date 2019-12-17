@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "ast_nodes/value_kind.h"
+#include "ast_constructs/value_kind.h"
 #include "char.h"
 
 namespace ionir
@@ -9,7 +9,7 @@ CharValue::CharValue(char value) : Value(ValueKind::Character), value(value)
     //
 }
 
-Ptr<Node> CharValue::accept(Pass *visitor)
+Ptr<Construct> CharValue::accept(Pass *visitor)
 {
     return visitor->visitCharValue(this->cast<CharValue>());
 }
