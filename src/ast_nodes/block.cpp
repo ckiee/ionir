@@ -3,13 +3,13 @@
 
 namespace ionir
 {
-Block::Block(std::vector<std::shared_ptr<Section>> sections)
+Block::Block(std::vector<Ptr<Section>> sections)
     : Node(NodeKind::Block), sections(sections), cachedEntry(std::nullopt)
 {
     //
 }
 
-std::shared_ptr<Node> Block::accept(Pass *visitor)
+Ptr<Node> Block::accept(Pass *visitor)
 {
     return visitor->visitBlock(this->cast<Block>());
 }
@@ -40,7 +40,7 @@ bool Block::verify() const
     return true;
 }
 
-std::optional<std::shared_ptr<Section>> Block::getEntrySection()
+std::optional<Ptr<Section>> Block::getEntrySection()
 {
     /**
      * Entry section has already been previously
@@ -66,12 +66,12 @@ std::optional<std::shared_ptr<Section>> Block::getEntrySection()
     return std::nullopt;
 }
 
-std::vector<std::shared_ptr<Section>> Block::getSections() const
+std::vector<Ptr<Section>> Block::getSections() const
 {
     return this->sections;
 }
 
-void Block::setSections(std::vector<std::shared_ptr<Section>> sections)
+void Block::setSections(std::vector<Ptr<Section>> sections)
 {
     this->sections = sections;
 }

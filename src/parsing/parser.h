@@ -19,6 +19,7 @@
 #include "misc/notice.h"
 #include "misc/notice_context.h"
 #include "misc/notice_type.h"
+#include "misc/helpers.h"
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
 #include "ast_nodes/insts/branch.h"
@@ -48,7 +49,7 @@ protected:
 
     Notice createNotice(NoticeType type, std::string message);
 
-    std::shared_ptr<Scope> createScope();
+    Ptr<Scope> createScope();
 
     void pushNotice(NoticeType type, std::string message);
 
@@ -57,57 +58,57 @@ public:
 
     std::vector<Notice> getNotices() const;
 
-    std::shared_ptr<Node> parseTopLevel();
+    Ptr<Node> parseTopLevel();
 
     /**
      * Parses a integer literal in the form of
      * long (or integer 64).
      */
-    std::shared_ptr<IntValue> parseInt();
+    Ptr<IntValue> parseInt();
 
-    std::shared_ptr<CharValue> parseChar();
+    Ptr<CharValue> parseChar();
 
-    std::shared_ptr<StringValue> parseString();
+    Ptr<StringValue> parseString();
 
     std::string parseId();
 
-    std::shared_ptr<Type> parseType();
+    Ptr<Type> parseType();
 
     Arg parseArg();
 
-    std::shared_ptr<Args> parseArgs();
+    Ptr<Args> parseArgs();
 
-    std::shared_ptr<Prototype> parsePrototype();
+    Ptr<Prototype> parsePrototype();
 
-    std::shared_ptr<Extern> parseExtern();
+    Ptr<Extern> parseExtern();
 
-    std::shared_ptr<Function> parseFunction();
+    Ptr<Function> parseFunction();
 
-    std::shared_ptr<GlobalVar> parseGlobalVar();
+    Ptr<GlobalVar> parseGlobalVar();
 
-    std::shared_ptr<Value> parseValue();
+    Ptr<Value> parseValue();
 
-    std::optional<std::shared_ptr<Node>> parsePrimaryExpr();
+    std::optional<Ptr<Node>> parsePrimaryExpr();
 
-    std::shared_ptr<Node> parseBinaryExprRightSide(std::shared_ptr<Node> leftSide, int minimalPrecedence);
+    Ptr<Node> parseBinaryExprRightSide(Ptr<Node> leftSide, int minimalPrecedence);
 
-    std::shared_ptr<Section> parseSection();
+    Ptr<Section> parseSection();
 
-    std::shared_ptr<Block> parseBlock();
+    Ptr<Block> parseBlock();
 
-    std::shared_ptr<AllocaInst> parseAllocaInst();
+    Ptr<AllocaInst> parseAllocaInst();
 
-    std::shared_ptr<ReturnInst> parseReturnInst();
+    Ptr<ReturnInst> parseReturnInst();
 
-    std::shared_ptr<BranchInst> parseBranchInst();
+    Ptr<BranchInst> parseBranchInst();
 
-    std::shared_ptr<GotoInst> parseGotoInst();
+    Ptr<GotoInst> parseGotoInst();
 
     /**
      * Parses an instruction, consuming its identifier.
      * Invokes the corresponding parser depending on its
      * identifier.
      */
-    std::shared_ptr<Inst> parseInst();
+    Ptr<Inst> parseInst();
 };
 } // namespace ionir

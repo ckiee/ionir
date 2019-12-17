@@ -6,12 +6,12 @@
 
 namespace ionir
 {
-void SemanticAnalysisPass::functionReturnCheck(std::shared_ptr<Function> node)
+void SemanticAnalysisPass::functionReturnCheck(Ptr<Function> node)
 {
     // TODO: Hard-coded id.
     if (node->getPrototype()->getReturnType()->getId() != "void")
     {
-        std::optional<std::shared_ptr<Section>> entrySection = node->getBody()->getEntrySection();
+        std::optional<Ptr<Section>> entrySection = node->getBody()->getEntrySection();
 
         if (!entrySection.has_value())
         {
@@ -22,7 +22,7 @@ void SemanticAnalysisPass::functionReturnCheck(std::shared_ptr<Function> node)
         {
             if (inst->getInstKind() == InstKind::Return)
             {
-                std::shared_ptr<ReturnInst> returnInst = inst->cast<ReturnInst>();
+                Ptr<ReturnInst> returnInst = inst->cast<ReturnInst>();
 
                 if (!returnInst->getValue().has_value())
                 {
@@ -33,7 +33,7 @@ void SemanticAnalysisPass::functionReturnCheck(std::shared_ptr<Function> node)
     }
 }
 
-std::shared_ptr<Node> SemanticAnalysisPass::visitFunction(std::shared_ptr<Function> node)
+Ptr<Node> SemanticAnalysisPass::visitFunction(Ptr<Function> node)
 {
     this->functionReturnCheck(node);
 

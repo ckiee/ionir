@@ -2,6 +2,7 @@
 
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
+#include "misc/helpers.h"
 #include "value.h"
 #include "inst_kind.h"
 
@@ -17,7 +18,7 @@ protected:
 public:
     Inst(InstKind kind);
 
-    virtual std::shared_ptr<Node> accept(Pass *visitor) = 0;
+    virtual Ptr<Node> accept(Pass *visitor) = 0;
 
     InstKind getInstKind() const;
 };

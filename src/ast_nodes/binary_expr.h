@@ -4,6 +4,7 @@
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
 #include "syntax/token_type.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -16,9 +17,9 @@ struct BinaryExprOpts
 
     int precedence;
 
-    std::shared_ptr<Node> leftSide;
+    Ptr<Node> leftSide;
 
-    std::optional<std::shared_ptr<Node>> rightSide;
+    std::optional<Ptr<Node>> rightSide;
 };
 
 class BinaryExpr : public Node
@@ -28,21 +29,21 @@ protected:
 
     int precedence;
 
-    std::shared_ptr<Node> leftSide;
+    Ptr<Node> leftSide;
 
-    std::optional<std::shared_ptr<Node>> rightSide = std::nullopt;
+    std::optional<Ptr<Node>> rightSide = std::nullopt;
 
 public:
     BinaryExpr(BinaryExprOpts opts);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
-    std::shared_ptr<Node> getLeftSide() const;
+    Ptr<Node> getLeftSide() const;
 
-    void setLeftSide(std::shared_ptr<Node> leftSide);
+    void setLeftSide(Ptr<Node> leftSide);
 
-    std::optional<std::shared_ptr<Node>> getRightSide() const;
+    std::optional<Ptr<Node>> getRightSide() const;
 
-    void setRightSide(std::optional<std::shared_ptr<Node>> rightSide);
+    void setRightSide(std::optional<Ptr<Node>> rightSide);
 };
 } // namespace ionir

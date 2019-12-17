@@ -3,33 +3,33 @@
 
 namespace ionir
 {
-Function::Function(std::shared_ptr<Prototype> prototype, std::shared_ptr<Block> body)
+Function::Function(Ptr<Prototype> prototype, Ptr<Block> body)
     : Node(NodeKind::Function), prototype(prototype), body(body)
 {
     //
 }
 
-std::shared_ptr<Node> Function::accept(Pass *visitor)
+Ptr<Node> Function::accept(Pass *visitor)
 {
     return visitor->visitFunction(this->cast<Function>());
 }
 
-std::shared_ptr<Prototype> Function::getPrototype() const
+Ptr<Prototype> Function::getPrototype() const
 {
     return this->prototype;
 }
 
-void Function::setPrototype(std::shared_ptr<Prototype> prototype)
+void Function::setPrototype(Ptr<Prototype> prototype)
 {
     this->prototype = prototype;
 }
 
-std::shared_ptr<Block> Function::getBody() const
+Ptr<Block> Function::getBody() const
 {
     return this->body;
 }
 
-void Function::setBody(std::shared_ptr<Block> body)
+void Function::setBody(Ptr<Block> body)
 {
     this->body = body;
 }

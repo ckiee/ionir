@@ -28,7 +28,7 @@ Parser parser(std::vector<Token> tokens)
     return ionir::Parser(stream);
 }
 
-std::shared_ptr<Module> module(std::string identifier)
+Ptr<Module> module(std::string identifier)
 {
     llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
     llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);
@@ -36,7 +36,7 @@ std::shared_ptr<Module> module(std::string identifier)
     return std::make_shared<Module>(llvmModule);
 }
 
-std::shared_ptr<LlvmVisitor> llvmVisitor()
+Ptr<LlvmVisitor> llvmVisitor()
 {
     return std::make_shared<LlvmVisitor>(module()->unwrap());
 }

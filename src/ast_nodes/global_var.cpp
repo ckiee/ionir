@@ -3,23 +3,23 @@
 
 namespace ionir
 {
-GlobalVar::GlobalVar(std::shared_ptr<Type> type, std::string id, std::optional<std::shared_ptr<Value>> value)
+GlobalVar::GlobalVar(Ptr<Type> type, std::string id, std::optional<Ptr<Value>> value)
     : Node(NodeKind::GlobalVariable), type(type), id(id), value(value)
 {
     //
 }
 
-std::shared_ptr<Node> GlobalVar::accept(Pass *visitor)
+Ptr<Node> GlobalVar::accept(Pass *visitor)
 {
     return visitor->visitGlobalVar(this->cast<GlobalVar>());
 }
 
-std::shared_ptr<Type> GlobalVar::getType() const
+Ptr<Type> GlobalVar::getType() const
 {
     return this->type;
 }
 
-void GlobalVar::setType(std::shared_ptr<Type> type)
+void GlobalVar::setType(Ptr<Type> type)
 {
     this->type = type;
 }
@@ -34,7 +34,7 @@ void GlobalVar::setId(std::string id)
     this->id = id;
 }
 
-std::optional<std::shared_ptr<Value>> GlobalVar::getValue() const
+std::optional<Ptr<Value>> GlobalVar::getValue() const
 {
     return this->value;
 }

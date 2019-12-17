@@ -9,7 +9,7 @@ Value::Value(ValueKind kind) : Node(NodeKind::Value), kind(kind)
     //
 }
 
-std::shared_ptr<Node> Value::accept(Pass *visitor)
+Ptr<Node> Value::accept(Pass *visitor)
 {
     return visitor->visitValue(this->cast<Value>());
 }

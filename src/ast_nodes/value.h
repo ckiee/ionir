@@ -2,6 +2,7 @@
 
 #include "code_gen/node.h"
 #include "ast_nodes/prototype.h"
+#include "misc/helpers.h"
 #include "value_kind.h"
 
 namespace ionir
@@ -16,7 +17,7 @@ private:
 public:
     Value(ValueKind kind);
 
-    virtual std::shared_ptr<Node> accept(Pass *visitor) = 0;
+    virtual Ptr<Node> accept(Pass *visitor) = 0;
 
     ValueKind getValueKind() const;
 };

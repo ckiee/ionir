@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "parsing/ast.h"
+#include "misc/helpers.h"
 #include "pass_manager_item.h"
 
 namespace ionir
@@ -15,7 +16,7 @@ protected:
      * manager items will be both stored
      * and processed from.
      */
-    std::vector<std::shared_ptr<PassManagerItem>> passes;
+    std::vector<Ptr<PassManagerItem>> passes;
 
 public:
     PassManager();
@@ -25,7 +26,7 @@ public:
      * the provided pass was successfully registered
      * in the internal set.
      */
-    void registerPass(std::shared_ptr<PassManagerItem> item);
+    void registerPass(Ptr<PassManagerItem> item);
 
     void run(Ast ast);
 };

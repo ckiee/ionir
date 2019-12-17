@@ -24,6 +24,7 @@
 #include "ast_nodes/insts/alloca.h"
 #include "ast_nodes/insts/return.h"
 #include "misc/stack.h"
+#include "misc/helpers.h"
 #include "passes/pass.h"
 
 namespace ionir
@@ -64,32 +65,32 @@ public:
 
 	Stack<llvm::Type *> getTypeStack() const;
 
-	std::shared_ptr<Node> visitFunction(std::shared_ptr<Function> node) override;
+	Ptr<Node> visitFunction(Ptr<Function> node) override;
 
-	std::shared_ptr<Node> visitExtern(std::shared_ptr<Extern> node) override;
+	Ptr<Node> visitExtern(Ptr<Extern> node) override;
 
-	std::shared_ptr<Node> visitSection(std::shared_ptr<Section> node) override;
+	Ptr<Node> visitSection(Ptr<Section> node) override;
 
-	std::shared_ptr<Node> visitBlock(std::shared_ptr<Block> node) override;
+	Ptr<Node> visitBlock(Ptr<Block> node) override;
 
-	std::shared_ptr<Node> visitType(std::shared_ptr<Type> node) override;
+	Ptr<Node> visitType(Ptr<Type> node) override;
 
-	std::shared_ptr<Node> visitBinaryExpr(std::shared_ptr<BinaryExpr> node) override;
+	Ptr<Node> visitBinaryExpr(Ptr<BinaryExpr> node) override;
 
-	std::shared_ptr<Node> visitPrototype(std::shared_ptr<Prototype> node) override;
+	Ptr<Node> visitPrototype(Ptr<Prototype> node) override;
 
-	std::shared_ptr<Node> visitIntValue(std::shared_ptr<IntValue> node) override;
+	Ptr<Node> visitIntValue(Ptr<IntValue> node) override;
 
-	std::shared_ptr<Node> visitCharValue(std::shared_ptr<CharValue> node) override;
+	Ptr<Node> visitCharValue(Ptr<CharValue> node) override;
 
-	std::shared_ptr<Node> visitStringValue(std::shared_ptr<StringValue> node) override;
+	Ptr<Node> visitStringValue(Ptr<StringValue> node) override;
 
-	std::shared_ptr<Node> visitAllocaInst(std::shared_ptr<AllocaInst> node) override;
+	Ptr<Node> visitAllocaInst(Ptr<AllocaInst> node) override;
 
-	std::shared_ptr<Node> visitReturnInst(std::shared_ptr<ReturnInst> node) override;
+	Ptr<Node> visitReturnInst(Ptr<ReturnInst> node) override;
 
-	std::shared_ptr<Node> visitBranchInst(std::shared_ptr<BranchInst> node) override;
+	Ptr<Node> visitBranchInst(Ptr<BranchInst> node) override;
 
-	std::shared_ptr<Node> visitGlobalVar(std::shared_ptr<GlobalVar> node) override;
+	Ptr<Node> visitGlobalVar(Ptr<GlobalVar> node) override;
 };
 } // namespace ionir

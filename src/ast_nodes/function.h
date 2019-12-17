@@ -5,6 +5,7 @@
 #include "code_gen/node_kind.h"
 #include "ast_nodes/prototype.h"
 #include "ast_nodes/block.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -13,22 +14,22 @@ class Pass;
 class Function : public Node
 {
 protected:
-	std::shared_ptr<Prototype> prototype;
+	Ptr<Prototype> prototype;
 
-	std::shared_ptr<Block> body;
+	Ptr<Block> body;
 
 public:
-	Function(std::shared_ptr<Prototype> prototype, std::shared_ptr<Block> body);
+	Function(Ptr<Prototype> prototype, Ptr<Block> body);
 
-	std::shared_ptr<Node> accept(Pass *visitor) override;
+	Ptr<Node> accept(Pass *visitor) override;
 
-	std::shared_ptr<Prototype> getPrototype() const;
+	Ptr<Prototype> getPrototype() const;
 
-	void setPrototype(std::shared_ptr<Prototype> prototype);
+	void setPrototype(Ptr<Prototype> prototype);
 
-	std::shared_ptr<Block> getBody() const;
+	Ptr<Block> getBody() const;
 
-	void setBody(std::shared_ptr<Block> body);
+	void setBody(Ptr<Block> body);
 
 	bool verify() const override;
 };

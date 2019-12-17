@@ -55,7 +55,7 @@ LlvmVisitor::~LlvmVisitor()
     this->typeStack.clear();
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitFunction(std::shared_ptr<Function> node)
+Ptr<Node> LlvmVisitor::visitFunction(Ptr<Function> node)
 {
     if (!node->verify())
     {
@@ -89,7 +89,7 @@ std::shared_ptr<Node> LlvmVisitor::visitFunction(std::shared_ptr<Function> node)
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitExtern(std::shared_ptr<Extern> node)
+Ptr<Node> LlvmVisitor::visitExtern(Ptr<Extern> node)
 {
     if (node->getPrototype() == nullptr)
     {
@@ -107,7 +107,7 @@ std::shared_ptr<Node> LlvmVisitor::visitExtern(std::shared_ptr<Extern> node)
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitSection(std::shared_ptr<Section> node)
+Ptr<Node> LlvmVisitor::visitSection(Ptr<Section> node)
 {
     // Function buffer must not be null.
     this->requireFunction();
@@ -119,7 +119,7 @@ std::shared_ptr<Node> LlvmVisitor::visitSection(std::shared_ptr<Section> node)
     this->builder.emplace(llvm::IRBuilder<>(block));
 
     // Visit and append instructions.
-    std::vector<std::shared_ptr<Inst>> insts = node->getInsts();
+    std::vector<Ptr<Inst>> insts = node->getInsts();
 
     // Process instructions.
     for (const auto inst : insts)
@@ -146,7 +146,7 @@ std::shared_ptr<Node> LlvmVisitor::visitSection(std::shared_ptr<Section> node)
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitBlock(std::shared_ptr<Block> node)
+Ptr<Node> LlvmVisitor::visitBlock(Ptr<Block> node)
 {
     // Verify the block before continuing.
     if (!node->verify())
@@ -158,7 +158,7 @@ std::shared_ptr<Node> LlvmVisitor::visitBlock(std::shared_ptr<Block> node)
      * Retrieve the entry section from the block.
      * At this point, it should be guaranteed to be set.
      */
-    std::optional<std::shared_ptr<Section>> entry = node->getEntrySection();
+    std::optional<Ptr<Section>> entry = node->getEntrySection();
 
     /**
      * Entry section must be set. Redundant check,
@@ -181,7 +181,7 @@ std::shared_ptr<Node> LlvmVisitor::visitBlock(std::shared_ptr<Block> node)
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitType(std::shared_ptr<Type> node)
+Ptr<Node> LlvmVisitor::visitType(Ptr<Type> node)
 {
     // TODO: Hard-coded double type.
     llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
@@ -197,7 +197,7 @@ std::shared_ptr<Node> LlvmVisitor::visitType(std::shared_ptr<Type> node)
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitBinaryExpr(std::shared_ptr<BinaryExpr> node)
+Ptr<Node> LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
 {
     // Ensure builder is instantiated.
     this->requireBuilder();
@@ -229,7 +229,7 @@ std::shared_ptr<Node> LlvmVisitor::visitBinaryExpr(std::shared_ptr<BinaryExpr> n
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitPrototype(std::shared_ptr<Prototype> node)
+Ptr<Node> LlvmVisitor::visitPrototype(Ptr<Prototype> node)
 {
     // Retrieve argument count from the argument vector.
     uint32_t argumentCount = node->getArgs()->getItems().size();
@@ -302,7 +302,7 @@ std::shared_ptr<Node> LlvmVisitor::visitPrototype(std::shared_ptr<Prototype> nod
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitIntValue(std::shared_ptr<IntValue> node)
+Ptr<Node> LlvmVisitor::visitIntValue(Ptr<IntValue> node)
 {
     /**
      * Create the APInt to provide. Acts sort of an
@@ -370,14 +370,14 @@ std::shared_ptr<Node> LlvmVisitor::visitIntValue(std::shared_ptr<IntValue> node)
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitCharValue(std::shared_ptr<CharValue> node)
+Ptr<Node> LlvmVisitor::visitCharValue(Ptr<CharValue> node)
 {
     // TODO
 
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitStringValue(std::shared_ptr<StringValue> node)
+Ptr<Node> LlvmVisitor::visitStringValue(Ptr<StringValue> node)
 {
     // Create the global string pointer.
     llvm::Constant *value =
@@ -389,7 +389,7 @@ std::shared_ptr<Node> LlvmVisitor::visitStringValue(std::shared_ptr<StringValue>
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitAllocaInst(std::shared_ptr<AllocaInst> node)
+Ptr<Node> LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node)
 {
     this->visitType(node->getType());
 
@@ -407,9 +407,9 @@ std::shared_ptr<Node> LlvmVisitor::visitAllocaInst(std::shared_ptr<AllocaInst> n
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitReturnInst(std::shared_ptr<ReturnInst> node)
+Ptr<Node> LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
 {
-    std::optional<std::shared_ptr<Value>> value = node->getValue();
+    std::optional<Ptr<Value>> value = node->getValue();
     llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
 
     if (value.has_value())
@@ -431,7 +431,7 @@ std::shared_ptr<Node> LlvmVisitor::visitReturnInst(std::shared_ptr<ReturnInst> n
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitBranchInst(std::shared_ptr<BranchInst> node)
+Ptr<Node> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
 {
     // Visit condition.
     this->visit(node->getCondition());
@@ -460,7 +460,7 @@ std::shared_ptr<Node> LlvmVisitor::visitBranchInst(std::shared_ptr<BranchInst> n
     return node;
 }
 
-std::shared_ptr<Node> LlvmVisitor::visitGlobalVar(std::shared_ptr<GlobalVar> node)
+Ptr<Node> LlvmVisitor::visitGlobalVar(Ptr<GlobalVar> node)
 {
     this->visitType(node->getType());
 

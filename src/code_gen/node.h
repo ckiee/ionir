@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "code_gen/node_kind.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -15,7 +16,7 @@ protected:
 public:
     Node(NodeKind type);
 
-    virtual std::shared_ptr<Node> accept(Pass *visitor) = 0;
+    virtual Ptr<Node> accept(Pass *visitor) = 0;
 
     NodeKind getNodeKind() const;
 
@@ -26,10 +27,10 @@ public:
      */
     virtual bool verify() const;
 
-    std::shared_ptr<Node> getPtr();
+    Ptr<Node> getPtr();
 
     template <class T>
-    std::shared_ptr<T> cast()
+    Ptr<T> cast()
     {
         return std::static_pointer_cast<T>(this->shared_from_this());
     }

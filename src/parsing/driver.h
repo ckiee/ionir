@@ -7,6 +7,7 @@
 #include "syntax/token.h"
 #include "misc/iterable.h"
 #include "misc/loose_generator.h"
+#include "misc/helpers.h"
 #include "ast.h"
 
 namespace ionir
@@ -32,6 +33,6 @@ public:
 	 * Processed the current iterable item and increments the
 	 * list's index if applicable.
 	 */
-	std::optional<std::shared_ptr<Node>> tryNext(); // override;
+	std::optional<Ptr<Node>> tryNext(); // override;
 };
 } // namespace ionir

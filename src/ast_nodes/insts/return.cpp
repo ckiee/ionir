@@ -1,25 +1,25 @@
-#include "return.h"
 #include "passes/pass.h"
+#include "return.h"
 
 namespace ionir
 {
 // TODO: Finish init. implementation.
-ReturnInst::ReturnInst(std::optional<std::shared_ptr<Value>> value) : Inst(InstKind::Return), value(value)
+ReturnInst::ReturnInst(std::optional<Ptr<Value>> value) : Inst(InstKind::Return), value(value)
 {
     //
 }
 
-std::shared_ptr<Node> ReturnInst::accept(Pass *visitor)
+Ptr<Node> ReturnInst::accept(Pass *visitor)
 {
     return visitor->visitReturnInst(this->cast<ReturnInst>());
 }
 
-std::optional<std::shared_ptr<Value>> ReturnInst::getValue() const
+std::optional<Ptr<Value>> ReturnInst::getValue() const
 {
     return this->value;
 }
 
-void ReturnInst::setValue(std::optional<std::shared_ptr<Value>> value)
+void ReturnInst::setValue(std::optional<Ptr<Value>> value)
 {
     this->value = value;
 }

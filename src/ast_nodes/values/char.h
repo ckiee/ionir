@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "ast_nodes/value.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -15,7 +16,7 @@ protected:
 public:
     CharValue(char value);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
     char getValue() const;
 

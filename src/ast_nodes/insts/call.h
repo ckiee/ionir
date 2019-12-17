@@ -6,27 +6,28 @@
 #include "parsing/partial_inst.h"
 #include "parsing/scope.h"
 #include "ast_nodes/function.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
 class Pass;
 
-class CallInst : public PartialInst<std::shared_ptr<Function>>
+class CallInst : public PartialInst<Ptr<Function>>
 {
 protected:
     std::string target;
 
 public:
-    CallInst(std::shared_ptr<Scope> scope, std::string target, std::optional<std::shared_ptr<Function>> callee = std::nullopt);
+    CallInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Function>> callee = std::nullopt);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
     std::string getTarget() const;
 
     void setTarget(std::string target);
 
-    std::optional<std::shared_ptr<Function>> getCallee() const;
+    std::optional<Ptr<Function>> getCallee() const;
 
-    void setCallee(std::shared_ptr<Function> callee);
+    void setCallee(Ptr<Function> callee);
 };
 } // namespace ionir

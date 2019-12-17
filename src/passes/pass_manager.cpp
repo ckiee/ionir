@@ -10,7 +10,7 @@ PassManager::PassManager() : passes({})
     //
 }
 
-void PassManager::registerPass(std::shared_ptr<PassManagerItem> item)
+void PassManager::registerPass(Ptr<PassManagerItem> item)
 {
     this->passes.push_back(item);
 }

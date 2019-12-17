@@ -9,7 +9,7 @@ Type::Type(std::string id, bool isPointer)
     //
 }
 
-std::shared_ptr<Node> Type::accept(Pass *visitor)
+Ptr<Node> Type::accept(Pass *visitor)
 {
     return visitor->visitType(this->cast<Type>());
 }

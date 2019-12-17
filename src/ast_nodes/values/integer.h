@@ -2,6 +2,7 @@
 
 #include "ast_nodes/value.h"
 #include "integer_kind.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -17,7 +18,7 @@ protected:
 public:
     IntValue(IntegerKind kind, long value);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
     IntegerKind getIntKind() const;
 

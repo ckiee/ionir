@@ -3,6 +3,7 @@
 #include <memory>
 #include "code_gen/node.h"
 #include "ast_nodes/function.h"
+#include "misc/helpers.h"
 #include "pass.h"
 
 namespace ionir
@@ -12,8 +13,8 @@ class SemanticAnalysisPass : public Pass
 public:
     SemanticAnalysisPass();
 
-    void functionReturnCheck(std::shared_ptr<Function> node);
+    void functionReturnCheck(Ptr<Function> node);
 
-    std::shared_ptr<Node> visitFunction(std::shared_ptr<Function> node) override;
+    Ptr<Node> visitFunction(Ptr<Function> node) override;
 };
 } // namespace ionir

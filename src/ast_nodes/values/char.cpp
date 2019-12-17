@@ -9,7 +9,7 @@ CharValue::CharValue(char value) : Value(ValueKind::Character), value(value)
     //
 }
 
-std::shared_ptr<Node> CharValue::accept(Pass *visitor)
+Ptr<Node> CharValue::accept(Pass *visitor)
 {
     return visitor->visitCharValue(this->cast<CharValue>());
 }

@@ -7,6 +7,7 @@
 #include "parsing/parser.h"
 #include "llvm/module.h"
 #include "code_gen/llvm_visitor.h"
+#include "misc/helpers.h"
 #include "util.h"
 
 namespace ionir::test::bootstrap
@@ -17,7 +18,7 @@ TokenStream tokenStream(int amountOfItems = 1);
 
 Parser parser(std::vector<Token> tokens);
 
-std::shared_ptr<Module> module(std::string identifier = "test");
+Ptr<Module> module(std::string identifier = "test");
 
-std::shared_ptr<LlvmVisitor> llvmVisitor();
+Ptr<LlvmVisitor> llvmVisitor();
 } // namespace ionir::test::bootstrap

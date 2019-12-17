@@ -5,6 +5,7 @@
 #include "ast_nodes/inst.h"
 #include "ast_nodes/section.h"
 #include "ast_nodes/binary_expr.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -13,27 +14,27 @@ class Pass;
 class BranchInst : public Inst
 {
 private:
-    std::shared_ptr<BinaryExpr> condition;
+    Ptr<BinaryExpr> condition;
 
-    std::shared_ptr<Section> body;
+    Ptr<Section> body;
 
-    std::optional<std::shared_ptr<Section>> otherwise;
+    std::optional<Ptr<Section>> otherwise;
 
 public:
-    BranchInst(std::shared_ptr<Section> body, std::optional<std::shared_ptr<Section>> otherwise = std::nullopt);
+    BranchInst(Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
-    std::shared_ptr<BinaryExpr> getCondition() const;
+    Ptr<BinaryExpr> getCondition() const;
 
-    void setCondition(std::shared_ptr<BinaryExpr> condition);
+    void setCondition(Ptr<BinaryExpr> condition);
 
-    std::shared_ptr<Section> getBody() const;
+    Ptr<Section> getBody() const;
 
-    void setBody(std::shared_ptr<Section> body);
+    void setBody(Ptr<Section> body);
 
-    std::optional<std::shared_ptr<Section>> getOtherwise() const;
+    std::optional<Ptr<Section>> getOtherwise() const;
 
-    void setOtherwise(std::optional<std::shared_ptr<Section>> otherwise);
+    void setOtherwise(std::optional<Ptr<Section>> otherwise);
 };
 } // namespace ionir

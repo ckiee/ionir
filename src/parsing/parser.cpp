@@ -46,7 +46,7 @@ Notice Parser::createNotice(NoticeType type, std::string message)
     return Notice(this->createNoticeContext(), type, message);
 }
 
-std::shared_ptr<Scope> Parser::createScope()
+Ptr<Scope> Parser::createScope()
 {
     // TODO
     return nullptr;
@@ -68,7 +68,7 @@ std::vector<Notice> Parser::getNotices() const
     return this->notices;
 }
 
-std::shared_ptr<Node> Parser::parseTopLevel()
+Ptr<Node> Parser::parseTopLevel()
 {
     switch (this->stream->get().getType())
     {
@@ -94,7 +94,7 @@ std::shared_ptr<Node> Parser::parseTopLevel()
     }
 }
 
-std::shared_ptr<IntValue> Parser::parseInt()
+Ptr<IntValue> Parser::parseInt()
 {
     this->expect(TokenType::LiteralInt);
 
@@ -131,7 +131,7 @@ std::shared_ptr<IntValue> Parser::parseInt()
     }
 
     // Create the integer instance.
-    std::shared_ptr<IntValue> integer = std::make_shared<IntValue>(*kind, value);
+    Ptr<IntValue> integer = std::make_shared<IntValue>(*kind, value);
 
     // Skip current token.
     this->stream->tryNext();
@@ -140,7 +140,7 @@ std::shared_ptr<IntValue> Parser::parseInt()
     return integer;
 }
 
-std::shared_ptr<CharValue> Parser::parseChar()
+Ptr<CharValue> Parser::parseChar()
 {
     this->expect(TokenType::LiteralCharacter);
 
@@ -160,7 +160,7 @@ std::shared_ptr<CharValue> Parser::parseChar()
     return std::make_shared<CharValue>(stringValue[0]);
 }
 
-std::shared_ptr<StringValue> Parser::parseString()
+Ptr<StringValue> Parser::parseString()
 {
     this->expect(TokenType::LiteralString);
 
@@ -186,7 +186,7 @@ std::string Parser::parseId()
     return id.getValue();
 }
 
-std::shared_ptr<Type> Parser::parseType()
+Ptr<Type> Parser::parseType()
 {
     std::string id = this->parseId();
     bool isPointer = false;
@@ -209,13 +209,13 @@ std::shared_ptr<Type> Parser::parseType()
 
 Arg Parser::parseArg()
 {
-    std::shared_ptr<Type> type = this->parseType();
+    Ptr<Type> type = this->parseType();
     std::string id = this->parseId();
 
     return std::make_pair(type, id);
 }
 
-std::shared_ptr<Args> Parser::parseArgs()
+Ptr<Args> Parser::parseArgs()
 {
     std::vector<Arg> args = {};
     bool isInfinite = false;
@@ -244,13 +244,13 @@ std::shared_ptr<Args> Parser::parseArgs()
     return std::make_shared<Args>(args, isInfinite);
 }
 
-std::shared_ptr<Prototype> Parser::parsePrototype()
+Ptr<Prototype> Parser::parsePrototype()
 {
     std::string id = this->parseId();
 
     this->skipOver(TokenType::SymbolParenthesesL);
 
-    std::shared_ptr<Args> args = std::make_shared<Args>();
+    Ptr<Args> args = std::make_shared<Args>();
 
     // Parse arguments if applicable.
     if (!this->is(TokenType::SymbolParenthesesR))
@@ -261,31 +261,31 @@ std::shared_ptr<Prototype> Parser::parsePrototype()
     this->stream->skip();
     this->skipOver(TokenType::SymbolArrow);
 
-    std::shared_ptr<Type> returnType = this->parseType();
+    Ptr<Type> returnType = this->parseType();
 
     return std::make_shared<Prototype>(id, args, returnType);
 }
 
-std::shared_ptr<Extern> Parser::parseExtern()
+Ptr<Extern> Parser::parseExtern()
 {
     this->skipOver(TokenType::KeywordExtern);
 
-    std::shared_ptr<Prototype> prototype = this->parsePrototype();
+    Ptr<Prototype> prototype = this->parsePrototype();
 
     return std::make_shared<Extern>(prototype);
 }
 
-std::shared_ptr<Function> Parser::parseFunction()
+Ptr<Function> Parser::parseFunction()
 {
     this->skipOver(TokenType::KeywordFunction);
 
-    std::shared_ptr<Prototype> prototype = this->parsePrototype();
-    std::shared_ptr<Block> body = this->parseBlock();
+    Ptr<Prototype> prototype = this->parsePrototype();
+    Ptr<Block> body = this->parseBlock();
 
     return std::make_shared<Function>(prototype, body);
 }
 
-std::shared_ptr<GlobalVar> Parser::parseGlobalVar()
+Ptr<GlobalVar> Parser::parseGlobalVar()
 {
     this->skipOver(TokenType::KeywordGlobal);
 
@@ -294,7 +294,7 @@ std::shared_ptr<GlobalVar> Parser::parseGlobalVar()
     return nullptr;
 }
 
-std::shared_ptr<Value> Parser::parseValue()
+Ptr<Value> Parser::parseValue()
 {
     Token token = this->stream->get();
 
@@ -319,7 +319,7 @@ std::shared_ptr<Value> Parser::parseValue()
     }
 }
 
-std::optional<std::shared_ptr<Node>> Parser::parsePrimaryExpr()
+std::optional<Ptr<Node>> Parser::parsePrimaryExpr()
 {
     switch (this->stream->get().getType())
     {
@@ -338,7 +338,7 @@ std::optional<std::shared_ptr<Node>> Parser::parsePrimaryExpr()
     }
 }
 
-std::shared_ptr<Node> Parser::parseBinaryExprRightSide(std::shared_ptr<Node> leftSide, int minimalPrecedence)
+Ptr<Node> Parser::parseBinaryExprRightSide(Ptr<Node> leftSide, int minimalPrecedence)
 {
     // If this is a binary operation, find it's precedence.
     while (true)
@@ -374,7 +374,7 @@ std::shared_ptr<Node> Parser::parseBinaryExprRightSide(std::shared_ptr<Node> lef
         this->stream->skip();
 
         // Parse the right-side.
-        std::optional<std::shared_ptr<Node>> rightSide = this->parsePrimaryExpr();
+        std::optional<Ptr<Node>> rightSide = this->parsePrimaryExpr();
 
         // Ensure that the right-side was successfully parsed.
         if (!rightSide.has_value())
@@ -410,7 +410,7 @@ std::shared_ptr<Node> Parser::parseBinaryExprRightSide(std::shared_ptr<Node> lef
         };
 
         // Create the binary expression entity.
-        std::shared_ptr<BinaryExpr> binaryExpr = std::make_shared<BinaryExpr>(opts);
+        Ptr<BinaryExpr> binaryExpr = std::make_shared<BinaryExpr>(opts);
 
         // TODO: Set the binaryExpr's name during codegen pass.
         // binaryExpr.SetName("tmp");
@@ -420,7 +420,7 @@ std::shared_ptr<Node> Parser::parseBinaryExprRightSide(std::shared_ptr<Node> lef
     }
 }
 
-std::shared_ptr<Section> Parser::parseSection()
+Ptr<Section> Parser::parseSection()
 {
     this->skipOver(TokenType::SymbolAt);
 
@@ -428,7 +428,7 @@ std::shared_ptr<Section> Parser::parseSection()
 
     this->skipOver(TokenType::SymbolColon);
 
-    std::vector<std::shared_ptr<Inst>> insts = {};
+    std::vector<Ptr<Inst>> insts = {};
 
     while (!this->is(TokenType::SymbolBraceR) && !this->is(TokenType::SymbolAt))
     {
@@ -452,11 +452,11 @@ std::shared_ptr<Section> Parser::parseSection()
     return std::make_shared<Section>(kind, id, insts);
 }
 
-std::shared_ptr<Block> Parser::parseBlock()
+Ptr<Block> Parser::parseBlock()
 {
     this->skipOver(TokenType::SymbolBraceL);
 
-    std::vector<std::shared_ptr<Section>> sections = {};
+    std::vector<Ptr<Section>> sections = {};
 
     while (!this->is(TokenType::SymbolBraceR))
     {
@@ -469,25 +469,25 @@ std::shared_ptr<Block> Parser::parseBlock()
     return std::make_shared<Block>(sections);
 }
 
-std::shared_ptr<AllocaInst> Parser::parseAllocaInst()
+Ptr<AllocaInst> Parser::parseAllocaInst()
 {
     std::string id = this->parseId();
-    std::shared_ptr<Type> type = this->parseType();
+    Ptr<Type> type = this->parseType();
 
     return std::make_shared<AllocaInst>(id, type);
 }
 
-std::shared_ptr<ReturnInst> Parser::parseReturnInst()
+Ptr<ReturnInst> Parser::parseReturnInst()
 {
     // TODO: Return inst does not necessarily take a value. Instead, it should be allowed to return without value, signaling void.
-    std::shared_ptr<Value> value = this->parseValue();
+    Ptr<Value> value = this->parseValue();
 
     return std::make_shared<ReturnInst>(value);
 }
 
-std::shared_ptr<BranchInst> Parser::parseBranchInst()
+Ptr<BranchInst> Parser::parseBranchInst()
 {
-    std::optional<std::shared_ptr<Node>> condition = this->parsePrimaryExpr();
+    std::optional<Ptr<Node>> condition = this->parsePrimaryExpr();
 
     // Condition must be set.
     if (!condition.has_value())
@@ -497,8 +497,8 @@ std::shared_ptr<BranchInst> Parser::parseBranchInst()
 
     // TODO: Use targets.
 
-    std::shared_ptr<Section> body = this->parseSection();
-    std::optional<std::shared_ptr<Section>> otherwise = std::nullopt;
+    Ptr<Section> body = this->parseSection();
+    std::optional<Ptr<Section>> otherwise = std::nullopt;
 
     // Parse the otherwise block if applicable.
     if (this->is(TokenType::KeywordElse))
@@ -513,21 +513,21 @@ std::shared_ptr<BranchInst> Parser::parseBranchInst()
     return std::make_shared<BranchInst>(body, *otherwise);
 }
 
-std::shared_ptr<GotoInst> Parser::parseGotoInst()
+Ptr<GotoInst> Parser::parseGotoInst()
 {
     std::string target = this->parseId();
-    std::shared_ptr<GotoInst> gotoInst = std::make_shared<GotoInst>(this->createScope(), target);
+    Ptr<GotoInst> gotoInst = std::make_shared<GotoInst>(this->createScope(), target);
 
     // TODO: createScope has not been defined yet.
     return gotoInst;
 }
 
-std::shared_ptr<Inst> Parser::parseInst()
+Ptr<Inst> Parser::parseInst()
 {
     // Parse the instruction's name to determine which argument parser to invoke.
     std::string id = this->parseId();
 
-    std::shared_ptr<Inst> inst;
+    Ptr<Inst> inst;
 
     // TODO: Hard-coded strings. Should be mapped into InstKind enum.
     if (id == "alloca")

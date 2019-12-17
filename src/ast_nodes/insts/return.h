@@ -7,6 +7,7 @@
 #include "ast_nodes/inst_kind.h"
 #include "ast_nodes/type.h"
 #include "ast_nodes/value.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -15,15 +16,15 @@ class Pass;
 class ReturnInst : public Inst
 {
 protected:
-    std::optional<std::shared_ptr<Value>> value;
+    std::optional<Ptr<Value>> value;
 
 public:
-    ReturnInst(std::optional<std::shared_ptr<Value>> value = std::nullopt);
+    ReturnInst(std::optional<Ptr<Value>> value = std::nullopt);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
-    std::optional<std::shared_ptr<Value>> getValue() const;
+    std::optional<Ptr<Value>> getValue() const;
 
-    void setValue(std::optional<std::shared_ptr<Value>> value);
+    void setValue(std::optional<Ptr<Value>> value);
 };
 } // namespace ionir

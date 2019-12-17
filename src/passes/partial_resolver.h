@@ -4,6 +4,7 @@
 #include <vector>
 #include "ast_nodes/insts/goto.h"
 #include "ast_nodes/inst.h"
+#include "misc/helpers.h"
 #include "pass.h"
 
 namespace ionir
@@ -11,15 +12,15 @@ namespace ionir
 class PartialResolverPass : public Pass
 {
 protected:
-    std::vector<std::shared_ptr<Inst>> partials;
+    std::vector<Ptr<Inst>> partials;
 
-    void resolveGotoInst(std::shared_ptr<GotoInst> partial);
+    void resolveGotoInst(Ptr<GotoInst> partial);
 
 public:
-    PartialResolverPass(std::vector<std::shared_ptr<Inst>> partials);
+    PartialResolverPass(std::vector<Ptr<Inst>> partials);
 
-    std::vector<std::shared_ptr<Inst>> getPartials() const;
+    std::vector<Ptr<Inst>> getPartials() const;
 
-    std::shared_ptr<Node> visitGotoInst(std::shared_ptr<GotoInst> node);
+    Ptr<Node> visitGotoInst(Ptr<GotoInst> node);
 };
 } // namespace ionir

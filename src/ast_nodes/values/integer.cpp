@@ -10,7 +10,7 @@ IntValue::IntValue(IntegerKind kind, long value)
     //
 }
 
-std::shared_ptr<Node> IntValue::accept(Pass *visitor)
+Ptr<Node> IntValue::accept(Pass *visitor)
 {
     return visitor->visitIntValue(this->cast<IntValue>());
 }

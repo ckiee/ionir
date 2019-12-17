@@ -4,47 +4,47 @@
 
 namespace ionir
 {
-std::shared_ptr<Node> Pass::visit(std::shared_ptr<Node> node)
+Ptr<Node> Pass::visit(Ptr<Node> node)
 {
     return node->accept(this);
 }
 
-std::shared_ptr<Node> Pass::visitFunction(std::shared_ptr<Function> node)
+Ptr<Node> Pass::visitFunction(Ptr<Function> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitExtern(std::shared_ptr<Extern> node)
+Ptr<Node> Pass::visitExtern(Ptr<Extern> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitSection(std::shared_ptr<Section> node)
+Ptr<Node> Pass::visitSection(Ptr<Section> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitBlock(std::shared_ptr<Block> node)
+Ptr<Node> Pass::visitBlock(Ptr<Block> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitType(std::shared_ptr<Type> node)
+Ptr<Node> Pass::visitType(Ptr<Type> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitBinaryExpr(std::shared_ptr<BinaryExpr> node)
+Ptr<Node> Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitPrototype(std::shared_ptr<Prototype> node)
+Ptr<Node> Pass::visitPrototype(Ptr<Prototype> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitValue(std::shared_ptr<Value> node)
+Ptr<Node> Pass::visitValue(Ptr<Value> node)
 {
     switch (node->getValueKind())
     {
@@ -72,22 +72,22 @@ std::shared_ptr<Node> Pass::visitValue(std::shared_ptr<Value> node)
     }
 }
 
-std::shared_ptr<Node> Pass::visitIntValue(std::shared_ptr<IntValue> node)
+Ptr<Node> Pass::visitIntValue(Ptr<IntValue> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitCharValue(std::shared_ptr<CharValue> node)
+Ptr<Node> Pass::visitCharValue(Ptr<CharValue> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitStringValue(std::shared_ptr<StringValue> node)
+Ptr<Node> Pass::visitStringValue(Ptr<StringValue> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitInst(std::shared_ptr<Inst> node)
+Ptr<Node> Pass::visitInst(Ptr<Inst> node)
 {
     switch (node->getInstKind())
     {
@@ -124,27 +124,27 @@ std::shared_ptr<Node> Pass::visitInst(std::shared_ptr<Inst> node)
     }
 }
 
-std::shared_ptr<Node> Pass::visitAllocaInst(std::shared_ptr<AllocaInst> node)
+Ptr<Node> Pass::visitAllocaInst(Ptr<AllocaInst> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitReturnInst(std::shared_ptr<ReturnInst> node)
+Ptr<Node> Pass::visitReturnInst(Ptr<ReturnInst> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitBranchInst(std::shared_ptr<BranchInst> node)
+Ptr<Node> Pass::visitBranchInst(Ptr<BranchInst> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitGotoInst(std::shared_ptr<GotoInst> node)
+Ptr<Node> Pass::visitGotoInst(Ptr<GotoInst> node)
 {
     return node;
 }
 
-std::shared_ptr<Node> Pass::visitGlobalVar(std::shared_ptr<GlobalVar> node)
+Ptr<Node> Pass::visitGlobalVar(Ptr<GlobalVar> node)
 {
     return node;
 }

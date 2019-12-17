@@ -4,13 +4,13 @@
 
 namespace ionir
 {
-Prototype::Prototype(std::string id, std::shared_ptr<Args> args, std::shared_ptr<Type> returnType)
+Prototype::Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType)
     : Node(NodeKind::Prototype), id(id), args(args), returnType(returnType)
 {
     //
 }
 
-std::shared_ptr<Node> Prototype::accept(Pass *visitor)
+Ptr<Node> Prototype::accept(Pass *visitor)
 {
     return visitor->visitPrototype(this->cast<Prototype>());
 }
@@ -25,22 +25,22 @@ void Prototype::setId(std::string id)
     this->id = id;
 }
 
-std::shared_ptr<Args> Prototype::getArgs() const
+Ptr<Args> Prototype::getArgs() const
 {
     return this->args;
 }
 
-void Prototype::setArgs(std::shared_ptr<Args> args)
+void Prototype::setArgs(Ptr<Args> args)
 {
     this->args = args;
 }
 
-std::shared_ptr<Type> Prototype::getReturnType() const
+Ptr<Type> Prototype::getReturnType() const
 {
     return this->returnType;
 }
 
-void Prototype::setReturnType(std::shared_ptr<Type> returnType)
+void Prototype::setReturnType(Ptr<Type> returnType)
 {
     this->returnType = returnType;
 }

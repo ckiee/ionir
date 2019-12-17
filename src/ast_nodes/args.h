@@ -4,11 +4,12 @@
 #include <vector>
 #include <utility>
 #include <string>
+#include "misc/helpers.h"
 #include "type.h"
 
 namespace ionir
 {
-typedef std::pair<std::shared_ptr<Type>, std::string> Arg;
+typedef std::pair<Ptr<Type>, std::string> Arg;
 
 class Args
 {

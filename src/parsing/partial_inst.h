@@ -5,6 +5,7 @@
 #include <optional>
 #include "ast_nodes/inst.h"
 #include "ast_nodes/inst_kind.h"
+#include "misc/helpers.h"
 #include "scope.h"
 
 namespace ionir
@@ -15,7 +16,7 @@ class PartialInst : public Inst
 private:
     std::optional<T> value;
 
-    std::shared_ptr<Scope> scope;
+    Ptr<Scope> scope;
 
 protected:
     std::optional<T> getValue() const
@@ -24,15 +25,15 @@ protected:
     }
 
 public:
-    PartialInst(InstKind kind, std::shared_ptr<Scope> scope, std::optional<T> value = std::nullopt)
+    PartialInst(InstKind kind, Ptr<Scope> scope, std::optional<T> value = std::nullopt)
         : Inst(kind), scope(scope), value(value)
     {
         //
     }
 
-    virtual std::shared_ptr<Node> accept(Pass *visitor) = 0;
+    virtual Ptr<Node> accept(Pass *visitor) = 0;
 
-    std::shared_ptr<Scope> getScope() const
+    Ptr<Scope> getScope() const
     {
         return this->scope;
     }

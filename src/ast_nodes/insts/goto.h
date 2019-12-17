@@ -6,27 +6,28 @@
 #include "parsing/partial_inst.h"
 #include "parsing/scope.h"
 #include "ast_nodes/section.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
 class Pass;
 
-class GotoInst : public PartialInst<std::shared_ptr<Section>>
+class GotoInst : public PartialInst<Ptr<Section>>
 {
 protected:
     std::string target;
 
 public:
-    GotoInst(std::shared_ptr<Scope> scope, std::string target, std::optional<std::shared_ptr<Section>> section = std::nullopt);
+    GotoInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Section>> section = std::nullopt);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
     std::string getTarget() const;
 
     void setTarget(std::string target);
 
-    std::optional<std::shared_ptr<Section>> getSection() const;
+    std::optional<Ptr<Section>> getSection() const;
 
-    void setSection(std::shared_ptr<Section> section);
+    void setSection(Ptr<Section> section);
 };
 } // namespace ionir

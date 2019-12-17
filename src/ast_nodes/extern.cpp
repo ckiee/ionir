@@ -3,22 +3,22 @@
 
 namespace ionir
 {
-Extern::Extern(std::shared_ptr<Prototype> prototype) : Node(NodeKind::Extern), prototype(prototype)
+Extern::Extern(Ptr<Prototype> prototype) : Node(NodeKind::Extern), prototype(prototype)
 {
     //
 }
 
-std::shared_ptr<Node> Extern::accept(Pass *visitor)
+Ptr<Node> Extern::accept(Pass *visitor)
 {
     return visitor->visitExtern(this->cast<Extern>());
 }
 
-std::shared_ptr<Prototype> Extern::getPrototype() const
+Ptr<Prototype> Extern::getPrototype() const
 {
     return this->prototype;
 }
 
-void Extern::setPrototype(std::shared_ptr<Prototype> prototype)
+void Extern::setPrototype(Ptr<Prototype> prototype)
 {
     this->prototype = prototype;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "misc/helpers.h"
 #include "pass.h"
 
 namespace ionir
@@ -12,6 +13,6 @@ public:
      * Analyzes function calls and removes functions
      * that are not called or referenced.
      */
-    std::shared_ptr<Node> visitFunction(std::shared_ptr<Function> node) override;
+    Ptr<Node> visitFunction(Ptr<Function> node) override;
 };
 } // namespace ionir

@@ -4,6 +4,7 @@
 #include <string>
 #include "code_gen/node.h"
 #include "code_gen/node_kind.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -19,7 +20,7 @@ protected:
 public:
     Type(std::string id, bool isPointer = false);
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
     std::string getId() const;
 

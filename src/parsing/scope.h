@@ -2,17 +2,18 @@
 
 #include "code_gen/node.h"
 #include "misc/wrapper.h"
+#include "misc/helpers.h"
 #include "scope_kind.h"
 
 namespace ionir
 {
-class Scope : public Wrapper<std::shared_ptr<Node>>
+class Scope : public Wrapper<Ptr<Node>>
 {
 protected:
     ScopeKind kind;
 
 public:
-    Scope(std::shared_ptr<Node> value, ScopeKind kind);
+    Scope(Ptr<Node> value, ScopeKind kind);
 
     ScopeKind getKind() const;
 };

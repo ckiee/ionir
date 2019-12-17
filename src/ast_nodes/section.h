@@ -8,6 +8,7 @@
 #include "ast_nodes/inst.h"
 #include "code_gen/node.h"
 #include "section_kind.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -20,12 +21,12 @@ protected:
 
     std::string id;
 
-    std::vector<std::shared_ptr<Inst>> insts;
+    std::vector<Ptr<Inst>> insts;
 
 public:
-    Section(SectionKind kind, std::string id, std::vector<std::shared_ptr<Inst>> insts = {});
+    Section(SectionKind kind, std::string id, std::vector<Ptr<Inst>> insts = {});
 
-    std::shared_ptr<Node> accept(Pass *visitor) override;
+    Ptr<Node> accept(Pass *visitor) override;
 
     SectionKind getKind() const;
 
@@ -33,8 +34,8 @@ public:
 
     void setId(std::string id);
 
-    std::vector<std::shared_ptr<Inst>> getInsts() const;
+    std::vector<Ptr<Inst>> getInsts() const;
 
-    void setInsts(std::vector<std::shared_ptr<Inst>> insts);
+    void setInsts(std::vector<Ptr<Inst>> insts);
 };
 } // namespace ionir

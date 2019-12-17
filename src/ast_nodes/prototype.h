@@ -6,6 +6,7 @@
 #include "ast_nodes/type.h"
 #include "ast_nodes/args.h"
 #include "code_gen/node.h"
+#include "misc/helpers.h"
 
 namespace ionir
 {
@@ -16,25 +17,25 @@ class Prototype : public Node
 protected:
 	std::string id;
 
-	std::shared_ptr<Args> args;
+	Ptr<Args> args;
 
-	std::shared_ptr<Type> returnType;
+	Ptr<Type> returnType;
 
 public:
-	Prototype(std::string id, std::shared_ptr<Args> args, std::shared_ptr<Type> returnType);
+	Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType);
 
-	std::shared_ptr<Node> accept(Pass *visitor) override;
+	Ptr<Node> accept(Pass *visitor) override;
 
 	std::string getId() const;
 
 	void setId(std::string id);
 
-	std::shared_ptr<Args> getArgs() const;
+	Ptr<Args> getArgs() const;
 
-	void setArgs(std::shared_ptr<Args> args);
+	void setArgs(Ptr<Args> args);
 
-	std::shared_ptr<Type> getReturnType() const;
+	Ptr<Type> getReturnType() const;
 
-	void setReturnType(std::shared_ptr<Type> returnType);
+	void setReturnType(Ptr<Type> returnType);
 };
 } // namespace ionir

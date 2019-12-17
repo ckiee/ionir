@@ -9,27 +9,27 @@ BinaryExpr::BinaryExpr(BinaryExprOpts opts)
     //
 }
 
-std::shared_ptr<Node> BinaryExpr::accept(Pass *visitor)
+Ptr<Node> BinaryExpr::accept(Pass *visitor)
 {
     return visitor->visitBinaryExpr(this->cast<BinaryExpr>());
 }
 
-std::shared_ptr<Node> BinaryExpr::getLeftSide() const
+Ptr<Node> BinaryExpr::getLeftSide() const
 {
     return this->leftSide;
 }
 
-void BinaryExpr::setLeftSide(std::shared_ptr<Node> leftSide)
+void BinaryExpr::setLeftSide(Ptr<Node> leftSide)
 {
     this->leftSide = leftSide;
 }
 
-std::optional<std::shared_ptr<Node>> BinaryExpr::getRightSide() const
+std::optional<Ptr<Node>> BinaryExpr::getRightSide() const
 {
     return this->rightSide;
 }
 
-void BinaryExpr::setRightSide(std::optional<std::shared_ptr<Node>> rightSide)
+void BinaryExpr::setRightSide(std::optional<Ptr<Node>> rightSide)
 {
     this->rightSide = rightSide;
 }

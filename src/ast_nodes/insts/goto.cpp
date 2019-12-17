@@ -1,11 +1,11 @@
-#include "goto.h"
 #include "ast_nodes/inst_kind.h"
 #include "passes/pass.h"
+#include "goto.h"
 
 namespace ionir
 {
-GotoInst::GotoInst(std::shared_ptr<Scope> scope, std::string target, std::optional<std::shared_ptr<Section>> section)
-    : PartialInst<std::shared_ptr<Section>>(InstKind::Goto, scope, section), target(target)
+GotoInst::GotoInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Section>> section)
+    : PartialInst<Ptr<Section>>(InstKind::Goto, scope, section), target(target)
 {
     if (section.has_value())
     {
@@ -13,7 +13,7 @@ GotoInst::GotoInst(std::shared_ptr<Scope> scope, std::string target, std::option
     }
 }
 
-std::shared_ptr<Node> GotoInst::accept(Pass *visitor)
+Ptr<Node> GotoInst::accept(Pass *visitor)
 {
     return visitor->visitGotoInst(this->cast<GotoInst>());
 }
@@ -28,12 +28,12 @@ void GotoInst::setTarget(std::string target)
     this->target = target;
 }
 
-std::optional<std::shared_ptr<Section>> GotoInst::getSection() const
+std::optional<Ptr<Section>> GotoInst::getSection() const
 {
     return this->getValue();
 }
 
-void GotoInst::setSection(std::shared_ptr<Section> section)
+void GotoInst::setSection(Ptr<Section> section)
 {
     this->resolve(section);
 }
