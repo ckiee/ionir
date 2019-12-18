@@ -32,10 +32,6 @@ public:
 
     std::string getId() const;
 
-    void setId(std::string id);
-
-    std::vector<Ptr<Inst>> &getInsts();
-
-    void setInsts(std::vector<Ptr<Inst>> insts);
+    std::vector<Ptr<Inst>> getInsts();
 };
 } // namespace ionir

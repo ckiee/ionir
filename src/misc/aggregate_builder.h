@@ -6,15 +6,27 @@
 
 namespace ionir
 {
+template <class T>
 class AggregateBuilder
 {
 protected:
     std::vector<Construct> parts;
 
 public:
-    AggregateBuilder();
+    AggregateBuilder() : parts({})
+    {
+        //
+    }
 
-    std::vector<Construct> getParts() const;
+    std::vector<Construct> getParts() const
+    {
+        return this->parts;
+    }
+
+    void clear()
+    {
+        this->parts.clear();
+    }
 
     template <class TConstruct, typename... TArgs>
     Ptr<AggregateBuilder> push(TArgs... args)
@@ -24,7 +36,6 @@ public:
         this->parts.push_back(std::make_shared<TConstruct>(args));
     }
 
-    template <class T>
     Ptr<T> make()
     {
         std::vector<Construct> parts = this->parts;
@@ -33,7 +44,5 @@ public:
 
         return std::make_shared<T>(parts...);
     }
-
-    void clear();
 };
 } // namespace ionir

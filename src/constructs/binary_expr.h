@@ -40,10 +40,6 @@ public:
 
     Ptr<Construct> getLeftSide() const;
 
-    void setLeftSide(Ptr<Construct> leftSide);
-
     std::optional<Ptr<Construct>> getRightSide() const;
-
-    void setRightSide(std::optional<Ptr<Construct>> rightSide);
 };
 } // namespace ionir

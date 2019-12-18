@@ -25,11 +25,7 @@ public:
 
 	Ptr<Prototype> getPrototype() const;
 
-	void setPrototype(Ptr<Prototype> prototype);
-
 	Ptr<Block> getBody() const;
-
-	void setBody(Ptr<Block> body);
 
 	bool verify() const override;
 };

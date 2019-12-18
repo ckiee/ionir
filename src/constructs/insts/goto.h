@@ -24,10 +24,6 @@ public:
 
     std::string getTarget() const;
 
-    void setTarget(std::string target);
-
     std::optional<Ptr<Section>> getSection() const;
-
-    void setSection(Ptr<Section> section);
 };
 } // namespace ionir

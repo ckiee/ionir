@@ -28,7 +28,5 @@ public:
     std::optional<Ptr<Section>> getEntrySection();
 
     std::vector<Ptr<Section>> getSections() const;
-
-    void setSections(std::vector<Ptr<Section>> sections);
 };
 } // namespace ionir

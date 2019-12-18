@@ -24,10 +24,6 @@ public:
 
     std::string getTarget() const;
 
-    void setTarget(std::string target);
-
     std::optional<Ptr<Function>> getCallee() const;
-
-    void setCallee(Ptr<Function> callee);
 };
 } // namespace ionir

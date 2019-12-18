@@ -19,19 +19,9 @@ Ptr<Type> GlobalVar::getType() const
     return this->type;
 }
 
-void GlobalVar::setType(Ptr<Type> type)
-{
-    this->type = type;
-}
-
 std::string GlobalVar::getId() const
 {
     return this->id;
-}
-
-void GlobalVar::setId(std::string id)
-{
-    this->id = id;
 }
 
 std::optional<Ptr<Value>> GlobalVar::getValue() const

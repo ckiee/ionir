@@ -28,7 +28,7 @@ public:
     {
         // TODO: Ensure T inherits from Inst or derived.
 
-        Ptr<TInst> inst = std::make_shared<TInst>(args);
+        Ptr<TInst> inst = std::make_shared<TInst>(args...);
 
         this->insert(inst);
 

@@ -23,10 +23,6 @@ public:
 
     std::vector<Arg> getItems() const;
 
-    void setItems(std::vector<Arg> items);
-
     bool getIsInfinite() const;
-
-    void setIsInfinite(bool isInfinite);
 };
 } // namespace ionir

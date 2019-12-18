@@ -23,18 +23,8 @@ std::string GotoInst::getTarget() const
     return this->target;
 }
 
-void GotoInst::setTarget(std::string target)
-{
-    this->target = target;
-}
-
 std::optional<Ptr<Section>> GotoInst::getSection() const
 {
     return this->getValue();
-}
-
-void GotoInst::setSection(Ptr<Section> section)
-{
-    this->resolve(section);
 }
 } // namespace ionir

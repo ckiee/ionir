@@ -21,7 +21,5 @@ public:
 	Ptr<Construct> accept(Pass *visitor) override;
 
 	Ptr<Prototype> getPrototype() const;
-
-	void setPrototype(Ptr<Prototype> prototype);
 };
 } // namespace ionir

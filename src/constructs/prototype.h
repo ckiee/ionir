@@ -28,14 +28,8 @@ public:
 
 	std::string getId() const;
 
-	void setId(std::string id);
-
 	Ptr<Args> getArgs() const;
 
-	void setArgs(Ptr<Args> args);
-
 	Ptr<Type> getReturnType() const;
-
-	void setReturnType(Ptr<Type> returnType);
 };
 } // namespace ionir

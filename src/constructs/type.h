@@ -24,10 +24,6 @@ public:
 
     std::string getId() const;
 
-    void setId(std::string id);
-
     bool getIsPointer() const;
-
-    void setIsPointer(bool isPointer);
 };
 } // namespace ionir

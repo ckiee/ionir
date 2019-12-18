@@ -20,28 +20,13 @@ Ptr<BinaryExpr> BranchInst::getCondition() const
     return this->condition;
 }
 
-void BranchInst::setCondition(Ptr<BinaryExpr> condition)
-{
-    this->condition = condition;
-}
-
 Ptr<Section> BranchInst::getBody() const
 {
     return this->body;
 }
 
-void BranchInst::setBody(Ptr<Section> body)
-{
-    this->body = body;
-}
-
 std::optional<Ptr<Section>> BranchInst::getOtherwise() const
 {
     return this->otherwise;
-}
-
-void BranchInst::setOtherwise(std::optional<Ptr<Section>> otherwise)
-{
-    this->otherwise = otherwise;
 }
 } // namespace ionir

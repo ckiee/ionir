@@ -29,11 +29,7 @@ public:
 
     Ptr<Type> getType() const;
 
-    void setType(Ptr<Type> type);
-
     std::string getId() const;
-
-    void setId(std::string id);
 
     std::optional<Ptr<Value>> getValue() const;
 };

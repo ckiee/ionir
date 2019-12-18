@@ -27,14 +27,8 @@ public:
 
     Ptr<BinaryExpr> getCondition() const;
 
-    void setCondition(Ptr<BinaryExpr> condition);
-
     Ptr<Section> getBody() const;
 
-    void setBody(Ptr<Section> body);
-
     std::optional<Ptr<Section>> getOtherwise() const;
-
-    void setOtherwise(std::optional<Ptr<Section>> otherwise);
 };
 } // namespace ionir

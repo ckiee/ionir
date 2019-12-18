@@ -25,18 +25,8 @@ std::string Section::getId() const
     return this->id;
 }
 
-void Section::setId(std::string id)
-{
-    this->id = id;
-}
-
-std::vector<Ptr<Inst>> &Section::getInsts()
+std::vector<Ptr<Inst>> Section::getInsts()
 {
     return this->insts;
-}
-
-void Section::setInsts(std::vector<Ptr<Inst>> insts)
-{
-    this->insts = insts;
 }
 } // namespace ionir

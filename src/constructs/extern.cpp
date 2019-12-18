@@ -17,9 +17,4 @@ Ptr<Prototype> Extern::getPrototype() const
 {
     return this->prototype;
 }
-
-void Extern::setPrototype(Ptr<Prototype> prototype)
-{
-    this->prototype = prototype;
-}
 } // namespace ionir

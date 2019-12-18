@@ -24,7 +24,5 @@ public:
     Ptr<Construct> accept(Pass *visitor) override;
 
     std::optional<Ptr<Value>> getValue() const;
-
-    void setValue(std::optional<Ptr<Value>> value);
 };
 } // namespace ionir

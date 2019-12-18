@@ -18,9 +18,4 @@ std::optional<Ptr<Value>> ReturnInst::getValue() const
 {
     return this->value;
 }
-
-void ReturnInst::setValue(std::optional<Ptr<Value>> value)
-{
-    this->value = value;
-}
 } // namespace ionir

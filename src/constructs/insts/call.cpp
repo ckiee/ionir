@@ -23,18 +23,8 @@ std::string CallInst::getTarget() const
     return this->target;
 }
 
-void CallInst::setTarget(std::string target)
-{
-    this->target = target;
-}
-
 std::optional<Ptr<Function>> CallInst::getCallee() const
 {
     return this->getValue();
-}
-
-void CallInst::setCallee(Ptr<Function> callee)
-{
-    this->resolve(callee);
 }
 } // namespace ionir

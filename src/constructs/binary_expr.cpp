@@ -19,18 +19,8 @@ Ptr<Construct> BinaryExpr::getLeftSide() const
     return this->leftSide;
 }
 
-void BinaryExpr::setLeftSide(Ptr<Construct> leftSide)
-{
-    this->leftSide = leftSide;
-}
-
 std::optional<Ptr<Construct>> BinaryExpr::getRightSide() const
 {
     return this->rightSide;
-}
-
-void BinaryExpr::setRightSide(std::optional<Ptr<Construct>> rightSide)
-{
-    this->rightSide = rightSide;
 }
 } // namespace ionir

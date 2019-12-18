@@ -70,9 +70,4 @@ std::vector<Ptr<Section>> Block::getSections() const
 {
     return this->sections;
 }
-
-void Block::setSections(std::vector<Ptr<Section>> sections)
-{
-    this->sections = sections;
-}
 } // namespace ionir

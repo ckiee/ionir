@@ -19,19 +19,9 @@ Ptr<Prototype> Function::getPrototype() const
     return this->prototype;
 }
 
-void Function::setPrototype(Ptr<Prototype> prototype)
-{
-    this->prototype = prototype;
-}
-
 Ptr<Block> Function::getBody() const
 {
     return this->body;
-}
-
-void Function::setBody(Ptr<Block> body)
-{
-    this->body = body;
 }
 
 bool Function::verify() const
