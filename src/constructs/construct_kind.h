@@ -26,8 +26,6 @@ enum class ConstructKind
 
 	Instruction,
 
-	Value,
-
 	Global,
 
 	Section,

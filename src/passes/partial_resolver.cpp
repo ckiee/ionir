@@ -16,12 +16,12 @@ std::vector<Ptr<Inst>> PartialResolverPass::getPartials() const
     return this->partials;
 }
 
-Ptr<Construct> PartialResolverPass::visitGotoInst(Ptr<GotoInst> node)
+void PartialResolverPass::visitGotoInst(Ptr<GotoInst> node)
 {
     // Partial has already been resolved. Do not continue.
     if (node->isResolved())
     {
-        return node;
+        return;
     }
 
     Ptr<Scope> scope = node->getScope();
@@ -40,8 +40,8 @@ Ptr<Construct> PartialResolverPass::visitGotoInst(Ptr<GotoInst> node)
             {
                 node->resolve(section);
 
-                // Return resolved node, no need to continue.
-                return node;
+                // Node was resolved, no need to continue.
+                return;
             }
         }
 
@@ -54,7 +54,5 @@ Ptr<Construct> PartialResolverPass::visitGotoInst(Ptr<GotoInst> node)
         throw std::runtime_error("Unknown scope kind");
     }
     }
-
-    return node;
 }
 } // namespace ionir

@@ -4,7 +4,7 @@
 
 namespace ionir
 {
-BranchInst::BranchInst(Ptr<BinaryExpr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise)
+BranchInst::BranchInst(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise)
     : Inst(InstKind::Branch), condition(condition), body(body), otherwise(otherwise)
 {
     //
@@ -15,7 +15,7 @@ void BranchInst::accept(Pass *visitor)
     visitor->visitBranchInst(this->cast<BranchInst>());
 }
 
-Ptr<BinaryExpr> BranchInst::getCondition() const
+Ptr<Expr> BranchInst::getCondition() const
 {
     return this->condition;
 }

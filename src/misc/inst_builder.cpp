@@ -22,7 +22,7 @@ Ptr<AllocaInst> InstBuilder::createAlloca(std::string id, Ptr<Type> type)
     return this->make<AllocaInst>(id, type);
 }
 
-Ptr<BranchInst> InstBuilder::createBranch(Ptr<BinaryExpr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise)
+Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise)
 {
     return this->make<BranchInst>(condition, body, otherwise);
 }

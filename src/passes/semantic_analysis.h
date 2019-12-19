@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include "constructs/construct.h"
 #include "constructs/function.h"
 #include "misc/helpers.h"
 #include "pass.h"
@@ -15,6 +14,6 @@ public:
 
     void functionReturnCheck(Ptr<Function> node);
 
-    Ptr<Construct> visitFunction(Ptr<Function> node) override;
+    void visitFunction(Ptr<Function> node) override;
 };
 } // namespace ionir

@@ -7,7 +7,7 @@
 #include "constructs/construct_kind.h"
 #include "misc/helpers.h"
 #include "type.h"
-#include "value.h"
+#include "values/value.h"
 
 namespace ionir
 {

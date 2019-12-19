@@ -33,10 +33,8 @@ void SemanticAnalysisPass::functionReturnCheck(Ptr<Function> node)
     }
 }
 
-Ptr<Construct> SemanticAnalysisPass::visitFunction(Ptr<Function> node)
+void SemanticAnalysisPass::visitFunction(Ptr<Function> node)
 {
     this->functionReturnCheck(node);
-
-    return node;
 }
 } // namespace ionir

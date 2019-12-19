@@ -1,4 +1,4 @@
-#include "constructs/value_kind.h"
+#include "constructs/values/value_kind.h"
 #include "passes/pass.h"
 #include "string.h"
 

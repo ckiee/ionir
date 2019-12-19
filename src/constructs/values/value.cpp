@@ -1,10 +1,10 @@
-#include "constructs/construct_kind.h"
+#include "constructs/expr/expr_kind.h"
 #include "passes/pass.h"
 #include "value.h"
 
 namespace ionir
 {
-Value::Value(ValueKind kind) : Construct(ConstructKind::Value), kind(kind)
+Value::Value(ValueKind kind) : Expr(ExprKind::Value), kind(kind)
 {
     //
 }

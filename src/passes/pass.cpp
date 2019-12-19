@@ -1,11 +1,11 @@
 #include <iostream>
 #include <exception>
-#include "constructs/value_kind.h"
+#include "constructs/values/value_kind.h"
 #include "pass.h"
 
 namespace ionir
 {
-void Pass::visit(void node)
+void Pass::visit(Ptr<Construct> node)
 {
     node->accept(this);
 }
@@ -41,6 +41,11 @@ void Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
 }
 
 void Pass::visitPrototype(Ptr<Prototype> node)
+{
+    //
+}
+
+void Pass::visitReference(Ptr<Reference> node)
 {
     //
 }
@@ -88,7 +93,7 @@ void Pass::visitStringValue(Ptr<StringValue> node)
     //
 }
 
-void visitBooleanValue(Ptr<BooleanValue> node)
+void Pass::visitBooleanValue(Ptr<BooleanValue> node)
 {
     //
 }

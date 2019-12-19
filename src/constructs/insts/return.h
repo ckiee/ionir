@@ -6,7 +6,7 @@
 #include "constructs/insts/inst.h"
 #include "constructs/insts/inst_kind.h"
 #include "constructs/type.h"
-#include "constructs/value.h"
+#include "constructs/values/value.h"
 #include "misc/helpers.h"
 
 namespace ionir

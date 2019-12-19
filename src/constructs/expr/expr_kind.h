@@ -6,6 +6,8 @@ enum class ExprKind
 {
     Binary,
 
-    Parentheses
+    Parentheses,
+
+    Value
 };
 } // namespace ionir

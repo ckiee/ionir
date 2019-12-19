@@ -21,6 +21,6 @@ public:
 
     std::vector<Ptr<Inst>> getPartials() const;
 
-    Ptr<Construct> visitGotoInst(Ptr<GotoInst> node);
+    void visitGotoInst(Ptr<GotoInst> node);
 };
 } // namespace ionir

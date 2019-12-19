@@ -13,6 +13,6 @@ public:
      * Analyzes function calls and removes functions
      * that are not called or referenced.
      */
-    Ptr<Construct> visitFunction(Ptr<Function> node) override;
+    void visitFunction(Ptr<Function> node) override;
 };
 } // namespace ionir

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "constructs/construct.h"
+#include "constructs/expr/expr.h"
 #include "constructs/prototype.h"
 #include "misc/helpers.h"
 #include "value_kind.h"
@@ -9,7 +9,7 @@ namespace ionir
 {
 class Pass;
 
-class Value : public Construct
+class Value : public Expr
 {
 private:
     ValueKind kind;

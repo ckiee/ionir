@@ -1,9 +1,9 @@
 #pragma once
 
+#include "constructs/values/value.h"
 #include "constructs/construct.h"
 #include "constructs/construct_kind.h"
 #include "misc/helpers.h"
-#include "constructs/value.h"
 #include "inst_kind.h"
 
 namespace ionir
@@ -12,8 +12,8 @@ class Pass;
 
 class Inst : public Construct
 {
-protected:
-    InstKind instKind;
+private:
+    InstKind kind;
 
 public:
     Inst(InstKind kind);

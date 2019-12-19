@@ -2,10 +2,8 @@
 
 namespace ionir
 {
-Ptr<Construct> UnusedPass::visitFunction(Ptr<Function> node)
+void UnusedPass::visitFunction(Ptr<Function> node)
 {
     // TODO
-
-    return node;
 }
 } // namespace ionir

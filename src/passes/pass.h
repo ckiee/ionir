@@ -10,7 +10,7 @@
 #include "constructs/type.h"
 #include "constructs/global.h"
 #include "constructs/expr/binary_expr.h"
-#include "constructs/value.h"
+#include "constructs/values/value.h"
 #include "constructs/values/integer.h"
 #include "constructs/values/char.h"
 #include "constructs/values/string.h"

@@ -16,9 +16,9 @@ struct BinaryExprOpts
 
     int precedence;
 
-    Ptr<Construct> leftSide;
+    Ptr<Expr> leftSide;
 
-    std::optional<Ptr<Construct>> rightSide = std::nullopt;
+    std::optional<Ptr<Expr>> rightSide = std::nullopt;
 };
 
 class BinaryExpr : public Expr
@@ -28,17 +28,17 @@ protected:
 
     int precedence;
 
-    Ptr<Construct> leftSide;
+    Ptr<Expr> leftSide;
 
-    std::optional<Ptr<Construct>> rightSide;
+    std::optional<Ptr<Expr>> rightSide;
 
 public:
     BinaryExpr(BinaryExprOpts opts);
 
     void accept(Pass *visitor) override;
 
-    Ptr<Construct> getLeftSide() const;
+    Ptr<Expr> getLeftSide() const;
 
-    std::optional<Ptr<Construct>> getRightSide() const;
+    std::optional<Ptr<Expr>> getRightSide() const;
 };
 } // namespace ionir

@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "constructs/value_kind.h"
+#include "constructs/values/value_kind.h"
 #include "boolean.h"
 
 namespace ionir
@@ -10,7 +10,8 @@ BooleanValue::BooleanValue(bool value)
     //
 }
 
-void BooleanValue::accept(Pass *visitor)
+void
+ BooleanValue::accept(Pass *visitor)
 {
     visitor->visitBooleanValue(this->cast<BooleanValue>());
 }

@@ -15,12 +15,12 @@ void BinaryExpr::accept(Pass *visitor)
     visitor->visitBinaryExpr(this->cast<BinaryExpr>());
 }
 
-Ptr<Construct> BinaryExpr::getLeftSide() const
+Ptr<Expr> BinaryExpr::getLeftSide() const
 {
     return this->leftSide;
 }
 
-std::optional<Ptr<Construct>> BinaryExpr::getRightSide() const
+std::optional<Ptr<Expr>> BinaryExpr::getRightSide() const
 {
     return this->rightSide;
 }

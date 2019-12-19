@@ -94,7 +94,7 @@ public:
 
     std::optional<Ptr<Expr>> parsePrimaryExpr();
 
-    Ptr<Construct> parseBinaryExprRightSide(Ptr<Construct> leftSide, int minimalPrecedence);
+    Ptr<Expr> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
 
     Ptr<Section> parseSection();
 

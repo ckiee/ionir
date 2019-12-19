@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "constructs/value_kind.h"
+#include "constructs/values/value_kind.h"
 #include "char.h"
 
 namespace ionir

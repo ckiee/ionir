@@ -11,8 +11,8 @@ class Pass;
 
 class Expr : public Construct
 {
-protected:
-    ExprKind exprKind;
+private:
+    ExprKind kind;
 
 public:
     Expr(ExprKind kind);

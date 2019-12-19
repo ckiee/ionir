@@ -2,6 +2,7 @@
 #include <utility>
 #include <vector>
 #include <exception>
+#include "constructs/expr/expr.h"
 #include "constructs/expr/binary_expr.h"
 #include "constructs/section_kind.h"
 #include "misc/util.h"
@@ -340,7 +341,7 @@ std::optional<Ptr<Expr>> Parser::parsePrimaryExpr()
     return std::nullopt;
 }
 
-Ptr<Construct> Parser::parseBinaryExprRightSide(Ptr<Construct> leftSide, int minimalPrecedence)
+Ptr<Expr> Parser::parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence)
 {
     // If this is a binary operation, find it's precedence.
     while (true)
@@ -376,7 +377,7 @@ Ptr<Construct> Parser::parseBinaryExprRightSide(Ptr<Construct> leftSide, int min
         this->stream->skip();
 
         // Parse the right-side.
-        std::optional<Ptr<Construct>> rightSide = this->parsePrimaryExpr();
+        std::optional<Ptr<Expr>> rightSide = this->parsePrimaryExpr();
 
         // Ensure that the right-side was successfully parsed.
         if (!rightSide.has_value())
@@ -489,7 +490,7 @@ Ptr<ReturnInst> Parser::parseReturnInst()
 
 Ptr<BranchInst> Parser::parseBranchInst()
 {
-    std::optional<Ptr<Construct>> condition = this->parsePrimaryExpr();
+    std::optional<Ptr<Expr>> condition = this->parsePrimaryExpr();
 
     // Condition must be set.
     if (!condition.has_value())

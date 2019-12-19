@@ -3,13 +3,13 @@
 
 namespace ionir
 {
-Expr::Expr(ExprKind kind) : Construct(ConstructKind::Expr), exprKind(kind)
+Expr::Expr(ExprKind kind) : Construct(ConstructKind::Expr), kind(kind)
 {
     //
 }
 
 ExprKind Expr::getExprKind() const
 {
-    return this->exprKind;
+    return this->kind;
 }
 } // namespace ionir

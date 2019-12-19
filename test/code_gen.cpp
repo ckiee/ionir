@@ -106,7 +106,7 @@ TEST(CodeGenTest, VisitBranchInst)
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
     Ptr<Function> function = test::bootstrap::emptyFunction();
     Ptr<Section> body = std::make_shared<Section>(SectionKind::Label, "ifbody");
-    Ptr<BinaryExpr> condition = std::make_shared<BinaryExpr>(std::make_shared<BooleanValue>(true));
+    Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
 
     (*function->getBody()->getEntrySection())
         ->getInsts()
