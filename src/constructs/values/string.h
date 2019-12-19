@@ -17,7 +17,7 @@ protected:
 public:
     StringValue(std::string value);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     std::string getValue() const;
 

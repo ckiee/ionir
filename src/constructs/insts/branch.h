@@ -23,7 +23,7 @@ private:
 public:
     BranchInst(Ptr<BinaryExpr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     Ptr<BinaryExpr> getCondition() const;
 

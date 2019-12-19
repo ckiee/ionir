@@ -1,5 +1,5 @@
-#include "block.h"
 #include "passes/pass.h"
+#include "block.h"
 
 namespace ionir
 {
@@ -9,9 +9,9 @@ Block::Block(std::vector<Ptr<Section>> sections)
     //
 }
 
-Ptr<Construct> Block::accept(Pass *visitor)
+void Block::accept(Pass *visitor)
 {
-    return visitor->visitBlock(this->cast<Block>());
+    visitor->visitBlock(this->cast<Block>());
 }
 
 bool Block::verify() const

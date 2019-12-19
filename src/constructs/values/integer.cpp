@@ -10,9 +10,9 @@ IntegerValue::IntegerValue(IntegerKind kind, long value)
     //
 }
 
-Ptr<Construct> IntegerValue::accept(Pass *visitor)
+void IntegerValue::accept(Pass *visitor)
 {
-    return visitor->visitIntegerValue(this->cast<IntegerValue>());
+    visitor->visitIntegerValue(this->cast<IntegerValue>());
 }
 
 IntegerKind IntegerValue::getIntKind() const

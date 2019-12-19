@@ -443,7 +443,7 @@ void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
     std::cout << "Visit branch inst (end)" << std::endl;
 }
 
-void LlvmVisitor::visitGlobalVar(Ptr<GlobalVar> node)
+void LlvmVisitor::visitGlobal(Ptr<Global> node)
 {
     this->visitType(node->getType());
 

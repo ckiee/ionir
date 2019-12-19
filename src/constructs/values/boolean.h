@@ -15,7 +15,7 @@ protected:
 public:
     BooleanValue(bool value);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     bool getValue() const;
 

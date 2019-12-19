@@ -5,7 +5,7 @@
 #include <utility>
 #include <string>
 #include "misc/helpers.h"
-#include "type.h"
+#include "constructs/type.h"
 
 namespace ionir
 {

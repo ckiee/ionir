@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "constructs/type.h"
-#include "constructs/args.h"
+#include "constructs/psuedo/args.h"
 #include "constructs/construct.h"
 #include "misc/helpers.h"
 
@@ -24,7 +24,7 @@ protected:
 public:
 	Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType);
 
-	Ptr<Construct> accept(Pass *visitor) override;
+	void accept(Pass *visitor) override;
 
 	std::string getId() const;
 

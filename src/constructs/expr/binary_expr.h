@@ -35,7 +35,7 @@ protected:
 public:
     BinaryExpr(BinaryExprOpts opts);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     Ptr<Construct> getLeftSide() const;
 

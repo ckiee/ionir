@@ -20,7 +20,7 @@ protected:
 public:
     Type(std::string id, bool isPointer = false);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     std::string getId() const;
 

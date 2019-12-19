@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "constructs/type.h"
-#include "constructs/args.h"
+#include "constructs/psuedo/args.h"
 #include "constructs/insts/inst.h"
 #include "constructs/construct.h"
 #include "section_kind.h"
@@ -26,7 +26,7 @@ protected:
 public:
     Section(SectionKind kind, std::string id, std::vector<Ptr<Inst>> insts = {});
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     SectionKind getKind() const;
 

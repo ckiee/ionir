@@ -19,7 +19,7 @@ public:
     // TODO: Missing support for array type allocas.
     AllocaInst(std::string id, Ptr<Type> type);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     std::string getId() const;
 

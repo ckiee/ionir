@@ -28,10 +28,12 @@ enum class ConstructKind
 
 	Value,
 
-	GlobalVariable,
+	Global,
 
 	Section,
 
-	Reference
+	Reference,
+
+	Expr
 };
 }

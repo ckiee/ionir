@@ -21,7 +21,7 @@ protected:
 public:
     Block(std::vector<Ptr<Section>> sections = {});
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     bool verify() const override;
 

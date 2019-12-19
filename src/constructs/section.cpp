@@ -10,9 +10,9 @@ Section::Section(SectionKind kind, std::string id, std::vector<Ptr<Inst>> insts)
     //
 }
 
-Ptr<Construct> Section::accept(Pass *visitor)
+void Section::accept(Pass *visitor)
 {
-    return visitor->visitSection(this->cast<Section>());
+    visitor->visitSection(this->cast<Section>());
 }
 
 SectionKind Section::getKind() const

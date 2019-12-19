@@ -9,9 +9,9 @@ ReturnInst::ReturnInst(std::optional<Ptr<Value>> value) : Inst(InstKind::Return)
     //
 }
 
-Ptr<Construct> ReturnInst::accept(Pass *visitor)
+void ReturnInst::accept(Pass *visitor)
 {
-    return visitor->visitReturnInst(this->cast<ReturnInst>());
+    visitor->visitReturnInst(this->cast<ReturnInst>());
 }
 
 std::optional<Ptr<Value>> ReturnInst::getValue() const

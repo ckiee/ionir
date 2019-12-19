@@ -15,7 +15,7 @@ protected:
 public:
     Construct(ConstructKind kind);
 
-    virtual Ptr<Construct> accept(Pass *visitor) = 0;
+    virtual void accept(Pass *visitor) = 0;
 
     ConstructKind getConstructKind() const;
 

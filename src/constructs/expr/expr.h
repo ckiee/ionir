@@ -3,6 +3,7 @@
 #include <memory>
 #include "constructs/construct.h"
 #include "misc/helpers.h"
+#include "expr_kind.h"
 
 namespace ionir
 {
@@ -11,17 +12,13 @@ class Pass;
 class Expr : public Construct
 {
 protected:
-    ExprKind kind;
+    ExprKind exprKind;
 
 public:
-    Expr(std::vector<Ptr<Section>> sections = {});
+    Expr(ExprKind kind);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    virtual void accept(Pass *visitor) = 0;
 
-    bool verify() const override;
-
-    std::optional<Ptr<Section>> getEntrySection();
-
-    std::vector<Ptr<Section>> getSections() const;
+    ExprKind getExprKind() const;
 };
 } // namespace ionir

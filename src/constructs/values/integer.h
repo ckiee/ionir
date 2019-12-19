@@ -18,7 +18,7 @@ protected:
 public:
     IntegerValue(IntegerKind kind, long value);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     IntegerKind getIntKind() const;
 

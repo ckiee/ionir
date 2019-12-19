@@ -16,7 +16,7 @@ protected:
 public:
     CharValue(char value);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     char getValue() const;
 

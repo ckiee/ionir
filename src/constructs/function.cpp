@@ -1,5 +1,5 @@
-#include "function.h"
 #include "passes/pass.h"
+#include "function.h"
 
 namespace ionir
 {
@@ -9,9 +9,9 @@ Function::Function(Ptr<Prototype> prototype, Ptr<Block> body)
     //
 }
 
-Ptr<Construct> Function::accept(Pass *visitor)
+void Function::accept(Pass *visitor)
 {
-    return visitor->visitFunction(this->cast<Function>());
+    visitor->visitFunction(this->cast<Function>());
 }
 
 Ptr<Prototype> Function::getPrototype() const

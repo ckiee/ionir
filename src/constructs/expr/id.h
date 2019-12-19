@@ -14,6 +14,6 @@ class IdExpr : public Expr
 public:
     IdExpr();
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 };
 } // namespace ionir

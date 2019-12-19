@@ -9,9 +9,9 @@ Value::Value(ValueKind kind) : Construct(ConstructKind::Value), kind(kind)
     //
 }
 
-Ptr<Construct> Value::accept(Pass *visitor)
+void Value::accept(Pass *visitor)
 {
-    return visitor->visitValue(this->cast<Value>());
+    visitor->visitValue(this->cast<Value>());
 }
 
 ValueKind Value::getValueKind() const

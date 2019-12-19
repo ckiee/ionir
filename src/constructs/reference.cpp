@@ -10,9 +10,9 @@ Reference::Reference(std::string id)
     //
 }
 
-Ptr<Construct> Reference::accept(Pass *visitor)
+void Reference::accept(Pass *visitor)
 {
-    return visitor->visitReference(this->cast<Reference>());
+    visitor->visitReference(this->cast<Reference>());
 }
 
 std::string Reference::getId() const

@@ -10,9 +10,9 @@ BooleanValue::BooleanValue(bool value)
     //
 }
 
-Ptr<Construct> BooleanValue::accept(Pass *visitor)
+void BooleanValue::accept(Pass *visitor)
 {
-    return visitor->visitBooleanValue(this->cast<BooleanValue>());
+    visitor->visitBooleanValue(this->cast<BooleanValue>());
 }
 
 bool BooleanValue::getValue() const

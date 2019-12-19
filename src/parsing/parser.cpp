@@ -79,7 +79,7 @@ Ptr<Construct> Parser::parseTopLevel()
 
     case TokenType::KeywordGlobal:
     {
-        return this->parseGlobalVar();
+        return this->parseGlobal();
     }
 
     case TokenType::KeywordExtern:
@@ -285,7 +285,7 @@ Ptr<Function> Parser::parseFunction()
     return std::make_shared<Function>(prototype, body);
 }
 
-Ptr<GlobalVar> Parser::parseGlobalVar()
+Ptr<Global> Parser::parseGlobal()
 {
     this->skipOver(TokenType::KeywordGlobal);
 

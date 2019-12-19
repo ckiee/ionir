@@ -17,7 +17,7 @@ private:
 public:
     Value(ValueKind kind);
 
-    virtual Ptr<Construct> accept(Pass *visitor) = 0;
+    virtual void accept(Pass *visitor) = 0;
 
     ValueKind getValueKind() const;
 };

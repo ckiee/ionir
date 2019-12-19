@@ -9,9 +9,9 @@ CharValue::CharValue(char value) : Value(ValueKind::Character), value(value)
     //
 }
 
-Ptr<Construct> CharValue::accept(Pass *visitor)
+void CharValue::accept(Pass *visitor)
 {
-    return visitor->visitCharValue(this->cast<CharValue>());
+    visitor->visitCharValue(this->cast<CharValue>());
 }
 
 char CharValue::getValue() const

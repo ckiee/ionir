@@ -13,9 +13,9 @@ CallInst::CallInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Funct
     }
 }
 
-Ptr<Construct> CallInst::accept(Pass *visitor)
+void CallInst::accept(Pass *visitor)
 {
-    return visitor->visitGotoInst(this->cast<GotoInst>());
+    visitor->visitGotoInst(this->cast<GotoInst>());
 }
 
 std::string CallInst::getTarget() const

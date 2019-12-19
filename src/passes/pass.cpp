@@ -152,7 +152,7 @@ void Pass::visitGotoInst(Ptr<GotoInst> node)
     //
 }
 
-void Pass::visitGlobalVar(Ptr<GlobalVar> node)
+void Pass::visitGlobal(Ptr<Global> node)
 {
     //
 }

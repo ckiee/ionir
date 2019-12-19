@@ -10,9 +10,9 @@ BranchInst::BranchInst(Ptr<BinaryExpr> condition, Ptr<Section> body, std::option
     //
 }
 
-Ptr<Construct> BranchInst::accept(Pass *visitor)
+void BranchInst::accept(Pass *visitor)
 {
-    return visitor->visitBranchInst(this->cast<BranchInst>());
+    visitor->visitBranchInst(this->cast<BranchInst>());
 }
 
 Ptr<BinaryExpr> BranchInst::getCondition() const

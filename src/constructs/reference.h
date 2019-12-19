@@ -16,7 +16,7 @@ protected:
 public:
     Reference(std::string id);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     std::string getId() const;
 };

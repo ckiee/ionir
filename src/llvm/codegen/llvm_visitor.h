@@ -18,7 +18,7 @@
 #include "constructs/function.h"
 #include "constructs/extern.h"
 #include "constructs/prototype.h"
-#include "constructs/global_var.h"
+#include "constructs/global.h"
 #include "constructs/insts/inst.h"
 #include "constructs/insts/branch.h"
 #include "constructs/insts/alloca.h"
@@ -91,6 +91,6 @@ public:
 
 	void visitBranchInst(Ptr<BranchInst> node) override;
 
-	void visitGlobalVar(Ptr<GlobalVar> node) override;
+	void visitGlobal(Ptr<Global> node) override;
 };
 } // namespace ionir

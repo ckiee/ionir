@@ -18,7 +18,7 @@ private:
 public:
 	Extern(Ptr<Prototype> prototype);
 
-	Ptr<Construct> accept(Pass *visitor) override;
+	void accept(Pass *visitor) override;
 
 	Ptr<Prototype> getPrototype() const;
 };

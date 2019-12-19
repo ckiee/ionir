@@ -9,9 +9,9 @@ Type::Type(std::string id, bool isPointer)
     //
 }
 
-Ptr<Construct> Type::accept(Pass *visitor)
+void Type::accept(Pass *visitor)
 {
-    return visitor->visitType(this->cast<Type>());
+    visitor->visitType(this->cast<Type>());
 }
 
 std::string Type::getId() const

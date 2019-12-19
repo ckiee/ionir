@@ -6,7 +6,7 @@
 #include "constructs/insts/inst.h"
 #include "constructs/insts/inst_kind.h"
 #include "misc/helpers.h"
-#include "scope.h"
+#include "parsing/scope.h"
 
 namespace ionir
 {
@@ -31,7 +31,7 @@ public:
         //
     }
 
-    virtual Ptr<Construct> accept(Pass *visitor) = 0;
+    virtual void accept(Pass *visitor) = 0;
 
     Ptr<Scope> getScope() const
     {

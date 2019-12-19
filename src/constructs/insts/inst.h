@@ -18,7 +18,7 @@ protected:
 public:
     Inst(InstKind kind);
 
-    virtual Ptr<Construct> accept(Pass *visitor) = 0;
+    virtual void accept(Pass *visitor) = 0;
 
     InstKind getInstKind() const;
 };

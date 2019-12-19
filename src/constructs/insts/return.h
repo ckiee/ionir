@@ -21,7 +21,7 @@ protected:
 public:
     ReturnInst(std::optional<Ptr<Value>> value = std::nullopt);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     std::optional<Ptr<Value>> getValue() const;
 };

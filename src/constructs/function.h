@@ -20,7 +20,7 @@ protected:
 public:
 	Function(Ptr<Prototype> prototype, Ptr<Block> body);
 
-	Ptr<Construct> accept(Pass *visitor) override;
+	void accept(Pass *visitor) override;
 
 	Ptr<Prototype> getPrototype() const;
 

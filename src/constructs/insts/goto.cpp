@@ -13,9 +13,9 @@ GotoInst::GotoInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Secti
     }
 }
 
-Ptr<Construct> GotoInst::accept(Pass *visitor)
+void GotoInst::accept(Pass *visitor)
 {
-    return visitor->visitGotoInst(this->cast<GotoInst>());
+    visitor->visitGotoInst(this->cast<GotoInst>());
 }
 
 std::string GotoInst::getTarget() const

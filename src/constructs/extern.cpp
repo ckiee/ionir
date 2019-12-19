@@ -1,5 +1,5 @@
-#include "extern.h"
 #include "passes/pass.h"
+#include "extern.h"
 
 namespace ionir
 {
@@ -8,9 +8,9 @@ Extern::Extern(Ptr<Prototype> prototype) : Construct(ConstructKind::Extern), pro
     //
 }
 
-Ptr<Construct> Extern::accept(Pass *visitor)
+void Extern::accept(Pass *visitor)
 {
-    return visitor->visitExtern(this->cast<Extern>());
+    visitor->visitExtern(this->cast<Extern>());
 }
 
 Ptr<Prototype> Extern::getPrototype() const

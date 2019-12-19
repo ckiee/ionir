@@ -18,8 +18,8 @@
 #include "syntax/token_identifier.h"
 #include "constructs/extern.h"
 #include "constructs/function.h"
-#include "constructs/global_var.h"
-#include "constructs/args.h"
+#include "constructs/global.h"
+#include "constructs/psuedo/args.h"
 #include "constructs/prototype.h"
 #include "constructs/block.h"
 #include "constructs/section.h"
@@ -86,7 +86,7 @@ public:
 
     Ptr<Function> parseFunction();
 
-    Ptr<GlobalVar> parseGlobalVar();
+    Ptr<Global> parseGlobal();
 
     Ptr<Value> parseValue();
 

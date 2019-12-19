@@ -10,9 +10,9 @@ Prototype::Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType)
     //
 }
 
-Ptr<Construct> Prototype::accept(Pass *visitor)
+void Prototype::accept(Pass *visitor)
 {
-    return visitor->visitPrototype(this->cast<Prototype>());
+    visitor->visitPrototype(this->cast<Prototype>());
 }
 
 std::string Prototype::getId() const

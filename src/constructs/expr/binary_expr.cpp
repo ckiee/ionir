@@ -10,9 +10,9 @@ BinaryExpr::BinaryExpr(BinaryExprOpts opts)
     //
 }
 
-Ptr<Construct> BinaryExpr::accept(Pass *visitor)
+void BinaryExpr::accept(Pass *visitor)
 {
-    return visitor->visitBinaryExpr(this->cast<BinaryExpr>());
+    visitor->visitBinaryExpr(this->cast<BinaryExpr>());
 }
 
 Ptr<Construct> BinaryExpr::getLeftSide() const

@@ -7,7 +7,7 @@
 #include "constructs/values/integer.h"
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/branch.h"
-#include "constructs/global_var.h"
+#include "constructs/global.h"
 #include "constructs/function.h"
 #include "constructs/block.h"
 #include "llvm/module.h"
@@ -55,34 +55,34 @@ TEST(CodeGenTest, VisitExtern)
 //     // EXPECT_TRUE(test::compare::ir(module->getAsString(), "function_empty"));
 // }
 
-TEST(CodeGenTest, VisitEmptyGlobalVar)
+TEST(CodeGenTest, VisitEmptyGlobal)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
-    // TODO: GlobalVar's type is hardcoded to double.
+    // TODO: Global's type is hardcoded to double.
     Ptr<Type> type = std::make_shared<Type>("int", false);
-    Ptr<GlobalVar> globalVar = std::make_shared<GlobalVar>(type, "test");
+    Ptr<Global> globalVar = std::make_shared<Global>(type, "test");
 
-    visitor->visitGlobalVar(globalVar);
+    visitor->visitGlobal(globalVar);
 
     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_var_empty"));
+    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_empty"));
 }
 
-TEST(CodeGenTest, VisitGlobalVar)
+TEST(CodeGenTest, VisitGlobal)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
-    // TODO: GlobalVar's type is hardcoded to double.
+    // TODO: Global's type is hardcoded to double.
     Ptr<Type> type = std::make_shared<Type>("int", false);
-    Ptr<GlobalVar> globalVar = std::make_shared<GlobalVar>(type, "test", std::make_shared<IntegerValue>(IntegerKind::Int32, 123));
+    Ptr<Global> globalVar = std::make_shared<Global>(type, "test", std::make_shared<IntegerValue>(IntegerKind::Int32, 123));
 
-    visitor->visitGlobalVar(globalVar);
+    visitor->visitGlobal(globalVar);
 
     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_var"));
+    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global"));
 }
 
 TEST(CodeGenTest, VisitAllocaInst)

@@ -20,7 +20,7 @@ protected:
 public:
     CallInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Function>> callee = std::nullopt);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     std::string getTarget() const;
 

@@ -8,7 +8,7 @@
 #include "constructs/extern.h"
 #include "constructs/block.h"
 #include "constructs/type.h"
-#include "constructs/global_var.h"
+#include "constructs/global.h"
 #include "constructs/expr/binary_expr.h"
 #include "constructs/value.h"
 #include "constructs/values/integer.h"
@@ -65,6 +65,6 @@ public:
 
     virtual void visitGotoInst(Ptr<GotoInst> node);
 
-    virtual void visitGlobalVar(Ptr<GlobalVar> node);
+    virtual void visitGlobal(Ptr<Global> node);
 };
 } // namespace ionir

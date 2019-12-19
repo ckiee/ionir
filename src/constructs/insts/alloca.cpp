@@ -11,9 +11,9 @@ AllocaInst::AllocaInst(std::string id, Ptr<Type> type)
     //
 }
 
-Ptr<Construct> AllocaInst::accept(Pass *visitor)
+void AllocaInst::accept(Pass *visitor)
 {
-    return visitor->visitAllocaInst(this->cast<AllocaInst>());
+    visitor->visitAllocaInst(this->cast<AllocaInst>());
 }
 
 std::string AllocaInst::getId() const

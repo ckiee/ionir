@@ -20,7 +20,7 @@ protected:
 public:
     GotoInst(Ptr<Scope> scope, std::string target, std::optional<Ptr<Section>> section = std::nullopt);
 
-    Ptr<Construct> accept(Pass *visitor) override;
+    void accept(Pass *visitor) override;
 
     std::string getTarget() const;
 
