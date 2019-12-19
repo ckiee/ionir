@@ -2,11 +2,12 @@
 
 #include <memory>
 #include <vector>
+#include "constructs/insts/inst.h"
+#include "llvm/codegen/llvm_visitor.h"
 #include "syntax/token.h"
 #include "syntax/token_type.h"
 #include "parsing/parser.h"
 #include "llvm/module.h"
-#include "llvm/codegen/llvm_visitor.h"
 #include "misc/helpers.h"
 #include "util.h"
 
@@ -22,5 +23,5 @@ Ptr<Module> module(std::string identifier = "test");
 
 Ptr<LlvmVisitor> llvmVisitor();
 
-Ptr<Function> emptyFunction();
+Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts = {});
 } // namespace ionir::test::bootstrap

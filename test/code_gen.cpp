@@ -1,3 +1,4 @@
+#include <vector>
 #include <memory>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/LLVMContext.h"
@@ -5,6 +6,7 @@
 #include "constructs/expr/binary_expr.h"
 #include "constructs/values/integer_kind.h"
 #include "constructs/values/integer.h"
+#include "constructs/insts/inst.h"
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/branch.h"
 #include "constructs/global.h"
@@ -88,15 +90,18 @@ TEST(CodeGenTest, VisitGlobal)
 TEST(CodeGenTest, VisitAllocaInst)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-    Ptr<Function> function = test::bootstrap::emptyFunction();
 
-    (*function->getBody()->getEntrySection())
-        ->getInsts()
-        .push_back(std::make_shared<AllocaInst>("foobar", std::make_shared<Type>("i32")));
+    std::vector<Ptr<Inst>> insts = {
+        std::make_shared<AllocaInst>("foobar", std::make_shared<Type>("i32")),
+    };
+
+    Ptr<Function> function = test::bootstrap::emptyFunction(insts);
 
     visitor->visitFunction(function);
 
     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
+
+    module->print();
 
     EXPECT_TRUE(test::compare::ir(module->getAsString(), "inst_alloca"));
 }
@@ -104,13 +109,14 @@ TEST(CodeGenTest, VisitAllocaInst)
 TEST(CodeGenTest, VisitBranchInst)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-    Ptr<Function> function = test::bootstrap::emptyFunction();
     Ptr<Section> body = std::make_shared<Section>(SectionKind::Label, "ifbody");
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
 
-    (*function->getBody()->getEntrySection())
-        ->getInsts()
-        .push_back(std::make_shared<BranchInst>(condition, body));
+    std::vector<Ptr<Inst>> insts = {
+        std::make_shared<BranchInst>(condition, body),
+    };
+
+    Ptr<Function> function = test::bootstrap::emptyFunction(insts);
 
     visitor->visitFunction(function);
 

@@ -41,11 +41,11 @@ Ptr<LlvmVisitor> llvmVisitor()
     return std::make_shared<LlvmVisitor>(module()->unwrap());
 }
 
-Ptr<Function> emptyFunction()
+Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts)
 {
     Ptr<Type> returnType = std::make_shared<Type>("void");
     Ptr<Prototype> prototype = std::make_shared<Prototype>("foobar", std::make_shared<Args>(), returnType);
-    Ptr<Section> entrySection = std::make_shared<Section>(SectionKind::Entry, "entry");
+    Ptr<Section> entrySection = std::make_shared<Section>(SectionKind::Entry, "entry", insts);
 
     std::vector<Ptr<Section>> sections = {
         entrySection,
