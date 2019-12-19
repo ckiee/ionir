@@ -1,15 +1,15 @@
-#include "node.h"
+#include "construct.h"
 
 namespace ionir
 {
-Construct::Construct(ConstructKind type) : type(type)
+Construct::Construct(ConstructKind kind) : constructKind(kind)
 {
     //
 }
 
 ConstructKind Construct::getConstructKind() const
 {
-    return this->type;
+    return this->constructKind;
 }
 
 bool Construct::verify() const

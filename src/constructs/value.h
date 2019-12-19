@@ -1,6 +1,6 @@
 #pragma once
 
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 #include "constructs/prototype.h"
 #include "misc/helpers.h"
 #include "value_kind.h"

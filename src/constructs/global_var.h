@@ -3,8 +3,8 @@
 #include <memory>
 #include <optional>
 #include <string>
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
+#include "constructs/construct.h"
+#include "constructs/construct_kind.h"
 #include "misc/helpers.h"
 #include "type.h"
 #include "value.h"

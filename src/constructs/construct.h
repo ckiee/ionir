@@ -1,7 +1,6 @@
 #pragma once
 
-#include <memory>
-#include "code_gen/node_kind.h"
+#include "construct_kind.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -11,10 +10,10 @@ class Pass;
 class Construct : public std::enable_shared_from_this<Construct>
 {
 protected:
-    ConstructKind type;
+    ConstructKind constructKind;
 
 public:
-    Construct(ConstructKind type);
+    Construct(ConstructKind kind);
 
     virtual Ptr<Construct> accept(Pass *visitor) = 0;
 

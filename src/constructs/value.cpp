@@ -1,4 +1,4 @@
-#include "code_gen/node_kind.h"
+#include "constructs/construct_kind.h"
 #include "passes/pass.h"
 #include "value.h"
 

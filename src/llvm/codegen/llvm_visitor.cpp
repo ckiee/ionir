@@ -5,7 +5,7 @@
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Constant.h"
-#include "constructs/inst_kind.h"
+#include "constructs/insts/inst_kind.h"
 #include "constructs/value.h"
 #include "misc/util.h"
 
@@ -56,7 +56,7 @@ LlvmVisitor::~LlvmVisitor()
     this->typeStack.clear();
 }
 
-Ptr<Construct> LlvmVisitor::visitFunction(Ptr<Function> node)
+void LlvmVisitor::visitFunction(Ptr<Function> node)
 {
     if (!node->verify())
     {
@@ -86,11 +86,9 @@ Ptr<Construct> LlvmVisitor::visitFunction(Ptr<Function> node)
 
     // Push the function back onto the stack.
     this->valueStack.push(function);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitExtern(Ptr<Extern> node)
+void LlvmVisitor::visitExtern(Ptr<Extern> node)
 {
     if (node->getPrototype() == nullptr)
     {
@@ -105,10 +103,9 @@ Ptr<Construct> LlvmVisitor::visitExtern(Ptr<Extern> node)
     this->visitPrototype(node->getPrototype());
 
     // No need to push the resulting function onto the stack.
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitSection(Ptr<Section> node)
+void LlvmVisitor::visitSection(Ptr<Section> node)
 {
     // Function buffer must not be null.
     this->requireFunction();
@@ -143,11 +140,9 @@ Ptr<Construct> LlvmVisitor::visitSection(Ptr<Section> node)
     }
 
     this->valueStack.push(block);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitBlock(Ptr<Block> node)
+void LlvmVisitor::visitBlock(Ptr<Block> node)
 {
     // Verify the block before continuing.
     if (!node->verify())
@@ -178,11 +173,9 @@ Ptr<Construct> LlvmVisitor::visitBlock(Ptr<Block> node)
         this->visitSection(section);
         this->valueStack.pop();
     }
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitType(Ptr<Type> node)
+void LlvmVisitor::visitType(Ptr<Type> node)
 {
     // TODO: Hard-coded double type.
     llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
@@ -194,11 +187,9 @@ Ptr<Construct> LlvmVisitor::visitType(Ptr<Type> node)
     }
 
     this->typeStack.push(type);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
+void LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
 {
     // Ensure builder is instantiated.
     this->requireBuilder();
@@ -226,11 +217,9 @@ Ptr<Construct> LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
         this->builder->CreateAdd(leftSide, *rightSide);
 
     this->valueStack.push(binaryExpr);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitPrototype(Ptr<Prototype> node)
+void LlvmVisitor::visitPrototype(Ptr<Prototype> node)
 {
     // Retrieve argument count from the argument vector.
     uint32_t argumentCount = node->getArgs()->getItems().size();
@@ -299,11 +288,9 @@ Ptr<Construct> LlvmVisitor::visitPrototype(Ptr<Prototype> node)
     }
 
     this->valueStack.push(function);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node)
+void LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node)
 {
     /**
      * Create the APInt to provide. Acts sort of an
@@ -367,18 +354,14 @@ Ptr<Construct> LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node)
 
     // Push the value onto the value stack.
     this->valueStack.push(value);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitCharValue(Ptr<CharValue> node)
+void LlvmVisitor::visitCharValue(Ptr<CharValue> node)
 {
     // TODO
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitStringValue(Ptr<StringValue> node)
+void LlvmVisitor::visitStringValue(Ptr<StringValue> node)
 {
     // Create the global string pointer.
     llvm::Constant *value =
@@ -386,11 +369,9 @@ Ptr<Construct> LlvmVisitor::visitStringValue(Ptr<StringValue> node)
 
     // Push the value onto the value stack.
     this->valueStack.push(value);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node)
+void LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node)
 {
     this->visitType(node->getType());
 
@@ -404,11 +385,9 @@ Ptr<Construct> LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node)
         this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getId());
 
     this->valueStack.push(allocaInst);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
+void LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
 {
     std::optional<Ptr<Value>> value = node->getValue();
     llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
@@ -428,11 +407,9 @@ Ptr<Construct> LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
     }
 
     this->valueStack.push(returnInst);
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
+void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
 {
     std::cout << "Visit branch inst" << std::endl;
     // Visit condition.
@@ -464,11 +441,9 @@ Ptr<Construct> LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
     this->builder->CreateCondBr(condition, body, otherwise.value_or(nullptr));
 
     std::cout << "Visit branch inst (end)" << std::endl;
-
-    return node;
 }
 
-Ptr<Construct> LlvmVisitor::visitGlobalVar(Ptr<GlobalVar> node)
+void LlvmVisitor::visitGlobalVar(Ptr<GlobalVar> node)
 {
     this->visitType(node->getType());
 
@@ -491,7 +466,5 @@ Ptr<Construct> LlvmVisitor::visitGlobalVar(Ptr<GlobalVar> node)
         // TODO: You can't just cast llvm::value to constant! See above.
         globalVar->setInitializer((llvm::Constant *)value);
     }
-
-    return node;
 }
 } // namespace ionir

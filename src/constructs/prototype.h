@@ -5,7 +5,7 @@
 #include <vector>
 #include "constructs/type.h"
 #include "constructs/args.h"
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 #include "misc/helpers.h"
 
 namespace ionir

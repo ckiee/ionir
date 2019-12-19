@@ -1,6 +1,6 @@
 #pragma once
 
-#include "constructs/inst.h"
+#include "constructs/insts/inst.h"
 #include "constructs/section.h"
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/branch.h"

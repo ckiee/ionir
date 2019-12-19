@@ -5,8 +5,8 @@
 #include <vector>
 #include "constructs/type.h"
 #include "constructs/args.h"
-#include "constructs/inst.h"
-#include "code_gen/node.h"
+#include "constructs/insts/inst.h"
+#include "constructs/construct.h"
 #include "section_kind.h"
 #include "misc/helpers.h"
 

@@ -30,6 +30,8 @@ enum class ConstructKind
 
 	GlobalVariable,
 
-	Section
+	Section,
+
+	Reference
 };
 }

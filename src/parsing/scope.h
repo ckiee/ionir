@@ -1,6 +1,6 @@
 #pragma once
 
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 #include "misc/wrapper.h"
 #include "misc/helpers.h"
 #include "scope_kind.h"

@@ -1,6 +1,6 @@
 #include <vector>
 #include "parsing/driver.h"
-#include "code_gen/node_kind.h"
+#include "constructs/construct_kind.h"
 #include "pass_manager.h"
 
 namespace ionir

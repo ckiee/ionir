@@ -5,47 +5,47 @@
 
 namespace ionir
 {
-Ptr<Construct> Pass::visit(Ptr<Construct> node)
+void Pass::visit(void node)
 {
-    return node->accept(this);
+    node->accept(this);
 }
 
-Ptr<Construct> Pass::visitFunction(Ptr<Function> node)
+void Pass::visitFunction(Ptr<Function> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitExtern(Ptr<Extern> node)
+void Pass::visitExtern(Ptr<Extern> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitSection(Ptr<Section> node)
+void Pass::visitSection(Ptr<Section> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitBlock(Ptr<Block> node)
+void Pass::visitBlock(Ptr<Block> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitType(Ptr<Type> node)
+void Pass::visitType(Ptr<Type> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
+void Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitPrototype(Ptr<Prototype> node)
+void Pass::visitPrototype(Ptr<Prototype> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitValue(Ptr<Value> node)
+void Pass::visitValue(Ptr<Value> node)
 {
     switch (node->getValueKind())
     {
@@ -73,27 +73,27 @@ Ptr<Construct> Pass::visitValue(Ptr<Value> node)
     }
 }
 
-Ptr<Construct> Pass::visitIntegerValue(Ptr<IntegerValue> node)
+void Pass::visitIntegerValue(Ptr<IntegerValue> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitCharValue(Ptr<CharValue> node)
+void Pass::visitCharValue(Ptr<CharValue> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitStringValue(Ptr<StringValue> node)
+void Pass::visitStringValue(Ptr<StringValue> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> visitBooleanValue(Ptr<BooleanValue> node)
+void visitBooleanValue(Ptr<BooleanValue> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitInst(Ptr<Inst> node)
+void Pass::visitInst(Ptr<Inst> node)
 {
     std::cout << "Visit inst" << std::endl;
 
@@ -132,28 +132,28 @@ Ptr<Construct> Pass::visitInst(Ptr<Inst> node)
     }
 }
 
-Ptr<Construct> Pass::visitAllocaInst(Ptr<AllocaInst> node)
+void Pass::visitAllocaInst(Ptr<AllocaInst> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitReturnInst(Ptr<ReturnInst> node)
+void Pass::visitReturnInst(Ptr<ReturnInst> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitBranchInst(Ptr<BranchInst> node)
+void Pass::visitBranchInst(Ptr<BranchInst> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitGotoInst(Ptr<GotoInst> node)
+void Pass::visitGotoInst(Ptr<GotoInst> node)
 {
-    return node;
+    //
 }
 
-Ptr<Construct> Pass::visitGlobalVar(Ptr<GlobalVar> node)
+void Pass::visitGlobalVar(Ptr<GlobalVar> node)
 {
-    return node;
+    //
 }
 } // namespace ionir

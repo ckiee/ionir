@@ -3,8 +3,8 @@
 #include <memory>
 #include <exception>
 #include <optional>
-#include "constructs/inst.h"
-#include "constructs/inst_kind.h"
+#include "constructs/insts/inst.h"
+#include "constructs/insts/inst_kind.h"
 #include "misc/helpers.h"
 #include "scope.h"
 

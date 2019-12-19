@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 #include "constructs/insts/goto.h"
-#include "constructs/inst.h"
+#include "constructs/insts/inst.h"
 #include "misc/helpers.h"
 #include "pass.h"
 

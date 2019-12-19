@@ -3,13 +3,13 @@
 
 namespace ionir
 {
-Inst::Inst(InstKind kind) : Construct(ConstructKind::Instruction), kind(kind)
+Inst::Inst(InstKind kind) : Construct(ConstructKind::Instruction), instKind(kind)
 {
     //
 }
 
 InstKind Inst::getInstKind() const
 {
-    return this->kind;
+    return this->instKind;
 }
 } // namespace ionir

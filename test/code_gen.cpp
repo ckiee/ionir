@@ -1,9 +1,8 @@
-#include <iostream>
 #include <memory>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/LLVMContext.h"
-#include "code_gen/llvm_visitor.h"
-#include "constructs/binary_expr.h"
+#include "llvm/codegen/llvm_visitor.h"
+#include "constructs/expr/binary_expr.h"
 #include "constructs/values/integer_kind.h"
 #include "constructs/values/integer.h"
 #include "constructs/insts/alloca.h"

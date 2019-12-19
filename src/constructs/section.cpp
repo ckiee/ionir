@@ -1,5 +1,5 @@
 #include "passes/pass.h"
-#include "code_gen/node_kind.h"
+#include "constructs/construct_kind.h"
 #include "section.h"
 
 namespace ionir

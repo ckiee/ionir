@@ -3,7 +3,7 @@
 #include <memory>
 #include <optional>
 #include <string>
-#include "parsing/partial_inst.h"
+#include "constructs/psuedo/partial_inst.h"
 #include "parsing/scope.h"
 #include "constructs/section.h"
 #include "misc/helpers.h"

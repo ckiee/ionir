@@ -1,10 +1,9 @@
 #pragma once
 
 #include <optional>
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
 #include "syntax/token_type.h"
 #include "misc/helpers.h"
+#include "expr.h"
 
 namespace ionir
 {
@@ -19,10 +18,10 @@ struct BinaryExprOpts
 
     Ptr<Construct> leftSide;
 
-    std::optional<Ptr<Construct>> rightSide;
+    std::optional<Ptr<Construct>> rightSide = std::nullopt;
 };
 
-class BinaryExpr : public Construct
+class BinaryExpr : public Expr
 {
 protected:
     TokenType operation;
@@ -31,7 +30,7 @@ protected:
 
     Ptr<Construct> leftSide;
 
-    std::optional<Ptr<Construct>> rightSide = std::nullopt;
+    std::optional<Ptr<Construct>> rightSide;
 
 public:
     BinaryExpr(BinaryExprOpts opts);

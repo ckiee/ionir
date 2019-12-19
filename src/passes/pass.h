@@ -1,20 +1,21 @@
 #pragma once
 
 #include <memory>
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 #include "constructs/function.h"
+#include "constructs/reference.h"
 #include "constructs/prototype.h"
 #include "constructs/extern.h"
 #include "constructs/block.h"
 #include "constructs/type.h"
 #include "constructs/global_var.h"
-#include "constructs/binary_expr.h"
+#include "constructs/expr/binary_expr.h"
 #include "constructs/value.h"
 #include "constructs/values/integer.h"
 #include "constructs/values/char.h"
 #include "constructs/values/string.h"
 #include "constructs/values/boolean.h"
-#include "constructs/inst.h"
+#include "constructs/insts/inst.h"
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/branch.h"
 #include "constructs/insts/goto.h"
@@ -26,42 +27,44 @@ namespace ionir
 class Pass
 {
 public:
-    Ptr<Construct> visit(Ptr<Construct> node);
+    virtual void visit(Ptr<Construct> node);
 
-    virtual Ptr<Construct> visitFunction(Ptr<Function> node);
+    virtual void visitFunction(Ptr<Function> node);
 
-    virtual Ptr<Construct> visitExtern(Ptr<Extern> node);
+    virtual void visitExtern(Ptr<Extern> node);
 
-    virtual Ptr<Construct> visitSection(Ptr<Section> node);
+    virtual void visitSection(Ptr<Section> node);
 
-    virtual Ptr<Construct> visitBlock(Ptr<Block> node);
+    virtual void visitBlock(Ptr<Block> node);
 
-    virtual Ptr<Construct> visitType(Ptr<Type> node);
+    virtual void visitType(Ptr<Type> node);
 
-    virtual Ptr<Construct> visitBinaryExpr(Ptr<BinaryExpr> node);
+    virtual void visitBinaryExpr(Ptr<BinaryExpr> node);
 
-    virtual Ptr<Construct> visitPrototype(Ptr<Prototype> node);
+    virtual void visitPrototype(Ptr<Prototype> node);
 
-    virtual Ptr<Construct> visitValue(Ptr<Value> node);
+    virtual void visitReference(Ptr<Reference> node);
 
-    virtual Ptr<Construct> visitIntegerValue(Ptr<IntegerValue> node);
+    virtual void visitValue(Ptr<Value> node);
 
-    virtual Ptr<Construct> visitCharValue(Ptr<CharValue> node);
+    virtual void visitIntegerValue(Ptr<IntegerValue> node);
 
-    virtual Ptr<Construct> visitStringValue(Ptr<StringValue> node);
+    virtual void visitCharValue(Ptr<CharValue> node);
 
-    virtual Ptr<Construct> visitBooleanValue(Ptr<BooleanValue> node);
+    virtual void visitStringValue(Ptr<StringValue> node);
 
-    virtual Ptr<Construct> visitInst(Ptr<Inst> node);
+    virtual void visitBooleanValue(Ptr<BooleanValue> node);
 
-    virtual Ptr<Construct> visitAllocaInst(Ptr<AllocaInst> node);
+    virtual void visitInst(Ptr<Inst> node);
 
-    virtual Ptr<Construct> visitReturnInst(Ptr<ReturnInst> node);
+    virtual void visitAllocaInst(Ptr<AllocaInst> node);
 
-    virtual Ptr<Construct> visitBranchInst(Ptr<BranchInst> node);
+    virtual void visitReturnInst(Ptr<ReturnInst> node);
 
-    virtual Ptr<Construct> visitGotoInst(Ptr<GotoInst> node);
+    virtual void visitBranchInst(Ptr<BranchInst> node);
 
-    virtual Ptr<Construct> visitGlobalVar(Ptr<GlobalVar> node);
+    virtual void visitGotoInst(Ptr<GotoInst> node);
+
+    virtual void visitGlobalVar(Ptr<GlobalVar> node);
 };
 } // namespace ionir

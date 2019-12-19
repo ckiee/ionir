@@ -3,11 +3,19 @@
 #include <memory>
 #include <optional>
 #include <string>
-#include "syntax/token.h"
-#include "syntax/token_identifier.h"
+#include "constructs/expr/expr.h"
+#include "constructs/expr/id.h"
 #include "constructs/values/integer.h"
 #include "constructs/values/char.h"
 #include "constructs/values/string.h"
+#include "constructs/insts/inst.h"
+#include "constructs/insts/alloca.h"
+#include "constructs/insts/return.h"
+#include "constructs/insts/branch.h"
+#include "constructs/insts/goto.h"
+#include "constructs/psuedo/partial_inst.h"
+#include "syntax/token.h"
+#include "syntax/token_identifier.h"
 #include "constructs/extern.h"
 #include "constructs/function.h"
 #include "constructs/global_var.h"
@@ -15,16 +23,10 @@
 #include "constructs/prototype.h"
 #include "constructs/block.h"
 #include "constructs/section.h"
-#include "constructs/inst.h"
 #include "reporting/notice.h"
 #include "reporting/notice_context.h"
 #include "reporting/notice_type.h"
 #include "misc/helpers.h"
-#include "constructs/insts/alloca.h"
-#include "constructs/insts/return.h"
-#include "constructs/insts/branch.h"
-#include "constructs/insts/goto.h"
-#include "partial_inst.h"
 
 namespace ionir
 {
@@ -88,7 +90,9 @@ public:
 
     Ptr<Value> parseValue();
 
-    std::optional<Ptr<Construct>> parsePrimaryExpr();
+    Ptr<IdExpr> parseIdExpr();
+
+    std::optional<Ptr<Expr>> parsePrimaryExpr();
 
     Ptr<Construct> parseBinaryExprRightSide(Ptr<Construct> leftSide, int minimalPrecedence);
 

@@ -1,25 +1,20 @@
 #pragma once
 
 #include <memory>
-#include <optional>
-#include <vector>
 #include "constructs/construct.h"
 #include "misc/helpers.h"
-#include "section.h"
 
 namespace ionir
 {
 class Pass;
 
-class Block : public Construct
+class Expr : public Construct
 {
 protected:
-    std::vector<Ptr<Section>> sections;
-
-    std::optional<Ptr<Section>> cachedEntry;
+    ExprKind kind;
 
 public:
-    Block(std::vector<Ptr<Section>> sections = {});
+    Expr(std::vector<Ptr<Section>> sections = {});
 
     Ptr<Construct> accept(Pass *visitor) override;
 

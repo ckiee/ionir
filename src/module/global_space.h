@@ -2,7 +2,7 @@
 
 #include <map>
 #include <string>
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 
 namespace ionir
 {

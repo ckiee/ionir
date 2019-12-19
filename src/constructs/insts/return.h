@@ -3,8 +3,8 @@
 #include <optional>
 #include <memory>
 #include <string>
-#include "constructs/inst.h"
-#include "constructs/inst_kind.h"
+#include "constructs/insts/inst.h"
+#include "constructs/insts/inst_kind.h"
 #include "constructs/type.h"
 #include "constructs/value.h"
 #include "misc/helpers.h"

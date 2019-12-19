@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <optional>
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 #include "llvm/IR/Module.h"
 #include "syntax/token.h"
 #include "misc/iterable.h"

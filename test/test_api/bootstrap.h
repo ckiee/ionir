@@ -6,7 +6,7 @@
 #include "syntax/token_type.h"
 #include "parsing/parser.h"
 #include "llvm/module.h"
-#include "code_gen/llvm_visitor.h"
+#include "llvm/codegen/llvm_visitor.h"
 #include "misc/helpers.h"
 #include "util.h"
 

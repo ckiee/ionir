@@ -1,4 +1,5 @@
 #include "passes/pass.h"
+#include "inst_kind.h"
 #include "alloca.h"
 
 namespace ionir

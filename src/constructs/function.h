@@ -1,8 +1,7 @@
 #pragma once
 
-#include <memory>
-#include "code_gen/node.h"
-#include "code_gen/node_kind.h"
+#include "constructs/construct.h"
+#include "constructs/construct_kind.h"
 #include "constructs/prototype.h"
 #include "constructs/block.h"
 #include "misc/helpers.h"

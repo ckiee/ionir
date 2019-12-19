@@ -1,6 +1,6 @@
 #include <optional>
 #include "constructs/section.h"
-#include "constructs/inst_kind.h"
+#include "constructs/insts/inst_kind.h"
 #include "constructs/insts/return.h"
 #include "semantic_analysis.h"
 

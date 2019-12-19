@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 #include <exception>
-#include "constructs/binary_expr.h"
+#include "constructs/expr/binary_expr.h"
 #include "constructs/section_kind.h"
 #include "misc/util.h"
 #include "constants/constants.h"
@@ -319,23 +319,25 @@ Ptr<Value> Parser::parseValue()
     }
 }
 
-std::optional<Ptr<Construct>> Parser::parsePrimaryExpr()
+Ptr<IdExpr> Parser::parseIdExpr()
 {
-    switch (this->stream->get().getType())
+    // TODO
+}
+
+std::optional<Ptr<Expr>> Parser::parsePrimaryExpr()
+{
+    TokenType type = this->stream->get().getType();
+
+    switch (type)
     {
-    // Parentheses expression.
-    case TokenType::SymbolParenthesesL:
+    // Identifier expression.
+    case TokenType::Identifier:
     {
-        // TODO
-        return nullptr;
+    }
     }
 
-    // At this point, return null.
-    default:
-    {
-        return std::nullopt;
-    }
-    }
+    // At this point, nothing was found.
+    return std::nullopt;
 }
 
 Ptr<Construct> Parser::parseBinaryExprRightSide(Ptr<Construct> leftSide, int minimalPrecedence)
@@ -510,7 +512,7 @@ Ptr<BranchInst> Parser::parseBranchInst()
         otherwise = this->parseSection();
     }
 
-    return std::make_shared<BranchInst>(body, *otherwise);
+    return std::make_shared<BranchInst>(*condition, body, *otherwise);
 }
 
 Ptr<GotoInst> Parser::parseGotoInst()

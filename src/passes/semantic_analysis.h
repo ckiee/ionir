@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 #include "constructs/function.h"
 #include "misc/helpers.h"
 #include "pass.h"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "code_gen/node.h"
+#include "constructs/construct.h"
 #include "misc/helpers.h"
 
 namespace ionir

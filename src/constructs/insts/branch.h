@@ -2,10 +2,10 @@
 
 #include <memory>
 #include <optional>
-#include "constructs/inst.h"
+#include "constructs/expr/binary_expr.h"
 #include "constructs/section.h"
-#include "constructs/binary_expr.h"
 #include "misc/helpers.h"
+#include "inst.h"
 
 namespace ionir
 {
