@@ -5,13 +5,17 @@
 namespace ionir
 {
 BooleanValue::BooleanValue(bool value)
-    : Value(ValueKind::Boolean), value(value)
+    : Value(ValueKind::Boolean)
 {
-    //
+    if (value)
+    {
+        this->value = 1;
+    }
+
+    this->value = 0;
 }
 
-void
- BooleanValue::accept(Pass *visitor)
+void BooleanValue::accept(Pass *visitor)
 {
     visitor->visitBooleanValue(this->cast<BooleanValue>());
 }
@@ -19,10 +23,5 @@ void
 bool BooleanValue::getValue() const
 {
     return this->value;
-}
-
-void BooleanValue::setValue(bool value)
-{
-    this->value = value;
 }
 } // namespace ionir

@@ -18,9 +18,4 @@ char CharValue::getValue() const
 {
     return this->value;
 }
-
-void CharValue::setValue(char value)
-{
-    this->value = value;
-}
 } // namespace ionir

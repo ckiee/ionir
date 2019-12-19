@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <memory>
 #include "llvm/IR/Module.h"
@@ -72,7 +73,7 @@ TEST(CodeGenTest, VisitEmptyGlobal)
     EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_empty"));
 }
 
-TEST(CodeGenTest, VisitGlobal)
+TEST(CodeGenTest, VisitGlobalWithValue)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
@@ -84,7 +85,7 @@ TEST(CodeGenTest, VisitGlobal)
 
     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global"));
+    EXPECT_TRUE(test::compare::ir(module->getAsString(), "global_init"));
 }
 
 TEST(CodeGenTest, VisitAllocaInst)
@@ -100,8 +101,6 @@ TEST(CodeGenTest, VisitAllocaInst)
     visitor->visitFunction(function);
 
     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
-
-    module->print();
 
     EXPECT_TRUE(test::compare::ir(module->getAsString(), "inst_alloca"));
 }
@@ -120,9 +119,7 @@ TEST(CodeGenTest, VisitBranchInst)
 
     visitor->visitFunction(function);
 
-    // Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
+    Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    // module->print();
-
-    // EXPECT_TRUE(test::compare::ir(module->getAsString(), "inst_alloca"));
+    EXPECT_TRUE(test::compare::ir(module->getAsString(), "inst_branch"));
 }

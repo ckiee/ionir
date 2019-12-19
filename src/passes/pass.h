@@ -9,6 +9,7 @@
 #include "constructs/block.h"
 #include "constructs/type.h"
 #include "constructs/global.h"
+#include "constructs/expr/expr.h"
 #include "constructs/expr/binary_expr.h"
 #include "constructs/values/value.h"
 #include "constructs/values/integer.h"
@@ -39,11 +40,13 @@ public:
 
     virtual void visitType(Ptr<Type> node);
 
-    virtual void visitBinaryExpr(Ptr<BinaryExpr> node);
-
     virtual void visitPrototype(Ptr<Prototype> node);
 
     virtual void visitReference(Ptr<Reference> node);
+
+    virtual void visitExpr(Ptr<Expr> node);
+
+    virtual void visitBinaryExpr(Ptr<BinaryExpr> node);
 
     virtual void visitValue(Ptr<Value> node);
 

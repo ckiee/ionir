@@ -7,8 +7,8 @@
 #include "constructs/psuedo/args.h"
 #include "constructs/insts/inst.h"
 #include "constructs/construct.h"
-#include "section_kind.h"
 #include "misc/helpers.h"
+#include "section_kind.h"
 
 namespace ionir
 {

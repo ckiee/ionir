@@ -23,7 +23,5 @@ public:
     IntegerKind getIntKind() const;
 
     long getValue() const;
-
-    void setValue(long value);
 };
 } // namespace ionir

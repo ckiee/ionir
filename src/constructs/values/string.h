@@ -20,7 +20,5 @@ public:
     void accept(Pass *visitor) override;
 
     std::string getValue() const;
-
-    void setValue(std::string value);
 };
 } // namespace ionir

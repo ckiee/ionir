@@ -2,10 +2,7 @@
 
 namespace ionir
 {
-enum class ExprKind
+class ConstFactory
 {
-    Binary,
-
-    Value
 };
 } // namespace ionir

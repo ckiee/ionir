@@ -1,5 +1,5 @@
-#include <iostream>
 #include <exception>
+#include "constructs/expr/expr_kind.h"
 #include "constructs/values/value_kind.h"
 #include "pass.h"
 
@@ -35,17 +35,42 @@ void Pass::visitType(Ptr<Type> node)
     //
 }
 
-void Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
-{
-    //
-}
-
 void Pass::visitPrototype(Ptr<Prototype> node)
 {
     //
 }
 
 void Pass::visitReference(Ptr<Reference> node)
+{
+    //
+}
+
+void Pass::visitExpr(Ptr<Expr> node)
+{
+    switch (node->getExprKind())
+    {
+    case ExprKind::Binary:
+    {
+        this->visitBinaryExpr(node->cast<BinaryExpr>());
+
+        break;
+    }
+
+    case ExprKind::Value:
+    {
+        this->visitValue(node->cast<Value>());
+
+        break;
+    }
+
+    default:
+    {
+        throw std::runtime_error("Unknown expression kind");
+    }
+    }
+}
+
+void Pass::visitBinaryExpr(Ptr<BinaryExpr> node)
 {
     //
 }
@@ -58,17 +83,30 @@ void Pass::visitValue(Ptr<Value> node)
 
     case ValueKind::Character:
     {
-        return this->visitCharValue(node->cast<CharValue>());
+        this->visitCharValue(node->cast<CharValue>());
+
+        break;
     }
 
     case ValueKind::Integer:
     {
-        return this->visitIntegerValue(node->cast<IntegerValue>());
+        this->visitIntegerValue(node->cast<IntegerValue>());
+
+        break;
     }
 
     case ValueKind::String:
     {
-        return this->visitStringValue(node->cast<StringValue>());
+        this->visitStringValue(node->cast<StringValue>());
+
+        break;
+    }
+
+    case ValueKind::Boolean:
+    {
+        this->visitBooleanValue(node->cast<BooleanValue>());
+
+        break;
     }
 
     default:
@@ -100,18 +138,20 @@ void Pass::visitBooleanValue(Ptr<BooleanValue> node)
 
 void Pass::visitInst(Ptr<Inst> node)
 {
-    std::cout << "Visit inst" << std::endl;
-
     switch (node->getInstKind())
     {
     case InstKind::Alloca:
     {
-        return this->visitAllocaInst(node->cast<AllocaInst>());
+        this->visitAllocaInst(node->cast<AllocaInst>());
+
+        break;
     }
 
     case InstKind::Branch:
     {
-        return this->visitBranchInst(node->cast<BranchInst>());
+        this->visitBranchInst(node->cast<BranchInst>());
+
+        break;
     }
 
         // TODO: Missing break inst.
@@ -120,12 +160,16 @@ void Pass::visitInst(Ptr<Inst> node)
 
     case InstKind::Goto:
     {
-        return this->visitGotoInst(node->cast<GotoInst>());
+        this->visitGotoInst(node->cast<GotoInst>());
+
+        break;
     }
 
     case InstKind::Return:
     {
-        return this->visitReturnInst(node->cast<ReturnInst>());
+        this->visitReturnInst(node->cast<ReturnInst>());
+
+        break;
     }
 
         // TODO: Missing store inst.

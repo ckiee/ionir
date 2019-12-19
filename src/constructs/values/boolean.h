@@ -18,7 +18,5 @@ public:
     void accept(Pass *visitor) override;
 
     bool getValue() const;
-
-    void setValue(bool value);
 };
 } // namespace ionir

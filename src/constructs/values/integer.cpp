@@ -24,9 +24,4 @@ long IntegerValue::getValue() const
 {
     return this->value;
 }
-
-void IntegerValue::setValue(long value)
-{
-    this->value = value;
-}
 } // namespace ionir

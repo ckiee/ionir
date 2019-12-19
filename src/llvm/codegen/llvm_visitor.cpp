@@ -1,4 +1,3 @@
-#include <iostream>
 #include <exception>
 #include "llvm/ADT/APInt.h"
 #include "llvm/IR/DerivedTypes.h"
@@ -127,16 +126,6 @@ void LlvmVisitor::visitSection(Ptr<Section> node)
 
         // Clean the stack off the result.
         this->valueStack.pop();
-    }
-
-    /**
-     * Entry section contains no instructions, add 
-     * a mandatory return void instruction at the end.
-     */
-    if (node->getKind() == SectionKind::Entry && node->getInsts().size() == 0)
-    {
-        this->requireBuilder();
-        (*this->builder).CreateRetVoid();
     }
 
     this->valueStack.push(block);
@@ -363,11 +352,23 @@ void LlvmVisitor::visitCharValue(Ptr<CharValue> node)
 
 void LlvmVisitor::visitStringValue(Ptr<StringValue> node)
 {
+    this->requireBuilder();
+
     // Create the global string pointer.
     llvm::Constant *value =
         this->builder->CreateGlobalStringPtr(node->getValue());
 
     // Push the value onto the value stack.
+    this->valueStack.push(value);
+}
+
+void LlvmVisitor::visitBooleanValue(Ptr<BooleanValue> node)
+{
+    // Create the boolean type along with the LLVM value.
+    llvm::IntegerType *type = llvm::Type::getInt1Ty(*this->context);
+    llvm::Constant *value = llvm::ConstantInt::get(type, llvm::APInt(1, node->getValue(), false));
+
+    // Push the resulting boolean constant onto the stack.
     this->valueStack.push(value);
 }
 
@@ -411,13 +412,10 @@ void LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
 
 void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
 {
-    std::cout << "Visit branch inst" << std::endl;
     // Visit condition.
-    this->visit(node->getCondition());
+    this->visitExpr(node->getCondition());
 
     llvm::Value *condition = this->valueStack.pop();
-
-    std::cout << "Visit branch inst (2)" << std::endl;
 
     // Visit body.
     this->visit(node->getBody());
@@ -435,12 +433,11 @@ void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
         otherwise = (llvm::BasicBlock *)this->valueStack.pop();
     }
 
-    std::cout << "Visit branch inst (3)" << std::endl;
-
     // Create the LLVM branch instruction.
-    this->builder->CreateCondBr(condition, body, otherwise.value_or(nullptr));
+    llvm::BranchInst *branchInst =
+        this->builder->CreateCondBr(condition, body, otherwise.value_or(nullptr));
 
-    std::cout << "Visit branch inst (end)" << std::endl;
+    this->valueStack.push(branchInst);
 }
 
 void LlvmVisitor::visitGlobal(Ptr<Global> node)

@@ -75,15 +75,17 @@ public:
 
 	void visitType(Ptr<Type> node) override;
 
-	void visitBinaryExpr(Ptr<BinaryExpr> node) override;
-
 	void visitPrototype(Ptr<Prototype> node) override;
+
+	void visitBinaryExpr(Ptr<BinaryExpr> node) override;
 
 	void visitIntegerValue(Ptr<IntegerValue> node) override;
 
 	void visitCharValue(Ptr<CharValue> node) override;
 
 	void visitStringValue(Ptr<StringValue> node) override;
+
+	void visitBooleanValue(Ptr<BooleanValue> node) override;
 
 	void visitAllocaInst(Ptr<AllocaInst> node) override;
 
