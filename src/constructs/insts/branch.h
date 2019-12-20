@@ -23,11 +23,7 @@ struct BranchInstOpts : InstOpts
 class BranchInst : public Inst
 {
 private:
-    Ptr<Expr> condition;
-
-    Ptr<Section> body;
-
-    std::optional<Ptr<Section>> otherwise;
+    BranchInstOpts opts;
 
 public:
     BranchInst(BranchInstOpts opts);
