@@ -156,11 +156,16 @@ void Pass::visitInst(Ptr<Inst> node)
 
         // TODO: Missing break inst.
 
-        // TODO: Missing call inst.
-
     case InstKind::Return:
     {
         this->visitReturnInst(node->cast<ReturnInst>());
+
+        break;
+    }
+
+    case InstKind::Call:
+    {
+        this->visitCallInst(node->cast<CallInst>());
 
         break;
     }
@@ -185,6 +190,11 @@ void Pass::visitReturnInst(Ptr<ReturnInst> node)
 }
 
 void Pass::visitBranchInst(Ptr<BranchInst> node)
+{
+    //
+}
+
+void Pass::visitCallInst(Ptr<CallInst> node)
 {
     //
 }

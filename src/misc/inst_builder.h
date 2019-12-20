@@ -4,7 +4,6 @@
 #include "constructs/section.h"
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/branch.h"
-#include "constructs/insts/goto.h"
 #include "constructs/insts/return.h"
 #include "constructs/insts/call.h"
 #include "misc/helpers.h"
@@ -38,8 +37,6 @@ public:
     Ptr<AllocaInst> createAlloca(std::string id, Ptr<Type> type);
 
     Ptr<BranchInst> createBranch(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
-
-    Ptr<GotoInst> createGoto(Ptr<Scope> scope, std::string target, std::optional<Ptr<Section>> section = std::nullopt);
 
     Ptr<ReturnInst> createReturn(std::optional<Ptr<Value>> value = std::nullopt);
 

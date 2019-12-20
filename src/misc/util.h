@@ -1,5 +1,8 @@
 #pragma once
 
+#include <optional>
+#include <vector>
+#include <algorithm>
 #include <string>
 #include <regex>
 #include <string_view>
@@ -26,6 +29,19 @@ public:
 	static bool instanceOf(T *value)
 	{
 		return dynamic_cast<U *>(value) != nullptr;
+	}
+
+	template <typename T>
+	static std::optional<uint32_t> locateInVector(std::vector<T> vector, T item)
+	{
+		auto iterator = std::find(vector.begin(), vector.end(), item);
+
+		if (iterator != vector.cend())
+		{
+			return std::distance(vector.begin(), iterator);
+		}
+
+		return std::nullopt;
 	}
 };
 } // namespace ionir

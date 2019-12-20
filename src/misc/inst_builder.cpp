@@ -27,11 +27,6 @@ Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr> condition, Ptr<Section> body
     return this->make<BranchInst>(condition, body, otherwise);
 }
 
-Ptr<GotoInst> InstBuilder::createGoto(Ptr<Scope> scope, std::string target, std::optional<Ptr<Section>> section)
-{
-    return this->make<GotoInst>(scope, target, section);
-}
-
 Ptr<ReturnInst> InstBuilder::createReturn(std::optional<Ptr<Value>> value)
 {
     return this->make<ReturnInst>(value);

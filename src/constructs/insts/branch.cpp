@@ -4,8 +4,8 @@
 
 namespace ionir
 {
-BranchInst::BranchInst(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise)
-    : Inst(InstKind::Branch), condition(condition), body(body), otherwise(otherwise)
+BranchInst::BranchInst(BranchInstOpts opts)
+    : Inst(opts.parent, InstKind::Branch), condition(opts.condition), body(opts.body), otherwise(opts.otherwise)
 {
     //
 }

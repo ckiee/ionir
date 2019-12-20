@@ -20,6 +20,7 @@
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/branch.h"
 #include "constructs/insts/return.h"
+#include "constructs/insts/call.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -64,6 +65,8 @@ public:
     virtual void visitReturnInst(Ptr<ReturnInst> node);
 
     virtual void visitBranchInst(Ptr<BranchInst> node);
+
+    virtual void visitCallInst(Ptr<CallInst> node);
 
     virtual void visitGlobal(Ptr<Global> node);
 };

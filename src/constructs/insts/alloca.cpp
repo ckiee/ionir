@@ -5,8 +5,8 @@
 namespace ionir
 {
 // TODO: Finish init. implementation.
-AllocaInst::AllocaInst(std::string id, Ptr<Type> type)
-    : Inst(InstKind::Alloca), id(id), type(type)
+AllocaInst::AllocaInst(Ptr<Section> parent, std::string id, Ptr<Type> type)
+    : Inst(parent, InstKind::Alloca), id(id), type(type)
 {
     //
 }

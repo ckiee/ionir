@@ -1,8 +1,9 @@
 #pragma once
 
 #include "constructs/values/value.h"
-#include "constructs/construct.h"
+#include "constructs/child_construct.h"
 #include "constructs/construct_kind.h"
+#include "constructs/section.h"
 #include "misc/helpers.h"
 #include "inst_kind.h"
 
@@ -10,13 +11,15 @@ namespace ionir
 {
 class Pass;
 
-class Inst : public Construct
+typedef ChildConstructOpts<Section> InstOpts;
+
+class Inst : public ChildConstruct<Section>
 {
 private:
     InstKind kind;
 
 public:
-    Inst(InstKind kind);
+    Inst(Ptr<Section> parent, InstKind kind);
 
     virtual void accept(Pass *visitor) = 0;
 

@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include "constructs/type.h"
+#include "constructs/section.h"
 #include "misc/helpers.h"
 #include "inst.h"
 
@@ -17,7 +18,7 @@ protected:
 
 public:
     // TODO: Missing support for array type allocas.
-    AllocaInst(std::string id, Ptr<Type> type);
+    AllocaInst(Ptr<Section> parent, std::string id, Ptr<Type> type);
 
     void accept(Pass *visitor) override;
 
