@@ -5,14 +5,9 @@
 namespace ionir
 {
 BooleanValue::BooleanValue(bool value)
-    : Value(ValueKind::Boolean)
+    : Value(ValueKind::Boolean), value(value)
 {
-    if (value)
-    {
-        this->value = 1;
-    }
-
-    this->value = 0;
+    //
 }
 
 void BooleanValue::accept(Pass *visitor)

@@ -7,6 +7,7 @@
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/Type.h"
 #include "llvm/IR/Value.h"
+#include "llvm/IR/BasicBlock.h"
 #include "constructs/construct.h"
 #include "constructs/construct_kind.h"
 #include "constructs/values/integer.h"
@@ -46,6 +47,8 @@ protected:
 
 	std::map<std::string, llvm::Value *> namedValues;
 
+	Stack<llvm::IRBuilder<>> builderTracker;
+
 	/**
 	 * Ensures that the builder is instantiated, otherwise
 	 * throws a runtime error.
@@ -54,10 +57,14 @@ protected:
 
 	void requireFunction();
 
+	void setBuilder(llvm::BasicBlock *block);
+
+	bool saveBuilder();
+
+	bool restoreBuilder();
+
 public:
 	LlvmVisitor(llvm::Module *module);
-
-	~LlvmVisitor();
 
 	llvm::Module *getModule() const;
 

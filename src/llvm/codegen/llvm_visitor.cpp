@@ -43,16 +43,39 @@ void LlvmVisitor::requireFunction()
     }
 }
 
-LlvmVisitor::LlvmVisitor(llvm::Module *module)
-    : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack()
+void LlvmVisitor::setBuilder(llvm::BasicBlock *block)
 {
-    this->namedValues = {};
+    this->builder.emplace(llvm::IRBuilder<>(block));
 }
 
-LlvmVisitor::~LlvmVisitor()
+bool LlvmVisitor::saveBuilder()
 {
-    this->valueStack.clear();
-    this->typeStack.clear();
+    if (!this->builder.has_value())
+    {
+        return false;
+    }
+
+    this->builderTracker.push(*this->builder);
+
+    return true;
+}
+
+bool LlvmVisitor::restoreBuilder()
+{
+    if (this->builderTracker.isEmpty())
+    {
+        return false;
+    }
+
+    this->builder.emplace(this->builderTracker.pop());
+
+    return true;
+}
+
+LlvmVisitor::LlvmVisitor(llvm::Module *module)
+    : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack(), builderTracker(), namedValues({})
+{
+    //
 }
 
 void LlvmVisitor::visitFunction(Ptr<Function> node)
@@ -113,7 +136,7 @@ void LlvmVisitor::visitSection(Ptr<Section> node)
     llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getId(), *this->function);
 
     // Create and assign the block to the builder.
-    this->builder.emplace(llvm::IRBuilder<>(block));
+    this->setBuilder(block);
 
     // Visit and append instructions.
     std::vector<Ptr<Inst>> insts = node->getInsts();
@@ -184,14 +207,14 @@ void LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node)
     this->requireBuilder();
 
     // Visit sides.
-    this->visit(node->getLeftSide());
+    this->visitExpr(node->getLeftSide());
 
     std::optional<llvm::Value *> rightSide = std::nullopt;
 
     // Process right side if applicable.
     if (node->getRightSide().has_value())
     {
-        this->visit(*node->getRightSide());
+        this->visitExpr(*node->getRightSide());
 
         // Retrieve and pop right side.
         rightSide = this->valueStack.pop();
@@ -395,7 +418,7 @@ void LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
 
     if (value.has_value())
     {
-        this->visit(*value);
+        this->visitValue(*value);
 
         llvm::Value *value = this->valueStack.pop();
 
@@ -417,8 +440,10 @@ void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
 
     llvm::Value *condition = this->valueStack.pop();
 
+    this->saveBuilder();
+
     // Visit body.
-    this->visit(node->getBody());
+    this->visitSection(node->getBody());
 
     llvm::BasicBlock *body =
         (llvm::BasicBlock *)this->valueStack.pop();
@@ -429,9 +454,11 @@ void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
     // Visit otherwise block if applicable.
     if (node->getOtherwise().has_value())
     {
-        this->visit(*node->getOtherwise());
+        this->visitSection(*node->getOtherwise());
         otherwise = (llvm::BasicBlock *)this->valueStack.pop();
     }
+
+    this->restoreBuilder();
 
     // Create the LLVM branch instruction.
     llvm::BranchInst *branchInst =
@@ -453,7 +480,7 @@ void LlvmVisitor::visitGlobal(Ptr<Global> node)
     if (node->getValue().has_value())
     {
         // Visit global variable value.
-        this->visit(*node->getValue());
+        this->visitValue(*node->getValue());
 
         llvm::Value *value = this->valueStack.pop();
 
