@@ -74,7 +74,7 @@ void TokenConst::init()
     TokenConst::pushSymbol("}", TokenType::SymbolBraceR);
     TokenConst::pushSymbol("->", TokenType::SymbolArrow);
 
-    // Register keywords.
+    // Register instructions & keywords.
     TokenConst::pushKeyword("create", TokenType::InstCreate);
     TokenConst::pushKeyword("call", TokenType::InstCall);
     TokenConst::pushKeyword("set", TokenType::InstSet);
@@ -83,6 +83,7 @@ void TokenConst::init()
     TokenConst::pushKeyword("extern", TokenType::KeywordExtern);
     TokenConst::pushKeyword("global", TokenType::KeywordGlobal);
     TokenConst::pushKeyword("else", TokenType::KeywordElse);
+    TokenConst::pushKeyword("mut", TokenType::KeywordMutable);
 
     // Register operators.
     TokenConst::pushOperator("+", TokenType::OperatorAdd);

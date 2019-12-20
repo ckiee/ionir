@@ -70,6 +70,8 @@ enum class TokenType
 
 	KeywordGlobal,
 
+	KeywordMutable,
+
 	OperatorAdd,
 
 	OperatorSub,
