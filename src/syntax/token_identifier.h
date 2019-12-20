@@ -1,7 +1,7 @@
 #pragma once
 
 #include "misc/helpers.h"
-#include "constants/token_const.h"
+#include "const/token_const.h"
 
 namespace ionir
 {

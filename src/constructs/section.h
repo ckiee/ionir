@@ -1,18 +1,20 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include <vector>
 #include "constructs/type.h"
 #include "constructs/psuedo/args.h"
 #include "constructs/insts/inst.h"
 #include "constructs/child_construct.h"
-#include "constructs/block.h"
 #include "misc/helpers.h"
 #include "section_kind.h"
 
 namespace ionir
 {
 class Pass;
+
+class Block;
 
 struct SectionOpts : ChildConstructOpts<Block>
 {

@@ -6,7 +6,7 @@
 #include "constructs/expr/binary_expr.h"
 #include "constructs/section_kind.h"
 #include "misc/util.h"
-#include "constants/constants.h"
+#include "const/constants.h"
 #include "parser.h"
 
 namespace ionir

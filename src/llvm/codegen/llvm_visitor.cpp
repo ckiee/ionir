@@ -440,7 +440,8 @@ void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
      * branch instruction onto a new stage of
      * the parent.
      */
-    node->getParent()->relocateInsts(node->getParent()->getParent());
+    // TODO
+    // node->getParent()->relocateInsts(node->getParent()->getParent());
 
     // Visit condition.
     this->visitExpr(node->getCondition());

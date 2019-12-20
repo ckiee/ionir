@@ -14,7 +14,7 @@ void Function::accept(Pass *visitor)
     visitor->visitFunction(this->cast<Function>());
 }
 
-Ptr<Prototype> &Function::getPrototype()
+Ptr<Prototype> Function::getPrototype() const
 {
     return this->prototype;
 }
@@ -24,7 +24,7 @@ void Function::setPrototype(Ptr<Prototype> prototype)
     this->prototype = prototype;
 }
 
-Ptr<Block> &Function::getBody()
+Ptr<Block> Function::getBody() const
 {
     return this->body;
 }

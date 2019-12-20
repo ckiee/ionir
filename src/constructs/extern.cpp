@@ -13,7 +13,7 @@ void Extern::accept(Pass *visitor)
     visitor->visitExtern(this->cast<Extern>());
 }
 
-Ptr<Prototype> &Extern::getPrototype()
+Ptr<Prototype> Extern::getPrototype() const
 {
     return this->prototype;
 }

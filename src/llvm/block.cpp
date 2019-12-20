@@ -14,7 +14,8 @@ Ptr<IrBuilder> Block::getBuilder()
         return *this->cachedBuilder;
     }
 
-    this->cachedBuilder = std::make_shared<IrBuilder>(this->value);
+    this->cachedBuilder =
+        std::make_shared<IrBuilder>(llvm::IRBuilder<>(this->value));
 
     return *this->cachedBuilder;
 }

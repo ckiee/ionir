@@ -14,7 +14,7 @@ void Global::accept(Pass *visitor)
     visitor->visitGlobal(this->cast<Global>());
 }
 
-Ptr<Type> &Global::getType()
+Ptr<Type> Global::getType() const
 {
     return this->type;
 }
@@ -34,7 +34,7 @@ void Global::setId(std::string id)
     this->id = id;
 }
 
-std::optional<Ptr<Value>> &Global::getValue()
+std::optional<Ptr<Value>> Global::getValue() const
 {
     return this->value;
 }

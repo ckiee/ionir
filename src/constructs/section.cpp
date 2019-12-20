@@ -2,6 +2,7 @@
 #include "misc/util.h"
 #include "passes/pass.h"
 #include "constructs/construct_kind.h"
+#include "constructs/block.h"
 #include "section.h"
 
 namespace ionir

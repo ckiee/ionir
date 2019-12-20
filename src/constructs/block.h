@@ -25,7 +25,7 @@ public:
 
     bool verify() const override;
 
-    std::optional<Ptr<Section>> &getEntrySection();
+    std::optional<Ptr<Section>> getEntrySection();
 
     std::vector<Ptr<Section>> &getSections();
 

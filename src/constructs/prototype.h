@@ -30,11 +30,11 @@ public:
 
 	void setId(std::string id);
 
-	Ptr<Args> &getArgs();
+	Ptr<Args> getArgs() const;
 
 	void setArgs(Ptr<Args> args);
 
-	Ptr<Type> &getReturnType();
+	Ptr<Type> getReturnType() const;
 
 	void setReturnType(Ptr<Type> returnType);
 

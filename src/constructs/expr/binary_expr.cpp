@@ -20,8 +20,18 @@ Ptr<Expr> BinaryExpr::getLeftSide() const
     return this->leftSide;
 }
 
+void BinaryExpr::setLeftSide(Ptr<Expr> leftSide)
+{
+    this->leftSide = leftSide;
+}
+
 std::optional<Ptr<Expr>> BinaryExpr::getRightSide() const
 {
     return this->rightSide;
+}
+
+void BinaryExpr::setRightSide(std::optional<Ptr<Expr>> rightSide)
+{
+    this->rightSide = rightSide;
 }
 } // namespace ionir

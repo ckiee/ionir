@@ -27,7 +27,7 @@ public:
 
     void accept(Pass *visitor) override;
 
-    Ptr<Type> &getType();
+    Ptr<Type> getType() const;
 
     void setType(Ptr<Type> type);
 
@@ -35,7 +35,7 @@ public:
 
     void setId(std::string id);
 
-    std::optional<Ptr<Value>> &getValue();
+    std::optional<Ptr<Value>> getValue() const;
 
     void setValue(std::optional<Ptr<Value>> value);
 };

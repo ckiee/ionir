@@ -1,3 +1,4 @@
+#include "constructs/section.h"
 #include "passes/pass.h"
 #include "inst.h"
 

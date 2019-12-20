@@ -45,7 +45,7 @@ bool Block::verify() const
     return true;
 }
 
-std::optional<Ptr<Section>> &Block::getEntrySection()
+std::optional<Ptr<Section>> Block::getEntrySection()
 {
     /**
      * Entry section has already been previously

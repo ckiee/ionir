@@ -16,7 +16,7 @@
 #include "llvm/module.h"
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
-#include "constants/constants.h"
+#include "const/constants.h"
 #include "pch.h"
 
 using namespace ionir;

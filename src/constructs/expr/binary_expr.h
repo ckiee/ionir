@@ -39,6 +39,10 @@ public:
 
     Ptr<Expr> getLeftSide() const;
 
+    void setLeftSide(Ptr<Expr> leftSide);
+
     std::optional<Ptr<Expr>> getRightSide() const;
+
+    void setRightSide(std::optional<Ptr<Expr>> rightSide);
 };
 } // namespace ionir

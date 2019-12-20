@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <optional>
 #include "syntax/token.h"
-#include "constants/token_const.h"
+#include "const/token_const.h"
 #include "misc/util.h"
 #include "misc/regex.h"
 #include "misc/iterable.h"

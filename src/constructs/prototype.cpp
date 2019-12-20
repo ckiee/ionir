@@ -20,7 +20,7 @@ std::string Prototype::getId() const
     return this->id;
 }
 
-Ptr<Args> &Prototype::getArgs()
+Ptr<Args> Prototype::getArgs() const
 {
     return this->args;
 }
@@ -30,7 +30,7 @@ void Prototype::setArgs(Ptr<Args> args)
     this->args = args;
 }
 
-Ptr<Type> &Prototype::getReturnType()
+Ptr<Type> Prototype::getReturnType() const
 {
     return this->returnType;
 }
