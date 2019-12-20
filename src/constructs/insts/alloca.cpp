@@ -21,8 +21,18 @@ std::string AllocaInst::getId() const
     return this->id;
 }
 
+void AllocaInst::setId(std::string id)
+{
+    this->id = id;
+}
+
 Ptr<Type> AllocaInst::getType() const
 {
     return this->type;
+}
+
+void AllocaInst::setType(Ptr<Type> type)
+{
+    this->type = type;
 }
 } // namespace ionir

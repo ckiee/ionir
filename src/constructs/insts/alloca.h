@@ -24,6 +24,10 @@ public:
 
     std::string getId() const;
 
+    void setId(std::string id);
+
     Ptr<Type> getType() const;
+
+    void setType(Ptr<Type> type);
 };
 } // namespace ionir
