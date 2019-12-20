@@ -20,14 +20,24 @@ std::string Prototype::getId() const
     return this->id;
 }
 
-Ptr<Args> Prototype::getArgs() const
+Ptr<Args> &Prototype::getArgs()
 {
     return this->args;
 }
 
-Ptr<Type> Prototype::getReturnType() const
+void Prototype::setArgs(Ptr<Args> args)
+{
+    this->args = args;
+}
+
+Ptr<Type> &Prototype::getReturnType()
 {
     return this->returnType;
+}
+
+void Prototype::setReturnType(Ptr<Type> returnType)
+{
+    this->returnType = returnType;
 }
 
 bool Prototype::verify() const

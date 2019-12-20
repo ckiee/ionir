@@ -28,9 +28,15 @@ public:
 
 	std::string getId() const;
 
-	Ptr<Args> getArgs() const;
+	void setId(std::string id);
 
-	Ptr<Type> getReturnType() const;
+	Ptr<Args> &getArgs();
+
+	void setArgs(Ptr<Args> args);
+
+	Ptr<Type> &getReturnType();
+
+	void setReturnType(Ptr<Type> returnType);
 
 	bool verify() const override;
 };

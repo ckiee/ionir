@@ -19,4 +19,9 @@ std::string Reference::getId() const
 {
     return this->id;
 }
+
+void Reference::setId(std::string id)
+{
+    this->id = id;
+}
 } // namespace ionir

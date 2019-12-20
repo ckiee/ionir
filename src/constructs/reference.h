@@ -19,5 +19,7 @@ public:
     void accept(Pass *visitor) override;
 
     std::string getId() const;
+
+    void setId(std::string id);
 };
 } // namespace ionir

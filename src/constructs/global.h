@@ -27,10 +27,16 @@ public:
 
     void accept(Pass *visitor) override;
 
-    Ptr<Type> getType() const;
+    Ptr<Type> &getType();
+
+    void setType(Ptr<Type> type);
 
     std::string getId() const;
 
-    std::optional<Ptr<Value>> getValue() const;
+    void setId(std::string id);
+
+    std::optional<Ptr<Value>> &getValue();
+
+    void setValue(std::optional<Ptr<Value>> value);
 };
 } // namespace ionir

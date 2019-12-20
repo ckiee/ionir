@@ -14,9 +14,14 @@ void Global::accept(Pass *visitor)
     visitor->visitGlobal(this->cast<Global>());
 }
 
-Ptr<Type> Global::getType() const
+Ptr<Type> &Global::getType()
 {
     return this->type;
+}
+
+void Global::setType(Ptr<Type> type)
+{
+    this->type = type;
 }
 
 std::string Global::getId() const
@@ -24,8 +29,18 @@ std::string Global::getId() const
     return this->id;
 }
 
-std::optional<Ptr<Value>> Global::getValue() const
+void Global::setId(std::string id)
+{
+    this->id = id;
+}
+
+std::optional<Ptr<Value>> &Global::getValue()
 {
     return this->value;
+}
+
+void Global::setValue(std::optional<Ptr<Value>> value)
+{
+    this->value = value;
 }
 } // namespace ionir
