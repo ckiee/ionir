@@ -13,15 +13,17 @@ class IntegerValue : public Value
 protected:
     IntegerKind kind;
 
-    long value;
+    int64_t value;
 
 public:
-    IntegerValue(IntegerKind kind, long value);
+    IntegerValue(IntegerKind kind, int64_t value);
 
     void accept(Pass *visitor) override;
 
     IntegerKind getIntKind() const;
 
-    long getValue() const;
+    int64_t getValue() const;
+
+    void setValue(int64_t value);
 };
 } // namespace ionir

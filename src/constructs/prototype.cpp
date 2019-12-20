@@ -29,4 +29,10 @@ Ptr<Type> Prototype::getReturnType() const
 {
     return this->returnType;
 }
+
+bool Prototype::verify() const
+{
+    // TODO: Verify args.
+    return this->returnType->verify();
+}
 } // namespace ionir

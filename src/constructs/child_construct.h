@@ -6,6 +6,12 @@
 
 namespace ionir
 {
+template <typename T>
+struct ChildConstructOpts
+{
+    Ptr<T> parent;
+};
+
 template <class T>
 class ChildConstruct : public Construct
 {

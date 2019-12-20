@@ -7,6 +7,8 @@ rem Run tests.
 cd build
 SET testExec=test\IonIrTests.exe
 
+del %testExec%
+
 if %errorlevel% EQU 0 (
     if not exist %testExec% (
         echo Build appears to be successful, however, test executable file does not exist.

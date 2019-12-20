@@ -16,4 +16,9 @@ bool Args::getIsInfinite() const
 {
     return this->isInfinite;
 }
+
+void Args::setIsInfinite(bool isInfinite)
+{
+    this->isInfinite = isInfinite;
+}
 } // namespace ionir

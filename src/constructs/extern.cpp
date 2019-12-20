@@ -13,8 +13,13 @@ void Extern::accept(Pass *visitor)
     visitor->visitExtern(this->cast<Extern>());
 }
 
-Ptr<Prototype> Extern::getPrototype() const
+Ptr<Prototype> &Extern::getPrototype()
 {
     return this->prototype;
+}
+
+void Extern::setPrototype(Ptr<Prototype> prototype)
+{
+    this->prototype = prototype;
 }
 } // namespace ionir

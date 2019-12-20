@@ -13,16 +13,23 @@ namespace ionir
 {
 class Pass;
 
+struct ReturnInstOpts : InstOpts
+{
+    std::optional<Ptr<Value>> value = std::nullopt;
+};
+
 class ReturnInst : public Inst
 {
 protected:
     std::optional<Ptr<Value>> value;
 
 public:
-    ReturnInst(std::optional<Ptr<Value>> value = std::nullopt);
+    ReturnInst(ReturnInstOpts opts);
 
     void accept(Pass *visitor) override;
 
-    std::optional<Ptr<Value>> getValue() const;
+    std::optional<Ptr<Value>> &getValue();
+
+    void setValue(std::optional<Ptr<Value>> value);
 };
 } // namespace ionir

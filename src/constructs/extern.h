@@ -20,6 +20,8 @@ public:
 
 	void accept(Pass *visitor) override;
 
-	Ptr<Prototype> getPrototype() const;
+	Ptr<Prototype> &getPrototype();
+
+	void setPrototype(Ptr<Prototype> prototype);
 };
 } // namespace ionir

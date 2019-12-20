@@ -24,5 +24,7 @@ public:
     std::vector<Arg> getItems() const;
 
     bool getIsInfinite() const;
+
+    void setIsInfinite(bool isInfinite);
 };
 } // namespace ionir

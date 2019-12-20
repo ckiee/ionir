@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <exception>
 #include <optional>
 #include "constructs/insts/inst.h"
@@ -10,6 +9,16 @@
 
 namespace ionir
 {
+template <typename T>
+struct PartialInstOpts : InstOpts
+{
+    InstKind kind;
+
+    Ptr<Scope> scope;
+
+    std::optional<T> value = std::nullopt;
+};
+
 template <typename T>
 class PartialInst : public Inst
 {
@@ -25,8 +34,8 @@ protected:
     }
 
 public:
-    PartialInst(InstKind kind, Ptr<Scope> scope, std::optional<T> value = std::nullopt)
-        : Inst(kind), scope(scope), value(value)
+    PartialInst(PartialInstOpts opts)
+        : Inst(opts.kind), scope(opts.scope), value(opts.value)
     {
         //
     }

@@ -9,6 +9,13 @@
 
 namespace ionir
 {
+struct AllocaInstOpts : InstOpts
+{
+    std::string id;
+
+    Ptr<Type> type;
+};
+
 class AllocaInst : public Inst
 {
 protected:
@@ -18,7 +25,7 @@ protected:
 
 public:
     // TODO: Missing support for array type allocas.
-    AllocaInst(Ptr<Section> parent, std::string id, Ptr<Type> type);
+    AllocaInst(AllocaInstOpts opts);
 
     void accept(Pass *visitor) override;
 

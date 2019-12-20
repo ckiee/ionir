@@ -18,4 +18,9 @@ std::string StringValue::getValue() const
 {
     return this->value;
 }
+
+void StringValue::setValue(std::string value)
+{
+    this->value = value;
+}
 } // namespace ionir

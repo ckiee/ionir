@@ -4,13 +4,9 @@
 
 namespace ionir
 {
-CallInst::CallInst(CallInstOpts opts)
-    : PartialInst<Ptr<Function>>(InstKind::Call, opts.scope, opts.callee), target(opts.target)
+CallInst::CallInst(CallInstOpts opts) : Inst(opts), target(opts.target)
 {
-    if (opts.callee.has_value())
-    {
-        this->resolve(*opts.callee);
-    }
+    //
 }
 
 void CallInst::accept(Pass *visitor)
@@ -26,10 +22,5 @@ std::string CallInst::getTarget() const
 void CallInst::setTarget(std::string target)
 {
     this->target = target;
-}
-
-std::optional<Ptr<Function>> CallInst::getCallee() const
-{
-    return this->getValue();
 }
 } // namespace ionir

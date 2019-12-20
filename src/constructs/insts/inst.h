@@ -19,7 +19,7 @@ private:
     InstKind kind;
 
 public:
-    Inst(Ptr<Section> parent, InstKind kind);
+    Inst(InstOpts opts);
 
     virtual void accept(Pass *visitor) = 0;
 

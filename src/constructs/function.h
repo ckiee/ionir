@@ -22,9 +22,13 @@ public:
 
 	void accept(Pass *visitor) override;
 
-	Ptr<Prototype> getPrototype() const;
+	Ptr<Prototype> &getPrototype();
 
-	Ptr<Block> getBody() const;
+	void setPrototype(Ptr<Prototype> prototype);
+
+	Ptr<Block> &getBody();
+
+	void setBody(Ptr<Block> body);
 
 	bool verify() const override;
 };

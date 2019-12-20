@@ -2,7 +2,6 @@
 
 #include <optional>
 #include "constructs/expr/expr.h"
-#include "constructs/child_construct_opts.h"
 #include "constructs/section.h"
 #include "misc/helpers.h"
 #include "inst.h"
@@ -23,17 +22,27 @@ struct BranchInstOpts : InstOpts
 class BranchInst : public Inst
 {
 private:
-    BranchInstOpts opts;
+    Ptr<Expr> condition;
+
+    Ptr<Section> body;
+
+    std::optional<Ptr<Section>> otherwise;
 
 public:
     BranchInst(BranchInstOpts opts);
 
     void accept(Pass *visitor) override;
 
-    Ptr<Expr> getCondition() const;
+    Ptr<Expr> &getCondition();
 
-    Ptr<Section> getBody() const;
+    void setCondition(Ptr<Expr> condition);
 
-    std::optional<Ptr<Section>> getOtherwise() const;
+    Ptr<Section> &getBody();
+
+    void setBody(Ptr<Section> body);
+
+    std::optional<Ptr<Section>> &getOtherwise();
+
+    void setOtherwise(std::optional<Ptr<Section>> otherwise);
 };
 } // namespace ionir

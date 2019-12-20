@@ -6,7 +6,6 @@
 #include "constructs/psuedo/args.h"
 #include "constructs/insts/inst.h"
 #include "constructs/child_construct.h"
-#include "constructs/child_construct_opts.h"
 #include "constructs/block.h"
 #include "misc/helpers.h"
 #include "section_kind.h"

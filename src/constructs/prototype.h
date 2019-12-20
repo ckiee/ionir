@@ -31,5 +31,7 @@ public:
 	Ptr<Args> getArgs() const;
 
 	Ptr<Type> getReturnType() const;
+
+	bool verify() const override;
 };
 } // namespace ionir

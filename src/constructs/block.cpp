@@ -35,12 +35,17 @@ bool Block::verify() const
             // Raise the flag.
             entryFound = true;
         }
+        // A section failed to verify.
+        else if (!section->verify())
+        {
+            return false;
+        }
     }
 
     return true;
 }
 
-std::optional<Ptr<Section>> Block::getEntrySection()
+std::optional<Ptr<Section>> &Block::getEntrySection()
 {
     /**
      * Entry section has already been previously
@@ -66,8 +71,13 @@ std::optional<Ptr<Section>> Block::getEntrySection()
     return std::nullopt;
 }
 
-std::vector<Ptr<Section>> Block::getSections() const
+std::vector<Ptr<Section>> &Block::getSections()
 {
     return this->sections;
+}
+
+void Block::setSections(std::vector<Ptr<Section>> sections)
+{
+    this->sections = sections;
 }
 } // namespace ionir

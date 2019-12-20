@@ -14,18 +14,28 @@ void Function::accept(Pass *visitor)
     visitor->visitFunction(this->cast<Function>());
 }
 
-Ptr<Prototype> Function::getPrototype() const
+Ptr<Prototype> &Function::getPrototype()
 {
     return this->prototype;
 }
 
-Ptr<Block> Function::getBody() const
+void Function::setPrototype(Ptr<Prototype> prototype)
+{
+    this->prototype = prototype;
+}
+
+Ptr<Block> &Function::getBody()
 {
     return this->body;
 }
 
+void Function::setBody(Ptr<Block> body)
+{
+    this->body = body;
+}
+
 bool Function::verify() const
 {
-    return this->body != nullptr && this->prototype != nullptr;
+    return this->body->verify() && this->prototype->verify();
 }
 } // namespace ionir

@@ -19,4 +19,9 @@ bool BooleanValue::getValue() const
 {
     return this->value;
 }
+
+void BooleanValue::setValue(bool value)
+{
+    this->value = value;
+}
 } // namespace ionir

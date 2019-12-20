@@ -5,7 +5,7 @@
 namespace ionir
 {
 BranchInst::BranchInst(BranchInstOpts opts)
-    : Inst(opts.parent, InstKind::Branch), opts(opts)
+    : Inst(opts), condition(opts.condition), body(opts.body), otherwise(opts.otherwise)
 {
     //
 }
@@ -15,18 +15,33 @@ void BranchInst::accept(Pass *visitor)
     visitor->visitBranchInst(this->cast<BranchInst>());
 }
 
-Ptr<Expr> BranchInst::getCondition() const
+Ptr<Expr> &BranchInst::getCondition()
 {
-    return this->opts.condition;
+    return this->condition;
 }
 
-Ptr<Section> BranchInst::getBody() const
+void BranchInst::setCondition(Ptr<Expr> condition)
 {
-    return this->opts.body;
+    this->condition = condition;
 }
 
-std::optional<Ptr<Section>> BranchInst::getOtherwise() const
+Ptr<Section> &BranchInst::getBody()
 {
-    return this->opts.otherwise;
+    return this->body;
+}
+
+void BranchInst::setBody(Ptr<Section> body)
+{
+    this->body = body;
+}
+
+std::optional<Ptr<Section>> &BranchInst::getOtherwise()
+{
+    return this->otherwise;
+}
+
+void BranchInst::setOtherwise(std::optional<Ptr<Section>> otherwise)
+{
+    this->otherwise = otherwise;
 }
 } // namespace ionir
