@@ -2,7 +2,6 @@
 
 #include <memory>
 #include <vector>
-#include "constructs/insts/goto.h"
 #include "constructs/insts/inst.h"
 #include "misc/helpers.h"
 #include "pass.h"
@@ -14,13 +13,9 @@ class PartialResolverPass : public Pass
 protected:
     std::vector<Ptr<Inst>> partials;
 
-    void resolveGotoInst(Ptr<GotoInst> partial);
-
 public:
     PartialResolverPass(std::vector<Ptr<Inst>> partials);
 
     std::vector<Ptr<Inst>> getPartials() const;
-
-    void visitGotoInst(Ptr<GotoInst> node);
 };
 } // namespace ionir

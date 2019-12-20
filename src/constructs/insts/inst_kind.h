@@ -14,8 +14,6 @@ enum class InstKind
 
     Break,
 
-    Branch,
-
-    Goto
+    Branch
 };
 } // namespace ionir

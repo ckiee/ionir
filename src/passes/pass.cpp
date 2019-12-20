@@ -158,13 +158,6 @@ void Pass::visitInst(Ptr<Inst> node)
 
         // TODO: Missing call inst.
 
-    case InstKind::Goto:
-    {
-        this->visitGotoInst(node->cast<GotoInst>());
-
-        break;
-    }
-
     case InstKind::Return:
     {
         this->visitReturnInst(node->cast<ReturnInst>());
@@ -192,11 +185,6 @@ void Pass::visitReturnInst(Ptr<ReturnInst> node)
 }
 
 void Pass::visitBranchInst(Ptr<BranchInst> node)
-{
-    //
-}
-
-void Pass::visitGotoInst(Ptr<GotoInst> node)
 {
     //
 }

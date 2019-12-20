@@ -121,7 +121,5 @@ TEST(CodeGenTest, VisitBranchInst)
 
     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
 
-    module->print();
-
     EXPECT_TRUE(test::compare::ir(module->getAsString(), "inst_branch"));
 }

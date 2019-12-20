@@ -19,7 +19,6 @@
 #include "constructs/insts/inst.h"
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/branch.h"
-#include "constructs/insts/goto.h"
 #include "constructs/insts/return.h"
 #include "misc/helpers.h"
 
@@ -65,8 +64,6 @@ public:
     virtual void visitReturnInst(Ptr<ReturnInst> node);
 
     virtual void visitBranchInst(Ptr<BranchInst> node);
-
-    virtual void visitGotoInst(Ptr<GotoInst> node);
 
     virtual void visitGlobal(Ptr<Global> node);
 };
