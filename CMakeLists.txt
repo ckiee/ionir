@@ -91,3 +91,6 @@ if (BUILD_TESTS)
     add_subdirectory(libs/googletest)
     add_subdirectory(test)
 endif()
+
+# Setup install target.
+install(TARGETS ${PROJECT_NAME})
