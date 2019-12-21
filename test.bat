@@ -1,7 +1,7 @@
 @echo off
 
 rem Prepare environment.
-SET testExec=test\IonIrTests.exe
+set testExec=test\IonIrTests.exe
 del %testExec%
 
 rem Build project first.
@@ -10,19 +10,19 @@ call build.bat
 rem Run tests.
 cd build
 
-if %errorlevel% EQU 0 (
+if %errorlevel% equ 0 (
     if not exist %testExec% (
         echo Build appears to be successful, however, test executable file does not exist.
-    ) Else (
+    ) else (
         %testExec%
 
         if %errorlevel% NEQ 0 (
             echo Tests appear to have failed.
-        ) Else (
+        ) else (
             echo Tests passed successfully.
         )
     )
-) Else (
+) else (
     echo Build did not exit successfully, test executable will not be run.
 )
 

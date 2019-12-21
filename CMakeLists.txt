@@ -6,7 +6,7 @@ project(ionir)
 set(CMAKE_CXX_STANDARD 17)
 
 # General project information.
-set(PROJECT_URL "https://github.com/ionlang/ir-c")
+set(PROJECT_URL "https://github.com/ionlang/ionir")
 
 # Setup source and build directories.
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
