@@ -2,15 +2,27 @@
 
 #include "construct/values/value.h"
 #include "misc/helpers.h"
-#include "integer_kind.h"
 
 namespace ionir
 {
 class Pass;
 
+enum class IntegerKind
+{
+    Int1,
+
+    Int16,
+
+    Int32,
+
+    Int64,
+
+    Int128
+};
+
 class IntegerValue : public Value
 {
-protected:
+private:
     IntegerKind kind;
 
     int64_t value;

@@ -71,7 +71,7 @@ std::optional<Ptr<Section>> Block::getEntrySection()
     return std::nullopt;
 }
 
-std::vector<Ptr<Section>> Block::getSections() const
+std::vector<Ptr<Section>> &Block::getSections()
 {
     return this->sections;
 }

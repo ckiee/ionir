@@ -4,7 +4,6 @@
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/codegen/llvm_visitor.h"
 #include "construct/expr/binary_expr.h"
-#include "construct/values/integer_kind.h"
 #include "construct/values/integer.h"
 #include "construct/insts/inst.h"
 #include "construct/insts/alloca.h"

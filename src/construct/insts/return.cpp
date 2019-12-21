@@ -5,12 +5,7 @@ namespace ionir
 {
 // TODO: Finish init. implementation.
 ReturnInst::ReturnInst(ReturnInstOpts opts)
-    : Inst(InstOpts{
-          opts.parent,
-          InstKind::Return,
-      }),
-
-      value(opts.value)
+    : Inst(opts.parent, InstKind::Return), value(opts.value)
 {
     //
 }
@@ -20,7 +15,7 @@ void ReturnInst::accept(Pass *visitor)
     visitor->visitReturnInst(this->cast<ReturnInst>());
 }
 
-std::optional<Ptr<Value>> &ReturnInst::getValue()
+std::optional<Ptr<Value>> ReturnInst::getValue() const
 {
     return this->value;
 }

@@ -28,12 +28,7 @@ protected:
 
 public:
     PartialInst(PartialInstOpts<T> opts)
-        : Inst(InstOpts{
-              opts.parent,
-              opts.kind,
-          }),
-
-          scope(opts.scope), value(opts.value)
+        : Inst(opts.parent, opts.kind), value(opts.value)
     {
         //
     }

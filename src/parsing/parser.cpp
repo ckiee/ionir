@@ -4,7 +4,6 @@
 #include <exception>
 #include "construct/expr/expr.h"
 #include "construct/expr/binary_expr.h"
-#include "construct/section_kind.h"
 #include "misc/util.h"
 #include "const/constants.h"
 #include "parser.h"

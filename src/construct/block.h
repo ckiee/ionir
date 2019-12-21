@@ -26,7 +26,7 @@ public:
 
     std::optional<Ptr<Section>> getEntrySection();
 
-    std::vector<Ptr<Section>> getSections() const;
+    std::vector<Ptr<Section>> &getSections();
 
     void setSections(std::vector<Ptr<Section>> sections);
 };

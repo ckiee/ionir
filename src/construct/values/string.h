@@ -10,7 +10,7 @@ class Pass;
 
 class StringValue : public Value
 {
-protected:
+private:
     std::string value;
 
 public:

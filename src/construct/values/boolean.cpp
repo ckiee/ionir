@@ -1,5 +1,5 @@
-#include "passes/pass.h"
 #include "construct/values/value_kind.h"
+#include "passes/pass.h"
 #include "boolean.h"
 
 namespace ionir
