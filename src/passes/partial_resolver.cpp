@@ -1,7 +1,7 @@
 #include <exception>
 #include "partial_resolver.h"
 #include "parsing/scope.h"
-#include "constructs/function.h"
+#include "construct/function.h"
 
 namespace ionir
 {

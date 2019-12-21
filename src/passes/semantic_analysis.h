@@ -1,6 +1,6 @@
 #pragma once
 
-#include "constructs/function.h"
+#include "construct/function.h"
 #include "misc/helpers.h"
 #include "pass.h"
 

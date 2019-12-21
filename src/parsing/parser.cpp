@@ -2,9 +2,9 @@
 #include <utility>
 #include <vector>
 #include <exception>
-#include "constructs/expr/expr.h"
-#include "constructs/expr/binary_expr.h"
-#include "constructs/section_kind.h"
+#include "construct/expr/expr.h"
+#include "construct/expr/binary_expr.h"
+#include "construct/section_kind.h"
 #include "misc/util.h"
 #include "const/constants.h"
 #include "parser.h"

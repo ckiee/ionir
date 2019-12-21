@@ -3,7 +3,7 @@
 #include <optional>
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Constant.h"
-#include "constructs/values/integer.h"
+#include "construct/values/integer.h"
 
 namespace ionir
 {

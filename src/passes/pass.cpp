@@ -1,6 +1,6 @@
 #include <exception>
-#include "constructs/expr/expr_kind.h"
-#include "constructs/values/value_kind.h"
+#include "construct/expr/expr_kind.h"
+#include "construct/values/value_kind.h"
 #include "pass.h"
 
 namespace ionir

@@ -1,4 +1,4 @@
-#include "constructs/section_kind.h"
+#include "construct/section_kind.h"
 #include "misc/inst_builder.h"
 #include "pch.h"
 

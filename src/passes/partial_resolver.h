@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "constructs/insts/inst.h"
+#include "construct/insts/inst.h"
 #include "misc/helpers.h"
 #include "pass.h"
 

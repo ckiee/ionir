@@ -1,7 +1,7 @@
 #include <optional>
-#include "constructs/section.h"
-#include "constructs/insts/inst_kind.h"
-#include "constructs/insts/return.h"
+#include "construct/section.h"
+#include "construct/insts/inst_kind.h"
+#include "construct/insts/return.h"
 #include "semantic_analysis.h"
 
 namespace ionir

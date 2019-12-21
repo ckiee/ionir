@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "constructs/insts/inst.h"
+#include "construct/insts/inst.h"
 #include "llvm/codegen/llvm_visitor.h"
 #include "syntax/token.h"
 #include "syntax/token_type.h"

@@ -26,11 +26,10 @@ Ptr<AllocaInst> InstBuilder::createAlloca(std::string id, Ptr<Type> type)
     });
 }
 
-Ptr<BranchInst> InstBuilder::createBranch(Ptr<Scope> scope, Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise)
+Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise)
 {
     return this->make<BranchInst>(BranchInstOpts{
         this->section,
-        scope,
         condition,
         body,
         otherwise,

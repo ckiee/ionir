@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "constructs/construct.h"
+#include "construct/construct.h"
 #include "llvm/IR/Module.h"
 #include "syntax/token.h"
 #include "misc/iterable.h"

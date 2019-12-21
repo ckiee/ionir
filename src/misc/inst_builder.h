@@ -1,11 +1,11 @@
 #pragma once
 
-#include "constructs/insts/inst.h"
-#include "constructs/section.h"
-#include "constructs/insts/alloca.h"
-#include "constructs/insts/branch.h"
-#include "constructs/insts/return.h"
-#include "constructs/insts/call.h"
+#include "construct/insts/inst.h"
+#include "construct/section.h"
+#include "construct/insts/alloca.h"
+#include "construct/insts/branch.h"
+#include "construct/insts/return.h"
+#include "construct/insts/call.h"
 #include "parsing/scope.h"
 #include "misc/helpers.h"
 
@@ -37,7 +37,7 @@ public:
 
     Ptr<AllocaInst> createAlloca(std::string id, Ptr<Type> type);
 
-    Ptr<BranchInst> createBranch(Ptr<Scope> scope, Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
+    Ptr<BranchInst> createBranch(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
 
     Ptr<ReturnInst> createReturn(std::optional<Ptr<Value>> value = std::nullopt);
 
