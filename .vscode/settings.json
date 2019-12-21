@@ -100,7 +100,8 @@
       "clocale": "cpp",
       "memory_resource": "cpp",
       "*.inc": "cpp",
-      "filesystem": "cpp"
+      "filesystem": "cpp",
+      "*.def": "cpp"
    },
    "cmake.configureOnOpen": true,
    "C_Cpp.configurationWarnings": "Disabled",

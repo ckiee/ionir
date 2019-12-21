@@ -6,6 +6,7 @@
 #include "constructs/insts/branch.h"
 #include "constructs/insts/return.h"
 #include "constructs/insts/call.h"
+#include "parsing/scope.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -36,10 +37,10 @@ public:
 
     Ptr<AllocaInst> createAlloca(std::string id, Ptr<Type> type);
 
-    Ptr<BranchInst> createBranch(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
+    Ptr<BranchInst> createBranch(Ptr<Scope> scope, Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise = std::nullopt);
 
     Ptr<ReturnInst> createReturn(std::optional<Ptr<Value>> value = std::nullopt);
 
-    Ptr<CallInst> createCall(Ptr<Scope> scope, std::string target, std::optional<Ptr<Function>> callee = std::nullopt);
+    Ptr<CallInst> createCall(Ptr<Section> section, std::string target, std::optional<Ptr<Function>> callee = std::nullopt);
 };
 } // namespace ionir

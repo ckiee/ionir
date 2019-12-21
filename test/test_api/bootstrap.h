@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <vector>
 #include "constructs/insts/inst.h"
 #include "llvm/codegen/llvm_visitor.h"

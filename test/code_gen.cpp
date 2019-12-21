@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <memory>
 #include "llvm/IR/Module.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/codegen/llvm_visitor.h"

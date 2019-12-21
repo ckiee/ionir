@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <string>
 #include "constructs/type.h"
 #include "constructs/section.h"

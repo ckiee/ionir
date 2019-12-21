@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <optional>
 #include <stack>
 #include "llvm/IR/Module.h"
@@ -8,22 +7,22 @@
 #include "llvm/IR/Type.h"
 #include "llvm/IR/Value.h"
 #include "llvm/IR/BasicBlock.h"
-#include "constructs/construct.h"
-#include "constructs/construct_kind.h"
 #include "constructs/values/integer.h"
 #include "constructs/values/char.h"
 #include "constructs/values/string.h"
-#include "constructs/type.h"
-#include "constructs/block.h"
 #include "constructs/expr/binary_expr.h"
-#include "constructs/function.h"
-#include "constructs/extern.h"
-#include "constructs/prototype.h"
-#include "constructs/global.h"
 #include "constructs/insts/inst.h"
 #include "constructs/insts/branch.h"
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/return.h"
+#include "constructs/construct.h"
+#include "constructs/construct_kind.h"
+#include "constructs/function.h"
+#include "constructs/type.h"
+#include "constructs/block.h"
+#include "constructs/extern.h"
+#include "constructs/prototype.h"
+#include "constructs/global.h"
 #include "misc/stack.h"
 #include "misc/helpers.h"
 #include "passes/pass.h"

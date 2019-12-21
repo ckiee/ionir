@@ -423,7 +423,7 @@ Ptr<Expr> Parser::parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPreced
     }
 }
 
-Ptr<Section> Parser::parseSection()
+Ptr<Section> Parser::parseSection(Ptr<Block> parent)
 {
     this->skipOver(TokenType::SymbolAt);
 
@@ -431,64 +431,81 @@ Ptr<Section> Parser::parseSection()
 
     this->skipOver(TokenType::SymbolColon);
 
-    std::vector<Ptr<Inst>> insts = {};
-
-    while (!this->is(TokenType::SymbolBraceR) && !this->is(TokenType::SymbolAt))
-    {
-        insts.push_back(this->parseInst());
-    }
-
-    this->stream->skip();
-
+    // Determine the section's kind.
     SectionKind kind = SectionKind::Label;
 
     if (id == Const::sectionInternalPrefix + Const::sectionEntryId)
     {
         kind = SectionKind::Entry;
     }
-
     else if (Util::stringStartsWith(id, Const::sectionInternalPrefix))
     {
         kind = SectionKind::Internal;
     }
 
-    return std::make_shared<Section>(kind, id, insts);
+    Ptr<Section> section = std::make_shared<Section>(SectionOpts{
+        parent,
+        kind,
+        id,
+    });
+
+    std::vector<Ptr<Inst>> insts = {};
+
+    while (!this->is(TokenType::SymbolBraceR) && !this->is(TokenType::SymbolAt))
+    {
+        insts.push_back(this->parseInst(section));
+    }
+
+    this->stream->skip();
+    section->setInsts(insts);
+
+    return section;
 }
 
 Ptr<Block> Parser::parseBlock()
 {
     this->skipOver(TokenType::SymbolBraceL);
 
+    Ptr<Block> block = std::make_shared<Block>();
     std::vector<Ptr<Section>> sections = {};
 
     while (!this->is(TokenType::SymbolBraceR))
     {
-        sections.push_back(this->parseSection());
+        sections.push_back(this->parseSection(block));
     }
+
+    block->setSections(sections);
 
     // Skip over right brace token.
     this->stream->skip();
 
-    return std::make_shared<Block>(sections);
+    return block;
 }
 
-Ptr<AllocaInst> Parser::parseAllocaInst()
+Ptr<AllocaInst> Parser::parseAllocaInst(Ptr<Section> parent)
 {
     std::string id = this->parseId();
     Ptr<Type> type = this->parseType();
 
-    return std::make_shared<AllocaInst>(id, type);
+    return std::make_shared<AllocaInst>(AllocaInstOpts{
+        parent,
+        id,
+        type,
+    });
 }
 
-Ptr<ReturnInst> Parser::parseReturnInst()
+Ptr<ReturnInst> Parser::parseReturnInst(Ptr<Section> parent)
 {
     // TODO: Return inst does not necessarily take a value. Instead, it should be allowed to return without value, signaling void.
     Ptr<Value> value = this->parseValue();
 
-    return std::make_shared<ReturnInst>(value);
+    return std::make_shared<ReturnInst>(ReturnInstOpts{
+        parent,
+        value,
+    });
 }
 
-Ptr<BranchInst> Parser::parseBranchInst()
+Ptr<BranchInst> Parser::parseBranchInst(Ptr<Section> parent)
 {
     std::optional<Ptr<Expr>> condition = this->parsePrimaryExpr();
 
@@ -513,37 +530,42 @@ Ptr<BranchInst> Parser::parseBranchInst()
         otherwise = this->parseSection();
     }
 
-    return std::make_shared<BranchInst>(*condition, body, *otherwise);
+    return std::make_shared<BranchInst>(BranchInstOpts{
+        parent,
+        *condition,
+        body,
+        *otherwise,
+    });
 }
 
-Ptr<GotoInst> Parser::parseGotoInst()
+Ptr<CallInst> Parser::parseCallInst(Ptr<Section> parent)
 {
-    std::string target = this->parseId();
-    Ptr<GotoInst> gotoInst = std::make_shared<GotoInst>(this->createScope(), target);
+    // TODO
 
-    // TODO: createScope has not been defined yet.
-    return gotoInst;
+    return nullptr;
 }
 
-Ptr<Inst> Parser::parseInst()
+Ptr<Inst> Parser::parseInst(Ptr<Section> parent)
 {
     // Parse the instruction's name to determine which argument parser to invoke.
     std::string id = this->parseId();
 
     Ptr<Inst> inst;
 
+    // TODO: Missing more instructions.
+
     // TODO: Hard-coded strings. Should be mapped into InstKind enum.
     if (id == "alloca")
     {
-        return this->parseAllocaInst();
+        return this->parseAllocaInst(parent);
     }
     else if (id == "return")
     {
-        return this->parseReturnInst();
+        return this->parseReturnInst(parent);
     }
-    else if (id == "goto")
+    else if (id == "call")
     {
-        return this->parseGotoInst();
+        return this->parseCallInst(parent);
     }
     else
     {

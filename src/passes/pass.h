@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "constructs/construct.h"
 #include "constructs/function.h"
 #include "constructs/reference.h"

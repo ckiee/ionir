@@ -12,8 +12,6 @@ namespace ionir
 template <typename T>
 struct PartialInstOpts : InstOpts
 {
-    InstKind kind;
-
     Ptr<Scope> scope;
 
     std::optional<T> value = std::nullopt;
@@ -34,8 +32,13 @@ protected:
     }
 
 public:
-    PartialInst(PartialInstOpts opts)
-        : Inst(opts.kind), scope(opts.scope), value(opts.value)
+    PartialInst(PartialInstOpts<T> opts)
+        : Inst(InstOpts{
+              opts.parent,
+              opts.kind,
+          }),
+
+          scope(opts.scope), value(opts.value)
     {
         //
     }

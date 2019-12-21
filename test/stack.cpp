@@ -1,5 +1,4 @@
 #include <optional>
-#include <memory>
 #include "misc/stack.h"
 #include "pch.h"
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "constructs/function.h"
 #include "misc/helpers.h"
 #include "pass.h"

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <optional>
 #include <string>
 #include "constructs/expr/expr.h"
@@ -12,7 +11,7 @@
 #include "constructs/insts/alloca.h"
 #include "constructs/insts/return.h"
 #include "constructs/insts/branch.h"
-#include "constructs/insts/goto.h"
+#include "constructs/insts/call.h"
 #include "constructs/psuedo/partial_inst.h"
 #include "syntax/token.h"
 #include "syntax/token_identifier.h"
@@ -27,6 +26,7 @@
 #include "reporting/notice_context.h"
 #include "reporting/notice_type.h"
 #include "misc/helpers.h"
+#include "scope.h"
 
 namespace ionir
 {
@@ -96,23 +96,23 @@ public:
 
     Ptr<Expr> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
 
-    Ptr<Section> parseSection();
+    Ptr<Section> parseSection(Ptr<Block> parent);
 
     Ptr<Block> parseBlock();
 
-    Ptr<AllocaInst> parseAllocaInst();
+    Ptr<AllocaInst> parseAllocaInst(Ptr<Section> parent);
 
-    Ptr<ReturnInst> parseReturnInst();
+    Ptr<ReturnInst> parseReturnInst(Ptr<Section> parent);
 
-    Ptr<BranchInst> parseBranchInst();
+    Ptr<BranchInst> parseBranchInst(Ptr<Section> parent);
 
-    Ptr<GotoInst> parseGotoInst();
+    Ptr<CallInst> parseCallInst(Ptr<Section> parent);
 
     /**
      * Parses an instruction, consuming its identifier.
      * Invokes the corresponding parser depending on its
      * identifier.
      */
-    Ptr<Inst> parseInst();
+    Ptr<Inst> parseInst(Ptr<Section> parent);
 };
 } // namespace ionir

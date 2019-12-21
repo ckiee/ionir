@@ -4,7 +4,13 @@
 
 namespace ionir
 {
-CallInst::CallInst(CallInstOpts opts) : Inst(opts), target(opts.target)
+CallInst::CallInst(CallInstOpts opts)
+    : Inst(InstOpts{
+          opts.parent,
+          InstKind::Call,
+      }),
+
+      target(opts.target)
 {
     //
 }

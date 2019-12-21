@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <memory>
 #include "parsing/ast.h"
 #include "misc/helpers.h"
 #include "pass_manager_item.h"

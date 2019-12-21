@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <memory>
 #include <string>
 #include "constructs/insts/inst.h"
 #include "constructs/insts/inst_kind.h"

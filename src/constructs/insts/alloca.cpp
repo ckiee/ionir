@@ -6,7 +6,12 @@ namespace ionir
 {
 // TODO: Finish init. implementation.
 AllocaInst::AllocaInst(AllocaInstOpts opts)
-    : Inst(opts), id(opts.id), type(opts.type)
+    : Inst(InstOpts{
+          opts.parent,
+          InstKind::Alloca,
+      }),
+
+      id(opts.id), type(opts.type)
 {
     //
 }
