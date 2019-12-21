@@ -280,9 +280,12 @@ Ptr<Function> Parser::parseFunction()
     this->skipOver(TokenType::KeywordFunction);
 
     Ptr<Prototype> prototype = this->parsePrototype();
-    Ptr<Block> body = this->parseBlock();
+    Ptr<Block> body = this->parseBlock(nullptr);
+    Ptr<Function> function = std::make_shared<Function>(prototype, body);
 
-    return std::make_shared<Function>(prototype, body);
+    body->setParent(function);
+
+    return function;
 }
 
 Ptr<Global> Parser::parseGlobal()
@@ -461,11 +464,11 @@ Ptr<Section> Parser::parseSection(Ptr<Block> parent)
     return section;
 }
 
-Ptr<Block> Parser::parseBlock()
+Ptr<Block> Parser::parseBlock(Ptr<Function> parent)
 {
     this->skipOver(TokenType::SymbolBraceL);
 
-    Ptr<Block> block = std::make_shared<Block>();
+    Ptr<Block> block = std::make_shared<Block>(parent);
     std::vector<Ptr<Section>> sections = {};
 
     while (!this->is(TokenType::SymbolBraceR))
@@ -506,35 +509,39 @@ Ptr<ReturnInst> Parser::parseReturnInst(Ptr<Section> parent)
 
 Ptr<BranchInst> Parser::parseBranchInst(Ptr<Section> parent)
 {
-    std::optional<Ptr<Expr>> condition = this->parsePrimaryExpr();
+    // std::optional<Ptr<Expr>> condition = this->parsePrimaryExpr();
 
-    // Condition must be set.
-    if (!condition.has_value())
-    {
-        throw std::runtime_error("Expected branch instruction to have a condition");
-    }
+    // // Condition must be set.
+    // if (!condition.has_value())
+    // {
+    //     throw std::runtime_error("Expected branch instruction to have a condition");
+    // }
 
-    // TODO: Use targets.
+    // // TODO: Use targets.
 
-    Ptr<Section> body = this->parseSection();
-    std::optional<Ptr<Section>> otherwise = std::nullopt;
+    // Ptr<Section> body = this->parseSection();
+    // std::optional<Ptr<Section>> otherwise = std::nullopt;
 
-    // Parse the otherwise block if applicable.
-    if (this->is(TokenType::KeywordElse))
-    {
-        // Skip over the else keyword.
-        this->stream->skip();
+    // // Parse the otherwise block if applicable.
+    // if (this->is(TokenType::KeywordElse))
+    // {
+    //     // Skip over the else keyword.
+    //     this->stream->skip();
 
-        // Parse the otherwise block.
-        otherwise = this->parseSection();
-    }
+    //     // Parse the otherwise block.
+    //     otherwise = this->parseSection();
+    // }
 
-    return std::make_shared<BranchInst>(BranchInstOpts{
-        parent,
-        *condition,
-        body,
-        *otherwise,
-    });
+    // return std::make_shared<BranchInst>(BranchInstOpts{
+    //     parent,
+    //     *condition,
+    //     body,
+    //     *otherwise,
+    // });
+
+    // TODO
+
+    return nullptr;
 }
 
 Ptr<CallInst> Parser::parseCallInst(Ptr<Section> parent)

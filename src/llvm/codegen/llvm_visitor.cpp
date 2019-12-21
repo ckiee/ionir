@@ -3,7 +3,6 @@
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Constant.h"
-#include "construct/insts/inst_kind.h"
 #include "construct/values/value.h"
 #include "misc/util.h"
 #include "llvm_visitor.h"

@@ -1,5 +1,4 @@
 #include "passes/pass.h"
-#include "construct/insts/inst_kind.h"
 #include "branch.h"
 
 namespace ionir

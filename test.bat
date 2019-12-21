@@ -1,13 +1,14 @@
 @echo off
 
+rem Prepare environment.
+SET testExec=test\IonIrTests.exe
+del %testExec%
+
 rem Build project first.
 call build.bat
 
 rem Run tests.
 cd build
-SET testExec=test\IonIrTests.exe
-
-del %testExec%
 
 if %errorlevel% EQU 0 (
     if not exist %testExec% (

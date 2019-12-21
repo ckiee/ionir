@@ -28,5 +28,10 @@ public:
     {
         return this->parent;
     }
+
+    void setParent(Ptr<T> parent)
+    {
+        this->parent = parent;
+    }
 };
 } // namespace ionir

@@ -45,14 +45,23 @@ Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts)
 {
     Ptr<Type> returnType = std::make_shared<Type>("void");
     Ptr<Prototype> prototype = std::make_shared<Prototype>("foobar", std::make_shared<Args>(), returnType);
-    Ptr<Section> entrySection = std::make_shared<Section>(SectionKind::Entry, "entry", insts);
+
+    Ptr<Section> entrySection = std::make_shared<Section>(SectionOpts{
+        nullptr,
+        SectionKind::Entry,
+        "entry",
+        insts,
+    });
 
     std::vector<Ptr<Section>> sections = {
         entrySection,
     };
 
-    Ptr<Block> functionBody = std::make_shared<Block>(sections);
+    Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);
+    Ptr<Block> body = std::make_shared<Block>(function, sections);
 
-    return std::make_shared<Function>(prototype, functionBody);
+    function->setBody(body);
+
+    return function;
 }
 } // namespace ionir::test::bootstrap

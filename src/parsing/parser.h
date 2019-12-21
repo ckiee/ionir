@@ -98,7 +98,7 @@ public:
 
     Ptr<Section> parseSection(Ptr<Block> parent);
 
-    Ptr<Block> parseBlock();
+    Ptr<Block> parseBlock(Ptr<Function> parent);
 
     Ptr<AllocaInst> parseAllocaInst(Ptr<Section> parent);
 

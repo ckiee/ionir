@@ -3,7 +3,6 @@
 #include <optional>
 #include <string>
 #include "construct/insts/inst.h"
-#include "construct/insts/inst_kind.h"
 #include "construct/type.h"
 #include "construct/values/value.h"
 #include "misc/helpers.h"

@@ -3,7 +3,6 @@
 #include <exception>
 #include <optional>
 #include "construct/insts/inst.h"
-#include "construct/insts/inst_kind.h"
 #include "misc/helpers.h"
 
 namespace ionir
@@ -12,6 +11,8 @@ template <typename T>
 struct PartialInstOpts : InstOpts
 {
     std::optional<T> value = std::nullopt;
+
+    InstKind kind;
 };
 
 template <typename T>

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "construct_kind.h"
 #include "misc/helpers.h"
+#include "construct_kind.h"
 
 namespace ionir
 {

@@ -4,7 +4,6 @@
 #include "construct/child_construct.h"
 #include "construct/construct_kind.h"
 #include "misc/helpers.h"
-#include "inst_kind.h"
 
 namespace ionir
 {
@@ -13,6 +12,21 @@ class Pass;
 class Section;
 
 typedef ChildConstructOpts<Section> InstOpts;
+
+enum class InstKind
+{
+    Alloca,
+
+    Store,
+
+    Call,
+
+    Return,
+
+    Break,
+
+    Branch
+};
 
 class Inst : public ChildConstruct<Section>
 {

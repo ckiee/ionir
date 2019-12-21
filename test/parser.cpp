@@ -1,10 +1,11 @@
 #include <string>
 #include <vector>
-#include "pch.h"
+#include "construct/insts/inst.h"
 #include "parsing/parser.h"
 #include "syntax/token.h"
-#include "construct/insts/inst_kind.h"
 #include "test_api/bootstrap.h"
+#include "misc/helpers.h"
+#include "pch.h"
 
 using namespace ionir;
 
@@ -87,7 +88,7 @@ TEST(ParserTest, ParseEmptyBlock)
         Token(TokenType::SymbolBraceR, "}"),
     });
 
-    auto block = parser.parseBlock();
+    auto block = parser.parseBlock(nullptr);
 
     EXPECT_EQ(block->getSections().size(), 0);
 }
@@ -126,7 +127,7 @@ TEST(ParserTest, ParseAllocaInst)
         Token(TokenType::Identifier, "int"),
     });
 
-    auto inst = parser.parseInst();
+    Ptr<Inst> inst = parser.parseInst(nullptr);
 
     EXPECT_EQ(inst->getInstKind(), InstKind::Alloca);
 }

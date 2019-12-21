@@ -2,15 +2,17 @@
 
 #include <optional>
 #include <vector>
-#include "construct/construct.h"
 #include "misc/helpers.h"
+#include "child_construct.h"
 #include "section.h"
 
 namespace ionir
 {
 class Pass;
 
-class Block : public Construct
+class Function;
+
+class Block : public ChildConstruct<Function>
 {
 protected:
     std::vector<Ptr<Section>> sections;
@@ -18,7 +20,7 @@ protected:
     std::optional<Ptr<Section>> cachedEntry;
 
 public:
-    Block(std::vector<Ptr<Section>> sections = {});
+    Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
 
     void accept(Pass *visitor) override;
 
