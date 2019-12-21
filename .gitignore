@@ -25,3 +25,4 @@ index
 *.log
 build/*
 !build/test.bat
+!portfile.cmake
