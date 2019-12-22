@@ -18,7 +18,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCCE_DIR})
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-    gtest_main
+    gtest
     ionir
 )
 

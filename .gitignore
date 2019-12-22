@@ -24,5 +24,6 @@ lib/
 index
 *.log
 build/*
+cmake-build-*/
 !build/test.bat
 !portfile.cmake

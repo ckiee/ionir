@@ -14,7 +14,7 @@ set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # Setup default build flags.
 #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} /MT")
+#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} /MT")
 
 # Option to use MD.
 option(USE_MD "Use MD instead of MTd" OFF)
