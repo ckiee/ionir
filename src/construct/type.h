@@ -17,7 +17,7 @@ protected:
     bool isPointer;
 
 public:
-    Type(std::string id, bool isPointer = false);
+    explicit Type(std::string id, bool isPointer = false);
 
     void accept(Pass *visitor) override;
 

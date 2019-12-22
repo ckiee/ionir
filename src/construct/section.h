@@ -55,7 +55,7 @@ protected:
     std::vector<Ptr<Inst>> insts;
 
 public:
-    Section(SectionOpts opts);
+    explicit Section(SectionOpts opts);
 
     void accept(Pass *visitor) override;
 

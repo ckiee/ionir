@@ -1,5 +1,5 @@
-#include "type.h"
 #include "passes/pass.h"
+#include "type.h"
 
 namespace ionir
 {

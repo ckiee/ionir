@@ -20,7 +20,7 @@ protected:
     std::optional<Ptr<Section>> cachedEntry;
 
 public:
-    Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
+    explicit Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
 
     void accept(Pass *visitor) override;
 

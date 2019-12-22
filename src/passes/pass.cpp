@@ -1,4 +1,3 @@
-#include <exception>
 #include "construct/expr/expr_kind.h"
 #include "construct/values/value_kind.h"
 #include "pass.h"

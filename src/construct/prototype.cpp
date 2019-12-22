@@ -20,6 +20,10 @@ std::string Prototype::getId() const
     return this->id;
 }
 
+void Prototype::setId(std::string id) {
+    this->id = id;
+}
+
 Ptr<Args> Prototype::getArgs() const
 {
     return this->args;

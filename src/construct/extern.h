@@ -15,7 +15,7 @@ private:
 	Ptr<Prototype> prototype;
 
 public:
-	Extern(Ptr<Prototype> prototype);
+	explicit Extern(Ptr<Prototype> prototype);
 
 	void accept(Pass *visitor) override;
 

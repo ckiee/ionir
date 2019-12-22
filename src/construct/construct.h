@@ -13,7 +13,7 @@ protected:
     ConstructKind constructKind;
 
 public:
-    Construct(ConstructKind kind);
+    explicit Construct(ConstructKind kind);
 
     virtual void accept(Pass *visitor) = 0;
 

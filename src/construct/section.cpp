@@ -1,8 +1,6 @@
-#include <algorithm>
 #include "misc/util.h"
 #include "passes/pass.h"
 #include "construct/construct_kind.h"
-#include "construct/block.h"
 #include "section.h"
 
 namespace ionir

@@ -63,7 +63,7 @@ protected:
 	bool restoreBuilder();
 
 public:
-	LlvmVisitor(llvm::Module *module);
+	explicit LlvmVisitor(llvm::Module *module);
 
 	llvm::Module *getModule() const;
 

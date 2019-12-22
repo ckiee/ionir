@@ -84,12 +84,16 @@ llvm_map_components_to_libnames(llvm_libs all)
 # Link against LLVM libraries.
 target_link_libraries("${PROJECT_NAME}" LLVM)
 
+# TODO: Adding subdirs eitherway.
+add_subdirectory(libs/googletest)
+add_subdirectory(test)
+
 # Setup unit testing using Google Test (GTest) if applicable. This binds the CMakeLists.txt on the test project.
 option(BUILD_TESTS "Build tests" ON)
 
 if (BUILD_TESTS)
-    add_subdirectory(libs/googletest)
-    add_subdirectory(test)
+#    add_subdirectory(libs/googletest)
+#    add_subdirectory(test)
 endif()
 
 # Setup install target.

@@ -14,7 +14,7 @@ protected:
     std::string id;
 
 public:
-    Reference(std::string id);
+    explicit Reference(std::string id);
 
     void accept(Pass *visitor) override;
 

@@ -238,8 +238,8 @@ void LlvmVisitor::visitPrototype(Ptr<Prototype> node)
     std::vector<llvm::Type *> arguments = {};
 
     // Attempt to retrieve an existing function.
-    llvm::Function *function(
-        this->module->getFunction(node->getId()));
+    llvm::Function *function =
+        this->module->getFunction(node->getId());
 
     // A function with a matching identifier already exists.
     if (function != nullptr)

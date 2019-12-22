@@ -6,16 +6,17 @@ enable_testing()
 #    PATHS "../libs/googletest/googletest/generated"
 #)
 
-set(PROJECT_NAME IonIrTests)
+project(ionir_tests)
 
 file(GLOB_RECURSE SOURCES
     "*.h"
     "*.cpp"
 )
 
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCCE_DIR})
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-#target_link_libraries(${PROJECT_NAME} GTest::GTest GTest::Main)
 target_link_libraries(${PROJECT_NAME} PUBLIC
     gtest_main
     ionir

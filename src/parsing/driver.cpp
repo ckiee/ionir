@@ -55,5 +55,7 @@ std::optional<Ptr<Construct>> Driver::tryNext()
     this->stream.tryNext();
 
     // TODO: Return value.
+
+    return nullptr;
 }
 } // namespace ionir

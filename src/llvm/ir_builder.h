@@ -8,6 +8,6 @@ namespace ionir
 class IrBuilder : public Wrapper<llvm::IRBuilder<>>
 {
 public:
-    IrBuilder(llvm::IRBuilder<> value);
+    explicit IrBuilder(llvm::IRBuilder<> value);
 };
 } // namespace ionir
