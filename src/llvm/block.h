@@ -14,7 +14,7 @@ private:
     std::optional<Ptr<IrBuilder>> cachedBuilder;
 
 public:
-    Block(llvm::BasicBlock *value);
+    explicit Block(llvm::BasicBlock *value);
 
     Ptr<IrBuilder> getBuilder();
 };

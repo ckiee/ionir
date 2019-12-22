@@ -15,7 +15,7 @@ protected:
 public:
     Module(llvm::Module *module, Context *context);
 
-    Module(llvm::Module *module);
+    explicit Module(llvm::Module *module);
 
     ~Module();
 

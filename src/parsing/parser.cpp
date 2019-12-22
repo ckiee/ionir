@@ -1,7 +1,6 @@
 #include <climits>
 #include <utility>
 #include <vector>
-#include <exception>
 #include "construct/expr/expr.h"
 #include "construct/expr/binary_expr.h"
 #include "misc/util.h"
@@ -325,6 +324,8 @@ Ptr<Value> Parser::parseValue()
 Ptr<IdExpr> Parser::parseIdExpr()
 {
     // TODO
+
+    return nullptr;
 }
 
 std::optional<Ptr<Expr>> Parser::parsePrimaryExpr()
@@ -336,6 +337,9 @@ std::optional<Ptr<Expr>> Parser::parsePrimaryExpr()
     // Identifier expression.
     case TokenType::Identifier:
     {
+        // TODO
+
+        throw std::runtime_error("Not implemented");
     }
     }
 

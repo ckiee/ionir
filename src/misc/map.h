@@ -19,13 +19,8 @@ public:
 	{
 		auto it = this->value.find(key);
 
-		if (it != this->value.end())
-		{
-			return true;
-		}
-
-		return false;
-	}
+        return it != this->value.end();
+    }
 
 	void insert(TKey key, TValue value)
 	{

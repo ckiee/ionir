@@ -13,7 +13,7 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # Setup default build flags.
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} /MT")
 
 # Option to use MD.
@@ -68,7 +68,7 @@ file(GLOB_RECURSE SOURCES
 )
 
 # Specify that this project is a library.
-add_library(${PROJECT_NAME} ${SOURCES})
+add_library("${PROJECT_NAME}" ${SOURCES})
 
 # Link .libs (same functionality handled by llvm_map_components_to_libnames().)
 #target_link_libraries(${PROJECT_NAME} ${LIB_SOURCES})
@@ -82,10 +82,10 @@ include_directories("src")
 llvm_map_components_to_libnames(llvm_libs all)
 
 # Link against LLVM libraries.
-target_link_libraries(${PROJECT_NAME} LLVM)
+target_link_libraries("${PROJECT_NAME}" LLVM)
 
 # Setup unit testing using Google Test (GTest) if applicable. This binds the CMakeLists.txt on the test project.
-option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_TESTS "Build tests" ON)
 
 if (BUILD_TESTS)
     add_subdirectory(libs/googletest)
@@ -93,4 +93,5 @@ if (BUILD_TESTS)
 endif()
 
 # Setup install target.
-install(TARGETS ${PROJECT_NAME})
+install(TARGETS "${PROJECT_NAME}" DESTINATION bin) # "bin" is relative to ${CMAKE_INSTALL_PREFIX}/
+install(FILES "${SOURCES}" DESTINATION src) # "src" is relative to ${CMAKE_INSTALL_PREFIX}/

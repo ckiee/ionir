@@ -13,12 +13,12 @@ template <typename T>
 class Generator
 {
 public:
+    virtual ~Generator() = default;
+    
     virtual bool hasNext() const = 0;
 
     virtual std::optional<T> tryNext() = 0;
 
     virtual void begin() = 0;
-
-    virtual ~Generator() = default;
 };
 } // namespace ionir

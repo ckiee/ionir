@@ -9,7 +9,7 @@ protected:
     T value;
 
 public:
-    Wrapper(T value) : value(value)
+    explicit Wrapper(T value) : value(value)
     {
         //
     }

@@ -15,11 +15,11 @@ protected:
     /**
      * Signifies the current item position of the list.
      */
-    size_t index;
+    size_t index{};
 
     std::vector<T> items;
 
-    size_t size;
+    size_t size{};
 
     size_t resolveNextIndex()
     {
@@ -40,7 +40,7 @@ protected:
         // Index cannot be negative.
         if (index < 0)
         {
-            throw "Index cannot be negative";
+            throw std::runtime_error("Index cannot be negative");
         }
         // Provided index is within bounds.
         else if (this->size > index)
@@ -60,7 +60,7 @@ protected:
     }
 
 public:
-    Iterable(std::vector<T> items)
+    explicit Iterable(std::vector<T> items)
     {
         this->items = items;
         this->size = this->items.size();
@@ -68,7 +68,7 @@ public:
         // Ensure items array contains at least one item.
         if (this->size == 0)
         {
-            throw "Items array cannot be empty";
+            throw std::runtime_error("Items array cannot be empty");
         }
 
         // Set the initial index to the first item.

@@ -8,6 +8,6 @@ namespace ionir
 class Context : public Wrapper<llvm::LLVMContext *>
 {
 public:
-    Context(llvm::LLVMContext *context);
+    explicit Context(llvm::LLVMContext *context);
 };
 } // namespace ionir

@@ -1,4 +1,3 @@
-#include <exception>
 #include "llvm/ADT/APInt.h"
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/BasicBlock.h"
@@ -95,7 +94,7 @@ void LlvmVisitor::visitFunction(Ptr<Function> node)
     this->visitPrototype(node->getPrototype());
 
     // Retrieve the resulting function off the stack.
-    llvm::Function *function = (llvm::Function *)this->valueStack.pop();
+    auto *function = (llvm::Function *)this->valueStack.pop();
 
     // Set the function buffer.
     this->function = function;
@@ -141,7 +140,7 @@ void LlvmVisitor::visitSection(Ptr<Section> node)
     std::vector<Ptr<Inst>> insts = node->getInsts();
 
     // Process instructions.
-    for (const auto inst : insts)
+    for (const auto &inst : insts)
     {
         // Visit the instruction.
         this->visitInst(inst);
@@ -179,7 +178,7 @@ void LlvmVisitor::visitBlock(Ptr<Block> node)
     }
 
     // Visit all the block's section(s).
-    for (const auto section : node->getSections())
+    for (const auto &section : node->getSections())
     {
         this->visitSection(section);
         this->valueStack.pop();
@@ -246,7 +245,7 @@ void LlvmVisitor::visitPrototype(Ptr<Prototype> node)
     if (function != nullptr)
     {
         // Function already has a body, disallow re-definition.
-        if (function->getBasicBlockList().size() > 0)
+        if (function->getBasicBlockList().empty())
         {
             throw std::runtime_error("Cannot re-define function");
         }
@@ -259,7 +258,7 @@ void LlvmVisitor::visitPrototype(Ptr<Prototype> node)
     // Otherwise, function will be created.
     else
     {
-        for (int i = 0; i < argumentCount; ++i)
+        for (uint32_t i = 0; i < argumentCount; ++i)
         {
             // TODO: Wrong type.
             arguments.push_back(llvm::Type::getDoubleTy(*this->context));
@@ -425,8 +424,7 @@ void LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node)
          * Create the LLVM equivalent return instruction
          * using the buffered builder.
          */
-        llvm::ReturnInst *returnInst =
-            this->builder->CreateRet(value);
+        returnInst = this->builder->CreateRet(value);
     }
 
     this->valueStack.push(returnInst);
@@ -452,8 +450,7 @@ void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node)
     // Visit body.
     this->visitSection(node->getBody());
 
-    llvm::BasicBlock *body =
-        (llvm::BasicBlock *)this->valueStack.pop();
+    auto *body = (llvm::BasicBlock *)this->valueStack.pop();
 
     // Prepare otherwise block with a default value.
     std::optional<llvm::BasicBlock *> otherwise = std::nullopt;
