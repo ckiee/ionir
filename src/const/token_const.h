@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <utility>
 #include <vector>
 #include <map>
@@ -39,8 +40,6 @@ protected:
     static bool sortByKeyLength(const std::pair<std::string, TokenType> &a, const std::pair<std::string, TokenType> &b);
 
 public:
-    static void init();
-
     static std::map<std::string, TokenType> getSimpleIds();
 
     static std::vector<std::pair<std::string, TokenType>> getSortedSimpleIds();
@@ -52,6 +51,12 @@ public:
     static TokenTypeVector getKeywords();
 
     static TokenTypeVector getOperators();
+
+    static bool getIsInitialized();
+
+    static std::optional<std::string> findSimpleValue(TokenType type);
+
+    static void init();
 };
 
 typedef std::vector<std::pair<std::string, TokenType>> SimplePairVector;

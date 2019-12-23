@@ -48,65 +48,6 @@ bool TokenConst::sortByKeyLength(const std::pair<std::string, TokenType> &a, con
     return a.first > b.first;
 }
 
-void TokenConst::init()
-{
-    // Static members have already been initialized. Do not continue.
-    if (TokenConst::isInitialized)
-    {
-        return;
-    }
-
-    // Register symbols.
-    TokenConst::pushSymbol("@", TokenType::SymbolAt);
-    TokenConst::pushSymbol(":", TokenType::SymbolColon);
-    TokenConst::pushSymbol("$", TokenType::SymbolDollar);
-    TokenConst::pushSymbol("#", TokenType::SymbolHash);
-    TokenConst::pushSymbol("(", TokenType::SymbolParenthesesL);
-    TokenConst::pushSymbol(")", TokenType::SymbolParenthesesR);
-    TokenConst::pushSymbol("[", TokenType::SymbolBracketL);
-    TokenConst::pushSymbol("]", TokenType::SymbolBracketR);
-    TokenConst::pushSymbol(",", TokenType::SymbolComma);
-    TokenConst::pushSymbol("~", TokenType::SymbolTilde);
-    TokenConst::pushSymbol("=", TokenType::SymbolEqual);
-    TokenConst::pushSymbol(";", TokenType::SymbolSemiColon);
-    TokenConst::pushSymbol("*", TokenType::SymbolStar);
-    TokenConst::pushSymbol("{", TokenType::SymbolBraceL);
-    TokenConst::pushSymbol("}", TokenType::SymbolBraceR);
-    TokenConst::pushSymbol("->", TokenType::SymbolArrow);
-
-    // Register instructions & keywords.
-    TokenConst::pushKeyword("create", TokenType::InstCreate);
-    TokenConst::pushKeyword("call", TokenType::InstCall);
-    TokenConst::pushKeyword("set", TokenType::InstSet);
-    TokenConst::pushKeyword("end", TokenType::InstEnd);
-    TokenConst::pushKeyword("fn", TokenType::KeywordFunction);
-    TokenConst::pushKeyword("extern", TokenType::KeywordExtern);
-    TokenConst::pushKeyword("global", TokenType::KeywordGlobal);
-    TokenConst::pushKeyword("else", TokenType::KeywordElse);
-    TokenConst::pushKeyword("mut", TokenType::KeywordMutable);
-
-    // Register operators.
-    TokenConst::pushOperator("+", TokenType::OperatorAdd);
-    TokenConst::pushOperator("-", TokenType::OperatorAdd);
-    TokenConst::pushOperator("*", TokenType::OperatorMultiply);
-    TokenConst::pushOperator("/", TokenType::OperatorDivide);
-    TokenConst::pushOperator("%", TokenType::OperatorModulo);
-    TokenConst::pushOperator("^", TokenType::OperatorExponent);
-    TokenConst::pushOperator(">", TokenType::OperatorGreaterThan);
-    TokenConst::pushOperator("<", TokenType::OperatorLessThan);
-
-    // Initialize complex map.
-    TokenConst::pushComplex(Regex::identifier, TokenType::Identifier);
-    TokenConst::pushComplex(Regex::string, TokenType::LiteralString);
-    TokenConst::pushComplex(Regex::decimal, TokenType::LiteralDecimal);
-    TokenConst::pushComplex(Regex::integer, TokenType::LiteralInt);
-    TokenConst::pushComplex(Regex::character, TokenType::LiteralCharacter);
-    TokenConst::pushComplex(Regex::whitespace, TokenType::Whitespace);
-
-    // Raise initialized flag to prevent further attempts to re-initialize.
-    TokenConst::isInitialized = true;
-}
-
 std::map<std::string, TokenType> TokenConst::getSimpleIds()
 {
     return TokenConst::simple;
@@ -144,5 +85,85 @@ TokenTypeVector TokenConst::getKeywords()
 TokenTypeVector TokenConst::getOperators()
 {
     return TokenConst::operators;
+}
+
+bool TokenConst::getIsInitialized()
+{
+    return TokenConst::isInitialized;
+}
+
+std::optional<std::string> TokenConst::findSimpleValue(TokenType type)
+{
+    for (const auto entry : TokenConst::simple)
+    {
+        if (entry.second == type)
+        {
+            return entry.first;
+        }
+    }
+
+    return std::nullopt;
+}
+
+void TokenConst::init()
+{
+    // Static members have already been initialized. Do not continue.
+    if (TokenConst::isInitialized)
+    {
+        return;
+    }
+
+    // Register symbols.
+    TokenConst::pushSymbol("@", TokenType::SymbolAt);
+    TokenConst::pushSymbol(":", TokenType::SymbolColon);
+    TokenConst::pushSymbol("$", TokenType::SymbolDollar);
+    TokenConst::pushSymbol("#", TokenType::SymbolHash);
+    TokenConst::pushSymbol("(", TokenType::SymbolParenthesesL);
+    TokenConst::pushSymbol(")", TokenType::SymbolParenthesesR);
+    TokenConst::pushSymbol("[", TokenType::SymbolBracketL);
+    TokenConst::pushSymbol("]", TokenType::SymbolBracketR);
+    TokenConst::pushSymbol(",", TokenType::SymbolComma);
+    TokenConst::pushSymbol("~", TokenType::SymbolTilde);
+    TokenConst::pushSymbol("=", TokenType::SymbolEqual);
+    TokenConst::pushSymbol(";", TokenType::SymbolSemiColon);
+    TokenConst::pushSymbol("*", TokenType::SymbolStar);
+    TokenConst::pushSymbol("{", TokenType::SymbolBraceL);
+    TokenConst::pushSymbol("}", TokenType::SymbolBraceR);
+    TokenConst::pushSymbol("->", TokenType::SymbolArrow);
+
+    // Register instructions & keywords.
+    TokenConst::pushKeyword("create", TokenType::InstCreate);
+    TokenConst::pushKeyword("call", TokenType::InstCall);
+    TokenConst::pushKeyword("set", TokenType::InstSet);
+    TokenConst::pushKeyword("end", TokenType::InstEnd);
+    TokenConst::pushKeyword("fn", TokenType::KeywordFunction);
+    TokenConst::pushKeyword("extern", TokenType::KeywordExtern);
+    TokenConst::pushKeyword("global", TokenType::KeywordGlobal);
+    TokenConst::pushKeyword("else", TokenType::KeywordElse);
+    TokenConst::pushKeyword("mut", TokenType::KeywordMutable);
+    TokenConst::pushKeyword("void", TokenType::KeywordVoid);
+    TokenConst::pushKeyword("str", TokenType::KeywordString);
+    TokenConst::pushKeyword("int", TokenType::KeywordInt);
+
+    // Register operators.
+    TokenConst::pushOperator("+", TokenType::OperatorAdd);
+    TokenConst::pushOperator("-", TokenType::OperatorAdd);
+    TokenConst::pushOperator("*", TokenType::OperatorMultiply);
+    TokenConst::pushOperator("/", TokenType::OperatorDivide);
+    TokenConst::pushOperator("%", TokenType::OperatorModulo);
+    TokenConst::pushOperator("^", TokenType::OperatorExponent);
+    TokenConst::pushOperator(">", TokenType::OperatorGreaterThan);
+    TokenConst::pushOperator("<", TokenType::OperatorLessThan);
+
+    // Initialize complex map.
+    TokenConst::pushComplex(Regex::identifier, TokenType::Identifier);
+    TokenConst::pushComplex(Regex::string, TokenType::LiteralString);
+    TokenConst::pushComplex(Regex::decimal, TokenType::LiteralDecimal);
+    TokenConst::pushComplex(Regex::integer, TokenType::LiteralInt);
+    TokenConst::pushComplex(Regex::character, TokenType::LiteralCharacter);
+    TokenConst::pushComplex(Regex::whitespace, TokenType::Whitespace);
+
+    // Raise initialized flag to prevent further attempts to re-initialize.
+    TokenConst::isInitialized = true;
 }
 } // namespace ionir

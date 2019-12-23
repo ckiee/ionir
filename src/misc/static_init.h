@@ -3,12 +3,13 @@
 namespace ionir
 {
 /**
- * Calls static initializers which initialize
- * static entities.
+ * Calls static initializer functions in various
+ * static classes which in turn attempt to initialize
+ * its static members.
  */
 class StaticInit
 {
 public:
-    static void init();
+    static bool init();
 };
 } // namespace ionir

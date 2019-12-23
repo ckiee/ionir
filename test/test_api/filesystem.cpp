@@ -4,7 +4,7 @@
 
 namespace ionir::test::fs
 {
-const std::string rootPath = "..";
+const std::string rootPath = "../..";
 
 const std::string testPath = "test";
 

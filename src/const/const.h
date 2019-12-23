@@ -26,5 +26,15 @@ public:
     static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
     static std::map<TokenType, int> operatorPrecedence;
+
+    static std::string typeVoid;
+
+    static std::string typeInt;
+
+    static std::string typeString;
+
+    static std::string idFoobar;
+
+    static bool init();
 };
 } // namespace ionir

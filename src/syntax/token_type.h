@@ -72,6 +72,12 @@ enum class TokenType
 
 	KeywordMutable,
 
+    KeywordVoid,
+
+    KeywordString,
+
+    KeywordInt,
+
 	OperatorAdd,
 
 	OperatorSub,
