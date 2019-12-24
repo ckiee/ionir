@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "llvm/IR/Module.h"
+#include <llvm/IR/Module.h>
 #include "misc/wrapper.h"
 #include "context.h"
 

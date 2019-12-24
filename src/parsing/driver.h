@@ -1,8 +1,8 @@
 #pragma once
 
 #include <optional>
+#include <llvm/IR/Module.h>
 #include "construct/construct.h"
-#include "llvm/IR/Module.h"
 #include "syntax/token.h"
 #include "misc/iterable.h"
 #include "misc/loose_generator.h"

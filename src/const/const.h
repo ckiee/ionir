@@ -3,8 +3,8 @@
 #include <string>
 #include <map>
 #include <optional>
-#include "llvm/IR/DerivedTypes.h"
-#include "llvm/IR/LLVMContext.h"
+#include <llvm/IR/DerivedTypes.h>
+#include <llvm/IR/LLVMContext.h>
 #include "construct/values/integer.h"
 #include "syntax/token_type.h"
 #include "misc/map.h"

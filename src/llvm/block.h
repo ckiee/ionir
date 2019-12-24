@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "llvm/IR/BasicBlock.h"
+#include <llvm/IR/BasicBlock.h>
 #include "misc/wrapper.h"
 #include "misc/helpers.h"
 #include "ir_builder.h"

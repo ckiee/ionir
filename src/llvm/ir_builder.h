@@ -1,6 +1,6 @@
 #pragma once
 
-#include "llvm/IR/IRBuilder.h"
+#include <llvm/IR/IRBuilder.h>
 #include "misc/wrapper.h"
 
 namespace ionir

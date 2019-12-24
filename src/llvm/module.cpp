@@ -1,6 +1,6 @@
 #include <iostream>
+#include <llvm/Support/raw_os_ostream.h>
 #include "module.h"
-#include "llvm/Support/raw_os_ostream.h"
 
 namespace ionir
 {
