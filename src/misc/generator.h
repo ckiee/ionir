@@ -3,11 +3,11 @@
 #include <optional>
 
 namespace ionir {
-/**
- * A generic generator which may return an
- * item after each iteration. However, it is not
- * guaranteed to do so.
- */
+    /**
+     * A generic generator which may return an
+     * item after each iteration. However, it is not
+     * guaranteed to do so.
+     */
     template<typename T>
     class Generator {
     public:

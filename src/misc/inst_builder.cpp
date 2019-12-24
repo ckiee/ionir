@@ -15,35 +15,35 @@ namespace ionir {
 
     Ptr<AllocaInst> InstBuilder::createAlloca(std::string id, Ptr<Type> type) {
         return this->make<AllocaInst>(AllocaInstOpts{
-                this->section,
-                id,
-                type,
+            this->section,
+            id,
+            type,
         });
     }
 
     Ptr<BranchInst>
     InstBuilder::createBranch(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise) {
         return this->make<BranchInst>(BranchInstOpts{
-                this->section,
-                condition,
-                body,
-                otherwise,
+            this->section,
+            condition,
+            body,
+            otherwise,
         });
     }
 
     Ptr<ReturnInst> InstBuilder::createReturn(std::optional<Ptr<Value>> value) {
         return this->make<ReturnInst>(ReturnInstOpts{
-                this->section,
-                value,
+            this->section,
+            value,
         });
     }
 
     Ptr<CallInst>
     InstBuilder::createCall(Ptr<Section> section, std::string target, std::optional<Ptr<Function>> callee) {
         return this->make<CallInst>(CallInstOpts{
-                this->section,
-                target,
-                callee,
+            this->section,
+            target,
+            callee,
         });
     }
 }

@@ -47,7 +47,7 @@ namespace ionir {
         Stack<llvm::IRBuilder<>> builderTracker;
 
         /**
-         * Ensures that the builder is instantiated, otherwise
+         * Ensure that the builder is instantiated, otherwise
          * throws a runtime error.
          */
         void requireBuilder();

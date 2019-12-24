@@ -28,6 +28,8 @@ namespace ionir {
             // TODO: Ensure TConstruct inherits from Construct or derived.
 
             this->parts.push_back(std::make_shared<TConstruct>(args));
+
+            return nullptr;
         }
 
         Ptr<T> make() {
