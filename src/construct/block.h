@@ -6,30 +6,28 @@
 #include "child_construct.h"
 #include "section.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class Function;
+    class Function;
 
-class Block : public ChildConstruct<Function>
-{
-protected:
-    std::vector<Ptr<Section>> sections;
+    class Block : public ChildConstruct<Function> {
+    protected:
+        std::vector<Ptr<Section>> sections;
 
-    std::optional<Ptr<Section>> cachedEntry;
+        std::optional<Ptr<Section>> cachedEntry;
 
-public:
-    explicit Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
+    public:
+        explicit Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    bool verify() const override;
+        bool verify() const override;
 
-    std::optional<Ptr<Section>> getEntrySection();
+        std::optional<Ptr<Section>> getEntrySection();
 
-    std::vector<Ptr<Section>> &getSections();
+        std::vector<Ptr<Section>> &getSections();
 
-    void setSections(std::vector<Ptr<Section>> sections);
-};
-} // namespace ionir
+        void setSections(std::vector<Ptr<Section>> sections);
+    };
+}

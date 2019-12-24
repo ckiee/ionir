@@ -6,34 +6,31 @@
 #include "misc/helpers.h"
 #include "inst.h"
 
-namespace ionir
-{
-struct AllocaInstOpts : InstOpts
-{
-    std::string id;
+namespace ionir {
+    struct AllocaInstOpts : InstOpts {
+        std::string id;
 
-    Ptr<Type> type;
-};
+        Ptr <Type> type;
+    };
 
-class AllocaInst : public Inst
-{
-protected:
-    std::string id;
+    class AllocaInst : public Inst {
+    protected:
+        std::string id;
 
-    Ptr<Type> type;
+        Ptr <Type> type;
 
-public:
-    // TODO: Missing support for array type allocas.
-    AllocaInst(AllocaInstOpts opts);
+    public:
+        // TODO: Missing support for array type allocas.
+        AllocaInst(AllocaInstOpts opts);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    std::string getId() const;
+        std::string getId() const;
 
-    void setId(std::string id);
+        void setId(std::string id);
 
-    Ptr<Type> getType() const;
+        Ptr <Type> getType() const;
 
-    void setType(Ptr<Type> type);
-};
-} // namespace ionir
+        void setType(Ptr <Type> type);
+    };
+}

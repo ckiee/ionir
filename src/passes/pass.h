@@ -22,51 +22,49 @@
 #include "construct/insts/call.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass
-{
-public:
-    virtual void visit(Ptr<Construct> node);
+namespace ionir {
+    class Pass {
+    public:
+        virtual void visit(Ptr<Construct> node);
 
-    virtual void visitFunction(Ptr<Function> node);
+        virtual void visitFunction(Ptr<Function> node);
 
-    virtual void visitExtern(Ptr<Extern> node);
+        virtual void visitExtern(Ptr<Extern> node);
 
-    virtual void visitSection(Ptr<Section> node);
+        virtual void visitSection(Ptr<Section> node);
 
-    virtual void visitBlock(Ptr<Block> node);
+        virtual void visitBlock(Ptr<Block> node);
 
-    virtual void visitType(Ptr<Type> node);
+        virtual void visitType(Ptr<Type> node);
 
-    virtual void visitPrototype(Ptr<Prototype> node);
+        virtual void visitPrototype(Ptr<Prototype> node);
 
-    virtual void visitReference(Ptr<Reference> node);
+        virtual void visitReference(Ptr<Reference> node);
 
-    virtual void visitExpr(Ptr<Expr> node);
+        virtual void visitExpr(Ptr<Expr> node);
 
-    virtual void visitBinaryExpr(Ptr<BinaryExpr> node);
+        virtual void visitBinaryExpr(Ptr<BinaryExpr> node);
 
-    virtual void visitValue(Ptr<Value> node);
+        virtual void visitValue(Ptr<Value> node);
 
-    virtual void visitIntegerValue(Ptr<IntegerValue> node);
+        virtual void visitIntegerValue(Ptr<IntegerValue> node);
 
-    virtual void visitCharValue(Ptr<CharValue> node);
+        virtual void visitCharValue(Ptr<CharValue> node);
 
-    virtual void visitStringValue(Ptr<StringValue> node);
+        virtual void visitStringValue(Ptr<StringValue> node);
 
-    virtual void visitBooleanValue(Ptr<BooleanValue> node);
+        virtual void visitBooleanValue(Ptr<BooleanValue> node);
 
-    virtual void visitInst(Ptr<Inst> node);
+        virtual void visitInst(Ptr<Inst> node);
 
-    virtual void visitAllocaInst(Ptr<AllocaInst> node);
+        virtual void visitAllocaInst(Ptr<AllocaInst> node);
 
-    virtual void visitReturnInst(Ptr<ReturnInst> node);
+        virtual void visitReturnInst(Ptr<ReturnInst> node);
 
-    virtual void visitBranchInst(Ptr<BranchInst> node);
+        virtual void visitBranchInst(Ptr<BranchInst> node);
 
-    virtual void visitCallInst(Ptr<CallInst> node);
+        virtual void visitCallInst(Ptr<CallInst> node);
 
-    virtual void visitGlobal(Ptr<Global> node);
-};
-} // namespace ionir
+        virtual void visitGlobal(Ptr<Global> node);
+    };
+}

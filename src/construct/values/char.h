@@ -3,22 +3,20 @@
 #include "construct/values/value.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class CharValue : public Value
-{
-protected:
-    char value;
+    class CharValue : public Value {
+    protected:
+        char value;
 
-public:
-    CharValue(char value);
+    public:
+        CharValue(char value);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    char getValue() const;
+        char getValue() const;
 
-    void setValue(char value);
-};
-} // namespace ionir
+        void setValue(char value);
+    };
+}

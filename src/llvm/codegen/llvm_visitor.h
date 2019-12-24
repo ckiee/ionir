@@ -27,78 +27,76 @@
 #include "misc/helpers.h"
 #include "passes/pass.h"
 
-namespace ionir
-{
-class LlvmVisitor : public Pass
-{
-protected:
-	llvm::LLVMContext *context;
+namespace ionir {
+    class LlvmVisitor : public Pass {
+    protected:
+        llvm::LLVMContext *context;
 
-	llvm::Module *module;
+        llvm::Module *module;
 
-	Stack<llvm::Value *> valueStack;
+        Stack<llvm::Value *> valueStack;
 
-	Stack<llvm::Type *> typeStack;
+        Stack<llvm::Type *> typeStack;
 
-	std::optional<llvm::Function *> function;
+        std::optional<llvm::Function *> function;
 
-	std::optional<llvm::IRBuilder<>> builder;
+        std::optional<llvm::IRBuilder<>> builder;
 
-	std::map<std::string, llvm::Value *> namedValues;
+        std::map<std::string, llvm::Value *> namedValues;
 
-	Stack<llvm::IRBuilder<>> builderTracker;
+        Stack<llvm::IRBuilder<>> builderTracker;
 
-	/**
-	 * Ensures that the builder is instantiated, otherwise
-	 * throws a runtime error.
-	 */
-	void requireBuilder();
+        /**
+         * Ensures that the builder is instantiated, otherwise
+         * throws a runtime error.
+         */
+        void requireBuilder();
 
-	void requireFunction();
+        void requireFunction();
 
-	void setBuilder(llvm::BasicBlock *block);
+        void setBuilder(llvm::BasicBlock *block);
 
-	bool saveBuilder();
+        bool saveBuilder();
 
-	bool restoreBuilder();
+        bool restoreBuilder();
 
-public:
-	explicit LlvmVisitor(llvm::Module *module);
+    public:
+        explicit LlvmVisitor(llvm::Module *module);
 
-	llvm::Module *getModule() const;
+        llvm::Module *getModule() const;
 
-	Stack<llvm::Value *> getValueStack() const;
+        Stack<llvm::Value *> getValueStack() const;
 
-	Stack<llvm::Type *> getTypeStack() const;
+        Stack<llvm::Type *> getTypeStack() const;
 
-	void visitFunction(Ptr<Function> node) override;
+        void visitFunction(Ptr<Function> node) override;
 
-	void visitExtern(Ptr<Extern> node) override;
+        void visitExtern(Ptr<Extern> node) override;
 
-	void visitSection(Ptr<Section> node) override;
+        void visitSection(Ptr<Section> node) override;
 
-	void visitBlock(Ptr<Block> node) override;
+        void visitBlock(Ptr<Block> node) override;
 
-	void visitType(Ptr<Type> node) override;
+        void visitType(Ptr<Type> node) override;
 
-	void visitPrototype(Ptr<Prototype> node) override;
+        void visitPrototype(Ptr<Prototype> node) override;
 
-	void visitBinaryExpr(Ptr<BinaryExpr> node) override;
+        void visitBinaryExpr(Ptr<BinaryExpr> node) override;
 
-	void visitIntegerValue(Ptr<IntegerValue> node) override;
+        void visitIntegerValue(Ptr<IntegerValue> node) override;
 
-	void visitCharValue(Ptr<CharValue> node) override;
+        void visitCharValue(Ptr<CharValue> node) override;
 
-	void visitStringValue(Ptr<StringValue> node) override;
+        void visitStringValue(Ptr<StringValue> node) override;
 
-	void visitBooleanValue(Ptr<BooleanValue> node) override;
+        void visitBooleanValue(Ptr<BooleanValue> node) override;
 
-	void visitAllocaInst(Ptr<AllocaInst> node) override;
+        void visitAllocaInst(Ptr<AllocaInst> node) override;
 
-	void visitReturnInst(Ptr<ReturnInst> node) override;
+        void visitReturnInst(Ptr<ReturnInst> node) override;
 
-	void visitBranchInst(Ptr<BranchInst> node) override;
+        void visitBranchInst(Ptr<BranchInst> node) override;
 
-	void visitGlobal(Ptr<Global> node) override;
-};
-} // namespace ionir
+        void visitGlobal(Ptr<Global> node) override;
+    };
+}

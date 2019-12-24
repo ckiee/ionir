@@ -5,44 +5,43 @@
 #include "misc/helpers.h"
 #include "expr.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
 // TODO: Should check un-initialized for properties?
-struct BinaryExprOpts
-{
-    TokenType operation;
+    struct BinaryExprOpts {
+        TokenType operation;
 
-    int precedence;
+        int precedence;
 
-    Ptr<Expr> leftSide;
+        Ptr <Expr> leftSide;
 
-    std::optional<Ptr<Expr>> rightSide = std::nullopt;
-};
+        std::optional<Ptr < Expr>> rightSide = std::nullopt;
+    };
 
-class BinaryExpr : public Expr
-{
-protected:
-    TokenType operation;
+    class BinaryExpr : public Expr {
+    protected:
+        TokenType operation;
 
-    int precedence;
+        int precedence;
 
-    Ptr<Expr> leftSide;
+        Ptr <Expr> leftSide;
 
-    std::optional<Ptr<Expr>> rightSide;
+        std::optional<Ptr < Expr>> rightSide;
 
-public:
-    BinaryExpr(BinaryExprOpts opts);
+    public:
+        BinaryExpr(BinaryExprOpts opts);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    Ptr<Expr> getLeftSide() const;
+        Ptr <Expr> getLeftSide() const;
 
-    void setLeftSide(Ptr<Expr> leftSide);
+        void setLeftSide(Ptr <Expr> leftSide);
 
-    std::optional<Ptr<Expr>> getRightSide() const;
+        std::optional<Ptr < Expr>> getRightSide() const;
 
-    void setRightSide(std::optional<Ptr<Expr>> rightSide);
-};
-} // namespace ionir
+        void setRightSide(std::optional<Ptr < Expr>>
+
+        rightSide);
+    };
+}

@@ -3,39 +3,36 @@
 #include "construct/values/value.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-enum class IntegerKind
-{
-    Int1,
+    enum class IntegerKind {
+        Int1,
 
-    Int16,
+        Int16,
 
-    Int32,
+        Int32,
 
-    Int64,
+        Int64,
 
-    Int128
-};
+        Int128
+    };
 
-class IntegerValue : public Value
-{
-private:
-    IntegerKind kind;
+    class IntegerValue : public Value {
+    private:
+        IntegerKind kind;
 
-    int64_t value;
+        int64_t value;
 
-public:
-    IntegerValue(IntegerKind kind, int64_t value);
+    public:
+        IntegerValue(IntegerKind kind, int64_t value);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    IntegerKind getIntKind() const;
+        IntegerKind getIntKind() const;
 
-    int64_t getValue() const;
+        int64_t getValue() const;
 
-    void setValue(int64_t value);
-};
-} // namespace ionir
+        void setValue(int64_t value);
+    };
+}

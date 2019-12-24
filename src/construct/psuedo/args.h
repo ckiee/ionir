@@ -6,24 +6,22 @@
 #include "misc/helpers.h"
 #include "construct/type.h"
 
-namespace ionir
-{
-typedef std::pair<Ptr<Type>, std::string> Arg;
+namespace ionir {
+    typedef std::pair<Ptr<Type>, std::string> Arg;
 
-class Args
-{
-protected:
-    std::vector<Arg> items;
+    class Args {
+    protected:
+        std::vector<Arg> items;
 
-    bool isInfinite;
+        bool isInfinite;
 
-public:
-    Args(std::vector<Arg> items = {}, bool isInfinite = false);
+    public:
+        Args(std::vector<Arg> items = {}, bool isInfinite = false);
 
-    std::vector<Arg> getItems() const;
+        std::vector<Arg> getItems() const;
 
-    bool getIsInfinite() const;
+        bool getIsInfinite() const;
 
-    void setIsInfinite(bool isInfinite);
-};
-} // namespace ionir
+        void setIsInfinite(bool isInfinite);
+    };
+}

@@ -4,14 +4,12 @@
 #include <string>
 #include "construct/construct.h"
 
-namespace ionir
-{
-class GlobalSpace
-{
-private:
-	std::map<std::string, Construct> variables;
+namespace ionir {
+    class GlobalSpace {
+    private:
+        std::map<std::string, Construct> variables;
 
-public:
-	bool hasVariable(std::string name) const;
-};
-} // namespace ionir
+    public:
+        bool hasVariable(std::string name) const;
+    };
+}

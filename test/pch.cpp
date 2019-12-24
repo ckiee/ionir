@@ -2,8 +2,7 @@
 #include "pch.h"
 
 // Testing environment initialization.
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     // Initialize Google tests.
     ::testing::InitGoogleTest(&argc, argv);
 

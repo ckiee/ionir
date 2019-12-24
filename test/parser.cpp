@@ -11,10 +11,9 @@
 
 using namespace ionir;
 
-TEST(ParserTest, ParseInt)
-{
+TEST(ParserTest, ParseInt) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::LiteralInt, "5"),
+            Token(TokenType::LiteralInt, "5"),
     });
 
     auto integer = parser.parseInt();
@@ -22,10 +21,9 @@ TEST(ParserTest, ParseInt)
     EXPECT_EQ(integer->getValue(), 5);
 }
 
-TEST(ParserTest, ParseChar)
-{
+TEST(ParserTest, ParseChar) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::LiteralCharacter, "a"),
+            Token(TokenType::LiteralCharacter, "a"),
     });
 
     auto character = parser.parseChar();
@@ -33,10 +31,9 @@ TEST(ParserTest, ParseChar)
     EXPECT_EQ(character->getValue(), 'a');
 }
 
-TEST(ParserTest, ParseIdentifier)
-{
+TEST(ParserTest, ParseIdentifier) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "test"),
+            Token(TokenType::Identifier, "test"),
     });
 
     std::string identifier = parser.parseId();
@@ -44,10 +41,9 @@ TEST(ParserTest, ParseIdentifier)
     EXPECT_EQ(identifier, "test");
 }
 
-TEST(ParserTest, ParseType)
-{
+TEST(ParserTest, ParseType) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type"),
+            Token(TokenType::Identifier, "type"),
     });
 
     auto type = parser.parseType();
@@ -56,11 +52,10 @@ TEST(ParserTest, ParseType)
     EXPECT_FALSE(type->getIsPointer());
 }
 
-TEST(ParserTest, ParsePointerType)
-{
+TEST(ParserTest, ParsePointerType) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type"),
-        Token(TokenType::SymbolStar, "*"),
+            Token(TokenType::Identifier, "type"),
+            Token(TokenType::SymbolStar, "*"),
     });
 
     auto type = parser.parseType();
@@ -69,11 +64,10 @@ TEST(ParserTest, ParsePointerType)
     EXPECT_TRUE(type->getIsPointer());
 }
 
-TEST(ParserTest, ParseArg)
-{
+TEST(ParserTest, ParseArg) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type"),
-        Token(TokenType::Identifier, "test"),
+            Token(TokenType::Identifier, "type"),
+            Token(TokenType::Identifier, "test"),
     });
 
     Arg arg = parser.parseArg();
@@ -83,11 +77,10 @@ TEST(ParserTest, ParseArg)
     EXPECT_EQ(arg.second, "test");
 }
 
-TEST(ParserTest, ParseEmptyBlock)
-{
+TEST(ParserTest, ParseEmptyBlock) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::SymbolBraceL, "{"),
-        Token(TokenType::SymbolBraceR, "}"),
+            Token(TokenType::SymbolBraceL, "{"),
+            Token(TokenType::SymbolBraceR, "}"),
     });
 
     auto block = parser.parseBlock(nullptr);
@@ -95,14 +88,13 @@ TEST(ParserTest, ParseEmptyBlock)
     EXPECT_EQ(block->getSections().size(), 0);
 }
 
-TEST(ParserTest, ParseEmptyPrototype)
-{
+TEST(ParserTest, ParseEmptyPrototype) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, Const::foobar),
-        Token(TokenType::SymbolParenthesesL, "("),
-        Token(TokenType::SymbolParenthesesR, ")"),
-        Token(TokenType::SymbolArrow, "->"),
-        Token(TokenType::Identifier, "type"),
+            Token(TokenType::Identifier, Const::foobar),
+            Token(TokenType::SymbolParenthesesL, "("),
+            Token(TokenType::SymbolParenthesesR, ")"),
+            Token(TokenType::SymbolArrow, "->"),
+            Token(TokenType::Identifier, "type"),
     });
 
     auto prototype = parser.parsePrototype();
@@ -121,12 +113,11 @@ TEST(ParserTest, ParseEmptyPrototype)
     EXPECT_FALSE(args->getIsInfinite());
 }
 
-TEST(ParserTest, ParseAllocaInst)
-{
+TEST(ParserTest, ParseAllocaInst) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, ConstName::instAlloca),
-        Token(TokenType::Identifier, Const::foobar),
-        Token(TokenType::Identifier, ConstName::typeInt32),
+            Token(TokenType::Identifier, ConstName::instAlloca),
+            Token(TokenType::Identifier, Const::foobar),
+            Token(TokenType::Identifier, ConstName::typeInt32),
     });
 
     Ptr<Inst> inst = parser.parseInst(nullptr);
@@ -134,15 +125,14 @@ TEST(ParserTest, ParseAllocaInst)
     EXPECT_EQ(inst->getInstKind(), InstKind::Alloca);
 }
 
-TEST(ParserTest, ParseExtern)
-{
+TEST(ParserTest, ParseExtern) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::KeywordExtern, "extern"),
-        Token(TokenType::Identifier, Const::foobar),
-        Token(TokenType::SymbolParenthesesL, "("),
-        Token(TokenType::SymbolParenthesesR, ")"),
-        Token(TokenType::SymbolArrow, "->"),
-        Token(TokenType::Identifier, "type"),
+            Token(TokenType::KeywordExtern, "extern"),
+            Token(TokenType::Identifier, Const::foobar),
+            Token(TokenType::SymbolParenthesesL, "("),
+            Token(TokenType::SymbolParenthesesR, ")"),
+            Token(TokenType::SymbolArrow, "->"),
+            Token(TokenType::Identifier, "type"),
     });
 
     auto externConstruct = parser.parseExtern();

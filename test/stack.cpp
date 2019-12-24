@@ -4,8 +4,7 @@
 
 using namespace ionir;
 
-TEST(StackTest, Push)
-{
+TEST(StackTest, Push) {
     Stack<int> stack = Stack<int>();
 
     stack.push(0);
@@ -13,8 +12,7 @@ TEST(StackTest, Push)
     EXPECT_EQ(stack.unwrap().top(), 0);
 }
 
-TEST(StackTest, IsEmpty)
-{
+TEST(StackTest, IsEmpty) {
     Stack<int> stack = Stack<int>();
 
     EXPECT_TRUE(stack.isEmpty());
@@ -22,8 +20,7 @@ TEST(StackTest, IsEmpty)
     EXPECT_FALSE(stack.isEmpty());
 }
 
-TEST(StackTest, TryPop)
-{
+TEST(StackTest, TryPop) {
     Stack<int> stack = Stack<int>();
 
     stack.push(0);
@@ -35,8 +32,7 @@ TEST(StackTest, TryPop)
     EXPECT_TRUE(stack.isEmpty());
 }
 
-TEST(StackTest, Pop)
-{
+TEST(StackTest, Pop) {
     Stack<int> stack = Stack<int>();
 
     stack.push(0);
@@ -48,15 +44,13 @@ TEST(StackTest, Pop)
     EXPECT_TRUE(stack.isEmpty());
 }
 
-TEST(StackTest, PopThrows)
-{
+TEST(StackTest, PopThrows) {
     Stack<int> stack = Stack<int>();
 
     EXPECT_THROW(stack.pop(), std::out_of_range);
 }
 
-TEST(StackTest, Clear)
-{
+TEST(StackTest, Clear) {
     Stack<int> stack = Stack<int>();
 
     stack.push(0);

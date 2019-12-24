@@ -1,24 +1,22 @@
 #include <optional>
-#include "misc/stack.h"
 #include "token_const.h"
 #include "const.h"
 
-namespace ionir
-{
-Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};
+namespace ionir {
+    Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};
 
-const std::string Const::sectionInternalPrefix = ".";
+    const std::string Const::sectionInternalPrefix = ".";
 
-std::map<TokenType, int> Const::operatorPrecedence = {
-    {TokenType::OperatorAdd, 20},
-    {TokenType::OperatorSub, 20},
-    {TokenType::OperatorMultiply, 40},
-    {TokenType::OperatorDivide, 40},
-    {TokenType::OperatorModulo, 40},
-    {TokenType::OperatorExponent, 80},
-};
+    std::map<TokenType, int> Const::operatorPrecedence = {
+        {TokenType::OperatorAdd, 20},
+        {TokenType::OperatorSub, 20},
+        {TokenType::OperatorMultiply, 40},
+        {TokenType::OperatorDivide, 40},
+        {TokenType::OperatorModulo, 40},
+        {TokenType::OperatorExponent, 80},
+    };
 
-const std::string Const::sectionEntryId = Const::sectionInternalPrefix + "entry";
+    const std::string Const::sectionEntryId = Const::sectionInternalPrefix + "entry";
 
 // TODO: Refactor.
 // Const::Const()
@@ -33,10 +31,9 @@ const std::string Const::sectionEntryId = Const::sectionInternalPrefix + "entry"
 //     // map.insert(IntegerKind::Int128, &llvm::IntegerType::getInt128Ty);
 // }
 
-std::optional<LlvmIntTypeResolver> Const::tryGetIntTypeResolver(IntegerKind kind)
-{
-    return Const::integerTypeResolverMap.tryGet(kind);
-}
+    std::optional<LlvmIntTypeResolver> Const::tryGetIntTypeResolver(IntegerKind kind) {
+        return Const::integerTypeResolverMap.tryGet(kind);
+    }
 
-const std::string Const::foobar = "foobar";
-} // namespace ionir
+    const std::string Const::foobar = "foobar";
+}

@@ -2,98 +2,96 @@
 
 #include <iostream>
 
-namespace ionir
-{
-enum class TokenType
-{
-	Dummy,
+namespace ionir {
+    enum class TokenType {
+        Dummy,
 
-	Unknown,
+        Unknown,
 
-	Identifier,
+        Identifier,
 
-	LiteralString,
+        LiteralString,
 
-	LiteralDecimal,
+        LiteralDecimal,
 
-	LiteralInt,
+        LiteralInt,
 
-	LiteralCharacter,
+        LiteralCharacter,
 
-	Whitespace,
+        Whitespace,
 
-	SymbolAt,
+        SymbolAt,
 
-	SymbolColon,
+        SymbolColon,
 
-	SymbolDollar,
+        SymbolDollar,
 
-	SymbolHash,
+        SymbolHash,
 
-	SymbolParenthesesL,
+        SymbolParenthesesL,
 
-	SymbolParenthesesR,
+        SymbolParenthesesR,
 
-	SymbolBracketL,
+        SymbolBracketL,
 
-	SymbolBracketR,
+        SymbolBracketR,
 
-	SymbolComma,
+        SymbolComma,
 
-	SymbolTilde,
+        SymbolTilde,
 
-	SymbolEqual,
+        SymbolEqual,
 
-	SymbolSemiColon,
+        SymbolSemiColon,
 
-	SymbolStar,
+        SymbolStar,
 
-	SymbolBraceL,
+        SymbolBraceL,
 
-	SymbolBraceR,
+        SymbolBraceR,
 
-	SymbolArrow,
+        SymbolArrow,
 
-	InstCall,
+        InstCall,
 
-	InstStore,
+        InstStore,
 
-	KeywordFunction,
+        KeywordFunction,
 
-	KeywordExtern,
+        KeywordExtern,
 
-	KeywordElse,
+        KeywordElse,
 
-	KeywordGlobal,
+        KeywordGlobal,
 
-	KeywordMutable,
+        KeywordMutable,
 
-    TypeVoid,
+        TypeVoid,
 
-    TypeString,
+        TypeString,
 
-    TypeInt16,
+        TypeInt16,
 
-    TypeInt32,
+        TypeInt32,
 
-    TypeInt64,
+        TypeInt64,
 
-	OperatorAdd,
+        OperatorAdd,
 
-	OperatorSub,
+        OperatorSub,
 
-	OperatorMultiply,
+        OperatorMultiply,
 
-	OperatorDivide,
+        OperatorDivide,
 
-	OperatorModulo,
+        OperatorModulo,
 
-	OperatorExponent,
+        OperatorExponent,
 
-	OperatorGreaterThan,
+        OperatorGreaterThan,
 
-	OperatorLessThan
-};
+        OperatorLessThan
+    };
 
-std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);
-} // namespace ionir
+    std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);
+}

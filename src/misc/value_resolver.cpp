@@ -1,27 +1,23 @@
 #include "const/const.h"
 #include "value_resolver.h"
 
-namespace ionir
-{
-ValueResolver::ValueResolver(llvm::Module *module) : module(module)
-{
-    //
-}
-
-std::optional<llvm::Constant *> ValueResolver::tryResolveInt(IntegerKind kind, long value, bool isSigned)
-{
-    std::optional<LlvmIntTypeResolver> resolver = Const::tryGetIntTypeResolver(kind);
-
-    if (!resolver.has_value())
-    {
-        return std::nullopt;
+namespace ionir {
+    ValueResolver::ValueResolver(llvm::Module *module) : module(module) {
+        //
     }
 
-    llvm::APInt apInt = llvm::APInt(value, isSigned);
+    std::optional<llvm::Constant *> ValueResolver::tryResolveInt(IntegerKind kind, long value, bool isSigned) {
+        std::optional<LlvmIntTypeResolver> resolver = Const::tryGetIntTypeResolver(kind);
 
-    // TODO
-    return std::nullopt;
+        if (!resolver.has_value()) {
+            return std::nullopt;
+        }
 
-    //return llvm::ConstantInt::get(resolver(this->context), apInt);
+        llvm::APInt apInt = llvm::APInt(value, isSigned);
+
+        // TODO
+        return std::nullopt;
+
+        //return llvm::ConstantInt::get(resolver(this->context), apInt);
+    }
 }
-} // namespace ionir

@@ -6,28 +6,23 @@
 
 using namespace ionir::test;
 
-TEST(TestApiTest, TrimSimpleString)
-{
+TEST(TestApiTest, TrimSimpleString) {
     EXPECT_EQ(util::trim(" test "), "test");
 }
 
-TEST(TestApiTest, TrimString)
-{
+TEST(TestApiTest, TrimString) {
     EXPECT_EQ(util::trim("  hello world  "), "hello world");
 }
 
-TEST(TestApiTest, LeftTrimString)
-{
+TEST(TestApiTest, LeftTrimString) {
     EXPECT_EQ(util::leftTrim("  hello world  "), "hello world  ");
 }
 
-TEST(TestApiTest, RightTrimString)
-{
+TEST(TestApiTest, RightTrimString) {
     EXPECT_EQ(util::rightTrim("  hello world  "), "  hello world");
 }
 
-TEST(TestApiTest, CompareStrings)
-{
+TEST(TestApiTest, CompareStrings) {
     // Compare strings without extra spacing.
     EXPECT_TRUE(compare::strings("test", "test"));
     EXPECT_FALSE(compare::strings("hello", "world"));
@@ -37,34 +32,29 @@ TEST(TestApiTest, CompareStrings)
     EXPECT_TRUE(compare::strings("test", "  test  "));
 }
 
-TEST(TestApiTest, JoinPaths)
-{
+TEST(TestApiTest, JoinPaths) {
     EXPECT_EQ(fs::joinPaths("foo", "bar"), "foo/bar");
 }
 
-TEST(TestApiTest, FileExists)
-{
+TEST(TestApiTest, FileExists) {
     EXPECT_TRUE(fs::exists(__FILE__));
     EXPECT_FALSE(fs::exists(".__madeup.file"));
 }
 
-TEST(TestApiTest, ResolvePath)
-{
+TEST(TestApiTest, ResolvePath) {
     EXPECT_TRUE(fs::exists(fs::resolvePath("README.md")));
 }
 
 // TODO: Tests for resolveTestPath(...) missing.
 
-TEST(TestApiTest, ReadFileContents)
-{
+TEST(TestApiTest, ReadFileContents) {
     std::optional<std::string> contents = fs::readFileContents(fs::resolvePath("test/data/test.txt"));
 
     EXPECT_TRUE(contents.has_value());
     EXPECT_EQ(*contents, ionir::Const::foobar + "\n");
 }
 
-TEST(TestApiTest, ReadTestFile)
-{
+TEST(TestApiTest, ReadTestFile) {
     std::optional<std::string> contents = fs::readTestFile("data/test.txt");
 
     EXPECT_TRUE(contents.has_value());

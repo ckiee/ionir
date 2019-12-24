@@ -9,29 +9,28 @@
 #include "misc/helpers.h"
 #include "ast.h"
 
-namespace ionir
-{
+namespace ionir {
 // TODO
-class Driver // : public LooseGenerator
-{
-private:
-	TokenStream stream;
+    class Driver // : public LooseGenerator
+    {
+    private:
+        TokenStream stream;
 
-	llvm::Module *module;
+        llvm::Module *module;
 
-public:
-	Driver(llvm::Module *module, TokenStream stream);
+    public:
+        Driver(llvm::Module *module, TokenStream stream);
 
-	Ast consume();
+        Ast consume();
 
-	void begin(); // override;
+        void begin(); // override;
 
-	bool hasNext() const; // override;
+        bool hasNext() const; // override;
 
-	/**
-	 * Processed the current iterable item and increments the
-	 * list's index if applicable.
-	 */
-	std::optional<Ptr<Construct>> tryNext(); // override;
-};
-} // namespace ionir
+        /**
+         * Processed the current iterable item and increments the
+         * list's index if applicable.
+         */
+        std::optional<Ptr<Construct>> tryNext(); // override;
+    };
+}

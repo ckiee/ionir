@@ -8,34 +8,36 @@
 #include "type.h"
 #include "values/value.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class Global : public Construct
-{
-protected:
-    Ptr<Type> type;
+    class Global : public Construct {
+    protected:
+        Ptr <Type> type;
 
-    std::string id;
+        std::string id;
 
-    std::optional<Ptr<Value>> value;
+        std::optional<Ptr < Value>> value;
 
-public:
-    Global(Ptr<Type> type, std::string id, std::optional<Ptr<Value>> value = std::nullopt);
+    public:
+        Global(Ptr <Type> type, std::string id, std::optional<Ptr < Value>>
 
-    void accept(Pass *visitor) override;
+        value = std::nullopt);
 
-    Ptr<Type> getType() const;
+        void accept(Pass *visitor) override;
 
-    void setType(Ptr<Type> type);
+        Ptr <Type> getType() const;
 
-    std::string getId() const;
+        void setType(Ptr <Type> type);
 
-    void setId(std::string id);
+        std::string getId() const;
 
-    std::optional<Ptr<Value>> getValue() const;
+        void setId(std::string id);
 
-    void setValue(std::optional<Ptr<Value>> value);
-};
-} // namespace ionir
+        std::optional<Ptr < Value>> getValue() const;
+
+        void setValue(std::optional<Ptr < Value>>
+
+        value);
+    };
+}

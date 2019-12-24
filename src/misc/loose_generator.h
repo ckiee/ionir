@@ -2,14 +2,12 @@
 
 #include "generator.h"
 
-namespace ionir
-{
+namespace ionir {
 /**
  * A generator which returns no items during each
  * iteration.
  */
-class LooseGenerator : Generator<void>
-{
-    //
-};
-} // namespace ionir
+    class LooseGenerator : Generator<void> {
+        //
+    };
+}

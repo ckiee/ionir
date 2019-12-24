@@ -6,16 +6,14 @@
 #include "misc/helpers.h"
 #include "ir_builder.h"
 
-namespace ionir
-{
-class Block : public Wrapper<llvm::BasicBlock *>
-{
-private:
-    std::optional<Ptr<IrBuilder>> cachedBuilder;
+namespace ionir {
+    class Block : public Wrapper<llvm::BasicBlock *> {
+    private:
+        std::optional<Ptr<IrBuilder>> cachedBuilder;
 
-public:
-    explicit Block(llvm::BasicBlock *value);
+    public:
+        explicit Block(llvm::BasicBlock *value);
 
-    Ptr<IrBuilder> getBuilder();
-};
-} // namespace ionir
+        Ptr<IrBuilder> getBuilder();
+    };
+}

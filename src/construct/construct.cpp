@@ -1,24 +1,19 @@
 #include "construct.h"
 
-namespace ionir
-{
-Construct::Construct(ConstructKind kind) : constructKind(kind)
-{
-    //
-}
+namespace ionir {
+    Construct::Construct(ConstructKind kind) : constructKind(kind) {
+        //
+    }
 
-ConstructKind Construct::getConstructKind() const
-{
-    return this->constructKind;
-}
+    ConstructKind Construct::getConstructKind() const {
+        return this->constructKind;
+    }
 
-bool Construct::verify() const
-{
-    return true;
-}
+    bool Construct::verify() const {
+        return true;
+    }
 
-Ptr<Construct> Construct::getPtr()
-{
-    return this->shared_from_this();
+    Ptr<Construct> Construct::getPtr() {
+        return this->shared_from_this();
+    }
 }
-} // namespace ionir

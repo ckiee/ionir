@@ -9,24 +9,22 @@
 #include "syntax/token_type.h"
 #include "misc/map.h"
 
-namespace ionir
-{
-typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMContext &context);
+namespace ionir {
+    typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMContext &context);
 
-class Const
-{
-protected:
-    static Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
+    class Const {
+    protected:
+        static Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
 
-public:
-    static const std::string sectionInternalPrefix;
+    public:
+        static const std::string sectionInternalPrefix;
 
-    static const std::string sectionEntryId;
+        static const std::string sectionEntryId;
 
-    static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
+        static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
-    static std::map<TokenType, int> operatorPrecedence;
+        static std::map<TokenType, int> operatorPrecedence;
 
-    static const std::string foobar;
-};
-} // namespace ionir
+        static const std::string foobar;
+    };
+}

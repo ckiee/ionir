@@ -4,22 +4,20 @@
 #include "construct/construct.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class Reference : public Construct
-{
-protected:
-    std::string id;
+    class Reference : public Construct {
+    protected:
+        std::string id;
 
-public:
-    explicit Reference(std::string id);
+    public:
+        explicit Reference(std::string id);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    std::string getId() const;
+        std::string getId() const;
 
-    void setId(std::string id);
-};
-} // namespace ionir
+        void setId(std::string id);
+    };
+}

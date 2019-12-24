@@ -6,30 +6,28 @@
 #include "construct/block.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class Function : public Construct
-{
-protected:
-	Ptr<Prototype> prototype;
+    class Function : public Construct {
+    protected:
+        Ptr<Prototype> prototype;
 
-	Ptr<Block> body;
+        Ptr<Block> body;
 
-public:
-	Function(Ptr<Prototype> prototype, Ptr<Block> body);
+    public:
+        Function(Ptr<Prototype> prototype, Ptr<Block> body);
 
-	void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-	Ptr<Prototype> getPrototype() const;
+        Ptr<Prototype> getPrototype() const;
 
-	void setPrototype(Ptr<Prototype> prototype);
+        void setPrototype(Ptr<Prototype> prototype);
 
-	Ptr<Block> getBody() const;
+        Ptr<Block> getBody() const;
 
-	void setBody(Ptr<Block> body);
+        void setBody(Ptr<Block> body);
 
-	bool verify() const override;
-};
-} // namespace ionir
+        bool verify() const override;
+    };
+}

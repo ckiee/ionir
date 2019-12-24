@@ -3,22 +3,20 @@
 #include "construct/values/value.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class BooleanValue : public Value
-{
-protected:
-    bool value;
+    class BooleanValue : public Value {
+    protected:
+        bool value;
 
-public:
-    BooleanValue(bool value);
+    public:
+        BooleanValue(bool value);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    bool getValue() const;
+        bool getValue() const;
 
-    void setValue(bool value);
-};
-} // namespace ionir
+        void setValue(bool value);
+    };
+}

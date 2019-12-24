@@ -2,11 +2,9 @@
 
 #include "pass.h"
 
-namespace ionir
-{
-class TypeCheckerPass : public Pass
-{
-public:
-    TypeCheckerPass();
-};
-} // namespace ionir
+namespace ionir {
+    class TypeCheckerPass : public Pass {
+    public:
+        TypeCheckerPass();
+    };
+}

@@ -3,18 +3,15 @@
 #include "parsing/scope.h"
 #include "construct/function.h"
 
-namespace ionir
-{
-PartialResolverPass::PartialResolverPass(std::vector<Ptr<Inst>> partials)
-    : partials(partials)
-{
-    //
-}
+namespace ionir {
+    PartialResolverPass::PartialResolverPass(std::vector<Ptr<Inst>> partials)
+            : partials(partials) {
+        //
+    }
 
-std::vector<Ptr<Inst>> PartialResolverPass::getPartials() const
-{
-    return this->partials;
-}
+    std::vector<Ptr<Inst>> PartialResolverPass::getPartials() const {
+        return this->partials;
+    }
 
 // void PartialResolverPass::visitGotoInst(Ptr<GotoInst> node)
 // {
@@ -55,4 +52,4 @@ std::vector<Ptr<Inst>> PartialResolverPass::getPartials() const
 //     }
 //     }
 // }
-} // namespace ionir
+}

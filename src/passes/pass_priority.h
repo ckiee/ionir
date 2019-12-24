@@ -1,19 +1,17 @@
 #pragma once
 
-namespace ionir
-{
-enum class PassPriority
-{
-    /**
-     * Highest priority. This precendence
-     * will be executed first.
-     */
-    Important,
+namespace ionir {
+    enum class PassPriority {
+        /**
+         * Highest priority. This precendence
+         * will be executed first.
+         */
+            Important,
 
-    Normal,
+        Normal,
 
-    Low,
+        Low,
 
-    Lowest
-};
-} // namespace ionir
+        Lowest
+    };
+}

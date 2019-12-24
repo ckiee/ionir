@@ -1,26 +1,23 @@
 #include <algorithm>
 #include "util.h"
 
-namespace ionir::test::util
-{
-const char *whitespace = " \t\n\r\f\v";
+namespace ionir::test::util {
+    const char *whitespace = " \t\n\r\f\v";
 
-std::string rightTrim(std::string subject)
-{
-    subject.erase(subject.find_last_not_of(whitespace) + 1);
+    std::string rightTrim(std::string subject) {
+        subject.erase(subject.find_last_not_of(whitespace) + 1);
 
-    return subject;
+        return subject;
+    }
+
+    std::string leftTrim(std::string subject) {
+        subject.erase(0, subject.find_first_not_of(whitespace));
+
+        return subject;
+    }
+
+    std::string trim(std::string subject) {
+        return leftTrim(rightTrim(subject));
+    }
 }
-
-std::string leftTrim(std::string subject)
-{
-    subject.erase(0, subject.find_first_not_of(whitespace));
-
-    return subject;
-}
-
-std::string trim(std::string subject)
-{
-    return leftTrim(rightTrim(subject));
-}
-} // namespace ionir::test::util
+::test::util

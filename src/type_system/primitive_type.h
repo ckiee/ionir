@@ -1,17 +1,15 @@
 #pragma once
 
-namespace ionir
-{
-enum class PrimitiveType
-{
-    Void,
+namespace ionir {
+    enum class PrimitiveType {
+        Void,
 
-    Integer32,
+        Integer32,
 
-    String,
+        String,
 
-    Character,
+        Character,
 
-    Boolean
-};
+        Boolean
+    };
 }

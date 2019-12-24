@@ -28,91 +28,89 @@
 #include "misc/helpers.h"
 #include "scope.h"
 
-namespace ionir
-{
-class Parser
-{
-protected:
-    TokenStream *stream;
+namespace ionir {
+    class Parser {
+    protected:
+        TokenStream *stream;
 
-    std::vector<Notice> notices;
+        std::vector<Notice> notices;
 
-    TokenIdentifier tokenIdentifier;
+        TokenIdentifier tokenIdentifier;
 
-    bool withinRange(long value, long from, long to);
+        bool withinRange(long value, long from, long to);
 
-    bool is(TokenType type);
+        bool is(TokenType type);
 
-    void expect(TokenType type);
+        void expect(TokenType type);
 
-    void skipOver(TokenType type);
+        void skipOver(TokenType type);
 
-    NoticeContext createNoticeContext();
+        NoticeContext createNoticeContext();
 
-    Notice createNotice(NoticeType type, std::string message);
+        Notice createNotice(NoticeType type, std::string message);
 
-    Ptr<Scope> createScope();
+        Ptr<Scope> createScope();
 
-    void pushNotice(NoticeType type, std::string message);
+        void pushNotice(NoticeType type, std::string message);
 
-public:
-    Parser(TokenStream *stream);
+    public:
+        Parser(TokenStream *stream);
 
-    std::vector<Notice> getNotices() const;
+        std::vector<Notice> getNotices() const;
 
-    Ptr<Construct> parseTopLevel();
+        Ptr<Construct> parseTopLevel();
 
-    /**
-     * Parses a integer literal in the form of
-     * long (or integer 64).
-     */
-    Ptr<IntegerValue> parseInt();
+        /**
+         * Parses a integer literal in the form of
+         * long (or integer 64).
+         */
+        Ptr<IntegerValue> parseInt();
 
-    Ptr<CharValue> parseChar();
+        Ptr<CharValue> parseChar();
 
-    Ptr<StringValue> parseString();
+        Ptr<StringValue> parseString();
 
-    std::string parseId();
+        std::string parseId();
 
-    Ptr<Type> parseType();
+        Ptr<Type> parseType();
 
-    Arg parseArg();
+        Arg parseArg();
 
-    Ptr<Args> parseArgs();
+        Ptr<Args> parseArgs();
 
-    Ptr<Prototype> parsePrototype();
+        Ptr<Prototype> parsePrototype();
 
-    Ptr<Extern> parseExtern();
+        Ptr<Extern> parseExtern();
 
-    Ptr<Function> parseFunction();
+        Ptr<Function> parseFunction();
 
-    Ptr<Global> parseGlobal();
+        Ptr<Global> parseGlobal();
 
-    Ptr<Value> parseValue();
+        Ptr<Value> parseValue();
 
-    Ptr<IdExpr> parseIdExpr();
+        Ptr<IdExpr> parseIdExpr();
 
-    std::optional<Ptr<Expr>> parsePrimaryExpr();
+        std::optional<Ptr<Expr>> parsePrimaryExpr();
 
-    Ptr<Expr> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
+        Ptr<Expr> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
 
-    Ptr<Section> parseSection(Ptr<Block> parent);
+        Ptr<Section> parseSection(Ptr<Block> parent);
 
-    Ptr<Block> parseBlock(Ptr<Function> parent);
+        Ptr<Block> parseBlock(Ptr<Function> parent);
 
-    Ptr<AllocaInst> parseAllocaInst(Ptr<Section> parent);
+        Ptr<AllocaInst> parseAllocaInst(Ptr<Section> parent);
 
-    Ptr<ReturnInst> parseReturnInst(Ptr<Section> parent);
+        Ptr<ReturnInst> parseReturnInst(Ptr<Section> parent);
 
-    Ptr<BranchInst> parseBranchInst(Ptr<Section> parent);
+        Ptr<BranchInst> parseBranchInst(Ptr<Section> parent);
 
-    Ptr<CallInst> parseCallInst(Ptr<Section> parent);
+        Ptr<CallInst> parseCallInst(Ptr<Section> parent);
 
-    /**
-     * Parses an instruction, consuming its identifier.
-     * Invokes the corresponding parser depending on its
-     * identifier.
-     */
-    Ptr<Inst> parseInst(Ptr<Section> parent);
-};
-} // namespace ionir
+        /**
+         * Parses an instruction, consuming its identifier.
+         * Invokes the corresponding parser depending on its
+         * identifier.
+         */
+        Ptr<Inst> parseInst(Ptr<Section> parent);
+    };
+}

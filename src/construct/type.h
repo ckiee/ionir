@@ -5,28 +5,26 @@
 #include "construct/construct_kind.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class Type : public Construct
-{
-protected:
-    std::string id;
+    class Type : public Construct {
+    protected:
+        std::string id;
 
-    bool isPointer;
+        bool isPointer;
 
-public:
-    explicit Type(std::string id, bool isPointer = false);
+    public:
+        explicit Type(std::string id, bool isPointer = false);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    std::string getId() const;
+        std::string getId() const;
 
-    void setId(std::string id);
+        void setId(std::string id);
 
-    bool getIsPointer() const;
+        bool getIsPointer() const;
 
-    void setIsPointer(bool isPointer);
-};
-} // namespace ionir
+        void setIsPointer(bool isPointer);
+    };
+}

@@ -10,17 +10,17 @@
 #include "misc/helpers.h"
 #include "util.h"
 
-namespace ionir::test::bootstrap
-{
-Token token(TokenType type = TokenType::Unknown);
+namespace ionir::test::bootstrap {
+    Token token(TokenType type = TokenType::Unknown);
 
-TokenStream tokenStream(int amountOfItems = 1);
+    TokenStream tokenStream(int amountOfItems = 1);
 
-Parser parser(std::vector<Token> tokens);
+    Parser parser(std::vector<Token> tokens);
 
-Ptr<Module> module(std::string identifier = "test");
+    Ptr<Module> module(std::string identifier = "test");
 
-Ptr<LlvmVisitor> llvmVisitor();
+    Ptr<LlvmVisitor> llvmVisitor();
 
-Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts = {});
-} // namespace ionir::test::bootstrap
+    Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts = {});
+}
+::test::bootstrap

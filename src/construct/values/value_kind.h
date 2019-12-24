@@ -1,15 +1,13 @@
 #pragma once
 
-namespace ionir
-{
-enum class ValueKind
-{
-    Integer,
+namespace ionir {
+    enum class ValueKind {
+        Integer,
 
-    Character,
+        Character,
 
-    String,
+        String,
 
-    Boolean
-};
-} // namespace ionir
+        Boolean
+    };
+}

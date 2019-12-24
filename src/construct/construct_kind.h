@@ -1,37 +1,35 @@
 #pragma once
 
-namespace ionir
-{
-enum class ConstructKind
-{
-	Type,
+namespace ionir {
+    enum class ConstructKind {
+        Type,
 
-	/**
-	 * A block, possibly containing statements.
-	 */
-	Block,
+        /**
+         * A block, possibly containing statements.
+         */
+                Block,
 
-	/**
-	 * Function prototype used to declare externs
-	 * or actual functions.
-	 */
-	Prototype,
+        /**
+         * Function prototype used to declare externs
+         * or actual functions.
+         */
+                Prototype,
 
-	Function,
+        Function,
 
-	/**
-	 * An external function definition.
-	 */
-	Extern,
+        /**
+         * An external function definition.
+         */
+                Extern,
 
-	Instruction,
+        Instruction,
 
-	Global,
+        Global,
 
-	Section,
+        Section,
 
-	Reference,
+        Reference,
 
-	Expr
-};
+        Expr
+    };
 }

@@ -10,58 +10,57 @@
 #include "misc/regex.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class TokenConst
-{
-protected:
-    static bool isInitialized;
+namespace ionir {
+    class TokenConst {
+    protected:
+        static bool isInitialized;
 
-    static std::map<std::string, TokenType> simple;
+        static std::map<std::string, TokenType> simple;
 
-    static std::vector<std::pair<std::regex, TokenType>> complex;
+        static std::vector<std::pair<std::regex, TokenType>> complex;
 
-    static TokenTypeVector symbols;
+        static TokenTypeVector symbols;
 
-    static TokenTypeVector keywords;
+        static TokenTypeVector keywords;
 
-    static TokenTypeVector operators;
+        static TokenTypeVector operators;
 
-    static TokenTypeVector types;
+        static TokenTypeVector types;
 
-    static void pushComplex(std::regex regex, TokenType tokenType);
+        static void pushComplex(std::regex regex, TokenType tokenType);
 
-    static void pushSimple(std::string value, TokenType type);
+        static void pushSimple(std::string value, TokenType type);
 
-    static void pushSymbol(std::string value, TokenType type);
+        static void pushSymbol(std::string value, TokenType type);
 
-    static void pushKeyword(std::string value, TokenType type);
+        static void pushKeyword(std::string value, TokenType type);
 
-    static void pushOperator(std::string value, TokenType type);
+        static void pushOperator(std::string value, TokenType type);
 
-    static bool sortByKeyLength(const std::pair<std::string, TokenType> &a, const std::pair<std::string, TokenType> &b);
+        static bool
+        sortByKeyLength(const std::pair<std::string, TokenType> &a, const std::pair<std::string, TokenType> &b);
 
-public:
-    static std::map<std::string, TokenType> getSimpleIds();
+    public:
+        static std::map<std::string, TokenType> getSimpleIds();
 
-    static std::vector<std::pair<std::string, TokenType>> getSortedSimpleIds();
+        static std::vector<std::pair<std::string, TokenType>> getSortedSimpleIds();
 
-    static std::vector<std::pair<std::regex, TokenType>> getComplexIds();
+        static std::vector<std::pair<std::regex, TokenType>> getComplexIds();
 
-    static TokenTypeVector getSymbols();
+        static TokenTypeVector getSymbols();
 
-    static TokenTypeVector getKeywords();
+        static TokenTypeVector getKeywords();
 
-    static TokenTypeVector getOperators();
+        static TokenTypeVector getOperators();
 
-    static TokenTypeVector getTypes();
+        static TokenTypeVector getTypes();
 
-    static bool getIsInitialized();
+        static bool getIsInitialized();
 
-    static std::optional<std::string> findSimpleValue(TokenType type);
+        static std::optional<std::string> findSimpleValue(TokenType type);
 
-    static void init();
-};
+        static void init();
+    };
 
-typedef std::vector<std::pair<std::string, TokenType>> SimplePairVector;
-} // namespace ionir
+    typedef std::vector<std::pair<std::string, TokenType>> SimplePairVector;
+}

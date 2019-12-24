@@ -2,20 +2,16 @@
 #include "passes/pass.h"
 #include "value.h"
 
-namespace ionir
-{
-Value::Value(ValueKind kind) : Expr(ExprKind::Value), kind(kind)
-{
-    //
-}
+namespace ionir {
+    Value::Value(ValueKind kind) : Expr(ExprKind::Value), kind(kind) {
+        //
+    }
 
-void Value::accept(Pass *visitor)
-{
-    visitor->visitValue(this->cast<Value>());
-}
+    void Value::accept(Pass *visitor) {
+        visitor->visitValue(this->cast<Value>());
+    }
 
-ValueKind Value::getValueKind() const
-{
-    return this->kind;
+    ValueKind Value::getValueKind() const {
+        return this->kind;
+    }
 }
-} // namespace ionir

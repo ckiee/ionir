@@ -1,8 +1,8 @@
 #pragma once
 
 namespace ionir {
-class FunctionFactory {
-public:
-    // TODO
-};
+    class FunctionFactory {
+    public:
+        // TODO
+    };
 }

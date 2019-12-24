@@ -4,8 +4,7 @@
 
 using namespace ionir;
 
-TEST(TokenTest, CorrectProperties)
-{
+TEST(TokenTest, CorrectProperties) {
     Token token = Token(TokenType::Identifier, std::string("hello_world"), 123);
 
     EXPECT_EQ(token.getValue(), "hello_world");
@@ -16,16 +15,14 @@ TEST(TokenTest, CorrectProperties)
     EXPECT_EQ(token.getEndPosition(), 134);
 }
 
-TEST(TokenTest, CreateDummy)
-{
+TEST(TokenTest, CreateDummy) {
     Token token = Token::createDummy(0);
     Token expected = Token(TokenType::Dummy, "", 0);
 
     EXPECT_EQ(expected, token);
 }
 
-TEST(TokenTest, DetermineWhetherIsDummy)
-{
+TEST(TokenTest, DetermineWhetherIsDummy) {
     Token dummy = Token::createDummy(0);
     Token token = test::bootstrap::token();
 
@@ -33,8 +30,7 @@ TEST(TokenTest, DetermineWhetherIsDummy)
     EXPECT_FALSE(token.isDummy());
 }
 
-TEST(TokenTest, EqualityAndDifference)
-{
+TEST(TokenTest, EqualityAndDifference) {
     // Create test tokens.
     Token token1 = Token(TokenType::SymbolColon, ":", 5);
     Token token2 = Token(TokenType::SymbolColon, ":", 5);

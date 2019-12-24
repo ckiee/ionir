@@ -5,16 +5,14 @@
 #include "misc/helpers.h"
 #include "scope_kind.h"
 
-namespace ionir
-{
-class Scope : public Wrapper<Ptr<Construct>>
-{
-protected:
-    ScopeKind kind;
+namespace ionir {
+    class Scope : public Wrapper<Ptr<Construct>> {
+    protected:
+        ScopeKind kind;
 
-public:
-    Scope(Ptr<Construct> value, ScopeKind kind);
+    public:
+        Scope(Ptr<Construct> value, ScopeKind kind);
 
-    ScopeKind getKind() const;
-};
-} // namespace ionir
+        ScopeKind getKind() const;
+    };
+}

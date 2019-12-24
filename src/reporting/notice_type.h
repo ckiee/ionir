@@ -1,13 +1,11 @@
 #pragma once
 
-namespace ionir
-{
-enum class NoticeType
-{
-    Warning,
+namespace ionir {
+    enum class NoticeType {
+        Warning,
 
-    Error,
+        Error,
 
-    Fatal
-};
-} // namespace ionir
+        Fatal
+    };
+}

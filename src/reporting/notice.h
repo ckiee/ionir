@@ -4,24 +4,22 @@
 #include "notice_type.h"
 #include "notice_context.h"
 
-namespace ionir
-{
-class Notice
-{
-protected:
-    NoticeContext context;
+namespace ionir {
+    class Notice {
+    protected:
+        NoticeContext context;
 
-    NoticeType type;
+        NoticeType type;
 
-    std::string message;
+        std::string message;
 
-public:
-    Notice(NoticeContext context, NoticeType type, std::string message);
+    public:
+        Notice(NoticeContext context, NoticeType type, std::string message);
 
-    NoticeContext getContext() const;
+        NoticeContext getContext() const;
 
-    NoticeType getType() const;
+        NoticeType getType() const;
 
-    std::string getMessage() const;
-};
-} // namespace ionir
+        std::string getMessage() const;
+    };
+}

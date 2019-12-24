@@ -1,37 +1,30 @@
 #include "passes/pass.h"
 #include "alloca.h"
 
-namespace ionir
-{
+namespace ionir {
 // TODO: Finish init. implementation.
-AllocaInst::AllocaInst(AllocaInstOpts opts)
-    : Inst(opts.parent, InstKind::Alloca), id(opts.id), type(opts.type)
-{
-    //
-}
+    AllocaInst::AllocaInst(AllocaInstOpts opts)
+            : Inst(opts.parent, InstKind::Alloca), id(opts.id), type(opts.type) {
+        //
+    }
 
-void AllocaInst::accept(Pass *visitor)
-{
-    visitor->visitAllocaInst(this->cast<AllocaInst>());
-}
+    void AllocaInst::accept(Pass *visitor) {
+        visitor->visitAllocaInst(this->cast<AllocaInst>());
+    }
 
-std::string AllocaInst::getId() const
-{
-    return this->id;
-}
+    std::string AllocaInst::getId() const {
+        return this->id;
+    }
 
-void AllocaInst::setId(std::string id)
-{
-    this->id = id;
-}
+    void AllocaInst::setId(std::string id) {
+        this->id = id;
+    }
 
-Ptr<Type> AllocaInst::getType() const
-{
-    return this->type;
-}
+    Ptr<Type> AllocaInst::getType() const {
+        return this->type;
+    }
 
-void AllocaInst::setType(Ptr<Type> type)
-{
-    this->type = type;
+    void AllocaInst::setType(Ptr<Type> type) {
+        this->type = type;
+    }
 }
-} // namespace ionir

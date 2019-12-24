@@ -4,22 +4,20 @@
 #include "construct/values/value.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class StringValue : public Value
-{
-private:
-    std::string value;
+    class StringValue : public Value {
+    private:
+        std::string value;
 
-public:
-    StringValue(std::string value);
+    public:
+        StringValue(std::string value);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    std::string getValue() const;
+        std::string getValue() const;
 
-    void setValue(std::string value);
-};
-} // namespace ionir
+        void setValue(std::string value);
+    };
+}

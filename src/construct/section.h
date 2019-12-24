@@ -9,73 +9,69 @@
 #include "construct/child_construct.h"
 #include "misc/helpers.h"
 
-namespace ionir
-{
-class Pass;
+namespace ionir {
+    class Pass;
 
-class Block;
+    class Block;
 
-enum class SectionKind
-{
-    /**
-     * The entry section of a block.
-     */
-    Entry,
+    enum class SectionKind {
+        /**
+         * The entry section of a block.
+         */
+                Entry,
 
-    /**
-     * A section defined by the user. Can be jumped to
-     * using a goto instruction.
-     */
-    Label,
+        /**
+         * A section defined by the user. Can be jumped to
+         * using a goto instruction.
+         */
+                Label,
 
-    /**
-     * A section which forms part of a construct. Cannot be
-     * directly accessed by the user.
-     */
-    Internal
-};
+        /**
+         * A section which forms part of a construct. Cannot be
+         * directly accessed by the user.
+         */
+                Internal
+    };
 
-struct SectionOpts : ChildConstructOpts<Block>
-{
-    SectionKind kind;
+    struct SectionOpts : ChildConstructOpts<Block> {
+        SectionKind kind;
 
-    std::string id;
+        std::string id;
 
-    std::vector<Ptr<Inst>> insts = {};
-};
+        std::vector<Ptr<Inst>> insts = {};
+    };
 
-class Section : public ChildConstruct<Block>
-{
-private:
-    SectionKind kind;
+    class Section : public ChildConstruct<Block> {
+    private:
+        SectionKind kind;
 
-protected:
-    std::string id;
+    protected:
+        std::string id;
 
-    std::vector<Ptr<Inst>> insts;
+        std::vector<Ptr<Inst>> insts;
 
-public:
-    explicit Section(SectionOpts opts);
+    public:
+        explicit Section(SectionOpts opts);
 
-    void accept(Pass *visitor) override;
+        void accept(Pass *visitor) override;
 
-    SectionKind getKind() const;
+        SectionKind getKind() const;
 
-    std::string getId() const;
+        std::string getId() const;
 
-    void setId(std::string id);
+        void setId(std::string id);
 
-    std::vector<Ptr<Inst>> &getInsts();
+        std::vector<Ptr<Inst>> &getInsts();
 
-    void setInsts(std::vector<Ptr<Inst>> insts);
+        void setInsts(std::vector<Ptr<Inst>> insts);
 
-    uint32_t relocateInsts(Ptr<Section> target, uint32_t from = 0);
+        uint32_t relocateInsts(Ptr<Section> target, uint32_t from = 0);
 
-    /**
-     * Attempt to find the index location
-     * of an instruction. Returns null if
-     * not found.
-     */
-    std::optional<uint32_t> locate(Ptr<Inst> inst);
-};
-} // namespace ionir
+        /**
+         * Attempt to find the index location
+         * of an instruction. Returns null if
+         * not found.
+         */
+        std::optional<uint32_t> locate(Ptr<Inst> inst);
+    };
+}

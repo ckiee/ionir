@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ionir::test::constant
-{
+namespace ionir::test::constant {
 // TODO
-} // namespace ionir::test::constant
+}
+::test::constant
