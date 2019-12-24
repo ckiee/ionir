@@ -72,7 +72,6 @@ TEST(CodeGenTest, VisitEmptyGlobal)
 TEST(CodeGenTest, VisitGlobalWithValue)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-
     Ptr<Type> type = std::make_shared<Type>(ConstName::typeInt32, false);
 
     Ptr<Global> globalVar =

@@ -3,7 +3,6 @@
 #include <const/const_name.h>
 #include "construct/insts/inst.h"
 #include "const/const.h"
-#include "const/const_name.h"
 #include "parsing/parser.h"
 #include "syntax/token.h"
 #include "test_api/bootstrap.h"
