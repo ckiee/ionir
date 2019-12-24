@@ -54,13 +54,9 @@ enum class TokenType
 
 	SymbolArrow,
 
-	InstCreate,
-
 	InstCall,
 
-	InstSet,
-
-	InstEnd,
+	InstStore,
 
 	KeywordFunction,
 
@@ -72,11 +68,15 @@ enum class TokenType
 
 	KeywordMutable,
 
-    KeywordVoid,
+    TypeVoid,
 
-    KeywordString,
+    TypeString,
 
-    KeywordInt,
+    TypeInt16,
+
+    TypeInt32,
+
+    TypeInt64,
 
 	OperatorAdd,
 

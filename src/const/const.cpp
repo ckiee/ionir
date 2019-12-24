@@ -38,34 +38,5 @@ std::optional<LlvmIntTypeResolver> Const::tryGetIntTypeResolver(IntegerKind kind
     return Const::integerTypeResolverMap.tryGet(kind);
 }
 
-std::string Const::idFoobar = "foobar";
-
-bool Const::init()
-{
-    if (!TokenConst::getIsInitialized())
-    {
-        return false;
-    }
-
-    Stack<std::optional<std::string>> valueStack = {};
-
-    valueStack.push(TokenConst::findSimpleValue(TokenType::KeywordVoid));
-    valueStack.push(TokenConst::findSimpleValue(TokenType::KeywordString));
-    valueStack.push(TokenConst::findSimpleValue(TokenType::KeywordInt));
-
-    // TODO: Make Stack iterable.
-//    for (const auto value : valueStack.unwrap())
-//    {
-//        if (!value.has_value())
-//        {
-//            throw std::runtime_error("Unable to find corresponding value");
-//        }
-//    }
-
-    Const::typeInt = *valueStack.pop();
-    Const::typeString = *valueStack.pop();
-    Const::typeVoid = *valueStack.pop();
-
-    return true;
-}
+const std::string Const::foobar = "foobar";
 } // namespace ionir

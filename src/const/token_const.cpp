@@ -1,4 +1,5 @@
 #include <algorithm>
+#include "const_name.h"
 #include "token_const.h"
 
 namespace ionir
@@ -14,6 +15,14 @@ TokenTypeVector TokenConst::keywords = {};
 TokenTypeVector TokenConst::symbols = {};
 
 TokenTypeVector TokenConst::operators = {};
+
+TokenTypeVector TokenConst::types = {
+    TokenType::TypeVoid,
+    TokenType::TypeString,
+    TokenType::TypeInt16,
+    TokenType::TypeInt32,
+    TokenType::TypeInt64,
+};
 
 void TokenConst::pushComplex(std::regex regex, TokenType tokenType)
 {
@@ -87,6 +96,11 @@ TokenTypeVector TokenConst::getOperators()
     return TokenConst::operators;
 }
 
+TokenTypeVector TokenConst::getTypes()
+{
+    return TokenConst::types;
+}
+
 bool TokenConst::getIsInitialized()
 {
     return TokenConst::isInitialized;
@@ -132,18 +146,18 @@ void TokenConst::init()
     TokenConst::pushSymbol("->", TokenType::SymbolArrow);
 
     // Register instructions & keywords.
-    TokenConst::pushKeyword("create", TokenType::InstCreate);
-    TokenConst::pushKeyword("call", TokenType::InstCall);
-    TokenConst::pushKeyword("set", TokenType::InstSet);
-    TokenConst::pushKeyword("end", TokenType::InstEnd);
+    TokenConst::pushKeyword(ConstName::instCall, TokenType::InstCall);
+    TokenConst::pushKeyword(ConstName::instStore, TokenType::InstStore);
     TokenConst::pushKeyword("fn", TokenType::KeywordFunction);
     TokenConst::pushKeyword("extern", TokenType::KeywordExtern);
     TokenConst::pushKeyword("global", TokenType::KeywordGlobal);
     TokenConst::pushKeyword("else", TokenType::KeywordElse);
     TokenConst::pushKeyword("mut", TokenType::KeywordMutable);
-    TokenConst::pushKeyword("void", TokenType::KeywordVoid);
-    TokenConst::pushKeyword("str", TokenType::KeywordString);
-    TokenConst::pushKeyword("int", TokenType::KeywordInt);
+    TokenConst::pushKeyword(ConstName::typeVoid, TokenType::TypeVoid);
+    TokenConst::pushKeyword(ConstName::typeString, TokenType::TypeString);
+    TokenConst::pushKeyword(ConstName::typeInt16, TokenType::TypeInt16);
+    TokenConst::pushKeyword(ConstName::typeInt32, TokenType::TypeInt32);
+    TokenConst::pushKeyword(ConstName::typeInt64, TokenType::TypeInt64);
 
     // Register operators.
     TokenConst::pushOperator("+", TokenType::OperatorAdd);

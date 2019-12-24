@@ -23,4 +23,9 @@ bool TokenIdentifier::isOperator(TokenType type)
 {
     return TokenIdentifier::contains(TokenConst::getOperators(), type);
 }
+
+bool TokenIdentifier::isType(TokenType type)
+{
+    return TokenIdentifier::contains(TokenConst::getTypes(), type);
+}
 } // namespace ionir

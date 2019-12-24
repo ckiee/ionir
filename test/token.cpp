@@ -1,6 +1,6 @@
-#include "pch.h"
 #include "syntax/token.h"
 #include "test_api/bootstrap.h"
+#include "pch.h"
 
 using namespace ionir;
 

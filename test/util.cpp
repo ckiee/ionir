@@ -1,5 +1,5 @@
-#include "pch.h"
 #include "misc/util.h"
+#include "pch.h"
 
 using namespace ionir;
 

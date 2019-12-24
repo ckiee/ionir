@@ -16,5 +16,7 @@ public:
     static bool isNumeric(TokenType type);
 
     static bool isOperator(TokenType type);
+
+    static bool isType(TokenType type);
 };
 } // namespace ionir

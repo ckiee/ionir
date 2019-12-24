@@ -1,21 +1,21 @@
-#include <string>
 #include <vector>
 #include "test_api/bootstrap.h"
 #include "pch.h"
 
 using namespace ionir;
 
-// TODO: TokenStream bootstrap uses new token bootstrap function.
-// TEST(StreamTest, HandleGet)
-// {
-// 	TokenStream stream = test::bootstrap::tokenStream();
-// 	Token currentToken = stream.get();
+ TEST(StreamTest, HandleGet)
+ {
+ 	TokenStream stream = test::bootstrap::tokenStream();
+ 	Token currentToken = stream.get();
 
-// 	EXPECT_EQ(currentToken.getValue(), "test_0");
-// 	EXPECT_EQ(currentToken.getType(), ionir::TokenType::Unknown);
-// 	EXPECT_EQ(currentToken.getStartPosition(), 0);
-// 	EXPECT_EQ(currentToken.getEndPosition(), 6);
-// }
+	// TODO: Add actual data so there isn't chance for some sort of corrupted token. (Overall, improve this test.)
+
+ 	EXPECT_EQ(currentToken.getValue(), "");
+ 	EXPECT_EQ(currentToken.getType(), ionir::TokenType::Unknown);
+ 	EXPECT_EQ(currentToken.getStartPosition(), 0);
+ 	EXPECT_EQ(currentToken.getEndPosition(), 0);
+ }
 
 TEST(StreamTest, HandleSize)
 {

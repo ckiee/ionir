@@ -1,6 +1,9 @@
 #include <string>
 #include <vector>
+#include <const/const_name.h>
 #include "construct/insts/inst.h"
+#include "const/const.h"
+#include "const/const_name.h"
 #include "parsing/parser.h"
 #include "syntax/token.h"
 #include "test_api/bootstrap.h"
@@ -96,7 +99,7 @@ TEST(ParserTest, ParseEmptyBlock)
 TEST(ParserTest, ParseEmptyPrototype)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "foobar"),
+        Token(TokenType::Identifier, Const::foobar),
         Token(TokenType::SymbolParenthesesL, "("),
         Token(TokenType::SymbolParenthesesR, ")"),
         Token(TokenType::SymbolArrow, "->"),
@@ -112,7 +115,7 @@ TEST(ParserTest, ParseEmptyPrototype)
     EXPECT_FALSE(returnType->getIsPointer());
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getId(), "foobar");
+    EXPECT_EQ(prototype->getId(), Const::foobar);
 
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().size(), 0);
@@ -122,9 +125,9 @@ TEST(ParserTest, ParseEmptyPrototype)
 TEST(ParserTest, ParseAllocaInst)
 {
     Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "alloca"),
-        Token(TokenType::Identifier, "foobar"),
-        Token(TokenType::Identifier, "int"),
+        Token(TokenType::Identifier, ConstName::instAlloca),
+        Token(TokenType::Identifier, Const::foobar),
+        Token(TokenType::Identifier, ConstName::typeInt32),
     });
 
     Ptr<Inst> inst = parser.parseInst(nullptr);
@@ -136,7 +139,7 @@ TEST(ParserTest, ParseExtern)
 {
     Parser parser = test::bootstrap::parser({
         Token(TokenType::KeywordExtern, "extern"),
-        Token(TokenType::Identifier, "foobar"),
+        Token(TokenType::Identifier, Const::foobar),
         Token(TokenType::SymbolParenthesesL, "("),
         Token(TokenType::SymbolParenthesesR, ")"),
         Token(TokenType::SymbolArrow, "->"),
@@ -148,7 +151,7 @@ TEST(ParserTest, ParseExtern)
     auto args = prototype->getArgs();
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getId(), "foobar");
+    EXPECT_EQ(prototype->getId(), Const::foobar);
 
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().size(), 0);

@@ -1,11 +1,12 @@
 #include <vector>
-#include <const/const.h>
 #include "llvm/codegen/llvm_visitor.h"
 #include "construct/values/integer.h"
 #include "construct/insts/inst.h"
 #include "construct/insts/alloca.h"
 #include "construct/global.h"
 #include "construct/function.h"
+#include "const/const.h"
+#include "const/const_name.h"
 #include "llvm/module.h"
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
@@ -16,23 +17,23 @@ using namespace ionir;
 TEST(CodeGenTest, VisitExtern)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-    Ptr<Type> returnType = std::make_shared<Type>("void");
+    Ptr<Type> returnType = std::make_shared<Type>(ConstName::typeVoid);
     Ptr<Args> args = std::make_shared<Args>();
-    Ptr<Prototype> prototype = std::make_shared<Prototype>("testExtern", args, returnType);
+    Ptr<Prototype> prototype = std::make_shared<Prototype>(Const::foobar, args, returnType);
     Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
 
     visitor->visitExtern(externConstruct);
 
-    Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
+    Module module = Module(visitor->getModule());
 
-    EXPECT_TRUE(test::compare::ir(module->getAsString(), "extern_simple"));
+    EXPECT_TRUE(test::compare::ir(module.getAsString(), "extern_simple"));
 }
 
  TEST(CodeGenTest, VisitEmptyFunction)
  {
      Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-     Ptr<Type> returnType = std::make_shared<Type>("void");
-     Ptr<Prototype> prototype = std::make_shared<Prototype>("foobar", std::make_shared<Args>(), returnType);
+     Ptr<Type> returnType = std::make_shared<Type>(ConstName::typeVoid);
+     Ptr<Prototype> prototype = std::make_shared<Prototype>(Const::foobar, std::make_shared<Args>(), returnType);
      Ptr<Block> body = std::make_shared<Block>(nullptr);
 
      std::vector<Ptr<Section>> sections = {
@@ -58,10 +59,8 @@ TEST(CodeGenTest, VisitExtern)
 TEST(CodeGenTest, VisitEmptyGlobal)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-
-    // TODO: Global's type is hardcoded to double.
-    Ptr<Type> type = std::make_shared<Type>("int", false);
-    Ptr<Global> globalVar = std::make_shared<Global>(type, "test");
+    Ptr<Type> type = std::make_shared<Type>(ConstName::typeInt32, false);
+    Ptr<Global> globalVar = std::make_shared<Global>(type, Const::foobar);
 
     visitor->visitGlobal(globalVar);
 
@@ -74,11 +73,10 @@ TEST(CodeGenTest, VisitGlobalWithValue)
 {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
-    // TODO: Global's type is hardcoded to double.
-    Ptr<Type> type = std::make_shared<Type>("int", false);
+    Ptr<Type> type = std::make_shared<Type>(ConstName::typeInt32, false);
 
     Ptr<Global> globalVar =
-            std::make_shared<Global>(type, "test", std::make_shared<IntegerValue>(IntegerKind::Int32, 123));
+            std::make_shared<Global>(type, Const::foobar, std::make_shared<IntegerValue>(IntegerKind::Int32, 123));
 
     visitor->visitGlobal(globalVar);
 
@@ -94,8 +92,8 @@ TEST(CodeGenTest, VisitAllocaInst)
     std::vector<Ptr<Inst>> insts = {
         std::make_shared<AllocaInst>(AllocaInstOpts{
             nullptr,
-            "foobar",
-            std::make_shared<Type>("i32"),
+            Const::foobar,
+            std::make_shared<Type>(ConstName::typeInt32),
         }),
     };
 

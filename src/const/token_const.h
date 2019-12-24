@@ -27,6 +27,8 @@ protected:
 
     static TokenTypeVector operators;
 
+    static TokenTypeVector types;
+
     static void pushComplex(std::regex regex, TokenType tokenType);
 
     static void pushSimple(std::string value, TokenType type);
@@ -51,6 +53,8 @@ public:
     static TokenTypeVector getKeywords();
 
     static TokenTypeVector getOperators();
+
+    static TokenTypeVector getTypes();
 
     static bool getIsInitialized();
 

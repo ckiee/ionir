@@ -5,11 +5,11 @@ namespace ionir
 /**
  * Calls static initializer functions in various
  * static classes which in turn attempt to initialize
- * its static members.
+ * its static member(s).
  */
 class StaticInit
 {
 public:
-    static bool init();
+    static void init();
 };
 } // namespace ionir

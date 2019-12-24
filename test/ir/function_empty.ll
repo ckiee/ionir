@@ -2,6 +2,5 @@
 source_filename = "test"
 
 define void @foobar() {
-entry:
-  ret void
+.entry:
 }
