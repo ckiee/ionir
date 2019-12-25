@@ -6,7 +6,7 @@
 #include "construct/insts/branch.h"
 #include "construct/insts/return.h"
 #include "construct/insts/call.h"
-#include "parsing/scope.h"
+#include "syntax/scope.h"
 #include "misc/helpers.h"
 
 namespace ionir {

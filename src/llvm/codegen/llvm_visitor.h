@@ -23,7 +23,7 @@
 #include "construct/extern.h"
 #include "construct/prototype.h"
 #include "construct/global.h"
-#include "misc/stack.h"
+#include "container/stack.h"
 #include "misc/helpers.h"
 #include "passes/pass.h"
 

@@ -22,4 +22,3 @@ namespace ionir::test::compare {
         return util::trim(output) == util::trim(*contents);
     }
 }
-::test::compare

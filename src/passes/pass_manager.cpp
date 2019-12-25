@@ -1,5 +1,5 @@
 #include <vector>
-#include "parsing/driver.h"
+#include "syntax/driver.h"
 #include "construct/construct_kind.h"
 #include "pass_manager.h"
 

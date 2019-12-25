@@ -3,9 +3,9 @@
 #include <vector>
 #include "construct/insts/inst.h"
 #include "llvm/codegen/llvm_visitor.h"
-#include "syntax/token.h"
-#include "syntax/token_type.h"
-#include "parsing/parser.h"
+#include "lexical/token.h"
+#include "lexical/token_type.h"
+#include "syntax/parser.h"
 #include "llvm/module.h"
 #include "misc/helpers.h"
 #include "util.h"
@@ -23,4 +23,3 @@ namespace ionir::test::bootstrap {
 
     Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts = {});
 }
-::test::bootstrap

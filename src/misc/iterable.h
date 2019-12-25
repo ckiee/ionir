@@ -3,7 +3,7 @@
 #include <exception>
 #include <vector>
 #include <optional>
-#include "syntax/token.h"
+#include "lexical/token.h"
 #include "misc/generator.h"
 
 namespace ionir {

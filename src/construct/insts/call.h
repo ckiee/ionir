@@ -2,7 +2,7 @@
 
 #include <optional>
 #include <string>
-#include "parsing/scope.h"
+#include "syntax/scope.h"
 #include "construct/function.h"
 #include "misc/helpers.h"
 
@@ -12,7 +12,7 @@ namespace ionir {
     struct CallInstOpts : InstOpts {
         std::string target;
 
-        std::optional<Ptr<Function>> callee = std::nullopt;
+        std::optional<Ptr < Function>> callee = std::nullopt;
     };
 
     class CallInst : public Inst {

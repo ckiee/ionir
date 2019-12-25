@@ -39,14 +39,14 @@ namespace ionir::test::bootstrap {
         Ptr<Prototype> prototype = std::make_shared<Prototype>("foobar", std::make_shared<Args>(), returnType);
 
         Ptr<Section> entrySection = std::make_shared<Section>(SectionOpts{
-                nullptr,
-                SectionKind::Entry,
-                "entry",
-                insts,
+            nullptr,
+            SectionKind::Entry,
+            "entry",
+            insts,
         });
 
         std::vector<Ptr<Section>> sections = {
-                entrySection,
+            entrySection,
         };
 
         Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);
@@ -57,4 +57,3 @@ namespace ionir::test::bootstrap {
         return function;
     }
 }
-::test::bootstrap

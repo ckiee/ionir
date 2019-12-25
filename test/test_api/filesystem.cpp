@@ -47,4 +47,3 @@ namespace ionir::test::fs {
         return (bool) file;
     }
 }
-::test::fs

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "syntax/token_type.h"
+#include "lexical/token_type.h"
 #include "misc/helpers.h"
 #include "expr.h"
 

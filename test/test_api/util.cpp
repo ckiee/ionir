@@ -20,4 +20,3 @@ namespace ionir::test::util {
         return leftTrim(rightTrim(subject));
     }
 }
-::test::util

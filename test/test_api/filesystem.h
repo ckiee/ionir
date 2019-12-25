@@ -28,4 +28,3 @@ namespace ionir::test::fs {
  */
     bool exists(const std::string &filename);
 }
-::test::fs

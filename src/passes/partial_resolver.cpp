@@ -1,11 +1,11 @@
 #include <exception>
 #include "partial_resolver.h"
-#include "parsing/scope.h"
+#include "syntax/scope.h"
 #include "construct/function.h"
 
 namespace ionir {
     PartialResolverPass::PartialResolverPass(std::vector<Ptr<Inst>> partials)
-            : partials(partials) {
+        : partials(partials) {
         //
     }
 

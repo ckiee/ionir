@@ -18,4 +18,3 @@ namespace ionir::test::util {
  */
     std::string trim(std::string subject);
 }
-::test::util

@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 #include <regex>
-#include "syntax/token_type.h"
+#include "lexical/token_type.h"
 #include "misc/regex.h"
 #include "misc/helpers.h"
 

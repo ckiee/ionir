@@ -1,4 +1,4 @@
-#include "syntax/token.h"
+#include "lexical/token.h"
 #include "test_api/bootstrap.h"
 #include "pch.h"
 

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <array>
 #include <string>
-#include "syntax/token.h"
+#include "lexical/token.h"
 #include "util.h"
 #include "../pch.h"
 
@@ -39,4 +39,3 @@ namespace ionir::test::compare {
         }
     }
 }
-::test::compare

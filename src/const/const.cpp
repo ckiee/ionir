@@ -32,7 +32,7 @@ namespace ionir {
 // }
 
     std::optional<LlvmIntTypeResolver> Const::tryGetIntTypeResolver(IntegerKind kind) {
-        return Const::integerTypeResolverMap.tryGet(kind);
+        return *Const::integerTypeResolverMap.lookup(kind);
     }
 
     const std::string Const::foobar = "foobar";

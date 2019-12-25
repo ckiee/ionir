@@ -23,7 +23,7 @@ if (USE_MD)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
     message(STATUS "Using /MD flag")
-endif(USE_MD)
+endif (USE_MD)
 
 # Options.
 option(USE_CLANG "Use Clang and Clang++ as compilers")
@@ -31,7 +31,7 @@ option(USE_CLANG "Use Clang and Clang++ as compilers")
 if (USE_CLANG)
     # TODO
     set(T "")
-endif(USE_CLANG)
+endif (USE_CLANG)
 
 # Setup versioning.
 set(VERSION_MAJOR "1")
@@ -45,7 +45,7 @@ find_package(LLVM 9.0.0 REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
-# Include LLVM source directories (for syntax support, etc.). The SYSTEM symbol supposedly marks the directory to supress warnings.
+# Include LLVM source directories (for lexical support, etc.). The SYSTEM symbol supposedly marks the directory to supress warnings.
 include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
@@ -63,9 +63,9 @@ add_definitions(${LLVM_DEFINITIONS})
 
 # Set source file(s).
 file(GLOB_RECURSE SOURCES
-    "src/*.h"
-    "src/*.cpp"
-)
+        "src/*.h"
+        "src/*.cpp"
+        )
 
 # Specify that this project is a library.
 add_library("${PROJECT_NAME}" ${SOURCES})
@@ -92,9 +92,9 @@ add_subdirectory(test)
 option(BUILD_TESTS "Build tests" ON)
 
 if (BUILD_TESTS)
-#    add_subdirectory(libs/googletest)
-#    add_subdirectory(test)
-endif()
+    #    add_subdirectory(libs/googletest)
+    #    add_subdirectory(test)
+endif ()
 
 # Setup install target.
 install(TARGETS "${PROJECT_NAME}" DESTINATION bin) # "bin" is relative to ${CMAKE_INSTALL_PREFIX}/

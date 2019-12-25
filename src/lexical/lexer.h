@@ -6,7 +6,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <optional>
-#include "syntax/token.h"
+#include "lexical/token.h"
 #include "const/token_const.h"
 #include "misc/util.h"
 #include "misc/regex.h"
