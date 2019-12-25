@@ -6,9 +6,6 @@ namespace ionir {
             return false;
         }
 
-        // TODO: Erroring.
-//        return this->insert(symbol.name, symbol, overwrite);
-
-        return false;
+        return this->insert(symbol.name, symbol, overwrite);
     }
 }

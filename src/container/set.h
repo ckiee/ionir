@@ -7,12 +7,23 @@ namespace ionir {
     template<typename T>
     class Set : public Wrapper<std::set<T>> {
     public:
-        Set(std::set<T> value = {}) : Wrapper<T>(value) {
+        Set(std::set<T> value = {}) : Wrapper<std::set<T>>(value) {
             //
         }
 
         bool insert(T item) {
-            return this->value.insert(item);
+            if (this->contains(item)) {
+                return false;
+            }
+
+            /**
+             * TODO: std::set's native insert() method returns
+             * a pair (and possibly nullptr if it failed)? If so,
+             * determine result through it.
+             */
+            this->value.insert(item);
+
+            return true;
         }
 
         bool contains(T item) {

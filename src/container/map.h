@@ -21,7 +21,7 @@ namespace ionir {
                 return false;
             }
 
-            this->value.insert(key, value);
+            this->value[key] = value;
 
             return true;
         }
@@ -45,11 +45,11 @@ namespace ionir {
         TValue lookupOr(TKey key, TValue defaultValue) {
             std::optional<TValue> value = this->lookup(key);
 
-            if (value.has_value()) {
-                return value;
+            if (!value.has_value()) {
+                return defaultValue;
             }
 
-            return defaultValue;
+            return *value;
         }
 
         void clear() {
