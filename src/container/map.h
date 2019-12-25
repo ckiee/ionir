@@ -8,14 +8,12 @@ namespace ionir {
     template<typename TKey, typename TValue>
     class Map : public Wrapper<std::map<TKey, TValue>> {
     public:
-        Map() : Wrapper<std::map<TKey, TValue>>({}) {
+        Map(std::map<TKey, TValue> value = {}) : Wrapper<std::map<TKey, TValue>>(value) {
             //
         }
 
         bool contains(TKey key) const {
-            auto it = this->value.find(key);
-
-            return it != this->value.end();
+            return this->value.find(key) != this->value.end();
         }
 
         bool insert(TKey key, TValue value, bool overwrite = false) {
@@ -56,6 +54,10 @@ namespace ionir {
 
         void clear() {
             this->value.clear();
+        }
+
+        size_t size() {
+            return this->value.size();
         }
     };
 }

@@ -4,8 +4,8 @@
 #include <optional>
 #include <string>
 #include "misc/wrapper.h"
-#include "struct/map.h"
 #include "construct/construct.h"
+#include "container/map.h"
 #include "container/set.h"
 
 namespace ionir {
@@ -35,6 +35,6 @@ namespace ionir {
      */
     class SymbolTable : public Map<std::string, Symbol> {
     public:
-        bool insert(Symbol symbol, bool overwrite = false);
+        bool insertSymbol(Symbol symbol, bool overwrite = false);
     };
 }

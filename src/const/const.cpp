@@ -35,5 +35,9 @@ namespace ionir {
         return *Const::integerTypeResolverMap.lookup(kind);
     }
 
-    const std::string Const::foobar = "foobar";
+    const std::string Const::foo = "foo";
+
+    const std::string Const::bar = "bar";
+
+    const std::string Const::foobar = Const::foo + Const::bar;
 }

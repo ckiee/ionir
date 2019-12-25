@@ -7,7 +7,7 @@
 #include <llvm/IR/LLVMContext.h>
 #include "construct/values/integer.h"
 #include "lexical/token_type.h"
-#include "struct/map.h"
+#include "container/map.h"
 
 namespace ionir {
     typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMContext &context);
@@ -24,6 +24,10 @@ namespace ionir {
         static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
         static std::map<TokenType, int> operatorPrecedence;
+
+        static const std::string foo;
+
+        static const std::string bar;
 
         static const std::string foobar;
     };
