@@ -1,15 +1,21 @@
+#include <vector>
+#include "const/const.h"
+#include "tracking/symbol_table.h"
+#include "pch.h"
+
 using namespace ionir;
 
-TEST(SymbolTableTest, T
+TEST(SymbolTableTest, InsertSymbol) {
+    SymbolTable symbols = SymbolTable();
 
-) {
-Lexer lexer = Lexer("test input");
+    EXPECT_EQ(symbols.size(), 0);
 
-EXPECT_EQ(lexer
+    Symbol symbol = Symbol{
+        Const::foobar
+    };
 
-.
+    symbols.insertSymbol(symbol);
 
-getInput(),
-
-"test input");
+    EXPECT_EQ(symbols.size(), 1);
+    EXPECT_EQ(symbols.lookup(symbol.name), symbol);
 }
