@@ -17,5 +17,12 @@ TEST(SymbolTableTest, InsertSymbol) {
     symbols.insertSymbol(symbol);
 
     EXPECT_EQ(symbols.size(), 1);
-    EXPECT_EQ(symbols.lookup(symbol.name), symbol);
+
+    std::optional<Symbol> insertedSymbol = symbols.lookup(symbol.name);
+
+    EXPECT_TRUE(insertedSymbol.has_value());
+    EXPECT_EQ(insertedSymbol->name, symbol.name);
+    EXPECT_EQ(insertedSymbol->construct, symbol.construct);
+
+    // TODO: Compare attributes?
 }

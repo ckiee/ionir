@@ -26,13 +26,16 @@ A general usage example is provided below.
 
 int main() {
     // Create a lexer to tokenize input.
-    Lexer lexer = new Lexer("hello world");
+    Lexer lexer = Lexer("hello world");
 
     // Tokenize the input.
     TokenStream stream = lexer.scan();
 
-    // Create a driver to handle code generation.
-    Driver driver = new Driver(stream);
+    // Parse constructs formed from resulting token stream.
+    Parser parser = Parser(stream);
+
+    // Create a driver to handle parsing.
+    Driver driver = Driver(stream);
 
     // Invoke the driver and capture its resulting LLVM IR code.
     std::string llvmIr = driver.invoke();
