@@ -1,9 +1,9 @@
 .vs/
 Debug/
+Release/
 obj/
 cmake
 .DS_Store
-Release/
 out/
 cmake-build-debug/
 .idea/
@@ -20,6 +20,8 @@ Testing/
 Makefile
 test/IonIrTests
 lib/
+libs/
+googletest/
 *.a
 index
 *.log

@@ -1,6 +1,6 @@
 # General project settings.
 cmake_minimum_required(VERSION 3.12.4)
-project(ionir)
+project(ionir VERSION 1.0.0 LANGUAGES CXX)
 
 # Setup compiler flag(s) & standard(s).
 set(CMAKE_CXX_STANDARD 17)
@@ -45,27 +45,19 @@ find_package(LLVM 9.0.0 REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
-# Include LLVM source directories (for lexical support, etc.). The SYSTEM symbol supposedly marks the directory to supress warnings.
+# Include LLVM source directories (for lexical support, etc.). The SYSTEM symbol supposedly marks the directory to suppress warning(s).
 include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
-
-# Prepare .libs (implementations).
-# link_directories("C:/Program Files (x86)/LLVM/lib")
-
-# file(GLOB LIB_SOURCES
-#     "C:/Program Files (x86)/LLVM/lib/*.lib"
-# )
 
 # Disable warnings from includes.
 #add_library(llvm INTERFACE)
 #target_sources(llvm INTERFACE)
 #target_include_directories(llvm PRIVATE include/ SYSTEM INTERFACE include/)
 
-# Set source file(s).
-file(GLOB_RECURSE SOURCES
-        "src/*.h"
-        "src/*.cpp"
-        )
+# Set source files.
+file(
+    GLOB_RECURSE SOURCES "src/*.h" "src/*.cpp"
+)
 
 # Specify that this project is a library.
 add_library("${PROJECT_NAME}" ${SOURCES})
@@ -74,8 +66,12 @@ add_library("${PROJECT_NAME}" ${SOURCES})
 #target_link_libraries(${PROJECT_NAME} ${LIB_SOURCES})
 
 # Provide include directories to be used in the build command. Position in file matters.
-#target_include_directories(${PROJECT_NAME} PRIVATE "src")
-include_directories("src")
+target_include_directories(
+    ${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
 
 # Find the libraries that correspond to the LLVM components
 # that we wish to use.
@@ -97,5 +93,28 @@ if (BUILD_TESTS)
 endif ()
 
 # Setup install target.
-install(TARGETS "${PROJECT_NAME}" DESTINATION bin) # "bin" is relative to ${CMAKE_INSTALL_PREFIX}/
-install(FILES "${SOURCES}" DESTINATION src) # "src" is relative to ${CMAKE_INSTALL_PREFIX}/
+install(
+    TARGETS "${PROJECT_NAME}"
+    EXPORT ionir-config LIBRARY
+    DESTINATION ${CMAKE_INSTALL_LIBDIR} # Destination is relative to ${CMAKE_INSTALL_PREFIX}.
+)
+
+install(
+    EXPORT ionir-config
+    NAMESPACE ionir::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+install(
+    DIRECTORY src/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+    FILES_MATCHING PATTERN "*.h" PATTERN "LICENSE" # Match only header files & LICENSE file.
+)
+
+# Support for CLion install target.
+add_custom_target(
+    install_${PROJECT_NAME}
+    "${CMAKE_COMMAND}" --build "${CMAKE_BINARY_DIR}" --target install
+    DEPENDS ${PROJECT_NAME}
+    COMMENT "Installing ${PROJECT_NAME}"
+)
