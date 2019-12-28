@@ -40,6 +40,8 @@ namespace ionir {
         static bool
         sortByKeyLength(const std::pair<std::string, TokenType> &a, const std::pair<std::string, TokenType> &b);
 
+        static void ensureInit();
+
     public:
         static std::map<std::string, TokenType> getSimpleIds();
 

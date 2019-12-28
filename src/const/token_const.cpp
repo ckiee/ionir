@@ -51,11 +51,19 @@ namespace ionir {
         return a.first > b.first;
     }
 
+    void TokenConst::ensureInit() {
+        if (!TokenConst::getIsInitialized()) {
+            throw std::runtime_error("Not initialized");
+        }
+    }
+
     std::map<std::string, TokenType> TokenConst::getSimpleIds() {
         return TokenConst::simple;
     }
 
     SimplePairVector TokenConst::getSortedSimpleIds() {
+        TokenConst::ensureInit();
+
         SimplePairVector result = {};
 
         for (auto pair : TokenConst::simple) {
@@ -68,22 +76,32 @@ namespace ionir {
     }
 
     std::vector<std::pair<std::regex, TokenType>> TokenConst::getComplexIds() {
+        TokenConst::ensureInit();
+
         return TokenConst::complex;
     }
 
     TokenTypeVector TokenConst::getSymbols() {
+        TokenConst::ensureInit();
+
         return TokenConst::symbols;
     }
 
     TokenTypeVector TokenConst::getKeywords() {
+        TokenConst::ensureInit();
+
         return TokenConst::keywords;
     }
 
     TokenTypeVector TokenConst::getOperators() {
+        TokenConst::ensureInit();
+
         return TokenConst::operators;
     }
 
     TokenTypeVector TokenConst::getTypes() {
+        TokenConst::ensureInit();
+
         return TokenConst::types;
     }
 

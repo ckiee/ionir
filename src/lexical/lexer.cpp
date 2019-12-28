@@ -163,7 +163,7 @@ namespace ionir {
         // TODO: Should be a list, then converted to a vector?
         std::vector<Token> tokens = {};
 
-        std::optional<Token> token = std::nullopt;
+        std::optional<Token> token;
 
         while (this->hasNext()) {
             token = this->tryNext();
