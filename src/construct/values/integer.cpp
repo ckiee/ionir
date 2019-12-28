@@ -1,6 +1,4 @@
-#include "passes/pass.h"
-#include "construct/values/value_kind.h"
-#include "integer.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     IntegerValue::IntegerValue(IntegerKind kind, int64_t value)

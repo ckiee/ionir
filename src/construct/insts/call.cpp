@@ -1,5 +1,4 @@
-#include "passes/pass.h"
-#include "call.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     CallInst::CallInst(CallInstOpts opts)

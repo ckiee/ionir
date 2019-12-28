@@ -1,10 +1,8 @@
-#include "construct/construct_kind.h"
-#include "passes/pass.h"
-#include "reference.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Reference::Reference(std::string id)
-            : Construct(ConstructKind::Reference), id(id) {
+        : Construct(ConstructKind::Reference), id(id) {
         //
     }
 

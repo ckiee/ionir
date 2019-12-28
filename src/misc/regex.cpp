@@ -1,4 +1,4 @@
-#include "regex.h"
+#include <ionir/misc/regex.h>
 
 namespace ionir {
     std::regex Regex::identifier = std::regex("([_a-z]+[_a-z0-9]*)");

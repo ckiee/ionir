@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "token_identifier.h"
+#include <ionir/lexical/token_identifier.h>
 
 namespace ionir {
     bool TokenIdentifier::contains(std::vector<TokenType> subject, TokenType item) {

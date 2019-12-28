@@ -1,7 +1,7 @@
 #include <optional>
-#include "construct/section.h"
-#include "construct/insts/return.h"
-#include "semantic_analysis.h"
+#include <ionir/construct/section.h>
+#include <ionir/construct/insts/return.h>
+#include <ionir/passes/semantic_analysis.h>
 
 namespace ionir {
     void SemanticAnalysisPass::functionReturnCheck(Ptr<Function> node) {
@@ -19,7 +19,7 @@ namespace ionir {
 
                     if (!returnInst->getValue().has_value()) {
                         throw std::runtime_error(
-                                "Function whose prototype's return type is not void must return a corresponding value");
+                            "Function whose prototype's return type is not void must return a corresponding value");
                     }
                 }
             }

@@ -1,4 +1,4 @@
-#include "symbol_table.h"
+#include <ionir/tracking/symbol_table.h>
 
 namespace ionir {
     bool SymbolTable::insertSymbol(Symbol symbol, bool overwrite) {

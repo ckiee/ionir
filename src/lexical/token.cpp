@@ -1,4 +1,4 @@
-#include "token.h"
+#include <ionir/lexical/token.h>
 
 namespace ionir {
     Token Token::createDummy(size_t startPosition) {
@@ -6,7 +6,7 @@ namespace ionir {
     }
 
     Token::Token(TokenType type, std::string value, size_t startPosition)
-            : type(type), value(value), startPosition(startPosition) {
+        : type(type), value(value), startPosition(startPosition) {
         //
     }
 
@@ -32,8 +32,8 @@ namespace ionir {
 
     bool Token::operator==(const Token &other) const {
         return this->value == other.value &&
-                this->type == other.type &&
-                this->startPosition == other.startPosition;
+            this->type == other.type &&
+            this->startPosition == other.startPosition;
     }
 
     bool Token::operator!=(const Token &other) const {
@@ -42,6 +42,6 @@ namespace ionir {
 
     std::ostream &operator<<(std::ostream &stream, Token &token) {
         return stream << "Token(" << token.getValue() << ", " << token.getType() << ", " << token.getStartPosition()
-                << "-" << token.getEndPosition() << ")";
+            << "-" << token.getEndPosition() << ")";
     }
 }

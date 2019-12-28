@@ -1,4 +1,4 @@
-#include "lexer.h"
+#include <ionir/lexical/lexer.h>
 
 namespace ionir {
     char Lexer::getChar() const {
@@ -72,7 +72,7 @@ namespace ionir {
     }
 
     Lexer::Lexer(std::string input)
-            : input(input), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
+        : input(input), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
         this->length = this->input.length();
 
         // Input string must contain at least one character.

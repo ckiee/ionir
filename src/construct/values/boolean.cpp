@@ -1,6 +1,4 @@
-#include "construct/values/value_kind.h"
-#include "passes/pass.h"
-#include "boolean.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     BooleanValue::BooleanValue(bool value)

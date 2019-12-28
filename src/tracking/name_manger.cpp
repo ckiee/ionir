@@ -1,5 +1,5 @@
-#include "const/const.h"
-#include "name_mangler.h"
+#include <ionir/const/const.h>
+#include <ionir/tracking/name_mangler.h>
 
 namespace ionir {
     std::string NameMangler::internal(std::string id) {

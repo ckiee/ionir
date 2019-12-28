@@ -1,4 +1,4 @@
-#include "driver.h"
+#include <ionir/syntax/driver.h>
 
 namespace ionir {
     Driver::Driver(llvm::Module *module, TokenStream stream) : module(module), stream(stream) {

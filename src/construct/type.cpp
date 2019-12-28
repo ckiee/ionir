@@ -1,9 +1,8 @@
-#include "passes/pass.h"
-#include "type.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Type::Type(std::string id, bool isPointer)
-            : Construct(ConstructKind::Type), id(id), isPointer(isPointer) {
+        : Construct(ConstructKind::Type), id(id), isPointer(isPointer) {
         //
     }
 

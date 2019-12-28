@@ -1,6 +1,4 @@
-#include "construct/values/value_kind.h"
-#include "passes/pass.h"
-#include "string.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     StringValue::StringValue(std::string value) : Value(ValueKind::String), value(value) {

@@ -1,6 +1,4 @@
-#include "construct/expr/expr_kind.h"
-#include "passes/pass.h"
-#include "value.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Value::Value(ValueKind kind) : Expr(ExprKind::Value), kind(kind) {

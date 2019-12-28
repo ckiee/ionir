@@ -3,7 +3,7 @@
 #include <iostream>
 #include <array>
 #include <string>
-#include "lexical/token.h"
+#include "../../include/ionir/lexical/token.h"
 #include "util.h"
 #include "../pch.h"
 

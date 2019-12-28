@@ -1,6 +1,4 @@
-#include "construct/expr/expr_kind.h"
-#include "construct/values/value_kind.h"
-#include "pass.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     void Pass::visit(Ptr<Construct> node) {

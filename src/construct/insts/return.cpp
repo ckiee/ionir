@@ -1,5 +1,4 @@
-#include "passes/pass.h"
-#include "return.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
 // TODO: Finish init. implementation.

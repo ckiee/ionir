@@ -1,7 +1,5 @@
-#include <vector>
-#include "syntax/driver.h"
-#include "construct/construct_kind.h"
-#include "pass_manager.h"
+#include <ionir/syntax/driver.h>
+#include <ionir/passes/pass_manager.h>
 
 namespace ionir {
     PassManager::PassManager() : passes({}) {

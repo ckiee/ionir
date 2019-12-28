@@ -1,5 +1,4 @@
-#include "passes/pass.h"
-#include "branch.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     BranchInst::BranchInst(BranchInstOpts opts)
@@ -11,7 +10,7 @@ namespace ionir {
             opts.otherwise,
         },
 
-        InstKind::Branch,
+        InstKind::Branch
     }),
 
         condition(opts.condition), body(opts.body), otherwise(opts.otherwise) {

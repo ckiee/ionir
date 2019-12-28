@@ -1,5 +1,4 @@
-#include "passes/pass.h"
-#include "function.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Function::Function(Ptr<Prototype> prototype, Ptr<Block> body)

@@ -1,12 +1,12 @@
 #include <string>
 #include <vector>
-#include <const/const_name.h>
-#include "construct/insts/inst.h"
-#include "const/const.h"
-#include "syntax/parser.h"
-#include "lexical/token.h"
+#include "../include/ionir/const/const_name.h"
+#include "../include/ionir/construct/insts/inst.h"
+#include "../include/ionir/const/const.h"
+#include "../include/ionir/syntax/parser.h"
+#include "../include/ionir/lexical/token.h"
 #include "test_api/bootstrap.h"
-#include "misc/helpers.h"
+#include "../include/ionir/misc/helpers.h"
 #include "pch.h"
 
 using namespace ionir;

@@ -1,11 +1,9 @@
-#include "misc/util.h"
-#include "passes/pass.h"
-#include "construct/construct_kind.h"
-#include "section.h"
+#include <ionir/misc/util.h>
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Section::Section(SectionOpts opts)
-            : ChildConstruct(opts.parent, ConstructKind::Section), kind(opts.kind), id(opts.id), insts(opts.insts) {
+        : ChildConstruct(opts.parent, ConstructKind::Section), kind(opts.kind), id(opts.id), insts(opts.insts) {
         //
     }
 

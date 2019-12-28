@@ -1,10 +1,9 @@
-#include "construct/function.h"
-#include "passes/pass.h"
-#include "block.h"
+#include <ionir/construct/function.h>
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Block::Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections)
-            : ChildConstruct(parent, ConstructKind::Block), sections(sections), cachedEntry(std::nullopt) {
+        : ChildConstruct(parent, ConstructKind::Block), sections(sections), cachedEntry(std::nullopt) {
         //
     }
 

@@ -1,5 +1,5 @@
-#include "const/const.h"
-#include "value_resolver.h"
+#include <ionir/const/const.h>
+#include <ionir/misc/value_resolver.h>
 
 namespace ionir {
     ValueResolver::ValueResolver(llvm::Module *module) : module(module) {

@@ -1,5 +1,4 @@
-#include "construct/construct_kind.h"
-#include "expr.h"
+#include <ionir/construct/expr/expr.h>
 
 namespace ionir {
     Expr::Expr(ExprKind kind) : Construct(ConstructKind::Expr), kind(kind) {

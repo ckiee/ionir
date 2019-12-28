@@ -1,16 +1,16 @@
 #include <vector>
-#include "llvm/codegen/llvm_visitor.h"
-#include "construct/values/integer.h"
-#include "construct/insts/inst.h"
-#include "construct/insts/alloca.h"
-#include "construct/global.h"
-#include "construct/function.h"
-#include "const/const.h"
-#include "const/const_name.h"
-#include "llvm/module.h"
+#include "../include/ionir/llvm/codegen/llvm_visitor.h"
+#include "../include/ionir/construct/values/integer.h"
+#include "../include/ionir/construct/insts/inst.h"
+#include "../include/ionir/construct/insts/alloca.h"
+#include "../include/ionir/construct/global.h"
+#include "../include/ionir/construct/function.h"
+#include "../include/ionir/const/const.h"
+#include "../include/ionir/const/const_name.h"
+#include "../include/ionir/llvm/module.h"
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
-#include "misc/helpers.h"
+#include "../include/ionir/misc/helpers.h"
 
 using namespace ionir;
 

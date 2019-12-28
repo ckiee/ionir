@@ -1,4 +1,4 @@
-#include "misc/static_init.h"
+#include "../include/ionir/misc/static_init.h"
 #include "pch.h"
 
 // Testing environment initialization.

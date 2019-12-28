@@ -1,4 +1,4 @@
-#include "scope.h"
+#include <ionir/syntax/scope.h>
 
 namespace ionir {
     Scope::Scope(Ptr<Construct> value, ScopeKind kind) : Wrapper(value), kind(kind) {

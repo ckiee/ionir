@@ -1,6 +1,5 @@
-#include "construct/section.h"
-#include "passes/pass.h"
-#include "inst.h"
+#include <ionir/construct/section.h>
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Inst::Inst(Ptr<Section> parent, InstKind kind)

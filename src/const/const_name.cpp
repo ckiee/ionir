@@ -1,4 +1,4 @@
-#include "const_name.h"
+#include <ionir/const/const_name.h>
 
 namespace ionir {
     const std::string ConstName::typeVoid = "void";

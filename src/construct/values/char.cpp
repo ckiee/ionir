@@ -1,6 +1,4 @@
-#include "construct/values/value_kind.h"
-#include "passes/pass.h"
-#include "char.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     CharValue::CharValue(char value) : Value(ValueKind::Character), value(value) {

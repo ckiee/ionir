@@ -1,10 +1,9 @@
-#include "passes/pass.h"
-#include "alloca.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
 // TODO: Finish init. implementation.
     AllocaInst::AllocaInst(AllocaInstOpts opts)
-            : Inst(opts.parent, InstKind::Alloca), id(opts.id), type(opts.type) {
+        : Inst(opts.parent, InstKind::Alloca), id(opts.id), type(opts.type) {
         //
     }
 

@@ -1,7 +1,4 @@
-#include <exception>
-#include "partial_resolver.h"
-#include "syntax/scope.h"
-#include "construct/function.h"
+#include <ionir/passes/partial_resolver.h>
 
 namespace ionir {
     PartialResolverPass::PartialResolverPass(std::vector<Ptr<Inst>> partials)

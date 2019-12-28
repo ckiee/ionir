@@ -1,8 +1,8 @@
-#include "notice.h"
+#include <ionir/reporting/notice.h>
 
 namespace ionir {
     Notice::Notice(NoticeContext context, NoticeType type, std::string message) : context(context), type(type),
-            message(message) {
+        message(message) {
         //
     }
 

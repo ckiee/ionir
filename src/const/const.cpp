@@ -1,6 +1,6 @@
 #include <optional>
-#include "token_const.h"
-#include "const.h"
+#include <ionir/const/token_const.h>
+#include <ionir/const/const.h>
 
 namespace ionir {
     Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};

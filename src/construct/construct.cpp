@@ -1,4 +1,4 @@
-#include "construct.h"
+#include <ionir/construct/construct.h>
 
 namespace ionir {
     Construct::Construct(ConstructKind kind) : constructKind(kind) {

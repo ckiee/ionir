@@ -1,11 +1,11 @@
 #include <climits>
 #include <utility>
 #include <vector>
-#include "construct/expr/expr.h"
-#include "construct/expr/binary_expr.h"
-#include "misc/util.h"
-#include "const/const.h"
-#include "parser.h"
+#include <ionir/construct/expr/expr.h>
+#include <ionir/construct/expr/binary_expr.h>
+#include <ionir/misc/util.h>
+#include <ionir/const/const.h>
+#include <ionir/syntax/parser.h>
 
 namespace ionir {
 // TODO: Consider moving to Util class.
@@ -47,7 +47,7 @@ namespace ionir {
     }
 
     Parser::Parser(TokenStream *stream)
-            : stream(stream), tokenIdentifier() {
+        : stream(stream), tokenIdentifier() {
         //
     }
 
@@ -354,10 +354,10 @@ namespace ionir {
             }
 
             BinaryExprOpts opts = BinaryExprOpts{
-                    binaryOperator,
-                    firstPrecedence,
-                    leftSide,
-                    rightSide,
+                binaryOperator,
+                firstPrecedence,
+                leftSide,
+                rightSide,
             };
 
             // Create the binary expression entity.
@@ -388,9 +388,9 @@ namespace ionir {
         }
 
         Ptr<Section> section = std::make_shared<Section>(SectionOpts{
-                parent,
-                kind,
-                id,
+            parent,
+            kind,
+            id,
         });
 
         std::vector<Ptr<Inst>> insts = {};
@@ -428,9 +428,9 @@ namespace ionir {
         Ptr<Type> type = this->parseType();
 
         return std::make_shared<AllocaInst>(AllocaInstOpts{
-                parent,
-                id,
-                type,
+            parent,
+            id,
+            type,
         });
     }
 
@@ -439,8 +439,8 @@ namespace ionir {
         Ptr<Value> value = this->parseValue();
 
         return std::make_shared<ReturnInst>(ReturnInstOpts{
-                parent,
-                value,
+            parent,
+            value,
         });
     }
 

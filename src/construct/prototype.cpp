@@ -1,6 +1,4 @@
-#include "construct/construct_kind.h"
-#include "passes/pass.h"
-#include "prototype.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Prototype::Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType)

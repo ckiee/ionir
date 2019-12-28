@@ -1,6 +1,6 @@
 #include <iostream>
 #include <llvm/Support/raw_os_ostream.h>
-#include "module.h"
+#include <ionir/llvm/module.h>
 
 namespace ionir {
     Module::Module(llvm::Module *module, Context *context) : Wrapper(module), context(context) {

@@ -1,5 +1,4 @@
-#include "passes/pass.h"
-#include "extern.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Extern::Extern(Ptr<Prototype> prototype) : Construct(ConstructKind::Extern), prototype(prototype) {

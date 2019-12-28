@@ -1,6 +1,4 @@
-#include "passes/pass.h"
-#include "expr_kind.h"
-#include "binary_expr.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     BinaryExpr::BinaryExpr(BinaryExprOpts opts)

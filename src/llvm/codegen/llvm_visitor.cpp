@@ -2,9 +2,9 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Constant.h>
-#include "construct/values/value.h"
-#include "misc/util.h"
-#include "llvm_visitor.h"
+#include <ionir/construct/values/value.h>
+#include <ionir/misc/util.h>
+#include <ionir/llvm/codegen/llvm_visitor.h>
 
 namespace ionir {
     llvm::Module *LlvmVisitor::getModule() const {

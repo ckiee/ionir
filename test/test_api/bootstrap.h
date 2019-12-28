@@ -1,13 +1,13 @@
 #pragma once
 
 #include <vector>
-#include "construct/insts/inst.h"
-#include "llvm/codegen/llvm_visitor.h"
-#include "lexical/token.h"
-#include "lexical/token_type.h"
-#include "syntax/parser.h"
-#include "llvm/module.h"
-#include "misc/helpers.h"
+#include "../../include/ionir/construct/insts/inst.h"
+#include "../../include/ionir/llvm/codegen/llvm_visitor.h"
+#include "../../include/ionir/lexical/token.h"
+#include "../../include/ionir/lexical/token_type.h"
+#include "../../include/ionir/syntax/parser.h"
+#include "../../include/ionir/llvm/module.h"
+#include "../../include/ionir/misc/helpers.h"
 #include "util.h"
 
 namespace ionir::test::bootstrap {

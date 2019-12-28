@@ -1,4 +1,4 @@
-#include "inst_builder.h"
+#include <ionir/misc/inst_builder.h>
 
 namespace ionir {
     InstBuilder::InstBuilder(Ptr<Section> section) : section(section) {

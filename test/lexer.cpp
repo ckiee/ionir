@@ -1,8 +1,8 @@
 #include <stdexcept>
 #include <vector>
 #include <array>
-#include "lexical/token.h"
-#include "lexical/lexer.h"
+#include "../include/ionir/lexical/token.h"
+#include "../include/ionir/lexical/lexer.h"
 #include "test_api/compare.h"
 
 using namespace ionir;

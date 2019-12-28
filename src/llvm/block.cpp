@@ -1,4 +1,4 @@
-#include "block.h"
+#include <ionir/llvm/block.h>
 
 namespace ionir {
     Block::Block(llvm::BasicBlock *value) : Wrapper(value), cachedBuilder(std::nullopt) {
@@ -11,7 +11,7 @@ namespace ionir {
         }
 
         this->cachedBuilder =
-                std::make_shared<IrBuilder>(llvm::IRBuilder<>(this->value));
+            std::make_shared<IrBuilder>(llvm::IRBuilder<>(this->value));
 
         return *this->cachedBuilder;
     }

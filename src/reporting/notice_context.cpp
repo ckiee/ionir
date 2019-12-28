@@ -1,4 +1,4 @@
-#include "notice_context.h"
+#include <ionir/reporting/notice_context.h>
 
 namespace ionir {
     NoticeContext::NoticeContext(std::string fileName, int lineNumber, int position) : fileName(fileName),

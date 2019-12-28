@@ -1,5 +1,4 @@
-#include "passes/pass.h"
-#include "global.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     Global::Global(Ptr<Type> type, std::string id, std::optional<Ptr<Value>> value)

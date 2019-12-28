@@ -1,6 +1,6 @@
 #include <algorithm>
-#include "const_name.h"
-#include "token_const.h"
+#include <ionir/const/const_name.h>
+#include <ionir/const/token_const.h>
 
 namespace ionir {
     bool TokenConst::isInitialized = false;
@@ -16,11 +16,11 @@ namespace ionir {
     TokenTypeVector TokenConst::operators = {};
 
     TokenTypeVector TokenConst::types = {
-            TokenType::TypeVoid,
-            TokenType::TypeString,
-            TokenType::TypeInt16,
-            TokenType::TypeInt32,
-            TokenType::TypeInt64,
+        TokenType::TypeVoid,
+        TokenType::TypeString,
+        TokenType::TypeInt16,
+        TokenType::TypeInt32,
+        TokenType::TypeInt64,
     };
 
     void TokenConst::pushComplex(std::regex regex, TokenType tokenType) {
@@ -47,7 +47,7 @@ namespace ionir {
     }
 
     bool TokenConst::sortByKeyLength(const std::pair<std::string, TokenType> &a,
-            const std::pair<std::string, TokenType> &b) {
+        const std::pair<std::string, TokenType> &b) {
         return a.first > b.first;
     }
 
