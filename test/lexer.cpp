@@ -3,6 +3,7 @@
 #include <array>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/lexer.h>
+#include <ionir/const/const.h>
 #include "test_api/compare.h"
 
 using namespace ionir;
@@ -95,4 +96,23 @@ TEST(LexerTest, LexIdentifiers) {
 
     // Compare result with expected.
     test::compare::tokenSets<2>(expected, actual);
+}
+
+TEST(LexerTest, LexCombination) {
+    Lexer lexer = Lexer(Const::foo + " ( " + Const::bar + " ) -> " + Const::foobar);
+
+    // Tokenize input and begin inspection.
+    std::vector<Token> actual = lexer.scan();
+
+    std::array<Token, 6> expected = {
+        Token(TokenType::Identifier, Const::foo, 0),
+        Token(TokenType::SymbolParenthesesL, "(", 5),
+        Token(TokenType::Identifier, Const::bar, 6),
+        Token(TokenType::SymbolParenthesesR, ")", 7),
+        Token(TokenType::SymbolArrow, "->", 8),
+        Token(TokenType::Identifier, Const::foobar, 10)
+    };
+
+    // Compare result with expected.
+    test::compare::tokenSets<6>(expected, actual);
 }

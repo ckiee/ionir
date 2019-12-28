@@ -104,14 +104,13 @@ namespace ionir {
 
         // Set the initial Token buffer as Unknown.
         Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
-        char character = this->getChar();
 
         // Ignore whitespace if applicable.
         this->processWhitespace();
 
         std::string tokenValue = token.getValue();
 
-        for (auto pair : this->simpleIds) {
+        for (const auto pair : this->simpleIds) {
             // Test the first letter of the subject to continue.
             if (tokenValue[0] == pair.first[0]) {
                 // Produce a Regex instance to match the exact value of the simple identifier. It is important that the initial value is escaped of any Regex special characters.
@@ -138,7 +137,7 @@ namespace ionir {
         }
 
         // Begin iteration through complex identifiers.
-        for (auto pair : this->complexIds) {
+        for (const auto pair : this->complexIds) {
             // If it matches, return the token (already modified by the matchExpression function).
             if (this->matchExpression(&token, pair.second, pair.first)) {
                 return token;
@@ -174,8 +173,8 @@ namespace ionir {
             }
 
             // Display a warning if the token's type is unknown.
-            if ((*token).getType() == TokenType::Unknown) {
-                // TODO: Issue warning instead of plain cout.
+            if (token->getType() == TokenType::Unknown) {
+                // TODO: Issue warning instead of plain std::cout.
                 std::cout << "Warning: Unknown token encountered" << std::endl;
             }
 

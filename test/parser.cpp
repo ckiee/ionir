@@ -92,7 +92,7 @@ TEST(ParserTest, ParseEmptyPrototype) {
         Token(TokenType::SymbolParenthesesL, "("),
         Token(TokenType::SymbolParenthesesR, ")"),
         Token(TokenType::SymbolArrow, "->"),
-        Token(TokenType::Identifier, "type"),
+        Token(TokenType::Identifier, "type")
     });
 
     auto prototype = parser.parsePrototype();
@@ -109,6 +109,23 @@ TEST(ParserTest, ParseEmptyPrototype) {
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().size(), 0);
     EXPECT_FALSE(args->getIsInfinite());
+}
+
+TEST(ParserTest, ParseEmptyFunction) {
+    Parser parser = test::bootstrap::parser({
+        Token(TokenType::KeywordFunction, "fn"),
+        Token(TokenType::Identifier, Const::foobar),
+        Token(TokenType::SymbolParenthesesL, "("),
+        Token(TokenType::SymbolParenthesesR, ")"),
+        Token(TokenType::SymbolArrow, "->"),
+        Token(TokenType::Identifier, "type"),
+        Token(TokenType::SymbolBraceL, "{"),
+        Token(TokenType::SymbolBraceR, "}")
+    });
+
+    auto function = parser.parseFunction();
+
+    // TODO: Verify the function's properties (ex. prototype, body, etc.).
 }
 
 TEST(ParserTest, ParseAllocaInst) {

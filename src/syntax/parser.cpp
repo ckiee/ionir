@@ -19,7 +19,7 @@ namespace ionir {
 
     void Parser::expect(TokenType type) {
         if (!this->is(type)) {
-            throw std::runtime_error("Unexpected token type");
+            throw std::runtime_error("Unexpected token type: " + std::to_string((int)type));
         }
     }
 
