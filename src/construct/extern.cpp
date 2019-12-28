@@ -9,6 +9,12 @@ namespace ionir {
         visitor->visitExtern(this->cast<Extern>());
     }
 
+    ConstructChildren Extern::getChildren() const {
+        return {
+            this->prototype->nativeCast()
+        };
+    }
+
     Ptr<Prototype> Extern::getPrototype() const {
         return this->prototype;
     }

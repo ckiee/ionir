@@ -229,4 +229,4 @@ sudo ln /usr/bin/g++-8 /usr/bin/g++
 
 #### Style guide
 
-This project adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
+This project partially adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).

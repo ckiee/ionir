@@ -13,27 +13,23 @@ namespace ionir {
 
     class Block : public ChildConstruct<Function> {
     private:
-        std::vector<Ptr < Section>> sections;
+        std::vector<Ptr<Section>> sections;
 
-        std::optional<Ptr < Section>> cachedEntry;
+        std::optional<Ptr<Section>> cachedEntry;
 
     public:
-        explicit Block(Ptr <Function> parent, std::vector<Ptr < Section>>
-
-        sections = {});
+        explicit Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
 
         void accept(Pass *visitor) override;
 
+        ConstructChildren getChildren() const override;
+
         bool verify() const override;
 
-        std::optional<Ptr < Section>> getEntrySection();
+        std::optional<Ptr<Section>> getEntrySection();
 
-        std::vector<Ptr < Section>> &
+        std::vector<Ptr<Section>> &getSections();
 
-        getSections();
-
-        void setSections(std::vector<Ptr < Section>>
-
-        sections);
+        void setSections(std::vector<Ptr<Section>> sections);
     };
 }

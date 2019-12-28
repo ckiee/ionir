@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
@@ -37,14 +38,32 @@ namespace ionir {
         Expr
     };
 
+    class Construct;
+
+    typedef std::vector<Ptr<Construct>> ConstructChildren;
+
     class Construct : public std::enable_shared_from_this<Construct> {
     protected:
         ConstructKind constructKind;
 
     public:
+        template<class T>
+        static ConstructChildren convertChildren(std::vector<Ptr<T>> vector) {
+            // TODO: Ensure T is child of Construct.
+            ConstructChildren children = {};
+
+            for (const auto item : vector) {
+                children.push_back(item);
+            }
+
+            return children;
+        }
+
         explicit Construct(ConstructKind kind);
 
         virtual void accept(Pass *visitor) = 0;
+
+        virtual ConstructChildren getChildren() const;
 
         ConstructKind getConstructKind() const;
 
@@ -61,5 +80,7 @@ namespace ionir {
         Ptr<T> cast() {
             return std::static_pointer_cast<T>(this->shared_from_this());
         }
+
+        Ptr<Construct> nativeCast();
     };
 }

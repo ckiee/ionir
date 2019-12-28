@@ -10,6 +10,18 @@ namespace ionir {
         visitor->visitGlobal(this->cast<Global>());
     }
 
+    ConstructChildren Global::getChildren() const {
+        ConstructChildren children = {
+            this->type->nativeCast()
+        };
+
+        if (this->value.has_value()) {
+            children.push_back(this->value->get()->nativeCast());
+        }
+
+        return children;
+    }
+
     Ptr<Type> Global::getType() const {
         return this->type;
     }

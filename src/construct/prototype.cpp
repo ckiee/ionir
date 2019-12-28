@@ -10,6 +10,13 @@ namespace ionir {
         visitor->visitPrototype(this->cast<Prototype>());
     }
 
+    ConstructChildren Prototype::getChildren() const {
+        // TODO: What about 'args'?
+        return {
+            this->returnType->nativeCast()
+        };
+    }
+
     std::string Prototype::getId() const {
         return this->id;
     }

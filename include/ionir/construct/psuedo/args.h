@@ -7,9 +7,7 @@
 #include <ionir/construct/type.h>
 
 namespace ionir {
-    typedef std::pair<Ptr<Type>, std::string>
-
-        Arg;
+    typedef std::pair<Ptr<Type>, std::string> Arg;
 
     class Args {
     protected:

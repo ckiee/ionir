@@ -11,6 +11,10 @@ namespace ionir {
         visitor->visitBlock(this->cast<Block>());
     }
 
+    ConstructChildren Block::getChildren() const {
+        return Construct::convertChildren<Section>(this->sections);
+    }
+
     bool Block::verify() const {
         bool entryFound = false;
 

@@ -25,6 +25,8 @@ namespace ionir {
 
         void accept(Pass *visitor) override;
 
+        ConstructChildren getChildren() const override;
+
         Ptr <Type> getType() const;
 
         void setType(Ptr <Type> type);

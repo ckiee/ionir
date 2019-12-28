@@ -38,7 +38,7 @@ namespace ionir {
 
         std::string id;
 
-        std::vector<Ptr < Inst>> insts = {};
+        std::vector<Ptr<Inst>> insts = {};
     };
 
     class Section : public ChildConstruct<Block> {
@@ -48,12 +48,14 @@ namespace ionir {
     protected:
         std::string id;
 
-        std::vector<Ptr < Inst>> insts;
+        std::vector<Ptr<Inst>> insts;
 
     public:
         explicit Section(SectionOpts opts);
 
         void accept(Pass *visitor) override;
+
+        ConstructChildren getChildren() const override;
 
         SectionKind getKind() const;
 
@@ -61,21 +63,21 @@ namespace ionir {
 
         void setId(std::string id);
 
-        std::vector<Ptr < Inst>> &
+        std::vector<Ptr<Inst>> &
 
         getInsts();
 
-        void setInsts(std::vector<Ptr < Inst>>
+        void setInsts(std::vector<Ptr<Inst>>
 
         insts);
 
-        uint32_t relocateInsts(Ptr <Section> target, uint32_t from = 0);
+        uint32_t relocateInsts(Ptr<Section> target, uint32_t from = 0);
 
         /**
          * Attempt to find the index location
          * of an instruction. Returns null if
          * not found.
          */
-        std::optional<uint32_t> locate(Ptr <Inst> inst);
+        std::optional<uint32_t> locate(Ptr<Inst> inst);
     };
 }
