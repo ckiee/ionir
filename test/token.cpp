@@ -1,4 +1,4 @@
-#include "../include/ionir/lexical/token.h"
+#include <ionir/lexical/token.h>
 #include "test_api/bootstrap.h"
 #include "pch.h"
 

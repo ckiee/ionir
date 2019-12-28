@@ -56,7 +56,7 @@ add_definitions(${LLVM_DEFINITIONS})
 
 # Set source files.
 file(
-    GLOB_RECURSE SOURCES "src/*.h" "src/*.cpp"
+    GLOB_RECURSE SOURCES "include/ionir/*.h" "src/*.cpp" "src/*.h"
 )
 
 # Specify that this project is a library.
@@ -107,7 +107,7 @@ install(
 )
 
 install(
-    DIRECTORY src/
+    DIRECTORY include/ionir/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
     FILES_MATCHING PATTERN "*.h" PATTERN "LICENSE" # Match only header files & LICENSE file.
 )

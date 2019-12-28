@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../include/ionir/const/const.h"
+#include <ionir/const/const.h>
 #include "test_api/util.h"
 #include "test_api/compare.h"
 #include "test_api/filesystem.h"

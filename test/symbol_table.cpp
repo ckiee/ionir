@@ -1,6 +1,6 @@
 #include <vector>
-#include "../include/ionir/const/const.h"
-#include "../include/ionir/tracking/symbol_table.h"
+#include <ionir/const/const.h>
+#include <ionir/tracking/symbol_table.h>
 #include "pch.h"
 
 using namespace ionir;

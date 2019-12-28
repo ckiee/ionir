@@ -1,8 +1,8 @@
 #include <stdexcept>
 #include <vector>
 #include <array>
-#include "../include/ionir/lexical/token.h"
-#include "../include/ionir/lexical/lexer.h"
+#include <ionir/lexical/token.h>
+#include <ionir/lexical/lexer.h>
 #include "test_api/compare.h"
 
 using namespace ionir;
@@ -42,8 +42,8 @@ TEST(LexerTest, LexTwoSymbols) {
     std::vector<Token> actual = lexer.scan();
 
     std::array<Token, 2> expected = {
-            Token(TokenType::SymbolDollar, "$", 0),
-            Token(TokenType::SymbolHash, "#", 1),
+        Token(TokenType::SymbolDollar, "$", 0),
+        Token(TokenType::SymbolHash, "#", 1),
     };
 
     // Compare result with expected.
@@ -61,21 +61,21 @@ TEST(LexerTest, LexSymbols) {
 
     // Create a list of expected tokens.
     std::array<Token, amount> expected = {
-            Token(TokenType::SymbolAt, "@", 0),
-            Token(TokenType::SymbolEqual, "=", 1),
-            Token(TokenType::SymbolColon, ":", 2),
-            Token(TokenType::SymbolDollar, "$", 3),
-            Token(TokenType::SymbolHash, "#", 4),
-            Token(TokenType::SymbolParenthesesL, "(", 5),
-            Token(TokenType::SymbolParenthesesR, ")", 6),
-            Token(TokenType::SymbolBracketL, "[", 7),
-            Token(TokenType::SymbolBracketR, "]", 8),
-            Token(TokenType::SymbolComma, ",", 9),
-            Token(TokenType::SymbolTilde, "~", 10),
-            Token(TokenType::SymbolSemiColon, ";", 11),
-            Token(TokenType::SymbolBraceL, "{", 12),
-            Token(TokenType::SymbolBraceR, "}", 13),
-            Token(TokenType::SymbolArrow, "->", 14),
+        Token(TokenType::SymbolAt, "@", 0),
+        Token(TokenType::SymbolEqual, "=", 1),
+        Token(TokenType::SymbolColon, ":", 2),
+        Token(TokenType::SymbolDollar, "$", 3),
+        Token(TokenType::SymbolHash, "#", 4),
+        Token(TokenType::SymbolParenthesesL, "(", 5),
+        Token(TokenType::SymbolParenthesesR, ")", 6),
+        Token(TokenType::SymbolBracketL, "[", 7),
+        Token(TokenType::SymbolBracketR, "]", 8),
+        Token(TokenType::SymbolComma, ",", 9),
+        Token(TokenType::SymbolTilde, "~", 10),
+        Token(TokenType::SymbolSemiColon, ";", 11),
+        Token(TokenType::SymbolBraceL, "{", 12),
+        Token(TokenType::SymbolBraceR, "}", 13),
+        Token(TokenType::SymbolArrow, "->", 14),
     };
 
     // Compare result with expected.
@@ -89,8 +89,8 @@ TEST(LexerTest, LexIdentifiers) {
     std::vector<Token> actual = lexer.scan();
 
     std::array<Token, 2> expected = {
-            Token(TokenType::Identifier, "hello", 0),
-            Token(TokenType::Identifier, "world", 5),
+        Token(TokenType::Identifier, "hello", 0),
+        Token(TokenType::Identifier, "world", 5),
     };
 
     // Compare result with expected.

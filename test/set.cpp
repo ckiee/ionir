@@ -1,7 +1,7 @@
 #include <set>
 #include <string>
-#include "../include/ionir/const/const.h"
-#include "../include/ionir/container/set.h"
+#include <ionir/const/const.h>
+#include <ionir/container/set.h>
 #include "pch.h"
 
 using namespace ionir;

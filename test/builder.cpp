@@ -1,7 +1,6 @@
-#include "../include/ionir/misc/helpers.h"
-#include "../include/ionir/misc/inst_builder.h"
-#include "../include/ionir/construct/section.h"
-#include "../include/ionir/const/const.h"
+#include <ionir/misc/helpers.h>
+#include <ionir/misc/inst_builder.h>
+#include <ionir/const/const.h>
 #include "pch.h"
 
 using namespace ionir;
