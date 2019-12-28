@@ -35,8 +35,8 @@ namespace ionir {
 
     std::ostream &operator<<(std::ostream &stream, Token &token);
 
-/**
- * An iterable list of tokens.
- */
+    /**
+     * An iterable list of tokens.
+     */
     typedef Iterable<Token> TokenStream;
 }
