@@ -42,6 +42,7 @@ namespace ionir {
                 << std::endl;
         }
 
+        // TODO: Debugging.
         std::cout << "Token type:" << token.getType() << std::endl;
 
         // Advance the Stream's index if applicable.

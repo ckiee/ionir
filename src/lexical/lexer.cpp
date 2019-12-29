@@ -1,5 +1,5 @@
-#define MATCH_INDEX_MATCHED 0
-#define MATCH_INDEX_CAPTURED 1
+#define IONIR_MATCH_INDEX_MATCHED 0
+#define IONIR_MATCH_INDEX_CAPTURED 1
 
 #include <ionir/lexical/lexer.h>
 
@@ -57,18 +57,18 @@ namespace ionir {
                 throw std::runtime_error("Successful regex match may not contain a captured value");
             }
 
-            int index = expectCapturedValue ? MATCH_INDEX_CAPTURED : MATCH_INDEX_MATCHED;
+            int index = expectCapturedValue ? IONIR_MATCH_INDEX_CAPTURED : IONIR_MATCH_INDEX_MATCHED;
 
             // Extract the matched or captured value from the match.
             std::string value = match[index];
 
             // Finalize result's properties.
             result.success = true;
-            result.matchedValue = match[MATCH_INDEX_MATCHED];
+            result.matchedValue = match[IONIR_MATCH_INDEX_MATCHED];
 
             // Set the result's captured value property if applicable.
             if (expectCapturedValue) {
-                result.capturedValue = match[MATCH_INDEX_CAPTURED];
+                result.capturedValue = match[IONIR_MATCH_INDEX_CAPTURED];
             }
 
             // Modify the input token (since it was passed by reference).
