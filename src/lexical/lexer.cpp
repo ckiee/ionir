@@ -86,8 +86,12 @@ namespace ionir {
     }
 
     void Lexer::processWhitespace() {
+        // TODO: Any way to omit 'match' since it's not actually being used?
         // Ignore whitespace.
-        while (isspace(this->getChar())) {
+        std::smatch match;
+        std::string subject = this->getCharAsString();
+
+        while (std::regex_search(subject, match, Regex::whitespace)) {
             this->skip();
         }
     }

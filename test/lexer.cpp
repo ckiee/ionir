@@ -89,16 +89,40 @@ TEST(LexerTest, LexIdentifiers) {
     test::compare::tokenSets<2>(expected, actual);
 }
 
+TEST(LexerTest, IgnoreWhitespace) {
+    Lexer lexer = Lexer("   " + test::constant::foobar + "   ");
+
+    // Tokenize input and begin inspection.
+    std::vector<Token> actual = lexer.scan();
+
+    for (auto tok : actual) {
+        std::cout << tok << std::endl;
+    }
+
+    std::array<Token, 1> expected = {
+        Token(TokenType::Identifier, test::constant::foobar, 0)
+    };
+
+    // Compare result with expected.
+    test::compare::tokenSets<1>(expected, actual);
+}
+
 TEST(LexerTest, LexCombination) {
     Lexer lexer = Lexer(test::constant::foo + " ( " + test::constant::bar + " ) -> " + test::constant::foobar);
 
     // Tokenize input and begin inspection.
     std::vector<Token> actual = lexer.scan();
 
+    for (auto tok : actual) {
+        std::cout << "TOK: " << tok << std::endl;
+    }
+
     std::array<Token, 6> expected = {
         Token(TokenType::Identifier, test::constant::foo, 0),
-        Token(TokenType::SymbolParenthesesL, "(", 5), Token(TokenType::Identifier, test::constant::bar, 6),
-        Token(TokenType::SymbolParenthesesR, ")", 7), Token(TokenType::SymbolArrow, "->", 8),
+        Token(TokenType::SymbolParenthesesL, "(", 3),
+        Token(TokenType::Identifier, test::constant::bar, 6),
+        Token(TokenType::SymbolParenthesesR, ")", 7),
+        Token(TokenType::SymbolArrow, "->", 8),
         Token(TokenType::Identifier, test::constant::foobar, 10)
     };
 
@@ -117,7 +141,6 @@ TEST(LexerTest, LexCharacter) {
 TEST(LexerTest, LexEmptyCharacter) {
     Lexer lexer = Lexer("''");
     Token actual = lexer.scan()[0];
-    std::cout << actual << std::endl;
 
     Token expected = Token(TokenType::LiteralCharacter, "", 0);
 
@@ -151,7 +174,8 @@ TEST(LexerTest, LexInteger) {
 TEST(LexerTest, LexDecimal) {
     Lexer lexer = Lexer("3.14");
     Token actual = lexer.scan()[0];
-    Token expected = Token(TokenType::LiteralInt, "3.14", 0);
+    std::cout << "Actual: " << actual << std::endl;
+    Token expected = Token(TokenType::LiteralDecimal, "3.14", 0);
 
     EXPECT_EQ(actual, expected);
 }

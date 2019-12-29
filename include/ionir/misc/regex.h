@@ -5,16 +5,16 @@
 namespace ionir {
     class Regex {
     public:
-        static std::regex identifier;
+        const static std::regex identifier;
 
-        static std::regex string;
+        const static std::regex string;
 
-        static std::regex decimal;
+        const static std::regex decimal;
 
-        static std::regex integer;
+        const static std::regex integer;
 
-        static std::regex character;
+        const static std::regex character;
 
-        static std::regex whitespace;
+        const static std::regex whitespace;
     };
 }
