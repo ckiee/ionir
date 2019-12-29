@@ -26,8 +26,10 @@ TEST(CodeGenTest, VisitExtern) {
 TEST(CodeGenTest, VisitEmptyFunction) {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
     Ptr<Type> returnType = std::make_shared<Type>(ConstName::typeVoid);
+
     Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(),
         returnType);
+
     Ptr<Block> body = std::make_shared<Block>(nullptr);
 
     std::vector<Ptr<Section>> sections = {
@@ -75,7 +77,12 @@ TEST(CodeGenTest, VisitAllocaInst) {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
     std::vector<Ptr<Inst>> insts = {std::make_shared<AllocaInst>(
-        AllocaInstOpts{nullptr, test::constant::foobar, std::make_shared<Type>(ConstName::typeInt32),}),};
+        AllocaInstOpts{
+            nullptr,
+            test::constant::foobar,
+            std::make_shared<Type>(ConstName::typeInt32)
+        })
+    };
 
     Ptr<Function> function = test::bootstrap::emptyFunction(insts);
 
@@ -86,6 +93,7 @@ TEST(CodeGenTest, VisitAllocaInst) {
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_alloca"));
 }
 
+// TODO
 // TEST(CodeGenTest, VisitBranchInst)
 // {
 //     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();

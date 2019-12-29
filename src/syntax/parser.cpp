@@ -8,7 +8,7 @@
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-// TODO: Consider moving to Util class.
+    // TODO: Consider moving to Util class.
     bool Parser::withinRange(long value, long from, long to) {
         return value >= from && value <= to;
     }
@@ -19,7 +19,8 @@ namespace ionir {
 
     void Parser::expect(TokenType type) {
         if (!this->is(type)) {
-            throw std::runtime_error("Unexpected token type: " + std::to_string((int)type));
+            throw std::runtime_error("Expected token type: " + std::to_string((int)type) + ", but got: " +
+                std::to_string((int)this->stream->get().getType()));
         }
     }
 
@@ -88,9 +89,11 @@ namespace ionir {
 
         if (this->withinRange(value, SHRT_MIN, SHRT_MAX)) {
             kind = IntegerKind::Int16;
-        } else if (this->withinRange(value, INT_MIN, INT_MAX)) {
+        }
+        else if (this->withinRange(value, INT_MIN, INT_MAX)) {
             kind = IntegerKind::Int32;
-        } else if (this->withinRange(value, LONG_MIN, LONG_MAX)) {
+        }
+        else if (this->withinRange(value, LONG_MIN, LONG_MAX)) {
             kind = IntegerKind::Int64;
         }
             // TODO: Missing Int128.
@@ -377,20 +380,24 @@ namespace ionir {
         std::string id = this->parseId();
 
         this->skipOver(TokenType::SymbolColon);
+        this->skipOver(TokenType::SymbolBraceL);
 
         // Determine the section's kind.
         SectionKind kind = SectionKind::Label;
 
-        if (id == Const::sectionInternalPrefix + Const::sectionEntryId) {
+        // TODO: Id cannot possibly start with the internal prefix since parseId() does not support '.' on an id!
+
+        if (id == Const::sectionEntryId) {
             kind = SectionKind::Entry;
-        } else if (Util::stringStartsWith(id, Const::sectionInternalPrefix)) {
+        }
+        else if (Util::stringStartsWith(id, Const::sectionInternalPrefix)) {
             kind = SectionKind::Internal;
         }
 
         Ptr<Section> section = std::make_shared<Section>(SectionOpts{
             parent,
             kind,
-            id,
+            id
         });
 
         std::vector<Ptr<Inst>> insts = {};
@@ -496,13 +503,21 @@ namespace ionir {
 
         // TODO: Hard-coded strings. Should be mapped into InstKind enum.
         if (id == "alloca") {
-            return this->parseAllocaInst(parent);
-        } else if (id == "return") {
-            return this->parseReturnInst(parent);
-        } else if (id == "call") {
-            return this->parseCallInst(parent);
-        } else {
+            inst = this->parseAllocaInst(parent);
+        }
+        else if (id == "return") {
+            inst = this->parseReturnInst(parent);
+        }
+        else if (id == "call") {
+            inst = this->parseCallInst(parent);
+        }
+        else {
             throw std::runtime_error("Unrecognized instruction name");
         }
+
+        // All instructions should end denoted by a semi-colon.
+        this->skipOver(TokenType::SymbolSemiColon);
+
+        return inst;
     }
 }

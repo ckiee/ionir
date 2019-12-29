@@ -11,7 +11,7 @@ namespace ionir {
         {TokenType::OperatorMultiply, 40}, {TokenType::OperatorDivide, 40}, {TokenType::OperatorModulo, 40},
         {TokenType::OperatorExponent, 80},};
 
-    const std::string Const::sectionEntryId = Const::sectionInternalPrefix + "entry";
+    const std::string Const::sectionEntryId = "entry";
 
     // TODO: Refactor.
     // Const::Const()
