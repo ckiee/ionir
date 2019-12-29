@@ -24,7 +24,6 @@
 #include <ionir/construct/section.h>
 #include <ionir/reporting/notice.h>
 #include <ionir/reporting/notice_context.h>
-#include <ionir/reporting/notice_type.h>
 #include <ionir/misc/helpers.h>
 #include "scope.h"
 

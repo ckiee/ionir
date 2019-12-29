@@ -1,10 +1,17 @@
 #pragma once
 
 #include <string>
-#include "notice_type.h"
 #include "notice_context.h"
 
 namespace ionir {
+    enum class NoticeType {
+        Warning,
+
+        Error,
+
+        Fatal
+    };
+
     class Notice {
     protected:
         NoticeContext context;

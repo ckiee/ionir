@@ -5,6 +5,7 @@
 #include <ionir/construct/expr/binary_expr.h>
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
+#include <ionir/const/const_name.h>
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
@@ -501,14 +502,13 @@ namespace ionir {
 
         // TODO: Missing more instructions.
 
-        // TODO: Hard-coded strings. Should be mapped into InstKind enum.
-        if (id == "alloca") {
+        if (id == ConstName::instAlloca) {
             inst = this->parseAllocaInst(parent);
         }
-        else if (id == "return") {
+        else if (id == ConstName::instReturn) {
             inst = this->parseReturnInst(parent);
         }
-        else if (id == "call") {
+        else if (id == ConstName::instCall) {
             inst = this->parseCallInst(parent);
         }
         else {
