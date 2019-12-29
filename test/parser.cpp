@@ -2,17 +2,15 @@
 #include <vector>
 #include <ionir/const/const_name.h>
 #include <ionir/construct/insts/inst.h>
-#include <ionir/const/const.h>
 #include <ionir/syntax/parser.h>
 #include "test_api/bootstrap.h"
+#include "test_api/constant.h"
 #include "pch.h"
 
 using namespace ionir;
 
 TEST(ParserTest, ParseInt) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::LiteralInt, "5"),
-    });
+    Parser parser = test::bootstrap::parser({Token(TokenType::LiteralInt, "5"),});
 
     auto integer = parser.parseInt();
 
@@ -20,9 +18,7 @@ TEST(ParserTest, ParseInt) {
 }
 
 TEST(ParserTest, ParseChar) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::LiteralCharacter, "a"),
-    });
+    Parser parser = test::bootstrap::parser({Token(TokenType::LiteralCharacter, "a"),});
 
     auto character = parser.parseChar();
 
@@ -30,9 +26,7 @@ TEST(ParserTest, ParseChar) {
 }
 
 TEST(ParserTest, ParseIdentifier) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "test"),
-    });
+    Parser parser = test::bootstrap::parser({Token(TokenType::Identifier, "test"),});
 
     std::string identifier = parser.parseId();
 
@@ -40,9 +34,7 @@ TEST(ParserTest, ParseIdentifier) {
 }
 
 TEST(ParserTest, ParseType) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type"),
-    });
+    Parser parser = test::bootstrap::parser({Token(TokenType::Identifier, "type"),});
 
     auto type = parser.parseType();
 
@@ -51,10 +43,7 @@ TEST(ParserTest, ParseType) {
 }
 
 TEST(ParserTest, ParsePointerType) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type"),
-        Token(TokenType::SymbolStar, "*"),
-    });
+    Parser parser = test::bootstrap::parser({Token(TokenType::Identifier, "type"), Token(TokenType::SymbolStar, "*"),});
 
     auto type = parser.parseType();
 
@@ -63,10 +52,8 @@ TEST(ParserTest, ParsePointerType) {
 }
 
 TEST(ParserTest, ParseArg) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, "type"),
-        Token(TokenType::Identifier, "test"),
-    });
+    Parser parser = test::bootstrap::parser(
+        {Token(TokenType::Identifier, "type"), Token(TokenType::Identifier, "test"),});
 
     Arg arg = parser.parseArg();
 
@@ -76,10 +63,8 @@ TEST(ParserTest, ParseArg) {
 }
 
 TEST(ParserTest, ParseEmptyBlock) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::SymbolBraceL, "{"),
-        Token(TokenType::SymbolBraceR, "}"),
-    });
+    Parser parser = test::bootstrap::parser(
+        {Token(TokenType::SymbolBraceL, "{"), Token(TokenType::SymbolBraceR, "}"),});
 
     auto block = parser.parseBlock(nullptr);
 
@@ -87,13 +72,10 @@ TEST(ParserTest, ParseEmptyBlock) {
 }
 
 TEST(ParserTest, ParseEmptyPrototype) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, Const::foobar),
-        Token(TokenType::SymbolParenthesesL, "("),
-        Token(TokenType::SymbolParenthesesR, ")"),
-        Token(TokenType::SymbolArrow, "->"),
-        Token(TokenType::Identifier, "type")
-    });
+    Parser parser = test::bootstrap::parser(
+        {Token(TokenType::Identifier, test::constant::foobar), Token(TokenType::SymbolParenthesesL, "("),
+            Token(TokenType::SymbolParenthesesR, ")"), Token(TokenType::SymbolArrow, "->"),
+            Token(TokenType::Identifier, "type")});
 
     auto prototype = parser.parsePrototype();
     auto returnType = prototype->getReturnType();
@@ -104,7 +86,7 @@ TEST(ParserTest, ParseEmptyPrototype) {
     EXPECT_FALSE(returnType->getIsPointer());
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getId(), Const::foobar);
+    EXPECT_EQ(prototype->getId(), test::constant::foobar);
 
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().size(), 0);
@@ -112,16 +94,11 @@ TEST(ParserTest, ParseEmptyPrototype) {
 }
 
 TEST(ParserTest, ParseEmptyFunction) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::KeywordFunction, "fn"),
-        Token(TokenType::Identifier, Const::foobar),
-        Token(TokenType::SymbolParenthesesL, "("),
-        Token(TokenType::SymbolParenthesesR, ")"),
-        Token(TokenType::SymbolArrow, "->"),
-        Token(TokenType::Identifier, "type"),
-        Token(TokenType::SymbolBraceL, "{"),
-        Token(TokenType::SymbolBraceR, "}")
-    });
+    Parser parser = test::bootstrap::parser(
+        {Token(TokenType::KeywordFunction, "fn"), Token(TokenType::Identifier, test::constant::foobar),
+            Token(TokenType::SymbolParenthesesL, "("), Token(TokenType::SymbolParenthesesR, ")"),
+            Token(TokenType::SymbolArrow, "->"), Token(TokenType::Identifier, "type"),
+            Token(TokenType::SymbolBraceL, "{"), Token(TokenType::SymbolBraceR, "}")});
 
     auto function = parser.parseFunction();
 
@@ -129,11 +106,9 @@ TEST(ParserTest, ParseEmptyFunction) {
 }
 
 TEST(ParserTest, ParseAllocaInst) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::Identifier, ConstName::instAlloca),
-        Token(TokenType::Identifier, Const::foobar),
-        Token(TokenType::Identifier, ConstName::typeInt32),
-    });
+    Parser parser = test::bootstrap::parser(
+        {Token(TokenType::Identifier, ConstName::instAlloca), Token(TokenType::Identifier, test::constant::foobar),
+            Token(TokenType::Identifier, ConstName::typeInt32),});
 
     Ptr<Inst> inst = parser.parseInst(nullptr);
 
@@ -141,21 +116,17 @@ TEST(ParserTest, ParseAllocaInst) {
 }
 
 TEST(ParserTest, ParseExtern) {
-    Parser parser = test::bootstrap::parser({
-        Token(TokenType::KeywordExtern, "extern"),
-        Token(TokenType::Identifier, Const::foobar),
-        Token(TokenType::SymbolParenthesesL, "("),
-        Token(TokenType::SymbolParenthesesR, ")"),
-        Token(TokenType::SymbolArrow, "->"),
-        Token(TokenType::Identifier, "type"),
-    });
+    Parser parser = test::bootstrap::parser(
+        {Token(TokenType::KeywordExtern, "extern"), Token(TokenType::Identifier, test::constant::foobar),
+            Token(TokenType::SymbolParenthesesL, "("), Token(TokenType::SymbolParenthesesR, ")"),
+            Token(TokenType::SymbolArrow, "->"), Token(TokenType::Identifier, "type"),});
 
     auto externConstruct = parser.parseExtern();
     auto prototype = externConstruct->getPrototype();
     auto args = prototype->getArgs();
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getId(), Const::foobar);
+    EXPECT_EQ(prototype->getId(), test::constant::foobar);
 
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().size(), 0);

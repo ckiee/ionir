@@ -3,8 +3,8 @@
 #include <array>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/lexer.h>
-#include <ionir/const/const.h>
 #include "test_api/compare.h"
+#include "test_api/constant.h"
 
 using namespace ionir;
 
@@ -44,7 +44,7 @@ TEST(LexerTest, LexTwoSymbols) {
 
     std::array<Token, 2> expected = {
         Token(TokenType::SymbolDollar, "$", 0),
-        Token(TokenType::SymbolHash, "#", 1),
+        Token(TokenType::SymbolHash, "#", 1)
     };
 
     // Compare result with expected.
@@ -61,23 +61,14 @@ TEST(LexerTest, LexSymbols) {
     const int amount = 15;
 
     // Create a list of expected tokens.
-    std::array<Token, amount> expected = {
-        Token(TokenType::SymbolAt, "@", 0),
-        Token(TokenType::SymbolEqual, "=", 1),
-        Token(TokenType::SymbolColon, ":", 2),
-        Token(TokenType::SymbolDollar, "$", 3),
-        Token(TokenType::SymbolHash, "#", 4),
-        Token(TokenType::SymbolParenthesesL, "(", 5),
-        Token(TokenType::SymbolParenthesesR, ")", 6),
-        Token(TokenType::SymbolBracketL, "[", 7),
-        Token(TokenType::SymbolBracketR, "]", 8),
-        Token(TokenType::SymbolComma, ",", 9),
-        Token(TokenType::SymbolTilde, "~", 10),
-        Token(TokenType::SymbolSemiColon, ";", 11),
-        Token(TokenType::SymbolBraceL, "{", 12),
-        Token(TokenType::SymbolBraceR, "}", 13),
-        Token(TokenType::SymbolArrow, "->", 14),
-    };
+    std::array<Token, amount> expected = {Token(TokenType::SymbolAt, "@", 0), Token(TokenType::SymbolEqual, "=", 1),
+        Token(TokenType::SymbolColon, ":", 2), Token(TokenType::SymbolDollar, "$", 3),
+        Token(TokenType::SymbolHash, "#", 4), Token(TokenType::SymbolParenthesesL, "(", 5),
+        Token(TokenType::SymbolParenthesesR, ")", 6), Token(TokenType::SymbolBracketL, "[", 7),
+        Token(TokenType::SymbolBracketR, "]", 8), Token(TokenType::SymbolComma, ",", 9),
+        Token(TokenType::SymbolTilde, "~", 10), Token(TokenType::SymbolSemiColon, ";", 11),
+        Token(TokenType::SymbolBraceL, "{", 12), Token(TokenType::SymbolBraceR, "}", 13),
+        Token(TokenType::SymbolArrow, "->", 14),};
 
     // Compare result with expected.
     test::compare::tokenSets<amount>(expected, actual);
@@ -91,7 +82,7 @@ TEST(LexerTest, LexIdentifiers) {
 
     std::array<Token, 2> expected = {
         Token(TokenType::Identifier, "hello", 0),
-        Token(TokenType::Identifier, "world", 5),
+        Token(TokenType::Identifier, "world", 5)
     };
 
     // Compare result with expected.
@@ -99,20 +90,68 @@ TEST(LexerTest, LexIdentifiers) {
 }
 
 TEST(LexerTest, LexCombination) {
-    Lexer lexer = Lexer(Const::foo + " ( " + Const::bar + " ) -> " + Const::foobar);
+    Lexer lexer = Lexer(test::constant::foo + " ( " + test::constant::bar + " ) -> " + test::constant::foobar);
 
     // Tokenize input and begin inspection.
     std::vector<Token> actual = lexer.scan();
 
     std::array<Token, 6> expected = {
-        Token(TokenType::Identifier, Const::foo, 0),
-        Token(TokenType::SymbolParenthesesL, "(", 5),
-        Token(TokenType::Identifier, Const::bar, 6),
-        Token(TokenType::SymbolParenthesesR, ")", 7),
-        Token(TokenType::SymbolArrow, "->", 8),
-        Token(TokenType::Identifier, Const::foobar, 10)
+        Token(TokenType::Identifier, test::constant::foo, 0),
+        Token(TokenType::SymbolParenthesesL, "(", 5), Token(TokenType::Identifier, test::constant::bar, 6),
+        Token(TokenType::SymbolParenthesesR, ")", 7), Token(TokenType::SymbolArrow, "->", 8),
+        Token(TokenType::Identifier, test::constant::foobar, 10)
     };
 
     // Compare result with expected.
     test::compare::tokenSets<6>(expected, actual);
+}
+
+TEST(LexerTest, LexCharacter) {
+    Lexer lexer = Lexer("'a'");
+    Token actual = lexer.scan()[0];
+    Token expected = Token(TokenType::LiteralCharacter, "a", 0);
+
+    EXPECT_EQ(actual, expected);
+}
+
+TEST(LexerTest, LexEmptyCharacter) {
+    Lexer lexer = Lexer("''");
+    Token actual = lexer.scan()[0];
+    std::cout << actual << std::endl;
+
+    Token expected = Token(TokenType::LiteralCharacter, "", 0);
+
+    EXPECT_EQ(actual, expected);
+}
+
+TEST(LexerTest, LexString) {
+    Lexer lexer = Lexer("\"hello world\"");
+    Token actual = lexer.scan()[0];
+    Token expected = Token(TokenType::LiteralString, "hello world", 0);
+
+    EXPECT_EQ(actual, expected);
+}
+
+TEST(LexerTest, LexEmptyString) {
+    Lexer lexer = Lexer("\"\"");
+    Token actual = lexer.scan()[0];
+    Token expected = Token(TokenType::LiteralString, "", 0);
+
+    EXPECT_EQ(actual, expected);
+}
+
+TEST(LexerTest, LexInteger) {
+    Lexer lexer = Lexer("1");
+    Token actual = lexer.scan()[0];
+    Token expected = Token(TokenType::LiteralInt, "1", 0);
+
+    EXPECT_EQ(actual, expected);
+}
+
+TEST(LexerTest, LexDecimal) {
+    Lexer lexer = Lexer("3.14");
+    Token actual = lexer.scan()[0];
+    Token expected = Token(TokenType::LiteralInt, "3.14", 0);
+
+    EXPECT_EQ(actual, expected);
 }

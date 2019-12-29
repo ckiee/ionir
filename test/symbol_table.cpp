@@ -1,6 +1,6 @@
 #include <vector>
-#include <ionir/const/const.h>
 #include <ionir/tracking/symbol_table.h>
+#include "test_api/constant.h"
 #include "pch.h"
 
 using namespace ionir;
@@ -10,9 +10,7 @@ TEST(SymbolTableTest, InsertSymbol) {
 
     EXPECT_EQ(symbols.size(), 0);
 
-    Symbol symbol = Symbol{
-        Const::foobar
-    };
+    Symbol symbol = Symbol{test::constant::foobar};
 
     symbols.insertSymbol(symbol);
 

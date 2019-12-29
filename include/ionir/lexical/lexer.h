@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <optional>
+#include <utility>
 #include <ionir/const/token_const.h>
 #include <ionir/misc/util.h>
 #include <ionir/misc/regex.h>
@@ -13,6 +14,14 @@
 #include "token.h"
 
 namespace ionir {
+    struct MatchResult {
+        bool success;
+
+        std::optional<std::string> matchedValue = std::nullopt;
+
+        std::optional<std::string> capturedValue = std::nullopt;
+    };
+
     class Lexer : public Generator<Token> {
     private:
         std::string input;
@@ -36,7 +45,7 @@ namespace ionir {
 
         size_t skip(size_t amount = 1);
 
-        bool matchExpression(Token *token, TokenType type, std::regex regex);
+        MatchResult matchExpression(Token &token, TokenType type, std::regex regex, bool expectCapturedValue = false);
 
         void processWhitespace();
 

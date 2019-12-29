@@ -1,8 +1,7 @@
-#include "pch.h"
-#include <ionir/const/const.h>
 #include "test_api/util.h"
 #include "test_api/compare.h"
 #include "test_api/filesystem.h"
+#include "test_api/constant.h"
 
 using namespace ionir::test;
 
@@ -51,12 +50,12 @@ TEST(TestApiTest, ReadFileContents) {
     std::optional<std::string> contents = fs::readFileContents(fs::resolvePath("test/data/test.txt"));
 
     EXPECT_TRUE(contents.has_value());
-    EXPECT_EQ(*contents, ionir::Const::foobar + "\n");
+    EXPECT_EQ(*contents, ionir::test::constant::foobar + "\n");
 }
 
 TEST(TestApiTest, ReadTestFile) {
     std::optional<std::string> contents = fs::readTestFile("data/test.txt");
 
     EXPECT_TRUE(contents.has_value());
-    EXPECT_EQ(*contents, ionir::Const::foobar + "\n");
+    EXPECT_EQ(*contents, ionir::test::constant::foobar + "\n");
 }

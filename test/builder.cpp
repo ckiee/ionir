@@ -1,16 +1,12 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/misc/inst_builder.h>
-#include <ionir/const/const.h>
+#include "test_api/constant.h"
 #include "pch.h"
 
 using namespace ionir;
 
 TEST(InstBuilderTest, GetSection) {
-    Ptr<Section> section = std::make_shared<Section>(SectionOpts{
-        nullptr,
-        SectionKind::Label,
-        Const::foobar,
-    });
+    Ptr<Section> section = std::make_shared<Section>(SectionOpts{nullptr, SectionKind::Label, test::constant::foobar});
 
     Ptr<InstBuilder> builder = std::make_shared<InstBuilder>(section);
 

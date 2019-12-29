@@ -1,3 +1,6 @@
+#define MATCH_INDEX_MATCHED 0
+#define MATCH_INDEX_CAPTURED 1
+
 #include <ionir/lexical/lexer.h>
 
 namespace ionir {
@@ -38,30 +41,48 @@ namespace ionir {
         return this->setIndex(this->index + amount);
     }
 
-    bool Lexer::matchExpression(Token *token, TokenType type, std::regex regex) {
+    MatchResult Lexer::matchExpression(Token &token, TokenType type, std::regex regex, bool expectCapturedValue) {
+        MatchResult result = {
+            false
+        };
+
         // Substring from the current index to get the viable matching string.
         std::string input = this->input.substr(this->index);
         std::smatch match;
 
-        bool success = std::regex_search(input, match, regex);
-
         // If successful, return a new token with different value and type.
-        if (success) {
-            // Extract the captured value from the match.
-            std::string value = match[0];
+        if (std::regex_search(input, match, regex)) {
+            // If applicable, match should contain both matched value (at index 0) and a captured value (at index 1).
+            if (expectCapturedValue && match.size() < 2) {
+                throw std::runtime_error("Successful regex match may not contain a captured value");
+            }
 
-            // Modify the result.
-            *token = Token(type, value, token->getStartPosition());
+            int index = expectCapturedValue ? MATCH_INDEX_CAPTURED : MATCH_INDEX_MATCHED;
 
-            // Skip the capture value's amount.
-            this->skip(value.length());
+            // Extract the matched or captured value from the match.
+            std::string value = match[index];
 
-            // Return true to indicate success.
-            return true;
+            // Finalize result's properties.
+            result.success = true;
+            result.matchedValue = match[MATCH_INDEX_MATCHED];
+
+            // Set the result's captured value property if applicable.
+            if (expectCapturedValue) {
+                result.capturedValue = match[MATCH_INDEX_CAPTURED];
+            }
+
+            // Modify the input token (since it was passed by reference).
+            token = Token(type, value, token.getStartPosition());
+
+            // Skip the matched value's length (never the captured one).
+            this->skip(result.matchedValue->length());
+
+            // Return the successful, modified result.
+            return result;
         }
 
-        // Return false to indicate failure.
-        return false;
+        // Return default result, which indicates failure.
+        return result;
     }
 
     void Lexer::processWhitespace() {
@@ -71,8 +92,8 @@ namespace ionir {
         }
     }
 
-    Lexer::Lexer(std::string input)
-        : input(input), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
+    Lexer::Lexer(std::string input) : input(input), simpleIds(TokenConst::getSortedSimpleIds()),
+        complexIds(TokenConst::getComplexIds()) {
         this->length = this->input.length();
 
         // Input string must contain at least one character.
@@ -113,16 +134,25 @@ namespace ionir {
         for (const auto pair : this->simpleIds) {
             // Test the first letter of the subject to continue.
             if (tokenValue[0] == pair.first[0]) {
-                // Produce a Regex instance to match the exact value of the simple identifier. It is important that the initial value is escaped of any Regex special characters.
+                /**
+                 * Produce a Regex instance to match the exact value of the
+                 * simple identifier. It is important that the initial value
+                 * is escaped of any Regex special characters.
+                 */
                 std::regex regex = Util::createPureRegex(pair.first);
 
-                // If the match starts with a letter, modify the regex to force either whitespace or EOF at the end.
+                /**
+                 * If the match starts with a letter, modify the regex to force
+                 * either whitespace or EOF at the end.
+                 */
                 if (std::regex_match(tokenValue, Regex::identifier)) {
                     // Modify the plain regex to meet requirements at the end.
                     regex = std::regex(pair.first + "(?:\\s|$)");
                 }
 
-                if (this->matchExpression(&token, pair.second, regex)) {
+                MatchResult matchResult = this->matchExpression(token, pair.second, regex);
+
+                if (matchResult.success) {
                     // Reduce the position.
                     // TODO: Causing problems, works when commented HERE.
                     //this.SetPosition(this.Position - token.Value.Length - pair.Key.Length);
@@ -138,8 +168,10 @@ namespace ionir {
 
         // Begin iteration through complex identifiers.
         for (const auto pair : this->complexIds) {
+            MatchResult matchResult = this->matchExpression(token, pair.second, pair.first, true);
+
             // If it matches, return the token (already modified by the matchExpression function).
-            if (this->matchExpression(&token, pair.second, pair.first)) {
+            if (matchResult.success) {
                 return token;
             }
         }
