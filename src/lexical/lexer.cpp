@@ -91,8 +91,9 @@ namespace ionir {
         std::smatch match;
         std::string subject = this->getCharAsString();
 
-        while (std::regex_search(subject, match, Regex::whitespace)) {
+        while (std::regex_search(subject, match, Regex::whitespace) && this->hasNext()) {
             this->skip();
+            subject = this->getCharAsString();
         }
     }
 
@@ -127,14 +128,21 @@ namespace ionir {
             return std::nullopt;
         }
 
+        // First, ignore all whitespace if applicable.
+        this->processWhitespace();
+
+        // No more possible tokens to retrieve.
+        if (!this->hasNext()) {
+            return std::nullopt;
+        }
+
         // Set the initial Token buffer as Unknown.
         Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
 
-        // Ignore whitespace if applicable.
-        this->processWhitespace();
-
+        // Abstract the Token's value for easier access.
         std::string tokenValue = token.getValue();
 
+        // Begin by testing against all simple until a possible match is found.
         for (const auto pair : this->simpleIds) {
             // Test the first letter of the subject to continue.
             if (tokenValue[0] == pair.first[0]) {
@@ -170,20 +178,20 @@ namespace ionir {
             }
         }
 
-        // Begin iteration through complex identifiers.
+        // No simple was matched, proceed to test complex.
         for (const auto pair : this->complexIds) {
             MatchResult matchResult = this->matchExpression(token, pair.second, pair.first, true);
 
-            // If it matches, return the token (already modified by the matchExpression function).
+            // If it matches, return the Token (already modified by the matchExpression function).
             if (matchResult.success) {
                 return token;
             }
         }
 
-        // At this point the token was not identified. Skip over any captured value.
+        // At this point the Token was not identified. Skip over any captured value.
         this->skip(tokenValue.length());
 
-        // Return the default token. The token type defaults to unknown.
+        // Return the default Token. The Token type defaults to Unknown.
         return token;
     }
 

@@ -82,7 +82,7 @@ TEST(LexerTest, LexIdentifiers) {
 
     std::array<Token, 2> expected = {
         Token(TokenType::Identifier, "hello", 0),
-        Token(TokenType::Identifier, "world", 5)
+        Token(TokenType::Identifier, "world", 6)
     };
 
     // Compare result with expected.
@@ -95,12 +95,8 @@ TEST(LexerTest, IgnoreWhitespace) {
     // Tokenize input and begin inspection.
     std::vector<Token> actual = lexer.scan();
 
-    for (auto tok : actual) {
-        std::cout << tok << std::endl;
-    }
-
     std::array<Token, 1> expected = {
-        Token(TokenType::Identifier, test::constant::foobar, 0)
+        Token(TokenType::Identifier, test::constant::foobar, 3)
     };
 
     // Compare result with expected.
@@ -113,17 +109,13 @@ TEST(LexerTest, LexCombination) {
     // Tokenize input and begin inspection.
     std::vector<Token> actual = lexer.scan();
 
-    for (auto tok : actual) {
-        std::cout << "TOK: " << tok << std::endl;
-    }
-
     std::array<Token, 6> expected = {
         Token(TokenType::Identifier, test::constant::foo, 0),
-        Token(TokenType::SymbolParenthesesL, "(", 3),
+        Token(TokenType::SymbolParenthesesL, "(", 4),
         Token(TokenType::Identifier, test::constant::bar, 6),
-        Token(TokenType::SymbolParenthesesR, ")", 7),
-        Token(TokenType::SymbolArrow, "->", 8),
-        Token(TokenType::Identifier, test::constant::foobar, 10)
+        Token(TokenType::SymbolParenthesesR, ")", 10),
+        Token(TokenType::SymbolArrow, "->", 12),
+        Token(TokenType::Identifier, test::constant::foobar, 15)
     };
 
     // Compare result with expected.
@@ -174,7 +166,6 @@ TEST(LexerTest, LexInteger) {
 TEST(LexerTest, LexDecimal) {
     Lexer lexer = Lexer("3.14");
     Token actual = lexer.scan()[0];
-    std::cout << "Actual: " << actual << std::endl;
     Token expected = Token(TokenType::LiteralDecimal, "3.14", 0);
 
     EXPECT_EQ(actual, expected);
