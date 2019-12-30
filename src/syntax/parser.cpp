@@ -45,7 +45,7 @@ namespace ionir {
     }
 
     std::nullopt_t Parser::makeNotice(std::string message, NoticeType type = NoticeType::Error) {
-        this->createNoticeFactory().make(type, message);
+        this->stackTrace->push(this->createNoticeFactory().make(type, message));
 
         return std::nullopt;
     }

@@ -19,10 +19,12 @@ A general usage example is provided below.
 ```cpp
 #include <iostream>
 #include <string>
-#include "ionir/generation/driver.h"
-#include "ionir/syntax/lexer.h"
-#include "ionir/syntax/token.h"
-#include "ionir/misc/iterator.h"
+#include <ionir/generation/driver.h>
+#include <ionir/lexical/lexer.h>
+#include <ionir/lexical/token.h>
+#include <ionir/misc/iterator.h>
+
+using namespace ionir;
 
 int main() {
     // Create a lexer to tokenize input.
@@ -53,7 +55,6 @@ int main() {
 * [zlib](https://zlib.net/)
 * [CMake >=v3.13.X](https://cmake.org/download/)
 * [Python =v2.7](https://www.python.org/download/releases/2.7/)
-* ~~[Visual Studio 2019 with C++ tools (Windows)](https://visualstudio.microsoft.com/downloads/)~~
 * [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) with GNU >=v8.1.0
 * [LLVM >=v9.0.0](https://releases.llvm.org/download.html) (must build from source on Windows, see section below)
 
@@ -113,13 +114,7 @@ The `CMAKE_BUILD_TYPE=Release` option will instruct CMake to build the project u
 
 **Additional notes**
 
-* After this, LLVM will be installed to your machine and some required include files (ex. `IntrinsicEnums.inc`) will be generated under your installation directory, (on Windows it's usually `C:\Program Files (x86)\LLVM\include`). Copy these required files onto the local git submodule directories, and you should be good to go. Skipping this step may cause include errors, as some of LLVM's header files `#include` these generated files. Additionally, you can find out which generated files are missing by simply following include errors. Below is a list of possible generated files you might have to copy over (may not be all):
-    * `llvm/Config/llvm-config.h`
-    * `llvm/Config/abi-breaking.h`
-    * `llvm/IR/IntrinsicEnums.inc`
-    * `llvm/IR/Attributes.inc`
-
-* LLVM sources, which are exclusively compatible with CMake, shold now be ready to be included in your `CMakeLists.txt` file. See example below:
+* LLVM sources, which are exclusively compatible with CMake, should now be ready to be included in your `CMakeLists.txt` file. See example below:
 
 ```cmake
 ...
@@ -177,8 +172,8 @@ If intelli-sense is failing in Visual Studio Code, there may be a few reasons be
 
 1. Additional tools
 
-* [libTooling](https://clang.llvm.org/docs/LibTooling.html)
-* [libClang](https://clang.llvm.org/doxygen/group__CINDEX.html)
+* [libTooling](https://clang.llvm.org/docs/LibTooling.html) (not yet employed)
+* [libClang](https://clang.llvm.org/doxygen/group__CINDEX.html) (not yet employed)
 
 [Click here](https://clang.llvm.org/docs/Tooling.html) for more information.
 
