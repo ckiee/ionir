@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stack>
 #include <iosfwd>
 #include <string>
 #include <ionir/container/stack.h>
@@ -9,11 +10,17 @@
 namespace ionir {
     class StackTrace : public Wrapper<Stack<Notice>> {
     public:
-        explicit StackTrace(Stack<Notice> value = {});
+        explicit StackTrace();
 
-        Stack<Notice> get() const;
+        explicit StackTrace(Stack<Notice> value);
 
-        void put(Notice notice);
+        explicit StackTrace(std::stack<Notice> value);
+
+        Stack<Notice> getStack() const;
+
+        void push(Notice notice);
+
+        bool isEmpty() const;
 
         std::string make();
     };

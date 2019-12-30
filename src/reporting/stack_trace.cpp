@@ -2,16 +2,28 @@
 #include <ionir/reporting/stack_trace.h>
 
 namespace ionir {
+    StackTrace::StackTrace() : Wrapper<Stack<Notice>>({}) {
+        //
+    }
+
     StackTrace::StackTrace(Stack<Notice> value) : Wrapper<Stack<Notice>>(value) {
         //
     }
 
-    Stack<Notice> StackTrace::get() const {
+    StackTrace::StackTrace(std::stack<Notice> value) : StackTrace(Stack<Notice>(value)) {
+        //
+    }
+
+    Stack<Notice> StackTrace::getStack() const {
         return this->value;
     }
 
-    void StackTrace::put(Notice notice) {
+    void StackTrace::push(Notice notice) {
         this->value.push(notice);
+    }
+
+    bool StackTrace::isEmpty() const {
+        return this->value.isEmpty();
     }
 
     std::string StackTrace::make() {
@@ -34,4 +46,5 @@ namespace ionir {
 
         return stackTrace.str();
     }
+
 }

@@ -70,5 +70,9 @@ namespace ionir {
                 }
             }
         }
+
+        size_t size() const {
+            return this->value.size();
+        }
     };
 }
