@@ -38,5 +38,7 @@ namespace ionir {
 
             return std::nullopt;
         }
+
+        static bool withinRange(long value, long from, long to);
     };
 }

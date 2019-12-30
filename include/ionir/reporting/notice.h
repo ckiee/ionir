@@ -13,7 +13,7 @@ namespace ionir {
     };
 
     class Notice {
-    protected:
+    private:
         NoticeContext context;
 
         NoticeType type;
@@ -21,6 +21,8 @@ namespace ionir {
         std::string message;
 
     public:
+        static std::string getText(NoticeType type);
+
         Notice(NoticeContext context, NoticeType type, std::string message);
 
         NoticeContext getContext() const;

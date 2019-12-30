@@ -1,8 +1,8 @@
 #include <ionir/reporting/notice_context.h>
 
 namespace ionir {
-    NoticeContext::NoticeContext(std::string filePath, size_t lineNumber, size_t position) : filePath(filePath),
-        lineNumber(lineNumber), position(position) {
+    NoticeContext::NoticeContext(std::string filePath, size_t lineNumber, size_t position)
+        : filePath(filePath), lineNumber(lineNumber), position(position) {
         //
     }
 

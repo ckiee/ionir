@@ -42,19 +42,15 @@ namespace ionir {
     protected:
         TokenIdentifier getTokenIdentifier() const;
 
-        bool withinRange(long value, long from, long to);
-
         bool is(TokenType type);
 
         bool expect(TokenType type);
 
         void skipOver(TokenType type);
 
-        Ptr<Scope> createScope();
-
         NoticeFactory createNoticeFactory();
 
-        std::nullopt_t makeNotice(NoticeType type, std::string message);
+        std::nullopt_t makeNotice(std::string message, NoticeType type);
 
     public:
         explicit Parser(TokenStream *stream, Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>(),

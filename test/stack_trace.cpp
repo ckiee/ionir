@@ -1,34 +1,37 @@
 #include <iostream>
 #include <ionir/reporting/stack_trace.h>
 #include <ionir/reporting/notice.h>
+#include <ionir/const/const_name.h>
+#include <ionir/misc/console_color.h>
 #include "test_api/constant.h"
 #include "pch.h"
 
 using namespace ionir;
 
 // TODO: Move to Test API.
-Notice makeNotice() {
-    return Notice(NoticeContext(0, 0, 0), NoticeType::Error, test::constant::foobar);
+inline Notice makeNotice() {
+    return Notice(NoticeContext(ConstName::anonymous, 1, 2), NoticeType::Error, test::constant::foobar);
 }
 
 TEST(StackTraceTest, Initialize) {
     StackTrace stackTrace = StackTrace();
-    Stack<Notice> innerStack = stackTrace.unwrap();
+    Stack<Notice> &innerStack = stackTrace.unwrap();
 
     EXPECT_TRUE(innerStack.isEmpty());
-    EXPECT_EQ(innerStack.size(), 1);
 
     std::stack<Notice> stack = {};
 
     stack.push(makeNotice());
     stackTrace = StackTrace(stack);
+    innerStack = stackTrace.unwrap();
 
-    EXPECT_FALSE(stackTrace.unwrap().isEmpty());
+    EXPECT_FALSE(innerStack.isEmpty());
+    EXPECT_EQ(innerStack.size(), 1);
 }
 
 TEST(StackTraceTest, Push) {
     StackTrace stackTrace = StackTrace();
-    Stack<Notice> innerStack = stackTrace.unwrap();
+    Stack<Notice> &innerStack = stackTrace.unwrap();
     Notice notice = makeNotice();
 
     stackTrace.push(notice);
@@ -51,12 +54,14 @@ TEST(StackTraceTest, Size) {
     // TODO
 }
 
+// TODO: Need to verify that order after invoking Make() is preserved.
 TEST(StackTraceTest, Make) {
     StackTrace stackTrace = StackTrace();
 
     stackTrace.push(makeNotice());
 
-    std::string result = stackTrace.make();
+    std::optional<std::string> result = stackTrace.make();
 
-    std::cout << result;
+    // TODO: Finish implementing test.
+    std::cout << ("Make result (" + std::to_string(result->length()) + " chars): ") << ConsoleColor::red(*result);
 }

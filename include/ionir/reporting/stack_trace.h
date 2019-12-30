@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <stack>
 #include <iosfwd>
 #include <string>
@@ -22,10 +23,10 @@ namespace ionir {
 
         bool isEmpty() const;
 
-        std::string make();
+        std::optional<std::string> make();
     };
 
     inline std::ostream &operator<<(std::ostream &stream, StackTrace &noticeJar) {
-        return stream << noticeJar.make();
+        return stream << noticeJar.make().value_or(nullptr);
     }
 }

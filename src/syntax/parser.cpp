@@ -9,16 +9,11 @@
 #include <ionir/syntax/parser.h>
 
 #define IONIR_PARSER_EXPECT(type) if (!this->expect(type)) { return std::nullopt; }
-#define IONIR_PARSER_ASSURE(value) if (!value.has_value()) { return std::nullopt; }
+#define IONIR_PARSER_ASSURE(value) if (!value.has_value()) { return this->makeNotice("Unexpected parsed constructed to be null"); }
 
 namespace ionir {
     TokenIdentifier Parser::getTokenIdentifier() const {
         return this->tokenIdentifier;
-    }
-
-    // TODO: Consider moving to Util class.
-    bool Parser::withinRange(long value, long from, long to) {
-        return value >= from && value <= to;
     }
 
     bool Parser::is(TokenType type) {
@@ -27,8 +22,8 @@ namespace ionir {
 
     bool Parser::expect(TokenType type) {
         if (!this->is(type)) {
-            this->makeNotice(NoticeType::Fatal, "Expected token type: " + std::to_string((int)type) + ", but got: " +
-                std::to_string((int)this->stream->get().getType()));
+            this->makeNotice("Expected token type: " + std::to_string((int)type) + ", but got: " +
+                std::to_string((int)this->stream->get().getType()), NoticeType::Fatal);
 
             return false;
         }
@@ -41,11 +36,6 @@ namespace ionir {
         this->stream->skip();
     }
 
-    Ptr<Scope> Parser::createScope() {
-        // TODO
-        return nullptr;
-    }
-
     NoticeFactory Parser::createNoticeFactory() {
         // Abstract current Token for easier access.
         Token token = this->stream->get();
@@ -54,7 +44,7 @@ namespace ionir {
         return NoticeFactory(NoticeContext(this->filePath, 0, token.getStartPosition()));
     }
 
-    std::nullopt_t Parser::makeNotice(NoticeType type, std::string message) {
+    std::nullopt_t Parser::makeNotice(std::string message, NoticeType type = NoticeType::Error) {
         this->createNoticeFactory().make(type, message);
 
         return std::nullopt;
@@ -88,7 +78,7 @@ namespace ionir {
             }
 
             default: {
-                return this->makeNotice(NoticeType::Warning, "Unknown top-level construct");
+                return this->makeNotice("Unknown top-level construct");
             }
         }
     }
@@ -104,23 +94,23 @@ namespace ionir {
 
         std::optional<IntegerKind> kind = std::nullopt;
 
-        if (this->withinRange(value, SHRT_MIN, SHRT_MAX)) {
+        if (Util::withinRange(value, SHRT_MIN, SHRT_MAX)) {
             kind = IntegerKind::Int16;
         }
-        else if (this->withinRange(value, INT_MIN, INT_MAX)) {
+        else if (Util::withinRange(value, INT_MIN, INT_MAX)) {
             kind = IntegerKind::Int32;
         }
-        else if (this->withinRange(value, LONG_MIN, LONG_MAX)) {
+        else if (Util::withinRange(value, LONG_MIN, LONG_MAX)) {
             kind = IntegerKind::Int64;
         }
             // TODO: Missing Int128.
         else {
-            throw std::runtime_error("Unable to identify integer kind for value");
+            return this->makeNotice("Unable to identify integer kind for value");
         }
 
         // At this point, kind must be set.
         if (!kind.has_value()) {
-            throw std::runtime_error("Expected kind to be defined");
+            return this->makeNotice("Expected kind to be defined");
         }
 
         // Create the integer instance.
@@ -144,7 +134,7 @@ namespace ionir {
 
         // Ensure extracted value only contains a single character.
         if (stringValue.length() > 1) {
-            return this->makeNotice(NoticeType::Error, "Character value length must be at most 1 character");
+            return this->makeNotice("Character value length must be at most 1 character");
         }
 
         // Create the character construct with the first and only character of the captured value.
@@ -218,9 +208,7 @@ namespace ionir {
             if (this->is(TokenType::SymbolComma)) {
                 // Prevent leading, lonely comma.
                 if (args.size() == 0) {
-                    // TODO: Add as notice.
-                    // this->pushNotice(NoticeType::Error, "Leading comma in argument list is not allowed");
-                    throw std::runtime_error("Leading comma in argument list is not allowed");
+                    return this->makeNotice("Leading comma in argument list is not allowed");
                 }
 
                 // Skip over comma token.
@@ -297,7 +285,7 @@ namespace ionir {
 
         // TODO
 
-        return nullptr;
+        return std::nullopt;
     }
 
     std::optional<Ptr<Value>> Parser::parseValue() {
@@ -315,7 +303,7 @@ namespace ionir {
                 // TODO: Missing values.
 
             default: {
-                throw std::runtime_error("Expected valid value token");
+                return this->makeNotice("Expected valid value token");
             }
         }
     }
@@ -328,6 +316,8 @@ namespace ionir {
 
     std::optional<Ptr<Expr>> Parser::parsePrimaryExpr() {
         TokenType type = this->stream->get().getType();
+
+        return this->makeNotice("Not yet implemented");
 
         switch (type) {
             // Identifier expression.
@@ -369,7 +359,7 @@ namespace ionir {
             // TODO: Should check if it's a BINARY operator, not just an operator.
             // Ensure the captured operator is validated.
             if (!TokenIdentifier::isOperator(binaryOperator)) {
-                throw std::runtime_error("Expected token to be a binary operator");
+                return this->makeNotice("Expected token to be a binary operator");
             }
 
             // Skip operator.
@@ -382,7 +372,7 @@ namespace ionir {
 
             // Ensure that the right-side was successfully parsed.
             if (!rightSide.has_value()) {
-                throw std::runtime_error("Unable to parse the right-side of the binary expression");
+                return this->makeNotice("Unable to parse the right-side of the binary expression");
             }
 
             // Determine the token precedence of the current token.
@@ -399,7 +389,7 @@ namespace ionir {
 
                 // Ensure the right-side was successfully parsed.
                 if (rightSide == nullptr) {
-                    throw std::runtime_error("Unable to parse the right-side of the binary expression");
+                    return this->makeNotice("Unable to parse the right-side of the binary expression");
                 }
             }
 
@@ -554,7 +544,7 @@ namespace ionir {
     std::optional<Ptr<CallInst>> Parser::parseCallInst(Ptr<Section> parent) {
         // TODO
 
-        return std::nullopt;
+        return this->makeNotice("Not yet implemented");
     }
 
     std::optional<Ptr<Inst>> Parser::parseInst(Ptr<Section> parent) {
@@ -577,7 +567,7 @@ namespace ionir {
             inst = this->parseCallInst(parent);
         }
         else {
-            return this->makeNotice(NoticeType::Error, "Unrecognized instruction name");
+            return this->makeNotice("Unrecognized instruction name");
         }
 
         // All instructions should end denoted by a semi-colon.

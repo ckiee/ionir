@@ -49,8 +49,6 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 
     Module module = Module(visitor->getModule());
 
-    module.print();
-
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "function_empty"));
 }
 

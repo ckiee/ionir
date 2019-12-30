@@ -27,4 +27,8 @@ namespace ionir {
     std::regex Util::createPureRegex(std::string value) {
         return std::regex(Util::escapeRegex(value));
     }
+
+    bool Util::withinRange(long value, long from, long to) {
+        return value >= from && value <= to;
+    }
 }
