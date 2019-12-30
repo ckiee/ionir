@@ -28,5 +28,7 @@ namespace ionir {
         NoticeType getType() const;
 
         std::string getMessage() const;
+
+        std::string createTrace() const;
     };
 }

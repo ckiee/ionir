@@ -5,19 +5,19 @@
 namespace ionir {
     class NoticeContext {
     protected:
-        std::string fileName;
+        std::string filePath;
 
-        int lineNumber;
+        size_t lineNumber;
 
-        int position;
+        size_t position;
 
     public:
-        NoticeContext(std::string fileName, int lineNumber, int position);
+        NoticeContext(std::string filePath, size_t lineNumber, size_t position);
 
-        std::string getFileName() const;
+        std::string getFilePath() const;
 
-        int getLineNumber() const;
+        size_t getLineNumber() const;
 
-        int getPosition() const;
+        size_t getPosition() const;
     };
 }

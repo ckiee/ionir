@@ -22,94 +22,101 @@
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/block.h>
 #include <ionir/construct/section.h>
-#include <ionir/reporting/notice.h>
-#include <ionir/reporting/notice_context.h>
+#include <ionir/reporting/stack_trace.h>
+#include <ionir/reporting/notice_factory.h>
 #include <ionir/misc/helpers.h>
+#include <ionir/const/const_name.h>
 #include "scope.h"
 
 namespace ionir {
     class Parser {
-    protected:
+    private:
         TokenStream *stream;
 
-        std::vector<Notice> notices;
+        Ptr<StackTrace> stackTrace;
+
+        std::string filePath;
 
         TokenIdentifier tokenIdentifier;
+
+    protected:
+        TokenIdentifier getTokenIdentifier() const;
 
         bool withinRange(long value, long from, long to);
 
         bool is(TokenType type);
 
-        void expect(TokenType type);
+        bool expect(TokenType type);
 
         void skipOver(TokenType type);
 
-        NoticeContext createNoticeContext();
-
-        Notice createNotice(NoticeType type, std::string message);
-
         Ptr<Scope> createScope();
 
-        void pushNotice(NoticeType type, std::string message);
+        NoticeFactory createNoticeFactory();
+
+        std::nullopt_t makeNotice(NoticeType type, std::string message);
 
     public:
-        Parser(TokenStream *stream);
+        explicit Parser(TokenStream *stream, Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>(),
+            std::string filePath = ConstName::anonymous);
 
-        std::vector<Notice> getNotices() const;
+        Ptr<StackTrace> getStackTrace() const;
 
-        Ptr<Construct> parseTopLevel();
+        std::string getFilePath() const;
+
+        std::optional<Ptr<Construct>> parseTopLevel();
 
         /**
          * Parses a integer literal in the form of
          * long (or integer 64).
          */
-        Ptr<IntegerValue> parseInt();
+        std::optional<Ptr<IntegerValue>> parseInt();
 
-        Ptr<CharValue> parseChar();
+        std::optional<Ptr<CharValue>> parseChar();
 
-        Ptr<StringValue> parseString();
+        std::optional<Ptr<StringValue>> parseString();
 
-        std::string parseId();
+        std::optional<std::string> parseId();
 
-        Ptr<Type> parseType();
+        std::optional<Ptr<Type>> parseType();
 
-        Arg parseArg();
+        std::optional<Arg> parseArg();
 
-        Ptr<Args> parseArgs();
+        std::optional<Ptr<Args>> parseArgs();
 
-        Ptr<Prototype> parsePrototype();
+        std::optional<Ptr<Prototype>> parsePrototype();
 
-        Ptr<Extern> parseExtern();
+        std::optional<Ptr<Extern>> parseExtern();
 
-        Ptr<Function> parseFunction();
+        std::optional<Ptr<Function>> parseFunction();
 
-        Ptr<Global> parseGlobal();
+        std::optional<Ptr<Global>> parseGlobal();
 
-        Ptr<Value> parseValue();
+        std::optional<Ptr<Value>> parseValue();
 
-        Ptr<IdExpr> parseIdExpr();
+        std::optional<Ptr<IdExpr>> parseIdExpr();
 
         std::optional<Ptr<Expr>> parsePrimaryExpr();
 
-        Ptr<Expr> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
+        std::optional<Ptr<Expr>> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
 
-        Ptr<Section> parseSection(Ptr<Block> parent);
+        std::optional<Ptr<Section>> parseSection(Ptr<Block> parent);
 
-        Ptr<Block> parseBlock(Ptr<Function> parent);
+        std::optional<Ptr<Block>> parseBlock(Ptr<Function> parent);
 
-        Ptr<AllocaInst> parseAllocaInst(Ptr<Section> parent);
+        std::optional<Ptr<AllocaInst>> parseAllocaInst(Ptr<Section> parent);
 
-        Ptr<ReturnInst> parseReturnInst(Ptr<Section> parent);
+        std::optional<Ptr<ReturnInst>> parseReturnInst(Ptr<Section> parent);
 
-        Ptr<BranchInst> parseBranchInst(Ptr<Section> parent);
+        std::optional<Ptr<BranchInst>> parseBranchInst(Ptr<Section> parent);
 
-        Ptr<CallInst> parseCallInst(Ptr<Section> parent);
+        std::optional<Ptr<CallInst>> parseCallInst(Ptr<Section> parent);
 
         /**
          * Parses an instruction, consuming its identifier.
          * Invokes the corresponding parser depending on its
          * identifier.
          */
-        Ptr<Inst> parseInst(Ptr<Section> parent);
+        std::optional<Ptr<Inst>> parseInst(Ptr<Section> parent);
     };
 }

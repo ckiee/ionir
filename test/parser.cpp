@@ -1,4 +1,3 @@
-#include <string>
 #include <vector>
 #include <ionir/const/const_name.h>
 #include <ionir/construct/insts/inst.h>
@@ -16,7 +15,8 @@ TEST(ParserTest, ParseInt) {
 
     auto integer = parser.parseInt();
 
-    EXPECT_EQ(integer->getValue(), 5);
+    EXPECT_TRUE(integer.has_value());
+    EXPECT_EQ(integer->get()->getValue(), 5);
 }
 
 TEST(ParserTest, ParseChar) {
@@ -26,7 +26,8 @@ TEST(ParserTest, ParseChar) {
 
     auto character = parser.parseChar();
 
-    EXPECT_EQ(character->getValue(), 'a');
+    EXPECT_TRUE(character.has_value());
+    EXPECT_EQ(character->get()->getValue(), 'a');
 }
 
 TEST(ParserTest, ParseIdentifier) {
@@ -34,9 +35,10 @@ TEST(ParserTest, ParseIdentifier) {
         Token(TokenType::Identifier, "test")
     });
 
-    std::string identifier = parser.parseId();
+    auto identifier = parser.parseId();
 
-    EXPECT_EQ(identifier, "test");
+    EXPECT_TRUE(identifier.has_value());
+    EXPECT_EQ(*identifier, "test");
 }
 
 TEST(ParserTest, ParseType) {
@@ -46,8 +48,9 @@ TEST(ParserTest, ParseType) {
 
     auto type = parser.parseType();
 
-    EXPECT_EQ(type->getId(), "type");
-    EXPECT_FALSE(type->getIsPointer());
+    EXPECT_TRUE(type.has_value());
+    EXPECT_EQ(type->get()->getId(), "type");
+    EXPECT_FALSE(type->get()->getIsPointer());
 }
 
 TEST(ParserTest, ParsePointerType) {
@@ -58,8 +61,9 @@ TEST(ParserTest, ParsePointerType) {
 
     auto type = parser.parseType();
 
-    EXPECT_EQ(type->getId(), "type");
-    EXPECT_TRUE(type->getIsPointer());
+    EXPECT_TRUE(type.has_value());
+    EXPECT_EQ(type->get()->getId(), "type");
+    EXPECT_TRUE(type->get()->getIsPointer());
 }
 
 TEST(ParserTest, ParseArg) {
@@ -68,11 +72,12 @@ TEST(ParserTest, ParseArg) {
         Token(TokenType::Identifier, "test")
     });
 
-    Arg arg = parser.parseArg();
+    auto arg = parser.parseArg();
 
-    EXPECT_EQ(arg.first->getId(), "type");
-    EXPECT_FALSE(arg.first->getIsPointer());
-    EXPECT_EQ(arg.second, "test");
+    EXPECT_TRUE(arg.has_value());
+    EXPECT_EQ(arg->first->getId(), "type");
+    EXPECT_FALSE(arg->first->getIsPointer());
+    EXPECT_EQ(arg->second, "test");
 }
 
 TEST(ParserTest, ParseEmptyBlock) {
@@ -83,7 +88,8 @@ TEST(ParserTest, ParseEmptyBlock) {
 
     auto block = parser.parseBlock(nullptr);
 
-    EXPECT_EQ(block->getSections().size(), 0);
+    EXPECT_TRUE(block.has_value());
+    EXPECT_EQ(block->get()->getSections().size(), 0);
 }
 
 TEST(ParserTest, ParseEmptyPrototype) {
@@ -96,15 +102,18 @@ TEST(ParserTest, ParseEmptyPrototype) {
     });
 
     auto prototype = parser.parsePrototype();
-    auto returnType = prototype->getReturnType();
-    auto args = prototype->getArgs();
+
+    EXPECT_TRUE(prototype.has_value());
+
+    auto returnType = prototype->get()->getReturnType();
+    auto args = prototype->get()->getArgs();
 
     // Verify return type.
     EXPECT_EQ(returnType->getId(), "type");
     EXPECT_FALSE(returnType->getIsPointer());
 
     // Verify prototype.
-    EXPECT_EQ(prototype->getId(), test::constant::foobar);
+    EXPECT_EQ(prototype->get()->getId(), test::constant::foobar);
 
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().size(), 0);
@@ -135,9 +144,10 @@ TEST(ParserTest, ParseAllocaInst) {
         Token(TokenType::Identifier, ConstName::typeInt32)
     });
 
-    Ptr<Inst> inst = parser.parseInst(nullptr);
+    auto inst = parser.parseInst(nullptr);
 
-    EXPECT_EQ(inst->getInstKind(), InstKind::Alloca);
+    EXPECT_TRUE(inst.has_value());
+    EXPECT_EQ(inst->get()->getInstKind(), InstKind::Alloca);
 }
 
 TEST(ParserTest, ParseExtern) {
@@ -151,7 +161,10 @@ TEST(ParserTest, ParseExtern) {
     });
 
     auto externConstruct = parser.parseExtern();
-    auto prototype = externConstruct->getPrototype();
+
+    EXPECT_TRUE(externConstruct.has_value());
+
+    auto prototype = externConstruct->get()->getPrototype();
     auto args = prototype->getArgs();
 
     // Verify prototype.

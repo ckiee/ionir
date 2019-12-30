@@ -2,5 +2,5 @@
 source_filename = "test"
 
 define void @foobar() {
-.entry:
+entry:
 }

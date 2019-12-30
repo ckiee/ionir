@@ -5,9 +5,17 @@ namespace ionir {
         return Token(TokenType::Dummy, "", startPosition);
     }
 
-    Token::Token(TokenType type, std::string value, size_t startPosition)
-        : type(type), value(value), startPosition(startPosition) {
+    Token::Token(TokenType type, std::string value, size_t startPosition, size_t lineNumber)
+        : type(type), value(value), startPosition(startPosition), lineNumber(lineNumber) {
         //
+    }
+
+    TokenType Token::getType() const {
+        return this->type;
+    }
+
+    std::string Token::getValue() const {
+        return this->value;
     }
 
     size_t Token::getStartPosition() const {
@@ -18,12 +26,8 @@ namespace ionir {
         return this->startPosition + this->value.length();
     }
 
-    TokenType Token::getType() const {
-        return this->type;
-    }
-
-    std::string Token::getValue() const {
-        return this->value;
+    size_t Token::getLineNumber() const {
+        return this->lineNumber;
     }
 
     bool Token::isDummy() const {
@@ -41,6 +45,7 @@ namespace ionir {
     }
 
     std::ostream &operator<<(std::ostream &stream, Token &token) {
+        // TODO: Include line number as well.
         return stream << "Token(" << token.getValue() << ", " << token.getType() << ", " << token.getStartPosition()
             << "-" << token.getEndPosition() << ")";
     }

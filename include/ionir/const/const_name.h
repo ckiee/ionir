@@ -5,6 +5,8 @@
 namespace ionir {
     class ConstName {
     public:
+        static const std::string anonymous;
+
         static const std::string typeVoid;
 
         static const std::string typeString;

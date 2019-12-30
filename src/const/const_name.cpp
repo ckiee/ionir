@@ -1,6 +1,8 @@
 #include <ionir/const/const_name.h>
 
 namespace ionir {
+    const std::string ConstName::anonymous = "anonymous";
+
     const std::string ConstName::typeVoid = "void";
 
     const std::string ConstName::typeString = "str";

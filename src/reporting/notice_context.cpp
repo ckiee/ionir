@@ -1,21 +1,20 @@
 #include <ionir/reporting/notice_context.h>
 
 namespace ionir {
-    NoticeContext::NoticeContext(std::string fileName, int lineNumber, int position) : fileName(fileName),
-        lineNumber(lineNumber),
-        position(position) {
+    NoticeContext::NoticeContext(std::string filePath, size_t lineNumber, size_t position) : filePath(filePath),
+        lineNumber(lineNumber), position(position) {
         //
     }
 
-    std::string NoticeContext::getFileName() const {
-        return this->fileName;
+    std::string NoticeContext::getFilePath() const {
+        return this->filePath;
     }
 
-    int NoticeContext::getLineNumber() const {
+    size_t NoticeContext::getLineNumber() const {
         return this->lineNumber;
     }
 
-    int NoticeContext::getPosition() const {
+    size_t NoticeContext::getPosition() const {
         return this->position;
     }
 }

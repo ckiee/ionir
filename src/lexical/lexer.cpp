@@ -220,7 +220,6 @@ namespace ionir {
             if (token->getType() == TokenType::Unknown) {
                 // TODO: Issue warning instead of plain std::cout.
                 std::cout << "Warning: Unknown token encountered" << std::endl;
-                this->
             }
 
             // Append the token to the result.
