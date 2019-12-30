@@ -33,7 +33,12 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     Ptr<Block> body = std::make_shared<Block>(nullptr);
 
     std::vector<Ptr<Section>> sections = {
-        std::make_shared<Section>(SectionOpts{body, SectionKind::Entry, Const::sectionEntryId}),};
+        std::make_shared<Section>(SectionOpts{
+            body,
+            SectionKind::Entry,
+            Const::sectionEntryId
+        })
+    };
 
     body->setSections(sections);
 
