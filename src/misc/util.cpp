@@ -1,3 +1,4 @@
+#include <sstream>
 #include <ionir/misc/util.h>
 
 namespace ionir {
@@ -30,5 +31,19 @@ namespace ionir {
 
     bool Util::withinRange(long value, long from, long to) {
         return value >= from && value <= to;
+    }
+
+    std::string Util::joinStringVector(std::vector<std::string> vector) {
+        std::stringstream result;
+
+        for (auto iterator = std::begin(vector); iterator != std::end(vector); ++iterator) {
+            result << *iterator;
+
+            if (std::next(iterator) != vector.end()) {
+                result << " ";
+            }
+        }
+
+        return result.str();
     }
 }

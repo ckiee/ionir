@@ -40,5 +40,7 @@ namespace ionir {
         }
 
         static bool withinRange(long value, long from, long to);
+
+        static std::string joinStringVector(std::vector<std::string> vector);
     };
 }

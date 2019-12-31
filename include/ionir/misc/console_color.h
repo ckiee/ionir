@@ -4,6 +4,16 @@
 #include <string>
 
 namespace ionir {
+    enum class ConsoleSpecial {
+        Reset = 0,
+
+        Bold = 1,
+
+        Underline = 4,
+
+        Invert = 7
+    };
+
     enum class ColorKind {
         ForegroundBlack = 30,
 
@@ -43,6 +53,12 @@ namespace ionir {
     public:
         const static std::string reset;
 
+        const static std::string bold;
+
+        const static std::string underline;
+
+        const static std::string invert;
+
         static std::string make(uint32_t code, std::optional<uint32_t> colorCode = std::nullopt);
 
         static std::string apply(std::string text, ColorKind color);
@@ -54,5 +70,15 @@ namespace ionir {
         static std::string green(std::string text);
 
         static std::string blue(std::string text);
+
+        static std::string cyan(std::string text);
+
+        static std::string white(std::string text);
+
+        static std::string black(std::string text);
+
+        static std::string yellow(std::string text);
+
+        static std::string magenta(std::string text);
     };
 }

@@ -1,11 +1,11 @@
 #include <ionir/lexical/token.h>
 
 namespace ionir {
-    Token Token::createDummy(size_t startPosition) {
+    Token Token::createDummy(uint32_t startPosition) {
         return Token(TokenType::Dummy, "", startPosition);
     }
 
-    Token::Token(TokenType type, std::string value, size_t startPosition, size_t lineNumber)
+    Token::Token(TokenType type, std::string value, uint32_t startPosition, uint32_t lineNumber)
         : type(type), value(value), startPosition(startPosition), lineNumber(lineNumber) {
         //
     }
@@ -18,15 +18,15 @@ namespace ionir {
         return this->value;
     }
 
-    size_t Token::getStartPosition() const {
+    uint32_t Token::getStartPosition() const {
         return this->startPosition;
     }
 
-    size_t Token::getEndPosition() const {
+    uint32_t Token::getEndPosition() const {
         return this->startPosition + this->value.length();
     }
 
-    size_t Token::getLineNumber() const {
+    uint32_t Token::getLineNumber() const {
         return this->lineNumber;
     }
 

@@ -3,6 +3,7 @@
 #include <exception>
 #include <vector>
 #include <optional>
+#include <ionir/misc/util.h>
 #include "generator.h"
 
 namespace ionir {
@@ -141,6 +142,10 @@ namespace ionir {
          */
         size_t getSize() const {
             return this->size;
+        }
+
+        std::optional<uint32_t> locate(T item) const {
+            return Util::locateInVector(this->items, item);
         }
     };
 }

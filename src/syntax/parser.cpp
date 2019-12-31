@@ -40,8 +40,7 @@ namespace ionir {
         // Abstract current Token for easier access.
         Token token = this->stream->get();
 
-        // TODO: Line support. Consider having a 'line' property in Token.
-        return NoticeFactory(NoticeContext(this->filePath, 0, token.getStartPosition()));
+        return NoticeFactory(NoticeContext(this->filePath, token.getLineNumber(), token.getStartPosition()));
     }
 
     std::nullopt_t Parser::makeNotice(std::string message, NoticeType type = NoticeType::Error) {

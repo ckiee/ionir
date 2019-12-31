@@ -1,8 +1,13 @@
 #include <ionir/misc/console_color.h>
 
 namespace ionir {
-    // TODO: Finish implementation.
-    const std::string ConsoleColor::reset = ConsoleColor::make(0);
+    const std::string ConsoleColor::reset = ConsoleColor::make((uint32_t)ConsoleSpecial::Reset);
+
+    const std::string ConsoleColor::bold = ConsoleColor::make((uint32_t)ConsoleSpecial::Bold);
+
+    const std::string ConsoleColor::underline = ConsoleColor::make((uint32_t)ConsoleSpecial::Underline);
+
+    const std::string ConsoleColor::invert = ConsoleColor::make((uint32_t)ConsoleSpecial::Invert);
 
     std::string ConsoleColor::make(uint32_t code, std::optional<uint32_t> colorCode) {
         std::string base = "\033[" + std::to_string(code);
@@ -15,7 +20,7 @@ namespace ionir {
     }
 
     std::string ConsoleColor::apply(std::string text, ColorKind code) {
-        return ConsoleColor::make((unsigned int)code) + text;
+        return ConsoleColor::make((uint32_t)code) + text;
     }
 
     std::string ConsoleColor::coat(std::string text, ColorKind code) {
@@ -32,5 +37,25 @@ namespace ionir {
 
     std::string ConsoleColor::blue(std::string text) {
         return ConsoleColor::coat(text, ColorKind::ForegroundBlue);
+    }
+
+    std::string ConsoleColor::cyan(std::string text) {
+        return ConsoleColor::coat(text, ColorKind::ForegroundCyan);
+    }
+
+    std::string ConsoleColor::white(std::string text) {
+        return ConsoleColor::coat(text, ColorKind::ForegroundWhite);
+    }
+
+    std::string ConsoleColor::black(std::string text) {
+        return ConsoleColor::coat(text, ColorKind::ForegroundBlack);
+    }
+
+    std::string ConsoleColor::yellow(std::string text) {
+        return ConsoleColor::coat(text, ColorKind::ForegroundYellow);
+    }
+
+    std::string ConsoleColor::magenta(std::string text) {
+        return ConsoleColor::coat(text, ColorKind::ForegroundMagenta);
     }
 }

@@ -11,24 +11,24 @@ namespace ionir {
 
         std::string value;
 
-        size_t startPosition;
+        uint32_t startPosition;
 
-        size_t lineNumber;
+        uint32_t lineNumber;
 
     public:
-        static Token createDummy(size_t startPosition);
+        static Token createDummy(uint32_t startPosition);
 
-        Token(TokenType type, std::string value, size_t startPosition = 0, size_t lineNumber = 0);
+        Token(TokenType type, std::string value, uint32_t startPosition = 0, uint32_t lineNumber = 0);
 
         TokenType getType() const;
 
         std::string getValue() const;
 
-        size_t getStartPosition() const;
+        uint32_t getStartPosition() const;
 
-        size_t getEndPosition() const;
+        uint32_t getEndPosition() const;
 
-        size_t getLineNumber() const;
+        uint32_t getLineNumber() const;
 
         bool isDummy() const;
 
