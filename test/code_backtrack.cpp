@@ -14,17 +14,16 @@ TEST(CodeBacktractTest, CreateCodeBlockNear) {
         Token(TokenType::Identifier, "dolor", 10, 1),
         Token(TokenType::Identifier, "amet", 15, 1),
         Token(TokenType::Identifier, "testing", 10, 1),
-        Token(TokenType::Identifier, "this", 15, 3),
-        Token(TokenType::Identifier, "thing", 10, 3),
+        Token(TokenType::Identifier, "this", 15, 2),
+        Token(TokenType::Identifier, "thing", 10, 2),
         Token(TokenType::Identifier, "to", 15, 3),
         Token(TokenType::Identifier, "see", 10, 3),
         Token(TokenType::Identifier, "if", 15, 3),
-        Token(TokenType::Identifier, "it", 10, 5),
-        Token(TokenType::Identifier, "works", 15, 5),
-        Token(TokenType::Identifier, "as", 10, 5),
-        Token(TokenType::Identifier, "expected", 15, 6),
-        Token(TokenType::Identifier, "or", 10, 7),
-        Token(TokenType::Identifier, "not", 15, 7)
+        Token(TokenType::Identifier, "it", 10, 4),
+        Token(TokenType::Identifier, "AFTER", 15, 5),
+        Token(TokenType::Identifier, "WARDS", 10, 5),
+        Token(TokenType::Identifier, "once", 15, 6),
+        Token(TokenType::Identifier, "again", 10, 6),
     });
 
     CodeBacktrack backtrack = CodeBacktrack(stream);

@@ -2,12 +2,17 @@
 
 #include <optional>
 #include <vector>
+#include <ionir/lexical/token.h>
 
 namespace ionir {
     struct CodeBlockLine {
         std::string text;
 
+        std::vector<Token> tokens;
+
         std::optional<uint32_t> lineNumber = std::nullopt;
+
+        bool highlight = false;
     };
 
     class CodeTraceBlock {

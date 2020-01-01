@@ -34,6 +34,10 @@ namespace ionir {
     }
 
     std::string Util::joinStringVector(std::vector<std::string> vector) {
+        if (vector.empty()) {
+            return "";
+        }
+
         std::stringstream result;
 
         for (auto iterator = std::begin(vector); iterator != std::end(vector); ++iterator) {
