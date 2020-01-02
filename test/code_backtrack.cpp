@@ -1,5 +1,4 @@
 #include <iostream>
-#include <optional>
 #include <string>
 #include <ionir/reporting/code_backtrack.h>
 #include "pch.h"
@@ -27,10 +26,11 @@ TEST(CodeBacktractTest, CreateCodeBlockNear) {
     });
 
     CodeBacktrack backtrack = CodeBacktrack(stream);
-    std::optional<std::string> codeBlock = backtrack.createCodeBlockNear(4);
+    auto codeBlock = backtrack.createCodeBlockNear(4);
 
     if (codeBlock.has_value()) {
-        std::cout << *codeBlock;
+        //        std::cout << *codeBlock;
+        // TODO: 'codeBlock' is no longer a string.
     }
     else {
         std::cout << "Code block has no value" << std::endl;

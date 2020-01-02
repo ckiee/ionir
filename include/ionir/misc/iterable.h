@@ -147,5 +147,15 @@ namespace ionir {
         std::optional<uint32_t> locate(T item) const {
             return Util::locateInVector(this->items, item);
         }
+
+        std::vector<T> slice(uint32_t start, uint32_t length) {
+            uint32_t end = start + length;
+
+            if (this->size() < end) {
+                throw std::out_of_range("Not enough items in iterable");
+            }
+
+            return std::vector<T>(this->begin() + start, this->begin() + end);
+        }
     };
 }

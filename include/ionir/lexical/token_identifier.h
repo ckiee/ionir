@@ -16,5 +16,7 @@ namespace ionir {
         static bool isOperator(TokenType type);
 
         static bool isType(TokenType type);
+
+        static bool isKeyword(TokenType type);
     };
 }

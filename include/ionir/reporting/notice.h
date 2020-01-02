@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include "notice_context.h"
 
 namespace ionir {
@@ -33,4 +34,6 @@ namespace ionir {
 
         std::string createTrace() const;
     };
+
+    typedef std::vector<Notice> StackTrace;
 }

@@ -22,7 +22,6 @@
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/block.h>
 #include <ionir/construct/section.h>
-#include <ionir/reporting/stack_trace.h>
 #include <ionir/reporting/notice_factory.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/const/const_name.h>

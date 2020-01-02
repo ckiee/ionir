@@ -1,18 +1,14 @@
 #include <sstream>
 #include <ionir/misc/util.h>
 #include <ionir/reporting/code_backtrack.h>
-#include <ionir/reporting/code_trace_block.h>
 
 namespace ionir {
     CodeBacktrack::CodeBacktrack(TokenStream &stream) : stream(stream) {
         //
     }
 
-    std::optional<std::string> CodeBacktrack::createCodeBlockNear(uint32_t lineNumber, uint32_t grace) {
-        std::stringstream codeBlock;
-
-        // Separate code block from previous messages by a single line.
-        codeBlock << std::endl << std::endl;
+    std::optional<std::vector<CodeBlockLine>> CodeBacktrack::createCodeBlockNear(uint32_t lineNumber, uint32_t grace) {
+        std::vector<CodeBlockLine> codeBlock;
 
         // Compute start & end line for the code block.
         uint32_t start = grace >= lineNumber ? 0 : lineNumber - grace;
@@ -22,7 +18,7 @@ namespace ionir {
 
         uint32_t lineCounter = 0;
         std::optional<Token> tokenBuffer = std::nullopt;
-        std::vector<std::string> lineBuffer = {};
+        std::vector<Token> lineBuffer = {};
         bool prime = true;
         bool met = false;
 
@@ -52,11 +48,17 @@ namespace ionir {
 
             bool streamHasNext = this->stream.hasNext();
 
-            lineBuffer.push_back(tokenBuffer->getValue());
+            lineBuffer.push_back(*tokenBuffer);
 
             if (stream.peek()->getLineNumber() != lineCounter) {
-                codeBlock
-                    << CodeTraceBlock::createLine(Util::joinStringVector(lineBuffer), tokenBuffer->getLineNumber());
+                // TODO: Extract text using Iterable::slice(from, to).
+                std::string text = "todo";
+
+                codeBlock.push_back(CodeBlockLine{
+                    text,
+                    lineBuffer,
+                    lineNumber
+                });
 
                 lineBuffer.clear();
                 lineCounter = stream.peek()->getLineNumber();
@@ -70,17 +72,23 @@ namespace ionir {
             }
                 // Return requirements have been met. Do not continue.
             else if (!streamHasNext) {
-                codeBlock
-                    << CodeTraceBlock::createLine(Util::joinStringVector(lineBuffer), tokenBuffer->getLineNumber());
+                // TODO: Extract text using Iterable::slice(from, to).
+                std::string text = "todo";
 
-                return codeBlock.str();
+                codeBlock.push_back(CodeBlockLine{
+                    text,
+                    lineBuffer,
+                    lineNumber
+                });
+
+                return codeBlock;
             }
         }
 
-        return codeBlock.str();
+        return codeBlock;
     }
 
-    std::optional<std::string> CodeBacktrack::createCodeBlockNear(Token token, uint32_t grace) {
+    std::optional<std::vector<CodeBlockLine>> CodeBacktrack::createCodeBlockNear(Token token, uint32_t grace) {
         return this->createCodeBlockNear(token.getLineNumber(), grace);
     }
 }
