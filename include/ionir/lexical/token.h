@@ -7,7 +7,7 @@
 namespace ionir {
     class Token {
     protected:
-        TokenType type;
+        TokenKind kind;
 
         std::string value;
 
@@ -18,9 +18,9 @@ namespace ionir {
     public:
         static Token createDummy(uint32_t startPosition);
 
-        Token(TokenType type, std::string value, uint32_t startPosition = 0, uint32_t lineNumber = 0);
+        Token(TokenKind kind, std::string value, uint32_t startPosition = 0, uint32_t lineNumber = 0);
 
-        TokenType getType() const;
+        TokenKind getKind() const;
 
         std::string getValue() const;
 

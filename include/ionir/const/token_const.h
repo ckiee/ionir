@@ -15,9 +15,9 @@ namespace ionir {
     protected:
         static bool isInitialized;
 
-        static std::map<std::string, TokenType> simple;
+        static std::map<std::string, TokenKind> simple;
 
-        static std::vector<std::pair<std::regex, TokenType>> complex;
+        static std::vector<std::pair<std::regex, TokenKind>> complex;
 
         static TokenTypeVector symbols;
 
@@ -27,27 +27,27 @@ namespace ionir {
 
         static TokenTypeVector types;
 
-        static void pushComplex(std::regex regex, TokenType tokenType);
+        static void pushComplex(std::regex regex, TokenKind tokenKind);
 
-        static void pushSimple(std::string value, TokenType type);
+        static void pushSimple(std::string value, TokenKind tokenKind);
 
-        static void pushSymbol(std::string value, TokenType type);
+        static void pushSymbol(std::string value, TokenKind tokenKind);
 
-        static void pushKeyword(std::string value, TokenType type);
+        static void pushKeyword(std::string value, TokenKind tokenKind);
 
-        static void pushOperator(std::string value, TokenType type);
+        static void pushOperator(std::string value, TokenKind tokenKind);
 
         static bool
-        sortByKeyLength(const std::pair<std::string, TokenType> &a, const std::pair<std::string, TokenType> &b);
+        sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b);
 
         static void ensureInit();
 
     public:
-        static std::map<std::string, TokenType> getSimpleIds();
+        static std::map<std::string, TokenKind> getSimpleIds();
 
-        static std::vector<std::pair<std::string, TokenType>> getSortedSimpleIds();
+        static std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
 
-        static std::vector<std::pair<std::regex, TokenType>> getComplexIds();
+        static std::vector<std::pair<std::regex, TokenKind>> getComplexIds();
 
         static TokenTypeVector getSymbols();
 
@@ -59,10 +59,10 @@ namespace ionir {
 
         static bool getIsInitialized();
 
-        static std::optional<std::string> findSimpleValue(TokenType type);
+        static std::optional<std::string> findSimpleValue(TokenKind tokenKind);
 
         static void init();
     };
 
-    typedef std::vector<std::pair<std::string, TokenType>> SimplePairVector;
+    typedef std::vector<std::pair<std::string, TokenKind>> SimplePairVector;
 }

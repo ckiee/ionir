@@ -8,9 +8,9 @@
 namespace ionir {
     class Pass;
 
-// TODO: Should check un-initialized for properties?
+    // TODO: Should check un-initialized for properties?
     struct BinaryExprOpts {
-        TokenType operation;
+        TokenKind operation;
 
         int precedence;
 
@@ -21,7 +21,7 @@ namespace ionir {
 
     class BinaryExpr : public Expr {
     protected:
-        TokenType operation;
+        TokenKind operation;
 
         int precedence;
 

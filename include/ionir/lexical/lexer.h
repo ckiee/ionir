@@ -32,7 +32,7 @@ namespace ionir {
 
         SimplePairVector simpleIds;
 
-        std::vector<std::pair<std::regex, TokenType>> complexIds;
+        std::vector<std::pair<std::regex, TokenKind>> complexIds;
 
     protected:
         char getChar() const;
@@ -45,7 +45,8 @@ namespace ionir {
 
         size_t skip(size_t amount = 1);
 
-        MatchResult matchExpression(Token &token, TokenType type, std::regex regex, bool expectCapturedValue = false);
+        MatchResult
+        matchExpression(Token &token, TokenKind tokenKind, std::regex regex, bool expectCapturedValue = false);
 
         void processWhitespace();
 

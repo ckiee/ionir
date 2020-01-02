@@ -1,6 +1,5 @@
 #pragma once
 
-#include "notice_context.h"
 #include "notice.h"
 
 namespace ionir {

@@ -2,16 +2,16 @@
 
 namespace ionir {
     Token Token::createDummy(uint32_t startPosition) {
-        return Token(TokenType::Dummy, "", startPosition);
+        return Token(TokenKind::Dummy, "", startPosition);
     }
 
-    Token::Token(TokenType type, std::string value, uint32_t startPosition, uint32_t lineNumber)
-        : type(type), value(value), startPosition(startPosition), lineNumber(lineNumber) {
+    Token::Token(TokenKind kind, std::string value, uint32_t startPosition, uint32_t lineNumber)
+        : kind(kind), value(value), startPosition(startPosition), lineNumber(lineNumber) {
         //
     }
 
-    TokenType Token::getType() const {
-        return this->type;
+    TokenKind Token::getKind() const {
+        return this->kind;
     }
 
     std::string Token::getValue() const {
@@ -31,12 +31,12 @@ namespace ionir {
     }
 
     bool Token::isDummy() const {
-        return this->type == TokenType::Dummy;
+        return this->kind == TokenKind::Dummy;
     }
 
     bool Token::operator==(const Token &other) const {
         return this->value == other.value &&
-            this->type == other.type &&
+            this->kind == other.kind &&
             this->startPosition == other.startPosition;
     }
 
@@ -46,7 +46,7 @@ namespace ionir {
 
     std::ostream &operator<<(std::ostream &stream, Token &token) {
         // TODO: Include line number as well.
-        return stream << "Token(" << token.getValue() << ", " << token.getType() << ", " << token.getStartPosition()
+        return stream << "Token(" << token.getValue() << ", " << token.getKind() << ", " << token.getStartPosition()
             << "-" << token.getEndPosition() << ")";
     }
 }

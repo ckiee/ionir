@@ -7,9 +7,9 @@ namespace ionir {
 
     const std::string Const::sectionInternalPrefix = ".";
 
-    std::map<TokenType, int> Const::operatorPrecedence = {{TokenType::OperatorAdd, 20}, {TokenType::OperatorSub, 20},
-        {TokenType::OperatorMultiply, 40}, {TokenType::OperatorDivide, 40}, {TokenType::OperatorModulo, 40},
-        {TokenType::OperatorExponent, 80},};
+    std::map<TokenKind, int> Const::operatorPrecedence = {{TokenKind::OperatorAdd, 20}, {TokenKind::OperatorSub, 20},
+        {TokenKind::OperatorMultiply, 40}, {TokenKind::OperatorDivide, 40}, {TokenKind::OperatorModulo, 40},
+        {TokenKind::OperatorExponent, 80},};
 
     const std::string Const::sectionEntryId = "entry";
 

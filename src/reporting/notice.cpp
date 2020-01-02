@@ -40,7 +40,7 @@ namespace ionir {
     }
 
     std::string Notice::createTrace() const {
-        return this->context.getFilePath() + ":" + std::to_string(this->context.getLineNumber()) + ":" +
-            std::to_string(this->context.getPosition()) + " | " + Notice::getText(this->type) + ": " + this->message;
+        return this->context.filePath + ":" + std::to_string(this->context.lineNumber) + ":" +
+            std::to_string(this->context.position) + " | " + Notice::getText(this->type) + ": " + this->message;
     }
 }

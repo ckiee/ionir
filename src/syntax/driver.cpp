@@ -35,7 +35,7 @@ namespace ionir {
         Token token = this->stream.get();
 
         // Function definition (Token should be a type name representing the function's return type).
-        if (token.getType() == TokenType::Identifier) {
+        if (token.getKind() == TokenKind::Identifier) {
             // TODO
             std::cout
                 << "Identifier token detected ~> Expecting function definition. (Token is considered function return type.)"
@@ -43,7 +43,7 @@ namespace ionir {
         }
 
         // TODO: Debugging.
-        std::cout << "Token type:" << token.getType() << std::endl;
+        std::cout << "Token type:" << token.getKind() << std::endl;
 
         // Advance the Stream's index if applicable.
         this->stream.tryNext();

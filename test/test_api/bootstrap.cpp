@@ -1,8 +1,8 @@
 #include "bootstrap.h"
 
 namespace ionir::test::bootstrap {
-    Token token(TokenType type) {
-        return Token(type, "");
+    Token token(TokenKind kind) {
+        return Token(kind, "");
     }
 
     TokenStream tokenStream(int amountOfItems) {

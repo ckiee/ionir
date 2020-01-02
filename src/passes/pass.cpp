@@ -138,7 +138,7 @@ namespace ionir {
                 // TODO: Missing store inst.
 
             default: {
-                throw std::runtime_error("Unknown instruction type");
+                throw std::runtime_error("Unknown instruction kind");
             }
         }
     }

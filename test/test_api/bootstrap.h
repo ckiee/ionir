@@ -11,7 +11,7 @@
 #include "util.h"
 
 namespace ionir::test::bootstrap {
-    Token token(TokenType type = TokenType::Unknown);
+    Token token(TokenKind kind = TokenKind::Unknown);
 
     TokenStream tokenStream(int amountOfItems = 1);
 

@@ -26,7 +26,7 @@ TEST(LexerTest, LexOneSymbol) {
     std::vector<Token> tokens = lexer.scan();
 
     // Create the expected token.
-    Token expected = Token(TokenType::SymbolDollar, "$", 0);
+    Token expected = Token(TokenKind::SymbolDollar, "$", 0);
 
     // Resulting vector should contain one item.
     EXPECT_EQ(tokens.size(), 1);
@@ -43,8 +43,8 @@ TEST(LexerTest, LexTwoSymbols) {
     std::vector<Token> actual = lexer.scan();
 
     std::array<Token, 2> expected = {
-        Token(TokenType::SymbolDollar, "$", 0),
-        Token(TokenType::SymbolHash, "#", 1)
+        Token(TokenKind::SymbolDollar, "$", 0),
+        Token(TokenKind::SymbolHash, "#", 1)
     };
 
     // Compare result with expected.
@@ -61,14 +61,14 @@ TEST(LexerTest, LexSymbols) {
     const int amount = 15;
 
     // Create a list of expected tokens.
-    std::array<Token, amount> expected = {Token(TokenType::SymbolAt, "@", 0), Token(TokenType::SymbolEqual, "=", 1),
-        Token(TokenType::SymbolColon, ":", 2), Token(TokenType::SymbolDollar, "$", 3),
-        Token(TokenType::SymbolHash, "#", 4), Token(TokenType::SymbolParenthesesL, "(", 5),
-        Token(TokenType::SymbolParenthesesR, ")", 6), Token(TokenType::SymbolBracketL, "[", 7),
-        Token(TokenType::SymbolBracketR, "]", 8), Token(TokenType::SymbolComma, ",", 9),
-        Token(TokenType::SymbolTilde, "~", 10), Token(TokenType::SymbolSemiColon, ";", 11),
-        Token(TokenType::SymbolBraceL, "{", 12), Token(TokenType::SymbolBraceR, "}", 13),
-        Token(TokenType::SymbolArrow, "->", 14),};
+    std::array<Token, amount> expected = {Token(TokenKind::SymbolAt, "@", 0), Token(TokenKind::SymbolEqual, "=", 1),
+        Token(TokenKind::SymbolColon, ":", 2), Token(TokenKind::SymbolDollar, "$", 3),
+        Token(TokenKind::SymbolHash, "#", 4), Token(TokenKind::SymbolParenthesesL, "(", 5),
+        Token(TokenKind::SymbolParenthesesR, ")", 6), Token(TokenKind::SymbolBracketL, "[", 7),
+        Token(TokenKind::SymbolBracketR, "]", 8), Token(TokenKind::SymbolComma, ",", 9),
+        Token(TokenKind::SymbolTilde, "~", 10), Token(TokenKind::SymbolSemiColon, ";", 11),
+        Token(TokenKind::SymbolBraceL, "{", 12), Token(TokenKind::SymbolBraceR, "}", 13),
+        Token(TokenKind::SymbolArrow, "->", 14),};
 
     // Compare result with expected.
     test::compare::tokenSets<amount>(expected, actual);
@@ -81,8 +81,8 @@ TEST(LexerTest, LexIdentifiers) {
     std::vector<Token> actual = lexer.scan();
 
     std::array<Token, 2> expected = {
-        Token(TokenType::Identifier, "hello", 0),
-        Token(TokenType::Identifier, "world", 6)
+        Token(TokenKind::Identifier, "hello", 0),
+        Token(TokenKind::Identifier, "world", 6)
     };
 
     // Compare result with expected.
@@ -96,7 +96,7 @@ TEST(LexerTest, IgnoreWhitespace) {
     std::vector<Token> actual = lexer.scan();
 
     std::array<Token, 1> expected = {
-        Token(TokenType::Identifier, test::constant::foobar, 3)
+        Token(TokenKind::Identifier, test::constant::foobar, 3)
     };
 
     // Compare result with expected.
@@ -110,12 +110,12 @@ TEST(LexerTest, LexCombination) {
     std::vector<Token> actual = lexer.scan();
 
     std::array<Token, 6> expected = {
-        Token(TokenType::Identifier, test::constant::foo, 0),
-        Token(TokenType::SymbolParenthesesL, "(", 4),
-        Token(TokenType::Identifier, test::constant::bar, 6),
-        Token(TokenType::SymbolParenthesesR, ")", 10),
-        Token(TokenType::SymbolArrow, "->", 12),
-        Token(TokenType::Identifier, test::constant::foobar, 15)
+        Token(TokenKind::Identifier, test::constant::foo, 0),
+        Token(TokenKind::SymbolParenthesesL, "(", 4),
+        Token(TokenKind::Identifier, test::constant::bar, 6),
+        Token(TokenKind::SymbolParenthesesR, ")", 10),
+        Token(TokenKind::SymbolArrow, "->", 12),
+        Token(TokenKind::Identifier, test::constant::foobar, 15)
     };
 
     // Compare result with expected.
@@ -125,7 +125,7 @@ TEST(LexerTest, LexCombination) {
 TEST(LexerTest, LexCharacter) {
     Lexer lexer = Lexer("'a'");
     Token actual = lexer.scan()[0];
-    Token expected = Token(TokenType::LiteralCharacter, "a", 0);
+    Token expected = Token(TokenKind::LiteralCharacter, "a", 0);
 
     EXPECT_EQ(actual, expected);
 }
@@ -134,7 +134,7 @@ TEST(LexerTest, LexEmptyCharacter) {
     Lexer lexer = Lexer("''");
     Token actual = lexer.scan()[0];
 
-    Token expected = Token(TokenType::LiteralCharacter, "", 0);
+    Token expected = Token(TokenKind::LiteralCharacter, "", 0);
 
     EXPECT_EQ(actual, expected);
 }
@@ -142,7 +142,7 @@ TEST(LexerTest, LexEmptyCharacter) {
 TEST(LexerTest, LexString) {
     Lexer lexer = Lexer("\"hello world\"");
     Token actual = lexer.scan()[0];
-    Token expected = Token(TokenType::LiteralString, "hello world", 0);
+    Token expected = Token(TokenKind::LiteralString, "hello world", 0);
 
     EXPECT_EQ(actual, expected);
 }
@@ -150,7 +150,7 @@ TEST(LexerTest, LexString) {
 TEST(LexerTest, LexEmptyString) {
     Lexer lexer = Lexer("\"\"");
     Token actual = lexer.scan()[0];
-    Token expected = Token(TokenType::LiteralString, "", 0);
+    Token expected = Token(TokenKind::LiteralString, "", 0);
 
     EXPECT_EQ(actual, expected);
 }
@@ -158,7 +158,7 @@ TEST(LexerTest, LexEmptyString) {
 TEST(LexerTest, LexInteger) {
     Lexer lexer = Lexer("1");
     Token actual = lexer.scan()[0];
-    Token expected = Token(TokenType::LiteralInt, "1", 0);
+    Token expected = Token(TokenKind::LiteralInt, "1", 0);
 
     EXPECT_EQ(actual, expected);
 }
@@ -166,7 +166,7 @@ TEST(LexerTest, LexInteger) {
 TEST(LexerTest, LexDecimal) {
     Lexer lexer = Lexer("3.14");
     Token actual = lexer.scan()[0];
-    Token expected = Token(TokenType::LiteralDecimal, "3.14", 0);
+    Token expected = Token(TokenKind::LiteralDecimal, "3.14", 0);
 
     EXPECT_EQ(actual, expected);
 }

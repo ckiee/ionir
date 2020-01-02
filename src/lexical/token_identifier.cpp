@@ -2,28 +2,28 @@
 #include <ionir/lexical/token_identifier.h>
 
 namespace ionir {
-    bool TokenIdentifier::contains(std::vector<TokenType> subject, TokenType item) {
+    bool TokenIdentifier::contains(std::vector<TokenKind> subject, TokenKind item) {
         return std::find(subject.begin(), subject.end(), item) != subject.end();
     }
 
-    bool TokenIdentifier::isSymbol(TokenType type) {
-        return TokenIdentifier::contains(TokenConst::getSymbols(), type);
+    bool TokenIdentifier::isSymbol(TokenKind tokenKind) {
+        return TokenIdentifier::contains(TokenConst::getSymbols(), tokenKind);
     }
 
-    bool TokenIdentifier::isNumeric(TokenType type) {
+    bool TokenIdentifier::isNumeric(TokenKind tokenKind) {
         // TODO: Need to define numeric group.
         return false;
     }
 
-    bool TokenIdentifier::isOperator(TokenType type) {
-        return TokenIdentifier::contains(TokenConst::getOperators(), type);
+    bool TokenIdentifier::isOperator(TokenKind tokenKind) {
+        return TokenIdentifier::contains(TokenConst::getOperators(), tokenKind);
     }
 
-    bool TokenIdentifier::isType(TokenType type) {
-        return TokenIdentifier::contains(TokenConst::getTypes(), type);
+    bool TokenIdentifier::isType(TokenKind tokenKind) {
+        return TokenIdentifier::contains(TokenConst::getTypes(), tokenKind);
     }
 
-    bool TokenIdentifier::isKeyword(TokenType type) {
-        return TokenIdentifier::contains(TokenConst::getKeywords(), type);
+    bool TokenIdentifier::isKeyword(TokenKind tokenKind) {
+        return TokenIdentifier::contains(TokenConst::getKeywords(), tokenKind);
     }
 }

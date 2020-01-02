@@ -41,7 +41,7 @@ namespace ionir {
         return this->setIndex(this->index + amount);
     }
 
-    MatchResult Lexer::matchExpression(Token &token, TokenType type, std::regex regex, bool expectCapturedValue) {
+    MatchResult Lexer::matchExpression(Token &token, TokenKind tokenKind, std::regex regex, bool expectCapturedValue) {
         MatchResult result = {
             false
         };
@@ -50,7 +50,7 @@ namespace ionir {
         std::string input = this->input.substr(this->index);
         std::smatch match;
 
-        // If successful, return a new token with different value and type.
+        // If successful, return a new token with different value and kind.
         if (std::regex_search(input, match, regex)) {
             // If applicable, match should contain both matched value (at index 0) and a captured value (at index 1).
             if (expectCapturedValue && match.size() < 2) {
@@ -72,7 +72,7 @@ namespace ionir {
             }
 
             // Modify the input token (since it was passed by reference).
-            token = Token(type, value, token.getStartPosition());
+            token = Token(tokenKind, value, token.getStartPosition());
 
             // Skip the matched value's length (never the captured one).
             this->skip(result.matchedValue->length());
@@ -137,7 +137,7 @@ namespace ionir {
         }
 
         // Set the initial Token buffer as Unknown.
-        Token token = Token(TokenType::Unknown, this->getCharAsString(), this->index);
+        Token token = Token(TokenKind::Unknown, this->getCharAsString(), this->index);
 
         // Abstract the Token's value for easier access.
         std::string tokenValue = token.getValue();
@@ -170,7 +170,7 @@ namespace ionir {
                     //this.SetPosition(this.Position - token.Value.Length - pair.Key.Length);
 
                     // Skim the last character off.
-                    token = Token(token.getType(), pair.first, token.getStartPosition());
+                    token = Token(token.getKind(), pair.first, token.getStartPosition());
 
                     // Return the token, no need to skip its value.
                     return token;
@@ -191,7 +191,7 @@ namespace ionir {
         // At this point the Token was not identified. Skip over any captured value.
         this->skip(tokenValue.length());
 
-        // Return the default Token. The Token type defaults to Unknown.
+        // Return the default token. The token kind defaults to Unknown.
         return token;
     }
 
@@ -217,7 +217,7 @@ namespace ionir {
             }
 
             // Display a warning if the token's type is unknown.
-            if (token->getType() == TokenType::Unknown) {
+            if (token->getKind() == TokenKind::Unknown) {
                 // TODO: Issue warning instead of plain std::cout.
                 std::cout << "Warning: Unknown token encountered" << std::endl;
             }

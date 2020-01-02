@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace ionir {
-    enum class TokenType {
+    enum class TokenKind {
         Dummy,
 
         Unknown,
@@ -93,5 +93,5 @@ namespace ionir {
         OperatorLessThan
     };
 
-    std::ostream &operator<<(std::ostream &stream, const ionir::TokenType &tokenType);
+    std::ostream &operator<<(std::ostream &stream, const ionir::TokenKind &tokenKind);
 }

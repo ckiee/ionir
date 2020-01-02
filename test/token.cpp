@@ -5,10 +5,10 @@
 using namespace ionir;
 
 TEST(TokenTest, CorrectProperties) {
-    Token token = Token(TokenType::Identifier, std::string("hello_world"), 123);
+    Token token = Token(TokenKind::Identifier, std::string("hello_world"), 123);
 
     EXPECT_EQ(token.getValue(), "hello_world");
-    EXPECT_EQ(token.getType(), TokenType::Identifier);
+    EXPECT_EQ(token.getKind(), TokenKind::Identifier);
     EXPECT_EQ(token.getStartPosition(), 123);
 
     // End position must be 123 + len("hello_world") (11) = 134.
@@ -17,7 +17,7 @@ TEST(TokenTest, CorrectProperties) {
 
 TEST(TokenTest, CreateDummy) {
     Token token = Token::createDummy(0);
-    Token expected = Token(TokenType::Dummy, "", 0);
+    Token expected = Token(TokenKind::Dummy, "", 0);
 
     EXPECT_EQ(expected, token);
 }
@@ -32,9 +32,9 @@ TEST(TokenTest, DetermineWhetherIsDummy) {
 
 TEST(TokenTest, EqualityAndDifference) {
     // Create test tokens.
-    Token token1 = Token(TokenType::SymbolColon, ":", 5);
-    Token token2 = Token(TokenType::SymbolColon, ":", 5);
-    Token token3 = Token(TokenType::SymbolColon, "~", 5);
+    Token token1 = Token(TokenKind::SymbolColon, ":", 5);
+    Token token2 = Token(TokenKind::SymbolColon, ":", 5);
+    Token token3 = Token(TokenKind::SymbolColon, "~", 5);
 
     // Expect equal.
     EXPECT_EQ(token1, token2);

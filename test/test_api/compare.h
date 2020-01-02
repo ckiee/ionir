@@ -31,7 +31,7 @@ namespace ionir::test::compare {
         int i = 0;
 
         for (auto &token : actual) {
-            // Compare iterator value with its corresponding expected token type.
+            // Compare iterator value with its corresponding expected token kind.
             EXPECT_EQ(expected[i], token);
 
             // Increment counter to prepare for next iteration.

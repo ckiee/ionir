@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-#include "notice_context.h"
 
 namespace ionir {
     enum class NoticeType {
@@ -11,6 +10,14 @@ namespace ionir {
         Error,
 
         Fatal
+    };
+
+    struct NoticeContext {
+        std::string filePath;
+
+        uint32_t lineNumber;
+
+        uint32_t position;
     };
 
     class Notice {

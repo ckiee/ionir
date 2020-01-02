@@ -32,7 +32,7 @@ namespace ionir {
     private:
         TokenStream *stream;
 
-        Ptr<StackTrace> stackTrace;
+        StackTrace stackTrace;
 
         std::string filePath;
 
@@ -41,21 +41,20 @@ namespace ionir {
     protected:
         TokenIdentifier getTokenIdentifier() const;
 
-        bool is(TokenType type);
+        bool is(TokenKind tokenKind);
 
-        bool expect(TokenType type);
+        bool expect(TokenKind tokenKind);
 
-        void skipOver(TokenType type);
+        void skipOver(TokenKind tokenKind);
 
         NoticeFactory createNoticeFactory();
 
         std::nullopt_t makeNotice(std::string message, NoticeType type);
 
     public:
-        explicit Parser(TokenStream *stream, Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>(),
-            std::string filePath = ConstName::anonymous);
+        explicit Parser(TokenStream *stream, StackTrace stackTrace = {}, std::string filePath = ConstName::anonymous);
 
-        Ptr<StackTrace> getStackTrace() const;
+        StackTrace getStackTrace() const;
 
         std::string getFilePath() const;
 

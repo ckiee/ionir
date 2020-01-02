@@ -16,14 +16,14 @@ namespace ionir {
         return this->tokenIdentifier;
     }
 
-    bool Parser::is(TokenType type) {
-        return this->stream->get().getType() == type;
+    bool Parser::is(TokenKind tokenKind) {
+        return this->stream->get().getKind() == tokenKind;
     }
 
-    bool Parser::expect(TokenType type) {
-        if (!this->is(type)) {
-            this->makeNotice("Expected token type: " + std::to_string((int)type) + ", but got: " +
-                std::to_string((int)this->stream->get().getType()), NoticeType::Fatal);
+    bool Parser::expect(TokenKind tokenKind) {
+        if (!this->is(tokenKind)) {
+            this->makeNotice("Expected token kind: " + std::to_string((int)tokenKind) + ", but got: " +
+                std::to_string((int)this->stream->get().getKind()), NoticeType::Fatal);
 
             return false;
         }
@@ -31,8 +31,8 @@ namespace ionir {
         return true;
     }
 
-    void Parser::skipOver(TokenType type) {
-        this->expect(type);
+    void Parser::skipOver(TokenKind tokenKind) {
+        this->expect(tokenKind);
         this->stream->skip();
     }
 
@@ -40,21 +40,25 @@ namespace ionir {
         // Abstract current Token for easier access.
         Token token = this->stream->get();
 
-        return NoticeFactory(NoticeContext(this->filePath, token.getLineNumber(), token.getStartPosition()));
+        return NoticeFactory(NoticeContext{
+            this->filePath,
+            token.getLineNumber(),
+            token.getStartPosition()
+        });
     }
 
     std::nullopt_t Parser::makeNotice(std::string message, NoticeType type = NoticeType::Error) {
-        this->stackTrace->push_back(this->createNoticeFactory().make(type, message));
+        this->stackTrace.push_back(this->createNoticeFactory().make(type, message));
 
         return std::nullopt;
     }
 
-    Parser::Parser(TokenStream *stream, Ptr<StackTrace> stackTrace, std::string filePath)
+    Parser::Parser(TokenStream *stream, StackTrace stackTrace, std::string filePath)
         : stream(stream), stackTrace(stackTrace), filePath(filePath), tokenIdentifier() {
         //
     }
 
-    Ptr<StackTrace> Parser::getStackTrace() const {
+    StackTrace Parser::getStackTrace() const {
         return this->stackTrace;
     }
 
@@ -63,16 +67,16 @@ namespace ionir {
     }
 
     std::optional<Ptr<Construct>> Parser::parseTopLevel() {
-        switch (this->stream->get().getType()) {
-            case TokenType::KeywordFunction: {
+        switch (this->stream->get().getKind()) {
+            case TokenKind::KeywordFunction: {
                 return this->parseFunction();
             }
 
-            case TokenType::KeywordGlobal: {
+            case TokenKind::KeywordGlobal: {
                 return this->parseGlobal();
             }
 
-            case TokenType::KeywordExtern: {
+            case TokenKind::KeywordExtern: {
                 return this->parseExtern();
             }
 
@@ -83,7 +87,7 @@ namespace ionir {
     }
 
     std::optional<Ptr<IntegerValue>> Parser::parseInt() {
-        IONIR_PARSER_EXPECT(TokenType::LiteralInt);
+        IONIR_PARSER_EXPECT(TokenKind::LiteralInt);
 
         // Abstract the token's value to be used in the string -> long conversion.
         std::string tokenValue = this->stream->get().getValue();
@@ -123,7 +127,7 @@ namespace ionir {
     }
 
     std::optional<Ptr<CharValue>> Parser::parseChar() {
-        IONIR_PARSER_EXPECT(TokenType::LiteralCharacter);
+        IONIR_PARSER_EXPECT(TokenKind::LiteralCharacter);
 
         // Extract the value from the character token.
         std::string stringValue = this->stream->get().getValue();
@@ -141,7 +145,7 @@ namespace ionir {
     }
 
     std::optional<Ptr<StringValue>> Parser::parseString() {
-        IONIR_PARSER_EXPECT(TokenType::LiteralString);
+        IONIR_PARSER_EXPECT(TokenKind::LiteralString);
 
         // Extract the value from the string token.
         std::string value = this->stream->get().getValue();
@@ -155,7 +159,7 @@ namespace ionir {
     std::optional<std::string> Parser::parseId() {
         Token id = this->stream->get();
 
-        IONIR_PARSER_EXPECT(TokenType::Identifier)
+        IONIR_PARSER_EXPECT(TokenKind::Identifier)
 
         // Skip over identifier token.
         this->stream->skip();
@@ -175,7 +179,7 @@ namespace ionir {
         Token token = this->stream->get();
 
         // Type is a pointer.
-        if (token.getType() == TokenType::SymbolStar) {
+        if (token.getKind() == TokenKind::SymbolStar) {
             isPointer = true;
 
             // Skip onto and from star token.
@@ -204,7 +208,7 @@ namespace ionir {
 
         do {
             // Skip comma token if applicable.
-            if (this->is(TokenType::SymbolComma)) {
+            if (this->is(TokenKind::SymbolComma)) {
                 // Prevent leading, lonely comma.
                 if (args.size() == 0) {
                     return this->makeNotice("Leading comma in argument list is not allowed");
@@ -220,7 +224,7 @@ namespace ionir {
 
             // Parse arg and push onto the vector.
             args.push_back(*arg);
-        } while (this->is(TokenType::SymbolComma));
+        } while (this->is(TokenKind::SymbolComma));
 
         return std::make_shared<Args>(args, isInfinite);
     }
@@ -230,12 +234,12 @@ namespace ionir {
 
         IONIR_PARSER_ASSURE(id)
 
-        this->skipOver(TokenType::SymbolParenthesesL);
+        this->skipOver(TokenKind::SymbolParenthesesL);
 
         Ptr<Args> args = std::make_shared<Args>();
 
         // Parse arguments if applicable.
-        if (!this->is(TokenType::SymbolParenthesesR)) {
+        if (!this->is(TokenKind::SymbolParenthesesR)) {
             std::optional<Ptr<Args>> temporaryArgs = this->parseArgs();
 
             IONIR_PARSER_ASSURE(temporaryArgs)
@@ -244,7 +248,7 @@ namespace ionir {
         }
 
         this->stream->skip();
-        this->skipOver(TokenType::SymbolArrow);
+        this->skipOver(TokenKind::SymbolArrow);
 
         std::optional<Ptr<Type>> returnType = this->parseType();
 
@@ -254,7 +258,7 @@ namespace ionir {
     }
 
     std::optional<Ptr<Extern>> Parser::parseExtern() {
-        this->skipOver(TokenType::KeywordExtern);
+        this->skipOver(TokenKind::KeywordExtern);
 
         std::optional<Ptr<Prototype>> prototype = this->parsePrototype();
 
@@ -264,7 +268,7 @@ namespace ionir {
     }
 
     std::optional<Ptr<Function>> Parser::parseFunction() {
-        this->skipOver(TokenType::KeywordFunction);
+        this->skipOver(TokenKind::KeywordFunction);
 
         std::optional<Ptr<Prototype>> prototype = this->parsePrototype();
         std::optional<Ptr<Block>> body = this->parseBlock(nullptr);
@@ -280,7 +284,7 @@ namespace ionir {
     }
 
     std::optional<Ptr<Global>> Parser::parseGlobal() {
-        this->skipOver(TokenType::KeywordGlobal);
+        this->skipOver(TokenKind::KeywordGlobal);
 
         // TODO
 
@@ -290,12 +294,12 @@ namespace ionir {
     std::optional<Ptr<Value>> Parser::parseValue() {
         Token token = this->stream->get();
 
-        switch (token.getType()) {
-            case TokenType::LiteralInt: {
+        switch (token.getKind()) {
+            case TokenKind::LiteralInt: {
                 return this->parseInt();
             }
 
-            case TokenType::LiteralCharacter: {
+            case TokenKind::LiteralCharacter: {
                 return this->parseChar();
             }
 
@@ -314,13 +318,13 @@ namespace ionir {
     }
 
     std::optional<Ptr<Expr>> Parser::parsePrimaryExpr() {
-        TokenType type = this->stream->get().getType();
+        TokenKind tokenKind = this->stream->get().getKind();
 
         return this->makeNotice("Not yet implemented");
 
-        switch (type) {
+        switch (tokenKind) {
             // Identifier expression.
-            case TokenType::Identifier: {
+            case TokenKind::Identifier: {
                 // TODO
 
                 throw std::runtime_error("Not implemented");
@@ -337,10 +341,10 @@ namespace ionir {
         // If this is a binary operation, find it's precedence.
         while (true) {
             // Capture the current token.
-            TokenType type = this->stream->get().getType();
+            TokenKind tokenKind = this->stream->get().getKind();
 
             // Calculate precedence for the current token.
-            int firstPrecedence = Const::operatorPrecedence[type];
+            int firstPrecedence = Const::operatorPrecedence[tokenKind];
 
             /**
              * If this is a binary operation that binds at least as tightly
@@ -353,11 +357,11 @@ namespace ionir {
             }
 
             // At this point, it's a binary operation.
-            TokenType binaryOperator = type;
+            TokenKind binaryOperatorKind = tokenKind;
 
             // TODO: Should check if it's a BINARY operator, not just an operator.
             // Ensure the captured operator is validated.
-            if (!TokenIdentifier::isOperator(binaryOperator)) {
+            if (!TokenIdentifier::isOperator(binaryOperatorKind)) {
                 return this->makeNotice("Expected token to be a binary operator");
             }
 
@@ -375,7 +379,7 @@ namespace ionir {
             }
 
             // Determine the token precedence of the current token.
-            int secondPrecedence = Const::operatorPrecedence[type];
+            int secondPrecedence = Const::operatorPrecedence[tokenKind];
 
             /**
              * If binary operator binds less tightly with the right-side than
@@ -393,7 +397,7 @@ namespace ionir {
             }
 
             BinaryExprOpts opts = BinaryExprOpts{
-                binaryOperator,
+                binaryOperatorKind,
                 firstPrecedence,
                 leftSide,
                 rightSide,
@@ -411,14 +415,14 @@ namespace ionir {
     }
 
     std::optional<Ptr<Section>> Parser::parseSection(Ptr<Block> parent) {
-        this->skipOver(TokenType::SymbolAt);
+        this->skipOver(TokenKind::SymbolAt);
 
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
 
-        this->skipOver(TokenType::SymbolColon);
-        this->skipOver(TokenType::SymbolBraceL);
+        this->skipOver(TokenKind::SymbolColon);
+        this->skipOver(TokenKind::SymbolBraceL);
 
         // Determine the section's kind.
         SectionKind kind = SectionKind::Label;
@@ -440,7 +444,7 @@ namespace ionir {
 
         std::vector<Ptr<Inst>> insts = {};
 
-        while (!this->is(TokenType::SymbolBraceR) && !this->is(TokenType::SymbolAt)) {
+        while (!this->is(TokenKind::SymbolBraceR) && !this->is(TokenKind::SymbolAt)) {
             std::optional<Ptr<Inst>> inst = this->parseInst(section);
 
             IONIR_PARSER_ASSURE(inst)
@@ -455,12 +459,12 @@ namespace ionir {
     }
 
     std::optional<Ptr<Block>> Parser::parseBlock(Ptr<Function> parent) {
-        this->skipOver(TokenType::SymbolBraceL);
+        this->skipOver(TokenKind::SymbolBraceL);
 
         Ptr<Block> block = std::make_shared<Block>(parent);
         std::vector<Ptr<Section>> sections = {};
 
-        while (!this->is(TokenType::SymbolBraceR)) {
+        while (!this->is(TokenKind::SymbolBraceR)) {
             std::optional<Ptr<Section>> section = this->parseSection(block);
 
             IONIR_PARSER_ASSURE(section)
@@ -519,7 +523,7 @@ namespace ionir {
         // std::optional<Ptr<Section>> otherwise = std::nullopt;
 
         // // Parse the otherwise block if applicable.
-        // if (this->is(TokenType::KeywordElse))
+        // if (this->is(TokenKind::KeywordElse))
         // {
         //     // Skip over the else keyword.
         //     this->stream->skip();
@@ -570,7 +574,7 @@ namespace ionir {
         }
 
         // All instructions should end denoted by a semi-colon.
-        this->skipOver(TokenType::SymbolSemiColon);
+        this->skipOver(TokenKind::SymbolSemiColon);
 
         return inst;
     }

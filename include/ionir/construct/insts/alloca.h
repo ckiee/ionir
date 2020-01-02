@@ -20,7 +20,7 @@ namespace ionir {
         Ptr <Type> type;
 
     public:
-        // TODO: Missing support for array type allocas.
+        // TODO: Missing support for array-type allocas.
         AllocaInst(AllocaInstOpts opts);
 
         void accept(Pass *visitor) override;

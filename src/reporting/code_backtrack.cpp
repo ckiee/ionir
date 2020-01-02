@@ -7,8 +7,8 @@ namespace ionir {
         //
     }
 
-    std::optional<std::vector<CodeBlockLine>> CodeBacktrack::createCodeBlockNear(uint32_t lineNumber, uint32_t grace) {
-        std::vector<CodeBlockLine> codeBlock;
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(uint32_t lineNumber, uint32_t grace) {
+        CodeBlock codeBlock;
 
         // Compute start & end line for the code block.
         uint32_t start = grace >= lineNumber ? 0 : lineNumber - grace;
@@ -88,7 +88,15 @@ namespace ionir {
         return codeBlock;
     }
 
-    std::optional<std::vector<CodeBlockLine>> CodeBacktrack::createCodeBlockNear(Token token, uint32_t grace) {
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(Token token, uint32_t grace) {
         return this->createCodeBlockNear(token.getLineNumber(), grace);
+    }
+
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(NoticeContext noticeContext, uint32_t grace) {
+        return this->createCodeBlockNear(noticeContext.lineNumber);
+    }
+
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(Notice notice, uint32_t grace) {
+        return this->createCodeBlockNear(notice.getContext());
     }
 }
