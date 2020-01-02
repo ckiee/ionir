@@ -4,7 +4,7 @@
 #include "../../include/ionir/construct/insts/inst.h"
 #include "../../include/ionir/llvm/codegen/llvm_visitor.h"
 #include "../../include/ionir/lexical/token.h"
-#include "../../include/ionir/lexical/token_type.h"
+#include "ionir/lexical/token_kind.h"
 #include "../../include/ionir/syntax/parser.h"
 #include "../../include/ionir/llvm/module.h"
 #include "../../include/ionir/misc/helpers.h"

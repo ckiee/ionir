@@ -2,7 +2,7 @@
 
 #include <string>
 #include <ionir/misc/iterable.h>
-#include "token_type.h"
+#include "token_kind.h"
 
 namespace ionir {
     class Token {

@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 #include <regex>
-#include <ionir/lexical/token_type.h>
+#include <ionir/lexical/token_kind.h>
 #include <ionir/misc/regex.h>
 #include <ionir/misc/helpers.h>
 

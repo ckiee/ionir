@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include <ionir/lexical/token_type.h>
+#include <ionir/lexical/token_kind.h>
 #include <ionir/misc/helpers.h>
 #include "expr.h"
 

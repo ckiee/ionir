@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <vector>
-#include <ionir/lexical/token_type.h>
+#include <ionir/lexical/token_kind.h>
 
 namespace ionir {
     template<typename T>
