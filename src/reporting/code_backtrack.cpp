@@ -3,8 +3,26 @@
 #include <ionir/reporting/code_backtrack.h>
 
 namespace ionir {
-    CodeBacktrack::CodeBacktrack(TokenStream &stream) : stream(stream) {
+    std::string CodeBacktrack::resolveInputText(std::string input, std::vector<Token> lineBuffer) {
+        if (lineBuffer.empty() || input.empty()) {
+            throw std::invalid_argument("Both input and line buffer arguments must contain value(s)");
+        }
+
+        return lineBuffer.size() > 1
+            ? input.substr(lineBuffer[0].getStartPosition(), lineBuffer[lineBuffer.size() - 1].getEndPosition())
+            : lineBuffer[0].getValue();
+    }
+
+    CodeBacktrack::CodeBacktrack(std::string input, TokenStream &stream) : input(input), stream(stream) {
         //
+    }
+
+    std::string CodeBacktrack::getInput() const {
+        return this->input;
+    }
+
+    TokenStream CodeBacktrack::getTokenStream() const {
+        return this->stream;
     }
 
     std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(uint32_t lineNumber, uint32_t grace) {
@@ -51,11 +69,8 @@ namespace ionir {
             lineBuffer.push_back(*tokenBuffer);
 
             if (stream.peek()->getLineNumber() != lineCounter) {
-                // TODO: Extract text using Iterable::slice(from, to).
-                std::string text = "todo";
-
                 codeBlock.push_back(CodeBlockLine{
-                    text,
+                    CodeBacktrack::resolveInputText(input, lineBuffer),
                     lineBuffer,
                     lineNumber
                 });
@@ -72,11 +87,8 @@ namespace ionir {
             }
                 // Return requirements have been met. Do not continue.
             else if (!streamHasNext) {
-                // TODO: Extract text using Iterable::slice(from, to).
-                std::string text = "todo";
-
                 codeBlock.push_back(CodeBlockLine{
-                    text,
+                    CodeBacktrack::resolveInputText(input, lineBuffer),
                     lineBuffer,
                     lineNumber
                 });

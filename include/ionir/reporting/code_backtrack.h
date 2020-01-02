@@ -23,10 +23,19 @@ namespace ionir {
 
     class CodeBacktrack {
     private:
+        std::string input;
+
         TokenStream &stream;
 
+    protected:
+        static std::string resolveInputText(std::string input, std::vector<Token> lineBuffer);
+
     public:
-        explicit CodeBacktrack(TokenStream &stream);
+        CodeBacktrack(std::string input, TokenStream &stream);
+
+        std::string getInput() const;
+
+        TokenStream getTokenStream() const;
 
         std::optional<CodeBlock> createCodeBlockNear(uint32_t lineNumber, uint32_t grace = IONIR_DEFAULT_GRACE);
 

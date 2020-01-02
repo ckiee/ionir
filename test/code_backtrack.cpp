@@ -25,14 +25,15 @@ TEST(CodeBacktractTest, CreateCodeBlockNear) {
         Token(TokenKind::Identifier, "again", 10, 6),
     });
 
-    CodeBacktrack backtrack = CodeBacktrack(stream);
-    auto codeBlock = backtrack.createCodeBlockNear(4);
-
-    if (codeBlock.has_value()) {
-        //        std::cout << *codeBlock;
-        // TODO: 'codeBlock' is no longer a string.
-    }
-    else {
-        std::cout << "Code block has no value" << std::endl;
-    }
+    // TODO: CodeBacktrack now also takes in 'input'.
+    //    CodeBacktrack backtrack = CodeBacktrack(stream);
+    //    auto codeBlock = backtrack.createCodeBlockNear(4);
+    //
+    //    if (codeBlock.has_value()) {
+    //        //        std::cout << *codeBlock;
+    //        // TODO: 'codeBlock' is no longer a string.
+    //    }
+    //    else {
+    //        std::cout << "Code block has no value" << std::endl;
+    //    }
 }

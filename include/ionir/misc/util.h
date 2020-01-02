@@ -42,5 +42,16 @@ namespace ionir {
         static bool withinRange(long value, long from, long to);
 
         static std::string joinStringVector(std::vector<std::string> vector);
+
+        template<typename T>
+        static std::vector<T> sliceVector(std::vector<T> subject, uint32_t start, uint32_t length) {
+            uint32_t end = start + length;
+
+            if (subject->size() < end) {
+                throw std::out_of_range("Not enough items in vector");
+            }
+
+            return std::vector<T>(subject->begin() + start, subject->begin() + end);
+        }
     };
 }
