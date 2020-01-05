@@ -5,7 +5,7 @@
 #include <optional>
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/LLVMContext.h>
-#include <ionir/construct/values/integer.h>
+#include <ionir/construct/value/integer.h>
 #include <ionir/lexical/token_kind.h>
 #include <ionir/container/map.h>
 

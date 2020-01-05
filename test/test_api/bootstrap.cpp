@@ -18,9 +18,7 @@ namespace ionir::test::bootstrap {
     }
 
     Parser parser(std::vector<Token> tokens) {
-        ionir::TokenStream *stream = new ionir::TokenStream(tokens);
-
-        return ionir::Parser(stream);
+        return ionir::Parser(ionir::TokenStream(tokens));
     }
 
     Ptr<Module> module(std::string identifier) {

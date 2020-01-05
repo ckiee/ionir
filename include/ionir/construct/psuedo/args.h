@@ -7,16 +7,16 @@
 #include <ionir/construct/type.h>
 
 namespace ionir {
-    typedef std::pair<Ptr<Type>, std::string> Arg;
+    typedef std::pair<Type &, std::string> Arg;
 
     class Args {
-    protected:
+    private:
         std::vector<Arg> items;
 
         bool isInfinite;
 
     public:
-        Args(std::vector<Arg> items = {}, bool isInfinite = false);
+        explicit Args(std::vector<Arg> items = {}, bool isInfinite = false);
 
         std::vector<Arg> getItems() const;
 

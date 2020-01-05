@@ -6,8 +6,8 @@ namespace ionir {
         //
     }
 
-    void Type::accept(Pass *visitor) {
-        visitor->visitType(this->cast<Type>());
+    void Type::accept(Pass &visitor) {
+        visitor.visitType(this->cast<Type>());
     }
 
     std::string Type::getId() const {

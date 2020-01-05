@@ -2,7 +2,7 @@
 
 #include <ionir/construct/construct.h>
 #include <ionir/construct/function.h>
-#include <ionir/construct/reference.h>
+#include <ionir/construct/variable_ref.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/extern.h>
 #include <ionir/construct/block.h>
@@ -10,16 +10,19 @@
 #include <ionir/construct/global.h>
 #include <ionir/construct/expr/expr.h>
 #include <ionir/construct/expr/binary_expr.h>
-#include <ionir/construct/values/value.h>
-#include <ionir/construct/values/integer.h>
-#include <ionir/construct/values/char.h>
-#include <ionir/construct/values/string.h>
-#include <ionir/construct/values/boolean.h>
-#include <ionir/construct/insts/inst.h>
-#include <ionir/construct/insts/alloca.h>
-#include <ionir/construct/insts/branch.h>
-#include <ionir/construct/insts/return.h>
-#include <ionir/construct/insts/call.h>
+#include <ionir/construct/value/value.h>
+#include <ionir/construct/value/integer.h>
+#include <ionir/construct/value/char.h>
+#include <ionir/construct/value/string.h>
+#include <ionir/construct/value/boolean.h>
+#include <ionir/construct/inst/inst.h>
+#include <ionir/construct/inst/alloca.h>
+#include <ionir/construct/inst/branch.h>
+#include <ionir/construct/inst/return.h>
+#include <ionir/construct/inst/store.h>
+#include <ionir/construct/inst/call.h>
+#include <ionir/construct/type/struct_decl.h>
+#include <ionir/construct/type/variable_decl.h>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
@@ -39,7 +42,7 @@ namespace ionir {
 
         virtual void visitPrototype(Ptr<Prototype> node);
 
-        virtual void visitReference(Ptr<Reference> node);
+        virtual void visitReference(Ptr<VariableRef> node);
 
         virtual void visitExpr(Ptr<Expr> node);
 
@@ -65,6 +68,12 @@ namespace ionir {
 
         virtual void visitCallInst(Ptr<CallInst> node);
 
+        virtual void visitStoreInst(Ptr<StoreInst> node);
+
         virtual void visitGlobal(Ptr<Global> node);
+
+        virtual void visitStructDecl(Ptr<StructDecl> node);
+
+        virtual void visitVariableDecl(Ptr<VariableDecl> node);
     };
 }

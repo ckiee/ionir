@@ -30,9 +30,9 @@ namespace ionir {
         std::optional<Ptr < Expr>> rightSide;
 
     public:
-        BinaryExpr(BinaryExprOpts opts);
+        explicit BinaryExpr(BinaryExprOpts opts);
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
 
         Ptr <Expr> getLeftSide() const;
 

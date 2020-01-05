@@ -2,7 +2,7 @@
 
 namespace ionir {
     void Pass::visit(Ptr<Construct> node) {
-        node->accept(this);
+        node->accept(*this);
     }
 
     void Pass::visitFunction(Ptr<Function> node) {
@@ -29,7 +29,7 @@ namespace ionir {
         //
     }
 
-    void Pass::visitReference(Ptr<Reference> node) {
+    void Pass::visitReference(Ptr<VariableRef> node) {
         //
     }
 
@@ -159,7 +159,19 @@ namespace ionir {
         //
     }
 
+    void Pass::visitStoreInst(Ptr<StoreInst> node) {
+        //
+    }
+
     void Pass::visitGlobal(Ptr<Global> node) {
+        //
+    }
+
+    void Pass::visitStructDecl(Ptr<StructDecl> node) {
+        //
+    }
+
+    void Pass::visitVariableDecl(Ptr<VariableDecl> node) {
         //
     }
 }

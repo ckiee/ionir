@@ -9,7 +9,7 @@ namespace ionir {
     class Pass;
 
     class Function : public Construct {
-    protected:
+    private:
         Ptr<Prototype> prototype;
 
         Ptr<Block> body;
@@ -17,7 +17,7 @@ namespace ionir {
     public:
         Function(Ptr<Prototype> prototype, Ptr<Block> body);
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
 
         ConstructChildren getChildren() const override;
 

@@ -1,11 +1,11 @@
 #pragma once
 
-#include <ionir/construct/insts/inst.h>
+#include <ionir/construct/inst/inst.h>
 #include <ionir/construct/section.h>
-#include <ionir/construct/insts/alloca.h>
-#include <ionir/construct/insts/branch.h>
-#include <ionir/construct/insts/return.h>
-#include <ionir/construct/insts/call.h>
+#include <ionir/construct/inst/alloca.h>
+#include <ionir/construct/inst/branch.h>
+#include <ionir/construct/inst/return.h>
+#include <ionir/construct/inst/call.h>
 #include <ionir/syntax/scope.h>
 #include "helpers.h"
 

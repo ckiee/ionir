@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <vector>
+#include <functional>
 #include <ionir/misc/helpers.h>
 #include "child_construct.h"
 #include "section.h"
@@ -18,9 +19,11 @@ namespace ionir {
         std::optional<Ptr<Section>> cachedEntry;
 
     public:
-        explicit Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
+        explicit Block(Ptr<Function> parent, std::vector<Ptr<Section>>
 
-        void accept(Pass *visitor) override;
+        sections = {});
+
+        void accept(Pass &visitor) override;
 
         ConstructChildren getChildren() const override;
 
@@ -28,8 +31,10 @@ namespace ionir {
 
         std::optional<Ptr<Section>> getEntrySection();
 
-        std::vector<Ptr<Section>> &getSections();
+        std::vector<Ptr<Section>> getSections() const;
 
-        void setSections(std::vector<Ptr<Section>> sections);
+        void setSections(std::vector<Ptr<Section>>
+
+        sections);
     };
 }

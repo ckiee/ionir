@@ -8,5 +8,8 @@ namespace ionir {
     template<typename T>
     using Ptr = std::shared_ptr<T>;
 
+    template<typename T>
+    using CPtr = Ptr<const T>;
+
     typedef std::vector<TokenKind> TokenTypeVector;
 }

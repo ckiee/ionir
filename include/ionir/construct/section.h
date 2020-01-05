@@ -5,7 +5,7 @@
 #include <vector>
 #include <ionir/misc/helpers.h>
 #include "psuedo/args.h"
-#include "insts/inst.h"
+#include "inst/inst.h"
 #include "child_construct.h"
 #include "type.h"
 
@@ -45,7 +45,6 @@ namespace ionir {
     private:
         SectionKind kind;
 
-    protected:
         std::string id;
 
         std::vector<Ptr<Inst>> insts;
@@ -53,7 +52,7 @@ namespace ionir {
     public:
         explicit Section(SectionOpts opts);
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
 
         ConstructChildren getChildren() const override;
 
@@ -61,23 +60,21 @@ namespace ionir {
 
         std::string getId() const;
 
-        void setId(std::string id);
+        void setId(const std::string id);
 
-        std::vector<Ptr<Inst>> &
-
-        getInsts();
+        std::vector<Ptr<Inst>> getInsts() const;
 
         void setInsts(std::vector<Ptr<Inst>>
 
         insts);
 
-        uint32_t relocateInsts(Ptr<Section> target, uint32_t from = 0);
+        uint32_t relocateInsts(Section &target, uint32_t from = 0);
 
         /**
          * Attempt to find the index location
          * of an instruction. Returns null if
          * not found.
          */
-        std::optional<uint32_t> locate(Ptr<Inst> inst);
+        std::optional<uint32_t> locate(Ptr<Inst> inst) const;
     };
 }

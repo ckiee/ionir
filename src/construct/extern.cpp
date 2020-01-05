@@ -1,12 +1,13 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Extern::Extern(Ptr<Prototype> prototype) : Construct(ConstructKind::Extern), prototype(prototype) {
+    Extern::Extern(Ptr<Prototype> prototype)
+        : Construct(ConstructKind::Extern), prototype(prototype) {
         //
     }
 
-    void Extern::accept(Pass *visitor) {
-        visitor->visitExtern(this->cast<Extern>());
+    void Extern::accept(Pass &visitor) {
+        visitor.visitExtern(this->cast<Extern>());
     }
 
     ConstructChildren Extern::getChildren() const {

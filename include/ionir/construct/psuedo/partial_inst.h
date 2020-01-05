@@ -2,7 +2,7 @@
 
 #include <exception>
 #include <optional>
-#include <ionir/construct/insts/inst.h>
+#include <ionir/construct/inst/inst.h>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
@@ -19,7 +19,7 @@ namespace ionir {
         std::optional<T> value;
 
     protected:
-        std::optional<T> getValue() const {
+        std::optional<const T> getValue() const {
             return this->value;
         }
 
@@ -29,7 +29,7 @@ namespace ionir {
             //
         }
 
-        virtual void accept(Pass *visitor) = 0;
+        virtual void accept(Pass &visitor) = 0;
 
         bool isResolved() const {
             return this->value.has_value();

@@ -56,6 +56,12 @@ namespace ionir {
 
         InstStore,
 
+        InstReturn,
+
+        InstAlloca,
+
+        InstBranch,
+
         KeywordFunction,
 
         KeywordExtern,

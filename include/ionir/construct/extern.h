@@ -14,7 +14,7 @@ namespace ionir {
     public:
         explicit Extern(Ptr <Prototype> prototype);
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
 
         ConstructChildren getChildren() const override;
 

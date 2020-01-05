@@ -16,11 +16,11 @@ namespace ionir {
     public:
         explicit Type(std::string id, bool isPointer = false);
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
 
         std::string getId() const;
 
-        void setId(std::string id);
+        void setId(const std::string id);
 
         bool getIsPointer() const;
 

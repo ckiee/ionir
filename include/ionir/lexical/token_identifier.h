@@ -19,5 +19,7 @@ namespace ionir {
         static bool isType(TokenKind tokenKind);
 
         static bool isKeyword(TokenKind tokenKind);
+
+        static bool isInst(TokenKind tokenKind);
     };
 }

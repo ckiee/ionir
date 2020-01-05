@@ -1,7 +1,7 @@
 #include <ionir/construct/expr/expr.h>
 
 namespace ionir {
-    Expr::Expr(ExprKind kind) : Construct(ConstructKind::Expr), kind(kind) {
+    Expr::Expr(const ExprKind kind) : Construct(ConstructKind::Expr), kind(kind) {
         //
     }
 

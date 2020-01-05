@@ -23,6 +23,14 @@ namespace ionir {
         TokenKind::TypeInt64,
     };
 
+    TokenTypeVector TokenConst::insts = {
+        TokenKind::InstAlloca,
+        TokenKind::InstBranch,
+        TokenKind::InstCall,
+        TokenKind::InstReturn,
+        TokenKind::InstStore
+    };
+
     void TokenConst::pushComplex(std::regex regex, TokenKind tokenKind) {
         TokenConst::complex.push_back(std::make_pair(regex, tokenKind));
     }
@@ -66,7 +74,7 @@ namespace ionir {
 
         SimplePairVector result = {};
 
-        for (auto pair : TokenConst::simple) {
+        for (const auto pair : TokenConst::simple) {
             result.push_back(pair);
         }
 
@@ -103,6 +111,12 @@ namespace ionir {
         TokenConst::ensureInit();
 
         return TokenConst::types;
+    }
+
+    TokenTypeVector TokenConst::getInsts() {
+        TokenConst::ensureInit();
+
+        return TokenConst::insts;
     }
 
     bool TokenConst::getIsInitialized() {
@@ -146,6 +160,9 @@ namespace ionir {
         // Register instructions & keywords.
         TokenConst::pushKeyword(ConstName::instCall, TokenKind::InstCall);
         TokenConst::pushKeyword(ConstName::instStore, TokenKind::InstStore);
+        TokenConst::pushKeyword(ConstName::instReturn, TokenKind::InstReturn);
+        TokenConst::pushKeyword(ConstName::instAlloca, TokenKind::InstAlloca);
+        TokenConst::pushKeyword(ConstName::instBranch, TokenKind::InstBranch);
         TokenConst::pushKeyword("fn", TokenKind::KeywordFunction);
         TokenConst::pushKeyword("extern", TokenKind::KeywordExtern);
         TokenConst::pushKeyword("global", TokenKind::KeywordGlobal);

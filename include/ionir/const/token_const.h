@@ -27,6 +27,8 @@ namespace ionir {
 
         static TokenTypeVector types;
 
+        static TokenTypeVector insts;
+
         static void pushComplex(std::regex regex, TokenKind tokenKind);
 
         static void pushSimple(std::string value, TokenKind tokenKind);
@@ -56,6 +58,8 @@ namespace ionir {
         static TokenTypeVector getOperators();
 
         static TokenTypeVector getTypes();
+
+        static TokenTypeVector getInsts();
 
         static bool getIsInitialized();
 

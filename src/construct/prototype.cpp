@@ -6,8 +6,8 @@ namespace ionir {
         //
     }
 
-    void Prototype::accept(Pass *visitor) {
-        visitor->visitPrototype(this->cast<Prototype>());
+    void Prototype::accept(Pass &visitor) {
+        visitor.visitPrototype(this->cast<Prototype>());
     }
 
     ConstructChildren Prototype::getChildren() const {

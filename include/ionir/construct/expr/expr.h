@@ -17,9 +17,9 @@ namespace ionir {
         ExprKind kind;
 
     public:
-        Expr(ExprKind kind);
+        explicit Expr(ExprKind kind);
 
-        virtual void accept(Pass *visitor) = 0;
+        virtual void accept(Pass &visitor) = 0;
 
         ExprKind getExprKind() const;
     };

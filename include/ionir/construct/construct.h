@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
@@ -33,9 +34,13 @@ namespace ionir {
 
         Section,
 
-        Reference,
+        VariableReference,
 
-        Expr
+        VariableDeclaration,
+
+        Expr,
+
+        StructDeclaration
     };
 
     class Construct;
@@ -61,7 +66,7 @@ namespace ionir {
 
         explicit Construct(ConstructKind kind);
 
-        virtual void accept(Pass *visitor) = 0;
+        virtual void accept(Pass &visitor) = 0;
 
         virtual ConstructChildren getChildren() const;
 
@@ -78,7 +83,7 @@ namespace ionir {
 
         template<class T>
         Ptr<T> cast() {
-            return std::static_pointer_cast<T>(this->shared_from_this());
+            return std::static_pointer_cast<T>(this->getPtr());
         }
 
         Ptr<Construct> nativeCast();

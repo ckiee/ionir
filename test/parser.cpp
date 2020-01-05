@@ -1,6 +1,6 @@
 #include <vector>
 #include <ionir/const/const_name.h>
-#include <ionir/construct/insts/inst.h>
+#include <ionir/construct/inst/inst.h>
 #include <ionir/syntax/parser.h>
 #include "test_api/bootstrap.h"
 #include "test_api/constant.h"
@@ -75,8 +75,8 @@ TEST(ParserTest, ParseArg) {
     auto arg = parser.parseArg();
 
     EXPECT_TRUE(arg.has_value());
-    EXPECT_EQ(arg->first->getId(), "type");
-    EXPECT_FALSE(arg->first->getIsPointer());
+    EXPECT_EQ(arg->first.getId(), "type");
+    EXPECT_FALSE(arg->first.getIsPointer());
     EXPECT_EQ(arg->second, "test");
 }
 
@@ -144,7 +144,7 @@ TEST(ParserTest, ParseAllocaInst) {
         Token(TokenKind::Identifier, ConstName::typeInt32)
     });
 
-    auto inst = parser.parseInst(nullptr);
+    auto inst = parser.parseAllocaInst(nullptr);
 
     EXPECT_TRUE(inst.has_value());
     EXPECT_EQ(inst->get()->getInstKind(), InstKind::Alloca);

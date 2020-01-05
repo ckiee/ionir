@@ -19,7 +19,7 @@ namespace ionir {
 
     const std::string ConstName::instCall = "call";
 
-    const std::string ConstName::instReturn = "return";
+    const std::string ConstName::instReturn = "ret";
 
     const std::string ConstName::instStore = "store";
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <ionir/construct/insts/inst.h>
+#include <ionir/construct/inst/inst.h>
 #include <ionir/misc/helpers.h>
 #include "pass.h"
 

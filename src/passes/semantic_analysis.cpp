@@ -1,6 +1,6 @@
 #include <optional>
 #include <ionir/construct/section.h>
-#include <ionir/construct/insts/return.h>
+#include <ionir/construct/inst/return.h>
 #include <ionir/passes/semantic_analysis.h>
 
 namespace ionir {

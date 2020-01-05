@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../../include/ionir/construct/insts/inst.h"
+#include "../../include/ionir/construct/inst/inst.h"
 #include "../../include/ionir/llvm/codegen/llvm_visitor.h"
 #include "../../include/ionir/lexical/token.h"
 #include "ionir/lexical/token_kind.h"

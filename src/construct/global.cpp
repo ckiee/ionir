@@ -6,8 +6,8 @@ namespace ionir {
         //
     }
 
-    void Global::accept(Pass *visitor) {
-        visitor->visitGlobal(this->cast<Global>());
+    void Global::accept(Pass &visitor) {
+        visitor.visitGlobal(this->cast<Global>());
     }
 
     ConstructChildren Global::getChildren() const {
@@ -42,7 +42,7 @@ namespace ionir {
         return this->value;
     }
 
-    void Global::setValue(std::optional<Ptr<Value>> value) {
+    void Global::setValue(const std::optional<Ptr<Value>> value) {
         this->value = value;
     }
 }

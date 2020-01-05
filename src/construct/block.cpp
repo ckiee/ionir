@@ -7,8 +7,8 @@ namespace ionir {
         //
     }
 
-    void Block::accept(Pass *visitor) {
-        visitor->visitBlock(this->cast<Block>());
+    void Block::accept(Pass &visitor) {
+        visitor.visitBlock(this->cast<Block>());
     }
 
     ConstructChildren Block::getChildren() const {
@@ -63,7 +63,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    std::vector<Ptr<Section>> &Block::getSections() {
+    std::vector<Ptr<Section>> Block::getSections() const {
         return this->sections;
     }
 

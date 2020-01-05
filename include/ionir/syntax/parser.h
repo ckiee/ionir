@@ -4,14 +4,15 @@
 #include <string>
 #include <ionir/construct/expr/expr.h>
 #include <ionir/construct/expr/id.h>
-#include <ionir/construct/values/integer.h>
-#include <ionir/construct/values/char.h>
-#include <ionir/construct/values/string.h>
-#include <ionir/construct/insts/inst.h>
-#include <ionir/construct/insts/alloca.h>
-#include <ionir/construct/insts/return.h>
-#include <ionir/construct/insts/branch.h>
-#include <ionir/construct/insts/call.h>
+#include <ionir/construct/value/integer.h>
+#include <ionir/construct/value/char.h>
+#include <ionir/construct/value/string.h>
+#include <ionir/construct/inst/inst.h>
+#include <ionir/construct/inst/alloca.h>
+#include <ionir/construct/inst/return.h>
+#include <ionir/construct/inst/branch.h>
+#include <ionir/construct/inst/call.h>
+#include <ionir/construct/inst/store.h>
 #include <ionir/construct/psuedo/partial_inst.h>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/token_identifier.h>
@@ -30,7 +31,7 @@
 namespace ionir {
     class Parser {
     private:
-        TokenStream *stream;
+        TokenStream stream;
 
         StackTrace stackTrace;
 
@@ -49,10 +50,11 @@ namespace ionir {
 
         NoticeFactory createNoticeFactory();
 
-        std::nullopt_t makeNotice(std::string message, NoticeType type);
+        std::nullopt_t makeNotice(std::string message, NoticeType type = NoticeType::Error);
 
     public:
-        explicit Parser(TokenStream *stream, StackTrace stackTrace = {}, std::string filePath = ConstName::anonymous);
+        explicit Parser(TokenStream stream, StackTrace stackTrace = {},
+            const std::string filePath = ConstName::anonymous);
 
         StackTrace getStackTrace() const;
 
@@ -64,7 +66,7 @@ namespace ionir {
          * Parses a integer literal in the form of
          * long (or integer 64).
          */
-        std::optional<Ptr<IntegerValue>> parseInt();
+        std::optional<Ptr<IntegerValue >> parseInt();
 
         std::optional<Ptr<CharValue>> parseChar();
 
@@ -105,6 +107,8 @@ namespace ionir {
         std::optional<Ptr<BranchInst>> parseBranchInst(Ptr<Section> parent);
 
         std::optional<Ptr<CallInst>> parseCallInst(Ptr<Section> parent);
+
+        std::optional<Ptr<StoreInst>> parseStoreInst(Ptr<Section> parent);
 
         /**
          * Parses an instruction, consuming its identifier.

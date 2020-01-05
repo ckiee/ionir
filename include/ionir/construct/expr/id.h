@@ -12,6 +12,6 @@ namespace ionir {
     public:
         IdExpr();
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
     };
 }

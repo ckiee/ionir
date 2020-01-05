@@ -3,7 +3,7 @@
 #include <optional>
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Constant.h>
-#include <ionir/construct/values/integer.h>
+#include <ionir/construct/value/integer.h>
 
 namespace ionir {
     class ValueResolver {

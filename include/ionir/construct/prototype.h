@@ -21,7 +21,7 @@ namespace ionir {
     public:
         Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType);
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
 
         ConstructChildren getChildren() const override;
 

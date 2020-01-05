@@ -26,4 +26,8 @@ namespace ionir {
     bool TokenIdentifier::isKeyword(TokenKind tokenKind) {
         return TokenIdentifier::contains(TokenConst::getKeywords(), tokenKind);
     }
+
+    bool TokenIdentifier::isInst(TokenKind tokenKind) {
+        return TokenIdentifier::contains(TokenConst::getInsts(), tokenKind);
+    }
 }

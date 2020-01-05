@@ -6,8 +6,8 @@ namespace ionir {
         //
     }
 
-    void Function::accept(Pass *visitor) {
-        visitor->visitFunction(this->cast<Function>());
+    void Function::accept(Pass &visitor) {
+        visitor.visitFunction(this->cast<Function>());
     }
 
     ConstructChildren Function::getChildren() const {

@@ -3,7 +3,7 @@
 #include <optional>
 #include <string>
 #include <ionir/misc/helpers.h>
-#include "values/value.h"
+#include "value/value.h"
 #include "construct.h"
 #include "type.h"
 
@@ -23,7 +23,7 @@ namespace ionir {
 
         value = std::nullopt);
 
-        void accept(Pass *visitor) override;
+        void accept(Pass &visitor) override;
 
         ConstructChildren getChildren() const override;
 
@@ -33,7 +33,7 @@ namespace ionir {
 
         std::string getId() const;
 
-        void setId(std::string id);
+        void setId(const std::string id);
 
         std::optional<Ptr < Value>> getValue() const;
 
