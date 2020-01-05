@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <ionir/reporting/code_backtrack.h>
 #include "pch.h"

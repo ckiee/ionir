@@ -31,7 +31,7 @@ namespace ionir {
         static std::string resolveInputText(std::string input, std::vector<Token> lineBuffer);
 
     public:
-        CodeBacktrack(std::string input, TokenStream &stream);
+        CodeBacktrack(std::string input, TokenStream stream);
 
         std::string getInput() const;
 

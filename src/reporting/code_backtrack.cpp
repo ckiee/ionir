@@ -13,7 +13,7 @@ namespace ionir {
             : lineBuffer[0].getValue();
     }
 
-    CodeBacktrack::CodeBacktrack(std::string input, TokenStream &stream) : input(input), stream(stream) {
+    CodeBacktrack::CodeBacktrack(std::string input, TokenStream stream) : input(input), stream(stream) {
         //
     }
 
