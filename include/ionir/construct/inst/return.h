@@ -3,9 +3,9 @@
 #include <optional>
 #include <string>
 #include <ionir/construct/type.h>
-#include <ionir/construct/value/value.h>
+#include <ionir/construct/value.h>
 #include <ionir/misc/helpers.h>
-#include "inst.h"
+#include "ionir/construct/inst.h"
 
 namespace ionir {
     class Pass;

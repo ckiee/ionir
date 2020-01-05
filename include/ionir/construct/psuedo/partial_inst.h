@@ -2,7 +2,7 @@
 
 #include <exception>
 #include <optional>
-#include <ionir/construct/inst/inst.h>
+#include <ionir/construct/inst.h>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {

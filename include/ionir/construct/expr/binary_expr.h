@@ -3,7 +3,7 @@
 #include <optional>
 #include <ionir/lexical/token_kind.h>
 #include <ionir/misc/helpers.h>
-#include "expr.h"
+#include "ionir/construct/expr.h"
 
 namespace ionir {
     class Pass;
@@ -14,9 +14,9 @@ namespace ionir {
 
         int precedence;
 
-        Ptr <Expr> leftSide;
+        Ptr<Expr> leftSide;
 
-        std::optional<Ptr < Expr>> rightSide = std::nullopt;
+        std::optional<Ptr<Expr>> rightSide = std::nullopt;
     };
 
     class BinaryExpr : public Expr {
@@ -25,22 +25,22 @@ namespace ionir {
 
         int precedence;
 
-        Ptr <Expr> leftSide;
+        Ptr<Expr> leftSide;
 
-        std::optional<Ptr < Expr>> rightSide;
+        std::optional<Ptr<Expr>> rightSide;
 
     public:
         explicit BinaryExpr(BinaryExprOpts opts);
 
         void accept(Pass &visitor) override;
 
-        Ptr <Expr> getLeftSide() const;
+        Ptr<Expr> getLeftSide() const;
 
-        void setLeftSide(Ptr <Expr> leftSide);
+        void setLeftSide(Ptr<Expr> leftSide);
 
-        std::optional<Ptr < Expr>> getRightSide() const;
+        std::optional<Ptr<Expr>> getRightSide() const;
 
-        void setRightSide(std::optional<Ptr < Expr>>
+        void setRightSide(std::optional<Ptr<Expr>>
 
         rightSide);
     };

@@ -3,7 +3,7 @@
 #include <optional>
 #include <ionir/lexical/token_kind.h>
 #include <ionir/misc/helpers.h>
-#include "expr.h"
+#include "ionir/construct/expr.h"
 
 namespace ionir {
     class Pass;

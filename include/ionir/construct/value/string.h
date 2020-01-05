@@ -2,7 +2,7 @@
 
 #include <string>
 #include <ionir/misc/helpers.h>
-#include "value.h"
+#include "ionir/construct/value.h"
 
 namespace ionir {
     class Pass;

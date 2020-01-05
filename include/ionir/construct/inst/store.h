@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ionir/construct/value/value.h>
+#include <ionir/construct/value.h>
 #include <ionir/construct/psuedo/partial_inst.h>
 #include <ionir/construct/child_construct.h>
 

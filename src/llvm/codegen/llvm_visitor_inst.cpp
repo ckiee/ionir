@@ -1,7 +1,7 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Constant.h>
-#include <ionir/construct/value/value.h>
+#include <ionir/construct/value.h>
 #include <ionir/llvm/codegen/llvm_visitor.h>
 
 namespace ionir {

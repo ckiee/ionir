@@ -1,6 +1,6 @@
 #include <vector>
 #include <ionir/const/const_name.h>
-#include <ionir/construct/inst/inst.h>
+#include <ionir/construct/inst.h>
 #include <ionir/syntax/parser.h>
 #include "test_api/bootstrap.h"
 #include "test_api/constant.h"

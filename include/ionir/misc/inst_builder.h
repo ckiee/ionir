@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ionir/construct/inst/inst.h>
+#include <ionir/construct/inst.h>
 #include <ionir/construct/section.h>
 #include <ionir/construct/inst/alloca.h>
 #include <ionir/construct/inst/branch.h>

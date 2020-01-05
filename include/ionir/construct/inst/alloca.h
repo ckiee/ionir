@@ -4,7 +4,7 @@
 #include <ionir/construct/type.h>
 #include <ionir/construct/section.h>
 #include <ionir/misc/helpers.h>
-#include "inst.h"
+#include "ionir/construct/inst.h"
 
 namespace ionir {
     struct AllocaInstOpts : InstOpts {
