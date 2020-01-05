@@ -134,4 +134,10 @@ namespace ionir {
 
         return this->makeNotice("Not yet implemented");
     }
+
+    std::optional<Ptr<StoreInst>> Parser::parseStoreInst(Ptr<Section> parent) {
+        // TODO
+
+        return std::nullopt;
+    }
 }

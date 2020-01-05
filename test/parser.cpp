@@ -75,8 +75,8 @@ TEST(ParserTest, ParseArg) {
     auto arg = parser.parseArg();
 
     EXPECT_TRUE(arg.has_value());
-    EXPECT_EQ(arg->first.getId(), "type");
-    EXPECT_FALSE(arg->first.getIsPointer());
+    EXPECT_EQ(arg->first->getId(), "type");
+    EXPECT_FALSE(arg->first->getIsPointer());
     EXPECT_EQ(arg->second, "test");
 }
 
