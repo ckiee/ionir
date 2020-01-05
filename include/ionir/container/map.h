@@ -12,6 +12,10 @@ namespace ionir {
             //
         }
 
+        TValue &operator[](TKey key) const {
+            return this->value[key];
+        }
+
         bool contains(TKey key) const {
             return this->value.find(key) != this->value.end();
         }
