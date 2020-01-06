@@ -1,8 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    IntegerValue::IntegerValue(IntegerKind kind, int64_t value)
-        : Value(ValueKind::Integer), kind(kind), value(value) {
+    IntegerValue::IntegerValue(Ptr<IntegerType> type, int64_t value)
+        : Value(ValueKind::Integer), type(type), value(value) {
         //
     }
 
@@ -10,8 +10,12 @@ namespace ionir {
         visitor.visitIntegerValue(this->cast<IntegerValue>());
     }
 
-    IntegerKind IntegerValue::getIntKind() const {
-        return this->kind;
+    Ptr<IntegerType> IntegerValue::getType() const {
+        return this->type;
+    }
+
+    void IntegerValue::setType(Ptr<IntegerType> type) {
+        this->type = type;
     }
 
     int64_t IntegerValue::getValue() const {

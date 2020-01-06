@@ -1,7 +1,6 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Constant.h>
-#include <ionir/construct/value.h>
 #include <ionir/llvm/codegen/llvm_visitor.h>
 
 namespace ionir {
@@ -61,6 +60,11 @@ namespace ionir {
         //
     }
 
+    LlvmVisitor::~LlvmVisitor() {
+        this->typeStack.clear();
+        this->valueStack.clear();
+    }
+
     void LlvmVisitor::visitSection(Ptr<Section> node) {
         // Function buffer must not be null.
         this->requireFunction();
@@ -115,18 +119,6 @@ namespace ionir {
         }
     }
 
-    void LlvmVisitor::visitType(Ptr<Type> node) {
-        // TODO: Hard-coded double type.
-        llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
-
-        // Convert type to a pointer if applicable.
-        if (node->getIsPointer()) {
-            // TODO: Convert type to pointer.
-        }
-
-        this->typeStack.push(type);
-    }
-
     void LlvmVisitor::visitGlobal(Ptr<Global> node) {
         this->visitType(node->getType());
 
@@ -148,5 +140,74 @@ namespace ionir {
             // TODO: You can't just cast llvm::value to constant! See above.
             globalVar->setInitializer((llvm::Constant *)value);
         }
+    }
+
+    void LlvmVisitor::visitType(Ptr<Type> node) {
+        // TODO: Hard-coded double type.
+        llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
+
+        // Convert type to a pointer if applicable.
+        if (node->getIsPointer()) {
+            // TODO: Convert type to pointer.
+        }
+
+        this->typeStack.push(type);
+    }
+
+    void LlvmVisitor::visitIntegerType(Ptr<IntegerType> node) {
+        std::optional<llvm::IntegerType *> type;
+
+        /**
+         * Create the corresponding LLVM integer type
+         * based off the node's integer kind.
+         */
+        switch (node->getIntegerKind()) {
+            case IntegerKind::Int1: {
+                type = llvm::Type::getInt1Ty(*this->context);
+
+                break;
+            }
+
+            case IntegerKind::Int8: {
+                type = llvm::Type::getInt8Ty(*this->context);
+
+                break;
+            }
+
+            case IntegerKind::Int16: {
+                type = llvm::Type::getInt16Ty(*this->context);
+
+                break;
+            }
+
+            case IntegerKind::Int32: {
+                type = llvm::Type::getInt32Ty(*this->context);
+
+                break;
+            }
+
+            case IntegerKind::Int64: {
+                type = llvm::Type::getInt64Ty(*this->context);
+
+                break;
+            }
+
+            case IntegerKind::Int128: {
+                type = llvm::Type::getInt128Ty(*this->context);
+
+                break;
+            }
+
+            default: {
+                throw std::runtime_error("An unrecognized integer kind was provided");
+            }
+        }
+
+        // At this point, type must be defined.
+        if (!type.has_value()) {
+            throw std::runtime_error("Expected type to be defined");
+        }
+
+        this->typeStack.push(*type);
     }
 }

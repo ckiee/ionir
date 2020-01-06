@@ -7,11 +7,17 @@ namespace ionir {
 
     const std::string ConstName::typeString = "str";
 
+    const std::string ConstName::typeInt1 = "i1";
+
+    const std::string ConstName::typeInt8 = "i8";
+
     const std::string ConstName::typeInt16 = "i16";
 
     const std::string ConstName::typeInt32 = "i32";
 
     const std::string ConstName::typeInt64 = "i64";
+
+    const std::string ConstName::typeInt128 = "i128";
 
     const std::string ConstName::instAlloca = "alloca";
 

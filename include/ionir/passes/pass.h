@@ -23,6 +23,7 @@
 #include <ionir/construct/inst/call.h>
 #include <ionir/construct/type/struct_decl.h>
 #include <ionir/construct/type/variable_decl.h>
+#include <ionir/construct/type/integer_type.h>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
@@ -37,8 +38,6 @@ namespace ionir {
         virtual void visitSection(Ptr<Section> node);
 
         virtual void visitBlock(Ptr<Block> node);
-
-        virtual void visitType(Ptr<Type> node);
 
         virtual void visitPrototype(Ptr<Prototype> node);
 
@@ -75,5 +74,9 @@ namespace ionir {
         virtual void visitStructDecl(Ptr<StructDecl> node);
 
         virtual void visitVariableDecl(Ptr<VariableDecl> node);
+
+        virtual void visitType(Ptr<Type> node);
+
+        virtual void visitIntegerType(Ptr<IntegerType> node);
     };
 }

@@ -6,6 +6,8 @@
 #include <string>
 #include <regex>
 #include <string_view>
+#include <ionir/construct/type/integer_type.h>
+#include <ionir/const/const_name.h>
 
 namespace ionir {
     class Util {
@@ -53,5 +55,9 @@ namespace ionir {
 
             return std::vector<T>(subject->begin() + start, subject->begin() + end);
         }
+
+        static std::string resolveIntegerKindName(IntegerKind kind);
+
+        static TypeKind resolveTypeKind(std::string id);
     };
 }

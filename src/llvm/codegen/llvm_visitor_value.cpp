@@ -13,51 +13,19 @@ namespace ionir {
          */
         llvm::APInt apInt = llvm::APInt(node->getValue(), true);
 
-        // TODO: Process correct int. type based on IntegerKind.
-        std::optional<llvm::IntegerType *> type = std::nullopt;
+        Ptr<Type> nodeType = node->getType();
 
-        /**
-         * Create the corresponding LLVM integer type
-         * based off the node's integer kind.
-         */
-        switch (node->getIntKind()) {
-            case IntegerKind::Int1: {
-                type = llvm::Type::getInt1Ty(*this->context);
-
-                break;
-            }
-
-            case IntegerKind::Int32: {
-                type = llvm::Type::getInt32Ty(*this->context);
-
-                break;
-            }
-
-            case IntegerKind::Int64: {
-                type = llvm::Type::getInt64Ty(*this->context);
-
-                break;
-            }
-
-            case IntegerKind::Int128: {
-                type = llvm::Type::getInt128Ty(*this->context);
-
-                break;
-            }
-
-            default: {
-                throw std::runtime_error("An unrecognized integer kind was provided");
-            }
+        if (nodeType->getTypeKind() != TypeKind::Integer) {
+            throw std::runtime_error("Integer value's type must be integer type");
         }
 
-        // At this point, type must be defined.
-        if (!type.has_value()) {
-            throw std::runtime_error("Expected type to be defined");
-        }
+        this->visitIntegerType(nodeType->cast<IntegerType>());
+
+        llvm::Type *type = this->typeStack.pop();
 
         // Finally, create the LLVM value constant.
         llvm::Constant *value =
-            llvm::ConstantInt::get(*type, apInt);
+            llvm::ConstantInt::get(type, apInt);
 
         // Push the value onto the value stack.
         this->valueStack.push(value);

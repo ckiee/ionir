@@ -1,7 +1,7 @@
 #include <ionir/tracking/class_descriptor.h>
 
 namespace ionir {
-    std::optional<Ptr<MethodDescriptor>> ClassDescriptor::findMethod(std::string name) const {
+    std::optional<Ptr<MethodDescriptor>> ClassDescriptor::findMethod(std::string name) {
         SymbolTable<MethodDescriptor> localMethods = this->getMethods();
 
         if (localMethods.contains(name)) {

@@ -43,18 +43,18 @@ TEST(MapContainerTest, LookupOr) {
 TEST(MapContainerTest, Size) {
     Map<std::string, int> map = Map<std::string, int>();
 
-    EXPECT_EQ(map.size(), 0);
+    EXPECT_EQ(map.getSize(), 0);
 
     map.insert(test::constant::foobar, value);
 
-    EXPECT_EQ(map.size(), 1);
+    EXPECT_EQ(map.getSize(), 1);
 }
 
 TEST(MapContainerTest, Remove) {
     Map<std::string, int> map = Map<std::string, int>({{test::constant::foobar, value}});
 
-    EXPECT_EQ(map.size(), 1);
+    EXPECT_EQ(map.getSize(), 1);
     EXPECT_TRUE(map.remove(test::constant::foobar));
-    EXPECT_EQ(map.size(), 0);
+    EXPECT_EQ(map.getSize(), 0);
     EXPECT_FALSE(map.remove(test::constant::foobar));
 }

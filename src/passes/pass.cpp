@@ -21,10 +21,6 @@ namespace ionir {
         //
     }
 
-    void Pass::visitType(Ptr<Type> node) {
-        //
-    }
-
     void Pass::visitPrototype(Ptr<Prototype> node) {
         //
     }
@@ -172,6 +168,14 @@ namespace ionir {
     }
 
     void Pass::visitVariableDecl(Ptr<VariableDecl> node) {
+        //
+    }
+
+    void Pass::visitType(Ptr<Type> node) {
+        //
+    }
+
+    void Pass::visitIntegerType(ionir::Ptr<ionir::IntegerType> node) {
         //
     }
 }

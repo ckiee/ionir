@@ -31,37 +31,20 @@ namespace ionir {
     }
 
     std::optional<Ptr<IntegerValue>> Parser::parseInt() {
-        IONIR_PARSER_EXPECT(TokenKind::LiteralInt);
+        std::optional<Ptr<Type>> type = this->parseTypePrefix();
+
+        IONIR_PARSER_ASSURE(type)
+        IONIR_PARSER_EXPECT(TokenKind::LiteralInt)
 
         // Abstract the token's value to be used in the string -> long conversion.
         std::string tokenValue = this->stream.get().getValue();
 
-        // Attempt to convert token's value to a long.
-        long value = std::stol(tokenValue);
-
-        std::optional<IntegerKind> kind = std::nullopt;
-
-        if (Util::withinRange(value, SHRT_MIN, SHRT_MAX)) {
-            kind = IntegerKind::Int16;
-        }
-        else if (Util::withinRange(value, INT_MIN, INT_MAX)) {
-            kind = IntegerKind::Int32;
-        }
-        else if (Util::withinRange(value, LONG_MIN, LONG_MAX)) {
-            kind = IntegerKind::Int64;
-        }
-            // TODO: Missing Int128.
-        else {
-            return this->makeNotice("Unable to identify integer kind for value");
-        }
-
-        // At this point, kind must be set.
-        if (!kind.has_value()) {
-            return this->makeNotice("Expected kind to be defined");
-        }
+        // TODO: May stol() throw an error? If so, wrap in try-catch block for safety.
+        // Attempt to convert token's value to a long (int64_t for cross-platform support).
+        int64_t value = std::stol(tokenValue);
 
         // Create the integer instance.
-        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(*kind, value);
+        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type->get()->cast<IntegerType>(), value);
 
         // Skip current token.
         this->stream.tryNext();

@@ -54,7 +54,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 
 TEST(CodeGenTest, VisitEmptyGlobal) {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-    Ptr<Type> type = std::make_shared<Type>(ConstName::typeInt32, false);
+    Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int32);
     Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar);
 
     visitor->visitGlobal(globalVar);
@@ -66,10 +66,10 @@ TEST(CodeGenTest, VisitEmptyGlobal) {
 
 TEST(CodeGenTest, VisitGlobalWithValue) {
     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-    Ptr<Type> type = std::make_shared<Type>(ConstName::typeInt32, false);
+    Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int32);
 
     Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar,
-        std::make_shared<IntegerValue>(IntegerKind::Int32, 123));
+        std::make_shared<IntegerValue>(type, 123));
 
     visitor->visitGlobal(globalVar);
 

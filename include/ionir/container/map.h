@@ -12,7 +12,7 @@ namespace ionir {
             //
         }
 
-        TValue &operator[](TKey key) const {
+        TValue &operator[](TKey key) {
             return this->value[key];
         }
 
@@ -60,7 +60,7 @@ namespace ionir {
             this->value.clear();
         }
 
-        size_t size() {
+        size_t getSize() const {
             return this->value.size();
         }
     };

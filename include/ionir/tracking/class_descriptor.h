@@ -8,7 +8,7 @@ namespace ionir {
         std::optional<Ptr<ClassDescriptor>> parent;
 
     public:
-        std::optional<Ptr<MethodDescriptor>> findMethod(std::string name) const;
+        std::optional<Ptr<MethodDescriptor>> findMethod(std::string name);
 
         bool containsMethod(std::string name);
     };

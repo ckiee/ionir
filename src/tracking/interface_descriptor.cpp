@@ -33,7 +33,7 @@ namespace ionir {
         this->interfaces = interfaces;
     }
 
-    std::optional<Ptr<FieldDescriptor>> InterfaceDescriptor::findField(std::string name) const {
+    std::optional<Ptr<FieldDescriptor>> InterfaceDescriptor::findField(std::string name) {
         if (this->fields.contains(name)) {
             return this->fields[name];
         }
@@ -49,7 +49,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    bool InterfaceDescriptor::containsField(std::string name) const {
+    bool InterfaceDescriptor::containsField(std::string name) {
         return this->findField(name) != std::nullopt;
     }
 }

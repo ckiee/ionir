@@ -1,35 +1,26 @@
 #pragma once
 
 #include <ionir/misc/helpers.h>
+#include <ionir/construct/type/integer_type.h>
 #include "ionir/construct/value.h"
 
 namespace ionir {
     class Pass;
 
-    enum class IntegerKind {
-        Int1,
-
-        Int16,
-
-        Int32,
-
-        Int64,
-
-        Int128
-    };
-
     class IntegerValue : public Value {
     private:
-        IntegerKind kind;
+        Ptr<IntegerType> type;
 
         int64_t value;
 
     public:
-        IntegerValue(IntegerKind kind, int64_t value);
+        IntegerValue(Ptr<IntegerType> type, int64_t value);
 
         void accept(Pass &visitor) override;
 
-        IntegerKind getIntKind() const;
+        Ptr<IntegerType> getType() const;
+
+        void setType(Ptr<IntegerType> type);
 
         int64_t getValue() const;
 

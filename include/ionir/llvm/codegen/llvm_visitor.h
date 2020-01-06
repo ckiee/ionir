@@ -62,6 +62,8 @@ namespace ionir {
     public:
         explicit LlvmVisitor(llvm::Module *module);
 
+        ~LlvmVisitor();
+
         llvm::Module *getModule() const;
 
         Stack<llvm::Value *> getValueStack() const;
@@ -75,8 +77,6 @@ namespace ionir {
         void visitSection(Ptr<Section> node) override;
 
         void visitBlock(Ptr<Block> node) override;
-
-        void visitType(Ptr<Type> node) override;
 
         void visitPrototype(Ptr<Prototype> node) override;
 
@@ -97,5 +97,9 @@ namespace ionir {
         void visitBranchInst(Ptr<BranchInst> node) override;
 
         void visitGlobal(Ptr<Global> node) override;
+
+        void visitType(Ptr<Type> node) override;
+
+        void visitIntegerType(Ptr<IntegerType> node) override;
     };
 }

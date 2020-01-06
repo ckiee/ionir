@@ -100,7 +100,20 @@ namespace ionir {
         }
 
         // Create and return the resulting type construct.
-        return std::make_shared<Type>(*id, isPointer);
+        return std::make_shared<Type>(*id, Util::resolveTypeKind(*id), isPointer);
+    }
+
+    std::optional<Ptr<Type>> Parser::parseTypePrefix() {
+        this->skipOver(TokenKind::SymbolBracketL);
+
+        std::optional<Ptr < Type>>
+        type = this->parseType();
+
+        IONIR_PARSER_ASSURE(type)
+
+        this->skipOver(TokenKind::SymbolBracketR);
+
+        return type;
     }
 
     std::optional<Ptr<Global>> Parser::parseGlobal() {

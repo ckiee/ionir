@@ -35,8 +35,8 @@ namespace ionir {
 
         void setInterfaces(std::vector<Ptr<InterfaceDescriptor>> interfaces);
 
-        std::optional<Ptr<FieldDescriptor>> findField(std::string name) const;
+        std::optional<Ptr<FieldDescriptor>> findField(std::string name);
 
-        bool containsField(std::string name) const;
+        bool containsField(std::string name);
     };
 }

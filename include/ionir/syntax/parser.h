@@ -76,6 +76,8 @@ namespace ionir {
 
         std::optional<Ptr<Type>> parseType();
 
+        std::optional<Ptr<Type>> parseTypePrefix();
+
         std::optional<Arg> parseArg();
 
         std::optional<Ptr<Args>> parseArgs();

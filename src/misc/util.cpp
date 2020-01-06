@@ -50,4 +50,61 @@ namespace ionir {
 
         return result.str();
     }
+
+    std::string Util::resolveIntegerKindName(IntegerKind kind) {
+        switch (kind) {
+            case IntegerKind::Int1: {
+                return ConstName::typeInt1;
+            }
+
+            case IntegerKind::Int16: {
+                return ConstName::typeInt16;
+            }
+
+            case IntegerKind::Int32: {
+                return ConstName::typeInt32;
+            }
+
+            case IntegerKind::Int64: {
+                return ConstName::typeInt64;
+            }
+
+            case IntegerKind::Int128: {
+                return ConstName::typeInt128;
+            }
+
+            default: {
+                throw std::runtime_error("Unknown integer kind");
+            }
+        }
+    }
+
+    TypeKind Util::resolveTypeKind(std::string id) {
+        if (id == ConstName::typeInt1) {
+            return TypeKind::Integer;
+        }
+        else if (id == ConstName::typeInt8) {
+            return TypeKind::Integer;
+        }
+        else if (id == ConstName::typeInt16) {
+            return TypeKind::Integer;
+        }
+        else if (id == ConstName::typeInt32) {
+            return TypeKind::Integer;
+        }
+        else if (id == ConstName::typeInt64) {
+            return TypeKind::Integer;
+        }
+        else if (id == ConstName::typeInt128) {
+            return TypeKind::Integer;
+        }
+        else if (id == ConstName::typeVoid) {
+            return TypeKind::Void;
+        }
+        else if (id == ConstName::typeString) {
+            return TypeKind::String;
+        }
+
+        return TypeKind::UserDefined;
+    }
 }
