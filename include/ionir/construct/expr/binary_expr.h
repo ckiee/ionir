@@ -43,5 +43,8 @@ namespace ionir {
         void setRightSide(std::optional<Ptr<Expr>>
 
         rightSide);
+
+        // TODO: Exprs must take in Type (thus, as well as Value, etc.).
+        std::optional<Ptr<Type>> evaluateType() const;
     };
 }
