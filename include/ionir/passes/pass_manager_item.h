@@ -5,7 +5,7 @@
 
 namespace ionir {
     struct PassManagerItem {
-        Pass *pass;
+        Ptr<Pass> pass;
 
         PassPriority priority = PassPriority::Normal;
     };

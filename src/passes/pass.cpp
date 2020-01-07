@@ -175,7 +175,11 @@ namespace ionir {
         //
     }
 
-    void Pass::visitIntegerType(ionir::Ptr<ionir::IntegerType> node) {
+    void Pass::visitIntegerType(Ptr<IntegerType> node) {
+        //
+    }
+
+    void Pass::visitVoidType(Ptr<VoidType> node) {
         //
     }
 

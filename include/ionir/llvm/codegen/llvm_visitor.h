@@ -101,5 +101,9 @@ namespace ionir {
         void visitType(Ptr<Type> node) override;
 
         void visitIntegerType(Ptr<IntegerType> node) override;
+
+        void visitVoidType(Ptr<VoidType> node) override;
+
+        void visitModule(Ptr<Module> node) override;
     };
 }

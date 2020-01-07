@@ -2,20 +2,46 @@
 #include <ionir/passes/pass_manager.h>
 
 namespace ionir {
-    PassManager::PassManager() : passes({}) {
+    PassManager::PassManager(std::vector<PassManagerItem> passes) : passes(passes) {
         //
     }
 
-    void PassManager::registerPass(Ptr<PassManagerItem> item) {
+    std::vector<PassManagerItem> &PassManager::getPasses() {
+        return this->passes;
+    }
+
+    void PassManager::setPasses(std::vector<PassManagerItem> passes) {
+        this->passes = passes;
+    }
+
+    void PassManager::registerPass(PassManagerItem item) {
         this->passes.push_back(item);
     }
 
-    void PassManager::run(Ast ast) {
-        for (auto item : this->passes) {
-            // TODO: Process priorities.
-            for (auto topLevelConstruct : ast) {
-                item->pass->visit(topLevelConstruct);
-            }
-        }
+    void PassManager::registerPass(Ptr<Pass> pass) {
+        this->registerPass(PassManagerItem{
+            pass
+        });
     }
+
+    void PassManager::run(Ast
+
+    ast) {
+    for (
+
+    const auto item
+
+    : this->passes) {
+    // TODO: Process priorities.
+    for (
+
+    auto topLevelConstruct
+
+    : ast) {
+    item.pass->
+
+    visit(topLevelConstruct);
+}
+}
+}
 }

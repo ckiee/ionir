@@ -63,6 +63,10 @@ namespace ionir {
 
     ParserResult<Construct> Parser::parseTopLevel() {
         switch (this->stream.get().getKind()) {
+            case TokenKind::KeywordModule: {
+                return this->parseModule();
+            }
+
             case TokenKind::KeywordFunction: {
                 return this->parseFunction();
             }

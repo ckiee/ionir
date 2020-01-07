@@ -12,7 +12,7 @@ namespace ionir {
     struct CodeBlockLine {
         std::string text;
 
-        std::vector<ionir::Token> tokens;
+        std::vector<Token> tokens;
 
         std::optional<uint32_t> lineNumber = std::nullopt;
 
@@ -25,7 +25,7 @@ namespace ionir {
     private:
         std::string input;
 
-        TokenStream &stream;
+        TokenStream stream;
 
     protected:
         static std::string resolveInputText(std::string input, std::vector<Token> lineBuffer);

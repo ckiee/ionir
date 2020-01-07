@@ -26,7 +26,7 @@ namespace ionir {
     }
 
     std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(uint32_t lineNumber, uint32_t grace) {
-        CodeBlock codeBlock;
+        CodeBlock codeBlock = {};
 
         // Compute start & end line for the code block.
         uint32_t start = grace >= lineNumber ? 0 : lineNumber - grace;

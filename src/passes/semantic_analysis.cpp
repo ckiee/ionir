@@ -4,6 +4,10 @@
 #include <ionir/passes/semantic_analysis.h>
 
 namespace ionir {
+    SemanticAnalysisPass::SemanticAnalysisPass() {
+        //
+    }
+
     void SemanticAnalysisPass::functionReturnCheck(Ptr<Function> node) {
         // TODO: Hard-coded id.
         if (node->getPrototype()->getReturnType()->getId() != "void") {

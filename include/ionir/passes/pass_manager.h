@@ -13,17 +13,23 @@ namespace ionir {
          * manager items will be both stored
          * and processed from.
          */
-        std::vector<Ptr<PassManagerItem>> passes;
+        std::vector<PassManagerItem> passes;
 
     public:
-        PassManager();
+        explicit PassManager(std::vector<PassManagerItem> passes = {});
+
+        std::vector<PassManagerItem> &getPasses();
+
+        void setPasses(std::vector<PassManagerItem> passes);
 
         /**
          * Register a pass in the set. Returns whether
          * the provided pass was successfully registered
          * in the internal set.
          */
-        void registerPass(Ptr<PassManagerItem> item);
+        void registerPass(PassManagerItem item);
+
+        void registerPass(Ptr<Pass> pass);
 
         void run(Ast ast);
     };

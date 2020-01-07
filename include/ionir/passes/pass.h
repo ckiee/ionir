@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ionir/misc/helpers.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/function.h>
 #include <ionir/construct/variable_ref.h>
@@ -25,7 +26,7 @@
 #include <ionir/construct/type/struct_decl.h>
 #include <ionir/construct/type/variable_decl.h>
 #include <ionir/construct/type/integer_type.h>
-#include <ionir/misc/helpers.h>
+#include <ionir/construct/type/void_type.h>
 
 namespace ionir {
     class Pass {
@@ -79,6 +80,8 @@ namespace ionir {
         virtual void visitType(Ptr<Type> node);
 
         virtual void visitIntegerType(Ptr<IntegerType> node);
+
+        virtual void visitVoidType(Ptr<VoidType> node);
 
         virtual void visitModule(Ptr<Module> node);
     };

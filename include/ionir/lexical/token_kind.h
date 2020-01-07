@@ -101,5 +101,5 @@ namespace ionir {
         OperatorLessThan
     };
 
-    std::ostream &operator<<(std::ostream &stream, const ionir::TokenKind &tokenKind);
+    std::ostream &operator<<(std::ostream &stream, const TokenKind &tokenKind);
 }

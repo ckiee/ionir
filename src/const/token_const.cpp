@@ -164,6 +164,7 @@ namespace ionir {
         TokenConst::pushKeyword(ConstName::instAlloca, TokenKind::InstAlloca);
         TokenConst::pushKeyword(ConstName::instBranch, TokenKind::InstBranch);
         TokenConst::pushKeyword("fn", TokenKind::KeywordFunction);
+        TokenConst::pushKeyword("module", TokenKind::KeywordModule);
         TokenConst::pushKeyword("extern", TokenKind::KeywordExtern);
         TokenConst::pushKeyword("global", TokenKind::KeywordGlobal);
         TokenConst::pushKeyword("else", TokenKind::KeywordElse);

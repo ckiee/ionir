@@ -210,4 +210,13 @@ namespace ionir {
 
         this->typeStack.push(*type);
     }
+
+    void LlvmVisitor::visitVoidType(Ptr<VoidType> node) {
+        this->typeStack.push(llvm::Type::getVoidTy(*this->context));
+    }
+
+    void LlvmVisitor::visitModule(Ptr<Module> node) {
+        this->context = new llvm::LLVMContext();
+        this->module = new llvm::Module(node->getId(), *this->context);
+    }
 }
