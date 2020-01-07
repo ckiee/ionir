@@ -3,9 +3,14 @@
 #include <vector>
 #include <ionir/syntax/ast.h>
 #include <ionir/misc/helpers.h>
-#include "pass_manager_item.h"
 
 namespace ionir {
+    struct PassManagerItem {
+        Ptr<Pass> pass;
+
+        PassPriority priority = PassPriority::Normal;
+    };
+
     class PassManager {
     protected:
         /**
