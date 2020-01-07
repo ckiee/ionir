@@ -6,16 +6,16 @@
 #include "context.h"
 
 namespace ionir {
-    class Module : public Wrapper<llvm::Module *> {
-    protected:
+    class LlvmModule : public Wrapper<llvm::Module *> {
+    private:
         Context *context;
 
     public:
-        Module(llvm::Module *module, Context *context);
+        LlvmModule(llvm::Module *module, Context *context);
 
-        explicit Module(llvm::Module *module);
+        explicit LlvmModule(llvm::Module *module);
 
-        ~Module();
+        ~LlvmModule();
 
         Context *getContext() const;
 

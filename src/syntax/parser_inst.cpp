@@ -4,7 +4,7 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    std::optional<Ptr<Inst>> Parser::parseInst(Ptr<Section> parent) {
+    ParserResult <Inst> Parser::parseInst(Ptr <Section> parent) {
         /**
          * Retrieve the current token's kind to
          * determine the instruction's name &
@@ -13,7 +13,8 @@ namespace ionir {
         TokenKind tokenKind = this->stream.get().getKind();
 
         // Create a buffer instruction to serve as the result.
-        std::optional<Ptr<Inst>> inst;
+        std::optional <Ptr<Inst>>
+            inst;
 
         /**
          * First off, ensure the name is actually
@@ -65,12 +66,13 @@ namespace ionir {
         return inst;
     }
 
-    std::optional<Ptr<AllocaInst>> Parser::parseAllocaInst(Ptr<Section> parent) {
-        std::optional<std::string> id = this->parseId();
+    ParserResult <AllocaInst> Parser::parseAllocaInst(Ptr <Section> parent) {
+        std::optional <std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
 
-        std::optional<Ptr<Type>> type = this->parseType();
+        std::optional <Ptr<Type>>
+            type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -81,9 +83,10 @@ namespace ionir {
         });
     }
 
-    std::optional<Ptr<ReturnInst>> Parser::parseReturnInst(Ptr<Section> parent) {
+    ParserResult <ReturnInst> Parser::parseReturnInst(Ptr <Section> parent) {
         // TODO: Return inst does not necessarily take a value. Instead, it should be allowed to return without value, signaling void.
-        std::optional<Ptr<Value>> value = this->parseValue();
+        std::optional <Ptr<Value>>
+            value = this->parseValue();
 
         IONIR_PARSER_ASSURE(value)
 
@@ -93,7 +96,7 @@ namespace ionir {
         });
     }
 
-    std::optional<Ptr<BranchInst>> Parser::parseBranchInst(Ptr<Section> parent) {
+    ParserResult <BranchInst> Parser::parseBranchInst(Ptr <Section> parent) {
         // std::optional<Ptr<Expr>> condition = this->parsePrimaryExpr();
 
         // // Condition must be set.
@@ -129,13 +132,13 @@ namespace ionir {
         return std::nullopt;
     }
 
-    std::optional<Ptr<CallInst>> Parser::parseCallInst(Ptr<Section> parent) {
+    ParserResult <CallInst> Parser::parseCallInst(Ptr <Section> parent) {
         // TODO
 
         return this->makeNotice("Not yet implemented");
     }
 
-    std::optional<Ptr<StoreInst>> Parser::parseStoreInst(Ptr<Section> parent) {
+    ParserResult <StoreInst> Parser::parseStoreInst(Ptr <Section> parent) {
         // TODO
 
         return std::nullopt;

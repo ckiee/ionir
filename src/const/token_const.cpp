@@ -9,13 +9,13 @@ namespace ionir {
 
     std::vector<std::pair<std::regex, TokenKind>> TokenConst::complex = {};
 
-    TokenTypeVector TokenConst::keywords = {};
+    TokenKindVector TokenConst::keywords = {};
 
-    TokenTypeVector TokenConst::symbols = {};
+    TokenKindVector TokenConst::symbols = {};
 
-    TokenTypeVector TokenConst::operators = {};
+    TokenKindVector TokenConst::operators = {};
 
-    TokenTypeVector TokenConst::types = {
+    TokenKindVector TokenConst::types = {
         TokenKind::TypeVoid,
         TokenKind::TypeString,
         TokenKind::TypeInt16,
@@ -23,7 +23,7 @@ namespace ionir {
         TokenKind::TypeInt64,
     };
 
-    TokenTypeVector TokenConst::insts = {
+    TokenKindVector TokenConst::insts = {
         TokenKind::InstAlloca,
         TokenKind::InstBranch,
         TokenKind::InstCall,
@@ -89,31 +89,31 @@ namespace ionir {
         return TokenConst::complex;
     }
 
-    TokenTypeVector TokenConst::getSymbols() {
+    TokenKindVector TokenConst::getSymbols() {
         TokenConst::ensureInit();
 
         return TokenConst::symbols;
     }
 
-    TokenTypeVector TokenConst::getKeywords() {
+    TokenKindVector TokenConst::getKeywords() {
         TokenConst::ensureInit();
 
         return TokenConst::keywords;
     }
 
-    TokenTypeVector TokenConst::getOperators() {
+    TokenKindVector TokenConst::getOperators() {
         TokenConst::ensureInit();
 
         return TokenConst::operators;
     }
 
-    TokenTypeVector TokenConst::getTypes() {
+    TokenKindVector TokenConst::getTypes() {
         TokenConst::ensureInit();
 
         return TokenConst::types;
     }
 
-    TokenTypeVector TokenConst::getInsts() {
+    TokenKindVector TokenConst::getInsts() {
         TokenConst::ensureInit();
 
         return TokenConst::insts;

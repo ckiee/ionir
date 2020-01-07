@@ -9,21 +9,21 @@ namespace ionir {
         this->name = name;
     }
 
-    SymbolTable<FieldDescriptor> InterfaceDescriptor::getFields() const {
+    PtrSymbolTable<FieldDescriptor> InterfaceDescriptor::getFields() const {
         return this->fields;
     }
 
-    void InterfaceDescriptor::setFields(SymbolTable<FieldDescriptor> fields) {
+    void InterfaceDescriptor::setFields(PtrSymbolTable<FieldDescriptor> fields) {
         this->fields = fields;
     }
 
-    SymbolTable<MethodDescriptor> InterfaceDescriptor::getMethods() const {
-        return this->methods;
-    }
-
-    void InterfaceDescriptor::setMethods(SymbolTable<MethodDescriptor> methods) {
-        this->methods = methods;
-    }
+    //    PtrSymbolTable<MethodDescriptor> InterfaceDescriptor::getMethods() const {
+    //        return this->methods;
+    //    }
+    //
+    //    void InterfaceDescriptor::setMethods(PtrSymbolTable<MethodDescriptor> methods) {
+    //        this->methods = methods;
+    //    }
 
     std::vector<Ptr<InterfaceDescriptor>> InterfaceDescriptor::getInterfaces() const {
         return this->interfaces;

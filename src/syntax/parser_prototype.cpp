@@ -1,4 +1,3 @@
-#include <vector>
 #include <ionir/construct/expr.h>
 #include <ionir/const/const_name.h>
 #include <ionir/syntax/parser.h>
@@ -6,14 +5,14 @@
 
 namespace ionir {
     std::optional<Ptr<Args>> Parser::parseArgs() {
-        std::vector<Arg> args = {};
+        SymbolTable<Arg> args = {};
         bool isInfinite = false;
 
         do {
             // Skip comma token if applicable.
             if (this->is(TokenKind::SymbolComma)) {
                 // Prevent leading, lonely comma.
-                if (args.size() == 0) {
+                if (args.isEmpty()) {
                     return this->makeNotice("Leading comma in argument list is not allowed");
                 }
 
@@ -25,8 +24,8 @@ namespace ionir {
 
             IONIR_PARSER_ASSURE(arg)
 
-            // Parse arg and push onto the vector.
-            args.push_back(*arg);
+            // Set the argument on the symbol table.
+            args[arg->second] = *arg;
         } while (this->is(TokenKind::SymbolComma));
 
         return std::make_shared<Args>(args, isInfinite);

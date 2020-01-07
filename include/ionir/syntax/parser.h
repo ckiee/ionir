@@ -23,12 +23,16 @@
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/block.h>
 #include <ionir/construct/section.h>
+#include <ionir/construct/module.h>
 #include <ionir/reporting/notice_factory.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/const/const_name.h>
 #include "scope.h"
 
 namespace ionir {
+    template<typename T>
+    using ParserResult = std::optional<Ptr<T>>;
+
     class Parser {
     private:
         TokenStream stream;
@@ -60,63 +64,65 @@ namespace ionir {
 
         std::string getFilePath() const;
 
-        std::optional<Ptr<Construct>> parseTopLevel();
+        ParserResult<Construct> parseTopLevel();
 
         /**
          * Parses a integer literal in the form of
          * long (or integer 64).
          */
-        std::optional<Ptr<IntegerValue >> parseInt();
+        ParserResult<IntegerValue> parseInt();
 
-        std::optional<Ptr<CharValue>> parseChar();
+        ParserResult<CharValue> parseChar();
 
-        std::optional<Ptr<StringValue>> parseString();
+        ParserResult<StringValue> parseString();
 
         std::optional<std::string> parseId();
 
-        std::optional<Ptr<Type>> parseType();
+        ParserResult<Type> parseType();
 
-        std::optional<Ptr<Type>> parseTypePrefix();
+        ParserResult<Type> parseTypePrefix();
 
         std::optional<Arg> parseArg();
 
-        std::optional<Ptr<Args>> parseArgs();
+        ParserResult<Args> parseArgs();
 
-        std::optional<Ptr<Prototype>> parsePrototype();
+        ParserResult<Prototype> parsePrototype();
 
-        std::optional<Ptr<Extern>> parseExtern();
+        ParserResult<Extern> parseExtern();
 
-        std::optional<Ptr<Function>> parseFunction();
+        ParserResult<Function> parseFunction();
 
-        std::optional<Ptr<Global>> parseGlobal();
+        ParserResult<Global> parseGlobal();
 
-        std::optional<Ptr<Value>> parseValue();
+        ParserResult<Value> parseValue();
 
-        std::optional<Ptr<IdExpr>> parseIdExpr();
+        ParserResult<IdExpr> parseIdExpr();
 
-        std::optional<Ptr<Expr>> parsePrimaryExpr();
+        ParserResult<Expr> parsePrimaryExpr();
 
-        std::optional<Ptr<Expr>> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
+        ParserResult<Expr> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
 
-        std::optional<Ptr<Section>> parseSection(Ptr<Block> parent);
+        ParserResult<Section> parseSection(Ptr<Block> parent);
 
-        std::optional<Ptr<Block>> parseBlock(Ptr<Function> parent);
+        ParserResult<Block> parseBlock(Ptr<Function> parent);
 
-        std::optional<Ptr<AllocaInst>> parseAllocaInst(Ptr<Section> parent);
+        ParserResult<AllocaInst> parseAllocaInst(Ptr<Section> parent);
 
-        std::optional<Ptr<ReturnInst>> parseReturnInst(Ptr<Section> parent);
+        ParserResult<ReturnInst> parseReturnInst(Ptr<Section> parent);
 
-        std::optional<Ptr<BranchInst>> parseBranchInst(Ptr<Section> parent);
+        ParserResult<BranchInst> parseBranchInst(Ptr<Section> parent);
 
-        std::optional<Ptr<CallInst>> parseCallInst(Ptr<Section> parent);
+        ParserResult<CallInst> parseCallInst(Ptr<Section> parent);
 
-        std::optional<Ptr<StoreInst>> parseStoreInst(Ptr<Section> parent);
+        ParserResult<StoreInst> parseStoreInst(Ptr<Section> parent);
 
         /**
          * Parses an instruction, consuming its identifier.
          * Invokes the corresponding parser depending on its
          * identifier.
          */
-        std::optional<Ptr<Inst>> parseInst(Ptr<Section> parent);
+        ParserResult<Inst> parseInst(Ptr<Section> parent);
+
+        ParserResult<Module> parseModule();
     };
 }

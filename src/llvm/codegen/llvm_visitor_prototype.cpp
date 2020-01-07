@@ -20,7 +20,7 @@ namespace ionir {
 
     void LlvmVisitor::visitPrototype(Ptr<Prototype> node) {
         // Retrieve argument count from the argument vector.
-        uint32_t argumentCount = node->getArgs()->getItems().size();
+        uint32_t argumentCount = node->getArgs()->getItems().getSize();
 
         // Create the argument buffer vector.
         std::vector<llvm::Type *> arguments = {};
@@ -69,11 +69,12 @@ namespace ionir {
         int i = 0;
 
         for (auto &arg : function->args()) {
+            // TODO: getItems() no longer a vector; cannot index by index, only key.
             // Retrieve the name element from the argument tuple.
-            std::string name = node->getArgs()->getItems()[i].second;
+            //            std::string name = node->getArgs()->getItems()[i].second;
 
             // Name the argument.
-            arg.setName(name);
+            //            arg.setName(name);
 
             // Increment the counter to prepare for next iteration.
             i++;

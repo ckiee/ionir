@@ -1,5 +1,8 @@
 #include <sstream>
 #include <ionir/misc/util.h>
+#include <ionir/construct/function.h>
+#include <ionir/construct/extern.h>
+#include <ionir/construct/global.h>
 
 namespace ionir {
     bool Util::stringStartsWith(std::string subject, std::string test) {
@@ -106,5 +109,25 @@ namespace ionir {
         }
 
         return TypeKind::UserDefined;
+    }
+
+    std::optional<std::string> Util::getConstructName(Ptr<Construct> construct) {
+        switch (construct->getConstructKind()) {
+            case ConstructKind::Function: {
+                return construct->cast<Function>()->getPrototype()->getId();
+            }
+
+            case ConstructKind::Extern: {
+                return construct->cast<Extern>()->getPrototype()->getId();
+            }
+
+            case ConstructKind::Global: {
+                return construct->cast<Global>()->getId();
+            }
+
+            default: {
+                return std::nullopt;
+            }
+        }
     }
 }

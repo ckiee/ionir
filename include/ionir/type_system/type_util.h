@@ -6,6 +6,6 @@
 namespace ionir {
     class TypeUtil {
     public:
-        static bool isAtomicTypesCompatible(TypeKind typeA, TypeKind typeB);
+        static bool isAtomicTypesCompatible(TypeKind typeKindA, TypeKind typeKindB);
     };
 }

@@ -6,7 +6,7 @@
 #include "../../include/ionir/lexical/token.h"
 #include "ionir/lexical/token_kind.h"
 #include "../../include/ionir/syntax/parser.h"
-#include "../../include/ionir/llvm/module.h"
+#include "ionir/llvm/llvm_module.h"
 #include "../../include/ionir/misc/helpers.h"
 #include "util.h"
 
@@ -17,7 +17,7 @@ namespace ionir::test::bootstrap {
 
     Parser parser(std::vector<Token> tokens);
 
-    Ptr<Module> module(std::string identifier = "test");
+    Ptr<LlvmModule> llvmModule(std::string identifier = "test");
 
     Ptr<LlvmVisitor> llvmVisitor();
 

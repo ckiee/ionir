@@ -7,7 +7,7 @@ namespace ionir {
     class TokenIdentifier {
     protected:
         // TODO: Consider moving onto Util class.
-        static bool contains(TokenTypeVector subject, TokenKind item);
+        static bool contains(TokenKindVector subject, TokenKind item);
 
     public:
         static bool isSymbol(TokenKind tokenKind);

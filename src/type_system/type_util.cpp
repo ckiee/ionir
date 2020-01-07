@@ -1,18 +1,17 @@
 #include <ionir/type_system/type_util.h>
 
 namespace ionir {
-    bool TypeUtil::isAtomicTypesCompatible(TypeKind typeA, TypeKind typeB) {
-        if (typeA == TypeKind::UserDefined || typeB == TypeKind::UserDefined) {
+    bool TypeUtil::isAtomicTypesCompatible(TypeKind typeKindA, TypeKind typeKindB) {
+        if (typeKindA == TypeKind::UserDefined || typeKindB == TypeKind::UserDefined) {
             throw std::invalid_argument("Neither argument may be user-defined type kind");
         }
-            // Same atomic types. They are compatible.
-        else if (typeA == typeB) {
-            return true;
-        }
-            // TODO: What about itself? Is void incompatible with itself? If so, move position of this if stmt and update comment.
             // Void is incompatible with everything.
-        else if (typeA == TypeKind::Void || typeB == TypeKind::Void) {
+        else if (typeKindA == TypeKind::Void || typeKindB == TypeKind::Void) {
             return false;
+        }
+            // Same, non-void atomic types. They are compatible.
+        else if (typeKindA == typeKindB) {
+            return true;
         }
 
         // TODO: Missing additional logic. Refer to (https://github.com/DoctorWkt/acwj/tree/master/12_Types_pt1#building-binary-expressions-comparing-types).

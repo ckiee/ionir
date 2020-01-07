@@ -59,5 +59,7 @@ namespace ionir {
         static std::string resolveIntegerKindName(IntegerKind kind);
 
         static TypeKind resolveTypeKind(std::string id);
+
+        static std::optional<std::string> getConstructName(Ptr<Construct> construct);
     };
 }

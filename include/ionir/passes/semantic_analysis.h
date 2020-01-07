@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <ionir/construct/function.h>
 #include <ionir/misc/helpers.h>
 #include "pass.h"
 
@@ -21,5 +20,7 @@ namespace ionir {
         void functionReturnCheck(Ptr<Function> node);
 
         void visitFunction(Ptr<Function> node) override;
+
+        void visitInst(Ptr<Inst> node) override;
     };
 }

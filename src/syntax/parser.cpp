@@ -61,7 +61,7 @@ namespace ionir {
         return this->filePath;
     }
 
-    std::optional<Ptr<Construct>> Parser::parseTopLevel() {
+    ParserResult<Construct> Parser::parseTopLevel() {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordFunction: {
                 return this->parseFunction();
@@ -81,7 +81,7 @@ namespace ionir {
         }
     }
 
-    std::optional<Ptr<Type>> Parser::parseType() {
+    ParserResult<Type> Parser::parseType() {
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
@@ -103,11 +103,11 @@ namespace ionir {
         return std::make_shared<Type>(*id, Util::resolveTypeKind(*id), isPointer);
     }
 
-    std::optional<Ptr<Type>> Parser::parseTypePrefix() {
+    ParserResult<Type> Parser::parseTypePrefix() {
         this->skipOver(TokenKind::SymbolBracketL);
 
-        std::optional<Ptr < Type>>
-        type = this->parseType();
+        std::optional<Ptr<Type>>
+            type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -116,7 +116,7 @@ namespace ionir {
         return type;
     }
 
-    std::optional<Ptr<Global>> Parser::parseGlobal() {
+    ParserResult<Global> Parser::parseGlobal() {
         this->skipOver(TokenKind::KeywordGlobal);
 
         // TODO
@@ -124,7 +124,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    std::optional<Ptr<Section>> Parser::parseSection(Ptr<Block> parent) {
+    ParserResult<Section> Parser::parseSection(Ptr<Block> parent) {
         this->skipOver(TokenKind::SymbolAt);
 
         std::optional<std::string> id = this->parseId();
@@ -168,7 +168,7 @@ namespace ionir {
         return section;
     }
 
-    std::optional<Ptr<Block>> Parser::parseBlock(Ptr<Function> parent) {
+    ParserResult<Block> Parser::parseBlock(Ptr<Function> parent) {
         this->skipOver(TokenKind::SymbolBraceL);
 
         Ptr<Block> block = std::make_shared<Block>(parent);
@@ -188,5 +188,38 @@ namespace ionir {
         this->stream.skip();
 
         return block;
+    }
+
+    ParserResult<Module> Parser::parseModule() {
+        this->skipOver(TokenKind::KeywordModule);
+
+        std::optional<std::string> id = this->parseId();
+
+        IONIR_PARSER_ASSURE(id)
+
+        this->stream.skip();
+        this->skipOver(TokenKind::SymbolBraceL);
+
+        PtrSymbolTable<Construct> constructs = {};
+
+        while (!this->is(TokenKind::SymbolBraceR)) {
+            ParserResult<Construct> topLevelConstruct = this->parseTopLevel();
+
+            // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
+            if (topLevelConstruct.has_value()) {
+                std::optional<std::string> name = Util::getConstructName(*topLevelConstruct);
+
+                if (!name.has_value()) {
+                    throw std::runtime_error("Unexpected construct name to be null");
+                }
+
+                // TODO: Ensure we're not re-defining something, issue a notice otherwise.
+                constructs[*name] = *topLevelConstruct;
+            }
+        }
+
+        this->skipOver(TokenKind::SymbolBraceR);
+
+        return std::make_shared<Module>(*id, constructs);
     }
 }

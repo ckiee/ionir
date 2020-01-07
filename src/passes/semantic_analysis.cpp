@@ -1,4 +1,4 @@
-#include <optional>
+#include <string>
 #include <ionir/construct/section.h>
 #include <ionir/construct/inst/return.h>
 #include <ionir/passes/semantic_analysis.h>
@@ -28,5 +28,28 @@ namespace ionir {
 
     void SemanticAnalysisPass::visitFunction(Ptr<Function> node) {
         this->functionReturnCheck(node);
+    }
+
+    void SemanticAnalysisPass::visitInst(Ptr<Inst> node) {
+        Ptr<Function> function = node->getParent()->getParent()->getParent();
+        Ptr<Args> args = function->getPrototype()->getArgs();
+
+        /**
+         * Compare the function's parameters against
+         * its local variable symbol table to ensure
+         * no name shadowing occurs.
+         */
+        if (!args->getIsInfinite()) {
+            for (const auto argEntry : args->getItems().unwrap()) {
+                std::string name = argEntry.first;
+
+                // Shadowing function parameter.
+                if (function->getLocalVariables().contains(name)) {
+                    throw std::runtime_error(
+                        "SemanticError: Function parameter being shadowed by local variable '" + name + "'"
+                    );
+                }
+            }
+        }
     }
 }

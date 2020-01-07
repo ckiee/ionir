@@ -33,6 +33,14 @@ namespace ionir {
         this->body = body;
     }
 
+    PtrSymbolTable<LocalVariableDescriptor> Function::getLocalVariables() const {
+        return this->localVariables;
+    }
+
+    void Function::setLocalVariables(PtrSymbolTable<LocalVariableDescriptor> localVariables) {
+        this->localVariables = localVariables;
+    }
+
     bool Function::verify() const {
         return this->body->verify() && this->prototype->verify();
     }

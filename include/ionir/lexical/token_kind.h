@@ -72,6 +72,8 @@ namespace ionir {
 
         KeywordMutable,
 
+        KeywordModule,
+
         TypeVoid,
 
         TypeString,

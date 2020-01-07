@@ -11,5 +11,5 @@ namespace ionir {
     template<typename T>
     using CPtr = Ptr<const T>;
 
-    typedef std::vector<TokenKind> TokenTypeVector;
+    typedef std::vector<TokenKind> TokenKindVector;
 }

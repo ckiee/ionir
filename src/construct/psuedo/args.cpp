@@ -1,12 +1,16 @@
 #include <ionir/construct/psuedo/args.h>
 
 namespace ionir {
-    Args::Args(std::vector<Arg> items, bool isInfinite) : items(items), isInfinite(isInfinite) {
+    Args::Args(SymbolTable<Arg> items, bool isInfinite) : items(items), isInfinite(isInfinite) {
         //
     }
 
-    std::vector<Arg> Args::getItems() const {
+    SymbolTable<Arg> Args::getItems() const {
         return this->items;
+    }
+
+    void Args::setItems(SymbolTable<Arg> items) {
+        this->items = items;
     }
 
     bool Args::getIsInfinite() const {

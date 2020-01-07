@@ -19,15 +19,15 @@ namespace ionir {
 
         static std::vector<std::pair<std::regex, TokenKind>> complex;
 
-        static TokenTypeVector symbols;
+        static TokenKindVector symbols;
 
-        static TokenTypeVector keywords;
+        static TokenKindVector keywords;
 
-        static TokenTypeVector operators;
+        static TokenKindVector operators;
 
-        static TokenTypeVector types;
+        static TokenKindVector types;
 
-        static TokenTypeVector insts;
+        static TokenKindVector insts;
 
         static void pushComplex(std::regex regex, TokenKind tokenKind);
 
@@ -51,15 +51,15 @@ namespace ionir {
 
         static std::vector<std::pair<std::regex, TokenKind>> getComplexIds();
 
-        static TokenTypeVector getSymbols();
+        static TokenKindVector getSymbols();
 
-        static TokenTypeVector getKeywords();
+        static TokenKindVector getKeywords();
 
-        static TokenTypeVector getOperators();
+        static TokenKindVector getOperators();
 
-        static TokenTypeVector getTypes();
+        static TokenKindVector getTypes();
 
-        static TokenTypeVector getInsts();
+        static TokenKindVector getInsts();
 
         static bool getIsInitialized();
 

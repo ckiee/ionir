@@ -121,7 +121,7 @@ TEST(ParserTest, ParseEmptyPrototype) {
     EXPECT_EQ(prototype->get()->getId(), test::constant::foobar);
 
     // Verify prototype's arguments.
-    EXPECT_EQ(args->getItems().size(), 0);
+    EXPECT_EQ(args->getItems().getSize(), 0);
     EXPECT_FALSE(args->getIsInfinite());
 }
 
@@ -176,6 +176,6 @@ TEST(ParserTest, ParseExtern) {
     EXPECT_EQ(prototype->getId(), test::constant::foobar);
 
     // Verify prototype's arguments.
-    EXPECT_EQ(args->getItems().size(), 0);
+    EXPECT_EQ(args->getItems().getSize(), 0);
     EXPECT_FALSE(args->getIsInfinite());
 }

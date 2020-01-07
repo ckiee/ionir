@@ -21,15 +21,15 @@ namespace ionir::test::bootstrap {
         return ionir::Parser(ionir::TokenStream(tokens));
     }
 
-    Ptr<Module> module(std::string identifier) {
+    Ptr<LlvmModule> llvmModule(std::string identifier) {
         llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
         llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);
 
-        return std::make_shared<Module>(llvmModule);
+        return std::make_shared<LlvmModule>(llvmModule);
     }
 
     Ptr<LlvmVisitor> llvmVisitor() {
-        return std::make_shared<LlvmVisitor>(module()->unwrap());
+        return std::make_shared<LlvmVisitor>(llvmModule()->unwrap());
     }
 
     Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts) {

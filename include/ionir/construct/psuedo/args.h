@@ -5,20 +5,23 @@
 #include <string>
 #include <ionir/misc/helpers.h>
 #include <ionir/construct/type.h>
+#include <ionir/tracking/symbol_table.h>
 
 namespace ionir {
     typedef std::pair<Ptr<Type>, std::string> Arg;
 
     class Args {
     private:
-        std::vector<Arg> items;
+        SymbolTable<Arg> items;
 
         bool isInfinite;
 
     public:
-        explicit Args(std::vector<Arg> items = {}, bool isInfinite = false);
+        explicit Args(SymbolTable<Arg> items = {}, bool isInfinite = false);
 
-        std::vector<Arg> getItems() const;
+        SymbolTable<Arg> getItems() const;
+
+        void setItems(SymbolTable<Arg> items);
 
         bool getIsInfinite() const;
 

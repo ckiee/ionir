@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include "field_descriptor.h"
-#include "method_descriptor.h"
 #include "symbol_table.h"
 
 namespace ionir {
@@ -12,9 +11,9 @@ namespace ionir {
     private:
         std::string name;
 
-        SymbolTable<FieldDescriptor> fields;
+        PtrSymbolTable<FieldDescriptor> fields;
 
-        SymbolTable<MethodDescriptor> methods;
+        //        PtrSymbolTable<MethodDescriptor> methods;
 
         std::vector<Ptr<InterfaceDescriptor>> interfaces;
 
@@ -23,13 +22,13 @@ namespace ionir {
 
         void setName(std::string name);
 
-        SymbolTable<FieldDescriptor> getFields() const;
+        PtrSymbolTable<FieldDescriptor> getFields() const;
 
-        void setFields(SymbolTable<FieldDescriptor> fields);
+        void setFields(PtrSymbolTable<FieldDescriptor> fields);
 
-        SymbolTable<MethodDescriptor> getMethods() const;
+        //PtrSymbolTable<MethodDescriptor> getMethods() const;
 
-        void setMethods(SymbolTable<MethodDescriptor> methods);
+        //void setMethods(PtrSymbolTable<MethodDescriptor> methods);
 
         std::vector<Ptr<InterfaceDescriptor>> getInterfaces() const;
 

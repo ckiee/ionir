@@ -7,12 +7,12 @@
 #include "ir_builder.h"
 
 namespace ionir {
-    class Block : public Wrapper<llvm::BasicBlock *> {
+    class LlvmBlock : public Wrapper<llvm::BasicBlock *> {
     private:
         std::optional<Ptr<IrBuilder>> cachedBuilder;
 
     public:
-        explicit Block(llvm::BasicBlock *value);
+        explicit LlvmBlock(llvm::BasicBlock *value);
 
         Ptr<IrBuilder> getBuilder();
     };

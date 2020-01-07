@@ -1,11 +1,11 @@
-#include <ionir/llvm/block.h>
+#include <ionir/llvm/llvm_block.h>
 
 namespace ionir {
-    Block::Block(llvm::BasicBlock *value) : Wrapper(value), cachedBuilder(std::nullopt) {
+    LlvmBlock::LlvmBlock(llvm::BasicBlock *value) : Wrapper(value), cachedBuilder(std::nullopt) {
         //
     }
 
-    Ptr<IrBuilder> Block::getBuilder() {
+    Ptr<IrBuilder> LlvmBlock::getBuilder() {
         if (this->cachedBuilder.has_value()) {
             return *this->cachedBuilder;
         }

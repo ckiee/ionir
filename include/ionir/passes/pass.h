@@ -8,14 +8,15 @@
 #include <ionir/construct/block.h>
 #include <ionir/construct/type.h>
 #include <ionir/construct/global.h>
+#include <ionir/construct/module.h>
 #include <ionir/construct/expr.h>
-#include <ionir/construct/expr/binary_expr.h>
 #include <ionir/construct/value.h>
+#include <ionir/construct/inst.h>
+#include <ionir/construct/expr/binary_expr.h>
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
 #include <ionir/construct/value/string.h>
 #include <ionir/construct/value/boolean.h>
-#include <ionir/construct/inst.h>
 #include <ionir/construct/inst/alloca.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>
@@ -78,5 +79,7 @@ namespace ionir {
         virtual void visitType(Ptr<Type> node);
 
         virtual void visitIntegerType(Ptr<IntegerType> node);
+
+        virtual void visitModule(Ptr<Module> node);
     };
 }

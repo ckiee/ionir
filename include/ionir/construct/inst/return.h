@@ -5,7 +5,7 @@
 #include <ionir/construct/type.h>
 #include <ionir/construct/value.h>
 #include <ionir/misc/helpers.h>
-#include "ionir/construct/inst.h"
+#include <ionir/construct/inst.h>
 
 namespace ionir {
     class Pass;

@@ -178,4 +178,8 @@ namespace ionir {
     void Pass::visitIntegerType(ionir::Ptr<ionir::IntegerType> node) {
         //
     }
+
+    void Pass::visitModule(Ptr<Module> node) {
+        //
+    }
 }

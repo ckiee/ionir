@@ -6,5 +6,8 @@
 
 namespace ionir {
     template<typename T>
-    using SymbolTable = Map<std::string, Ptr<T>>;
+    using SymbolTable = Map<std::string, T>;
+
+    template<typename T>
+    using PtrSymbolTable = SymbolTable<Ptr<T>>;
 }

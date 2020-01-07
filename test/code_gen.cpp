@@ -2,7 +2,7 @@
 #include <ionir/llvm/codegen/llvm_visitor.h>
 #include <ionir/const/const.h>
 #include <ionir/const/const_name.h>
-#include <ionir/llvm/module.h>
+#include <ionir/llvm/llvm_module.h>
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
 #include "test_api/constant.h"
@@ -18,7 +18,7 @@ TEST(CodeGenTest, VisitExtern) {
 
     visitor->visitExtern(externConstruct);
 
-    Module module = Module(visitor->getModule());
+    LlvmModule module = LlvmModule(visitor->getModule());
 
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "extern_simple"));
 }
@@ -47,7 +47,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     body->setParent(function);
     visitor->visitFunction(function);
 
-    Module module = Module(visitor->getModule());
+    LlvmModule module = LlvmModule(visitor->getModule());
 
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "function_empty"));
 }
@@ -59,7 +59,7 @@ TEST(CodeGenTest, VisitEmptyGlobal) {
 
     visitor->visitGlobal(globalVar);
 
-    Module module = Module(visitor->getModule());
+    LlvmModule module = LlvmModule(visitor->getModule());
 
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "global_empty"));
 }
@@ -73,7 +73,7 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
 
     visitor->visitGlobal(globalVar);
 
-    Module module = Module(visitor->getModule());
+    LlvmModule module = LlvmModule(visitor->getModule());
 
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "global_init"));
 }
@@ -93,7 +93,7 @@ TEST(CodeGenTest, VisitAllocaInst) {
 
     visitor->visitFunction(function);
 
-    Module module = Module(visitor->getModule());
+    LlvmModule module = LlvmModule(visitor->getModule());
 
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_alloca"));
 }

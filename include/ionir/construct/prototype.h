@@ -11,7 +11,7 @@ namespace ionir {
     class Pass;
 
     class Prototype : public Construct {
-    protected:
+    private:
         std::string id;
 
         Ptr<Args> args;

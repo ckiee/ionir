@@ -63,5 +63,9 @@ namespace ionir {
         size_t getSize() const {
             return this->value.size();
         }
+
+        bool isEmpty() const {
+            return this->value.empty();
+        }
     };
 }
