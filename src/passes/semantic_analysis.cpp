@@ -17,13 +17,14 @@ namespace ionir {
                 throw std::runtime_error("Entry section for function body is not set");
             }
 
-            for (auto inst : (*entrySection)->getInsts()) {
+            for (const auto inst : (*entrySection)->getInsts()) {
                 if (inst->getInstKind() == InstKind::Return) {
                     Ptr<ReturnInst> returnInst = inst->cast<ReturnInst>();
 
                     if (!returnInst->getValue().has_value()) {
                         throw std::runtime_error(
-                            "Function whose prototype's return type is not void must return a corresponding value");
+                            "Function whose prototype's return type is not void must return a corresponding value"
+                        );
                     }
                 }
             }
