@@ -13,20 +13,20 @@ namespace ionir {
         /**
          * A block, possibly containing statements.
          */
-            Block,
+        Block,
 
         /**
          * Function prototype used to declare externs
          * or actual functions.
          */
-            Prototype,
+        Prototype,
 
         Function,
 
         /**
          * An external function definition.
          */
-            Extern,
+        Extern,
 
         Instruction,
 
@@ -71,6 +71,8 @@ namespace ionir {
         virtual void accept(Pass &visitor) = 0;
 
         virtual ConstructChildren getChildren() const;
+
+        bool isLeafNode() const;
 
         ConstructKind getConstructKind() const;
 

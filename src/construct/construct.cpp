@@ -10,6 +10,10 @@ namespace ionir {
         return {};
     }
 
+    bool Construct::isLeafNode() const {
+        return this->getChildren().empty();
+    }
+
     ConstructKind Construct::getConstructKind() const {
         return this->constructKind;
     }
