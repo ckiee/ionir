@@ -5,6 +5,20 @@
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
+    enum class PassPriority {
+        /**
+         * Highest priority. This precedence
+         * will be executed first.
+         */
+            Important,
+
+        Normal,
+
+        Low,
+
+        Lowest
+    };
+
     struct PassManagerItem {
         Ptr<Pass> pass;
 

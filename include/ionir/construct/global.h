@@ -11,7 +11,7 @@ namespace ionir {
     class Pass;
 
     class Global : public Construct {
-    protected:
+    private:
         Ptr <Type> type;
 
         std::string id;

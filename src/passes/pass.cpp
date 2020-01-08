@@ -3,6 +3,15 @@
 namespace ionir {
     void Pass::visit(Ptr<Construct> node) {
         node->accept(*this);
+
+        // TODO: Will it cause StackOverflow error with large ASTs?
+        /**
+         * After visiting the node, attempt to
+         * visit all its children as well.
+         */
+        for (const auto child : node->getChildren()) {
+            this->visit(child);
+        }
     }
 
     void Pass::visitFunction(Ptr<Function> node) {

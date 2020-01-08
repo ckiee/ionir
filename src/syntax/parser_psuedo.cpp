@@ -10,9 +10,9 @@
 
 namespace ionir {
     std::optional<std::string> Parser::parseId() {
-        Token id = this->stream.get();
-
         IONIR_PARSER_EXPECT(TokenKind::Identifier)
+
+        Token id = this->stream.get();
 
         // Skip over identifier token.
         this->stream.skip();

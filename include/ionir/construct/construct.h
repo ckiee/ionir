@@ -47,19 +47,15 @@ namespace ionir {
 
     class Construct;
 
-    typedef std::vector<Ptr<Construct>>
-
-        ConstructChildren;
+    typedef std::vector<Ptr<Construct>> ConstructChildren;
 
     class Construct : public std::enable_shared_from_this<Construct> {
-    protected:
+    private:
         ConstructKind constructKind;
 
     public:
         template<class T>
-        static ConstructChildren convertChildren(std::vector<Ptr<T>>
-
-        vector) {
+        static ConstructChildren convertChildren(std::vector<Ptr<T>> vector) {
             // TODO: Ensure T is child of Construct.
             ConstructChildren children = {};
 

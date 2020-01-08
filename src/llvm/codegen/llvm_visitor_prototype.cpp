@@ -83,6 +83,16 @@ namespace ionir {
         this->valueStack.push(function);
     }
 
+    void LlvmVisitor::visit(Ptr<Construct> node) {
+        /**
+         * Only instruct the node to visit this
+         * instance and not its children, since
+         * they're already visited by the other
+         * member methods.
+         */
+        node->accept(*this);
+    }
+
     void LlvmVisitor::visitFunction(Ptr<Function> node) {
         if (!node->verify()) {
             throw std::runtime_error("Function verification failed");
