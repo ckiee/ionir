@@ -10,8 +10,10 @@ namespace ionir {
 
         Ptr<Construct> owner;
 
+        OPtr<Construct> value;
+
     public:
-        Reference(std::string id, Ptr<Construct> owner);
+        Reference(std::string id, Ptr<Construct> owner, OPtr<Construct> value = std::nullopt);
 
         std::string getId() const;
 
@@ -20,5 +22,11 @@ namespace ionir {
         Ptr<Construct> getOwner() const;
 
         void setOwner(Ptr<Construct> owner);
+
+        OPtr<Construct> getValue() const;
+
+        bool isResolved() const;
+
+        void resolve(OPtr<Construct> value);
     };
 }

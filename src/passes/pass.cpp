@@ -35,7 +35,7 @@ namespace ionir {
         //
     }
 
-    void Pass::visitReference(Ptr<VariableRef> node) {
+    void Pass::visitVarReference(Ptr<VariableRef> node) {
         //
     }
 
@@ -198,6 +198,10 @@ namespace ionir {
     }
 
     void Pass::visitDirective(Directive node) {
+        //
+    }
+
+    void Pass::visitReference(Reference node) {
         //
     }
 }

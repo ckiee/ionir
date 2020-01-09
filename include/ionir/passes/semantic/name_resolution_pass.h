@@ -3,6 +3,7 @@
 #include <optional>
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
+#include <ionir/reporting/notice.h>
 
 namespace ionir {
     /**
@@ -10,6 +11,14 @@ namespace ionir {
      * undefined symbols at the time by their identifier(s).
      */
     class NameResolutionPass : public Pass {
+    private:
+        Ptr<StackTrace> stackTrace;
+
     public:
+        NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
+
+        void visitReference(Reference node) override;
+
+        Ptr<StackTrace> getStackTrace() const;
     };
 }

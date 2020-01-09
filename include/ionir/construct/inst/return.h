@@ -11,22 +11,20 @@ namespace ionir {
     class Pass;
 
     struct ReturnInstOpts : InstOpts {
-        std::optional<Ptr < Value>> value = std::nullopt;
+        OPtr<Value> value = std::nullopt;
     };
 
     class ReturnInst : public Inst {
     private:
-        std::optional<Ptr < Value>> value;
+        OPtr<Value> value;
 
     public:
         explicit ReturnInst(ReturnInstOpts opts);
 
         void accept(Pass &visitor) override;
 
-        std::optional<Ptr < Value>> getValue() const;
+        OPtr<Value> getValue() const;
 
-        void setValue(std::optional<Ptr < Value>>
-
-        value);
+        void setValue(OPtr<Value> value);
     };
 }

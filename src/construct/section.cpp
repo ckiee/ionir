@@ -50,4 +50,12 @@ namespace ionir {
     std::optional<uint32_t> Section::locate(Ptr<Inst> inst) const {
         return Util::locateInVector<Ptr<Inst>>(this->insts, inst);
     }
+
+    PtrSymbolTable<Inst> Section::getSymbolTable() const {
+        return this->symbolTable;
+    }
+
+    void Section::setSymbolTable(PtrSymbolTable<Inst> symbolTable) {
+        this->symbolTable = symbolTable;
+    }
 }

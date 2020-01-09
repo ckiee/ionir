@@ -25,7 +25,7 @@ namespace ionir {
         });
     }
 
-    void PassManager::run(Ast ast) {
+    void PassManager::run(const Ast &ast) {
         auto compare = [](PassManagerItem left, PassManagerItem right) {
             // TODO: Ensure correct order.
             return left.priority > right.priority;

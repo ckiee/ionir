@@ -26,7 +26,7 @@ namespace ionir {
     };
 
     class PassManager {
-    protected:
+    private:
         /**
          * Internal container on which pass
          * manager items will be both stored
@@ -50,6 +50,6 @@ namespace ionir {
 
         void registerPass(Ptr<Pass> pass);
 
-        void run(Ast ast);
+        void run(const Ast &ast);
     };
 }

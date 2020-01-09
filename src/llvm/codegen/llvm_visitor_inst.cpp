@@ -22,7 +22,7 @@ namespace ionir {
     }
 
     void LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node) {
-        std::optional<Ptr<Value>> value = node->getValue();
+        OPtr<Value> value = node->getValue();
         llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
 
         if (value.has_value()) {

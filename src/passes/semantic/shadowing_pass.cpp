@@ -4,8 +4,8 @@
 
 namespace ionir {
     void ShadowingPass::visitInst(Ptr<Inst> node) {
-        Ptr <Function> function = node->getParent()->getParent()->getParent();
-        Ptr <Args> args = function->getPrototype()->getArgs();
+        Ptr<Function> function = node->getParent()->getParent()->getParent();
+        Ptr<Args> args = function->getPrototype()->getArgs();
 
         /**
          * Compare the function's parameters against

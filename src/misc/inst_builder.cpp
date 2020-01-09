@@ -21,29 +21,27 @@ namespace ionir {
         });
     }
 
-    Ptr<BranchInst>
-    InstBuilder::createBranch(Ptr<Expr> condition, Ptr<Section> body, std::optional<Ptr<Section>> otherwise) {
+    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr> condition, Ptr<Section> body, OPtr<Section> otherwise) {
         return this->make<BranchInst>(BranchInstOpts{
             this->section,
             condition,
             body,
-            otherwise,
+            otherwise
         });
     }
 
-    Ptr<ReturnInst> InstBuilder::createReturn(std::optional<Ptr<Value>> value) {
+    Ptr<ReturnInst> InstBuilder::createReturn(OPtr<Value> value) {
         return this->make<ReturnInst>(ReturnInstOpts{
             this->section,
-            value,
+            value
         });
     }
 
-    Ptr<CallInst>
-    InstBuilder::createCall(Ptr<Section> section, std::string target, std::optional<Ptr<Function>> callee) {
+    Ptr<CallInst> InstBuilder::createCall(Ptr<Section> section, std::string target, OPtr<Function> callee) {
         return this->make<CallInst>(CallInstOpts{
             this->section,
             target,
-            callee,
+            callee
         });
     }
 }

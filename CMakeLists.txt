@@ -60,7 +60,7 @@ file(
 )
 
 # Specify that this project is a library.
-add_library("${PROJECT_NAME}" ${SOURCES})
+add_library("${PROJECT_NAME}" ${SOURCES} src/passes/semantic/name_resolution_pass.cpp)
 
 # Link .libs (same functionality handled by llvm_map_components_to_libnames().)
 #target_link_libraries(${PROJECT_NAME} ${LIB_SOURCES})

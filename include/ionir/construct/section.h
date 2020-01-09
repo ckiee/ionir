@@ -49,6 +49,8 @@ namespace ionir {
 
         std::vector<Ptr<Inst>> insts;
 
+        PtrSymbolTable<Inst> symbolTable;
+
     public:
         explicit Section(SectionOpts opts);
 
@@ -64,9 +66,7 @@ namespace ionir {
 
         std::vector<Ptr<Inst>> getInsts() const;
 
-        void setInsts(std::vector<Ptr<Inst>>
-
-        insts);
+        void setInsts(std::vector<Ptr<Inst>> insts);
 
         uint32_t relocateInsts(Section &target, uint32_t from = 0);
 
@@ -76,5 +76,9 @@ namespace ionir {
          * not found.
          */
         std::optional<uint32_t> locate(Ptr<Inst> inst) const;
+
+        PtrSymbolTable<Inst> getSymbolTable() const;
+
+        void setSymbolTable(PtrSymbolTable<Inst> symbolTable);
     };
 }
