@@ -28,7 +28,7 @@
 
 namespace ionir {
     class LlvmVisitor : public Pass {
-    protected:
+    private:
         llvm::LLVMContext *context;
 
         llvm::Module *module;

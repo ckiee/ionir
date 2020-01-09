@@ -167,13 +167,24 @@ namespace ionir {
         });
 
         std::vector<Ptr<Inst>> insts = {};
+        PtrSymbolTable<Inst> symbolTable = section->getSymbolTable();
 
         while (!this->is(TokenKind::SymbolBraceR) && !this->is(TokenKind::SymbolAt)) {
-            std::optional<Ptr<Inst>> inst = this->parseInst(section);
+            OPtr<Inst> inst = this->parseInst(section);
 
             IONIR_PARSER_ASSURE(inst)
 
             insts.push_back(*inst);
+
+            /**
+             * Register the alloca instruction on
+             * the resulting section's symbol table.
+             */
+            if (inst->get()->getInstKind() == InstKind::Alloca) {
+                Ptr<AllocaInst> allocaInst = inst->get()->cast<AllocaInst>();
+
+                symbolTable[allocaInst->getId()] = allocaInst;
+            }
         }
 
         this->stream.skip();
