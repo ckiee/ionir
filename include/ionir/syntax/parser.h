@@ -15,6 +15,7 @@
 #include <ionir/construct/inst/store.h>
 #include <ionir/construct/pseudo/partial_inst.h>
 #include <ionir/construct/pseudo/directive.h>
+#include <ionir/construct/pseudo/reference.h>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/token_identifier.h>
 #include <ionir/construct/extern.h>
@@ -29,6 +30,7 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/const/const_name.h>
 #include "scope.h"
+#include "parser_helpers.h"
 
 namespace ionir {
     template<typename T>
@@ -59,7 +61,7 @@ namespace ionir {
 
     public:
         explicit Parser(TokenStream stream, StackTrace stackTrace = {},
-            const std::string filePath = ConstName::anonymous);
+            std::string filePath = ConstName::anonymous);
 
         StackTrace getStackTrace() const;
 
@@ -131,5 +133,14 @@ namespace ionir {
         // TODO: Add comment-parsing support.
 
         std::optional<Directive> parseDirective();
+
+        template<typename T = Construct>
+        ParserResult<Reference<T>> parseReference(Ptr<Construct> owner) {
+            std::optional<std::string> id = this->parseId();
+
+            IONIR_PARSER_ASSURE(id)
+
+            return std::make_shared<Reference<T>>(*id, owner);
+        }
     };
 }
