@@ -11,8 +11,7 @@ namespace ionir {
     }
 
     Ast Module::getChildrenNodes() const {
-//        return Construct::convertChildren(this->constructs);
-return {};
+        return Construct::convertChildren(this->constructs);
     }
 
     std::string Module::getId() const {
