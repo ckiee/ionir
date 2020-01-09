@@ -18,7 +18,7 @@ namespace ionir {
     bool Parser::expect(TokenKind tokenKind) {
         if (!this->is(tokenKind)) {
             this->makeNotice("Expected token kind: " + std::to_string((int)tokenKind) + ", but got: " +
-                std::to_string((int)this->stream.get().getKind()), NoticeType::Fatal);
+                std::to_string((int)this->stream.get().getKind()));
 
             return false;
         }
@@ -123,9 +123,19 @@ namespace ionir {
     ParserResult<Global> Parser::parseGlobal() {
         this->skipOver(TokenKind::KeywordGlobal);
 
-        // TODO
+        ParserResult<Type> type = this->parseType();
 
-        return std::nullopt;
+        IONIR_PARSER_ASSURE(type)
+
+        std::optional<std::string> id = this->parseId();
+
+        IONIR_PARSER_ASSURE(id)
+
+        // TODO: Handle in-line initialization & pass std::optional<Value> into Global constructor.
+
+        this->skipOver(TokenKind::SymbolSemiColon);
+
+        return std::make_shared<Global>(*type, *id);
     }
 
     ParserResult<Section> Parser::parseSection(Ptr<Block> parent) {
@@ -201,12 +211,12 @@ namespace ionir {
 
         IONIR_PARSER_ASSURE(id)
 
-        this->stream.skip();
         this->skipOver(TokenKind::SymbolBraceL);
 
         PtrSymbolTable<Construct> constructs = {};
 
         while (!this->is(TokenKind::SymbolBraceR)) {
+            std::cout << "Iteration .. " << this->stream.get().getKind() << std::endl;
             ParserResult<Construct> topLevelConstruct = this->parseTopLevel();
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
@@ -220,10 +230,32 @@ namespace ionir {
                 // TODO: Ensure we're not re-defining something, issue a notice otherwise.
                 constructs[*name] = *topLevelConstruct;
             }
+
+            // No more tokens to process.
+            if (!this->stream.hasNext() && !this->is(TokenKind::SymbolBraceR)) {
+                return this->makeNotice("Unexpected end of input");
+            }
         }
 
         this->skipOver(TokenKind::SymbolBraceR);
 
         return std::make_shared<Module>(*id, constructs);
+    }
+
+    std::optional<std::string> Parser::parseLine() {
+        // TODO: Lexer cannot ignore whitespace.
+        return "";
+    }
+
+    std::optional<Directive> Parser::parseDirective() {
+        this->skipOver(TokenKind::SymbolHash);
+
+        std::optional<std::string> id = this->parseId();
+
+        IONIR_PARSER_ASSURE(id)
+
+        std::optional<std::string> content = this->parseLine();
+
+        return std::make_pair(*id, content);
     }
 }

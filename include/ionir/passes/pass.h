@@ -1,18 +1,5 @@
 #pragma once
 
-#include <ionir/misc/helpers.h>
-#include <ionir/construct/construct.h>
-#include <ionir/construct/function.h>
-#include <ionir/construct/variable_ref.h>
-#include <ionir/construct/prototype.h>
-#include <ionir/construct/extern.h>
-#include <ionir/construct/block.h>
-#include <ionir/construct/type.h>
-#include <ionir/construct/global.h>
-#include <ionir/construct/module.h>
-#include <ionir/construct/expr.h>
-#include <ionir/construct/value.h>
-#include <ionir/construct/inst.h>
 #include <ionir/construct/expr/binary_expr.h>
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
@@ -27,6 +14,20 @@
 #include <ionir/construct/type/variable_decl.h>
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
+#include <ionir/construct/pseudo/directive.h>
+#include <ionir/construct/construct.h>
+#include <ionir/construct/function.h>
+#include <ionir/construct/variable_ref.h>
+#include <ionir/construct/prototype.h>
+#include <ionir/construct/extern.h>
+#include <ionir/construct/block.h>
+#include <ionir/construct/type.h>
+#include <ionir/construct/global.h>
+#include <ionir/construct/module.h>
+#include <ionir/construct/expr.h>
+#include <ionir/construct/value.h>
+#include <ionir/construct/inst.h>
+#include <ionir/misc/helpers.h>
 
 namespace ionir {
     class Pass {
@@ -84,5 +85,7 @@ namespace ionir {
         virtual void visitVoidType(Ptr<VoidType> node);
 
         virtual void visitModule(Ptr<Module> node);
+
+        virtual void visitDirective(Directive node);
     };
 }

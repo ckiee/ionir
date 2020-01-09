@@ -20,14 +20,14 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        ConstructChildren getChildren() const override;
+        Ast getChildrenNodes() const override;
 
         std::string getId() const;
 
         void setId(std::string id);
 
-        PtrSymbolTable <Construct> getConstructs() const;
+        PtrSymbolTable<Construct> getConstructs() const;
 
-        void setConstructs(PtrSymbolTable <Construct> constructs);
+        void setConstructs(PtrSymbolTable<Construct> constructs);
     };
 }

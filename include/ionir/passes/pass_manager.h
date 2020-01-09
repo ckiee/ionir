@@ -1,10 +1,24 @@
 #pragma once
 
 #include <vector>
-#include <ionir/syntax/ast.h>
 #include <ionir/misc/helpers.h>
+#include "pass.h"
 
 namespace ionir {
+    enum class PassPriority {
+        /**
+         * Highest priority. This precedence
+         * will be executed first.
+         */
+        Important,
+
+        Normal,
+
+        Low,
+
+        Lowest
+    };
+
     struct PassManagerItem {
         Ptr<Pass> pass;
 

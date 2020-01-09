@@ -3,6 +3,16 @@
 namespace ionir {
     void Pass::visit(Ptr<Construct> node) {
         node->accept(*this);
+
+        // TODO: Will it cause StackOverflow error with large ASTs?
+        /**
+         * After visiting the node, attempt to
+         * visit all its children as well.
+         */
+        for (const auto child : node->getChildrenNodes()) {
+            // TODO: CRITICAL: What if 'child' (AstNode) is not boxed under Construct?
+            this->visit(std::static_pointer_cast<Construct>(child));
+        }
     }
 
     void Pass::visitFunction(Ptr<Function> node) {
@@ -184,6 +194,10 @@ namespace ionir {
     }
 
     void Pass::visitModule(Ptr<Module> node) {
+        //
+    }
+
+    void Pass::visitDirective(Directive node) {
         //
     }
 }

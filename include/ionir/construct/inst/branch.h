@@ -2,18 +2,12 @@
 
 #include <optional>
 #include <ionir/construct/expr.h>
-#include <ionir/construct/psuedo/partial_inst.h>
+#include <ionir/construct/pseudo/partial_inst.h>
 #include <ionir/construct/section.h>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
     class Pass;
-
-    struct BranchInstPartials {
-        Ptr<Section> body;
-
-        std::optional<Ptr<Section>> otherwise = std::nullopt;
-    };
 
     struct BranchInstOpts : InstOpts {
         Ptr<Expr> condition;
@@ -23,7 +17,7 @@ namespace ionir {
         std::optional<Ptr<Section>> otherwise = std::nullopt;
     };
 
-    class BranchInst : public PartialInst<BranchInstPartials> {
+    class BranchInst : public Inst {
     private:
         Ptr<Expr> condition;
 

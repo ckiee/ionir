@@ -13,13 +13,14 @@
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/call.h>
 #include <ionir/construct/inst/store.h>
-#include <ionir/construct/psuedo/partial_inst.h>
+#include <ionir/construct/pseudo/partial_inst.h>
+#include <ionir/construct/pseudo/directive.h>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/token_identifier.h>
 #include <ionir/construct/extern.h>
 #include <ionir/construct/function.h>
 #include <ionir/construct/global.h>
-#include <ionir/construct/psuedo/args.h>
+#include <ionir/construct/pseudo/args.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/block.h>
 #include <ionir/construct/section.h>
@@ -124,5 +125,11 @@ namespace ionir {
         ParserResult<Inst> parseInst(Ptr<Section> parent);
 
         ParserResult<Module> parseModule();
+
+        std::optional<std::string> parseLine();
+
+        // TODO: Add comment-parsing support.
+
+        std::optional<Directive> parseDirective();
     };
 }

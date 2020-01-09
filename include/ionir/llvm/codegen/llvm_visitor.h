@@ -70,6 +70,8 @@ namespace ionir {
 
         Stack<llvm::Type *> getTypeStack() const;
 
+        void visit(Ptr<Construct> node) override;
+
         void visitFunction(Ptr<Function> node) override;
 
         void visitExtern(Ptr<Extern> node) override;

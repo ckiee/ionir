@@ -19,7 +19,7 @@ namespace ionir {
         std::optional<T> value;
 
     protected:
-        std::optional<const T> getValue() const {
+        std::optional<T> getValue() const {
             return this->value;
         }
 
@@ -31,7 +31,7 @@ namespace ionir {
 
         virtual void accept(Pass &visitor) = 0;
 
-        bool isResolved() const {
+        virtual bool isResolved() const {
             return this->value.has_value();
         }
 

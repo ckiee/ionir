@@ -1,7 +1,6 @@
-#include <priority_queue>
-#include <ionir/syntax/driver.h>
+#include <queue>
 #include <ionir/passes/pass_manager.h>
-#include "../../include/ionir/passes/pass_manager.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     PassManager::PassManager(std::vector<PassManagerItem> passes) : passes(passes) {
@@ -35,9 +34,8 @@ namespace ionir {
         std::priority_queue<
             PassManagerItem,
             std::vector<PassManagerItem>,
-            std::greater<PassManagerItem>,
             decltype(compare)
-        > runQueue(compare) = {};
+        > runQueue(compare);
 
         // Push pass manager items onto the queue, thus ordering them.
         for (const auto item : this->passes) {
@@ -48,9 +46,12 @@ namespace ionir {
          * Loop through the resulting ordered queue
          * and start executing passes.
          */
-        for (auto item : runQueue) {
-            // TODO: Process priorities.
-            for (auto topLevelConstruct : ast) {
+        while (!runQueue.empty()) {
+            PassManagerItem item = runQueue.top();
+
+            runQueue.pop();
+
+            for (auto &topLevelConstruct : ast) {
                 item.pass->visit(topLevelConstruct);
             }
         }
