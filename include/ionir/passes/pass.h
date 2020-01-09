@@ -14,7 +14,7 @@
 #include <ionir/construct/type/variable_decl.h>
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
-#include <ionir/construct/psuedo/directive.h>
+#include <ionir/construct/pseudo/directive.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/function.h>
 #include <ionir/construct/variable_ref.h>

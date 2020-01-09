@@ -1,4 +1,4 @@
-#include <ionir/construct/psuedo/reference.h>
+#include <ionir/construct/pseudo/reference.h>
 
 namespace ionir {
     Reference::Reference(std::string id, Ptr<Construct> owner) : id(id), owner(owner) {

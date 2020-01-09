@@ -1,4 +1,4 @@
-#include <ionir/construct/psuedo/args.h>
+#include <ionir/construct/pseudo/args.h>
 
 namespace ionir {
     Args::Args(SymbolTable<Arg> items, bool isInfinite) : items(items), isInfinite(isInfinite) {

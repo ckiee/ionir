@@ -2,7 +2,7 @@
 
 #include <optional>
 #include <ionir/construct/expr.h>
-#include <ionir/construct/psuedo/partial_inst.h>
+#include <ionir/construct/pseudo/partial_inst.h>
 #include <ionir/construct/section.h>
 #include <ionir/misc/helpers.h>
 

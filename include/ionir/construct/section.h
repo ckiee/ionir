@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <ionir/misc/helpers.h>
-#include "psuedo/args.h"
+#include "pseudo/args.h"
 #include "inst.h"
 #include "child_construct.h"
 #include "type.h"

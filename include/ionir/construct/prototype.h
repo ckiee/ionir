@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <ionir/construct/psuedo/args.h>
+#include <ionir/construct/pseudo/args.h>
 #include <ionir/misc/helpers.h>
 #include "type.h"
 #include "construct.h"
