@@ -5,14 +5,14 @@ namespace ionir {
         //
     }
 
-    void NameResolutionPass::visitReference(Reference node) {
+    void NameResolutionPass::visitRef(PtrRef<> node) {
         // Node is already resolved, no need to continue.
-        if (node.isResolved()) {
+        if (node->isResolved()) {
             return;
         }
 
-        Ptr<Construct> owner = node.getOwner();
-        std::string id = node.getId();
+        Ptr<Construct> owner = node->getOwner();
+        std::string id = node->getId();
 
         switch (owner->getConstructKind()) {
             case ConstructKind::Instruction: {
@@ -21,7 +21,7 @@ namespace ionir {
 
                 // The section's symbol table contains the referenced entity.
                 if (sectionSymbolTable.contains(id)) {
-                    node.resolve(sectionSymbolTable[id]);
+                    node->resolve(sectionSymbolTable[id]);
 
                     return;
                 }

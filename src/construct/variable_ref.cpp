@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void VariableRef::accept(Pass &visitor) {
-        visitor.visitReference(this->cast<VariableRef>());
+        visitor.visitVarReference(this->cast<VariableRef>());
     }
 
     std::string VariableRef::getId() const {

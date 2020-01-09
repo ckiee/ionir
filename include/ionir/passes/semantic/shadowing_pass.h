@@ -12,7 +12,7 @@ namespace ionir {
      */
     class ShadowingPass : public Pass {
     public:
-        static OPtr<Type> evaluateExprType(Ptr<Expr> expr);
+        static OptPtr<Type> evaluateExprType(Ptr<Expr> expr);
 
         void visitInst(Ptr<Inst> node) override;
     };

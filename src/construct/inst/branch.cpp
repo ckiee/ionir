@@ -18,19 +18,19 @@ namespace ionir {
         this->condition = condition;
     }
 
-    Ptr<Section> BranchInst::getBody() const {
+    PtrRef<Section> BranchInst::getBody() const {
         return this->body;
     }
 
-    void BranchInst::setBody(Ptr<Section> body) {
+    void BranchInst::setBody(PtrRef<Section> body) {
         this->body = body;
     }
 
-    std::optional<Ptr<Section>> BranchInst::getOtherwise() const {
+    OptPtrRef<Section> BranchInst::getOtherwise() const {
         return this->otherwise;
     }
 
-    void BranchInst::setOtherwise(std::optional<Ptr<Section>> otherwise) {
+    void BranchInst::setOtherwise(OptPtrRef<Section> otherwise) {
         this->otherwise = otherwise;
     }
 }

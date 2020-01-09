@@ -11,11 +11,11 @@ namespace ionir {
         visitor.visitReturnInst(this->cast<ReturnInst>());
     }
 
-    OPtr<Value> ReturnInst::getValue() const {
+    OptPtr<Value> ReturnInst::getValue() const {
         return this->value;
     }
 
-    void ReturnInst::setValue(OPtr<Value> value) {
+    void ReturnInst::setValue(OptPtr<Value> value) {
         this->value = value;
     }
 }

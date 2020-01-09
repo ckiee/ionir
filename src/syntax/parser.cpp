@@ -169,7 +169,7 @@ namespace ionir {
         PtrSymbolTable<Inst> symbolTable = section->getSymbolTable();
 
         while (!this->is(TokenKind::SymbolBraceR) && !this->is(TokenKind::SymbolAt)) {
-            OPtr<Inst> inst = this->parseInst(section);
+            OptPtr<Inst> inst = this->parseInst(section);
 
             IONIR_PARSER_ASSURE(inst)
 

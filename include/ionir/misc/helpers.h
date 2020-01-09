@@ -10,10 +10,10 @@ namespace ionir {
     using Ptr = std::shared_ptr<T>;
 
     template<typename T>
-    using CPtr = Ptr<const T>;
+    using ConstPtr = Ptr<const T>;
 
     template<typename T>
-    using OPtr = std::optional<Ptr<T>>;
+    using OptPtr = std::optional<Ptr<T>>;
 
     typedef std::vector<TokenKind> TokenKindVector;
 }

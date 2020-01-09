@@ -98,22 +98,31 @@ TEST(CodeGenTest, VisitAllocaInst) {
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_alloca"));
 }
 
-// TODO
-// TEST(CodeGenTest, VisitBranchInst)
-// {
-//     Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
-//     Ptr<Section> body = std::make_shared<Section>(SectionKind::Label, "ifbody");
-//     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
+TEST(CodeGenTest, VisitBranchInst)
+{
+    Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
 
-//     std::vector<Ptr<Inst>> insts = {
-//         std::make_shared<BranchInst>(condition, body),
-//     };
+    Ptr<Section> body = std::make_shared<Section>(SectionOpts{
+        nullptr,
+        SectionKind::Label,
+        "ifbody"
+    });
 
-//     Ptr<Function> function = test::bootstrap::emptyFunction(insts);
+    Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
 
-//     visitor->visitFunction(function);
+    std::vector<Ptr<Inst>> insts = {
+        std::make_shared<BranchInst>(BranchInstOpts{
+            nullptr,
+            condition,
+            std::make_shared<Ref<Section>>("ifbody", body)
+        })
+    };
 
-//     Ptr<Module> module = std::make_shared<Module>(visitor->getModule());
+    Ptr<Function> function = test::bootstrap::emptyFunction(insts);
 
-//     EXPECT_TRUE(test::compare::ir(module->getAsString(), "inst_branch"));
-// }
+    visitor->visitFunction(function);
+
+    LlvmModule module = LlvmModule(visitor->getModule());
+
+    EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_branch"));
+}

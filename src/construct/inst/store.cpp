@@ -2,43 +2,27 @@
 
 namespace ionir {
     StoreInst::StoreInst(StoreInstOpts opts)
-        : PartialInst(PartialInstOpts<StoreInstPartials>{
-        opts.parent,
-
-        StoreInstPartials{
-            // TODO
-        },
-
-        InstKind::Branch
-    }) {
+        : Inst(opts.parent, InstKind::Branch), value(opts.value), target(opts.target) {
         //
     }
 
-    void BranchInst::accept(Pass &visitor) {
-        visitor.visitBranchInst(this->cast<BranchInst>());
+    void StoreInst::accept(Pass &visitor) {
+        visitor.visitStoreInst(this->cast<StoreInst>());
     }
 
-    Ptr<Expr> BranchInst::getCondition() const {
-        return this->condition;
+    Ptr<Value> StoreInst::getValue() const {
+        return this->value;
     }
 
-    void BranchInst::setCondition(Ptr<Expr> condition) {
-        this->condition = condition;
+    void StoreInst::setValue(Ptr<Value> value) {
+        this->value = value;
     }
 
-    Ptr<Section> BranchInst::getBody() const {
-        return this->body;
+    PtrRef<AllocaInst> StoreInst::getTarget() const {
+        return this->target;
     }
 
-    void BranchInst::setBody(Ptr<Section> body) {
-        this->body = body;
-    }
-
-    std::optional<Ptr<Section>> BranchInst::getOtherwise() const {
-        return this->otherwise;
-    }
-
-    void BranchInst::setOtherwise(std::optional<Ptr<Section>> otherwise) {
-        this->otherwise = otherwise;
+    void StoreInst::setTarget(PtrRef<AllocaInst> target) {
+        this->target = target;
     }
 }

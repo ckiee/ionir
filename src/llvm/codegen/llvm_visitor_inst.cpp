@@ -22,7 +22,7 @@ namespace ionir {
     }
 
     void LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node) {
-        OPtr<Value> value = node->getValue();
+        OptPtr<Value> value = node->getValue();
         llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
 
         if (value.has_value()) {
@@ -56,27 +56,38 @@ namespace ionir {
 
         this->saveBuilder();
 
-        // Visit body.
-        this->visitSection(node->getBody());
+        PtrRef<Section> bodyRef = node->getBody();
 
-        auto *body = (llvm::BasicBlock *)
-            this->valueStack.pop();
+        // Body should have been resolved at this point.
+        if (!bodyRef->isResolved()) {
+            throw std::runtime_error("Unresolved branch instruction body");
+        }
+
+        // Visit body.
+        this->visitSection(*bodyRef->getValue());
+
+        auto *llvmBody = (llvm::BasicBlock *)this->valueStack.pop();
 
         // Prepare otherwise block with a default value.
-        std::optional<llvm::BasicBlock *> otherwise = std::nullopt;
+        std::optional<llvm::BasicBlock *> llvmOtherwise = std::nullopt;
 
+        OptPtrRef<Section> otherwiseRef = node->getOtherwise();
+
+        // Otherwise, if set, should have been resolved at this point.
+        if (otherwiseRef.has_value() && !otherwiseRef->get()->isResolved()) {
+            throw std::runtime_error("Unresolved branch instruction otherwise");
+        }
         // Visit otherwise block if applicable.
-        if (node->getOtherwise().has_value()) {
-            this->visitSection(*node->getOtherwise());
-            otherwise = (llvm::BasicBlock *)
-                this->valueStack.pop();
+        else if (otherwiseRef.has_value()) {
+            this->visitSection(*otherwiseRef->get()->getValue());
+            llvmOtherwise = (llvm::BasicBlock *)this->valueStack.pop();
         }
 
         this->restoreBuilder();
 
         // Create the LLVM branch instruction.
         llvm::BranchInst *branchInst =
-            this->builder->CreateCondBr(condition, body, otherwise.value_or(nullptr));
+            this->builder->CreateCondBr(condition, llvmBody, llvmOtherwise.value_or(nullptr));
 
         this->valueStack.push(branchInst);
     }

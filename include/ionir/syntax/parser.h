@@ -15,7 +15,7 @@
 #include <ionir/construct/inst/store.h>
 #include <ionir/construct/pseudo/partial_inst.h>
 #include <ionir/construct/pseudo/directive.h>
-#include <ionir/construct/pseudo/reference.h>
+#include <ionir/construct/pseudo/ref.h>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/token_identifier.h>
 #include <ionir/construct/extern.h>
@@ -135,12 +135,12 @@ namespace ionir {
         std::optional<Directive> parseDirective();
 
         template<typename T = Construct>
-        ParserResult<Reference<T>> parseReference(Ptr<Construct> owner) {
+        ParserResult<Ref<T>> parseReference(Ptr<Construct> owner) {
             std::optional<std::string> id = this->parseId();
 
             IONIR_PARSER_ASSURE(id)
 
-            return std::make_shared<Reference<T>>(*id, owner);
+            return std::make_shared<Ref<T>>(*id, owner);
         }
     };
 }

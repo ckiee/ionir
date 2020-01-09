@@ -201,7 +201,7 @@ namespace ionir {
         //
     }
 
-    void Pass::visitReference(Reference node) {
+    void Pass::visitRef(PtrRef<> node) {
         //
     }
 }

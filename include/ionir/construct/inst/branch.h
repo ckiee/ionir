@@ -5,7 +5,7 @@
 #include <ionir/construct/pseudo/partial_inst.h>
 #include <ionir/construct/section.h>
 #include <ionir/misc/helpers.h>
-#include <ionir/construct/pseudo/reference.h>
+#include <ionir/construct/pseudo/ref.h>
 
 namespace ionir {
     class Pass;
@@ -13,18 +13,18 @@ namespace ionir {
     struct BranchInstOpts : InstOpts {
         Ptr<Expr> condition;
 
-        Ptr<Reference<Section>> body;
+        Ptr<Ref<Section>> body;
 
-        std::optional<Ptr<Reference<Section>>> otherwise = std::nullopt;
+        std::optional<Ptr<Ref<Section>>> otherwise = std::nullopt;
     };
 
     class BranchInst : public Inst {
     private:
         Ptr<Expr> condition;
 
-        Ptr<Reference<Section>> body;
+        Ptr<Ref<Section>> body;
 
-        std::optional<Ptr<Reference<Section>>> otherwise;
+        std::optional<Ptr<Ref<Section>>> otherwise;
 
     public:
         explicit BranchInst(BranchInstOpts opts);
@@ -35,12 +35,12 @@ namespace ionir {
 
         void setCondition(Ptr<Expr> condition);
 
-        Ptr<Reference<Section>> getBody() const;
+        PtrRef<Section> getBody() const;
 
-        void setBody(Ptr<Reference<Section>> body);
+        void setBody(PtrRef<Section> body);
 
-        std::optional<Ptr<Reference<Section>>> getOtherwise() const;
+        std::optional<Ptr<Ref<Section>>> getOtherwise() const;
 
-        void setOtherwise(std::optional<Ptr<Reference<Section>>> otherwise);
+        void setOtherwise(std::optional<Ptr<Ref<Section>>> otherwise);
     };
 }

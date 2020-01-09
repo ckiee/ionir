@@ -10,14 +10,14 @@ namespace ionir {
     struct AllocaInstOpts : InstOpts {
         std::string id;
 
-        Ptr <Type> type;
+        Ptr<Type> type;
     };
 
     class AllocaInst : public Inst {
     private:
         std::string id;
 
-        Ptr <Type> type;
+        Ptr<Type> type;
 
     public:
         // TODO: Missing support for array-type allocas.

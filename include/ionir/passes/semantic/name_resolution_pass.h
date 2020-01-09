@@ -17,7 +17,7 @@ namespace ionir {
     public:
         NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
 
-        void visitReference(Reference node) override;
+        void visitRef(PtrRef<> node) override;
 
         Ptr<StackTrace> getStackTrace() const;
     };
