@@ -14,6 +14,7 @@
 #include <ionir/construct/inst/call.h>
 #include <ionir/construct/inst/store.h>
 #include <ionir/construct/psuedo/partial_inst.h>
+#include <ionir/construct/psuedo/directive.h>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/token_identifier.h>
 #include <ionir/construct/extern.h>
@@ -124,5 +125,11 @@ namespace ionir {
         ParserResult<Inst> parseInst(Ptr<Section> parent);
 
         ParserResult<Module> parseModule();
+
+        std::optional<std::string> parseLine();
+
+        // TODO: Add comment-parsing support.
+
+        std::optional<Directive> parseDirective();
     };
 }

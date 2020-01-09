@@ -7,7 +7,6 @@
 #include <ionir/misc/iterable.h>
 #include <ionir/misc/loose_generator.h>
 #include <ionir/misc/helpers.h>
-#include "ast.h"
 
 namespace ionir {
 // TODO

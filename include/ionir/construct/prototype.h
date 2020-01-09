@@ -23,7 +23,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        ConstructChildren getChildren() const override;
+        Ast getChildrenNodes() const override;
 
         std::string getId() const;
 

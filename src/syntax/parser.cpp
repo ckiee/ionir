@@ -211,7 +211,6 @@ namespace ionir {
 
         IONIR_PARSER_ASSURE(id)
 
-        this->stream.skip();
         this->skipOver(TokenKind::SymbolBraceL);
 
         PtrSymbolTable<Construct> constructs = {};
@@ -233,7 +232,7 @@ namespace ionir {
             }
 
             // No more tokens to process.
-            if (!this->stream.hasNext()) {
+            if (!this->stream.hasNext() && !this->is(TokenKind::SymbolBraceR)) {
                 return this->makeNotice("Unexpected end of input");
             }
         }
@@ -241,5 +240,22 @@ namespace ionir {
         this->skipOver(TokenKind::SymbolBraceR);
 
         return std::make_shared<Module>(*id, constructs);
+    }
+
+    std::optional<std::string> Parser::parseLine() {
+        // TODO: Lexer cannot ignore whitespace.
+        return "";
+    }
+
+    std::optional<Directive> Parser::parseDirective() {
+        this->skipOver(TokenKind::SymbolHash);
+
+        std::optional<std::string> id = this->parseId();
+
+        IONIR_PARSER_ASSURE(id)
+
+        std::optional<std::string> content = this->parseLine();
+
+        return std::make_pair(*id, content);
     }
 }

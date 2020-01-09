@@ -3,6 +3,7 @@
 #include <vector>
 #include <functional>
 #include <ionir/misc/helpers.h>
+#include <ionir/tracking/symbol_table.h>
 
 namespace ionir {
     class Pass;
@@ -47,7 +48,7 @@ namespace ionir {
 
     class Construct;
 
-    typedef std::vector<Ptr<Construct>> ConstructChildren;
+    typedef std::vector<Ptr<Construct>> Ast;
 
     class Construct : public std::enable_shared_from_this<Construct> {
     private:
@@ -55,12 +56,23 @@ namespace ionir {
 
     public:
         template<class T>
-        static ConstructChildren convertChildren(std::vector<Ptr<T>> vector) {
-            // TODO: Ensure T is child of Construct.
-            ConstructChildren children = {};
+        static Ast convertChildren(std::vector<Ptr<T>> vector) {
+            // TODO: Ensure T is child of AstNode.
+            Ast children = {};
 
             for (const auto item : vector) {
                 children.push_back(item);
+            }
+
+            return children;
+        }
+
+        template<class T>
+        static Ast convertChildren(SymbolTable<T> symbolTable) {
+            Ast children = {};
+
+            for (const auto &[key, value] : symbolTable.unwrap()) {
+                children.push_back(value);
             }
 
             return children;
@@ -70,7 +82,7 @@ namespace ionir {
 
         virtual void accept(Pass &visitor) = 0;
 
-        virtual ConstructChildren getChildren() const;
+        virtual Ast getChildrenNodes() const;
 
         bool isLeafNode() const;
 

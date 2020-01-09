@@ -16,7 +16,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        ConstructChildren getChildren() const override;
+        Ast getChildrenNodes() const override;
 
         Ptr <Prototype> getPrototype() const;
 

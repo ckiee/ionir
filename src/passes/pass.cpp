@@ -9,8 +9,9 @@ namespace ionir {
          * After visiting the node, attempt to
          * visit all its children as well.
          */
-        for (const auto child : node->getChildren()) {
-            this->visit(child);
+        for (const auto child : node->getChildrenNodes()) {
+            // TODO: CRITICAL: What if 'child' (AstNode) is not boxed under Construct?
+            this->visit(std::static_pointer_cast<Construct>(child));
         }
     }
 
@@ -193,6 +194,10 @@ namespace ionir {
     }
 
     void Pass::visitModule(Ptr<Module> node) {
+        //
+    }
+
+    void Pass::visitDirective(Directive node) {
         //
     }
 }

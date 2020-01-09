@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <ionir/syntax/ast.h>
 #include <ionir/misc/helpers.h>
+#include "pass.h"
 
 namespace ionir {
     enum class PassPriority {
@@ -10,7 +10,7 @@ namespace ionir {
          * Highest priority. This precedence
          * will be executed first.
          */
-            Important,
+        Important,
 
         Normal,
 

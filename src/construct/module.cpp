@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Module::Module(std::string id, PtrSymbolTable<Construct>)
+    Module::Module(std::string id, PtrSymbolTable<Construct> constructs)
         : Construct(ConstructKind::Module), id(id), constructs(constructs) {
         //
     }
@@ -10,9 +10,9 @@ namespace ionir {
         visitor.visitModule(this->cast<Module>());
     }
 
-    ConstructChildren Module::getChildren() const {
-        // TODO
-        return {};
+    Ast Module::getChildrenNodes() const {
+//        return Construct::convertChildren(this->constructs);
+return {};
     }
 
     std::string Module::getId() const {

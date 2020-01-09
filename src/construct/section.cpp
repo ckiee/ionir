@@ -11,7 +11,7 @@ namespace ionir {
         visitor.visitSection(this->cast<Section>());
     }
 
-    ConstructChildren Section::getChildren() const {
+    Ast Section::getChildrenNodes() const {
         return Construct::convertChildren(this->insts);
     }
 

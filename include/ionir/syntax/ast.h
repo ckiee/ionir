@@ -5,8 +5,14 @@
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
-    // TODO: Move to 'parser.h'.
-    typedef std::vector<Ptr < Construct>>
+    class AstNode;
 
-    Ast;
+    class AstNode {
+    public:
+
+
+        virtual Ast getChildrenNodes() const = 0;
+
+        bool isLeafNode() const;
+    };
 }
