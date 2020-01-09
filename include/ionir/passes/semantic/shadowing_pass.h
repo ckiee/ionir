@@ -2,7 +2,7 @@
 
 #include <optional>
 #include <ionir/misc/helpers.h>
-#include "ionir/passes/pass.h"
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     /**

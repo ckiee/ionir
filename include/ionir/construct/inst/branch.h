@@ -9,12 +9,6 @@
 namespace ionir {
     class Pass;
 
-    struct BranchInstPartials {
-        Ptr<Section> body;
-
-        std::optional<Ptr<Section>> otherwise = std::nullopt;
-    };
-
     struct BranchInstOpts : InstOpts {
         Ptr<Expr> condition;
 
@@ -23,7 +17,7 @@ namespace ionir {
         std::optional<Ptr<Section>> otherwise = std::nullopt;
     };
 
-    class BranchInst : public PartialInst<BranchInstPartials> {
+    class BranchInst : public Inst {
     private:
         Ptr<Expr> condition;
 

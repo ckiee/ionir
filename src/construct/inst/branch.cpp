@@ -2,18 +2,7 @@
 
 namespace ionir {
     BranchInst::BranchInst(BranchInstOpts opts)
-        : PartialInst(PartialInstOpts<BranchInstPartials>{
-        opts.parent,
-
-        BranchInstPartials{
-            opts.body,
-            opts.otherwise,
-        },
-
-        InstKind::Branch
-    }),
-
-        condition(opts.condition), body(opts.body), otherwise(opts.otherwise) {
+        : Inst(opts.parent, InstKind::Branch), condition(opts.condition), body(opts.body), otherwise(opts.otherwise) {
         //
     }
 
