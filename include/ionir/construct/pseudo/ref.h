@@ -3,10 +3,11 @@
 #include <optional>
 #include <string>
 #include <ionir/construct/construct.h>
+#include <ionir/passes/pass.h>
 
 namespace ionir {
     template<typename T = Construct>
-    class Ref {
+    class Ref : Construct {
     private:
         std::string id;
 
@@ -16,8 +17,12 @@ namespace ionir {
 
     public:
         Ref(std::string id, Ptr<Construct> owner, OptPtr<T> value = std::nullopt)
-            : id(id), owner(owner), value(value) {
+            : Construct(ConstructKind::Reference), id(id), owner(owner), value(value) {
             //
+        }
+
+        void accept(Pass &visitor) override {
+            visitor.visitRef(this->cast<PtrRef<>>());
         }
 
         std::string getId() const {
