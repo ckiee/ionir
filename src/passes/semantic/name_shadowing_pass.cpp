@@ -1,6 +1,6 @@
 #include <string>
 #include <ionir/construct/section.h>
-#include <ionir/passes/semantic/shadowing_pass.h>
+#include <ionir/passes/semantic/name_shadowing_pass.h>
 
 namespace ionir {
     void ShadowingPass::visitInst(Ptr<Inst> node) {

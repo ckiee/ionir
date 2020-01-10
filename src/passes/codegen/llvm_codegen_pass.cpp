@@ -1,22 +1,22 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Constant.h>
-#include <ionir/llvm/codegen/llvm_visitor.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    llvm::Module *LlvmVisitor::getModule() const {
+    llvm::Module *LlvmCodegenPass::getModule() const {
         return this->module;
     }
 
-    Stack<llvm::Value *> LlvmVisitor::getValueStack() const {
+    Stack<llvm::Value *> LlvmCodegenPass::getValueStack() const {
         return this->valueStack;
     }
 
-    Stack<llvm::Type *> LlvmVisitor::getTypeStack() const {
+    Stack<llvm::Type *> LlvmCodegenPass::getTypeStack() const {
         return this->typeStack;
     }
 
-    void LlvmVisitor::requireBuilder() {
+    void LlvmCodegenPass::requireBuilder() {
         // Builder must be instantiated.
         if (!this->builder.has_value()) {
             // Otherwise, throw a runtime error.
@@ -24,17 +24,17 @@ namespace ionir {
         }
     }
 
-    void LlvmVisitor::requireFunction() {
+    void LlvmCodegenPass::requireFunction() {
         if (this->function == nullptr) {
             throw std::runtime_error("Expected the function buffer to be set, but was null");
         }
     }
 
-    void LlvmVisitor::setBuilder(llvm::BasicBlock *block) {
+    void LlvmCodegenPass::setBuilder(llvm::BasicBlock *block) {
         this->builder.emplace(llvm::IRBuilder<>(block));
     }
 
-    bool LlvmVisitor::saveBuilder() {
+    bool LlvmCodegenPass::saveBuilder() {
         if (!this->builder.has_value()) {
             return false;
         }
@@ -44,7 +44,7 @@ namespace ionir {
         return true;
     }
 
-    bool LlvmVisitor::restoreBuilder() {
+    bool LlvmCodegenPass::restoreBuilder() {
         if (this->builderTracker.isEmpty()) {
             return false;
         }
@@ -54,18 +54,18 @@ namespace ionir {
         return true;
     }
 
-    LlvmVisitor::LlvmVisitor(llvm::Module *module)
+    LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
         : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack(),
         builderTracker(), namedValues({}) {
         //
     }
 
-    LlvmVisitor::~LlvmVisitor() {
+    LlvmCodegenPass::~LlvmCodegenPass() {
         this->typeStack.clear();
         this->valueStack.clear();
     }
 
-    void LlvmVisitor::visitSection(Ptr<Section> node) {
+    void LlvmCodegenPass::visitSection(Ptr<Section> node) {
         // Function buffer must not be null.
         this->requireFunction();
 
@@ -90,7 +90,7 @@ namespace ionir {
         this->valueStack.push(block);
     }
 
-    void LlvmVisitor::visitBlock(Ptr<Block> node) {
+    void LlvmCodegenPass::visitBlock(Ptr<Block> node) {
         // Verify the block before continuing.
         if (!node->verify()) {
             throw std::runtime_error("Block failed to be verified");
@@ -119,7 +119,7 @@ namespace ionir {
         }
     }
 
-    void LlvmVisitor::visitGlobal(Ptr<Global> node) {
+    void LlvmCodegenPass::visitGlobal(Ptr<Global> node) {
         this->visitType(node->getType());
 
         llvm::Type *type = this->typeStack.pop();
@@ -142,7 +142,7 @@ namespace ionir {
         }
     }
 
-    void LlvmVisitor::visitType(Ptr<Type> node) {
+    void LlvmCodegenPass::visitType(Ptr<Type> node) {
         // TODO: Hard-coded double type.
         llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
 
@@ -154,7 +154,7 @@ namespace ionir {
         this->typeStack.push(type);
     }
 
-    void LlvmVisitor::visitIntegerType(Ptr<IntegerType> node) {
+    void LlvmCodegenPass::visitIntegerType(Ptr<IntegerType> node) {
         std::optional<llvm::IntegerType *> type;
 
         /**
@@ -211,11 +211,11 @@ namespace ionir {
         this->typeStack.push(*type);
     }
 
-    void LlvmVisitor::visitVoidType(Ptr<VoidType> node) {
+    void LlvmCodegenPass::visitVoidType(Ptr<VoidType> node) {
         this->typeStack.push(llvm::Type::getVoidTy(*this->context));
     }
 
-    void LlvmVisitor::visitModule(Ptr<Module> node) {
+    void LlvmCodegenPass::visitModule(Ptr<Module> node) {
         this->context = new llvm::LLVMContext();
         this->module = new llvm::Module(node->getId(), *this->context);
     }

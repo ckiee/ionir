@@ -1,10 +1,10 @@
 #include <llvm/ADT/APInt.h>
 #include <llvm/IR/DerivedTypes.h>
 #include <ionir/construct/value.h>
-#include <ionir/llvm/codegen/llvm_visitor.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmVisitor::visitExtern(Ptr<Extern> node) {
+    void LlvmCodegenPass::visitExtern(Ptr<Extern> node) {
         if (node->getPrototype() == nullptr) {
             throw std::runtime_error("Unexpected external definition's prototype to be null");
         }
@@ -18,7 +18,7 @@ namespace ionir {
         // No need to push the resulting function onto the stack.
     }
 
-    void LlvmVisitor::visitPrototype(Ptr<Prototype> node) {
+    void LlvmCodegenPass::visitPrototype(Ptr<Prototype> node) {
         // Retrieve argument count from the argument vector.
         uint32_t argumentCount = node->getArgs()->getItems().getSize();
 
@@ -83,7 +83,7 @@ namespace ionir {
         this->valueStack.push(function);
     }
 
-    void LlvmVisitor::visit(Ptr<Construct> node) {
+    void LlvmCodegenPass::visit(Ptr<Construct> node) {
         /**
          * Only instruct the node to visit this
          * instance and not its children, since
@@ -93,7 +93,7 @@ namespace ionir {
         node->accept(*this);
     }
 
-    void LlvmVisitor::visitFunction(Ptr<Function> node) {
+    void LlvmCodegenPass::visitFunction(Ptr<Function> node) {
         if (!node->verify()) {
             throw std::runtime_error("Function verification failed");
         }

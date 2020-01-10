@@ -1,8 +1,10 @@
 #include <vector>
-#include <ionir/llvm/codegen/llvm_visitor.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
+#include <ionir/passes/semantic/name_resolution_pass.h>
+#include <ionir/llvm/llvm_module.h>
 #include <ionir/const/const.h>
 #include <ionir/const/const_name.h>
-#include <ionir/llvm/llvm_module.h>
+#include <ionir/passes/pass_manager.h>
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
 #include "test_api/constant.h"
@@ -10,7 +12,7 @@
 using namespace ionir;
 
 TEST(CodeGenTest, VisitExtern) {
-    Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+    Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
     Ptr<Type> returnType = std::make_shared<Type>(ConstName::typeVoid);
     Ptr<Args> args = std::make_shared<Args>();
     Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, args, returnType);
@@ -24,7 +26,7 @@ TEST(CodeGenTest, VisitExtern) {
 }
 
 TEST(CodeGenTest, VisitEmptyFunction) {
-    Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+    Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
     Ptr<Type> returnType = std::make_shared<Type>(ConstName::typeVoid);
 
     Ptr<Prototype> prototype =
@@ -53,7 +55,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 }
 
 TEST(CodeGenTest, VisitEmptyGlobal) {
-    Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+    Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
     Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int32);
     Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar);
 
@@ -65,7 +67,7 @@ TEST(CodeGenTest, VisitEmptyGlobal) {
 }
 
 TEST(CodeGenTest, VisitGlobalWithValue) {
-    Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+    Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
     Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int32);
 
     Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar,
@@ -79,7 +81,7 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
 }
 
 TEST(CodeGenTest, VisitAllocaInst) {
-    Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+    Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
 
     std::vector<Ptr<Inst>> insts = {std::make_shared<AllocaInst>(
         AllocaInstOpts{
@@ -100,7 +102,9 @@ TEST(CodeGenTest, VisitAllocaInst) {
 
 TEST(CodeGenTest, VisitBranchInst)
 {
-    Ptr<LlvmVisitor> visitor = test::bootstrap::llvmVisitor();
+    PassManager passManager = PassManager();
+
+    passManager.registerPass(std::make_shared<NameResolutionPass>());
 
     Ptr<Section> body = std::make_shared<Section>(SectionOpts{
         nullptr,
@@ -118,11 +122,16 @@ TEST(CodeGenTest, VisitBranchInst)
         })
     };
 
+    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
     Ptr<Function> function = test::bootstrap::emptyFunction(insts);
 
-    visitor->visitFunction(function);
+    passManager.run({
+        function
+    });
 
-    LlvmModule module = LlvmModule(visitor->getModule());
+    llvmCodegenPass->visitFunction(function);
+
+    LlvmModule module = LlvmModule(llvmCodegenPass->getModule());
 
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_branch"));
 }

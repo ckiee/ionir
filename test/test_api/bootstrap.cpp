@@ -28,8 +28,8 @@ namespace ionir::test::bootstrap {
         return std::make_shared<LlvmModule>(llvmModule);
     }
 
-    Ptr<LlvmVisitor> llvmVisitor() {
-        return std::make_shared<LlvmVisitor>(llvmModule()->unwrap());
+    Ptr<LlvmCodegenPass> llvmCodegenPass() {
+        return std::make_shared<LlvmCodegenPass>(llvmModule()->unwrap());
     }
 
     Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts) {

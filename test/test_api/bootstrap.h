@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "ionir/construct/inst.h"
-#include "../../include/ionir/llvm/codegen/llvm_visitor.h"
+#include "ionir/passes/codegen/llvm_codegen_pass.h"
 #include "../../include/ionir/lexical/token.h"
 #include "ionir/lexical/token_kind.h"
 #include "../../include/ionir/syntax/parser.h"
@@ -19,7 +19,7 @@ namespace ionir::test::bootstrap {
 
     Ptr<LlvmModule> llvmModule(std::string identifier = "test");
 
-    Ptr<LlvmVisitor> llvmVisitor();
+    Ptr<LlvmCodegenPass> llvmCodegenPass();
 
     Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts = {});
 }

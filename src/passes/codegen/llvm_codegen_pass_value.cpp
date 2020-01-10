@@ -2,10 +2,10 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/Constant.h>
 #include <ionir/construct/value.h>
-#include <ionir/llvm/codegen/llvm_visitor.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmVisitor::visitIntegerValue(Ptr<IntegerValue> node) {
+    void LlvmCodegenPass::visitIntegerValue(Ptr<IntegerValue> node) {
         /**
          * Create the APInt to provide. Acts sort of an
          * LLVM integer value wrapper. Default to being
@@ -31,11 +31,11 @@ namespace ionir {
         this->valueStack.push(value);
     }
 
-    void LlvmVisitor::visitCharValue(Ptr<CharValue> node) {
+    void LlvmCodegenPass::visitCharValue(Ptr<CharValue> node) {
         // TODO
     }
 
-    void LlvmVisitor::visitStringValue(Ptr<StringValue> node) {
+    void LlvmCodegenPass::visitStringValue(Ptr<StringValue> node) {
         this->requireBuilder();
 
         // Create the global string pointer.
@@ -46,7 +46,7 @@ namespace ionir {
         this->valueStack.push(value);
     }
 
-    void LlvmVisitor::visitBooleanValue(Ptr<BooleanValue> node) {
+    void LlvmCodegenPass::visitBooleanValue(Ptr<BooleanValue> node) {
         // Create the boolean type along with the LLVM value.
         llvm::IntegerType *type = llvm::Type::getInt1Ty(*this->context);
         llvm::Constant *value = llvm::ConstantInt::get(type, llvm::APInt(1, node->getValue(), false));

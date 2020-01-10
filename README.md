@@ -17,33 +17,117 @@ $ cmake --build .
 A general usage example is provided below.
 
 ```cpp
+#include <memory>
 #include <iostream>
 #include <string>
+#include <ionir/passes/semantic/name_resolution_pass.h>
+#include <ionir/passes/semantic/name_shadowing_pass.h>
+#include <ionir/passes/optimization/dead_code_elimination_pass.h>
+#include <ionir/passes/type_system/type_checker_pass.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
+#include <ionir/passes/construct_validation_pass.h>
+#include <ionir/passes/pass_manager.h>
 #include <ionir/generation/driver.h>
 #include <ionir/lexical/lexer.h>
 #include <ionir/lexical/token.h>
 #include <ionir/misc/iterator.h>
+#include <ionir/misc/helpers.h>
+#include <ionir/construct/construct.h>
 
 using namespace ionir;
 
 int main() {
-    // Create a lexer to tokenize input.
-    Lexer lexer = Lexer("hello world");
+    // Create a lexer instance which will scan & tokenize input IonIR code.
+    Lexer lexer = Lexer("module foo { fn main() -> i32 { ret 0; } }");
 
     // Tokenize the input.
     TokenStream stream = lexer.scan();
 
-    // Parse constructs formed from resulting token stream.
+    /**
+     * Used to parse all applicable top-level constructs
+     * formed from the resulting token stream.
+     */
     Parser parser = Parser(stream);
 
-    // Create a driver to handle parsing.
+    // Create a driver to automatically handle parsing.
     Driver driver = Driver(stream);
 
-    // Invoke the driver and capture its resulting LLVM IR code.
-    std::string llvmIr = driver.invoke();
+    // Invoke the driver and retrieve the resulting AST.
+    Ast ast = driver.invoke();
 
-    // Print out the resulting IR code.
-    std::cout << llvmIr << std::endl;
+    /**
+     * Create a PassManager instance and register 
+     * various passes which will traverse, analyze
+     * and modify the resulting, parsed AST. It is
+     * important to note that the order in which passes
+     * are registered matters since those registered
+     * and executed first may modify the AST.
+     */
+    PassManager passManager;
+
+    /**
+     * ConstructValidationPass: Ensures that all parsed
+     * nodes are not missing (having null) its required
+     * properties.
+     */
+    passManager.registerPass(std::make_shared<ConstructValidationPass>());
+
+    /**
+     * NameResolutionPass: Will resolve partial constructs
+     * which reference other constructs by their identifier(s).
+     * For example, constructs defined later (after its identifier
+     * usage) will be resolved by this pass.
+     */
+    passManager.registerPass(std::make_shared<NameResolutionPass>());
+
+    /**
+     * NameShadowingPass: Ensures that locally-defined variables' names
+     * do not shadow (or override) previously existing ones, among other
+     * entities such as function argument names and method names.
+     */
+    passManager.registerPass(std::make_shared<NameShadowingPass>());
+
+    /**
+     * DeadCodeEliminationPass: An optimization pass which will remove
+     * unreachable code from the resulting, parsed AST. For example, code
+     * after a return statement is considered dead since it will never be
+     * reached nor executed. Another example would be the removal of unused
+     * variables, methods, classes, among other entities.
+     */
+    passManager.registerPass(std::make_shared<DeadCodeEliminationPass>());
+
+    /**
+     * TypeCheckerPass: At this point, type checking will occur. This pass's
+     * responsibility is enforcing various semantic type rules of the language.
+     * For example, binary operations involving incompatible type operands will
+     * result in a type error produced by this pass. Another example would be
+     * verifying that return values' types are compatible with the defined return
+     * type of the function.
+     */
+    passManager.registerPass(std::make_shared<TypeCheckerPass>());
+
+    /**
+     * LlvmCodegenPass: Finally, the target code-generation pass will be registered
+     * last after all optimizations and semantic analysis has taken place. This pass
+     * will generate LLVM IR from the parsed AST. IonIR is designed in a way to support
+     * multiple different targets, with the ability to create new ones simply by creating
+     * and implementing a Pass class. This means that the implementation of other targets
+     * should be a breeze.
+     */
+    Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>();
+
+    passManager.registerPass(llvmCodegenPass);
+
+    /**
+     * After registering all the corresponding passes, instruct the pass manager to execute
+     * all the passes while respecting the order in which they were registered.
+     */
+    passManager.run(ast);
+
+    LlvmModule module = LlvmModule(llvmCodegenPass->getModule());
+
+    // Since we're targeting LLVM IR, print out the resulting LLVM IR code.
+    std::cout << module.getAsString() << std::endl;
 
     // Finish program.
     return 0;

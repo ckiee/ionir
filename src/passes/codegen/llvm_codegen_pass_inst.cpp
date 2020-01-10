@@ -2,10 +2,10 @@
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Constant.h>
 #include <ionir/construct/value.h>
-#include <ionir/llvm/codegen/llvm_visitor.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmVisitor::visitAllocaInst(Ptr<AllocaInst> node) {
+    void LlvmCodegenPass::visitAllocaInst(Ptr<AllocaInst> node) {
         this->visitType(node->getType());
 
         llvm::Type *type = this->typeStack.pop();
@@ -21,7 +21,7 @@ namespace ionir {
         this->valueStack.push(allocaInst);
     }
 
-    void LlvmVisitor::visitReturnInst(Ptr<ReturnInst> node) {
+    void LlvmCodegenPass::visitReturnInst(Ptr<ReturnInst> node) {
         OptPtr<Value> value = node->getValue();
         llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
 
@@ -40,7 +40,7 @@ namespace ionir {
         this->valueStack.push(returnInst);
     }
 
-    void LlvmVisitor::visitBranchInst(Ptr<BranchInst> node) {
+    void LlvmCodegenPass::visitBranchInst(Ptr<BranchInst> node) {
         /**
          * Relocate all instructions following the
          * branch instruction onto a new stage of

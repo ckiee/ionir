@@ -27,7 +27,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    class LlvmVisitor : public Pass {
+    class LlvmCodegenPass : public Pass {
     private:
         llvm::LLVMContext *context;
 
@@ -60,9 +60,9 @@ namespace ionir {
         bool restoreBuilder();
 
     public:
-        explicit LlvmVisitor(llvm::Module *module);
+        explicit LlvmCodegenPass(llvm::Module *module);
 
-        ~LlvmVisitor();
+        ~LlvmCodegenPass();
 
         llvm::Module *getModule() const;
 

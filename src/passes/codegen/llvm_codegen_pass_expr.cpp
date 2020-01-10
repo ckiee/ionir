@@ -1,9 +1,9 @@
 #include <llvm/IR/Constant.h>
 #include <ionir/construct/value.h>
-#include <ionir/llvm/codegen/llvm_visitor.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmVisitor::visitBinaryExpr(Ptr<BinaryExpr> node) {
+    void LlvmCodegenPass::visitBinaryExpr(Ptr<BinaryExpr> node) {
         // Ensure builder is instantiated.
         this->requireBuilder();
 
