@@ -32,11 +32,20 @@ A general usage example is provided below.
 #include <ionir/lexical/token.h>
 #include <ionir/misc/iterator.h>
 #include <ionir/misc/helpers.h>
+#include <ionir/misc/static_init.h>
 #include <ionir/construct/construct.h>
 
 using namespace ionir;
 
 int main() {
+    /**
+     * First off, initialize static constants used within the project.
+     * Usage of components which depend on initialized constants while
+     * the initialization process has not occurred will result in a runtime
+     * error.
+     */
+    StaticInit::init();
+
     // Create a lexer instance which will scan & tokenize input IonIR code.
     Lexer lexer = Lexer("module foo { fn main() -> i32 { ret 0; } }");
 
