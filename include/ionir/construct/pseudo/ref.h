@@ -22,7 +22,7 @@ namespace ionir {
         }
 
         void accept(Pass &visitor) override {
-            visitor.visitRef(this->cast<PtrRef<>>());
+            visitor.visitRef(this->cast<Ref<T>>());
         }
 
         std::string getId() const {

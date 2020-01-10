@@ -98,6 +98,8 @@ namespace ionir {
 
         void visitBranchInst(Ptr<BranchInst> node) override;
 
+        void visitCallInst(Ptr<CallInst> node) override;
+
         void visitGlobal(Ptr<Global> node) override;
 
         void visitType(Ptr<Type> node) override;

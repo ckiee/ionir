@@ -10,22 +10,20 @@ namespace ionir {
     class Pass;
 
     struct CallInstOpts : InstOpts {
-        std::string target;
-
-        std::optional<Ptr<Function>> callee = std::nullopt;
+        OptPtrRef<Function> callee = std::nullopt;
     };
 
     class CallInst : public Inst {
     private:
-        std::string target;
+        OptPtrRef<Function> callee;
 
     public:
         explicit CallInst(CallInstOpts opts);
 
         void accept(Pass &visitor) override;
 
-        std::string getTarget() const;
+        OptPtrRef<Function> getCallee() const;
 
-        void setTarget(std::string target);
+        void setCallee(OptPtrRef<Function> callee);
     };
 }

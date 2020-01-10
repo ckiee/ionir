@@ -6,6 +6,7 @@
 
 namespace ionir {
     void LlvmCodegenPass::visitAllocaInst(Ptr<AllocaInst> node) {
+        this->requireBuilder();
         this->visitType(node->getType());
 
         llvm::Type *type = this->typeStack.pop();
@@ -15,13 +16,14 @@ namespace ionir {
          * using the buffered builder.
          */
         llvm::AllocaInst *allocaInst =
-            this->builder->CreateAlloca(type, (llvm::Value *)
-                nullptr, node->getId());
+            this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getId());
 
         this->valueStack.push(allocaInst);
     }
 
     void LlvmCodegenPass::visitReturnInst(Ptr<ReturnInst> node) {
+        this->requireBuilder();
+
         OptPtr<Value> value = node->getValue();
         llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
 
@@ -41,6 +43,8 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitBranchInst(Ptr<BranchInst> node) {
+        this->requireBuilder();
+
         /**
          * Relocate all instructions following the
          * branch instruction onto a new stage of
@@ -90,5 +94,29 @@ namespace ionir {
             this->builder->CreateCondBr(condition, llvmBody, llvmOtherwise.value_or(nullptr));
 
         this->valueStack.push(branchInst);
+    }
+
+    void LlvmCodegenPass::visitCallInst(Ptr<CallInst> node) {
+        this->requireBuilder();
+
+        OptPtrRef<Function> callee = node->getCallee();
+
+        // At this point, callee must have been resolved.
+        if (!callee.has_value()) {
+            // TODO: Use notices.
+            throw std::runtime_error("Unresolved call instruction callee");
+        }
+
+        // Attempt to resolve the callee LLVM-equivalent function.
+        llvm::Function* llvmCallee = this->module->getFunction(callee->get()->getId());
+
+        // LLVM-equivalent function could not be found. Report an error.
+        if (llvmCallee == nullptr) {
+            throw std::runtime_error("Call instruction referenced an undefined function");
+        }
+
+        // TODO: What about arguments?
+        // Otherwise, create the LLVM call instruction.
+        this->builder->CreateCall(llvmCallee);
     }
 }

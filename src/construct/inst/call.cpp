@@ -2,7 +2,7 @@
 
 namespace ionir {
     CallInst::CallInst(CallInstOpts opts)
-        : Inst(opts.parent, InstKind::Call), target(opts.target) {
+        : Inst(opts.parent, InstKind::Call), callee(opts.callee) {
         //
     }
 
@@ -10,11 +10,11 @@ namespace ionir {
         visitor.visitCallInst(this->cast<CallInst>());
     }
 
-    std::string CallInst::getTarget() const {
-        return this->target;
+    OptPtrRef<Function> CallInst::getCallee() const {
+        return this->callee;
     }
 
-    void CallInst::setTarget(std::string target) {
-        this->target = target;
+    void CallInst::setCallee(OptPtrRef<Function> callee) {
+        this->callee = callee;
     }
 }
