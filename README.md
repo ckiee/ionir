@@ -47,7 +47,7 @@ int main() {
     StaticInit::init();
 
     // Create a lexer instance which will scan & tokenize input IonIR code.
-    Lexer lexer = Lexer("module foo { fn main() -> i32 { ret 0; } }");
+    Lexer lexer = Lexer("module foo { fn main() -> i32 { ret [i32] 0; } }");
 
     // Tokenize the input.
     TokenStream stream = lexer.scan();
@@ -84,8 +84,8 @@ int main() {
     /**
      * NameResolutionPass: Will resolve partial constructs
      * which reference other constructs by their identifier(s).
-     * For example, constructs defined later (after its identifier
-     * usage) will be resolved by this pass.
+     * For example, constructs defined later within the code (after
+     * its identifier usage) will be resolved by this pass.
      */
     passManager.registerPass(std::make_shared<NameResolutionPass>());
 
