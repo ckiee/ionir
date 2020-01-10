@@ -12,6 +12,26 @@ Then, you'd want to invoke CMake to automatically build and compile the project:
 $ cmake --build .
 ```
 
+#### IonIR Syntax
+
+Below is a simple IonIR syntax example. For a complete syntax & instruction reference, [see !not yet available!](#).
+
+```c++
+module foo { // Module declaration (encapsulation).
+    fn main(i32 argc) -> i32 { // Function declaration with atomic argument & return type (i32).
+        branch (argc == [i32]0) br_0_body br_0_otherwise; // Branch instruction.
+
+        @br_0_body: { // Label/basic block declaration.
+            ret [i32]1; // Return instruction.
+        }
+
+        @br_0_otherwise: {
+            ret [i32]0;
+        }
+    }
+}
+```
+
 #### Usage
 
 A general usage example is provided below.
@@ -101,7 +121,7 @@ int main() {
      * unreachable code from the resulting, parsed AST. For example, code
      * after a return statement is considered dead since it will never be
      * reached nor executed. Another example would be the removal of unused
-     * variables, methods, classes, among other entities.
+     * variables, methods, classes, among other entities from the AST.
      */
     passManager.registerPass(std::make_shared<DeadCodeEliminationPass>());
 
@@ -111,7 +131,7 @@ int main() {
      * For example, binary operations involving incompatible type operands will
      * result in a type error produced by this pass. Another example would be
      * verifying that return values' types are compatible with the defined return
-     * type of the function.
+     * type of its corresponding parent function.
      */
     passManager.registerPass(std::make_shared<TypeCheckerPass>());
 
@@ -120,7 +140,7 @@ int main() {
      * last after all optimizations and semantic analysis has taken place. This pass
      * will generate LLVM IR from the parsed AST. IonIR is designed in a way to support
      * multiple different targets, with the ability to create new ones simply by creating
-     * and implementing a Pass class. This means that the implementation of other targets
+     * and implementing a Pass class. This means that the implementation of new targets
      * should be a breeze.
      */
     Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>();

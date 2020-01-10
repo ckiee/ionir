@@ -10,7 +10,7 @@ namespace ionir {
      * ensuring that variables, functions, and
      * classes are not re-defined nor shadowed.
      */
-    class ShadowingPass : public Pass {
+    class NameShadowingPass : public Pass {
     public:
         static OptPtr<Type> evaluateExprType(Ptr<Expr> expr);
 
