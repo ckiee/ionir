@@ -84,7 +84,7 @@ namespace ionir {
 
         virtual void accept(Pass &visitor) = 0;
 
-        virtual Ast getChildrenNodes() const;
+        virtual Ast getChildNodes() const;
 
         bool isLeafNode() const;
 

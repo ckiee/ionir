@@ -38,6 +38,6 @@ namespace ionir {
 
         Ptr<ReturnInst> createReturn(OptPtr<Value> value = std::nullopt);
 
-        Ptr<CallInst> createCall(Ptr<Section> section, std::string target, OptPtr<Function> callee = std::nullopt);
+        Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt);
     };
 }

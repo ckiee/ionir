@@ -39,6 +39,8 @@ namespace ionir {
         std::string id;
 
         std::vector<Ptr<Inst>> insts = {};
+
+        PtrSymbolTable<Inst> symbolTable = {};
     };
 
     class Section : public ChildConstruct<Block> {
@@ -56,7 +58,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildrenNodes() const override;
+        Ast getChildNodes() const override;
 
         SectionKind getKind() const;
 

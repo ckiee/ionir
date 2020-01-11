@@ -83,6 +83,7 @@ namespace ionir {
         }
         // Visit otherwise block if applicable.
         else if (otherwiseRef.has_value()) {
+            std::cout << "Branch inst is resolved ... llvm codegen" << std::endl;
             this->visitSection(*otherwiseRef->get()->getValue());
             llvmOtherwise = (llvm::BasicBlock *)this->valueStack.pop();
         }

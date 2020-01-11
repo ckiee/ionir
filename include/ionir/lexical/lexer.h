@@ -22,6 +22,16 @@ namespace ionir {
         std::optional<std::string> capturedValue = std::nullopt;
     };
 
+    struct MatchOpts {
+        Token &token;
+
+        TokenKind tokenKind;
+
+        std::regex regex;
+
+        bool expectCapturedValue = false;
+    };
+
     class Lexer : public Generator<Token> {
     private:
         std::string input;
@@ -45,8 +55,7 @@ namespace ionir {
 
         size_t skip(size_t amount = 1);
 
-        MatchResult
-        matchExpression(Token &token, TokenKind tokenKind, std::regex regex, bool expectCapturedValue = false);
+        MatchResult matchExpression(MatchOpts opts);
 
         void processWhitespace();
 

@@ -37,10 +37,9 @@ namespace ionir {
         });
     }
 
-    Ptr<CallInst> InstBuilder::createCall(Ptr<Section> section, std::string target, OptPtr<Function> callee) {
+    Ptr<CallInst> InstBuilder::createCall(Ptr<Section> section, OptPtrRef<Function> callee) {
         return this->make<CallInst>(CallInstOpts{
             this->section,
-            target,
             callee
         });
     }

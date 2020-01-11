@@ -15,7 +15,7 @@
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
 #include <ionir/construct/pseudo/directive.h>
-#include <ionir/construct/pseudo/ref.h>
+//#include <ionir/construct/pseudo/ref.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/function.h>
 #include <ionir/construct/variable_ref.h>
@@ -34,6 +34,8 @@ namespace ionir {
     class Pass {
     public:
         virtual void visit(Ptr<Construct> node);
+
+        virtual void visitChildren(Ptr<Construct> node);
 
         virtual void visitFunction(Ptr<Function> node);
 

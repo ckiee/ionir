@@ -5,13 +5,13 @@ namespace ionir {
         //
     }
 
-    Ast Construct::getChildrenNodes() const {
+    Ast Construct::getChildNodes() const {
         // By default, construct contains no children.
         return {};
     }
 
     bool Construct::isLeafNode() const {
-        return this->getChildrenNodes().empty();
+        return this->getChildNodes().empty();
     }
 
     ConstructKind Construct::getConstructKind() const {

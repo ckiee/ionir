@@ -1,6 +1,7 @@
 #include <vector>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 #include <ionir/passes/semantic/name_resolution_pass.h>
+#include <ionir/construct/pseudo/ref.h>
 #include <ionir/llvm/llvm_module.h>
 #include <ionir/const/const.h>
 #include <ionir/const/const_name.h>
@@ -100,8 +101,7 @@ TEST(CodeGenTest, VisitAllocaInst) {
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_alloca"));
 }
 
-TEST(CodeGenTest, VisitBranchInst)
-{
+TEST(CodeGenTest, VisitBranchInst) {
     PassManager passManager = PassManager();
 
     passManager.registerPass(std::make_shared<NameResolutionPass>());
@@ -109,21 +109,26 @@ TEST(CodeGenTest, VisitBranchInst)
     Ptr<Section> body = std::make_shared<Section>(SectionOpts{
         nullptr,
         SectionKind::Label,
-        "ifbody"
+        "ifbody",
+        {}
     });
 
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
 
-    std::vector<Ptr<Inst>> insts = {
-        std::make_shared<BranchInst>(BranchInstOpts{
-            nullptr,
-            condition,
-            std::make_shared<Ref<Section>>("ifbody", body)
-        })
-    };
+    // TODO: Use some sort of factory design pattern.
+    auto branchInst = std::make_shared<BranchInst>(BranchInstOpts{
+        nullptr,
+        condition,
+        std::make_shared<Ref<Section>>("ifbody", nullptr)
+    });
+
+    branchInst->getBody()->setOwner(branchInst);
 
     Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
-    Ptr<Function> function = test::bootstrap::emptyFunction(insts);
+
+    Ptr<Function> function = test::bootstrap::emptyFunction({
+        branchInst
+    });
 
     passManager.run({
         function

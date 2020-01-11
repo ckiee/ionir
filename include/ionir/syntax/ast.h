@@ -11,7 +11,7 @@ namespace ionir {
     public:
 
 
-        virtual Ast getChildrenNodes() const = 0;
+        virtual Ast getChildNodes() const = 0;
 
         bool isLeafNode() const;
     };

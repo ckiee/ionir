@@ -3,7 +3,7 @@
 
 namespace ionir {
     Section::Section(SectionOpts opts)
-        : ChildConstruct(opts.parent, ConstructKind::Section), kind(opts.kind), id(opts.id), insts(opts.insts) {
+        : ChildConstruct(opts.parent, ConstructKind::Section), kind(opts.kind), id(opts.id), insts(opts.insts), symbolTable(opts.symbolTable) {
         //
     }
 
@@ -11,7 +11,7 @@ namespace ionir {
         visitor.visitSection(this->cast<Section>());
     }
 
-    Ast Section::getChildrenNodes() const {
+    Ast Section::getChildNodes() const {
         return Construct::convertChildren(this->insts);
     }
 

@@ -3,11 +3,13 @@
 #include <optional>
 #include <string>
 #include <ionir/construct/construct.h>
-#include <ionir/passes/pass.h>
 
 namespace ionir {
+    // TODO: What if 'pass.h' is never included?
+    class Pass;
+
     template<typename T = Construct>
-    class Ref : Construct {
+    class Ref : public Construct {
     private:
         std::string id;
 
@@ -22,7 +24,8 @@ namespace ionir {
         }
 
         void accept(Pass &visitor) override {
-            visitor.visitRef(this->cast<Ref<T>>());
+            // TODO: CRITICAL: Fix 'incomplete type' problem.
+            // visitor.visitRef(this->cast<Ref<T>>());
         }
 
         std::string getId() const {

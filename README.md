@@ -140,8 +140,8 @@ int main() {
      * last after all optimizations and semantic analysis has taken place. This pass
      * will generate LLVM IR from the parsed AST. IonIR is designed in a way to support
      * multiple different targets, with the ability to create new ones simply by creating
-     * and implementing a Pass class. This means that the implementation of new targets
-     * should be a breeze.
+     * and implementing a Pass class. This, in turn, makes the implementation of new targets
+     * a breeze.
      */
     Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>();
 

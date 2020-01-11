@@ -10,6 +10,18 @@ namespace ionir {
         visitor.visitBranchInst(this->cast<BranchInst>());
     }
 
+    Ast BranchInst::getChildNodes() const {
+        Ast children = {
+            this->body
+        };
+
+        if (this->otherwise.has_value()) {
+            children.push_back(*this->otherwise);
+        }
+
+        return children;
+    }
+
     Ptr<Expr> BranchInst::getCondition() const {
         return this->condition;
     }

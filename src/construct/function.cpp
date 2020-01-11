@@ -10,7 +10,7 @@ namespace ionir {
         visitor.visitFunction(this->cast<Function>());
     }
 
-    Ast Function::getChildrenNodes() const {
+    Ast Function::getChildNodes() const {
         return {
             this->prototype->nativeCast(),
             this->body->nativeCast()

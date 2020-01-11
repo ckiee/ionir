@@ -23,9 +23,13 @@ namespace ionir {
                 if (sectionSymbolTable.contains(id)) {
                     node->resolve(sectionSymbolTable[id]);
 
+                    std::cout << "Reference found and resolved" << std::endl;
+
                     return;
                 }
                 // TODO: Check globals.
+
+                std::cout << "Does not contain" << std::endl;
 
                 // Otherwise, report an undefined reference error.
                 // TODO: Create NoticeContext using some sort of factory, for now throw error.

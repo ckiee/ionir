@@ -2,14 +2,28 @@
 
 namespace ionir {
     void Pass::visit(Ptr<Construct> node) {
+        std::cout << "Visiting node ..." << (int)node->getConstructKind() << std::endl;
+
         node->accept(*this);
 
+        // TODO: Temporary fix for circular dep.
+        if (node->getConstructKind() == ConstructKind::Reference) {
+            this->visitRef(node->cast<Ref<>>());
+
+            // No need to visit children for this node.
+            return;
+        }
+
+        this->visitChildren(node);
+    }
+
+    void Pass::visitChildren(Ptr<Construct> node) {
         // TODO: Will it cause StackOverflow error with large ASTs?
         /**
          * After visiting the node, attempt to
          * visit all its children as well.
          */
-        for (const auto child : node->getChildrenNodes()) {
+        for (const auto child : node->getChildNodes()) {
             // TODO: CRITICAL: What if 'child' (AstNode) is not boxed under Construct?
             this->visit(std::static_pointer_cast<Construct>(child));
         }

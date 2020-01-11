@@ -41,7 +41,7 @@ namespace ionir {
         return this->setIndex(this->index + amount);
     }
 
-    MatchResult Lexer::matchExpression(Token &token, TokenKind tokenKind, std::regex regex, bool expectCapturedValue) {
+    MatchResult Lexer::matchExpression(MatchOpts opts) {
         MatchResult result = {
             false
         };
@@ -51,13 +51,13 @@ namespace ionir {
         std::smatch match;
 
         // If successful, return a new token with different value and kind.
-        if (std::regex_search(input, match, regex)) {
+        if (std::regex_search(input, match, opts.regex)) {
             // If applicable, match should contain both matched value (at index 0) and a captured value (at index 1).
-            if (expectCapturedValue && match.size() < 2) {
+            if (opts.expectCapturedValue && match.size() < 2) {
                 throw std::runtime_error("Successful regex match may not contain a captured value");
             }
 
-            int index = expectCapturedValue ? IONIR_MATCH_INDEX_CAPTURED : IONIR_MATCH_INDEX_MATCHED;
+            int index = opts.expectCapturedValue ? IONIR_MATCH_INDEX_CAPTURED : IONIR_MATCH_INDEX_MATCHED;
 
             // Extract the matched or captured value from the match.
             std::string value = match[index];
@@ -67,12 +67,12 @@ namespace ionir {
             result.matchedValue = match[IONIR_MATCH_INDEX_MATCHED];
 
             // Set the result's captured value property if applicable.
-            if (expectCapturedValue) {
+            if (opts.expectCapturedValue) {
                 result.capturedValue = match[IONIR_MATCH_INDEX_CAPTURED];
             }
 
             // Modify the input token (since it was passed by reference).
-            token = Token(tokenKind, value, token.getStartPosition());
+            opts.token = Token(opts.tokenKind, value, opts.token.getStartPosition());
 
             // Skip the matched value's length (never the captured one).
             this->skip(result.matchedValue->length());
@@ -162,7 +162,11 @@ namespace ionir {
                     regex = std::regex(pair.first + "(?:\\s|$)");
                 }
 
-                MatchResult matchResult = this->matchExpression(token, pair.second, regex);
+                MatchResult matchResult = this->matchExpression(MatchOpts{
+                    token,
+                    pair.second,
+                    regex
+                });
 
                 if (matchResult.success) {
                     // Reduce the position.
@@ -180,7 +184,12 @@ namespace ionir {
 
         // No simple was matched, proceed to test complex.
         for (const auto pair : this->complexIds) {
-            MatchResult matchResult = this->matchExpression(token, pair.second, pair.first, true);
+            MatchResult matchResult = this->matchExpression(MatchOpts{
+                token,
+                pair.second,
+                pair.first,
+                true
+            });
 
             // If it matches, return the Token (already modified by the matchExpression function).
             if (matchResult.success) {

@@ -10,7 +10,7 @@ namespace ionir {
         visitor.visitModule(this->cast<Module>());
     }
 
-    Ast Module::getChildrenNodes() const {
+    Ast Module::getChildNodes() const {
         return Construct::convertChildren(this->constructs);
     }
 
