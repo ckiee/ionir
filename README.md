@@ -19,7 +19,9 @@ Below is a simple IonIR syntax example. For a complete syntax & instruction refe
 ```c++
 module foo { // Module declaration (encapsulation).
     fn main(i32 argc) -> i32 { // Function declaration with atomic argument & return type (i32).
-        branch (argc == [i32]0) br_0_body br_0_otherwise; // Branch instruction.
+        alloca i1 cond // Allocate comparison boolean to be used in branch instruction.
+        compare argc [i32]0 cond // Compare equality of 'argc' and 0.
+        branch cond br_0_body br_0_otherwise; // Branch depending on the result of the comparison.
 
         @br_0_body: { // Label/basic block declaration.
             ret [i32]1; // Return instruction.
