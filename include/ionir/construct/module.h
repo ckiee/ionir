@@ -2,21 +2,19 @@
 
 #include <string>
 #include <ionir/misc/helpers.h>
-#include <ionir/tracking/symbol_table.h>
+#include <ionir/tracking/scope_anchor.h>
 #include "type.h"
 #include "construct.h"
 
 namespace ionir {
     class Pass;
 
-    class Module : public Construct {
+    class Module : public Construct, public ScopeAnchor<> {
     private:
         std::string id;
 
-        PtrSymbolTable <Construct> constructs;
-
     public:
-        explicit Module(std::string id, PtrSymbolTable <Construct> constructs = {});
+        explicit Module(std::string id);
 
         void accept(Pass &visitor) override;
 
@@ -25,9 +23,5 @@ namespace ionir {
         std::string getId() const;
 
         void setId(std::string id);
-
-        PtrSymbolTable<Construct> getConstructs() const;
-
-        void setConstructs(PtrSymbolTable<Construct> constructs);
     };
 }

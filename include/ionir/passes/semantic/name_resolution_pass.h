@@ -4,6 +4,7 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
 #include <ionir/reporting/notice.h>
+#include <ionir/tracking/scope.h>
 
 namespace ionir {
     /**
@@ -14,11 +15,19 @@ namespace ionir {
     private:
         Ptr<StackTrace> stackTrace;
 
+        ScopeStack scopeStack;
+
     public:
         NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
+
+        void visitModule(Ptr<Module> node) override {
+            this->scopeStack.push_back(node->getSymbolTable());
+        }
 
         void visitRef(PtrRef<> node) override;
 
         Ptr<StackTrace> getStackTrace() const;
+
+        const ScopeStack &getScopeStack() const;
     };
 }

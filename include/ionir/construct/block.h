@@ -4,6 +4,7 @@
 #include <vector>
 #include <functional>
 #include <ionir/misc/helpers.h>
+#include <ionir/tracking/scope_anchor.h>
 #include "child_construct.h"
 #include "section.h"
 
@@ -12,10 +13,8 @@ namespace ionir {
 
     class Function;
 
-    class Block : public ChildConstruct<Function> {
+    class Block : public ChildConstruct<Function>, ScopeAnchor<Section> {
     private:
-        std::vector<Ptr<Section>> sections;
-
         std::optional<Ptr<Section>> cachedEntry;
 
     public:
@@ -28,9 +27,5 @@ namespace ionir {
         bool verify() const override;
 
         std::optional<Ptr<Section>> getEntrySection();
-
-        std::vector<Ptr<Section>> getSections() const;
-
-        void setSections(std::vector<Ptr<Section>> sections);
     };
 }

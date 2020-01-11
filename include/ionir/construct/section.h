@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <ionir/misc/helpers.h>
+#include <ionir/tracking/scope_anchor.h>
 #include "pseudo/args.h"
 #include "inst.h"
 #include "child_construct.h"
@@ -43,15 +44,11 @@ namespace ionir {
         PtrSymbolTable<Inst> symbolTable = {};
     };
 
-    class Section : public ChildConstruct<Block> {
+    class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst> {
     private:
         SectionKind kind;
 
         std::string id;
-
-        std::vector<Ptr<Inst>> insts;
-
-        PtrSymbolTable<Inst> symbolTable;
 
     public:
         explicit Section(SectionOpts opts);
@@ -66,10 +63,6 @@ namespace ionir {
 
         void setId(const std::string id);
 
-        std::vector<Ptr<Inst>> getInsts() const;
-
-        void setInsts(std::vector<Ptr<Inst>> insts);
-
         uint32_t relocateInsts(Section &target, uint32_t from = 0);
 
         /**
@@ -78,9 +71,5 @@ namespace ionir {
          * not found.
          */
         std::optional<uint32_t> locate(Ptr<Inst> inst) const;
-
-        PtrSymbolTable<Inst> getSymbolTable() const;
-
-        void setSymbolTable(PtrSymbolTable<Inst> symbolTable);
     };
 }

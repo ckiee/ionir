@@ -1,7 +1,7 @@
 #include <ionir/passes/semantic/name_resolution_pass.h>
 
 namespace ionir {
-    NameResolutionPass::NameResolutionPass(Ptr<StackTrace> stackTrace) : stackTrace(stackTrace) {
+    NameResolutionPass::NameResolutionPass(Ptr<StackTrace> stackTrace) : stackTrace(stackTrace), scopeStack({}) {
         //
     }
 
@@ -42,5 +42,9 @@ namespace ionir {
 
     Ptr<StackTrace> NameResolutionPass::getStackTrace() const {
         return this->stackTrace;
+    }
+
+    const ScopeStack &NameResolutionPass::getScopeStack() const {
+        return this->scopeStack;
     }
 }

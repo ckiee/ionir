@@ -1,8 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Module::Module(std::string id, PtrSymbolTable<Construct> constructs)
-        : Construct(ConstructKind::Module), id(id), constructs(constructs) {
+    Module::Module(std::string id)
+        : Construct(ConstructKind::Module), id(id) {
         //
     }
 
@@ -11,7 +11,7 @@ namespace ionir {
     }
 
     Ast Module::getChildNodes() const {
-        return Construct::convertChildren(this->constructs);
+        return Construct::convertChildren(this->getSymbolTable());
     }
 
     std::string Module::getId() const {
@@ -20,13 +20,5 @@ namespace ionir {
 
     void Module::setId(std::string id) {
         this->id = id;
-    }
-
-    PtrSymbolTable<Construct> Module::getConstructs() const {
-        return this->constructs;
-    }
-
-    void Module::setConstructs(PtrSymbolTable<Construct> constructs) {
-        this->constructs = constructs;
     }
 }

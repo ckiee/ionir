@@ -117,7 +117,7 @@ TEST(CodeGenTest, VisitBranchInst) {
 
     // TODO: Use some sort of factory design pattern.
     auto branchInst = std::make_shared<BranchInst>(BranchInstOpts{
-        nullptr,
+        body,
         condition,
         std::make_shared<Ref<Section>>("ifbody", nullptr)
     });

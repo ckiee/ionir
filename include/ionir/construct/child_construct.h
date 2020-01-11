@@ -9,7 +9,7 @@ namespace ionir {
         Ptr<T> parent;
     };
 
-    template<class T>
+    template<class T = Construct>
     class ChildConstruct : public Construct {
     private:
         Ptr<T> parent;
