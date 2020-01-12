@@ -41,9 +41,19 @@ TEST(CodeGenTest, VisitEmptyFunction) {
         "entry"
     });
 
-    std::map<std::string, Ptr<Section>> sectionsMap = {
+    // TODO: Fix mumbo-jumbo debugging code.
+    // --------------------------
+
+    typedef PtrSymbolTable<Section> t;
+    typedef SymbolTable<Ptr<Section>> tt;
+
+    auto sectionsVal = std::map<std::string, Ptr<Section>>{
         {"entry", section}
     };
+
+    t sectionsMap = std::make_shared<tt>(tt{});
+
+    // ---------------------------
 
     body->setSymbolTable(sectionsMap);
 

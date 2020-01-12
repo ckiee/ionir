@@ -43,13 +43,18 @@ namespace ionir::test::bootstrap {
             insts,
         });
 
-        std::map<std::string, Ptr<Section>> symbolTableEntry = {
+        // TODO: Fix mumbo-jumbo debugging code. -------------
+
+        typedef PtrSymbolTable<Section> t;
+        typedef SymbolTable<Ptr<Section>> tt;
+
+        auto t1 = std::map<std::string, Ptr<Section>>{
             {entrySection->getId(), entrySection}
         };
 
-        PtrSymbolTable<Section> sections = {
-            symbolTableEntry
-        };
+        t sections = std::make_shared<tt>(tt{});
+
+        // --------------------
 
         Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);
         Ptr<Block> body = std::make_shared<Block>(function, sections);

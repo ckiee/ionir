@@ -12,7 +12,8 @@ namespace ionir {
     }
 
     Ast Block::getChildNodes() const {
-        return Construct::convertChildren(this->getSymbolTable());
+        // TODO: De-referencing symbol table, so it's copying and it won't link back? Review.
+        return Construct::convertChildren(*this->getSymbolTable());
     }
 
     bool Block::verify() const {
@@ -22,7 +23,7 @@ namespace ionir {
          * Loop through all sections to determine
          * whether multiple entry sections exist.
          */
-        for (const auto &[key, section] : this->getSymbolTable().unwrap()) {
+        for (const auto &[key, section] : this->getSymbolTable()->unwrap()) {
             if (section->getKind() == SectionKind::Entry) {
                 // Multiple entry sections exist.
                 if (entryFound) {
@@ -50,7 +51,7 @@ namespace ionir {
             return *this->cachedEntry;
         }
 
-        for (const auto &[key, section] : this->getSymbolTable().unwrap()) {
+        for (const auto &[key, section] : this->getSymbolTable()->unwrap()) {
             if (section->getKind() == SectionKind::Entry) {
                 // Save the result for faster subsequent access.
                 this->cachedEntry = section;

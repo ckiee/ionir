@@ -94,7 +94,7 @@ TEST(ParserTest, ParseEmptyBlock) {
     auto block = parser.parseBlock(nullptr);
 
     EXPECT_TRUE(block.has_value());
-    EXPECT_TRUE(block->get()->getSymbolTable().isEmpty());
+    EXPECT_TRUE(block->get()->getSymbolTable()->isEmpty());
 }
 
 TEST(ParserTest, ParseEmptyPrototype) {

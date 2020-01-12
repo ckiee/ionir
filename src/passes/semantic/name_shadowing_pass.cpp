@@ -17,7 +17,7 @@ namespace ionir {
                 std::string name = argEntry.first;
 
                 // Shadowing function parameter.
-                if (function->getLocalVariables().contains(name)) {
+                if (function->getLocalVariables()->contains(name)) {
                     throw std::runtime_error(
                         "SemanticError: Function parameter being shadowed by local variable '" + name + "'"
                     );

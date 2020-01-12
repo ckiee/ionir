@@ -113,7 +113,7 @@ namespace ionir {
         }
 
         // Visit all the block's section(s).
-        for (const auto &[key, section] : node->getSymbolTable().unwrap()) {
+        for (const auto &[key, section] : node->getSymbolTable()->unwrap()) {
             this->visitSection(section);
             this->valueStack.pop();
         }

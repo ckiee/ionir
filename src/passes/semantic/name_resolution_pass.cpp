@@ -20,8 +20,8 @@ namespace ionir {
                 PtrSymbolTable<Inst> sectionSymbolTable = inst->getParent()->getSymbolTable();
 
                 // The section's symbol table contains the referenced entity.
-                if (sectionSymbolTable.contains(id)) {
-                    node->resolve(sectionSymbolTable[id]);
+                if (sectionSymbolTable->contains(id)) {
+                    node->resolve((*sectionSymbolTable)[id]);
 
                     std::cout << "Reference found and resolved" << std::endl;
 

@@ -182,7 +182,7 @@ namespace ionir {
             if (inst->get()->getInstKind() == InstKind::Alloca) {
                 Ptr<AllocaInst> allocaInst = inst->get()->cast<AllocaInst>();
 
-                symbolTable[allocaInst->getId()] = allocaInst;
+                (*symbolTable)[allocaInst->getId()] = allocaInst;
             }
         }
 
@@ -199,11 +199,11 @@ namespace ionir {
         PtrSymbolTable<Section> sections = {};
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            std::optional<Ptr<Section>> section = this->parseSection(block);
+            OptPtr<Section> section = this->parseSection(block);
 
             IONIR_PARSER_ASSURE(section)
 
-            sections[section->get()->getId()] = *section;
+            (*sections)[section->get()->getId()] = *section;
         }
 
         block->setSymbolTable(sections);
@@ -238,7 +238,7 @@ namespace ionir {
                 }
 
                 // TODO: Ensure we're not re-defining something, issue a notice otherwise.
-                symbolTable[*name] = *topLevelConstruct;
+                (*symbolTable)[*name] = *topLevelConstruct;
             }
 
             // No more tokens to process.

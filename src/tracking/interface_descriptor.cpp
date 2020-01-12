@@ -34,8 +34,8 @@ namespace ionir {
     }
 
     std::optional<Ptr<FieldDescriptor>> InterfaceDescriptor::findField(std::string name) {
-        if (this->fields.contains(name)) {
-            return this->fields[name];
+        if (this->fields->contains(name)) {
+            return (*this->fields)[name];
         }
 
         for (const auto &interface : this->interfaces) {

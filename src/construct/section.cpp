@@ -12,7 +12,8 @@ namespace ionir {
     }
 
     Ast Section::getChildNodes() const {
-        return Construct::convertChildren(this->getSymbolTable());
+        // TODO: De-referencing symbol table, so it's copying and it won't link back? Review.
+        return Construct::convertChildren(*this->getSymbolTable());
     }
 
     SectionKind Section::getKind() const {
