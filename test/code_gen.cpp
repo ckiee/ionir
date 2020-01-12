@@ -48,10 +48,10 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     typedef SymbolTable<Ptr<Section>> tt;
 
     auto sectionsVal = std::map<std::string, Ptr<Section>>{
-        {"entry", section}
+        {Const::sectionEntryId, section}
     };
 
-    t sectionsMap = std::make_shared<tt>(tt{});
+    t sectionsMap = std::make_shared<tt>(sectionsVal);
 
     // ---------------------------
 

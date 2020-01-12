@@ -14,9 +14,6 @@ namespace ionir {
     class Function;
 
     class Block : public ChildConstruct<Function>, public ScopeAnchor<Section> {
-    private:
-        OptPtr<Section> cachedEntry;
-
     public:
         explicit Block(Ptr<Function> parent, PtrSymbolTable<Section> symbolTable = {});
 
@@ -26,6 +23,6 @@ namespace ionir {
 
         bool verify() const override;
 
-        std::optional<Ptr<Section>> getEntrySection();
+        OptPtr<Section> getEntrySection();
     };
 }

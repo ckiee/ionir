@@ -100,7 +100,7 @@ namespace ionir {
          * Retrieve the entry section from the block.
          * At this point, it should be guaranteed to be set.
          */
-        std::optional<Ptr<Section>> entry = node->getEntrySection();
+        OptPtr<Section> entry = node->getEntrySection();
 
         /**
          * Entry section must be set. Redundant check,

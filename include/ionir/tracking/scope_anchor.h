@@ -15,11 +15,11 @@ namespace ionir {
             //
         }
 
-        PtrSymbolTable<T> getSymbolTable() const {
+        virtual PtrSymbolTable<T> getSymbolTable() const {
             return this->symbolTable;
         }
 
-        void setSymbolTable(PtrSymbolTable<T> symbolTable) {
+        virtual void setSymbolTable(PtrSymbolTable<T> symbolTable) {
             this->symbolTable = symbolTable;
         }
     };

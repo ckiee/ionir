@@ -1,9 +1,10 @@
 #include <ionir/construct/function.h>
 #include <ionir/passes/pass.h>
+#include <ionir/const/const.h>
 
 namespace ionir {
     Block::Block(Ptr<Function> parent, PtrSymbolTable<Section> symbolTable)
-        : ChildConstruct(parent, ConstructKind::Block), ScopeAnchor<Section>(symbolTable), cachedEntry(std::nullopt) {
+        : ChildConstruct(parent, ConstructKind::Block), ScopeAnchor<Section>(symbolTable) {
         //
     }
 
@@ -42,25 +43,7 @@ namespace ionir {
         return true;
     }
 
-    std::optional<Ptr<Section>> Block::getEntrySection() {
-        /**
-         * Entry section has already been previously
-         * found, return the cached value.
-         */
-        if (this->cachedEntry.has_value()) {
-            return *this->cachedEntry;
-        }
-
-        for (const auto &[key, section] : this->getSymbolTable()->unwrap()) {
-            if (section->getKind() == SectionKind::Entry) {
-                // Save the result for faster subsequent access.
-                this->cachedEntry = section;
-
-                return this->cachedEntry;
-            }
-        }
-
-        // Entry section was neither cached nor found.
-        return std::nullopt;
+    OptPtr<Section> Block::getEntrySection() {
+        return this->getSymbolTable()->lookup(Const::sectionEntryId);
     }
 }
