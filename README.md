@@ -259,6 +259,14 @@ For additional information on building LLVM with CMake, [view the LLVM docs on b
 
 Please refer to [this link](http://apt.llvm.org/) for instructions on installing LLVM on Linux systems. It is recommended to use the automatic installation script provided there.
 
+### Installing LLVM (macOS)
+
+Simply [Homebrew](https://brew.sh/) to install LLVM:
+
+```
+$ brew install llvm@9
+```
+
 #### LLVM notes
 
 If CMake is having a hard time finding your LLVM installation, try setting the `LLVM_DIR` environment variable to the root folder of the installation. Example: If you build LLVM from source and have it located on your Downloads folder.

@@ -13,12 +13,12 @@ namespace ionir {
 
     class Function;
 
-    class Block : public ChildConstruct<Function>, ScopeAnchor<Section> {
+    class Block : public ChildConstruct<Function>, public ScopeAnchor<Section> {
     private:
-        std::optional<Ptr<Section>> cachedEntry;
+        OptPtr<Section> cachedEntry;
 
     public:
-        explicit Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections = {});
+        explicit Block(Ptr<Function> parent, PtrSymbolTable<Section> symbolTable = {});
 
         void accept(Pass &visitor) override;
 

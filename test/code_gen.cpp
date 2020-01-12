@@ -35,15 +35,17 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 
     Ptr<Block> body = std::make_shared<Block>(nullptr);
 
-    std::vector<Ptr<Section>> sections = {
-        std::make_shared<Section>(SectionOpts{
-            body,
-            SectionKind::Entry,
-            Const::sectionEntryId
-        })
+    Ptr<Section> section = std::make_shared<Section>(SectionOpts{
+        body,
+        SectionKind::Entry,
+        "entry"
+    });
+
+    std::map<std::string, Ptr<Section>> sectionsMap = {
+        {"entry", section}
     };
 
-    body->setSections(sections);
+    body->setSymbolTable(sectionsMap);
 
     Ptr<Function> function = std::make_shared<Function>(prototype, body);
 

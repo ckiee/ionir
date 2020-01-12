@@ -26,11 +26,11 @@ namespace ionir {
             return true;
         }
 
-        bool contains(T item) {
+        bool contains(T item) const {
             return this->value.find(item) != this->value.end();
         }
 
-        size_t size() {
+        size_t size() const {
             return this->value.size();
         }
 

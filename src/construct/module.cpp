@@ -1,8 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Module::Module(std::string id)
-        : Construct(ConstructKind::Module), id(id) {
+    Module::Module(std::string id, PtrSymbolTable<Construct> symbolTable)
+        : Construct(ConstructKind::Module), ScopeAnchor<>(symbolTable), id(id) {
         //
     }
 

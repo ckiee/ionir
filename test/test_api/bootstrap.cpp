@@ -43,8 +43,12 @@ namespace ionir::test::bootstrap {
             insts,
         });
 
-        std::vector<Ptr<Section>> sections = {
-            entrySection,
+        std::map<std::string, Ptr<Section>> symbolTableEntry = {
+            {entrySection->getId(), entrySection}
+        };
+
+        PtrSymbolTable<Section> sections = {
+            symbolTableEntry
         };
 
         Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);

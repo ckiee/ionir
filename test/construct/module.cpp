@@ -20,5 +20,5 @@ TEST(ModuleConstructTest, ParseEmpty) {
     Ptr<Module> moduleValue = *module;
 
     EXPECT_EQ(moduleValue->getId(), test::constant::foobar);
-    EXPECT_TRUE(moduleValue->getConstructs().isEmpty());
+    EXPECT_TRUE(moduleValue->getSymbolTable().isEmpty());
 }

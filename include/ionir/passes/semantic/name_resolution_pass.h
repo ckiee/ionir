@@ -21,7 +21,7 @@ namespace ionir {
         NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
 
         void visitModule(Ptr<Module> node) override {
-            this->scopeStack.push_back(node->getSymbolTable());
+            this->scopeStack.push(node->getSymbolTable());
         }
 
         void visitRef(PtrRef<> node) override;

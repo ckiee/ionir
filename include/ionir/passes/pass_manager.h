@@ -50,6 +50,9 @@ namespace ionir {
 
         void registerPass(Ptr<Pass> pass);
 
+        template<typename T>
+        void registerPass();
+
         void run(const Ast &ast);
     };
 }

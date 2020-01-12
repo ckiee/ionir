@@ -196,17 +196,17 @@ namespace ionir {
         this->skipOver(TokenKind::SymbolBraceL);
 
         Ptr<Block> block = std::make_shared<Block>(parent);
-        std::vector<Ptr<Section>> sections = {};
+        PtrSymbolTable<Section> sections = {};
 
         while (!this->is(TokenKind::SymbolBraceR)) {
             std::optional<Ptr<Section>> section = this->parseSection(block);
 
             IONIR_PARSER_ASSURE(section)
 
-            sections.push_back(*section);
+            sections[section->get()->getId()] = *section;
         }
 
-        block->setSections(sections);
+        block->setSymbolTable(sections);
 
         // Skip over right brace token.
         this->stream.skip();
@@ -223,7 +223,7 @@ namespace ionir {
 
         this->skipOver(TokenKind::SymbolBraceL);
 
-        PtrSymbolTable<Construct> constructs = {};
+        PtrSymbolTable<Construct> symbolTable = {};
 
         while (!this->is(TokenKind::SymbolBraceR)) {
             std::cout << "Iteration .. " << this->stream.get().getKind() << std::endl;
@@ -238,7 +238,7 @@ namespace ionir {
                 }
 
                 // TODO: Ensure we're not re-defining something, issue a notice otherwise.
-                constructs[*name] = *topLevelConstruct;
+                symbolTable[*name] = *topLevelConstruct;
             }
 
             // No more tokens to process.
@@ -249,7 +249,7 @@ namespace ionir {
 
         this->skipOver(TokenKind::SymbolBraceR);
 
-        return std::make_shared<Module>(*id, constructs);
+        return std::make_shared<Module>(*id, symbolTable);
     }
 
     std::optional<std::string> Parser::parseLine() {

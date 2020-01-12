@@ -6,5 +6,5 @@
 #include <ionir/construct/construct.h>
 
 namespace ionir {
-    typedef std::vector<Stack<SymbolTable<Construct>>> ScopeStack;
+    typedef Stack<PtrSymbolTable<Construct>> ScopeStack;
 }

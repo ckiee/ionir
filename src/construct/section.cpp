@@ -3,7 +3,7 @@
 
 namespace ionir {
     Section::Section(SectionOpts opts)
-        : ChildConstruct(opts.parent, ConstructKind::Section), kind(opts.kind), id(opts.id), insts(opts.insts), symbolTable(opts.symbolTable) {
+        : ChildConstruct(opts.parent, ConstructKind::Section), ScopeAnchor<Inst>(), kind(opts.kind), id(opts.id), insts(opts.insts) {
         //
     }
 
@@ -12,7 +12,7 @@ namespace ionir {
     }
 
     Ast Section::getChildNodes() const {
-        return Construct::convertChildren(this->insts);
+        return Construct::convertChildren(this->getSymbolTable());
     }
 
     SectionKind Section::getKind() const {
@@ -31,7 +31,7 @@ namespace ionir {
         return this->insts;
     }
 
-    void Section::setInsts(const std::vector<Ptr<Inst>> insts) {
+    void Section::setInsts(std::vector<Ptr<Inst>> insts) {
         this->insts = insts;
     }
 
@@ -49,13 +49,5 @@ namespace ionir {
 
     std::optional<uint32_t> Section::locate(Ptr<Inst> inst) const {
         return Util::locateInVector<Ptr<Inst>>(this->insts, inst);
-    }
-
-    PtrSymbolTable<Inst> Section::getSymbolTable() const {
-        return this->symbolTable;
-    }
-
-    void Section::setSymbolTable(PtrSymbolTable<Inst> symbolTable) {
-        this->symbolTable = symbolTable;
     }
 }

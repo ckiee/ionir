@@ -19,19 +19,19 @@ namespace ionir {
         /**
          * The entry section of a block.
          */
-            Entry,
+        Entry,
 
         /**
          * A section defined by the user. Can be jumped to
          * using a goto instruction.
          */
-            Label,
+        Label,
 
         /**
          * A section which forms part of a construct. Cannot be
          * directly accessed by the user.
          */
-            Internal
+        Internal
     };
 
     struct SectionOpts : ChildConstructOpts<Block> {
@@ -40,8 +40,6 @@ namespace ionir {
         std::string id;
 
         std::vector<Ptr<Inst>> insts = {};
-
-        PtrSymbolTable<Inst> symbolTable = {};
     };
 
     class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst> {
@@ -49,6 +47,8 @@ namespace ionir {
         SectionKind kind;
 
         std::string id;
+
+        std::vector<Ptr<Inst>> insts;
 
     public:
         explicit Section(SectionOpts opts);
@@ -62,6 +62,10 @@ namespace ionir {
         std::string getId() const;
 
         void setId(const std::string id);
+
+        std::vector<Ptr<Inst>> getInsts() const;
+
+        void setInsts(std::vector<Ptr<Inst>> insts);
 
         uint32_t relocateInsts(Section &target, uint32_t from = 0);
 

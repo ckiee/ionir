@@ -2,8 +2,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Block::Block(Ptr<Function> parent, std::vector<Ptr<Section>> sections)
-        : ChildConstruct(parent, ConstructKind::Block), sections(sections), cachedEntry(std::nullopt) {
+    Block::Block(Ptr<Function> parent, PtrSymbolTable<Section> symbolTable)
+        : ChildConstruct(parent, ConstructKind::Block), ScopeAnchor<Section>(symbolTable), cachedEntry(std::nullopt) {
         //
     }
 
@@ -12,7 +12,7 @@ namespace ionir {
     }
 
     Ast Block::getChildNodes() const {
-        return Construct::convertChildren<Section>(this->sections);
+        return Construct::convertChildren(this->getSymbolTable());
     }
 
     bool Block::verify() const {
@@ -22,7 +22,7 @@ namespace ionir {
          * Loop through all sections to determine
          * whether multiple entry sections exist.
          */
-        for (const auto section : this->sections) {
+        for (const auto &[key, section] : this->getSymbolTable().unwrap()) {
             if (section->getKind() == SectionKind::Entry) {
                 // Multiple entry sections exist.
                 if (entryFound) {
@@ -50,7 +50,7 @@ namespace ionir {
             return *this->cachedEntry;
         }
 
-        for (auto section : this->sections) {
+        for (const auto &[key, section] : this->getSymbolTable().unwrap()) {
             if (section->getKind() == SectionKind::Entry) {
                 // Save the result for faster subsequent access.
                 this->cachedEntry = section;
@@ -61,13 +61,5 @@ namespace ionir {
 
         // Entry section was neither cached nor found.
         return std::nullopt;
-    }
-
-    std::vector<Ptr<Section>> Block::getSections() const {
-        return this->sections;
-    }
-
-    void Block::setSections(std::vector<Ptr<Section>> sections) {
-        this->sections = sections;
     }
 }

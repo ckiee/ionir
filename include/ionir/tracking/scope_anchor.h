@@ -4,6 +4,7 @@
 #include <ionir/tracking/symbol_table.h>
 
 namespace ionir {
+    // TODO: Implement concepts to ensure T is or derives of Construct.
     template<typename T = Construct>
     class ScopeAnchor {
     private:
@@ -14,9 +15,11 @@ namespace ionir {
             //
         }
 
-        virtual PtrSymbolTable<T> getSymbolTable() const = 0;
+        virtual PtrSymbolTable<T> getSymbolTable() const {
+            return this->symbolTable;
+        }
 
-        void setSymbolTable(PtrSymbolTable<T> symbolTable) {
+        virtual void setSymbolTable(PtrSymbolTable<T> symbolTable) {
             this->symbolTable = symbolTable;
         }
     };
