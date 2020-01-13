@@ -18,29 +18,7 @@ namespace ionir {
     }
 
     bool Block::verify() const {
-        bool entryFound = false;
-
-        /**
-         * Loop through all sections to determine
-         * whether multiple entry sections exist.
-         */
-        for (const auto &[key, section] : this->getSymbolTable()->unwrap()) {
-            if (section->getKind() == SectionKind::Entry) {
-                // Multiple entry sections exist.
-                if (entryFound) {
-                    return false;
-                }
-
-                // Raise the flag.
-                entryFound = true;
-            }
-                // A section failed to verify.
-            else if (!section->verify()) {
-                return false;
-            }
-        }
-
-        return true;
+        return this->getSymbolTable()->contains(Const::sectionEntryId);
     }
 
     OptPtr<Section> Block::getEntrySection() {

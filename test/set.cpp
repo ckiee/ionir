@@ -19,7 +19,7 @@ TEST(SetContainerTest, Initialize) {
 
 TEST(SetContainerTest, Insert) {
     Set<std::string> set = Set<std::string>();
-    std::set<std::string> underlyingSet = set.unwrap();
+    std::set<std::string> &underlyingSet = set.unwrap();
 
     EXPECT_EQ(underlyingSet.size(), 0);
     EXPECT_TRUE(set.insert(test::constant::foobar));

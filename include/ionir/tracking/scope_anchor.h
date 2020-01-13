@@ -11,7 +11,7 @@ namespace ionir {
         PtrSymbolTable<T> symbolTable;
 
     public:
-        ScopeAnchor(PtrSymbolTable<T> symbolTable = {}) : symbolTable(symbolTable) {
+        explicit ScopeAnchor(PtrSymbolTable<T> symbolTable = std::make_shared<SymbolTable<Ptr<T>>>()) : symbolTable(symbolTable) {
             //
         }
 

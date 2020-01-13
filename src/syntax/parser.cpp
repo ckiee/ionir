@@ -196,7 +196,7 @@ namespace ionir {
         this->skipOver(TokenKind::SymbolBraceL);
 
         Ptr<Block> block = std::make_shared<Block>(parent);
-        PtrSymbolTable<Section> sections = {};
+        PtrSymbolTable<Section> sections = std::make_shared<SymbolTable<Ptr<Section>>>();
 
         while (!this->is(TokenKind::SymbolBraceR)) {
             OptPtr<Section> section = this->parseSection(block);
@@ -223,10 +223,9 @@ namespace ionir {
 
         this->skipOver(TokenKind::SymbolBraceL);
 
-        PtrSymbolTable<Construct> symbolTable = {};
+        PtrSymbolTable<Construct> symbolTable = std::make_shared<SymbolTable<Ptr<Construct>>>();
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            std::cout << "Iteration .. " << this->stream.get().getKind() << std::endl;
             ParserResult<Construct> topLevelConstruct = this->parseTopLevel();
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
