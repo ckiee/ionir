@@ -261,7 +261,7 @@ Please refer to [this link](http://apt.llvm.org/) for instructions on installing
 
 ### Installing LLVM (macOS)
 
-Simply [Homebrew](https://brew.sh/) to install LLVM:
+Simply use [Homebrew](https://brew.sh/) to install LLVM:
 
 ```
 $ brew install llvm@9
