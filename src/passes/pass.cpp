@@ -141,7 +141,7 @@ namespace ionir {
                 break;
             }
 
-                // TODO: Missing break inst.
+            // TODO: Missing break inst.
 
             case InstKind::Return: {
                 this->visitReturnInst(node->cast<ReturnInst>());

@@ -3,7 +3,7 @@ source_filename = "test"
 
 define void @foobar() {
 entry:
-  br i1 true, label %ifbody, <null operand!>
+  br i1 true, label %if_body, <null operand!>
 
-ifbody:                                           ; preds = %entry
+if_body:                                          ; preds = %entry
 }

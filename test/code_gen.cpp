@@ -121,7 +121,7 @@ TEST(CodeGenTest, VisitBranchInst) {
     Ptr<Section> body = std::make_shared<Section>(SectionOpts{
         nullptr,
         SectionKind::Label,
-        "ifbody",
+        "if_body",
         {}
     });
 
@@ -131,7 +131,7 @@ TEST(CodeGenTest, VisitBranchInst) {
     auto branchInst = std::make_shared<BranchInst>(BranchInstOpts{
         body,
         condition,
-        std::make_shared<Ref<Section>>("ifbody", nullptr)
+        std::make_shared<Ref<Section>>("if_body", nullptr, body)
     });
 
     branchInst->getBody()->setOwner(branchInst);
