@@ -41,7 +41,7 @@ namespace ionir {
         this->localVariables = localVariables;
     }
 
-    bool Function::verify() const {
+    bool Function::verify() {
         return this->body->verify() && this->prototype->verify();
     }
 }

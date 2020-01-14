@@ -2,6 +2,7 @@
 
 #include <ionir/construct/construct.h>
 #include <ionir/tracking/symbol_table.h>
+#include <ionir/misc/static_factory.h>
 
 namespace ionir {
     // TODO: Implement concepts to ensure T is or derives of Construct.
@@ -11,7 +12,8 @@ namespace ionir {
         PtrSymbolTable<T> symbolTable;
 
     public:
-        explicit ScopeAnchor(PtrSymbolTable<T> symbolTable = std::make_shared<SymbolTable<Ptr<T>>>()) : symbolTable(symbolTable) {
+        explicit ScopeAnchor(PtrSymbolTable<T> symbolTable = StaticFactory::makePtrSymbolTable<T>())
+            : symbolTable(symbolTable) {
             //
         }
 

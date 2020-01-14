@@ -17,11 +17,15 @@ namespace ionir {
         return Construct::convertChildren(*this->getSymbolTable());
     }
 
-    bool Block::verify() const {
-        return this->getSymbolTable()->contains(Const::sectionEntryId);
+    bool Block::verify() {
+        return this->hasEntrySection();
     }
 
     OptPtr<Section> Block::getEntrySection() {
         return this->getSymbolTable()->lookup(Const::sectionEntryId);
+    }
+
+    bool Block::hasEntrySection() {
+        return this->getEntrySection().has_value();
     }
 }

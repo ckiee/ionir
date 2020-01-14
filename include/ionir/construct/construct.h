@@ -95,7 +95,7 @@ namespace ionir {
          * Without an implementation by the derived class,
          * this will always return true.
          */
-        virtual bool verify() const;
+        virtual bool verify();
 
         Ptr<Construct> getPtr();
 

@@ -96,8 +96,8 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
 TEST(CodeGenTest, VisitAllocaInst) {
     Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
 
-    std::vector<Ptr<Inst>> insts = {std::make_shared<AllocaInst>(
-        AllocaInstOpts{
+    std::vector<Ptr<Inst>> insts = {
+        std::make_shared<AllocaInst>(AllocaInstOpts{
             nullptr,
             test::constant::foobar,
             std::make_shared<Type>(ConstName::typeInt32)

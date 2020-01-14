@@ -24,11 +24,5 @@ namespace ionir {
         static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
         static std::map<TokenKind, int> operatorPrecedence;
-
-        static const std::string foo;
-
-        static const std::string bar;
-
-        static const std::string foobar;
     };
 }

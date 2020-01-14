@@ -1,4 +1,5 @@
 #include <ionir/const/const.h>
+#include "constant.h"
 #include "bootstrap.h"
 
 namespace ionir::test::bootstrap {
@@ -35,7 +36,7 @@ namespace ionir::test::bootstrap {
 
     Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts) {
         Ptr<Type> returnType = std::make_shared<Type>("void");
-        Ptr<Prototype> prototype = std::make_shared<Prototype>(Const::foobar, std::make_shared<Args>(), returnType);
+        Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType);
 
         Ptr<Section> entrySection = std::make_shared<Section>(SectionOpts{
             nullptr,
@@ -53,7 +54,7 @@ namespace ionir::test::bootstrap {
             {entrySection->getId(), entrySection}
         };
 
-        t sections = std::make_shared<tt>(tt{});
+        t sections = std::make_shared<tt>(t1);
 
         // --------------------
 

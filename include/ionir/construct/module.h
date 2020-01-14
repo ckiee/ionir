@@ -14,7 +14,7 @@ namespace ionir {
         std::string id;
 
     public:
-        explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = {});
+        explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = StaticFactory::makePtrSymbolTable<>());
 
         void accept(Pass &visitor) override;
 

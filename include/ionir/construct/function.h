@@ -37,6 +37,6 @@ namespace ionir {
 
         void setLocalVariables(PtrSymbolTable<LocalVariableDescriptor> localVariables);
 
-        bool verify() const override;
+        bool verify() override;
     };
 }

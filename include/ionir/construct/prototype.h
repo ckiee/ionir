@@ -37,6 +37,6 @@ namespace ionir {
 
         void setReturnType(Ptr<Type> returnType);
 
-        bool verify() const override;
+        bool verify() override;
     };
 }

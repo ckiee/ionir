@@ -18,7 +18,7 @@ namespace ionir {
         return this->constructKind;
     }
 
-    bool Construct::verify() const {
+    bool Construct::verify() {
         return true;
     }
 

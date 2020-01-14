@@ -41,7 +41,7 @@ namespace ionir {
         this->returnType = returnType;
     }
 
-    bool Prototype::verify() const {
+    bool Prototype::verify() {
         // TODO: Verify args.
         return this->returnType->verify();
     }
