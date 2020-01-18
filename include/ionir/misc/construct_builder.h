@@ -5,13 +5,13 @@
 #include "helpers.h"
 
 namespace ionir {
-    template<class T>
-    class AggregateBuilder {
-    protected:
+    template<class T = Construct>
+    class ConstructBuilder {
+    private:
         std::vector<Construct> parts;
 
     public:
-        AggregateBuilder() : parts({}) {
+        ConstructBuilder() : parts({}) {
             //
         }
 
@@ -24,7 +24,7 @@ namespace ionir {
         }
 
         template<class TConstruct, typename... TArgs>
-        Ptr<AggregateBuilder> push(TArgs... args) {
+        Ptr<ConstructBuilder> push(TArgs... args) {
             // TODO: Ensure TConstruct inherits from Construct or derived.
 
             this->parts.push_back(std::make_shared<TConstruct>(args));

@@ -14,11 +14,15 @@ namespace ionir {
     }
 
     Ptr<AllocaInst> InstBuilder::createAlloca(std::string id, Ptr<Type> type) {
-        return this->make<AllocaInst>(AllocaInstOpts{
+        Ptr<AllocaInst> allocaInst = this->make<AllocaInst>(AllocaInstOpts{
             this->section,
             id,
-            type,
+            type
         });
+
+        (*this->section->getSymbolTable())[allocaInst->getId()] = allocaInst;
+
+        return allocaInst;
     }
 
     Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr> condition, PtrRef<Section> body, OptPtrRef<Section> otherwise) {

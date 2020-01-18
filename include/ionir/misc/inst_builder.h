@@ -11,7 +11,7 @@
 
 namespace ionir {
     class InstBuilder {
-    protected:
+    private:
         Ptr<Section> section;
 
     public:

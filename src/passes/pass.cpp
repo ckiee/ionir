@@ -2,8 +2,6 @@
 
 namespace ionir {
     void Pass::visit(Ptr<Construct> node) {
-        std::cout << "Visiting node ..." << (int)node->getConstructKind() << std::endl;
-
         node->accept(*this);
 
         // TODO: Temporary fix for circular dep.
