@@ -23,5 +23,7 @@ namespace ionir {
         std::string getId() const;
 
         void setId(std::string id);
+
+        void insertFunction(Ptr<Function> function);
     };
 }

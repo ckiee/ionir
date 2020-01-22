@@ -76,7 +76,7 @@ namespace ionir {
             Const::sectionEntryId
         });
 
-        (*block->getSymbolTable())[entrySection->getId()] = entrySection;
+        block->insertSection(entrySection);
         this->setSectionBuffer(entrySection);
 
         Ptr<Type> returnType = std::make_shared<VoidType>();
@@ -86,6 +86,7 @@ namespace ionir {
 
         block->setParent(function);
         this->functionBuffer = function;
+        this->moduleBuffer->get()->insertFunction(function);
 
         return *this;
     }

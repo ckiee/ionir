@@ -27,5 +27,7 @@ namespace ionir {
         OptPtr<Section> getEntrySection();
 
         bool hasEntrySection();
+
+        void insertSection(Ptr<Section> section);
     };
 }

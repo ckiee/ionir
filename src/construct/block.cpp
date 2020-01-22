@@ -28,4 +28,9 @@ namespace ionir {
     bool Block::hasEntrySection() {
         return this->getEntrySection().has_value();
     }
+
+    void Block::insertSection(Ptr<Section> section) {
+        // TODO: Check if section exists first?
+        (*this->getSymbolTable())[section->getId()] = section;
+    }
 }
