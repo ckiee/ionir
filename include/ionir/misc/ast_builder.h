@@ -7,7 +7,7 @@
 #include "inst_builder.h"
 
 namespace ionir {
-    class AstBuilder : std::enable_shared_from_this<AstBuilder> {
+    class AstBuilder {
     private:
         Ast ast;
 
@@ -37,18 +37,16 @@ namespace ionir {
         void clearBuffers();
 
     public:
-        static Ptr<AstBuilder> make();
-
         AstBuilder();
 
         Ast getAst() const;
 
-        Ptr<AstBuilder> module(std::string id);
+        AstBuilder &module(std::string id);
 
-        Ptr<AstBuilder> function(std::string id);
+        AstBuilder &function(std::string id);
 
-        Ptr<AstBuilder> functionReturnType(Ptr<Type> returnType);
+        AstBuilder &functionReturnType(Ptr<Type> returnType);
 
-        Ptr<AstBuilder> instAlloca(std::string id, Ptr<Type> type);
+        AstBuilder &instAlloca(std::string id, Ptr<Type> type);
     };
 }

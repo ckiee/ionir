@@ -4,10 +4,10 @@
 
 namespace ionir {
     Ast Bootstrap::functionAst(std::string id) {
-        return AstBuilder::make()
-            ->module(ConstName::anonymous)
-            ->function(id)
-            ->getAst();
+        return AstBuilder()
+            .module(ConstName::anonymous)
+            .function(id)
+            .getAst();
     }
 
     Ptr<Function> Bootstrap::function(std::string id) {

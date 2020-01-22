@@ -47,10 +47,6 @@ namespace ionir {
         setSectionBuffer(std::nullopt);
     }
 
-    Ptr<AstBuilder> AstBuilder::make() {
-        return std::make_shared<AstBuilder>();
-    }
-
     AstBuilder::AstBuilder() : ast({}) {
         //
     }
@@ -59,16 +55,17 @@ namespace ionir {
         return this->ast;
     }
 
-    Ptr<AstBuilder> AstBuilder::module(std::string id) {
+    AstBuilder &AstBuilder::module(std::string id) {
         Ptr<Module> module = std::make_shared<Module>(id);
 
         this->clearBuffers();
         this->moduleBuffer = module;
+        this->ast.push_back(module);
 
-        return this->shared_from_this();
+        return *this;
     }
 
-    Ptr<AstBuilder> AstBuilder::function(std::string id) {
+    AstBuilder &AstBuilder::function(std::string id) {
         this->requireModule();
 
         Ptr<Block> block = std::make_shared<Block>(nullptr);
@@ -90,20 +87,20 @@ namespace ionir {
         block->setParent(function);
         this->functionBuffer = function;
 
-        return this->shared_from_this();
+        return *this;
     }
 
-    Ptr<AstBuilder> AstBuilder::functionReturnType(Ptr<Type> returnType) {
+    AstBuilder &AstBuilder::functionReturnType(Ptr<Type> returnType) {
         this->requireFunction();
         this->functionBuffer->get()->getPrototype()->setReturnType(returnType);
 
-        return this->shared_from_this();
+        return *this;
     }
 
-    Ptr<AstBuilder> AstBuilder::instAlloca(std::string id, Ptr<Type> type) {
+    AstBuilder &AstBuilder::instAlloca(std::string id, Ptr<Type> type) {
         this->requireSection();
         this->instBuilder->get()->createAlloca(id, type);
 
-        return this->shared_from_this();
+        return *this;
     }
 }
