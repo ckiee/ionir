@@ -6,7 +6,7 @@
 
 namespace ionir {
     class Token {
-    protected:
+    private:
         TokenKind kind;
 
         std::string value;
@@ -32,6 +32,8 @@ namespace ionir {
         uint32_t getLineNumber() const;
 
         bool isDummy() const;
+
+        std::string getName() const;
 
         bool operator==(const Token &other) const;
 

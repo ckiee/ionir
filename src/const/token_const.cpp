@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <ionir/misc/util.h>
 #include <ionir/const/const_name.h>
 #include <ionir/const/token_const.h>
 
@@ -29,6 +30,57 @@ namespace ionir {
         TokenKind::InstCall,
         TokenKind::InstReturn,
         TokenKind::InstStore
+    };
+
+    std::map<TokenKind, std::string> TokenConst::names = {
+        {TokenKind::Dummy, "Dummy"},
+        {TokenKind::Unknown, "Unknown"},
+        {TokenKind::Identifier, "Identifier"},
+        {TokenKind::LiteralString, "LiteralString"},
+        {TokenKind::LiteralDecimal, "LiteralDecimal"},
+        {TokenKind::LiteralInt, "LiteralInt"},
+        {TokenKind::LiteralCharacter, "LiteralCharacter"},
+        {TokenKind::Whitespace, "Whitespace"},
+        {TokenKind::SymbolAt, "SymbolAt"},
+        {TokenKind::SymbolColon, "SymbolColon"},
+        {TokenKind::SymbolDollar, "SymbolDollar"},
+        {TokenKind::SymbolHash, "SymbolHash"},
+        {TokenKind::SymbolParenthesesL, "SymbolParenthesesL"},
+        {TokenKind::SymbolParenthesesR, "SymbolParenthesesR"},
+        {TokenKind::SymbolBracketL, "SymbolBracketL"},
+        {TokenKind::SymbolBracketR, "SymbolBracketR"},
+        {TokenKind::SymbolComma, "SymbolComma"},
+        {TokenKind::SymbolTilde, "SymbolTilde"},
+        {TokenKind::SymbolEqual, "SymbolEqual"},
+        {TokenKind::SymbolSemiColon, "SymbolSemiColon"},
+        {TokenKind::SymbolStar, "SymbolStar"},
+        {TokenKind::SymbolBraceL, "SymbolBraceL"},
+        {TokenKind::SymbolBraceR, "SymbolBraceR"},
+        {TokenKind::SymbolArrow, "SymbolArrow"},
+        {TokenKind::InstCall, "InstCall"},
+        {TokenKind::InstStore, "InstStore"},
+        {TokenKind::InstReturn, "InstReturn"},
+        {TokenKind::InstAlloca, "InstAlloca"},
+        {TokenKind::InstBranch, "InstBranch"},
+        {TokenKind::KeywordFunction, "KeywordFunction"},
+        {TokenKind::KeywordExtern, "KeywordExtern"},
+        {TokenKind::KeywordElse, "KeywordElse"},
+        {TokenKind::KeywordGlobal, "KeywordGlobal"},
+        {TokenKind::KeywordMutable, "KeywordMutable"},
+        {TokenKind::KeywordModule, "KeywordModule"},
+        {TokenKind::TypeVoid, "TypeVoid"},
+        {TokenKind::TypeString, "TypeString"},
+        {TokenKind::TypeInt16, "TypeInt16"},
+        {TokenKind::TypeInt32, "TypeInt32"},
+        {TokenKind::TypeInt64, "TypeInt64"},
+        {TokenKind::OperatorAdd, "OperatorAdd"},
+        {TokenKind::OperatorSub, "OperatorSub"},
+        {TokenKind::OperatorMultiply, "OperatorMultiply"},
+        {TokenKind::OperatorDivide, "OperatorDivide"},
+        {TokenKind::OperatorModulo, "OperatorModulo"},
+        {TokenKind::OperatorExponent, "OperatorExponent"},
+        {TokenKind::OperatorGreaterThan, "OperatorGreaterThan"},
+        {TokenKind::OperatorLessThan, "OperatorLessThan"}
     };
 
     void TokenConst::pushComplex(std::regex regex, TokenKind tokenKind) {
@@ -63,6 +115,10 @@ namespace ionir {
         if (!TokenConst::getIsInitialized()) {
             throw std::runtime_error("Not initialized");
         }
+    }
+
+    bool TokenConst::contains(std::vector<TokenKind> subject, TokenKind item) {
+        return std::find(subject.begin(), subject.end(), item) != subject.end();
     }
 
     std::map<std::string, TokenKind> TokenConst::getSimpleIds() {
@@ -117,6 +173,22 @@ namespace ionir {
         TokenConst::ensureInit();
 
         return TokenConst::insts;
+    }
+
+    std::map<TokenKind, std::string> TokenConst::getNames() {
+        TokenConst::ensureInit();
+
+        return TokenConst::names;
+    }
+
+    std::optional<std::string> TokenConst::getTokenKindName(TokenKind tokenKind) {
+        TokenConst::ensureInit();
+
+        if (!Util::mapContains<TokenKind, std::string>(TokenConst::names, tokenKind)) {
+            return std::nullopt;
+        }
+
+        return TokenConst::names[tokenKind];
     }
 
     bool TokenConst::getIsInitialized() {

@@ -61,5 +61,10 @@ namespace ionir {
         static TypeKind resolveTypeKind(std::string id);
 
         static std::optional<std::string> getConstructName(Ptr<Construct> construct);
+
+        template<typename TKey, typename TValue>
+        static bool mapContains(std::map<TKey, TValue> map, TKey key) {
+            return map.find(key) != map.end();
+        }
     };
 }

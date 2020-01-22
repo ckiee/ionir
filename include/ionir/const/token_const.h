@@ -29,6 +29,8 @@ namespace ionir {
 
         static TokenKindVector insts;
 
+        static std::map<TokenKind, std::string> names;
+
         static void pushComplex(std::regex regex, TokenKind tokenKind);
 
         static void pushSimple(std::string value, TokenKind tokenKind);
@@ -39,12 +41,13 @@ namespace ionir {
 
         static void pushOperator(std::string value, TokenKind tokenKind);
 
-        static bool
-        sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b);
+        static bool sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b);
 
         static void ensureInit();
 
     public:
+        static bool contains(TokenKindVector subject, TokenKind item);
+
         static std::map<std::string, TokenKind> getSimpleIds();
 
         static std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
@@ -60,6 +63,10 @@ namespace ionir {
         static TokenKindVector getTypes();
 
         static TokenKindVector getInsts();
+
+        static std::map<TokenKind, std::string> getNames();
+
+        static std::optional<std::string> getTokenKindName(TokenKind tokenKind);
 
         static bool getIsInitialized();
 

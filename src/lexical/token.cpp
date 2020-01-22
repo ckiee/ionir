@@ -1,4 +1,5 @@
 #include <ionir/lexical/token.h>
+#include <ionir/const/token_const.h>
 
 namespace ionir {
     Token Token::createDummy(const uint32_t startPosition) {
@@ -32,6 +33,12 @@ namespace ionir {
 
     bool Token::isDummy() const {
         return this->kind == TokenKind::Dummy;
+    }
+
+    std::string Token::getName() const {
+        std::optional<std::string> name = TokenConst::getTokenKindName(this->getKind());
+
+        return name.value_or("Unnamed");
     }
 
     bool Token::operator==(const Token &other) const {
