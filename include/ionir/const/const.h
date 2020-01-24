@@ -26,5 +26,7 @@ namespace ionir {
         static std::map<TokenKind, int> operatorPrecedence;
 
         static std::map<ConstructKind, std::string> constructNames;
+
+        static std::optional<std::string> getConstructKindName(ConstructKind constructKind);
     };
 }

@@ -8,7 +8,7 @@
 #include <ionir/passes/pass_manager.h>
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
-#include "test_api/constant.h"
+#include "test_api/const.h"
 
 using namespace ionir;
 

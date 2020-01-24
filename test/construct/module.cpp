@@ -1,6 +1,6 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/syntax/parser.h>
-#include "../test_api/constant.h"
+#include "../test_api/const.h"
 #include "../pch.h"
 #include "../test_api/bootstrap.h"
 

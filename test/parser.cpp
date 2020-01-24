@@ -3,7 +3,7 @@
 #include <ionir/construct/inst.h>
 #include <ionir/syntax/parser.h>
 #include "test_api/bootstrap.h"
-#include "test_api/constant.h"
+#include "test_api/const.h"
 #include "pch.h"
 
 using namespace ionir;

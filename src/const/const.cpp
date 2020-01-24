@@ -1,6 +1,6 @@
-#include <optional>
 #include <ionir/const/token_const.h>
 #include <ionir/const/const.h>
+#include <ionir/misc/util.h>
 
 namespace ionir {
     Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};
@@ -49,5 +49,13 @@ namespace ionir {
 
     std::optional<LlvmIntTypeResolver> Const::tryGetIntTypeResolver(IntegerKind kind) {
         return *Const::integerTypeResolverMap.lookup(kind);
+    }
+
+    std::optional<std::string> Const::getConstructKindName(ConstructKind constructKind) {
+        if (Util::mapContains<ConstructKind, std::string>(Const::constructNames, constructKind)) {
+            return Const::constructNames[constructKind];
+        }
+
+        return std::nullopt;
     }
 }

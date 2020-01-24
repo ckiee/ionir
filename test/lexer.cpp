@@ -4,7 +4,7 @@
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/lexer.h>
 #include "test_api/compare.h"
-#include "test_api/constant.h"
+#include "test_api/const.h"
 
 using namespace ionir;
 

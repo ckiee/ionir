@@ -1,7 +1,7 @@
 #include <ionir/passes/semantic/name_resolution_pass.h>
 #include <ionir/passes/pass_manager.h>
 #include <ionir/misc/bootstrap.h>
-#include "test_api/constant.h"
+#include "test_api/const.h"
 #include "pch.h"
 
 using namespace ionir;

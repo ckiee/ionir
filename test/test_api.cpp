@@ -1,7 +1,7 @@
 #include "test_api/util.h"
 #include "test_api/compare.h"
 #include "test_api/filesystem.h"
-#include "test_api/constant.h"
+#include "test_api/const.h"
 
 using namespace ionir::test;
 

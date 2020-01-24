@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+#include <string>
 #include <vector>
 #include <functional>
 #include <ionir/misc/helpers.h>
@@ -105,5 +107,7 @@ namespace ionir {
         }
 
         Ptr<Construct> nativeCast();
+
+        std::optional<std::string> getConstructName();
     };
 }

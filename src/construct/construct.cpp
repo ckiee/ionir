@@ -1,4 +1,5 @@
 #include <ionir/construct/construct.h>
+#include <ionir/const/const.h>
 
 namespace ionir {
     Construct::Construct(ConstructKind kind) : constructKind(kind) {
@@ -28,5 +29,9 @@ namespace ionir {
 
     Ptr<Construct> Construct::nativeCast() {
         return this->cast<Construct>();
+    }
+
+    std::optional<std::string> Construct::getConstructName() {
+        return Const::getConstructKindName(this->constructKind);
     }
 }
