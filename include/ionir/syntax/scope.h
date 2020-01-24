@@ -9,23 +9,13 @@ namespace ionir {
         Block
     };
 
-    class Scope : public Wrapper<Ptr < Construct>>
-
-{
-    protected:
-
-    ScopeKind kind;
+    class Scope : public Wrapper<Ptr<Construct>> {
+    private:
+        ScopeKind kind;
 
     public:
+        Scope(Ptr<Construct> value, ScopeKind kind);
 
-    Scope(Ptr<Construct>
-
-    value,
-
-    ScopeKind kind
-
-    );
-
-    ScopeKind getKind() const;
-};
+        ScopeKind getKind() const;
+    };
 }
