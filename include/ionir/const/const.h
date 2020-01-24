@@ -13,7 +13,7 @@ namespace ionir {
     typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMContext &context);
 
     class Const {
-    protected:
+    private:
         static Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
 
     public:
@@ -24,5 +24,7 @@ namespace ionir {
         static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
         static std::map<TokenKind, int> operatorPrecedence;
+
+        static std::map<ConstructKind, std::string> constructNames;
     };
 }
