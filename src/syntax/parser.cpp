@@ -230,7 +230,7 @@ namespace ionir {
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
             if (topLevelConstruct.has_value()) {
-                std::optional<std::string> name = Util::getConstructName(*topLevelConstruct);
+                std::optional<std::string> name = Util::getConstructId(*topLevelConstruct);
 
                 if (!name.has_value()) {
                     throw std::runtime_error("Unexpected construct name to be null");

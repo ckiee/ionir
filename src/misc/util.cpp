@@ -111,7 +111,7 @@ namespace ionir {
         return TypeKind::UserDefined;
     }
 
-    std::optional<std::string> Util::getConstructName(Ptr<Construct> construct) {
+    std::optional<std::string> Util::getConstructId(Ptr<Construct> construct) {
         switch (construct->getConstructKind()) {
             case ConstructKind::Function: {
                 return construct->cast<Function>()->getPrototype()->getId();
