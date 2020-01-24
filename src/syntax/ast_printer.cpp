@@ -1,3 +1,5 @@
+#include <string>
+#include <optional>
 #include <queue>
 #include <sstream>
 #include <ionir/syntax/ast_printer.h>
@@ -14,8 +16,14 @@ namespace ionir {
         }
 
         std::string type = node.isLeaf ? IONIR_TREE_LEAF : IONIR_TREE_INTERSECTION;
+        std::optional<std::string> constructName = node.construct->getConstructName();
 
-        tree << type << IONIR_TREE_H_LINE << IONIR_TREE_H_LINE << AstPrinter::makeSpaces(node.depth) << (int)node.construct->getConstructKind() << std::endl;
+        tree << type
+            << IONIR_TREE_H_LINE
+            << IONIR_TREE_H_LINE
+            << AstPrinter::makeSpaces(node.depth)
+            << constructName.value_or("Unnamed")
+            << std::endl;
     }
 
     std::string AstPrinter::makeSpaces(uint32_t depth) {

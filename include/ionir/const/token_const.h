@@ -12,7 +12,7 @@
 
 namespace ionir {
     class TokenConst {
-    protected:
+    private:
         static bool isInitialized;
 
         static std::map<std::string, TokenKind> simple;

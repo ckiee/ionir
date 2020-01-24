@@ -17,11 +17,11 @@ namespace ionir {
 
                 continue;
             }
-                /**
-                 * Determine whether the current instruction
-                 * is of kind return and it is not the last
-                 * item in the vector.
-                 */
+            /**
+             * Determine whether the current instruction
+             * is of kind return and it is not the last
+             * item in the vector.
+             */
             else if (inst->getInstKind() == InstKind::Return && ++iterator == insts.end()) {
                 /**
                  * If so, erase all following instructions,
