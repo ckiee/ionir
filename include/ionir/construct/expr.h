@@ -20,10 +20,23 @@ namespace ionir {
         Ptr<T> type;
 
     public:
-        Expr(ExprKind kind, Ptr<T> type);
+        Expr(ExprKind kind, Ptr<T> type)
+            : Construct(ConstructKind::Expr), kind(kind), type(type) {
+            //
+        }
 
         virtual void accept(Pass &visitor) = 0;
 
-        ExprKind getExprKind() const;
+        ExprKind getExprKind() const {
+            return this->kind;
+        }
+
+        Ptr<T> getType() const {
+            return this->type;
+        }
+
+        void setType(Ptr<T> type) {
+            this->type = type;
+        }
     };
 }

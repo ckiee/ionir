@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ionir/construct/type.h>
 #include <ionir/construct/expr.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/misc/helpers.h>
