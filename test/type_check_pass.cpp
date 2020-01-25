@@ -1,4 +1,4 @@
-#include <ionir/passes/type_system/type_checker_pass.h>
+#include <ionir/passes/type_system/type_check_pass.h>
 #include <ionir/passes/pass_manager.h>
 #include <ionir/misc/bootstrap.h>
 #include <ionir/syntax/ast_builder.h>
@@ -7,8 +7,8 @@
 
 using namespace ionir;
 
-TEST(TypeCheckerPassTest, Run) {
-    Ptr<TypeCheckerPass> pass = std::make_shared<TypeCheckerPass>();
+TEST(TypeCheckPassTest, Run) {
+    Ptr<TypeCheckPass> pass = std::make_shared<TypeCheckPass>();
 
     PassManager passManager = PassManager({
         PassManagerItem{

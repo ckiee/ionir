@@ -1,7 +1,7 @@
-#include <ionir/passes/type_system/type_checker_pass.h>
+#include <ionir/passes/type_system/type_check_pass.h>
 
 namespace ionir {
-    void TypeCheckerPass::visitFunction(Ptr<Function> node) {
+    void TypeCheckPass::visitFunction(Ptr<Function> node) {
         std::optional <Ptr<Section>> entrySection = node->getBody()->getEntrySection();
 
         if (!entrySection.has_value()) {
@@ -32,7 +32,7 @@ namespace ionir {
         }
     }
 
-    void TypeCheckerPass::visitStoreInst(Ptr<StoreInst> node) {
+    void TypeCheckPass::visitStoreInst(Ptr<StoreInst> node) {
 
     }
 }

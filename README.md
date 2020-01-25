@@ -128,14 +128,14 @@ int main() {
     passManager.registerPass(std::make_shared<DeadCodeEliminationPass>());
 
     /**
-     * TypeCheckerPass: At this point, type checking will occur. This pass's
+     * TypeCheckPass: At this point, type checking will occur. This pass's
      * responsibility is enforcing various semantic type rules of the language.
      * For example, binary operations involving incompatible type operands will
      * result in a type error produced by this pass. Another example would be
      * verifying that return values' types are compatible with the defined return
      * type of its corresponding parent function.
      */
-    passManager.registerPass(std::make_shared<TypeCheckerPass>());
+    passManager.registerPass(std::make_shared<TypeCheckPass>());
 
     /**
      * LlvmCodegenPass: Finally, the target code-generation pass will be registered
