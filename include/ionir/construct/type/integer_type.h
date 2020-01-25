@@ -23,11 +23,17 @@ namespace ionir {
     private:
         IntegerKind kind;
 
+        bool isSigned;
+
     public:
-        IntegerType(IntegerKind kind, bool isPointer = false);
+        IntegerType(IntegerKind kind, bool isSigned = true, bool isPointer = false);
 
         void accept(Pass &pass) override;
 
         IntegerKind getIntegerKind() const;
+
+        bool getIsSigned() const;
+
+        void setIsSigned(bool isSigned);
     };
 }

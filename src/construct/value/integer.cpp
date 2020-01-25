@@ -11,6 +11,10 @@ namespace ionir {
     }
 
     int64_t IntegerValue::getValue() const {
+        if (!this->getType()->getIsSigned()) {
+            return std::abs(this->value);
+        }
+
         return this->value;
     }
 
