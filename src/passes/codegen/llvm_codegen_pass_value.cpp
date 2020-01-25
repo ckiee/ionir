@@ -11,7 +11,7 @@ namespace ionir {
          * LLVM integer value wrapper. Default to being
          * signed to allow for a larger range of values.
          */
-        llvm::APInt apInt = llvm::APInt(node->getValue(), true);
+        llvm::APInt apInt = llvm::APInt(node->getValue(), true, node->getType()->getIsSigned());
 
         Ptr<Type> nodeType = node->getType();
 
