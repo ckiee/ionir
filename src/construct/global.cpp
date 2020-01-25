@@ -1,8 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Global::Global(Ptr<Type> type, std::string id, std::optional<Ptr<Value>> value)
-        : Construct(ConstructKind::Global), type(type), id(id), value(value) {
+    Global::Global(Ptr<Type> type, std::string id, OptPtr<Value<>> value)
+        : Construct(ConstructKind::Global), type(type), Named(id), value(value) {
         //
     }
 
@@ -30,19 +30,11 @@ namespace ionir {
         this->type = type;
     }
 
-    std::string Global::getId() const {
-        return this->id;
-    }
-
-    void Global::setId(std::string id) {
-        this->id = id;
-    }
-
-    std::optional<Ptr<Value>> Global::getValue() const {
+    OptPtr<Value<>> Global::getValue() const {
         return this->value;
     }
 
-    void Global::setValue(const std::optional<Ptr<Value>> value) {
+    void Global::setValue(OptPtr<Value<>> value) {
         this->value = value;
     }
 }

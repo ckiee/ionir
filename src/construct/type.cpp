@@ -2,20 +2,12 @@
 
 namespace ionir {
     Type::Type(std::string id, TypeKind kind, bool isPointer)
-        : Construct(ConstructKind::Type), id(id), kind(kind), isPointer(isPointer) {
+        : Construct(ConstructKind::Type), Named(id), kind(kind), isPointer(isPointer) {
         //
     }
 
     void Type::accept(Pass &visitor) {
         visitor.visitType(this->cast<Type>());
-    }
-
-    std::string Type::getId() const {
-        return this->id;
-    }
-
-    void Type::setId(std::string id) {
-        this->id = id;
     }
 
     TypeKind Type::getTypeKind() const {

@@ -51,7 +51,7 @@ namespace ionir {
         //
     }
 
-    void Pass::visitExpr(Ptr<Expr> node) {
+    void Pass::visitExpr(Ptr<Expr<>> node) {
         switch (node->getExprKind()) {
             case ExprKind::Binary: {
                 this->visitBinaryExpr(node->cast<BinaryExpr>());
@@ -60,7 +60,7 @@ namespace ionir {
             }
 
             case ExprKind::Value: {
-                this->visitValue(node->cast<Value>());
+                this->visitValue(node->cast<Value<>>());
 
                 break;
             }
@@ -75,7 +75,7 @@ namespace ionir {
         //
     }
 
-    void Pass::visitValue(Ptr<Value> node) {
+    void Pass::visitValue(Ptr<Value<>> node) {
         switch (node->getValueKind()) {
             // TODO: Missing boolean value kind.
 

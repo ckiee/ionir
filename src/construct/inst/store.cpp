@@ -10,11 +10,11 @@ namespace ionir {
         visitor.visitStoreInst(this->cast<StoreInst>());
     }
 
-    Ptr<Value> StoreInst::getValue() const {
+    Ptr<Value<>> StoreInst::getValue() const {
         return this->value;
     }
 
-    void StoreInst::setValue(Ptr<Value> value) {
+    void StoreInst::setValue(Ptr<Value<>> value) {
         this->value = value;
     }
 

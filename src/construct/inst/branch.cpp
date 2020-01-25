@@ -22,11 +22,11 @@ namespace ionir {
         return children;
     }
 
-    Ptr<Expr> BranchInst::getCondition() const {
+    Ptr<Expr<>> BranchInst::getCondition() const {
         return this->condition;
     }
 
-    void BranchInst::setCondition(Ptr<Expr> condition) {
+    void BranchInst::setCondition(Ptr<Expr<>> condition) {
         this->condition = condition;
     }
 

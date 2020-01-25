@@ -5,6 +5,7 @@
 #include <ionir/construct/section.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/construct/inst.h>
+#include <ionir/misc/named.h>
 
 namespace ionir {
     struct AllocaInstOpts : InstOpts {
@@ -13,10 +14,8 @@ namespace ionir {
         Ptr<Type> type;
     };
 
-    class AllocaInst : public Inst {
+    class AllocaInst : public Inst, public Named {
     private:
-        std::string id;
-
         Ptr<Type> type;
 
     public:
@@ -24,10 +23,6 @@ namespace ionir {
         explicit AllocaInst(AllocaInstOpts opts);
 
         void accept(Pass &visitor) override;
-
-        std::string getId() const;
-
-        void setId(std::string id);
 
         Ptr <Type> getType() const;
 

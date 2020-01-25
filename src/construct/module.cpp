@@ -2,7 +2,7 @@
 
 namespace ionir {
     Module::Module(std::string id, PtrSymbolTable<Construct> symbolTable)
-        : Construct(ConstructKind::Module), ScopeAnchor<>(symbolTable), id(id) {
+        : Construct(ConstructKind::Module), ScopeAnchor<>(symbolTable), Named(id) {
         //
     }
 
@@ -14,14 +14,6 @@ namespace ionir {
         auto ast = Construct::convertChildren(*this->getSymbolTable());
         // TODO: De-referencing symbol table, so it's copying and it won't link back? Review.
         return ast;
-    }
-
-    std::string Module::getId() const {
-        return this->id;
-    }
-
-    void Module::setId(std::string id) {
-        this->id = id;
     }
 
     void Module::insertFunction(Ptr<Function> function) {

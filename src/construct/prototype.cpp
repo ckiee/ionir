@@ -2,7 +2,7 @@
 
 namespace ionir {
     Prototype::Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType)
-        : Construct(ConstructKind::Prototype), id(id), args(args), returnType(returnType) {
+        : Construct(ConstructKind::Prototype), Named(id), args(args), returnType(returnType) {
         //
     }
 
@@ -15,14 +15,6 @@ namespace ionir {
         return {
             this->returnType->nativeCast()
         };
-    }
-
-    std::string Prototype::getId() const {
-        return this->id;
-    }
-
-    void Prototype::setId(std::string id) {
-        this->id = id;
     }
 
     Ptr<Args> Prototype::getArgs() const {

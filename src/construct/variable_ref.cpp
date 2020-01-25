@@ -2,19 +2,11 @@
 
 namespace ionir {
     VariableRef::VariableRef(std::string id)
-        : Construct(ConstructKind::VariableReference), id(id) {
+        : Construct(ConstructKind::VariableReference), Named(id) {
         //
     }
 
     void VariableRef::accept(Pass &visitor) {
         visitor.visitVarReference(this->cast<VariableRef>());
-    }
-
-    std::string VariableRef::getId() const {
-        return this->id;
-    }
-
-    void VariableRef::setId(std::string id) {
-        this->id = id;
     }
 }

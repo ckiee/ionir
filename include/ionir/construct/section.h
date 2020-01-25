@@ -45,11 +45,9 @@ namespace ionir {
         PtrSymbolTable<Inst> symbolTable = StaticFactory::makePtrSymbolTable<Inst>();
     };
 
-    class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst> {
+    class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst>, public Named {
     private:
         SectionKind kind;
-
-        std::string id;
 
         std::vector<Ptr<Inst>> insts;
 
@@ -61,10 +59,6 @@ namespace ionir {
         Ast getChildNodes() const override;
 
         SectionKind getKind() const;
-
-        std::string getId() const;
-
-        void setId(const std::string id);
 
         std::vector<Ptr<Inst>> getInsts() const;
 

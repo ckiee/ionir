@@ -2,6 +2,7 @@
 
 #include <string>
 #include <ionir/misc/helpers.h>
+#include <ionir/misc/named.h>
 #include "construct.h"
 
 namespace ionir {
@@ -17,10 +18,8 @@ namespace ionir {
         String
     };
 
-    class Type : public Construct {
+    class Type : public Construct, public Named {
     private:
-        std::string id;
-
         TypeKind kind;
 
         bool isPointer;
@@ -34,10 +33,6 @@ namespace ionir {
         explicit Type(std::string id, TypeKind kind = TypeKind::UserDefined, bool isPointer = false);
 
         void accept(Pass &visitor) override;
-
-        std::string getId() const;
-
-        void setId(const std::string id);
 
         TypeKind getTypeKind() const;
 

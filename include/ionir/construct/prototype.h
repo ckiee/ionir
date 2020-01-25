@@ -4,13 +4,14 @@
 #include <vector>
 #include <ionir/construct/pseudo/args.h>
 #include <ionir/misc/helpers.h>
+#include <ionir/misc/named.h>
 #include "type.h"
 #include "construct.h"
 
 namespace ionir {
     class Pass;
 
-    class Prototype : public Construct {
+    class Prototype : public Construct, public Named {
     private:
         std::string id;
 
@@ -24,10 +25,6 @@ namespace ionir {
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() const override;
-
-        std::string getId() const;
-
-        void setId(std::string id);
 
         Ptr<Args> getArgs() const;
 

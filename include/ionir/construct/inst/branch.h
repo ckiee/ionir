@@ -11,7 +11,7 @@ namespace ionir {
     class Pass;
 
     struct BranchInstOpts : InstOpts {
-        Ptr<Expr> condition;
+        Ptr<Expr<>> condition;
 
         PtrRef<Section> body;
 
@@ -20,7 +20,7 @@ namespace ionir {
 
     class BranchInst : public Inst {
     private:
-        Ptr<Expr> condition;
+        Ptr<Expr<>> condition;
 
         PtrRef<Section> body;
 
@@ -33,9 +33,9 @@ namespace ionir {
 
         Ast getChildNodes() const override;
 
-        Ptr<Expr> getCondition() const;
+        Ptr<Expr<>> getCondition() const;
 
-        void setCondition(Ptr<Expr> condition);
+        void setCondition(Ptr<Expr<>> condition);
 
         PtrRef<Section> getBody() const;
 

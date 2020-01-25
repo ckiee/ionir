@@ -9,20 +9,13 @@
 namespace ionir {
     class Pass;
 
-    class Module : public Construct, public ScopeAnchor<> {
-    private:
-        std::string id;
-
+    class Module : public Construct, public ScopeAnchor<>, public Named {
     public:
         explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = StaticFactory::makePtrSymbolTable<>());
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() const override;
-
-        std::string getId() const;
-
-        void setId(std::string id);
 
         void insertFunction(Ptr<Function> function);
 

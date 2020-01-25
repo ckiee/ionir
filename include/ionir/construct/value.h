@@ -30,7 +30,7 @@ namespace ionir {
         }
 
         void accept(Pass &visitor) {
-            visitor.visitValue(this->cast<Value>());
+            visitor.visitValue(this->cast<Value<>>());
         }
 
         ValueKind getValueKind() const {

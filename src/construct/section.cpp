@@ -3,7 +3,7 @@
 
 namespace ionir {
     Section::Section(SectionOpts opts)
-        : ChildConstruct(opts.parent, ConstructKind::Section), ScopeAnchor<Inst>(), kind(opts.kind), id(opts.id), insts(opts.insts) {
+        : ChildConstruct(opts.parent, ConstructKind::Section), ScopeAnchor<Inst>(), kind(opts.kind), Named(opts.id), insts(opts.insts) {
         //
     }
 
@@ -18,14 +18,6 @@ namespace ionir {
 
     SectionKind Section::getKind() const {
         return this->kind;
-    }
-
-    std::string Section::getId() const {
-        return this->id;
-    }
-
-    void Section::setId(std::string id) {
-        this->id = id;
     }
 
     std::vector<Ptr<Inst>> Section::getInsts() const {

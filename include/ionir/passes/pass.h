@@ -15,7 +15,6 @@
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
 #include <ionir/construct/pseudo/directive.h>
-//#include <ionir/construct/pseudo/ref.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/function.h>
 #include <ionir/construct/variable_ref.h>
@@ -49,11 +48,11 @@ namespace ionir {
 
         virtual void visitVarReference(Ptr<VariableRef> node);
 
-        virtual void visitExpr(Ptr<Expr> node);
+        virtual void visitExpr(Ptr<Expr<>> node);
 
         virtual void visitBinaryExpr(Ptr<BinaryExpr> node);
 
-        virtual void visitValue(Ptr<Value> node);
+        virtual void visitValue(Ptr<Value<>> node);
 
         virtual void visitIntegerValue(Ptr<IntegerValue> node);
 
