@@ -6,5 +6,7 @@ namespace ionir {
     class TypeCheckerPass : public Pass {
     public:
         void visitFunction(Ptr <Function> node) override;
+
+        void visitStoreInst(Ptr<StoreInst> node) override;
     };
 }

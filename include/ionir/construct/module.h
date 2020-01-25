@@ -25,5 +25,7 @@ namespace ionir {
         void setId(std::string id);
 
         void insertFunction(Ptr<Function> function);
+
+        OptPtr<Function> lookupFunction(std::string id);
     };
 }

@@ -1,7 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Value::Value(ValueKind kind) : Expr(ExprKind::Value), kind(kind) {
+    Value::Value(ValueKind kind, Ptr<Type> type)
+        : Expr(ExprKind::Value, type), kind(kind) {
         //
     }
 

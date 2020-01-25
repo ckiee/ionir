@@ -1,5 +1,5 @@
 #include <ionir/construct/type/void_type.h>
-#include <ionir/misc/ast_builder.h>
+#include <ionir/syntax/ast_builder.h>
 #include <ionir/const/const.h>
 
 namespace ionir {
@@ -51,7 +51,7 @@ namespace ionir {
         //
     }
 
-    Ast AstBuilder::getAst() const {
+    Ast AstBuilder::make() const {
         return this->ast;
     }
 

@@ -28,4 +28,14 @@ namespace ionir {
         // TODO: Check if function exists first?
         (*this->getSymbolTable())[function->getPrototype()->getId()] = function;
     }
+
+    OptPtr<Function> Module::lookupFunction(std::string id) {
+        OptPtr<Construct> functionConstruct = this->getSymbolTable()->lookup(id);
+
+        if (functionConstruct.has_value()) {
+            return functionConstruct->get()->cast<Function>();
+        }
+
+        return std::nullopt;
+    }
 }

@@ -1,5 +1,5 @@
 #include <ionir/const/const_name.h>
-#include <ionir/misc/ast_builder.h>
+#include <ionir/syntax/ast_builder.h>
 #include <ionir/misc/bootstrap.h>
 
 namespace ionir {
@@ -7,7 +7,7 @@ namespace ionir {
         return AstBuilder()
             .module(ConstName::anonymous)
             .function(id)
-            .getAst();
+            .make();
     }
 
     Ptr<Function> Bootstrap::function(std::string id) {

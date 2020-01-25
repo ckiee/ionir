@@ -34,7 +34,7 @@
 
 namespace ionir {
     template<typename T>
-    using ParserResult = std::optional<Ptr<T>>;
+    using ParserResult = OptPtr<T>;
 
     class Parser {
     private:

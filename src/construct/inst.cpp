@@ -10,4 +10,9 @@ namespace ionir {
     InstKind Inst::getInstKind() {
         return this->kind;
     }
+
+    bool Inst::isTerminal() const {
+        return this->kind == InstKind::Return
+            || this->kind == InstKind::Branch;
+    }
 }

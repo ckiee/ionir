@@ -35,5 +35,7 @@ namespace ionir {
         virtual void accept(Pass &visitor) = 0;
 
         InstKind getInstKind();
+
+        bool isTerminal() const;
     };
 }

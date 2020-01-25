@@ -4,7 +4,7 @@
 #include <ionir/construct/function.h>
 #include <ionir/construct/block.h>
 #include <ionir/construct/module.h>
-#include "inst_builder.h"
+#include "ionir/misc/inst_builder.h"
 
 namespace ionir {
     class AstBuilder {
@@ -39,7 +39,7 @@ namespace ionir {
     public:
         AstBuilder();
 
-        Ast getAst() const;
+        Ast make() const;
 
         AstBuilder &module(std::string id);
 

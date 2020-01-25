@@ -16,8 +16,10 @@ namespace ionir {
     private:
         ExprKind kind;
 
+        Ptr<Type> type;
+
     public:
-        explicit Expr(ExprKind kind);
+        Expr(ExprKind kind, Ptr<Type> type);
 
         virtual void accept(Pass &visitor) = 0;
 

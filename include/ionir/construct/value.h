@@ -22,7 +22,7 @@ namespace ionir {
         ValueKind kind;
 
     public:
-        explicit Value(ValueKind kind);
+        explicit Value(ValueKind kind, Ptr<Type> type);
 
         virtual void accept(Pass &visitor) = 0;
 

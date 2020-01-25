@@ -2,25 +2,37 @@
 
 namespace ionir {
     void TypeCheckerPass::visitFunction(Ptr<Function> node) {
-        // TODO: Hard-coded id.
-        if (node->getPrototype()->getReturnType()->getId() != "void") {
-            std::optional <Ptr<Section>> entrySection = node->getBody()->getEntrySection();
+        std::optional <Ptr<Section>> entrySection = node->getBody()->getEntrySection();
 
-            if (!entrySection.has_value()) {
-                throw std::runtime_error("Entry section for function body is not set");
-            }
+        if (!entrySection.has_value()) {
+            throw std::runtime_error("Entry section for function body is not set");
+        }
 
-            for (const auto inst : (*entrySection)->getInsts()) {
-                if (inst->getInstKind() == InstKind::Return) {
-                    Ptr <ReturnInst> returnInst = inst->cast<ReturnInst>();
+        std::vector<Ptr<Inst>> insts = entrySection->get()->getInsts();
 
-                    if (!returnInst->getValue().has_value()) {
-                        throw std::runtime_error(
-                            "Function whose prototype's return type is not void must return a corresponding value"
-                        );
-                    }
+        // All sections must contain at least a terminal instruction.
+        if (insts.empty() || !insts[0]->isTerminal()) {
+            throw std::runtime_error("Section must contain at least a terminal instruction");
+        }
+
+        for (const auto inst : insts) {
+            if (inst->getInstKind() == InstKind::Return) {
+                Ptr<ReturnInst> returnInst = inst->cast<ReturnInst>();
+
+                /**
+                 * Functions whose prototype's return type is non-void must provide
+                 * a value to the return instruction.
+                 */
+                if (!returnInst->getValue().has_value()) {
+                    throw std::runtime_error(
+                        "Function whose prototype's return type is not void must return a corresponding value"
+                    );
                 }
             }
         }
+    }
+
+    void TypeCheckerPass::visitStoreInst(Ptr<StoreInst> node) {
+
     }
 }
