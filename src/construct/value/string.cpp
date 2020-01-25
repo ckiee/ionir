@@ -1,7 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    StringValue::StringValue(std::string value) : Value(ValueKind::String), value(value) {
+    StringValue::StringValue(std::string value)
+        : Value(ValueKind::String, StaticFactory::typeString()), value(value) {
         //
     }
 

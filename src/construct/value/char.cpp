@@ -1,7 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    CharValue::CharValue(char value) : Value(ValueKind::Character), value(value) {
+    CharValue::CharValue(char value)
+        : Value(ValueKind::Character, StaticFactory::typeChar()), value(value) {
         //
     }
 

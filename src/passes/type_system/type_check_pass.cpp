@@ -33,6 +33,6 @@ namespace ionir {
     }
 
     void TypeCheckPass::visitStoreInst(Ptr<StoreInst> node) {
-
+        // TODO
     }
 }

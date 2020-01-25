@@ -7,20 +7,14 @@
 namespace ionir {
     class Pass;
 
-    class IntegerValue : public Value {
+    class IntegerValue : public Value<IntegerType> {
     private:
-        Ptr<IntegerType> type;
-
         int64_t value;
 
     public:
         IntegerValue(Ptr<IntegerType> type, int64_t value);
 
         void accept(Pass &visitor) override;
-
-        Ptr<IntegerType> getType() const;
-
-        void setType(Ptr<IntegerType> type);
 
         int64_t getValue() const;
 

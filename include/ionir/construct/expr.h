@@ -12,14 +12,15 @@ namespace ionir {
         Value
     };
 
+    template<typename T = Type>
     class Expr : public Construct {
     private:
         ExprKind kind;
 
-        Ptr<Type> type;
+        Ptr<T> type;
 
     public:
-        Expr(ExprKind kind, Ptr<Type> type);
+        Expr(ExprKind kind, Ptr<T> type);
 
         virtual void accept(Pass &visitor) = 0;
 

@@ -2,7 +2,7 @@
 
 namespace ionir {
     BooleanValue::BooleanValue(bool value)
-        : Value(ValueKind::Boolean), value(value) {
+        : Value(ValueKind::Boolean, StaticFactory::typeBoolean()), value(value) {
         //
     }
 

@@ -6,7 +6,7 @@
 namespace ionir {
     class Pass;
 
-    class CharValue : public Value {
+    class CharValue : public Value<> {
     private:
         char value;
 

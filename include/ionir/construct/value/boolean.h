@@ -6,7 +6,7 @@
 namespace ionir {
     class Pass;
 
-    class BooleanValue : public Value {
+    class BooleanValue : public Value<> {
     private:
         bool value;
 

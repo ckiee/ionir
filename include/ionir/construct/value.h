@@ -17,15 +17,23 @@ namespace ionir {
         Boolean
     };
 
-    class Value : public Expr {
+    template<typename T = Type>
+    class Value : public Expr<T> {
     private:
         ValueKind kind;
 
     public:
-        explicit Value(ValueKind kind, Ptr<Type> type);
+        Value(ValueKind kind, Ptr<T> type)
+            : Expr<T>(ExprKind::Value, type), kind(kind) {
+            //
+        }
 
-        virtual void accept(Pass &visitor) = 0;
+        void accept(Pass &visitor) {
+            visitor.visitValue(this->cast<Value>());
+        }
 
-        ValueKind getValueKind() const;
+        ValueKind getValueKind() const {
+            return this->kind;
+        }
     };
 }

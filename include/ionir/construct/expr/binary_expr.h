@@ -15,18 +15,18 @@ namespace ionir {
 
         int precedence;
 
-        Ptr<Expr> leftSide;
+        Ptr<Expr<>> leftSide;
 
-        std::optional<Ptr<Expr>> rightSide = std::nullopt;
+        std::optional<Ptr<Expr<>>> rightSide = std::nullopt;
     };
 
-    class BinaryExpr : public Expr {
+    class BinaryExpr : public Expr<> {
     protected:
         TokenKind operation;
 
         int precedence;
 
-        Ptr<Expr> leftSide;
+        Ptr<Expr<>> leftSide;
 
         std::optional<Ptr<Expr>> rightSide;
 
@@ -35,15 +35,13 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ptr<Expr> getLeftSide() const;
+        Ptr<Expr<>> getLeftSide() const;
 
-        void setLeftSide(Ptr<Expr> leftSide);
+        void setLeftSide(Ptr<Expr<>> leftSide);
 
-        std::optional<Ptr<Expr>> getRightSide() const;
+        std::optional<Ptr<Expr<>>> getRightSide() const;
 
-        void setRightSide(std::optional<Ptr<Expr>>
-
-        rightSide);
+        void setRightSide(std::optional<Ptr<Expr>> rightSide);
 
         // TODO: Exprs must take in Type (thus, as well as Value, etc.).
         std::optional<Ptr<Type>> evaluateType() const;

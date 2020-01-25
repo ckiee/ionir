@@ -7,7 +7,7 @@
 namespace ionir {
     class Pass;
 
-    class StringValue : public Value {
+    class StringValue : public Value<> {
     private:
         std::string value;
 
