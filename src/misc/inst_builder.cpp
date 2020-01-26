@@ -35,7 +35,7 @@ namespace ionir {
     }
 
     Ptr<ReturnInst> InstBuilder::createReturn(OptPtr<Value<>> value) {
-        return this->make<ReturnInst>(ReturnInstOpts{
+        return this->make<ReturnInst, ReturnInstOpts>(ReturnInstOpts{
             this->section,
             value
         });

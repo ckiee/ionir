@@ -23,7 +23,7 @@ namespace ionir {
                  * Functions whose prototype's return type is non-void must provide
                  * a value to the return instruction.
                  */
-                if (!returnInst->getValue().has_value()) {
+                if (node->getPrototype()->getReturnType()->getTypeKind() != TypeKind ::Void && !returnInst->getValue().has_value()) {
                     throw std::runtime_error(
                         "Function whose prototype's return type is not void must return a corresponding value"
                     );

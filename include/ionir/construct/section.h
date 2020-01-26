@@ -60,7 +60,7 @@ namespace ionir {
 
         SectionKind getKind() const;
 
-        std::vector<Ptr<Inst>> getInsts() const;
+        std::vector<Ptr<Inst>> &getInsts();
 
         void setInsts(std::vector<Ptr<Inst>> insts);
 

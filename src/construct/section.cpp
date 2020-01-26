@@ -20,7 +20,7 @@ namespace ionir {
         return this->kind;
     }
 
-    std::vector<Ptr<Inst>> Section::getInsts() const {
+    std::vector<Ptr<Inst>> &Section::getInsts() {
         return this->insts;
     }
 
