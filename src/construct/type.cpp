@@ -10,6 +10,18 @@ namespace ionir {
         visitor.visitType(this->cast<Type>());
     }
 
+    bool Type::equals(Ptr<Construct> other) {
+        if (other->getConstructKind() != ConstructKind::Type) {
+            return false;
+        }
+
+        Ptr<Type> otherType = other->cast<Type>();
+
+        return otherType->getTypeKind() == this->getTypeKind()
+            && otherType->getId() == this->getId()
+            && otherType->getIsPointer() == this->getIsPointer();
+    }
+
     TypeKind Type::getTypeKind() const {
         return this->kind;
     }

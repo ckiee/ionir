@@ -34,6 +34,8 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
+        bool equals(Ptr<Construct> other) override;
+
         TypeKind getTypeKind() const;
 
         bool getIsPointer() const;

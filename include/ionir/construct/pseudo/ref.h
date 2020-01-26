@@ -3,37 +3,28 @@
 #include <optional>
 #include <string>
 #include <ionir/construct/construct.h>
+#include <ionir/misc/named.h>
 
 namespace ionir {
     // TODO: What if 'pass.h' is never included?
     class Pass;
 
     template<typename T = Construct>
-    class Ref : public Construct {
+    class Ref : public Construct, public Named {
     private:
-        std::string id;
-
         Ptr<Construct> owner;
 
         OptPtr<T> value;
 
     public:
         Ref(std::string id, Ptr<Construct> owner, OptPtr<T> value = std::nullopt)
-            : Construct(ConstructKind::Reference), id(id), owner(owner), value(value) {
+            : Construct(ConstructKind::Reference), Named(id), owner(owner), value(value) {
             //
         }
 
         void accept(Pass &visitor) override {
             // TODO: CRITICAL: Fix 'incomplete type' problem.
             // visitor.visitRef(this->cast<Ref<T>>());
-        }
-
-        std::string getId() const {
-            return this->id;
-        }
-
-        void setId(std::string id) {
-            this->id = id;
         }
 
         Ptr<Construct> getOwner() const {

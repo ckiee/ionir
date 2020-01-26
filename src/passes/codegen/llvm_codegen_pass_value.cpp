@@ -7,9 +7,9 @@
 namespace ionir {
     void LlvmCodegenPass::visitIntegerValue(Ptr<IntegerValue> node) {
         /**
-         * Create the APInt to provide. Acts sort of an
-         * LLVM integer value wrapper. Default to being
-         * signed to allow for a larger range of values.
+         * Create the APInt (Arbitrary-precision integer)
+         * to provide. Acts sort of an LLVM integer value
+         * wrapper.
          */
         llvm::APInt apInt = llvm::APInt(node->getValue(), true, node->getType()->getIsSigned());
 
@@ -24,15 +24,19 @@ namespace ionir {
         llvm::Type *type = this->typeStack.pop();
 
         // Finally, create the LLVM value constant.
-        llvm::Constant *value =
-            llvm::ConstantInt::get(type, apInt);
+        llvm::Constant *value = llvm::ConstantInt::get(type, apInt);
 
         // Push the value onto the value stack.
         this->valueStack.push(value);
     }
 
     void LlvmCodegenPass::visitCharValue(Ptr<CharValue> node) {
-        // TODO
+        this->requireBuilder();
+
+        llvm::Type *charType = llvm::Type::getInt8Ty(*this->context);
+        llvm::Constant *value = llvm::ConstantInt::get(charType, node->getValue());
+
+        this->valueStack.push(value);
     }
 
     void LlvmCodegenPass::visitStringValue(Ptr<StringValue> node) {

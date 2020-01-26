@@ -25,7 +25,7 @@ namespace ionir {
         return allocaInst;
     }
 
-    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr> condition, PtrRef<Section> body, OptPtrRef<Section> otherwise) {
+    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr<>> condition, PtrRef<Section> body, OptPtrRef<Section> otherwise) {
         return this->make<BranchInst>(BranchInstOpts{
             this->section,
             condition,
@@ -34,7 +34,7 @@ namespace ionir {
         });
     }
 
-    Ptr<ReturnInst> InstBuilder::createReturn(OptPtr<Value> value) {
+    Ptr<ReturnInst> InstBuilder::createReturn(OptPtr<Value<>> value) {
         return this->make<ReturnInst>(ReturnInstOpts{
             this->section,
             value

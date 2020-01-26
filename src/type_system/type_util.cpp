@@ -19,4 +19,29 @@ namespace ionir {
         // Anything remaining is compatible.
         return true;
     }
+
+    OptPtr<Type> TypeUtil::determineBinaryExprType(Ptr<Type> leftSideType, OptPtr<Type> rightSideType) {
+        // Both operands' types are the same.
+        if (rightSideType.has_value()) {
+            return rightSideType->get()->equals(leftSideType) ? leftSideType : std::nullopt;
+        }
+
+        /**
+         * Binary expression's right side is not defined; The
+         * binary expression's type is automatically that of
+         * the its left-side operand.
+         */
+        return leftSideType;
+    }
+
+    OptPtr<Type> TypeUtil::determineBinaryExprType(Ptr<Expr<>> leftSide, OptPtr<Expr<>> rightSide) {
+        return TypeUtil::determineBinaryExprType(
+            leftSide->getType(),
+            rightSide.has_value() ? rightSide->get()->getType() : std::nullopt
+        );
+    }
+
+    OptPtr<Type> TypeUtil::determineBinaryExprType(BinaryExprOpts opts) {
+        return TypeUtil::determineBinaryExprType(opts.leftSide, opts.rightSide);
+    }
 }

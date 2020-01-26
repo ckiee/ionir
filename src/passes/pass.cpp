@@ -11,6 +11,16 @@ namespace ionir {
             // No need to visit children for this node.
             return;
         }
+        else if (node->getConstructKind() == ConstructKind::Expr) {
+            Ptr<Expr<>> expr = node->cast<Expr<>>();
+
+            if (expr->getExprKind() == ExprKind::Value) {
+                this->visitValue(node->cast<Value<>>());
+
+                // No need to visit children for this node.
+                return;
+            }
+        }
 
         this->visitChildren(node);
     }

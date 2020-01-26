@@ -97,13 +97,13 @@ namespace ionir {
 
         ParserResult<Global> parseGlobal();
 
-        ParserResult<Value> parseValue();
+        ParserResult<Value<>> parseValue();
 
         ParserResult<IdExpr> parseIdExpr();
 
-        ParserResult<Expr> parsePrimaryExpr();
+        ParserResult<Expr<>> parsePrimaryExpr();
 
-        ParserResult<Expr> parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence);
+        ParserResult<Expr<>> parseBinaryExprRightSide(Ptr<Expr<>> leftSide, int minimalPrecedence);
 
         ParserResult<Section> parseSection(Ptr<Block> parent);
 

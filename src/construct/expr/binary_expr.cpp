@@ -1,9 +1,10 @@
 #include <ionir/passes/pass.h>
+#include <ionir/type_system/type_util.h>
 
 namespace ionir {
     BinaryExpr::BinaryExpr(BinaryExprOpts opts)
-        : Expr(ExprKind::Binary), operation(opts.operation), precedence(opts.precedence), leftSide(opts.leftSide),
-        rightSide(opts.rightSide) {
+        // TODO: Add error-handling for failing to determine expression type.
+        : Expr<>(ExprKind::Binary, *TypeUtil::determineBinaryExprType(opts)), operation(opts.operation), precedence(opts.precedence), leftSide(opts.leftSide), rightSide(opts.rightSide) {
         //
     }
 
@@ -11,19 +12,38 @@ namespace ionir {
         visitor.visitBinaryExpr(this->cast<BinaryExpr>());
     }
 
-    Ptr<Expr> BinaryExpr::getLeftSide() const {
+    Ptr<Expr<>> BinaryExpr::getLeftSide() const {
         return this->leftSide;
     }
 
-    void BinaryExpr::setLeftSide(Ptr<Expr> leftSide) {
+    void BinaryExpr::setLeftSide(Ptr<Expr<>> leftSide) {
         this->leftSide = leftSide;
+
+        // Re-determine the binary expression's type after changing an operand.
+        this->redetermineType();
     }
 
-    std::optional<Ptr<Expr>> BinaryExpr::getRightSide() const {
+    OptPtr<Expr<>> BinaryExpr::getRightSide() const {
         return this->rightSide;
     }
 
-    void BinaryExpr::setRightSide(std::optional<Ptr<Expr>> rightSide) {
+    void BinaryExpr::setRightSide(OptPtr<Expr<>> rightSide) {
         this->rightSide = rightSide;
+
+        // Re-determine the binary expression's type after changing an operand.
+        this->redetermineType();
+    }
+
+    void BinaryExpr::redetermineType() {
+        // Re-evaluate the expression's type after changing its operands.
+        OptPtr<Type> type = TypeUtil::determineBinaryExprType(this->leftSide, this->rightSide);
+
+        // Type must have been determined, otherwise report an error.
+        if (type.has_value()) {
+            // TODO: Instead of throwing, use some mechanism to reach notices.
+            throw std::runtime_error("Unable to determine binary expression type -- incompatible operands might be the cause");
+        }
+
+        this->setType(*type);
     }
 }

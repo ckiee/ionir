@@ -24,7 +24,7 @@ namespace ionir {
     void LlvmCodegenPass::visitReturnInst(Ptr<ReturnInst> node) {
         this->requireBuilder();
 
-        OptPtr<Value> value = node->getValue();
+        OptPtr<Value<>> value = node->getValue();
         llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
 
         if (value.has_value()) {

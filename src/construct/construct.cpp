@@ -11,6 +11,10 @@ namespace ionir {
         return {};
     }
 
+    bool Construct::equals(Ptr<Construct> other) {
+        return other == this->shared_from_this();
+    }
+
     bool Construct::isLeafNode() const {
         return this->getChildNodes().empty();
     }

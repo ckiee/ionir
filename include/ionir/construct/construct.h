@@ -88,6 +88,8 @@ namespace ionir {
 
         virtual Ast getChildNodes() const;
 
+        virtual bool equals(Ptr<Construct> other);
+
         bool isLeafNode() const;
 
         ConstructKind getConstructKind() const;

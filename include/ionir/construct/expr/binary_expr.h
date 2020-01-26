@@ -17,18 +17,18 @@ namespace ionir {
 
         Ptr<Expr<>> leftSide;
 
-        std::optional<Ptr<Expr<>>> rightSide = std::nullopt;
+        OptPtr<Expr<>> rightSide = std::nullopt;
     };
 
     class BinaryExpr : public Expr<> {
-    protected:
+    private:
         TokenKind operation;
 
         int precedence;
 
         Ptr<Expr<>> leftSide;
 
-        std::optional<Ptr<Expr>> rightSide;
+        OptPtr<Expr<>> rightSide;
 
     public:
         explicit BinaryExpr(BinaryExprOpts opts);
@@ -39,11 +39,10 @@ namespace ionir {
 
         void setLeftSide(Ptr<Expr<>> leftSide);
 
-        std::optional<Ptr<Expr<>>> getRightSide() const;
+        OptPtr<Expr<>> getRightSide() const;
 
-        void setRightSide(std::optional<Ptr<Expr>> rightSide);
+        void setRightSide(OptPtr<Expr<>> rightSide);
 
-        // TODO: Exprs must take in Type (thus, as well as Value, etc.).
-        std::optional<Ptr<Type>> evaluateType() const;
+        void redetermineType();
     };
 }

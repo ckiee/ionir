@@ -10,7 +10,7 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    std::optional<Ptr<Value>> Parser::parseValue() {
+    ParserResult<Value<>> Parser::parseValue() {
         Token token = this->stream.get();
 
         switch (token.getKind()) {
@@ -30,7 +30,7 @@ namespace ionir {
         }
     }
 
-    std::optional<Ptr<IntegerValue>> Parser::parseInt() {
+    ParserResult<IntegerValue> Parser::parseInt() {
         std::optional<Ptr<Type>> type = this->parseTypePrefix();
 
         IONIR_PARSER_ASSURE(type)
@@ -53,7 +53,7 @@ namespace ionir {
         return integer;
     }
 
-    std::optional<Ptr<CharValue>> Parser::parseChar() {
+    ParserResult<CharValue> Parser::parseChar() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralCharacter);
 
         // Extract the value from the character token.
@@ -71,7 +71,7 @@ namespace ionir {
         return std::make_shared<CharValue>(stringValue[0]);
     }
 
-    std::optional<Ptr<StringValue>> Parser::parseString() {
+    ParserResult<StringValue> Parser::parseString() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralString);
 
         // Extract the value from the string token.

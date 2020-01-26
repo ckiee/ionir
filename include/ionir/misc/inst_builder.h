@@ -34,9 +34,9 @@ namespace ionir {
 
         Ptr<AllocaInst> createAlloca(std::string id, Ptr<Type> type);
 
-        Ptr<BranchInst> createBranch(Ptr<Expr> condition, PtrRef<Section> body, OptPtrRef<Section> otherwise = std::nullopt);
+        Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, PtrRef<Section> body, OptPtrRef<Section> otherwise = std::nullopt);
 
-        Ptr<ReturnInst> createReturn(OptPtr<Value> value = std::nullopt);
+        Ptr<ReturnInst> createReturn(OptPtr<Value<>> value = std::nullopt);
 
         Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt);
     };
