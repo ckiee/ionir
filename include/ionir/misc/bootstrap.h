@@ -9,5 +9,7 @@ namespace ionir {
         static Ast functionAst(std::string id = ConstName::anonymous);
 
         static Ptr<Function> function(std::string id = ConstName::anonymous);
+
+        static Ptr<Section> section(Ptr<Block> parent = nullptr, std::string id = ConstName::anonymous, SectionKind sectionKind = SectionKind::Entry);
     };
 }

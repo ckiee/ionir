@@ -5,6 +5,7 @@
 #include <vector>
 #include <ionir/misc/helpers.h>
 #include <ionir/misc/static_factory.h>
+#include <ionir/misc/inst_builder.h>
 #include <ionir/tracking/scope_anchor.h>
 #include "pseudo/args.h"
 #include "inst.h"
@@ -72,5 +73,7 @@ namespace ionir {
          * not found.
          */
         std::optional<uint32_t> locate(Ptr<Inst> inst) const;
+
+        Ptr<InstBuilder> createBuilder() const;
     };
 }

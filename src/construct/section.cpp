@@ -43,4 +43,8 @@ namespace ionir {
     std::optional<uint32_t> Section::locate(Ptr<Inst> inst) const {
         return Util::locateInVector<Ptr<Inst>>(this->insts, inst);
     }
+
+    Ptr<InstBuilder> Section::createBuilder() const {
+        return std::make_shared<InstBuilder>(this->shared_from_this());
+    }
 }

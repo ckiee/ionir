@@ -15,4 +15,12 @@ namespace ionir {
 
         return (*module->getSymbolTable())[id]->cast<Function>();
     }
+
+    Ptr<Section> Bootstrap::section(Ptr<Block> parent, std::string id, SectionKind sectionKind) {
+        return std::make_shared<Section>(SectionOpts{
+            parent,
+            sectionKind,
+            id
+        });
+    }
 }
