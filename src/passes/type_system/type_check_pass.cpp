@@ -2,7 +2,7 @@
 
 namespace ionir {
     void TypeCheckPass::visitFunction(Ptr<Function> node) {
-        std::optional <Ptr<Section>> entrySection = node->getBody()->getEntrySection();
+        OptPtr<Section> entrySection = node->getBody()->getEntrySection();
 
         if (!entrySection.has_value()) {
             throw std::runtime_error("Entry section for function body is not set");

@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <ionir/construct/type/integer_type.h>
+#include <ionir/construct/type/void_type.h>
 #include <ionir/construct/construct.h>
 #include <ionir/tracking/symbol_table.h>
 
@@ -33,6 +34,10 @@ namespace ionir {
         static Ptr<Type> typeString() {
             // TODO: Awaiting array types support.
             return StaticFactory::typeChar();
+        }
+
+        static Ptr<Type> typeVoid() {
+            return std::make_shared<VoidType>();
         }
     };
 }
