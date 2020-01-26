@@ -11,7 +11,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    std::optional<Ptr<Expr>> Parser::parsePrimaryExpr() {
+    std::optional<Ptr<Expr<>>> Parser::parsePrimaryExpr() {
         TokenKind tokenKind = this->stream.get().getKind();
 
         return this->makeNotice("Not yet implemented");
@@ -31,7 +31,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    std::optional<Ptr<Expr>> Parser::parseBinaryExprRightSide(Ptr<Expr> leftSide, int minimalPrecedence) {
+    OptPtr<Expr<>> Parser::parseBinaryExprRightSide(Ptr<Expr<>> leftSide, int minimalPrecedence) {
         // If this is a binary operation, find it's precedence.
         while (true) {
             // Capture the current token.
@@ -63,7 +63,7 @@ namespace ionir {
             this->stream.skip();
 
             // Parse the right-side.
-            std::optional<Ptr<Expr>> rightSide = this->parsePrimaryExpr();
+            OptPtr<Expr<>> rightSide = this->parsePrimaryExpr();
 
             IONIR_PARSER_ASSURE(rightSide)
 

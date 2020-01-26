@@ -23,7 +23,11 @@ namespace ionir {
     OptPtr<Type> TypeUtil::determineBinaryExprType(Ptr<Type> leftSideType, OptPtr<Type> rightSideType) {
         // Both operands' types are the same.
         if (rightSideType.has_value()) {
-            return rightSideType->get()->equals(leftSideType) ? leftSideType : std::nullopt;
+            if (rightSideType->get()->equals(leftSideType)) {
+                return leftSideType;
+            }
+
+            return std::nullopt;
         }
 
         /**
@@ -35,9 +39,15 @@ namespace ionir {
     }
 
     OptPtr<Type> TypeUtil::determineBinaryExprType(Ptr<Expr<>> leftSide, OptPtr<Expr<>> rightSide) {
+        OptPtr<Type> rightSideType = std::nullopt;
+
+        if (rightSide.has_value()) {
+            rightSideType = rightSide->get()->getType();
+        }
+
         return TypeUtil::determineBinaryExprType(
             leftSide->getType(),
-            rightSide.has_value() ? rightSide->get()->getType() : std::nullopt
+            rightSideType
         );
     }
 

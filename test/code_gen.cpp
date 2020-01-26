@@ -84,7 +84,7 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
     Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int32);
 
     Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar,
-        std::make_shared<IntegerValue>(type, 123));
+        std::make_shared<IntegerValue>(type, 123)->cast<Value<>>());
 
     visitor->visitGlobal(globalVar);
 

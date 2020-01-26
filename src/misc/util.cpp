@@ -60,6 +60,10 @@ namespace ionir {
                 return ConstName::typeInt1;
             }
 
+            case IntegerKind ::Int8: {
+                return ConstName::typeInt8;
+            }
+
             case IntegerKind::Int16: {
                 return ConstName::typeInt16;
             }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ionir/construct/construct.h>
+#include <ionir/construct/type.h>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {

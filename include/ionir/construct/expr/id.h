@@ -8,7 +8,7 @@
 namespace ionir {
     class Pass;
 
-    class IdExpr : public Expr {
+    class IdExpr : public Expr<> {
     public:
         IdExpr();
 

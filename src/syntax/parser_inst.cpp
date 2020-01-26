@@ -85,8 +85,7 @@ namespace ionir {
 
     ParserResult<ReturnInst> Parser::parseReturnInst(Ptr<Section> parent) {
         // TODO: Return inst does not necessarily take a value. Instead, it should be allowed to return without value, signaling void.
-        std::optional <Ptr<Value>>
-            value = this->parseValue();
+        OptPtr<Value<>> value = this->parseValue();
 
         IONIR_PARSER_ASSURE(value)
 
@@ -97,7 +96,7 @@ namespace ionir {
     }
 
     ParserResult<BranchInst> Parser::parseBranchInst(Ptr<Section> parent) {
-         OptPtr<Expr> condition = this->parsePrimaryExpr();
+         OptPtr<Expr<>> condition = this->parsePrimaryExpr();
 
          // Condition must be set.
          IONIR_PARSER_ASSURE(condition)
@@ -138,7 +137,7 @@ namespace ionir {
     }
 
     ParserResult<StoreInst> Parser::parseStoreInst(Ptr<Section> parent) {
-        ParserResult<Value> value = this->parseValue();
+        ParserResult<Value<>> value = this->parseValue();
 
         IONIR_PARSER_ASSURE(value)
 

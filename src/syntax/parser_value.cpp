@@ -15,7 +15,13 @@ namespace ionir {
 
         switch (token.getKind()) {
             case TokenKind::LiteralInt: {
-                return this->parseInt();
+                ParserResult<IntegerValue> integerValue = this->parseInt();
+
+                if (integerValue.has_value()) {
+                    return integerValue->get()->cast<Value<>>();
+                }
+
+                return std::nullopt;
             }
 
             case TokenKind::LiteralCharacter: {
