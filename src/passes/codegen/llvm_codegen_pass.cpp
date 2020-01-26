@@ -125,7 +125,7 @@ namespace ionir {
         llvm::Type *type = this->typeStack.pop();
 
         llvm::GlobalVariable *globalVar =
-            (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), type);
+            llvm::dyn_cast<llvm::GlobalVariable>(this->module->getOrInsertGlobal(node->getId(), type));
 
         // Assign value if applicable.
         if (node->getValue().has_value()) {
