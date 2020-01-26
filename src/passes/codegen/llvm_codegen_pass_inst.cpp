@@ -16,7 +16,7 @@ namespace ionir {
          * using the buffered builder.
          */
         llvm::AllocaInst *allocaInst =
-            this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getId());
+            this->builder->CreateAlloca(type, (llvm::Value *)nullptr, node->getYieldId());
 
         this->valueStack.push(allocaInst);
     }
@@ -70,7 +70,7 @@ namespace ionir {
         // Visit body.
         this->visitSection(*bodyRef->getValue());
 
-        auto *llvmBody = (llvm::BasicBlock *)this->valueStack.pop();
+        auto *llvmBody = this->valueStack.popAs<llvm::BasicBlock>();
 
         // Prepare otherwise block with a default value.
         std::optional<llvm::BasicBlock *> llvmOtherwise = std::nullopt;
@@ -85,7 +85,7 @@ namespace ionir {
         else if (otherwiseRef.has_value()) {
             std::cout << "Branch inst is resolved ... llvm codegen" << std::endl;
             this->visitSection(*otherwiseRef->get()->getValue());
-            llvmOtherwise = (llvm::BasicBlock *)this->valueStack.pop();
+            llvmOtherwise = this->valueStack.popAs<llvm::BasicBlock>();
         }
 
         this->restoreBuilder();

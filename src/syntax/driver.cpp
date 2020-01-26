@@ -30,15 +30,14 @@ namespace ionir {
         return false;
     }
 
-    std::optional<Ptr<Construct>> Driver::tryNext() {
+    OptPtr<Construct> Driver::tryNext() {
         // Retrieve the current token from the token stream.
         Token token = this->stream.get();
 
         // Function definition (Token should be a type name representing the function's return type).
         if (token.getKind() == TokenKind::Identifier) {
             // TODO
-            std::cout
-                << "Identifier token detected ~> Expecting function definition. (Token is considered function return type.)"
+            std::cout << "Identifier token detected ~> Expecting function definition. (Token is considered function return type.)"
                 << std::endl;
         }
 

@@ -60,7 +60,7 @@ namespace ionir {
         return this->filePath;
     }
 
-    ParserResult<Construct> Parser::parseTopLevel() {
+    OptPtr<Construct> Parser::parseTopLevel() {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordModule: {
                 return this->parseModule();
@@ -84,7 +84,7 @@ namespace ionir {
         }
     }
 
-    ParserResult<Type> Parser::parseType() {
+    OptPtr<Type> Parser::parseType() {
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
@@ -106,11 +106,10 @@ namespace ionir {
         return std::make_shared<Type>(*id, Util::resolveTypeKind(*id), isPointer);
     }
 
-    ParserResult<Type> Parser::parseTypePrefix() {
+    OptPtr<Type> Parser::parseTypePrefix() {
         this->skipOver(TokenKind::SymbolBracketL);
 
-        std::optional<Ptr<Type>>
-            type = this->parseType();
+        OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -119,10 +118,10 @@ namespace ionir {
         return type;
     }
 
-    ParserResult<Global> Parser::parseGlobal() {
+    OptPtr<Global> Parser::parseGlobal() {
         this->skipOver(TokenKind::KeywordGlobal);
 
-        ParserResult<Type> type = this->parseType();
+        OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -137,7 +136,7 @@ namespace ionir {
         return std::make_shared<Global>(*type, *id);
     }
 
-    ParserResult<Section> Parser::parseSection(Ptr<Block> parent) {
+    OptPtr<Section> Parser::parseSection(Ptr<Block> parent) {
         this->skipOver(TokenKind::SymbolAt);
 
         std::optional<std::string> id = this->parseId();
@@ -192,7 +191,7 @@ namespace ionir {
         return section;
     }
 
-    ParserResult<Block> Parser::parseBlock(Ptr<Function> parent) {
+    OptPtr<Block> Parser::parseBlock(Ptr<Function> parent) {
         this->skipOver(TokenKind::SymbolBraceL);
 
         Ptr<Block> block = std::make_shared<Block>(parent);
@@ -214,7 +213,7 @@ namespace ionir {
         return block;
     }
 
-    ParserResult<Module> Parser::parseModule() {
+    OptPtr<Module> Parser::parseModule() {
         this->skipOver(TokenKind::KeywordModule);
 
         std::optional<std::string> id = this->parseId();
@@ -226,7 +225,7 @@ namespace ionir {
         PtrSymbolTable<Construct> symbolTable = std::make_shared<SymbolTable<Ptr<Construct>>>();
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            ParserResult<Construct> topLevelConstruct = this->parseTopLevel();
+            OptPtr<Construct> topLevelConstruct = this->parseTopLevel();
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
             if (topLevelConstruct.has_value()) {

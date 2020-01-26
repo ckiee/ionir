@@ -11,7 +11,7 @@
 #include <ionir/construct/inst/store.h>
 #include <ionir/construct/inst/call.h>
 #include <ionir/construct/type/struct_decl.h>
-#include <ionir/construct/type/variable_decl.h>
+#include <ionir/construct/variable_decl.h>
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
 #include <ionir/construct/pseudo/directive.h>

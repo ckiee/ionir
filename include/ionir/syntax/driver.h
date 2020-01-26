@@ -30,6 +30,6 @@ namespace ionir {
          * Processed the current iterable item and increments the
          * list's index if applicable.
          */
-        std::optional<Ptr<Construct>> tryNext(); // override;
+        OptPtr<Construct> tryNext(); // override;
     };
 }

@@ -33,9 +33,6 @@
 #include "parser_helpers.h"
 
 namespace ionir {
-    template<typename T>
-    using ParserResult = OptPtr<T>;
-
     class Parser {
     private:
         TokenStream stream;
@@ -67,66 +64,66 @@ namespace ionir {
 
         std::string getFilePath() const;
 
-        ParserResult<Construct> parseTopLevel();
+        OptPtr<Construct> parseTopLevel();
 
         /**
          * Parses a integer literal in the form of
          * long (or integer 64).
          */
-        ParserResult<IntegerValue> parseInt();
+        OptPtr<IntegerValue> parseInt();
 
-        ParserResult<CharValue> parseChar();
+        OptPtr<CharValue> parseChar();
 
-        ParserResult<StringValue> parseString();
+        OptPtr<StringValue> parseString();
 
         std::optional<std::string> parseId();
 
-        ParserResult<Type> parseType();
+        OptPtr<Type> parseType();
 
-        ParserResult<Type> parseTypePrefix();
+        OptPtr<Type> parseTypePrefix();
 
         std::optional<Arg> parseArg();
 
-        ParserResult<Args> parseArgs();
+        OptPtr<Args> parseArgs();
 
-        ParserResult<Prototype> parsePrototype();
+        OptPtr<Prototype> parsePrototype();
 
-        ParserResult<Extern> parseExtern();
+        OptPtr<Extern> parseExtern();
 
-        ParserResult<Function> parseFunction();
+        OptPtr<Function> parseFunction();
 
-        ParserResult<Global> parseGlobal();
+        OptPtr<Global> parseGlobal();
 
-        ParserResult<Value<>> parseValue();
+        OptPtr<Value<>> parseValue();
 
-        ParserResult<IdExpr> parseIdExpr();
+        OptPtr<IdExpr> parseIdExpr();
 
-        ParserResult<Expr<>> parsePrimaryExpr();
+        OptPtr<Expr<>> parsePrimaryExpr();
 
-        ParserResult<Expr<>> parseBinaryExprRightSide(Ptr<Expr<>> leftSide, int minimalPrecedence);
+        OptPtr<Expr<>> parseBinaryExprRightSide(Ptr<Expr<>> leftSide, int minimalPrecedence);
 
-        ParserResult<Section> parseSection(Ptr<Block> parent);
+        OptPtr<Section> parseSection(Ptr<Block> parent);
 
-        ParserResult<Block> parseBlock(Ptr<Function> parent);
+        OptPtr<Block> parseBlock(Ptr<Function> parent);
 
-        ParserResult<AllocaInst> parseAllocaInst(Ptr<Section> parent);
+        OptPtr<AllocaInst> parseAllocaInst(Ptr<Section> parent);
 
-        ParserResult<ReturnInst> parseReturnInst(Ptr<Section> parent);
+        OptPtr<ReturnInst> parseReturnInst(Ptr<Section> parent);
 
-        ParserResult<BranchInst> parseBranchInst(Ptr<Section> parent);
+        OptPtr<BranchInst> parseBranchInst(Ptr<Section> parent);
 
-        ParserResult<CallInst> parseCallInst(Ptr<Section> parent);
+        OptPtr<CallInst> parseCallInst(Ptr<Section> parent);
 
-        ParserResult<StoreInst> parseStoreInst(Ptr<Section> parent);
+        OptPtr<StoreInst> parseStoreInst(Ptr<Section> parent);
 
         /**
          * Parses an instruction, consuming its identifier.
          * Invokes the corresponding parser depending on its
          * identifier.
          */
-        ParserResult<Inst> parseInst(Ptr<Section> parent);
+        OptPtr<Inst> parseInst(Ptr<Section> parent);
 
-        ParserResult<Module> parseModule();
+        OptPtr<Module> parseModule();
 
         std::optional<std::string> parseLine();
 
@@ -135,7 +132,7 @@ namespace ionir {
         std::optional<Directive> parseDirective();
 
         template<typename T = Construct>
-        ParserResult<Ref<T>> parseReference(Ptr<Construct> owner) {
+        OptPtr<Ref<T>> parseRef(Ptr<Construct> owner) {
             std::optional<std::string> id = this->parseId();
 
             IONIR_PARSER_ASSURE(id)
