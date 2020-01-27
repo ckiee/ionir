@@ -5,7 +5,6 @@
 #include <vector>
 #include <ionir/misc/helpers.h>
 #include <ionir/misc/static_factory.h>
-#include <ionir/misc/inst_builder.h>
 #include <ionir/tracking/scope_anchor.h>
 #include "pseudo/args.h"
 #include "inst.h"
@@ -16,6 +15,8 @@ namespace ionir {
     class Pass;
 
     class Block;
+
+    class InstBuilder;
 
     enum class SectionKind {
         /**
@@ -65,6 +66,8 @@ namespace ionir {
 
         void setInsts(std::vector<Ptr<Inst>> insts);
 
+        void insertInst(Ptr<Inst> inst);
+
         uint32_t relocateInsts(Section &target, uint32_t from = 0);
 
         /**
@@ -74,6 +77,6 @@ namespace ionir {
          */
         std::optional<uint32_t> locate(Ptr<Inst> inst) const;
 
-        Ptr<InstBuilder> createBuilder() const;
+        Ptr<InstBuilder> createBuilder();
     };
 }

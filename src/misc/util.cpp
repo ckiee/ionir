@@ -3,6 +3,7 @@
 #include <ionir/construct/function.h>
 #include <ionir/construct/extern.h>
 #include <ionir/construct/global.h>
+#include <ionir/construct/inst/alloca.h>
 
 namespace ionir {
     bool Util::stringStartsWith(std::string subject, std::string test) {
@@ -127,6 +128,22 @@ namespace ionir {
 
             case ConstructKind::Global: {
                 return construct->cast<Global>()->getId();
+            }
+
+            case ConstructKind::Instruction: {
+                return Util::getInstId(construct->cast<Inst>());
+            }
+
+            default: {
+                return std::nullopt;
+            }
+        }
+    }
+
+    std::optional<std::string> Util::getInstId(Ptr<Inst> inst) {
+        switch (inst->getInstKind()) {
+            case InstKind::Alloca: {
+                return inst->cast<AllocaInst>()->getYieldId();
             }
 
             default: {

@@ -7,6 +7,7 @@
 #include <regex>
 #include <string_view>
 #include <ionir/construct/type/integer_type.h>
+#include <ionir/construct/inst.h>
 #include <ionir/const/const_name.h>
 
 namespace ionir {
@@ -61,6 +62,8 @@ namespace ionir {
         static TypeKind resolveTypeKind(std::string id);
 
         static std::optional<std::string> getConstructId(Ptr<Construct> construct);
+
+        static std::optional<std::string> getInstId(Ptr<Inst> inst);
 
         template<typename TKey, typename TValue>
         static bool mapContains(std::map<TKey, TValue> map, TKey key) {

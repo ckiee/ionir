@@ -181,7 +181,7 @@ namespace ionir {
             if (inst->get()->getInstKind() == InstKind::Alloca) {
                 Ptr<AllocaInst> allocaInst = inst->get()->cast<AllocaInst>();
 
-                (*symbolTable)[allocaInst->getId()] = allocaInst;
+                symbolTable->insert(*allocaInst->getYieldId(), allocaInst);
             }
         }
 

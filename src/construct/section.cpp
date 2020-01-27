@@ -1,3 +1,4 @@
+#include <ionir/misc/inst_builder.h>
 #include <ionir/misc/util.h>
 #include <ionir/passes/pass.h>
 
@@ -24,8 +25,20 @@ namespace ionir {
         return this->insts;
     }
 
+    // TODO: SymbolTable must be re-populated after changing insts vector.
     void Section::setInsts(std::vector<Ptr<Inst>> insts) {
         this->insts = insts;
+    }
+
+    void Section::insertInst(Ptr<Inst> inst) {
+        this->insts.push_back(inst);
+
+        std::optional<std::string> id = Util::getInstId(inst);
+
+        // Instruction is named. Register it in the symbol table.
+        if (id.has_value()) {
+            this->getSymbolTable()->insert(*id, inst);
+        }
     }
 
     uint32_t Section::relocateInsts(Section &target, const uint32_t from) {
@@ -44,7 +57,7 @@ namespace ionir {
         return Util::locateInVector<Ptr<Inst>>(this->insts, inst);
     }
 
-    Ptr<InstBuilder> Section::createBuilder() const {
-        return std::make_shared<InstBuilder>(this->shared_from_this());
+    Ptr<InstBuilder> Section::createBuilder() {
+        return std::make_shared<InstBuilder>(this->cast<Section>());
     }
 }

@@ -20,7 +20,7 @@ namespace ionir {
             type
         });
 
-        (*this->section->getSymbolTable())[allocaInst->getId()] = allocaInst;
+        this->section->insertInst(allocaInst);
 
         return allocaInst;
     }
@@ -41,9 +41,10 @@ namespace ionir {
         });
     }
 
-    Ptr<CallInst> InstBuilder::createCall(Ptr<Section> section, OptPtrRef<Function> callee) {
+    Ptr<CallInst> InstBuilder::createCall(Ptr<Section> section, OptPtrRef<Function> callee, std::optional<std::string> yieldId) {
         return this->make<CallInst>(CallInstOpts{
             this->section,
+            yieldId,
             callee
         });
     }

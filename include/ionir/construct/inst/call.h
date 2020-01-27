@@ -1,16 +1,16 @@
 #pragma once
 
-#include <optional>
 #include <string>
-#include <ionir/syntax/scope.h>
-#include <ionir/construct/function.h>
-#include <ionir/misc/helpers.h>
+#include <ionir/construct/pseudo/ref.h>
+#include <ionir/construct/inst_yield.h>
 
 namespace ionir {
     class Pass;
 
+    class Function;
+
     struct CallInstOpts : InstOpts {
-        std::string yieldId;
+        std::optional<std::string> yieldId;
 
         OptPtrRef<Function> callee = std::nullopt;
     };

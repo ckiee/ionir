@@ -199,10 +199,6 @@ namespace ionir {
         //
     }
 
-    void Pass::visitVariableDecl(Ptr<VariableDecl> node) {
-        //
-    }
-
     void Pass::visitType(Ptr<Type> node) {
         //
     }

@@ -1,15 +1,15 @@
 #include <ionir/construct/inst_yield.h>
 
 namespace ionir {
-    InstYield::InstYield(std::string yieldId) : yieldId(yieldId) {
+    InstYield::InstYield(std::optional<std::string> yieldId) : yieldId(yieldId) {
         //
     }
 
-    std::string InstYield::getYieldId() const {
+    std::optional<std::string> InstYield::getYieldId() const {
         return this->yieldId;
     }
 
-    void InstYield::setYieldId(std::string yieldId) {
+    void InstYield::setYieldId(std::optional<std::string> yieldId) {
         this->yieldId = yieldId;
     }
 }

@@ -2,13 +2,13 @@
 
 #include <string>
 #include <ionir/construct/type.h>
-#include <ionir/construct/section.h>
 #include <ionir/construct/inst_yield.h>
 #include <ionir/construct/inst.h>
 #include <ionir/misc/helpers.h>
-#include <ionir/misc/named.h>
 
 namespace ionir {
+    class Section;
+
     struct AllocaInstOpts : InstOpts {
         std::string yieldId;
 

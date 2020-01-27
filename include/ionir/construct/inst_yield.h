@@ -1,18 +1,19 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include "inst.h"
 
 namespace ionir {
     class InstYield {
     private:
-        std::string yieldId;
+        std::optional<std::string> yieldId;
 
     public:
-        explicit InstYield(std::string yieldId);
+        explicit InstYield(std::optional<std::string> yieldId);
 
-        std::string getYieldId() const;
+        std::optional<std::string> getYieldId() const;
 
-        void setYieldId(std::string yieldId);
+        void setYieldId(std::optional<std::string> yieldId);
     };
 }

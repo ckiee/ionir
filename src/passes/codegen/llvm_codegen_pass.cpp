@@ -8,11 +8,11 @@ namespace ionir {
         return this->module;
     }
 
-    Stack<llvm::Value *> LlvmCodegenPass::getValueStack() const {
+    LlvmStack<llvm::Value> LlvmCodegenPass::getValueStack() const {
         return this->valueStack;
     }
 
-    Stack<llvm::Type *> LlvmCodegenPass::getTypeStack() const {
+    LlvmStack<llvm::Type> LlvmCodegenPass::getTypeStack() const {
         return this->typeStack;
     }
 

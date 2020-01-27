@@ -10,12 +10,12 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    ParserResult<Value<>> Parser::parseValue() {
+    OptPtr<Value<>> Parser::parseValue() {
         Token token = this->stream.get();
 
         switch (token.getKind()) {
             case TokenKind::LiteralInt: {
-                ParserResult<IntegerValue> integerValue = this->parseInt();
+                OptPtr<IntegerValue> integerValue = this->parseInt();
 
                 if (integerValue.has_value()) {
                     return integerValue->get()->cast<Value<>>();
@@ -28,7 +28,7 @@ namespace ionir {
                 return this->parseChar();
             }
 
-                // TODO: Missing values.
+            // TODO: Missing values.
 
             default: {
                 return this->makeNotice("Expected valid value token");
@@ -36,7 +36,7 @@ namespace ionir {
         }
     }
 
-    ParserResult<IntegerValue> Parser::parseInt() {
+    OptPtr<IntegerValue> Parser::parseInt() {
         std::optional<Ptr<Type>> type = this->parseTypePrefix();
 
         IONIR_PARSER_ASSURE(type)
@@ -59,7 +59,7 @@ namespace ionir {
         return integer;
     }
 
-    ParserResult<CharValue> Parser::parseChar() {
+    OptPtr<CharValue> Parser::parseChar() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralCharacter);
 
         // Extract the value from the character token.
@@ -77,7 +77,7 @@ namespace ionir {
         return std::make_shared<CharValue>(stringValue[0]);
     }
 
-    ParserResult<StringValue> Parser::parseString() {
+    OptPtr<StringValue> Parser::parseString() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralString);
 
         // Extract the value from the string token.

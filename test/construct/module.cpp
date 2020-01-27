@@ -13,7 +13,7 @@ TEST(ModuleConstructTest, ParseEmpty) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    ParserResult<Module> module = parser.parseModule();
+    OptPtr<Module> module = parser.parseModule();
 
     EXPECT_TRUE(module.has_value());
 

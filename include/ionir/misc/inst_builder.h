@@ -6,7 +6,6 @@
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>
 #include <ionir/construct/inst/call.h>
-#include <ionir/syntax/scope.h>
 #include "helpers.h"
 
 namespace ionir {
@@ -38,6 +37,6 @@ namespace ionir {
 
         Ptr<ReturnInst> createReturn(OptPtr<Value<>> value = std::nullopt);
 
-        Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt);
+        Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt, std::optional<std::string> yieldId = std::nullopt);
     };
 }
