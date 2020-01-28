@@ -39,9 +39,7 @@ module foo { // Module declaration (encapsulation).
 A general usage example is provided below.
 
 ```cpp
-#include <memory>
 #include <iostream>
-#include <string>
 #include <ionir/passes/semantic/name_resolution_pass.h>
 #include <ionir/passes/semantic/name_shadowing_pass.h>
 #include <ionir/passes/optimization/dead_code_elimination_pass.h>
