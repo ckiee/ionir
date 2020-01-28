@@ -88,5 +88,7 @@ namespace ionir {
         virtual void visitDirective(Directive node);
 
         virtual void visitRef(PtrRef<> node);
+
+        virtual void visitScopeAnchor(Ptr<ScopeAnchor<>> node);
     };
 }

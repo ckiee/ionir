@@ -6,10 +6,13 @@ namespace ionir {
     }
 
     void NameResolutionPass::visitModule(Ptr<Module> node) {
+        Pass::visitModule(node);
         this->scopeStack.push(node->getSymbolTable());
     }
 
     void NameResolutionPass::visitRef(PtrRef<> node) {
+        Pass::visitRef(node);
+
         // Node is already resolved, no need to continue.
         if (node->isResolved()) {
             return;
@@ -42,6 +45,13 @@ namespace ionir {
                 break;
             }
         }
+    }
+
+    void NameResolutionPass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
+        Pass::visitScopeAnchor(node);
+
+        // TODO: ScopeStack should be pushed & popped, but its never popped.
+        this->scopeStack.push(node->getSymbolTable());
     }
 
     Ptr<StackTrace> NameResolutionPass::getStackTrace() const {

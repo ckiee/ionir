@@ -4,6 +4,8 @@
 
 namespace ionir {
     void NameShadowingPass::visitInst(Ptr<Inst> node) {
+        Pass::visitInst(node);
+
         Ptr<Function> function = node->getParent()->getParent()->getParent();
         Ptr<Args> args = function->getPrototype()->getArgs();
 

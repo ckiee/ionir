@@ -222,4 +222,8 @@ namespace ionir {
     void Pass::visitRef(PtrRef<> node) {
         //
     }
+
+    void Pass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
+        //
+    }
 }

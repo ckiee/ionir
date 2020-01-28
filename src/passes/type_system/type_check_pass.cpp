@@ -2,6 +2,8 @@
 
 namespace ionir {
     void TypeCheckPass::visitFunction(Ptr<Function> node) {
+        Pass::visitFunction(node);
+
         OptPtr<Section> entrySection = node->getBody()->getEntrySection();
 
         if (!entrySection.has_value()) {
@@ -33,6 +35,8 @@ namespace ionir {
     }
 
     void TypeCheckPass::visitStoreInst(Ptr<StoreInst> node) {
+        Pass::visitStoreInst(node);
 
+        // TODO: Implement.
     }
 }

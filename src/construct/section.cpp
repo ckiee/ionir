@@ -9,6 +9,7 @@ namespace ionir {
     }
 
     void Section::accept(Pass &visitor) {
+        visitor.visitScopeAnchor(this->cast<ScopeAnchor<>>());
         visitor.visitSection(this->cast<Section>());
     }
 

@@ -1,4 +1,4 @@
-#include <ionir/passes/construct_validation_pass.h>
+#include <ionir/passes/semantic/construct_validation_pass.h>
 
 namespace ionir {
     void ConstructValidationPass::visit(Ptr<Construct> node) {

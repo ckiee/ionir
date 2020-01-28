@@ -7,6 +7,7 @@ namespace ionir {
     }
 
     void Module::accept(Pass &visitor) {
+        visitor.visitScopeAnchor(this->cast<ScopeAnchor<>>());
         visitor.visitModule(this->cast<Module>());
     }
 

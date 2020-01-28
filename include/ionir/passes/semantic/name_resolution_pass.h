@@ -3,7 +3,7 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
 #include <ionir/reporting/notice.h>
-#include <ionir/tracking/scope.h>
+#include <ionir/tracking/scope_stack.h>
 
 namespace ionir {
     /**
@@ -20,6 +20,8 @@ namespace ionir {
         explicit NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
 
         void visitModule(Ptr<Module> node) override;
+
+        void visitScopeAnchor(Ptr<ScopeAnchor<>> node) override;
 
         void visitRef(PtrRef<> node) override;
 

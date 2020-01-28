@@ -2,6 +2,8 @@
 
 namespace ionir {
     void DeadCodeEliminationPass::visitSection(Ptr<Section> node) {
+        Pass::visitSection(node);
+        
         std::vector<Ptr<Inst>> insts = node->getInsts();
         bool erase = false;
 
