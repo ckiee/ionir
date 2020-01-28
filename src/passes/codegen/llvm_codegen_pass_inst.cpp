@@ -60,7 +60,7 @@ namespace ionir {
 
         this->saveBuilder();
 
-        PtrRef<Section> bodyRef = node->getBody();
+        PtrRef<Section> bodyRef = node->getBodyRef();
 
         // Body should have been resolved at this point.
         if (!bodyRef->isResolved()) {
@@ -75,7 +75,7 @@ namespace ionir {
         // Prepare otherwise block with a default value.
         std::optional<llvm::BasicBlock *> llvmOtherwise = std::nullopt;
 
-        OptPtrRef<Section> otherwiseRef = node->getOtherwise();
+        OptPtrRef<Section> otherwiseRef = node->getOtherwiseRef();
 
         // Otherwise, if set, should have been resolved at this point.
         if (otherwiseRef.has_value() && !otherwiseRef->get()->isResolved()) {

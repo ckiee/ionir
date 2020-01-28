@@ -69,5 +69,14 @@ namespace ionir {
         static bool mapContains(std::map<TKey, TValue> map, TKey key) {
             return map.find(key) != map.end();
         }
+
+        template<typename T>
+        static std::vector<T> mergeVectors(std::vector<T> a, std::vector<T> b) {
+            for (const auto item : b) {
+                a.push_back(item);
+            }
+
+            return a;
+        }
     };
 }

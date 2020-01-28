@@ -122,8 +122,8 @@ namespace ionir {
              OptPtr<Ref<Section>> otherwise = this->parseRef<Section>(branchInst);
          }
 
-         branchInst->setBody(*body);
-         branchInst->setOtherwise(otherwise);
+        branchInst->setBodyRef(*body);
+        branchInst->setOtherwiseRef(otherwise);
 
          return branchInst;
     }

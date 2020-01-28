@@ -20,9 +20,7 @@ namespace ionir {
     public:
         NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
 
-        void visitModule(Ptr<Module> node) override {
-            this->scopeStack.push(node->getSymbolTable());
-        }
+        void visitModule(Ptr<Module> node) override;
 
         void visitRef(PtrRef<> node) override;
 

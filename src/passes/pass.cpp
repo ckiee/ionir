@@ -5,7 +5,7 @@ namespace ionir {
         node->accept(*this);
 
         // TODO: Temporary fix for circular dep.
-        if (node->getConstructKind() == ConstructKind::Reference) {
+        if (node->getConstructKind() == ConstructKind::Ref) {
             this->visitRef(node->cast<Ref<>>());
 
             // No need to visit children for this node.

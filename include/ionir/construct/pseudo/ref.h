@@ -18,7 +18,7 @@ namespace ionir {
 
     public:
         Ref(std::string id, Ptr<Construct> owner, OptPtr<T> value = std::nullopt)
-            : Construct(ConstructKind::Reference), Named(id), owner(owner), value(value) {
+            : Construct(ConstructKind::Ref), Named(id), owner(owner), value(value) {
             //
         }
 

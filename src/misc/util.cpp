@@ -130,7 +130,7 @@ namespace ionir {
                 return construct->cast<Global>()->getId();
             }
 
-            case ConstructKind::Instruction: {
+            case ConstructKind::Inst: {
                 return Util::getInstId(construct->cast<Inst>());
             }
 

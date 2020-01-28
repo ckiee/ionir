@@ -5,6 +5,10 @@ namespace ionir {
         //
     }
 
+    void NameResolutionPass::visitModule(Ptr<Module> node) {
+        this->scopeStack.push(node->getSymbolTable());
+    }
+
     void NameResolutionPass::visitRef(PtrRef<> node) {
         // Node is already resolved, no need to continue.
         if (node->isResolved()) {
@@ -15,7 +19,7 @@ namespace ionir {
         std::string id = node->getId();
 
         switch (owner->getConstructKind()) {
-            case ConstructKind::Instruction: {
+            case ConstructKind::Inst: {
                 Ptr<Inst> inst = owner->cast<Inst>();
                 PtrSymbolTable<Inst> sectionSymbolTable = inst->getParent()->getSymbolTable();
 

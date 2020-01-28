@@ -31,23 +31,23 @@ namespace ionir {
          */
         Extern,
 
-        Instruction,
+        Inst,
 
         Global,
 
         Section,
 
-        VariableReference,
+        VariableRef,
 
-        VariableDeclaration,
+        VariableDecl,
 
         Expr,
 
-        StructDeclaration,
+        StructDecl,
 
         Module,
 
-        Reference
+        Ref
     };
 
     class Construct;

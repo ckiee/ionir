@@ -23,15 +23,15 @@ namespace ionir {
         {ConstructKind::Prototype, "Prototype"},
         {ConstructKind::Function, "Function"},
         {ConstructKind::Extern, "Extern"},
-        {ConstructKind::Instruction, "Instruction"},
+        {ConstructKind::Inst, "Instruction"},
         {ConstructKind::Global, "Global"},
         {ConstructKind::Section, "Section"},
-        {ConstructKind::VariableReference, "VariableReference"},
-        {ConstructKind::VariableDeclaration, "VariableDeclaration"},
+        {ConstructKind::VariableRef, "VariableReference"},
+        {ConstructKind::VariableDecl, "VariableDeclaration"},
         {ConstructKind::Expr, "Expr"},
-        {ConstructKind::StructDeclaration, "StructDeclaration"},
+        {ConstructKind::StructDecl, "StructDeclaration"},
         {ConstructKind::Module, "Module"},
-        {ConstructKind::Reference, "Reference"}
+        {ConstructKind::Ref, "Reference"}
     };
 
     // TODO: Refactor.

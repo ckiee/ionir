@@ -134,7 +134,7 @@ TEST(CodeGenTest, VisitBranchInst) {
         std::make_shared<Ref<Section>>("if_body", nullptr, body)
     });
 
-    branchInst->getBody()->setOwner(branchInst);
+    branchInst->getBodyRef()->setOwner(branchInst);
 
     Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 

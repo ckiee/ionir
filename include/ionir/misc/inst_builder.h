@@ -35,6 +35,8 @@ namespace ionir {
 
         Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, PtrRef<Section> body, OptPtrRef<Section> otherwise = std::nullopt);
 
+        Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, std::string id);
+
         Ptr<ReturnInst> createReturn(OptPtr<Value<>> value = std::nullopt);
 
         Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt, std::optional<std::string> yieldId = std::nullopt);

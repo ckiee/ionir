@@ -34,6 +34,15 @@ namespace ionir {
         });
     }
 
+    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr<>> condition, std::string id) {
+        PtrRef<Section> body = std::make_shared<Ref<Section>>(id, nullptr);
+        Ptr<BranchInst> branchInst = this->createBranch(condition, body);
+
+        body->setOwner(branchInst);
+
+        return branchInst;
+    }
+
     Ptr<ReturnInst> InstBuilder::createReturn(OptPtr<Value<>> value) {
         return this->make<ReturnInst, ReturnInstOpts>(ReturnInstOpts{
             this->section,
