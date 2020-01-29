@@ -38,6 +38,7 @@ namespace ionir {
     }
 
     OptPtr<VoidType> Parser::parseVoidType() {
+        // TODO: Fully verify this works (through unit tests). The question is whether Type -> Void type cast will work.
         OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
