@@ -48,5 +48,6 @@ namespace ionir {
 
     OptPtr<IntegerType> Parser::parseIntegerType() {
         // TODO: Implement.
+        return std::nullopt;
     }
 }
