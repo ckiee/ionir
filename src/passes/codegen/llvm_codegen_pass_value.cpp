@@ -19,7 +19,7 @@ namespace ionir {
             throw std::runtime_error("Integer value's type must be integer type");
         }
 
-        this->visitIntegerType(nodeType->cast<IntegerType>());
+        this->visitIntegerType(nodeType->dynamicCast<IntegerType>());
 
         llvm::Type *type = this->typeStack.pop();
 

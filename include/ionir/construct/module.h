@@ -11,7 +11,7 @@ namespace ionir {
 
     class Module : public Construct, public ScopeAnchor<>, public Named {
     public:
-        explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = StaticFactory::makePtrSymbolTable<>());
+        explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = TypeFactory::makePtrSymbolTable<>());
 
         void accept(Pass &visitor) override;
 

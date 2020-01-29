@@ -8,7 +8,7 @@ namespace ionir {
     }
 
     void AllocaInst::accept(Pass &visitor) {
-        visitor.visitAllocaInst(this->cast<AllocaInst>());
+        visitor.visitAllocaInst(this->dynamicCast<AllocaInst>());
     }
 
     Ptr<Type> AllocaInst::getType() const {

@@ -32,7 +32,7 @@ namespace ionir {
     }
 
     Ptr<Construct> Construct::nativeCast() {
-        return this->cast<Construct>();
+        return this->dynamicCast<Construct>();
     }
 
     std::optional<std::string> Construct::getConstructName() {

@@ -18,7 +18,7 @@ namespace ionir {
                 OptPtr<IntegerValue> integerValue = this->parseInt();
 
                 if (integerValue.has_value()) {
-                    return integerValue->get()->cast<Value<>>();
+                    return integerValue->get()->dynamicCast<Value<>>();
                 }
 
                 return std::nullopt;
@@ -37,7 +37,7 @@ namespace ionir {
     }
 
     OptPtr<IntegerValue> Parser::parseInt() {
-        std::optional<Ptr<Type>> type = this->parseTypePrefix();
+        OptPtr<Type> type = this->parseTypePrefix();
 
         IONIR_PARSER_ASSURE(type)
         IONIR_PARSER_EXPECT(TokenKind::LiteralInt)
@@ -49,8 +49,9 @@ namespace ionir {
         // Attempt to convert token's value to a long (int64_t for cross-platform support).
         int64_t value = std::stol(tokenValue);
 
+        // TODO: Cannot cast Type to IntegerType just like that. It will have missing values (ex.
         // Create the integer instance.
-        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type->get()->cast<IntegerType>(), value);
+        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>((*type)->dynamicCast<IntegerType>(), value);
 
         // Skip current token.
         this->stream.tryNext();

@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void IntegerValue::accept(Pass &visitor) {
-        visitor.visitIntegerValue(this->cast<IntegerValue>());
+        visitor.visitIntegerValue(this->dynamicCast<IntegerValue>());
     }
 
     int64_t IntegerValue::getValue() const {

@@ -18,7 +18,7 @@ TEST(NameResolutionPassTest, Run) {
     });
 
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
-    OptPtr<Function> function = ast[0]->cast<Module>()->lookupFunction(test::constant::foobar);
+    OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
     Ptr<Section> entrySection = *function->get()->getBody()->getEntrySection();
     InstBuilder instBuilder = InstBuilder(entrySection);
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);

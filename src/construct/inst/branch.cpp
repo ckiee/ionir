@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void BranchInst::accept(Pass &visitor) {
-        visitor.visitBranchInst(this->cast<BranchInst>());
+        visitor.visitBranchInst(this->dynamicCast<BranchInst>());
     }
 
     Ast BranchInst::getChildNodes() const {

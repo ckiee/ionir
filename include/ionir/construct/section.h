@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <ionir/misc/helpers.h>
-#include <ionir/misc/static_factory.h>
+#include <ionir/misc/type_factory.h>
 #include <ionir/tracking/scope_anchor.h>
 #include "pseudo/args.h"
 #include "inst.h"
@@ -44,7 +44,7 @@ namespace ionir {
 
         std::vector<Ptr<Inst>> insts = {};
 
-        PtrSymbolTable<Inst> symbolTable = StaticFactory::makePtrSymbolTable<Inst>();
+        PtrSymbolTable<Inst> symbolTable = TypeFactory::makePtrSymbolTable<Inst>();
     };
 
     class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst>, public Named {

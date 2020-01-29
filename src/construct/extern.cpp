@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void Extern::accept(Pass &visitor) {
-        visitor.visitExtern(this->cast<Extern>());
+        visitor.visitExtern(this->dynamicCast<Extern>());
     }
 
     Ast Extern::getChildNodes() const {

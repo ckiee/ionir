@@ -7,6 +7,6 @@ namespace ionir {
     }
 
     void VariableRef::accept(Pass &visitor) {
-        visitor.visitVarReference(this->cast<VariableRef>());
+        visitor.visitVarReference(this->dynamicCast<VariableRef>());
     }
 }

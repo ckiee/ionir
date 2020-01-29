@@ -103,8 +103,13 @@ namespace ionir {
 
         Ptr<Construct> getPtr();
 
+        template<typename T>
+        Ptr<T> staticCast() {
+            return std::static_pointer_cast<T>(this->getPtr());
+        }
+
         template<class T>
-        Ptr<T> cast() {
+        Ptr<T> dynamicCast() {
             return std::dynamic_pointer_cast<T>(this->getPtr());
         }
 

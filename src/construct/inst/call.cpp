@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void CallInst::accept(Pass &visitor) {
-        visitor.visitCallInst(this->cast<CallInst>());
+        visitor.visitCallInst(this->dynamicCast<CallInst>());
     }
 
     OptPtrRef<Function> CallInst::getCallee() const {

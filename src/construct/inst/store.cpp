@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void StoreInst::accept(Pass &visitor) {
-        visitor.visitStoreInst(this->cast<StoreInst>());
+        visitor.visitStoreInst(this->dynamicCast<StoreInst>());
     }
 
     Ptr<Value<>> StoreInst::getValue() const {

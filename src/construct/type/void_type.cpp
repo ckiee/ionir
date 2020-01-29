@@ -7,6 +7,6 @@ namespace ionir {
     }
 
     void VoidType::accept(Pass &pass) {
-        return pass.visitVoidType(this->cast<VoidType>());
+        return pass.visitVoidType(this->dynamicCast<VoidType>());
     }
 }

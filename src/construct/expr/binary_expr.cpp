@@ -9,7 +9,7 @@ namespace ionir {
     }
 
     void BinaryExpr::accept(Pass &visitor) {
-        visitor.visitBinaryExpr(this->cast<BinaryExpr>());
+        visitor.visitBinaryExpr(this->dynamicCast<BinaryExpr>());
     }
 
     Ptr<Expr<>> BinaryExpr::getLeftSide() const {

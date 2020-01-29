@@ -24,7 +24,7 @@ namespace ionir {
 //     {
 //     case ScopeKind::Block:
 //     {
-//         Ptr<Block> block = scope->unwrap()->cast<Block>();
+//         Ptr<Block> block = scope->unwrap()->dynamicCast<Block>();
 //         std::vector<Ptr<Section>> sections = block->getSections();
 
 //         for (auto section : sections)

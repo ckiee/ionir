@@ -9,8 +9,8 @@ namespace ionir {
     }
 
     void Section::accept(Pass &visitor) {
-        visitor.visitScopeAnchor(this->cast<ScopeAnchor<>>());
-        visitor.visitSection(this->cast<Section>());
+        visitor.visitScopeAnchor(this->dynamicCast<ScopeAnchor<>>());
+        visitor.visitSection(this->dynamicCast<Section>());
     }
 
     Ast Section::getChildNodes() const {
@@ -58,6 +58,6 @@ namespace ionir {
     }
 
     Ptr<InstBuilder> Section::createBuilder() {
-        return std::make_shared<InstBuilder>(this->cast<Section>());
+        return std::make_shared<InstBuilder>(this->dynamicCast<Section>());
     }
 }

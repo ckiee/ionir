@@ -179,7 +179,7 @@ namespace ionir {
              * the resulting section's symbol table.
              */
             if (inst->get()->getInstKind() == InstKind::Alloca) {
-                Ptr<AllocaInst> allocaInst = inst->get()->cast<AllocaInst>();
+                Ptr<AllocaInst> allocaInst = inst->get()->dynamicCast<AllocaInst>();
 
                 symbolTable->insert(*allocaInst->getYieldId(), allocaInst);
             }

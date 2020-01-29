@@ -24,7 +24,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override {
             // TODO: CRITICAL: Fix 'incomplete type' problem.
-            // visitor.visitRef(this->cast<Ref<T>>());
+            // visitor.visitRef(this->dynamicCast<Ref<T>>());
         }
 
         Ptr<Construct> getOwner() const {
@@ -46,7 +46,7 @@ namespace ionir {
             OptPtr<Construct> value = this->getValue();
 
             if (value.has_value()) {
-                return value->get()->cast<TValue>();
+                return value->get()->dynamicCast<TValue>();
             }
 
             return std::nullopt;

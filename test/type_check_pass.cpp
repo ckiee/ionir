@@ -18,13 +18,13 @@ TEST(TypeCheckPassTest, Run) {
     });
 
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
-    OptPtr<Function> function = ast[0]->cast<Module>()->lookupFunction(test::constant::foobar);
+    OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
 
     EXPECT_TRUE(function.has_value());
 
     Ptr<Prototype> prototype = function->get()->getPrototype();
 
-    prototype->setReturnType(StaticFactory::typeInteger(IntegerKind::Int32));
+    prototype->setReturnType(TypeFactory::typeInteger(IntegerKind::Int32));
 
     // TODO: For now it's throwing, but soon instead check for produced semantic error.
 
@@ -35,7 +35,7 @@ TEST(TypeCheckPassTest, Run) {
      */
     EXPECT_THROW(passManager.run(ast), std::runtime_error);
 
-    prototype->setReturnType(StaticFactory::typeVoid());
+    prototype->setReturnType(TypeFactory::typeVoid());
 
     Ptr<Section> entrySection = *function->get()->getBody()->getEntrySection();
     InstBuilder instBuilder = InstBuilder(entrySection);

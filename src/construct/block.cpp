@@ -9,8 +9,8 @@ namespace ionir {
     }
 
     void Block::accept(Pass &visitor) {
-        visitor.visitScopeAnchor(this->cast<ScopeAnchor<>>());
-        visitor.visitBlock(this->cast<Block>());
+        visitor.visitScopeAnchor(this->dynamicCast<ScopeAnchor<>>());
+        visitor.visitBlock(this->dynamicCast<Block>());
     }
 
     Ast Block::getChildNodes() const {

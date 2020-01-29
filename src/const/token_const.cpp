@@ -21,7 +21,7 @@ namespace ionir {
         TokenKind::TypeString,
         TokenKind::TypeInt16,
         TokenKind::TypeInt32,
-        TokenKind::TypeInt64,
+        TokenKind::TypeInt64
     };
 
     TokenKindVector TokenConst::insts = {
@@ -242,10 +242,18 @@ namespace ionir {
         TokenConst::pushKeyword("else", TokenKind::KeywordElse);
         TokenConst::pushKeyword("mut", TokenKind::KeywordMutable);
         TokenConst::pushKeyword(ConstName::typeVoid, TokenKind::TypeVoid);
-        TokenConst::pushKeyword(ConstName::typeString, TokenKind::TypeString);
+        TokenConst::pushKeyword(ConstName::typeBool, TokenKind::TypeBool);
         TokenConst::pushKeyword(ConstName::typeInt16, TokenKind::TypeInt16);
         TokenConst::pushKeyword(ConstName::typeInt32, TokenKind::TypeInt32);
         TokenConst::pushKeyword(ConstName::typeInt64, TokenKind::TypeInt64);
+        TokenConst::pushKeyword(ConstName::typeUnsignedInt16, TokenKind::TypeUnsignedInt16);
+        TokenConst::pushKeyword(ConstName::typeUnsignedInt32, TokenKind::TypeUnsignedInt32);
+        TokenConst::pushKeyword(ConstName::typeUnsignedInt64, TokenKind::TypeUnsignedInt64);
+        TokenConst::pushKeyword(ConstName::typeFloat16, TokenKind::TypeFloat16);
+        TokenConst::pushKeyword(ConstName::typeFloat32, TokenKind::TypeFloat32);
+        TokenConst::pushKeyword(ConstName::typeFloat64, TokenKind::TypeFloat64);
+        TokenConst::pushKeyword(ConstName::typeChar, TokenKind::TypeChar);
+        TokenConst::pushKeyword(ConstName::typeString, TokenKind::TypeString);
 
         // Register operators.
         TokenConst::pushOperator("+", TokenKind::OperatorAdd);

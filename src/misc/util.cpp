@@ -87,6 +87,10 @@ namespace ionir {
         }
     }
 
+    std::string Util::resolveIntegerKind(std::string name) {
+
+    }
+
     TypeKind Util::resolveTypeKind(std::string id) {
         if (id == ConstName::typeInt1) {
             return TypeKind::Integer;
@@ -119,19 +123,19 @@ namespace ionir {
     std::optional<std::string> Util::getConstructId(Ptr<Construct> construct) {
         switch (construct->getConstructKind()) {
             case ConstructKind::Function: {
-                return construct->cast<Function>()->getPrototype()->getId();
+                return construct->dynamicCast<Function>()->getPrototype()->getId();
             }
 
             case ConstructKind::Extern: {
-                return construct->cast<Extern>()->getPrototype()->getId();
+                return construct->dynamicCast<Extern>()->getPrototype()->getId();
             }
 
             case ConstructKind::Global: {
-                return construct->cast<Global>()->getId();
+                return construct->dynamicCast<Global>()->getId();
             }
 
             case ConstructKind::Inst: {
-                return Util::getInstId(construct->cast<Inst>());
+                return Util::getInstId(construct->dynamicCast<Inst>());
             }
 
             default: {
@@ -143,7 +147,7 @@ namespace ionir {
     std::optional<std::string> Util::getInstId(Ptr<Inst> inst) {
         switch (inst->getInstKind()) {
             case InstKind::Alloca: {
-                return inst->cast<AllocaInst>()->getYieldId();
+                return inst->dynamicCast<AllocaInst>()->getYieldId();
             }
 
             default: {

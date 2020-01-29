@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void Global::accept(Pass &visitor) {
-        visitor.visitGlobal(this->cast<Global>());
+        visitor.visitGlobal(this->dynamicCast<Global>());
     }
 
     Ast Global::getChildNodes() const {

@@ -26,7 +26,7 @@ namespace ionir {
         bool isSigned;
 
     public:
-        IntegerType(IntegerKind kind, bool isSigned = true, bool isPointer = false);
+        explicit IntegerType(IntegerKind kind, bool isSigned = true, bool isPointer = false);
 
         void accept(Pass &pass) override;
 

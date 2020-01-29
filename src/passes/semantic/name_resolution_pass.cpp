@@ -23,7 +23,7 @@ namespace ionir {
 
         switch (owner->getConstructKind()) {
             case ConstructKind::Inst: {
-                Ptr<Inst> inst = owner->cast<Inst>();
+                Ptr<Inst> inst = owner->dynamicCast<Inst>();
                 PtrSymbolTable<Inst> sectionSymbolTable = inst->getParent()->getSymbolTable();
 
                 // The section's symbol table contains the referenced entity.
