@@ -18,10 +18,18 @@ namespace ionir {
 
     TokenKindVector TokenConst::types = {
         TokenKind::TypeVoid,
-        TokenKind::TypeString,
+        TokenKind::TypeBool,
         TokenKind::TypeInt16,
         TokenKind::TypeInt32,
-        TokenKind::TypeInt64
+        TokenKind::TypeInt64,
+        TokenKind::TypeUnsignedInt16,
+        TokenKind::TypeUnsignedInt32,
+        TokenKind::TypeUnsignedInt64,
+        TokenKind::TypeFloat16,
+        TokenKind::TypeFloat32,
+        TokenKind::TypeFloat64,
+        TokenKind::TypeChar,
+        TokenKind::TypeString
     };
 
     TokenKindVector TokenConst::insts = {

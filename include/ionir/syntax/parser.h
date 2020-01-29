@@ -17,7 +17,7 @@
 #include <ionir/construct/pseudo/directive.h>
 #include <ionir/construct/pseudo/ref.h>
 #include <ionir/lexical/token.h>
-#include <ionir/lexical/token_identifier.h>
+#include <ionir/lexical/classifier.h>
 #include <ionir/construct/extern.h>
 #include <ionir/construct/function.h>
 #include <ionir/construct/global.h>
@@ -41,10 +41,10 @@ namespace ionir {
 
         std::string filePath;
 
-        TokenIdentifier tokenIdentifier;
+        Classifier tokenIdentifier;
 
     protected:
-        TokenIdentifier getTokenIdentifier() const;
+        Classifier getTokenIdentifier() const;
 
         bool is(TokenKind tokenKind);
 
@@ -81,6 +81,10 @@ namespace ionir {
         OptPtr<Type> parseType();
 
         OptPtr<Type> parseTypePrefix();
+
+        OptPtr<VoidType> parseVoidType();
+
+        OptPtr<IntegerType> parseIntegerType();
 
         std::optional<Arg> parseArg();
 

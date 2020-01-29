@@ -4,7 +4,7 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    class TokenIdentifier {
+    class Classifier {
     public:
         static bool isSymbol(TokenKind tokenKind);
 
@@ -17,5 +17,7 @@ namespace ionir {
         static bool isKeyword(TokenKind tokenKind);
 
         static bool isInst(TokenKind tokenKind);
+
+        static bool isUnsignedType(TokenKind tokenKind);
     };
 }

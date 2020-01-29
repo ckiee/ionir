@@ -19,7 +19,7 @@ namespace ionir {
          * First off, ensure the name is actually
          * registered as an instruction name.
          */
-        if (!TokenIdentifier::isInst(tokenKind)) {
+        if (!Classifier::isInst(tokenKind)) {
             return std::nullopt;
         }
 

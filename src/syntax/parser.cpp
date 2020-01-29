@@ -6,7 +6,7 @@
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-    TokenIdentifier Parser::getTokenIdentifier() const {
+    Classifier Parser::getTokenIdentifier() const {
         return this->tokenIdentifier;
     }
 
@@ -82,40 +82,6 @@ namespace ionir {
                 return this->makeNotice("Unknown top-level construct");
             }
         }
-    }
-
-    OptPtr<Type> Parser::parseType() {
-        std::optional<std::string> id = this->parseId();
-
-        IONIR_PARSER_ASSURE(id)
-
-        bool isPointer = false;
-
-        // Retrieve the current token.
-        Token token = this->stream.get();
-
-        // Type is a pointer.
-        if (token.getKind() == TokenKind::SymbolStar) {
-            isPointer = true;
-
-            // Skip onto and from star token.
-            this->stream.skip(2);
-        }
-
-        // Create and return the resulting type construct.
-        return std::make_shared<Type>(*id, Util::resolveTypeKind(*id), isPointer);
-    }
-
-    OptPtr<Type> Parser::parseTypePrefix() {
-        this->skipOver(TokenKind::SymbolBracketL);
-
-        OptPtr<Type> type = this->parseType();
-
-        IONIR_PARSER_ASSURE(type)
-
-        this->skipOver(TokenKind::SymbolBracketR);
-
-        return type;
     }
 
     OptPtr<Global> Parser::parseGlobal() {

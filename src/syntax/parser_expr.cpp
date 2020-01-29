@@ -5,13 +5,13 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    std::optional<Ptr<IdExpr>> Parser::parseIdExpr() {
+    OptPtr<IdExpr> Parser::parseIdExpr() {
         // TODO
 
         return std::nullopt;
     }
 
-    std::optional<Ptr<Expr<>>> Parser::parsePrimaryExpr() {
+    OptPtr<Expr<>> Parser::parsePrimaryExpr() {
         TokenKind tokenKind = this->stream.get().getKind();
 
         return this->makeNotice("Not yet implemented");
@@ -55,7 +55,7 @@ namespace ionir {
 
             // TODO: Should check if it's a BINARY operator, not just an operator.
             // Ensure the captured operator is validated.
-            if (!TokenIdentifier::isOperator(binaryOperatorKind)) {
+            if (!Classifier::isOperator(binaryOperatorKind)) {
                 return this->makeNotice("Expected token to be a binary operator");
             }
 
