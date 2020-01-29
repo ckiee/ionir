@@ -21,25 +21,14 @@ namespace ionir {
             return std::make_shared<SymbolTable<Ptr<T>>>();
         }
 
-        static Ptr<IntegerType> typeInteger(IntegerKind integerKind) {
-            return std::make_shared<IntegerType>(integerKind);
-        }
+        static Ptr<IntegerType> typeInteger(IntegerKind integerKind, bool isSigned = true);
 
-        static Ptr<IntegerType> typeBoolean() {
-            return TypeFactory::typeInteger(IntegerKind::Int1);
-        }
+        static Ptr<IntegerType> typeBoolean();
 
-        static Ptr<IntegerType> typeChar() {
-            return TypeFactory::typeInteger(IntegerKind::Int8);
-        }
+        static Ptr<IntegerType> typeChar();
 
-        static Ptr<Type> typeString() {
-            // TODO: Awaiting array types support.
-            return TypeFactory::typeChar();
-        }
+        static Ptr<Type> typeString();
 
-        static Ptr<VoidType> typeVoid() {
-            return std::make_shared<VoidType>();
-        }
+        static Ptr<VoidType> typeVoid();
     };
 }
