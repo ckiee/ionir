@@ -2,7 +2,6 @@
 
 #include <optional>
 #include <ionir/construct/expr.h>
-#include <ionir/construct/pseudo/partial_inst.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/construct/pseudo/ref.h>
 

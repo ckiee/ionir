@@ -137,8 +137,8 @@ namespace ionir {
             // TODO: Value needs to be created from below commented statement.
             // llvm::Constant* initializerValue = llvm::Constant::getIntegerValue(llvm::Type);
 
-            // TODO: You can't just cast llvm::value to constant! See above.
-            globalVar->setInitializer((llvm::Constant *)value);
+            // TODO: CRITICAL: You can't just cast llvm::value to constant! See above.
+            globalVar->setInitializer(llvm::dyn_cast<llvm::Constant>(value));
         }
     }
 

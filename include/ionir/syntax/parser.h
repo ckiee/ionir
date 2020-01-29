@@ -13,7 +13,6 @@
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/call.h>
 #include <ionir/construct/inst/store.h>
-#include <ionir/construct/pseudo/partial_inst.h>
 #include <ionir/construct/pseudo/directive.h>
 #include <ionir/construct/pseudo/ref.h>
 #include <ionir/lexical/token.h>
