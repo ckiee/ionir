@@ -77,21 +77,15 @@ namespace ionir {
                 return ConstName::typeInt64;
             }
 
-            case IntegerKind::Int128: {
-                return ConstName::typeInt128;
-            }
-
             default: {
                 throw std::runtime_error("Unknown integer kind");
             }
         }
     }
 
-    std::string Util::resolveIntegerKind(std::string name) {
-
-    }
-
     TypeKind Util::resolveTypeKind(std::string id) {
+        // TODO: CRITICAL: Add support new/missing types.
+
         if (id == ConstName::typeInt1) {
             return TypeKind::Integer;
         }
@@ -105,9 +99,6 @@ namespace ionir {
             return TypeKind::Integer;
         }
         else if (id == ConstName::typeInt64) {
-            return TypeKind::Integer;
-        }
-        else if (id == ConstName::typeInt128) {
             return TypeKind::Integer;
         }
         else if (id == ConstName::typeVoid) {
