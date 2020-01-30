@@ -47,6 +47,8 @@ namespace ionir {
 
         bool is(TokenKind tokenKind);
 
+        bool isPeek(TokenKind tokenKind);
+
         bool expect(TokenKind tokenKind);
 
         void skipOver(TokenKind tokenKind);

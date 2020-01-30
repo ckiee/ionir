@@ -12,12 +12,14 @@ namespace ionir {
 
         static bool isOperator(TokenKind tokenKind);
 
+        static bool isUnsignedIntegerType(TokenKind tokenKind);
+
+        static bool isIntegerType(TokenKind tokenKind);
+
         static bool isType(TokenKind tokenKind);
 
         static bool isKeyword(TokenKind tokenKind);
 
         static bool isInst(TokenKind tokenKind);
-
-        static bool isUnsignedType(TokenKind tokenKind);
     };
 }

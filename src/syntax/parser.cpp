@@ -14,6 +14,10 @@ namespace ionir {
         return this->stream.get().getKind() == tokenKind;
     }
 
+    bool Parser::isPeek(TokenKind tokenKind) {
+        return this->stream.peek()->getKind() == tokenKind;
+    }
+
     bool Parser::expect(TokenKind tokenKind) {
         if (!this->is(tokenKind)) {
             this->makeNotice("Expected token kind: " + std::to_string((int)tokenKind) + ", but got: " +

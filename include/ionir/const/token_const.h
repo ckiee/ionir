@@ -17,13 +17,13 @@ namespace ionir {
 
         static std::map<std::string, TokenKind> simple;
 
-        static std::vector<std::pair<std::regex, TokenKind>> complex;
+        static TokenKindMap complex;
 
-        static TokenKindVector symbols;
+        static TokenKindMap keywords;
 
-        static TokenKindVector keywords;
+        static TokenKindMap symbols;
 
-        static TokenKindVector operators;
+        static TokenKindMap operators;
 
         static TokenKindVector types;
 
@@ -31,15 +31,7 @@ namespace ionir {
 
         static std::map<TokenKind, std::string> names;
 
-        static void pushComplex(std::regex regex, TokenKind tokenKind);
-
         static void pushSimple(std::string value, TokenKind tokenKind);
-
-        static void pushSymbol(std::string value, TokenKind tokenKind);
-
-        static void pushKeyword(std::string value, TokenKind tokenKind);
-
-        static void pushOperator(std::string value, TokenKind tokenKind);
 
         static bool sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b);
 
@@ -52,13 +44,13 @@ namespace ionir {
 
         static std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
 
-        static std::vector<std::pair<std::regex, TokenKind>> getComplexIds();
+        static TokenKindMap getComplexIds();
 
-        static TokenKindVector getSymbols();
+        static TokenKindMap getSymbols();
 
-        static TokenKindVector getKeywords();
+        static TokenKindMap getKeywords();
 
-        static TokenKindVector getOperators();
+        static TokenKindMap getOperators();
 
         static TokenKindVector getTypes();
 

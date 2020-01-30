@@ -18,17 +18,24 @@ namespace ionir {
         return TokenConst::contains(TokenConst::getTypes(), tokenKind);
     }
 
+    bool Classifier::isUnsignedIntegerType(TokenKind tokenKind) {
+        return tokenKind == TokenKind::TypeUnsignedInt16
+            || tokenKind == TokenKind::TypeUnsignedInt32
+            || tokenKind == TokenKind::TypeUnsignedInt64;
+    }
+
+    bool Classifier::isIntegerType(TokenKind tokenKind) {
+        return tokenKind == TokenKind::TypeInt16
+            || tokenKind == TokenKind::TypeInt32
+            || tokenKind == TokenKind::TypeInt64
+            || Classifier::isUnsignedIntegerType(tokenKind);
+    }
+
     bool Classifier::isKeyword(TokenKind tokenKind) {
         return TokenConst::contains(TokenConst::getKeywords(), tokenKind);
     }
 
     bool Classifier::isInst(TokenKind tokenKind) {
         return TokenConst::contains(TokenConst::getInsts(), tokenKind);
-    }
-
-    bool Classifier::isUnsignedType(TokenKind tokenKind) {
-        return tokenKind == TokenKind::TypeUnsignedInt16
-            || tokenKind == TokenKind::TypeUnsignedInt32
-            || tokenKind == TokenKind::TypeUnsignedInt64;
     }
 }
