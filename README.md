@@ -179,7 +179,7 @@ int main() {
 
 2. Extract sources onto a directory whose absolute path contains no spaces. For example, use `C:/LLVM_BUILD` instead of `C:/LLVM BUILD`. This will prevent the CMake build from failing, since it seems that certain project(s) have a hard time with paths containing spaces in Windows.
 
-3. Copy the `install_llvm.bat` file in this folder to the folder where you extracted the sources.
+3. Copy the `install_llvm.bat` Batch script located under the `tools/` directory to the folder where you extracted the sources.
 
 4. Run the `install_llvm.bat` file you just copied **as administrator** by right-clicking it then selecting `Run as administrator`.
 
