@@ -17,6 +17,6 @@ namespace ionir {
         {"*", TokenKind::SymbolStar},
         {"{", TokenKind::SymbolBraceL},
         {"}", TokenKind::SymbolBraceR},
-        {"->", TokenKind::SymbolArrow},
+        {"->", TokenKind::SymbolArrow}
     };
 }
