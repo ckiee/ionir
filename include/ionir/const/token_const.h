@@ -9,21 +9,22 @@
 #include <ionir/lexical/token_kind.h>
 #include <ionir/misc/regex.h>
 #include <ionir/misc/helpers.h>
+#include <ionir/container/bi_map.h>
 
 namespace ionir {
     class TokenConst {
     private:
         static bool isInitialized;
 
-        static std::map<std::string, TokenKind> simple;
+        static BiMap<std::string, TokenKind> simple;
 
         static TokenKindMap complex;
 
-        static TokenKindMap keywords;
+        static BiMap<std::string, TokenKind> keywords;
 
-        static TokenKindMap symbols;
+        static BiMap<std::string, TokenKind> symbols;
 
-        static TokenKindMap operators;
+        static BiMap<std::string, TokenKind> operators;
 
         static TokenKindVector types;
 
@@ -40,21 +41,21 @@ namespace ionir {
     public:
         static bool contains(TokenKindVector subject, TokenKind item);
 
-        static std::map<std::string, TokenKind> getSimpleIds();
+        static const BiMap<std::string, TokenKind> &getSimpleIds();
 
-        static std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
+        static const std::vector<std::pair<std::string, TokenKind>> &getSortedSimpleIds();
 
-        static TokenKindMap getComplexIds();
+        static const TokenKindMap &getComplexIds();
 
-        static TokenKindMap getSymbols();
+        static const BiMap<std::string, TokenKind> &getSymbols();
 
-        static TokenKindMap getKeywords();
+        static const BiMap<std::string, TokenKind> &getKeywords();
 
-        static TokenKindMap getOperators();
+        static const BiMap<std::string, TokenKind> &getOperators();
 
-        static TokenKindVector getTypes();
+        static const TokenKindVector &getTypes();
 
-        static TokenKindVector getInsts();
+        static const TokenKindVector &getInsts();
 
         static std::map<TokenKind, std::string> getNames();
 

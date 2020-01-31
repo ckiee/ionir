@@ -6,7 +6,7 @@
 namespace ionir {
     bool TokenConst::isInitialized = false;
 
-    std::map<std::string, TokenKind> TokenConst::simple = {};
+    BiMap<std::string, TokenKind> TokenConst::simple = {};
 
     TokenKindVector TokenConst::types = {
         TokenKind::TypeVoid,
@@ -33,6 +33,7 @@ namespace ionir {
     };
 
     void TokenConst::pushSimple(std::string value, TokenKind tokenKind) {
+        TokenConst::simple.insert(value, tokenKind);
         TokenConst::simple[value] = tokenKind;
     }
 
@@ -51,11 +52,11 @@ namespace ionir {
         return std::find(subject.begin(), subject.end(), item) != subject.end();
     }
 
-    std::map<std::string, TokenKind> TokenConst::getSimpleIds() {
+    const BiMap<std::string, TokenKind> &TokenConst::getSimpleIds() {
         return TokenConst::simple;
     }
 
-    SimplePairVector TokenConst::getSortedSimpleIds() {
+    const SimplePairVector &TokenConst::getSortedSimpleIds() {
         TokenConst::ensureInit();
 
         SimplePairVector result = {};
@@ -69,37 +70,37 @@ namespace ionir {
         return result;
     }
 
-    TokenKindMap TokenConst::getComplexIds() {
+    const TokenKindMap &TokenConst::getComplexIds() {
         TokenConst::ensureInit();
 
         return TokenConst::complex;
     }
 
-    TokenKindMap TokenConst::getSymbols() {
+    const BiMap<std::string, TokenKind> &TokenConst::getSymbols() {
         TokenConst::ensureInit();
 
         return TokenConst::symbols;
     }
 
-    TokenKindMap TokenConst::getKeywords() {
+    const BiMap<std::string, TokenKind> &TokenConst::getKeywords() {
         TokenConst::ensureInit();
 
         return TokenConst::keywords;
     }
 
-    TokenKindMap TokenConst::getOperators() {
+    const BiMap<std::string, TokenKind> &TokenConst::getOperators() {
         TokenConst::ensureInit();
 
         return TokenConst::operators;
     }
 
-    TokenKindVector TokenConst::getTypes() {
+    const TokenKindVector &TokenConst::getTypes() {
         TokenConst::ensureInit();
 
         return TokenConst::types;
     }
 
-    TokenKindVector TokenConst::getInsts() {
+    const TokenKindVector &TokenConst::getInsts() {
         TokenConst::ensureInit();
 
         return TokenConst::insts;

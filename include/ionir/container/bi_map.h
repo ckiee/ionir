@@ -17,6 +17,10 @@ namespace ionir {
                 && this->secondMap.insert(second, first, overwrite);
         }
 
+        bool insert(TSecond second, TFirst first, bool overwrite = false) {
+            return this->insert(first, second, overwrite);
+        }
+
         std::optional<TSecond> lookup(TFirst first) {
             return this->firstMap.lookup(first);
         }
