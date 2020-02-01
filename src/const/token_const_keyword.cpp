@@ -2,7 +2,7 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    TokenKindMap TokenConst::keywords = {
+    BiMap<std::string, TokenKind> TokenConst::keywords = BiMap<std::string, TokenKind>({
         {ConstName::instCall, TokenKind::InstCall},
         {ConstName::instStore, TokenKind::InstStore},
         {ConstName::instReturn, TokenKind::InstReturn},
@@ -27,5 +27,5 @@ namespace ionir {
         {ConstName::typeFloat64, TokenKind::TypeFloat64},
         {ConstName::typeChar, TokenKind::TypeChar},
         {ConstName::typeString, TokenKind::TypeString}
-    };
+    });
 }

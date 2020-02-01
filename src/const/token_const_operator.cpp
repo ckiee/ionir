@@ -1,7 +1,7 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    TokenKindMap TokenConst::operators = {
+    BiMap<std::string, TokenKind> TokenConst::operators = BiMap<std::string, TokenKind>({
         {"+", TokenKind::OperatorAdd},
         {"-", TokenKind::OperatorSub},
         {"*", TokenKind::OperatorMultiply},
@@ -10,5 +10,5 @@ namespace ionir {
         {"^", TokenKind::OperatorExponent},
         {">", TokenKind::OperatorGreaterThan},
         {"<", TokenKind::OperatorLessThan}
-    };
+    });
 }

@@ -1,7 +1,7 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    TokenKindMap TokenConst::symbols = {
+    BiMap<std::string, TokenKind> TokenConst::symbols = BiMap<std::string, TokenKind>({
         {"@", TokenKind::SymbolAt},
         {":", TokenKind::SymbolColon},
         {"$", TokenKind::SymbolDollar},
@@ -18,5 +18,5 @@ namespace ionir {
         {"{", TokenKind::SymbolBraceL},
         {"}", TokenKind::SymbolBraceR},
         {"->", TokenKind::SymbolArrow}
-    };
+    });
 }

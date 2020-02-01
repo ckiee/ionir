@@ -6,7 +6,7 @@
 namespace ionir {
     bool TokenConst::isInitialized = false;
 
-    BiMap<std::string, TokenKind> TokenConst::simple = {};
+    BiMap<std::string, TokenKind> TokenConst::simple = BiMap<std::string, TokenKind>();
 
     TokenKindVector TokenConst::types = {
         TokenKind::TypeVoid,
@@ -32,9 +32,8 @@ namespace ionir {
         TokenKind::InstStore
     };
 
-    void TokenConst::pushSimple(std::string value, TokenKind tokenKind) {
-        TokenConst::simple.insert(value, tokenKind);
-        TokenConst::simple[value] = tokenKind;
+    bool TokenConst::pushSimple(std::string value, TokenKind tokenKind) {
+        return TokenConst::simple.insert(value, tokenKind);
     }
 
     bool TokenConst::sortByKeyLength(const std::pair<std::string, TokenKind> &a,
@@ -56,12 +55,12 @@ namespace ionir {
         return TokenConst::simple;
     }
 
-    const SimplePairVector &TokenConst::getSortedSimpleIds() {
+    const SimplePairVector TokenConst::getSortedSimpleIds() {
         TokenConst::ensureInit();
 
         SimplePairVector result = {};
 
-        for (const auto pair : TokenConst::simple) {
+        for (const auto &pair : TokenConst::simple.getFirstMap().unwrapConst()) {
             result.push_back(pair);
         }
 
@@ -70,7 +69,7 @@ namespace ionir {
         return result;
     }
 
-    const TokenKindMap &TokenConst::getComplexIds() {
+    const std::vector<std::pair<std::regex, TokenKind>> &TokenConst::getComplexIds() {
         TokenConst::ensureInit();
 
         return TokenConst::complex;
@@ -127,7 +126,7 @@ namespace ionir {
     }
 
     std::optional<std::string> TokenConst::findSimpleValue(TokenKind tokenKind) {
-        for (const auto entry : TokenConst::simple) {
+        for (const auto entry : TokenConst::simple.getFirstMap().unwrapConst()) {
             if (entry.second == tokenKind) {
                 return entry.first;
             }

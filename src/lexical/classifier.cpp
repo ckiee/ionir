@@ -1,10 +1,8 @@
 #include <ionir/lexical/classifier.h>
-#include <ionir/misc/util.h>
 
 namespace ionir {
     bool Classifier::isSymbol(TokenKind tokenKind) {
-
-        return Util::mapContains<std::string, TokenKind>(TokenConst::getSymbols(), tokenKind);
+        return TokenConst::getSymbols().contains(tokenKind);
     }
 
     bool Classifier::isNumeric(TokenKind tokenKind) {
@@ -13,7 +11,7 @@ namespace ionir {
     }
 
     bool Classifier::isOperator(TokenKind tokenKind) {
-        return TokenConst::contains(TokenConst::getOperators(), tokenKind);
+        return TokenConst::getOperators().contains(tokenKind);
     }
 
     bool Classifier::isType(TokenKind tokenKind) {
@@ -34,7 +32,7 @@ namespace ionir {
     }
 
     bool Classifier::isKeyword(TokenKind tokenKind) {
-        return TokenConst::contains(TokenConst::getKeywords(), tokenKind);
+        return TokenConst::getKeywords().contains(tokenKind);
     }
 
     bool Classifier::isInst(TokenKind tokenKind) {

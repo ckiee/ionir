@@ -2,7 +2,7 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    TokenKindMap TokenConst::complex = {
+    std::vector<std::pair<std::regex, TokenKind>> TokenConst::complex = {
         {Regex::identifier, TokenKind::Identifier},
         {Regex::string, TokenKind::LiteralString},
         {Regex::decimal, TokenKind::LiteralDecimal},

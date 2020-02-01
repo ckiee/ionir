@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <ionir/misc/util.h>
 #include "map.h"
 
 namespace ionir {
@@ -12,6 +13,11 @@ namespace ionir {
         Map<TSecond, TFirst> secondMap;
 
     public:
+        BiMap(std::map<TFirst, TSecond> value = {})
+            :  firstMap(value), secondMap(Util::flipMap<TFirst, TSecond>(value)) {
+            //
+        }
+
         bool insert(TFirst first, TSecond second, bool overwrite = false) {
             return this->firstMap.insert(first, second, overwrite)
                 && this->secondMap.insert(second, first, overwrite);

@@ -18,7 +18,7 @@ namespace ionir {
 
         static BiMap<std::string, TokenKind> simple;
 
-        static TokenKindMap complex;
+        static std::vector<std::pair<std::regex, TokenKind>> complex;
 
         static BiMap<std::string, TokenKind> keywords;
 
@@ -32,7 +32,7 @@ namespace ionir {
 
         static std::map<TokenKind, std::string> names;
 
-        static void pushSimple(std::string value, TokenKind tokenKind);
+        static bool pushSimple(std::string value, TokenKind tokenKind);
 
         static bool sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b);
 
@@ -43,9 +43,9 @@ namespace ionir {
 
         static const BiMap<std::string, TokenKind> &getSimpleIds();
 
-        static const std::vector<std::pair<std::string, TokenKind>> &getSortedSimpleIds();
+        static const std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
 
-        static const TokenKindMap &getComplexIds();
+        static const std::vector<std::pair<std::regex, TokenKind>> &getComplexIds();
 
         static const BiMap<std::string, TokenKind> &getSymbols();
 

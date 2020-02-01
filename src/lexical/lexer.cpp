@@ -4,6 +4,18 @@
 #include <ionir/lexical/lexer.h>
 
 namespace ionir {
+    Lexer::Lexer(std::string input)
+        : input(input), length(input.length()), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
+        // Input string must contain at least one character.
+        if (!this->length || this->length < 1) {
+            throw std::invalid_argument("Input must be a string with one or more character(s)");
+        }
+
+        // TODO: Avoid invoking virtual member functions from constructor.
+        // Reset the index, setting its initial value.
+        this->begin();
+    }
+
     char Lexer::getChar() const {
         // Return null character if reached end of input.
         if (!this->hasNext()) {
@@ -97,19 +109,6 @@ namespace ionir {
         }
     }
 
-    Lexer::Lexer(std::string input) : input(input), simpleIds(TokenConst::getSortedSimpleIds()),
-        complexIds(TokenConst::getComplexIds()) {
-        this->length = this->input.length();
-
-        // Input string must contain at least one character.
-        if (!this->length || this->length < 1) {
-            throw std::invalid_argument("Input must be a string with one or more character(s)");
-        }
-
-        // Reset the index, setting its initial value.
-        this->begin();
-    }
-
     size_t Lexer::getIndex() const {
         return this->index;
     }
@@ -191,13 +190,13 @@ namespace ionir {
                 true
             });
 
-            // If it matches, return the Token (already modified by the matchExpression function).
+            // If it matches, return the token (already modified by the matchExpression function).
             if (matchResult.success) {
                 return token;
             }
         }
 
-        // At this point the Token was not identified. Skip over any captured value.
+        // At this point the token was not identified. Skip over any captured value.
         this->skip(tokenValue.length());
 
         // Return the default token. The token kind defaults to Unknown.

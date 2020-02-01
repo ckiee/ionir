@@ -78,5 +78,17 @@ namespace ionir {
 
             return a;
         }
+
+        template<typename TKey, typename TValue>
+        static std::map<TValue, TKey> flipMap(std::map<TKey, TValue> map) {
+            // TODO: What about if different keys contain the same value? Maybe report an error.
+            std::map<TValue, TKey> flippedMap = {};
+
+            for (const auto &[key, value] : map) {
+                flippedMap[value] = key;
+            }
+
+            return flippedMap;
+        }
     };
 }
