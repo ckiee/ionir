@@ -2,11 +2,11 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    Token Token::createDummy(const uint32_t startPosition) {
+    Token Token::createDummy(uint32_t startPosition) {
         return Token(TokenKind::Dummy, "", startPosition);
     }
 
-    Token::Token(const TokenKind kind, const std::string value, const uint32_t startPosition, const uint32_t lineNumber)
+    Token::Token(TokenKind kind, std::string value, uint32_t startPosition, uint32_t lineNumber)
         : kind(kind), value(value), startPosition(startPosition), lineNumber(lineNumber) {
         //
     }

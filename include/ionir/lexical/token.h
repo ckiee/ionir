@@ -16,10 +16,9 @@ namespace ionir {
         uint32_t lineNumber;
 
     public:
-        static Token createDummy(const uint32_t startPosition);
+        static Token createDummy(uint32_t startPosition);
 
-        Token(const TokenKind kind, const std::string value, const uint32_t startPosition = 0,
-            const uint32_t lineNumber = 0);
+        Token(TokenKind kind, std::string value, uint32_t startPosition = 0, uint32_t lineNumber = 0);
 
         TokenKind getKind() const;
 
