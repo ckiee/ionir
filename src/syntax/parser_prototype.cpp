@@ -36,8 +36,7 @@ namespace ionir {
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
-
-        this->skipOver(TokenKind::SymbolParenthesesL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolParenthesesL))
 
         Ptr<Args> args = std::make_shared<Args>();
 
@@ -51,7 +50,8 @@ namespace ionir {
         }
 
         this->stream.skip();
-        this->skipOver(TokenKind::SymbolArrow);
+
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolArrow))
 
         OptPtr<Type> returnType = this->parseType();
 
@@ -61,7 +61,7 @@ namespace ionir {
     }
 
     OptPtr<Extern> Parser::parseExtern() {
-        this->skipOver(TokenKind::KeywordExtern);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordExtern))
 
         OptPtr<Prototype> prototype = this->parsePrototype();
 
@@ -71,7 +71,7 @@ namespace ionir {
     }
 
     OptPtr<Function> Parser::parseFunction() {
-        this->skipOver(TokenKind::KeywordFunction);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordFunction))
 
         OptPtr<Prototype> prototype = this->parsePrototype();
         OptPtr<Block> body = this->parseBlock(nullptr);

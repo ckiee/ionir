@@ -1,8 +1,4 @@
-#include <climits>
-#include <utility>
-#include <vector>
 #include <ionir/construct/expr.h>
-#include <ionir/construct/expr/binary_expr.h>
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
 #include <ionir/const/const_name.h>
@@ -42,16 +38,31 @@ namespace ionir {
         IONIR_PARSER_ASSURE(type)
         IONIR_PARSER_EXPECT(TokenKind::LiteralInt)
 
-        // Abstract the token's value to be used in the string -> long conversion.
+        /**
+         * Abstract the token's value to be used in the
+         * string to long integer conversion.
+         */
         std::string tokenValue = this->stream.get().getValue();
 
         // TODO: May stol() throw an error? If so, wrap in try-catch block for safety.
-        // Attempt to convert token's value to a long (int64_t for cross-platform support).
-        int64_t value = std::stol(tokenValue);
+        /**
+         * Attempt to convert token's value to a long
+         * (int64_t for cross-platform support).
+         */
+        int64_t value;
+
+        try {
+            value = std::stol(tokenValue);
+        }
+        catch (std::invalid_argument& exception) {
+            // Value conversion failed.
+            return this->makeNotice("Could not convert string to value");
+        }
 
         // TODO: Cannot cast Type to IntegerType just like that. It will have missing values (ex.
         // Create the integer instance.
-        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>((*type)->dynamicCast<IntegerType>(), value);
+        Ptr<IntegerValue> integer =
+            std::make_shared<IntegerValue>((*type)->dynamicCast<IntegerType>(), value);
 
         // Skip current token.
         this->stream.tryNext();

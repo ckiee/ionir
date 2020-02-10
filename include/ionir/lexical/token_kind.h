@@ -4,9 +4,9 @@
 
 namespace ionir {
     enum class TokenKind {
-        Dummy,
-
         Unknown,
+
+        Dummy,
 
         Identifier,
 

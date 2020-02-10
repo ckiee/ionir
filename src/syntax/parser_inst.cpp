@@ -60,7 +60,7 @@ namespace ionir {
         }
 
         // All instructions should end denoted by a semi-colon.
-        this->skipOver(TokenKind::SymbolSemiColon);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon))
 
         return inst;
     }

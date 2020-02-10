@@ -53,13 +53,12 @@ namespace ionir {
     }
 
     OptPtr<Type> Parser::parseTypePrefix() {
-        this->skipOver(TokenKind::SymbolBracketL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketL))
 
         OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
-
-        this->skipOver(TokenKind::SymbolBracketR);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketR))
 
         return type;
     }
@@ -74,7 +73,14 @@ namespace ionir {
     }
 
     OptPtr<IntegerType> Parser::parseIntegerType() {
-        // TODO: Implement.
+        if (this->is(TokenKind::TypeInt32)) {
+            this->stream.skip();
+
+            return std::make_shared<IntegerType>(IntegerKind::Int32);
+        }
+
+        // TODO: Missing support for others.
+
         return std::nullopt;
     }
 }

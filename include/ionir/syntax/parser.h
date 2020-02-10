@@ -51,7 +51,7 @@ namespace ionir {
 
         bool expect(TokenKind tokenKind);
 
-        void skipOver(TokenKind tokenKind);
+        bool skipOver(TokenKind tokenKind);
 
         NoticeFactory createNoticeFactory();
 

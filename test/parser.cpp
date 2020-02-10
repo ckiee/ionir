@@ -11,16 +11,22 @@ using namespace ionir;
 TEST(ParserTest, ParseInt) {
     Parser parser = test::bootstrap::parser({
         Token(TokenKind::SymbolBracketL, "["),
-        Token(TokenKind::Identifier, "i32"),
+        Token(TokenKind::TypeInt32, "i32"),
         Token(TokenKind::SymbolBracketR, "]"),
         Token(TokenKind::LiteralInt, "5")
     });
 
-    auto integer = parser.parseInt();
+    OptPtr<IntegerValue> integer = parser.parseInt();
 
     // TODO: Verify integer type?
 
     EXPECT_TRUE(integer.has_value());
+
+    // Prevent SEGFAULT when trying to access members of std::nullopt.
+    if (!integer.has_value()) {
+        return;
+    }
+
     EXPECT_EQ(integer->get()->getValue(), 5);
 }
 

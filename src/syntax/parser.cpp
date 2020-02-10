@@ -29,9 +29,14 @@ namespace ionir {
         return true;
     }
 
-    void Parser::skipOver(TokenKind tokenKind) {
-        this->expect(tokenKind);
+    bool Parser::skipOver(TokenKind tokenKind) {
+        if (!this->expect(tokenKind)) {
+            return false;
+        }
+
         this->stream.skip();
+
+        return true;
     }
 
     NoticeFactory Parser::createNoticeFactory() {
@@ -89,7 +94,7 @@ namespace ionir {
     }
 
     OptPtr<Global> Parser::parseGlobal() {
-        this->skipOver(TokenKind::KeywordGlobal);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordGlobal))
 
         OptPtr<Type> type = this->parseType();
 
@@ -101,20 +106,19 @@ namespace ionir {
 
         // TODO: Handle in-line initialization & pass std::optional<Value> into Global constructor.
 
-        this->skipOver(TokenKind::SymbolSemiColon);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon))
 
         return std::make_shared<Global>(*type, *id);
     }
 
     OptPtr<Section> Parser::parseSection(Ptr<Block> parent) {
-        this->skipOver(TokenKind::SymbolAt);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolAt))
 
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
-
-        this->skipOver(TokenKind::SymbolColon);
-        this->skipOver(TokenKind::SymbolBraceL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolColon))
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         // Determine the section's kind.
         SectionKind kind = SectionKind::Label;
@@ -162,7 +166,7 @@ namespace ionir {
     }
 
     OptPtr<Block> Parser::parseBlock(Ptr<Function> parent) {
-        this->skipOver(TokenKind::SymbolBraceL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         Ptr<Block> block = std::make_shared<Block>(parent);
         PtrSymbolTable<Section> sections = std::make_shared<SymbolTable<Ptr<Section>>>();
@@ -172,7 +176,7 @@ namespace ionir {
 
             IONIR_PARSER_ASSURE(section)
 
-            (*sections)[section->get()->getId()] = *section;
+            sections->insert(section->get()->getId(), *section);
         }
 
         block->setSymbolTable(sections);
@@ -184,13 +188,12 @@ namespace ionir {
     }
 
     OptPtr<Module> Parser::parseModule() {
-        this->skipOver(TokenKind::KeywordModule);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordModule))
 
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
-
-        this->skipOver(TokenKind::SymbolBraceL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         PtrSymbolTable<Construct> symbolTable = std::make_shared<SymbolTable<Ptr<Construct>>>();
 
@@ -206,7 +209,7 @@ namespace ionir {
                 }
 
                 // TODO: Ensure we're not re-defining something, issue a notice otherwise.
-                (*symbolTable)[*name] = *topLevelConstruct;
+                symbolTable->insert(*name, *topLevelConstruct);
             }
 
             // No more tokens to process.
@@ -215,7 +218,7 @@ namespace ionir {
             }
         }
 
-        this->skipOver(TokenKind::SymbolBraceR);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceR))
 
         return std::make_shared<Module>(*id, symbolTable);
     }
@@ -226,7 +229,7 @@ namespace ionir {
     }
 
     std::optional<Directive> Parser::parseDirective() {
-        this->skipOver(TokenKind::SymbolHash);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolHash))
 
         std::optional<std::string> id = this->parseId();
 
