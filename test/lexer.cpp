@@ -95,11 +95,12 @@ TEST(LexerTest, LexTypes) {
     // Tokenize input and begin inspection.
     std::vector<Token> actual = lexer.scan();
 
+    // TODO: Re-check positions.
     std::array<Token, 4> expected = {
         Token(TokenKind::TypeVoid, "void", 0),
         Token(TokenKind::TypeBool, "bool", 5),
-        Token(TokenKind::TypeInt16, "i16", 9),
-        Token(TokenKind::TypeInt32, "i32", 13)
+        Token(TokenKind::TypeInt16, "i16", 10),
+        Token(TokenKind::TypeInt32, "i32", 14)
     };
 
     // Compare result with expected.

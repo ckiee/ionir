@@ -63,17 +63,35 @@ namespace ionir {
         std::smatch match;
 
         // If successful, return a new token with different value and kind.
-        // TODO: CRITICAL: std::regex_search searches among ANY value in the string, not necessarily the start! This means that upcoming tokens might be matched first, as it is the case with the failing test.
         if (std::regex_search(input, match, opts.regex)) {
             // If applicable, match should contain both matched value (at index 0) and a captured value (at index 1).
             if (opts.expectCapturedValue && match.size() < 2) {
                 throw std::runtime_error("Successful regex match may not contain a captured value");
             }
 
-            int index = opts.expectCapturedValue ? IONIR_MATCH_INDEX_CAPTURED : IONIR_MATCH_INDEX_MATCHED;
+            int index = opts.expectCapturedValue
+                ? IONIR_MATCH_INDEX_CAPTURED
+                : IONIR_MATCH_INDEX_MATCHED;
 
             // Extract the matched or captured value from the match.
             std::string value = match[index];
+
+            /**
+             * Since std::regex_search() returns true if any match
+             * is found, regardless of its position in the input
+             * string, it must be assured that the captured value
+             * is actually positioned at the beginning of the input
+             * string, otherwise in certain cases it may lead to some
+             * tokens being skipped. For example, when parsing a valid
+             * token, 'A', if after the value of such token in the input
+             * string is located another valid token, 'B', and its rule
+             * is processed first, then token 'B' would take precedence
+             * when it should not.
+             */
+            if (!Util::stringStartsWith(input, value)) {
+                // Return default result at this point.
+                return result;
+            }
 
             // Finalize result's properties.
             result.success = true;
