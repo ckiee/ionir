@@ -13,8 +13,8 @@ namespace ionir {
         Map<TSecond, TFirst> secondMap;
 
     public:
-        BiMap(std::map<TFirst, TSecond> value = {})
-            :  firstMap(value), secondMap(Util::flipMap<TFirst, TSecond>(value)) {
+        explicit BiMap(std::map<TFirst, TSecond> value = {})
+            :  firstMap(Map<TFirst, TSecond>(value)), secondMap(Map<TSecond, TFirst>(Util::flipMap<TFirst, TSecond>(value))) {
             //
         }
 
@@ -49,6 +49,22 @@ namespace ionir {
 
         const Map<TSecond, TFirst> &getSecondMap() const {
             return this->secondMap;
+        }
+
+        BiMap<TFirst, TSecond> merge(BiMap<TFirst, TSecond> other) {
+            BiMap<TFirst, TSecond> firstMap = BiMap<TFirst, TSecond>();
+
+            // TODO: Check for existing keys in both maps.
+
+            for (const auto [key, value] : this->firstMap.unwrapConst()) {
+                firstMap.insert(key, value);
+            }
+
+            for (const auto [key, value] : other.firstMap.unwrapConst()) {
+                firstMap.insert(key, value);
+            }
+
+            return BiMap<TFirst, TSecond>(firstMap);
         }
     };
 }

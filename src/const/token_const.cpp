@@ -8,6 +8,8 @@ namespace ionir {
 
     BiMap<std::string, TokenKind> TokenConst::simple = BiMap<std::string, TokenKind>();
 
+    BiMap<std::string, TokenKind> TokenConst::keywords = BiMap<std::string, TokenKind>();
+
     TokenKindVector TokenConst::types = {
         TokenKind::TypeVoid,
         TokenKind::TypeBool,
@@ -141,9 +143,48 @@ namespace ionir {
             return;
         }
 
-        // TODO: Merge all maps into simple.
+        // Initialize keywords bidirectional map.
+        TokenConst::keywords = BiMap<std::string, TokenKind>(std::map<std::string, TokenKind>{
+            // Instructions.
+            {ConstName::instCall, TokenKind::InstCall},
+            {ConstName::instStore, TokenKind::InstStore},
+            {ConstName::instReturn, TokenKind::InstReturn},
+            {ConstName::instAlloca, TokenKind::InstAlloca},
+            {ConstName::instBranch, TokenKind::InstBranch},
 
-        // Raise initialized flag to prevent further attempts to re-initialize.
+            // Keywords.
+            {"fn", TokenKind::KeywordFunction},
+            {"module", TokenKind::KeywordModule},
+            {"extern", TokenKind::KeywordExtern},
+            {"global", TokenKind::KeywordGlobal},
+            {"else", TokenKind::KeywordElse},
+            {"mut", TokenKind::KeywordMutable},
+
+            // Types keywords.
+            {ConstName::typeVoid, TokenKind::TypeVoid},
+            {ConstName::typeBool, TokenKind::TypeBool},
+            {ConstName::typeInt16, TokenKind::TypeInt16},
+            {ConstName::typeInt32, TokenKind::TypeInt32},
+            {ConstName::typeInt64, TokenKind::TypeInt64},
+            {ConstName::typeUnsignedInt16, TokenKind::TypeUnsignedInt16},
+            {ConstName::typeUnsignedInt32, TokenKind::TypeUnsignedInt32},
+            {ConstName::typeUnsignedInt64, TokenKind::TypeUnsignedInt64},
+            {ConstName::typeFloat16, TokenKind::TypeFloat16},
+            {ConstName::typeFloat32, TokenKind::TypeFloat32},
+            {ConstName::typeFloat64, TokenKind::TypeFloat64},
+            {ConstName::typeChar, TokenKind::TypeChar},
+            {ConstName::typeString, TokenKind::TypeString}
+        });
+
+        // Merge simple maps.
+        TokenConst::simple = TokenConst::symbols.merge(TokenConst::simple);
+        TokenConst::simple = TokenConst::keywords.merge(TokenConst::simple);
+        TokenConst::simple = TokenConst::operators.merge(TokenConst::simple);
+
+        /**
+         * Raise initialized flag to prevent further
+         * attempts to re-initialize.
+         */
         TokenConst::isInitialized = true;
     }
 }

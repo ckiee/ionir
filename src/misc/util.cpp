@@ -6,8 +6,8 @@
 #include <ionir/construct/inst/alloca.h>
 
 namespace ionir {
-    bool Util::stringStartsWith(std::string subject, std::string test) {
-        return subject.rfind(test, 0) == 0;
+    bool Util::stringStartsWith(std::string subject, std::string value) {
+        return subject.rfind(value, 0) == 0;
     }
 
     std::string Util::escapeRegex(std::string subject) {

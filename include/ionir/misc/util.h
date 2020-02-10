@@ -16,7 +16,7 @@ namespace ionir {
         static constexpr std::string_view specialChars{"{}$^.?\\[]()*+|<>-&"};
 
     public:
-        static bool stringStartsWith(std::string subject, std::string test);
+        static bool stringStartsWith(std::string subject, std::string value);
 
         static std::string escapeRegex(std::string subject);
 

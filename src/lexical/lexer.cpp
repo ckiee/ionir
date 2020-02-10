@@ -63,6 +63,7 @@ namespace ionir {
         std::smatch match;
 
         // If successful, return a new token with different value and kind.
+        // TODO: CRITICAL: std::regex_search searches among ANY value in the string, not necessarily the start! This means that upcoming tokens might be matched first, as it is the case with the failing test.
         if (std::regex_search(input, match, opts.regex)) {
             // If applicable, match should contain both matched value (at index 0) and a captured value (at index 1).
             if (opts.expectCapturedValue && match.size() < 2) {
