@@ -52,6 +52,7 @@ TEST(ParserTest, ParseIdentifier) {
     EXPECT_EQ(*identifier, "test");
 }
 
+// TODO: Should be renamed to 'ParseUserDefinedType'.
 TEST(ParserTest, ParseType) {
     Parser parser = test::bootstrap::parser({
         Token(TokenKind::Identifier, "type")

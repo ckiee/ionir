@@ -1,6 +1,7 @@
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
+    // TODO: Consider using Ref<> to register pending type reference if user-defined type is parsed?
     OptPtr<Type> Parser::parseType() {
         // Retrieve the current token.
         Token token = this->stream.get();
@@ -9,7 +10,10 @@ namespace ionir {
         std::string tokenValue = token.getValue();
         TokenKind tokenKind = token.getKind();
 
-        IONIR_PARSER_ASSERT(Classifier::isType(tokenKind))
+        IONIR_PARSER_ASSERT((
+            Classifier::isType(tokenKind)
+            || tokenKind == TokenKind::Identifier
+        ))
 
         OptPtr<Type> type;
 
@@ -30,6 +34,7 @@ namespace ionir {
          */
         if (!type.has_value()) {
             type = std::make_shared<Type>(tokenValue, Util::resolveTypeKind(tokenValue));
+            this->stream.skip();
         }
 
         // If applicable, mark the type as a pointer.
