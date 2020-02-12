@@ -51,7 +51,8 @@ namespace ionir {
         Pass::visitScopeAnchor(node);
 
         // TODO: ScopeStack should be pushed & popped, but its never popped.
-        this->scopeStack.push(node->getSymbolTable());
+        // TODO: CRITICAL: Throwing SEGFAULT because node is NULL (casting fails).
+//        this->scopeStack.push(node->getSymbolTable());
     }
 
     Ptr<StackTrace> NameResolutionPass::getStackTrace() const {

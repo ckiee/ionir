@@ -9,8 +9,9 @@ namespace ionir {
     }
 
     void Block::accept(Pass &visitor) {
-        visitor.visitScopeAnchor(this->dynamicCast<ScopeAnchor<>>());
-        visitor.visitBlock(this->dynamicCast<Block>());
+        // TODO: CRITICAL: Cast error.
+//        visitor.visitScopeAnchor(this->staticCast<ScopeAnchor<Section>>());
+        visitor.visitBlock(this->staticCast<Block>());
     }
 
     Ast Block::getChildNodes() const {
