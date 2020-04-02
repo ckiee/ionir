@@ -4,9 +4,9 @@ namespace ionir {
     void Pass::visit(Ptr<Construct> node) {
         node->accept(*this);
 
-        // TODO: Temporary fix for circular dep.
+        // TODO: Hotfix for circular dep.
         if (node->getConstructKind() == ConstructKind::Ref) {
-            this->visitRef(node->dynamicCast<Ref<>>());
+            this->visitRef(node->staticCast<Ref<>>());
 
             // No need to visit children for this node.
             return;
