@@ -21,14 +21,16 @@ namespace ionir {
         Ptr<Construct> owner = node->getOwner();
         std::string id = node->getId();
 
+        // TODO: CRITICAL: Recently solved the problem which was that it was using the section's own symbol table instead of the function's to find the section (Dummy mistake). Verify that this is actually how it should be.
+
         switch (owner->getConstructKind()) {
             case ConstructKind::Inst: {
                 Ptr<Inst> inst = owner->dynamicCast<Inst>();
-                PtrSymbolTable<Inst> sectionSymbolTable = inst->getParent()->getSymbolTable();
+                PtrSymbolTable<Section> functionSymbolTable = inst->getParent()->getParent()->getSymbolTable();
 
-                // The section's symbol table contains the referenced entity.
-                if (sectionSymbolTable->contains(id)) {
-                    node->resolve((*sectionSymbolTable)[id]);
+                // The function's symbol table contains the referenced entity.
+                if (functionSymbolTable->contains(id)) {
+                    node->resolve((*functionSymbolTable)[id]);
 
                     std::cout << "Reference found and resolved" << std::endl;
 
