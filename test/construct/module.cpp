@@ -8,8 +8,9 @@ using namespace ionir;
 
 TEST(ModuleConstructTest, ParseEmpty) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenKind::SymbolBraceL, "{"),
+        Token(TokenKind::KeywordModule, "module"),
         Token(TokenKind::Identifier, test::constant::foobar),
+        Token(TokenKind::SymbolBraceL, "{"),
         Token(TokenKind::SymbolBraceR, "}")
     });
 

@@ -86,9 +86,12 @@ namespace ionir {
              * token, 'A', if after the value of such token in the input
              * string is located another valid token, 'B', and its rule
              * is processed first, then token 'B' would take precedence
-             * when it should not.
+             * when it should not. Additionally, use the matched value
+             * index instead of the captured value, because patterns such
+             * as literal character and string capture values while skipping
+             * certain characters.
              */
-            if (!Util::stringStartsWith(input, value)) {
+            if (!Util::stringStartsWith(input, match[IONIR_MATCH_INDEX_MATCHED])) {
                 // Return default result at this point.
                 return result;
             }
