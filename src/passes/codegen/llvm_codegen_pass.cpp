@@ -127,10 +127,12 @@ namespace ionir {
         llvm::GlobalVariable *globalVar =
             llvm::dyn_cast<llvm::GlobalVariable>(this->module->getOrInsertGlobal(node->getId(), type));
 
+        OptPtr<Value<>> nodeValue = node->getValue();
+
         // Assign value if applicable.
-        if (node->getValue().has_value()) {
+        if (nodeValue.has_value()) {
             // Visit global variable value.
-            this->visitValue(*node->getValue());
+            this->visitValue(*nodeValue);
 
             llvm::Value *value = this->valueStack.pop();
 
