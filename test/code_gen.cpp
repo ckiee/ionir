@@ -163,6 +163,5 @@ TEST(CodeGenTest, VisitBranchInst) {
 
     LlvmModule module = LlvmModule(llvmCodegenPass->getModule());
 
-    std::cout << module.getAsString() << '\n';
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_branch"));
 }
