@@ -19,7 +19,7 @@ namespace ionir {
 
         for (const auto inst : insts) {
             if (inst->getInstKind() == InstKind::Return) {
-                Ptr<ReturnInst> returnInst = inst->dynamicCast<ReturnInst>();
+                Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
 
                 /**
                  * Functions whose prototype's return type is non-void must provide

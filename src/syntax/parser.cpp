@@ -6,8 +6,8 @@
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-    Classifier Parser::getTokenIdentifier() const {
-        return this->tokenIdentifier;
+    Classifier Parser::getClassifier() const {
+        return this->classifier;
     }
 
     bool Parser::is(TokenKind tokenKind) {
@@ -57,7 +57,7 @@ namespace ionir {
     }
 
     Parser::Parser(TokenStream stream, StackTrace stackTrace, std::string filePath)
-        : stream(stream), stackTrace(stackTrace), filePath(filePath), tokenIdentifier() {
+        : stream(stream), stackTrace(stackTrace), filePath(filePath), classifier() {
         //
     }
 

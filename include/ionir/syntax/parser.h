@@ -40,10 +40,10 @@ namespace ionir {
 
         std::string filePath;
 
-        Classifier tokenIdentifier;
+        Classifier classifier;
 
     protected:
-        Classifier getTokenIdentifier() const;
+        Classifier getClassifier() const;
 
         bool is(TokenKind tokenKind);
 
