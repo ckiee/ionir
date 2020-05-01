@@ -15,16 +15,16 @@ namespace ionir {
 
         PtrRef<Section> bodyRef;
 
-        OptPtrRef<Section> otherwiseRef = std::nullopt;
+        PtrRef<Section> otherwiseRef;
     };
 
     class BranchInst : public Inst {
     private:
         Ptr<Expr<>> condition;
 
-        PtrRef<Section> bodyRef;
+        PtrRef<Section> bodySectionRef;
 
-        OptPtrRef<Section> otherwiseRef;
+        PtrRef<Section> otherwiseSectionRef;
 
     public:
         explicit BranchInst(BranchInstOpts opts);
@@ -41,8 +41,8 @@ namespace ionir {
 
         void setBodyRef(PtrRef<Section> bodyRef);
 
-        OptPtrRef<Section> getOtherwiseRef() const;
+        PtrRef<Section> getOtherwiseRef() const;
 
-        void setOtherwiseRef(OptPtrRef<Section> otherwiseRef);
+        void setOtherwiseRef(PtrRef<Section> otherwiseRef);
     };
 }

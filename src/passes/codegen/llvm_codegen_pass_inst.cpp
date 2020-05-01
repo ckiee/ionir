@@ -45,14 +45,6 @@ namespace ionir {
     void LlvmCodegenPass::visitBranchInst(Ptr<BranchInst> node) {
         this->requireBuilder();
 
-        /**
-         * Relocate all instructions following the
-         * branch instruction onto a new stage of
-         * the parent.
-         */
-        // TODO
-        // node->getParent()->relocateInsts(node->getParent()->getParent());
-
         // Visit condition.
         this->visitExpr(node->getCondition());
 
@@ -61,39 +53,32 @@ namespace ionir {
         this->saveBuilder();
 
         PtrRef<Section> bodyRef = node->getBodyRef();
+        PtrRef<Section> otherwiseRef = node->getOtherwiseRef();
 
-        // Body should have been resolved at this point.
+        // Body reference should have been resolved at this point.
         if (!bodyRef->isResolved()) {
-            throw std::runtime_error("Unresolved branch instruction body");
+            throw std::runtime_error("Unresolved branch instruction body reference");
+        }
+        // Otherwise reference should have been resolved as well at this point.
+        else if (!otherwiseRef->isResolved()) {
+            throw std::runtime_error("Unresolved branch instruction otherwise reference");
         }
 
-        // Visit body.
+        // Visit body and otherwise references.
         this->visitSection(*bodyRef->getValue());
+        this->visitSection(*otherwiseRef->getValue());
 
-        auto *llvmBody = this->valueStack.popAs<llvm::BasicBlock>();
-
-        // Prepare otherwise block with a default value.
-        std::optional<llvm::BasicBlock *> llvmOtherwise = std::nullopt;
-
-        OptPtrRef<Section> otherwiseRef = node->getOtherwiseRef();
-
-        // Otherwise, if set, should have been resolved at this point.
-        if (otherwiseRef.has_value() && !otherwiseRef->get()->isResolved()) {
-            throw std::runtime_error("Unresolved branch instruction otherwise");
-        }
-        // Visit otherwise block if applicable.
-        else if (otherwiseRef.has_value()) {
-            std::cout << "Branch inst is resolved ... llvm codegen" << std::endl;
-            this->visitSection(*otherwiseRef->get()->getValue());
-            llvmOtherwise = this->valueStack.popAs<llvm::BasicBlock>();
-        }
+        // Pop both reference's values.
+        auto *llvmBodyBlock = this->valueStack.popAs<llvm::BasicBlock>();
+        auto *llvmOtherwiseBlock = this->valueStack.popAs<llvm::BasicBlock>();
 
         this->restoreBuilder();
 
         // Create the LLVM branch instruction.
         llvm::BranchInst *branchInst =
-            this->builder->CreateCondBr(condition, llvmBody, llvmOtherwise.value_or(nullptr));
+            this->builder->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
 
+        // Finally, push the resulting branch instruction onto the value stack.
         this->valueStack.push(branchInst);
     }
 

@@ -126,15 +126,28 @@ TEST(CodeGenTest, VisitBranchInst) {
     });
 
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
+    PtrRef<Section> bodySectionRef = std::make_shared<Ref<Section>>("if_body", nullptr, body);
 
     // TODO: Use some sort of factory design pattern.
     auto branchInst = std::make_shared<BranchInst>(BranchInstOpts{
         body,
         condition,
-        std::make_shared<Ref<Section>>("if_body", nullptr, body)
+
+        /**
+         * Point both body and otherwise sections to
+         * the same section for testing purposes. LLVM
+         * is smart enough to create a different label,
+         * even if both attempt to reference the same label.
+         * Unsure however how it would handle splitting of
+         * instructions if there were to be contained inside
+         * the section once it creates the new label.
+         */
+        bodySectionRef,
+        bodySectionRef
     });
 
     branchInst->getBodyRef()->setOwner(branchInst);
+    branchInst->getOtherwiseRef()->setOwner(branchInst);
 
     Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 
@@ -150,5 +163,6 @@ TEST(CodeGenTest, VisitBranchInst) {
 
     LlvmModule module = LlvmModule(llvmCodegenPass->getModule());
 
+    std::cout << module.getAsString() << '\n';
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_branch"));
 }

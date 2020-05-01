@@ -130,6 +130,7 @@ namespace ionir {
         OptPtr<Value<>> nodeValue = node->getValue();
 
         // Assign value if applicable.
+        // TODO: 'nodeValue' can be NULL and still return .has_value() true.
         if (nodeValue.has_value()) {
             // Visit global variable value.
             this->visitValue(*nodeValue);

@@ -32,8 +32,6 @@ namespace ionir {
                 if (functionSymbolTable->contains(id)) {
                     node->resolve((*functionSymbolTable)[id]);
 
-                    std::cout << "Reference found and resolved" << std::endl;
-
                     return;
                 }
                 // TODO: Check globals.
@@ -45,6 +43,11 @@ namespace ionir {
                 throw std::runtime_error("Undefined reference to '" + id + "'");
 
                 break;
+            }
+
+            // TODO: Finish implementation.
+            default: {
+                throw std::runtime_error("Unhandled construct kind");
             }
         }
     }

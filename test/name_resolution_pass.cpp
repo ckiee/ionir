@@ -24,10 +24,12 @@ TEST(NameResolutionPassTest, Run) {
     OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
     Ptr<Section> entrySection = *function->get()->getBody()->getEntrySection();
 
-    // Create and attach the instruction.
+    // Create an instruction builder instance and the branch instruction's condition.
     InstBuilder instBuilder = InstBuilder(entrySection);
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
-    Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::sectionEntryId);
+
+    // Create the branch instruction pointing to the entry section on both true and false.
+    Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::sectionEntryId, Const::sectionEntryId);
 
     // Abstract specific element(s) to be tested.
     PtrRef<Section> bodyRef = branchInst->getBodyRef();

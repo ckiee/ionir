@@ -106,24 +106,16 @@ namespace ionir {
              nullptr
          });
 
-         OptPtr<Ref<Section>> body = this->parseRef<Section>(branchInst);
+         OptPtr<Ref<Section>> bodySection = this->parseRef<Section>(branchInst);
 
-         IONIR_PARSER_ASSURE(body)
+         IONIR_PARSER_ASSURE(bodySection)
 
-         OptPtr<Ref<Section>> otherwise = std::nullopt;
+         OptPtr<Ref<Section>> otherwiseSection = this->parseRef<Section>(branchInst);
 
-         // Parse the otherwise block if applicable.
-         if (this->is(TokenKind::KeywordElse))
-         {
-             // Skip over the else keyword.
-             this->stream.skip();
+        IONIR_PARSER_ASSURE(otherwiseSection)
 
-             // Parse the otherwise block.
-             OptPtr<Ref<Section>> otherwise = this->parseRef<Section>(branchInst);
-         }
-
-        branchInst->setBodyRef(*body);
-        branchInst->setOtherwiseRef(otherwise);
+        branchInst->setBodyRef(*bodySection);
+        branchInst->setOtherwiseRef(*otherwiseSection);
 
          return branchInst;
     }
