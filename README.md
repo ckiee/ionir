@@ -191,6 +191,7 @@ Additionally, install the following packages using the MinGW Installation Manage
 
 * `mingw32-gcc-bin`
 * `mingw32-gcc-g++-bin`
+* `mingw32-make-bin`
 
 1. Download sources ([Visit LLVM's downloads page](http://releases.llvm.org/download.html)) for LLVM 9.0.0 (or [click here](http://releases.llvm.org/9.0.0/llvm-9.0.0.src.tar.xz) to download them directly).
 
