@@ -10,9 +10,6 @@ using namespace ionir;
 
 TEST(ParserTest, ParseInt) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenKind::SymbolBracketL, "["),
-        Token(TokenKind::TypeInt32, "i32"),
-        Token(TokenKind::SymbolBracketR, "]"),
         Token(TokenKind::LiteralInt, "5")
     });
 

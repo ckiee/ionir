@@ -82,7 +82,11 @@ namespace ionir {
     }
 
     OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<Section> parent) {
-        // TODO: Return inst does not necessarily take a value. Instead, it should be allowed to return without value, signaling void.
+        /**
+         * TODO: Return inst does not necessarily take a value. Instead,
+         * it should be allowed to return without value, signaling void
+         * (or with the keyword void itself).
+         */
         OptPtr<Value<>> value = this->parseValue();
 
         IONIR_PARSER_ASSURE(value)

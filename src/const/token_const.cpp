@@ -8,6 +8,8 @@ namespace ionir {
 
     BiMap<std::string, TokenKind> TokenConst::simple = BiMap<std::string, TokenKind>();
 
+    std::vector<std::pair<std::regex, TokenKind>> TokenConst::complex = {};
+
     BiMap<std::string, TokenKind> TokenConst::keywords = BiMap<std::string, TokenKind>();
 
     TokenKindVector TokenConst::types = {
@@ -180,6 +182,16 @@ namespace ionir {
         TokenConst::simple = TokenConst::symbols.merge(TokenConst::simple);
         TokenConst::simple = TokenConst::keywords.merge(TokenConst::simple);
         TokenConst::simple = TokenConst::operators.merge(TokenConst::simple);
+
+        // Initialize complex maps.
+        TokenConst::complex = {
+            {Regex::identifier, TokenKind::Identifier},
+            {Regex::string, TokenKind::LiteralString},
+            {Regex::decimal, TokenKind::LiteralDecimal},
+            {Regex::integer, TokenKind::LiteralInt},
+            {Regex::character, TokenKind::LiteralCharacter},
+            {Regex::whitespace, TokenKind::Whitespace}
+        };
 
         /**
          * Raise initialized flag to prevent further

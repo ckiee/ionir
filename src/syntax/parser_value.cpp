@@ -33,9 +33,6 @@ namespace ionir {
     }
 
     OptPtr<IntegerValue> Parser::parseInt() {
-        OptPtr<Type> type = this->parseTypePrefix();
-
-        IONIR_PARSER_ASSURE(type)
         IONIR_PARSER_EXPECT(TokenKind::LiteralInt)
 
         /**
@@ -59,10 +56,11 @@ namespace ionir {
             return this->makeNotice("Could not convert string to value");
         }
 
-        // TODO: Cannot cast Type to IntegerType just like that. It will have missing values (ex.
+        // Create a long integer type for the value.
+        Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int64);
+
         // Create the integer instance.
-        Ptr<IntegerValue> integer =
-            std::make_shared<IntegerValue>((*type)->dynamicCast<IntegerType>(), value);
+        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type, value);
 
         // Skip current token.
         this->stream.tryNext();
