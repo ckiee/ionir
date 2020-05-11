@@ -28,7 +28,7 @@ namespace ionir {
     }
 
     bool Block::hasEntrySection() {
-        return this->getEntrySection().has_value();
+        return Util::hasValue(this->getEntrySection());
     }
 
     void Block::insertSection(Ptr<Section> section) {

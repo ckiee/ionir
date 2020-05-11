@@ -90,5 +90,10 @@ namespace ionir {
 
             return flippedMap;
         }
+
+        template<typename T>
+        static bool hasValue(OptPtr<T> pointer) {
+            return pointer != nullptr && pointer.has_value();
+        }
     };
 }

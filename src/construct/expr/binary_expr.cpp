@@ -39,7 +39,7 @@ namespace ionir {
         OptPtr<Type> type = TypeUtil::determineBinaryExprType(this->leftSide, this->rightSide);
 
         // Type must have been determined, otherwise report an error.
-        if (type.has_value()) {
+        if (Util::hasValue(type)) {
             // TODO: Instead of throwing, use some mechanism to reach notices.
             throw std::runtime_error("Unable to determine binary expression type -- incompatible operands might be the cause");
         }

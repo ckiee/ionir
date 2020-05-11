@@ -12,9 +12,11 @@ namespace ionir {
 
         std::optional<llvm::Value *> rightSide = std::nullopt;
 
+        auto nodeRightSide = node->getRightSide();
+
         // Process right side if applicable.
-        if (node->getRightSide().has_value()) {
-            this->visitExpr(*node->getRightSide());
+        if (Util::hasValue(nodeRightSide)) {
+            this->visitExpr(*nodeRightSide);
 
             // Retrieve and pop right side.
             rightSide = this->valueStack.pop();

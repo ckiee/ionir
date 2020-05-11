@@ -13,7 +13,7 @@ namespace ionir {
             case TokenKind::LiteralInt: {
                 OptPtr<IntegerValue> integerValue = this->parseInt();
 
-                if (integerValue.has_value()) {
+                if (Util::hasValue(integerValue)) {
                     return integerValue->get()->dynamicCast<Value<>>();
                 }
 

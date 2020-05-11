@@ -4,6 +4,7 @@
 #include <string>
 #include <ionir/construct/construct.h>
 #include <ionir/misc/named.h>
+#include <ionir/misc/util.h>
 
 namespace ionir {
     // TODO: What if 'pass.h' is never included?
@@ -45,7 +46,7 @@ namespace ionir {
 
             OptPtr<Construct> value = this->getValue();
 
-            if (value.has_value()) {
+            if (Util::hasValue(value)) {
                 return value->get()->dynamicCast<TValue>();
             }
 

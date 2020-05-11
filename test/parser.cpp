@@ -17,7 +17,7 @@ TEST(ParserTest, ParseInt) {
 
     // TODO: Verify integer type?
 
-    EXPECT_TRUE(integer.has_value());
+    EXPECT_TRUE(Util::hasValue(integer));
 
     // Prevent SEGFAULT when trying to access members of std::nullopt.
     if (!integer.has_value()) {
@@ -34,7 +34,7 @@ TEST(ParserTest, ParseChar) {
 
     auto character = parser.parseChar();
 
-    EXPECT_TRUE(character.has_value());
+    EXPECT_TRUE(Util::hasValue(character));
     EXPECT_EQ(character->get()->getValue(), 'a');
 }
 
@@ -57,7 +57,7 @@ TEST(ParserTest, ParseType) {
 
     auto type = parser.parseType();
 
-    EXPECT_TRUE(type.has_value());
+    EXPECT_TRUE(Util::hasValue(type));
     EXPECT_EQ(type->get()->getId(), "type");
     EXPECT_FALSE(type->get()->getIsPointer());
 }
@@ -70,7 +70,7 @@ TEST(ParserTest, ParsePointerType) {
 
     auto type = parser.parseType();
 
-    EXPECT_TRUE(type.has_value());
+    EXPECT_TRUE(Util::hasValue(type));
     EXPECT_EQ(type->get()->getId(), "type");
     EXPECT_TRUE(type->get()->getIsPointer());
 }
@@ -97,7 +97,7 @@ TEST(ParserTest, ParseEmptyBlock) {
 
     auto block = parser.parseBlock(nullptr);
 
-    EXPECT_TRUE(block.has_value());
+    EXPECT_TRUE(Util::hasValue(block));
     EXPECT_TRUE(block->get()->getSymbolTable()->isEmpty());
 }
 
@@ -112,7 +112,7 @@ TEST(ParserTest, ParseEmptyPrototype) {
 
     auto prototype = parser.parsePrototype();
 
-    EXPECT_TRUE(prototype.has_value());
+    EXPECT_TRUE(Util::hasValue(prototype));
 
     auto returnType = prototype->get()->getReturnType();
     auto args = prototype->get()->getArgs();
@@ -141,9 +141,64 @@ TEST(ParserTest, ParseEmptyFunction) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    auto function = parser.parseFunction();
+    OptPtr<Function> function = parser.parseFunction();
 
-    // TODO: Verify the function's properties (ex. prototype, body, etc.).
+    EXPECT_TRUE(Util::hasValue(function));
+
+    /**
+     * Function should not be able to be verified, since it's
+     * body is ill-formed and missing required entry section.
+     */
+    EXPECT_FALSE(function->get()->verify());
+
+    // Abstract the function's body block.
+    Ptr<Block> body = function->get()->getBody();
+
+    /**
+     * The function's body should not contain any section(s),
+     * since there were none provided to parse.
+     */
+    EXPECT_EQ(body->getSymbolTable()->getSize(), 0);
+}
+
+TEST(ParserTest, ParseFunction) {
+    Parser parser = test::bootstrap::parser({
+        Token(TokenKind::KeywordFunction, "fn"),
+        Token(TokenKind::Identifier, test::constant::foobar),
+        Token(TokenKind::SymbolParenthesesL, "("),
+        Token(TokenKind::SymbolParenthesesR, ")"),
+        Token(TokenKind::SymbolArrow, "->"),
+        Token(TokenKind::Identifier, "type"),
+        Token(TokenKind::SymbolBraceL, "{"),
+        Token(TokenKind::SymbolAt, "@"),
+        Token(TokenKind::Identifier, "entry"),
+        Token(TokenKind::SymbolColon, ":"),
+        Token(TokenKind::SymbolBraceL, "{"),
+        Token(TokenKind::InstReturn, "ret"),
+        Token(TokenKind::LiteralInt, "5"),
+        Token(TokenKind::SymbolSemiColon, ";"),
+        Token(TokenKind::SymbolBraceR, "}"),
+        Token(TokenKind::SymbolBraceR, "}")
+    });
+
+    OptPtr<Function> function = parser.parseFunction();
+
+    EXPECT_TRUE(Util::hasValue(function));
+
+    /**
+     * Function should be able to be verified successfully,
+     * since it's body contains valid requirements.
+     */
+    EXPECT_TRUE(function->get()->verify());
+
+    // Abstract the function's body block.
+    Ptr<Block> body = function->get()->getBody();
+
+    /**
+     * The function's body block should contain the entry
+     * section.
+     */
+    EXPECT_TRUE(body->hasEntrySection());
 }
 
 TEST(ParserTest, ParseAllocaInst) {
@@ -153,9 +208,9 @@ TEST(ParserTest, ParseAllocaInst) {
         Token(TokenKind::Identifier, ConstName::typeInt32)
     });
 
-    auto inst = parser.parseAllocaInst(nullptr);
+    OptPtr<AllocaInst> inst = parser.parseAllocaInst(nullptr);
 
-    EXPECT_TRUE(inst.has_value());
+    EXPECT_TRUE(Util::hasValue(inst));
     EXPECT_EQ(inst->get()->getInstKind(), InstKind::Alloca);
 }
 
@@ -169,11 +224,11 @@ TEST(ParserTest, ParseExtern) {
         Token(TokenKind::Identifier, "type")
     });
 
-    auto externConstruct = parser.parseExtern();
+    OptPtr<Extern> externConstruct = parser.parseExtern();
 
-    EXPECT_TRUE(externConstruct.has_value());
+    EXPECT_TRUE(Util::hasValue(externConstruct));
 
-    auto prototype = externConstruct->get()->getPrototype();
+    Ptr<Prototype> prototype = externConstruct->get()->getPrototype();
     auto args = prototype->getArgs();
 
     // Verify prototype.
