@@ -14,7 +14,7 @@ using namespace ionir;
 
 TEST(CodeGenTest, VisitExtern) {
     Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
-    Ptr<Type> returnType = std::make_shared<Type>(ConstName::typeVoid);
+    Ptr<VoidType> returnType = TypeFactory::typeVoid();
     Ptr<Args> args = std::make_shared<Args>();
     Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, args, returnType);
     Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
@@ -28,7 +28,7 @@ TEST(CodeGenTest, VisitExtern) {
 
 TEST(CodeGenTest, VisitEmptyFunction) {
     Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
-    Ptr<Type> returnType = std::make_shared<Type>(ConstName::typeVoid);
+    Ptr<VoidType> returnType = TypeFactory::typeVoid();
 
     Ptr<Prototype> prototype =
         std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType);
@@ -69,7 +69,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 
 TEST(CodeGenTest, VisitEmptyGlobal) {
     Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
-    Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int32);
+    Ptr<IntegerType> type = TypeFactory::typeInteger(IntegerKind::Int32);
     Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar);
 
     visitor->visitGlobal(globalVar);
@@ -81,10 +81,13 @@ TEST(CodeGenTest, VisitEmptyGlobal) {
 
 TEST(CodeGenTest, VisitGlobalWithValue) {
     Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
-    Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int32);
+    Ptr<IntegerType> type = TypeFactory::typeInteger(IntegerKind::Int32);
 
-    Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar,
-        std::make_shared<IntegerValue>(type, 123)->staticCast<Value<>>());
+    Ptr<Global> globalVar = std::make_shared<Global>(
+        type,
+        test::constant::foobar,
+        std::make_shared<IntegerValue>(type, 123)->staticCast<Value<>>()
+    );
 
     visitor->visitGlobal(globalVar);
 
@@ -100,7 +103,7 @@ TEST(CodeGenTest, VisitAllocaInst) {
         std::make_shared<AllocaInst>(AllocaInstOpts{
             nullptr,
             test::constant::foobar,
-            std::make_shared<Type>(ConstName::typeInt32)
+            TypeFactory::typeInteger(IntegerKind::Int32)
         })
     };
 

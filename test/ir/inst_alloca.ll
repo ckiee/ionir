@@ -3,5 +3,5 @@ source_filename = "test"
 
 define void @foobar() {
 entry:
-  %foobar = alloca double
+  %foobar = alloca i32
 }

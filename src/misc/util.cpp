@@ -146,4 +146,11 @@ namespace ionir {
             }
         }
     }
+
+    int Util::calculateBitLength(int64_t number) {
+        /**
+         * Formula has been taken from Wikipedia.
+         */
+        return floor(log2(number + 1));
+    }
 }

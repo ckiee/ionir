@@ -70,10 +70,9 @@ namespace ionir {
 
     OptPtr<VoidType> Parser::parseVoidType() {
         /**
-         * TODO: Manually skipping token(s) means that this parser abandons
-         * support for pointers (ex. *) or references (&), etc.
+         * Void type does not accept references nor pointer
+         * specifiers, so just simply skip over its token.
          */
-
         this->skipOver(TokenKind::TypeVoid);
 
         return std::make_shared<VoidType>();

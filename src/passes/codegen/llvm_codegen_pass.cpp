@@ -146,15 +146,39 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitType(Ptr<Type> node) {
-        // TODO: Hard-coded double type.
-        llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
-
         // Convert type to a pointer if applicable.
         if (node->getIsPointer()) {
-            // TODO: Convert type to pointer.
+            /**
+             * TODO: Convert type to pointer before passing on
+             * to explicit handlers, thus saving time and code.
+             */
         }
 
-        this->typeStack.push(type);
+        switch (node->getTypeKind()) {
+            case TypeKind::Void: {
+                return this->visitVoidType(node->staticCast<VoidType>());
+            }
+
+            case TypeKind::Integer: {
+                return this->visitIntegerType(node->staticCast<IntegerType>());
+            }
+
+            case TypeKind::String: {
+                // TODO
+
+                throw std::runtime_error("Not implemented");
+            }
+
+            case TypeKind::UserDefined: {
+                // TODO
+
+                throw std::runtime_error("Not implemented");
+            }
+
+            default: {
+                throw std::runtime_error("Could not identify type kind");
+            }
+        }
     }
 
     void LlvmCodegenPass::visitIntegerType(Ptr<IntegerType> node) {

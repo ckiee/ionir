@@ -56,11 +56,15 @@ namespace ionir {
                 arguments.push_back(llvm::Type::getDoubleTy(*this->context));
             }
 
+            // Visit and pop the return type.
+            this->visitType(node->getReturnType());
+
+            llvm::Type *returnType = this->typeStack.pop();
+
             // TODO: Support for infinite arguments and hard-coded return type.
             // Create the function type.
             llvm::FunctionType *type =
-                llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments,
-                    node->getArgs()->getIsInfinite());
+                llvm::FunctionType::get(returnType, arguments, node->getArgs()->getIsInfinite());
 
             // Cast the value to a function, since we know getCallee() will return a function.
             function =
