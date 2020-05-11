@@ -25,7 +25,7 @@ namespace ionir {
         this->requireBuilder();
 
         OptPtr<Value<>> value = node->getValue();
-        llvm::ReturnInst *returnInst = this->builder->CreateRetVoid();
+        llvm::ReturnInst *returnInst = nullptr;
 
         if (value.has_value()) {
             this->visitValue(*value);
@@ -37,6 +37,10 @@ namespace ionir {
              * using the buffered builder.
              */
             returnInst = this->builder->CreateRet(value);
+        }
+        // No value was specified. Simply return void.
+        else {
+            returnInst = this->builder->CreateRetVoid();
         }
 
         this->valueStack.push(returnInst);

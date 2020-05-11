@@ -55,8 +55,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
-        : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack(),
-        builderTracker(), namedValues({}) {
+        : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack(), builderTracker(), namedValues({}) {
         //
     }
 
