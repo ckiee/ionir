@@ -69,12 +69,14 @@ namespace ionir {
     }
 
     OptPtr<VoidType> Parser::parseVoidType() {
-        // TODO: Fully verify this works (through unit tests). The question is whether Type -> Void type cast will work.
-        OptPtr<Type> type = this->parseType();
+        /**
+         * TODO: Manually skipping token(s) means that this parser abandons
+         * support for pointers (ex. *) or references (&), etc.
+         */
 
-        IONIR_PARSER_ASSURE(type)
+        this->skipOver(TokenKind::TypeVoid);
 
-        return type->get()->dynamicCast<VoidType>();
+        return std::make_shared<VoidType>();
     }
 
     OptPtr<IntegerType> Parser::parseIntegerType() {

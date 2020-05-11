@@ -62,6 +62,18 @@ TEST(ParserTest, ParseType) {
     EXPECT_FALSE(type->get()->getIsPointer());
 }
 
+TEST(ParserTest, ParseVoidType) {
+    Parser parser = test::bootstrap::parser({
+        Token(TokenKind::TypeVoid, "void")
+    });
+
+    OptPtr<Type> type = parser.parseType();
+
+    EXPECT_TRUE(Util::hasValue(type));
+    EXPECT_EQ(type->get()->getId(), "void");
+    EXPECT_FALSE(type->get()->getIsPointer());
+}
+
 TEST(ParserTest, ParsePointerType) {
     Parser parser = test::bootstrap::parser({
         Token(TokenKind::Identifier, "type"),
