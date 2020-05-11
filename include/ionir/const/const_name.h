@@ -7,6 +7,8 @@ namespace ionir {
     public:
         static const std::string anonymous;
 
+        static const std::string main;
+
         static const std::string typeVoid;
 
         static const std::string typeBool;

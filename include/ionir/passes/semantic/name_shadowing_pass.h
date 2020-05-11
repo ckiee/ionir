@@ -1,6 +1,5 @@
 #pragma once
 
-#include <optional>
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
 

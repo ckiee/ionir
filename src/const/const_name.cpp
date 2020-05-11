@@ -3,6 +3,8 @@
 namespace ionir {
     const std::string ConstName::anonymous = "anonymous";
 
+    const std::string ConstName::main = "main";
+
     const std::string ConstName::typeVoid = "void";
 
     const std::string ConstName::typeBool = "bool";
