@@ -8,11 +8,11 @@ namespace ionir {
         return this->module;
     }
 
-    Stack<llvm::Value *> LlvmCodegenPass::getValueStack() const {
+    LlvmStack<llvm::Value> LlvmCodegenPass::getValueStack() const {
         return this->valueStack;
     }
 
-    Stack<llvm::Type *> LlvmCodegenPass::getTypeStack() const {
+    LlvmStack<llvm::Type> LlvmCodegenPass::getTypeStack() const {
         return this->typeStack;
     }
 
@@ -55,8 +55,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
-        : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack(),
-        builderTracker(), namedValues({}) {
+        : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack(), builderTracker(), namedValues({}) {
         //
     }
 
@@ -125,33 +124,60 @@ namespace ionir {
         llvm::Type *type = this->typeStack.pop();
 
         llvm::GlobalVariable *globalVar =
-            (llvm::GlobalVariable *)this->module->getOrInsertGlobal(node->getId(), type);
+            llvm::dyn_cast<llvm::GlobalVariable>(this->module->getOrInsertGlobal(node->getId(), type));
+
+        OptPtr<Value<>> nodeValue = node->getValue();
 
         // Assign value if applicable.
-        if (node->getValue().has_value()) {
+        // TODO: 'nodeValue' can be NULL and still return .has_value() true.
+        if (nodeValue.has_value()) {
             // Visit global variable value.
-            this->visitValue(*node->getValue());
+            this->visitValue(*nodeValue);
 
             llvm::Value *value = this->valueStack.pop();
 
             // TODO: Value needs to be created from below commented statement.
             // llvm::Constant* initializerValue = llvm::Constant::getIntegerValue(llvm::Type);
 
-            // TODO: You can't just cast llvm::value to constant! See above.
-            globalVar->setInitializer((llvm::Constant *)value);
+            // TODO: CRITICAL: You can't just cast llvm::value to constant! See above.
+            globalVar->setInitializer(llvm::dyn_cast<llvm::Constant>(value));
         }
     }
 
     void LlvmCodegenPass::visitType(Ptr<Type> node) {
-        // TODO: Hard-coded double type.
-        llvm::Type *type = llvm::Type::getDoubleTy(*this->context);
-
         // Convert type to a pointer if applicable.
         if (node->getIsPointer()) {
-            // TODO: Convert type to pointer.
+            /**
+             * TODO: Convert type to pointer before passing on
+             * to explicit handlers, thus saving time and code.
+             */
         }
 
-        this->typeStack.push(type);
+        switch (node->getTypeKind()) {
+            case TypeKind::Void: {
+                return this->visitVoidType(node->staticCast<VoidType>());
+            }
+
+            case TypeKind::Integer: {
+                return this->visitIntegerType(node->staticCast<IntegerType>());
+            }
+
+            case TypeKind::String: {
+                // TODO
+
+                throw std::runtime_error("Not implemented");
+            }
+
+            case TypeKind::UserDefined: {
+                // TODO
+
+                throw std::runtime_error("Not implemented");
+            }
+
+            default: {
+                throw std::runtime_error("Could not identify type kind");
+            }
+        }
     }
 
     void LlvmCodegenPass::visitIntegerType(Ptr<IntegerType> node) {

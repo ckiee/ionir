@@ -9,7 +9,7 @@
 namespace ionir {
     class LlvmBlock : public Wrapper<llvm::BasicBlock *> {
     private:
-        std::optional<Ptr<IrBuilder>> cachedBuilder;
+        OptPtr<IrBuilder> cachedBuilder;
 
     public:
         explicit LlvmBlock(llvm::BasicBlock *value);

@@ -14,5 +14,9 @@ namespace ionir {
         virtual T &unwrap() {
             return this->value;
         }
+
+        virtual const T &unwrapConst() const {
+            return this->value;
+        }
     };
 }

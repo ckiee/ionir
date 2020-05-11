@@ -6,22 +6,26 @@
 namespace ionir {
     bool TokenConst::isInitialized = false;
 
-    std::map<std::string, TokenKind> TokenConst::simple = {};
+    BiMap<std::string, TokenKind> TokenConst::simple = BiMap<std::string, TokenKind>();
 
     std::vector<std::pair<std::regex, TokenKind>> TokenConst::complex = {};
 
-    TokenKindVector TokenConst::keywords = {};
-
-    TokenKindVector TokenConst::symbols = {};
-
-    TokenKindVector TokenConst::operators = {};
+    BiMap<std::string, TokenKind> TokenConst::keywords = BiMap<std::string, TokenKind>();
 
     TokenKindVector TokenConst::types = {
         TokenKind::TypeVoid,
-        TokenKind::TypeString,
+        TokenKind::TypeBool,
         TokenKind::TypeInt16,
         TokenKind::TypeInt32,
         TokenKind::TypeInt64,
+        TokenKind::TypeUnsignedInt16,
+        TokenKind::TypeUnsignedInt32,
+        TokenKind::TypeUnsignedInt64,
+        TokenKind::TypeFloat16,
+        TokenKind::TypeFloat32,
+        TokenKind::TypeFloat64,
+        TokenKind::TypeChar,
+        TokenKind::TypeString
     };
 
     TokenKindVector TokenConst::insts = {
@@ -32,78 +36,8 @@ namespace ionir {
         TokenKind::InstStore
     };
 
-    std::map<TokenKind, std::string> TokenConst::names = {
-        {TokenKind::Dummy, "Dummy"},
-        {TokenKind::Unknown, "Unknown"},
-        {TokenKind::Identifier, "Identifier"},
-        {TokenKind::LiteralString, "LiteralString"},
-        {TokenKind::LiteralDecimal, "LiteralDecimal"},
-        {TokenKind::LiteralInt, "LiteralInt"},
-        {TokenKind::LiteralCharacter, "LiteralCharacter"},
-        {TokenKind::Whitespace, "Whitespace"},
-        {TokenKind::SymbolAt, "SymbolAt"},
-        {TokenKind::SymbolColon, "SymbolColon"},
-        {TokenKind::SymbolDollar, "SymbolDollar"},
-        {TokenKind::SymbolHash, "SymbolHash"},
-        {TokenKind::SymbolParenthesesL, "SymbolParenthesesL"},
-        {TokenKind::SymbolParenthesesR, "SymbolParenthesesR"},
-        {TokenKind::SymbolBracketL, "SymbolBracketL"},
-        {TokenKind::SymbolBracketR, "SymbolBracketR"},
-        {TokenKind::SymbolComma, "SymbolComma"},
-        {TokenKind::SymbolTilde, "SymbolTilde"},
-        {TokenKind::SymbolEqual, "SymbolEqual"},
-        {TokenKind::SymbolSemiColon, "SymbolSemiColon"},
-        {TokenKind::SymbolStar, "SymbolStar"},
-        {TokenKind::SymbolBraceL, "SymbolBraceL"},
-        {TokenKind::SymbolBraceR, "SymbolBraceR"},
-        {TokenKind::SymbolArrow, "SymbolArrow"},
-        {TokenKind::InstCall, "InstCall"},
-        {TokenKind::InstStore, "InstStore"},
-        {TokenKind::InstReturn, "InstReturn"},
-        {TokenKind::InstAlloca, "InstAlloca"},
-        {TokenKind::InstBranch, "InstBranch"},
-        {TokenKind::KeywordFunction, "KeywordFunction"},
-        {TokenKind::KeywordExtern, "KeywordExtern"},
-        {TokenKind::KeywordElse, "KeywordElse"},
-        {TokenKind::KeywordGlobal, "KeywordGlobal"},
-        {TokenKind::KeywordMutable, "KeywordMutable"},
-        {TokenKind::KeywordModule, "KeywordModule"},
-        {TokenKind::TypeVoid, "TypeVoid"},
-        {TokenKind::TypeString, "TypeString"},
-        {TokenKind::TypeInt16, "TypeInt16"},
-        {TokenKind::TypeInt32, "TypeInt32"},
-        {TokenKind::TypeInt64, "TypeInt64"},
-        {TokenKind::OperatorAdd, "OperatorAdd"},
-        {TokenKind::OperatorSub, "OperatorSub"},
-        {TokenKind::OperatorMultiply, "OperatorMultiply"},
-        {TokenKind::OperatorDivide, "OperatorDivide"},
-        {TokenKind::OperatorModulo, "OperatorModulo"},
-        {TokenKind::OperatorExponent, "OperatorExponent"},
-        {TokenKind::OperatorGreaterThan, "OperatorGreaterThan"},
-        {TokenKind::OperatorLessThan, "OperatorLessThan"}
-    };
-
-    void TokenConst::pushComplex(std::regex regex, TokenKind tokenKind) {
-        TokenConst::complex.push_back(std::make_pair(regex, tokenKind));
-    }
-
-    void TokenConst::pushSimple(std::string value, TokenKind tokenKind) {
-        TokenConst::simple[value] = tokenKind;
-    }
-
-    void TokenConst::pushSymbol(std::string value, TokenKind tokenKind) {
-        TokenConst::pushSimple(value, tokenKind);
-        TokenConst::symbols.push_back(tokenKind);
-    }
-
-    void TokenConst::pushKeyword(std::string value, TokenKind tokenKind) {
-        TokenConst::pushSimple(value, tokenKind);
-        TokenConst::keywords.push_back(tokenKind);
-    }
-
-    void TokenConst::pushOperator(std::string value, TokenKind tokenKind) {
-        TokenConst::pushSimple(value, tokenKind);
-        TokenConst::operators.push_back(tokenKind);
+    bool TokenConst::pushSimple(std::string value, TokenKind tokenKind) {
+        return TokenConst::simple.insert(value, tokenKind);
     }
 
     bool TokenConst::sortByKeyLength(const std::pair<std::string, TokenKind> &a,
@@ -121,16 +55,16 @@ namespace ionir {
         return std::find(subject.begin(), subject.end(), item) != subject.end();
     }
 
-    std::map<std::string, TokenKind> TokenConst::getSimpleIds() {
+    const BiMap<std::string, TokenKind> &TokenConst::getSimpleIds() {
         return TokenConst::simple;
     }
 
-    SimplePairVector TokenConst::getSortedSimpleIds() {
+    const SimplePairVector TokenConst::getSortedSimpleIds() {
         TokenConst::ensureInit();
 
         SimplePairVector result = {};
 
-        for (const auto pair : TokenConst::simple) {
+        for (const auto &pair : TokenConst::simple.getFirstMap().unwrapConst()) {
             result.push_back(pair);
         }
 
@@ -139,37 +73,37 @@ namespace ionir {
         return result;
     }
 
-    std::vector<std::pair<std::regex, TokenKind>> TokenConst::getComplexIds() {
+    const std::vector<std::pair<std::regex, TokenKind>> &TokenConst::getComplexIds() {
         TokenConst::ensureInit();
 
         return TokenConst::complex;
     }
 
-    TokenKindVector TokenConst::getSymbols() {
+    const BiMap<std::string, TokenKind> &TokenConst::getSymbols() {
         TokenConst::ensureInit();
 
         return TokenConst::symbols;
     }
 
-    TokenKindVector TokenConst::getKeywords() {
+    const BiMap<std::string, TokenKind> &TokenConst::getKeywords() {
         TokenConst::ensureInit();
 
         return TokenConst::keywords;
     }
 
-    TokenKindVector TokenConst::getOperators() {
+    const BiMap<std::string, TokenKind> &TokenConst::getOperators() {
         TokenConst::ensureInit();
 
         return TokenConst::operators;
     }
 
-    TokenKindVector TokenConst::getTypes() {
+    const TokenKindVector &TokenConst::getTypes() {
         TokenConst::ensureInit();
 
         return TokenConst::types;
     }
 
-    TokenKindVector TokenConst::getInsts() {
+    const TokenKindVector &TokenConst::getInsts() {
         TokenConst::ensureInit();
 
         return TokenConst::insts;
@@ -196,7 +130,7 @@ namespace ionir {
     }
 
     std::optional<std::string> TokenConst::findSimpleValue(TokenKind tokenKind) {
-        for (const auto entry : TokenConst::simple) {
+        for (const auto entry : TokenConst::simple.getFirstMap().unwrapConst()) {
             if (entry.second == tokenKind) {
                 return entry.first;
             }
@@ -211,61 +145,58 @@ namespace ionir {
             return;
         }
 
-        // Register symbols.
-        TokenConst::pushSymbol("@", TokenKind::SymbolAt);
-        TokenConst::pushSymbol(":", TokenKind::SymbolColon);
-        TokenConst::pushSymbol("$", TokenKind::SymbolDollar);
-        TokenConst::pushSymbol("#", TokenKind::SymbolHash);
-        TokenConst::pushSymbol("(", TokenKind::SymbolParenthesesL);
-        TokenConst::pushSymbol(")", TokenKind::SymbolParenthesesR);
-        TokenConst::pushSymbol("[", TokenKind::SymbolBracketL);
-        TokenConst::pushSymbol("]", TokenKind::SymbolBracketR);
-        TokenConst::pushSymbol(",", TokenKind::SymbolComma);
-        TokenConst::pushSymbol("~", TokenKind::SymbolTilde);
-        TokenConst::pushSymbol("=", TokenKind::SymbolEqual);
-        TokenConst::pushSymbol(";", TokenKind::SymbolSemiColon);
-        TokenConst::pushSymbol("*", TokenKind::SymbolStar);
-        TokenConst::pushSymbol("{", TokenKind::SymbolBraceL);
-        TokenConst::pushSymbol("}", TokenKind::SymbolBraceR);
-        TokenConst::pushSymbol("->", TokenKind::SymbolArrow);
+        // Initialize keywords bidirectional map.
+        TokenConst::keywords = BiMap<std::string, TokenKind>(std::map<std::string, TokenKind>{
+            // Instructions.
+            {ConstName::instCall, TokenKind::InstCall},
+            {ConstName::instStore, TokenKind::InstStore},
+            {ConstName::instReturn, TokenKind::InstReturn},
+            {ConstName::instAlloca, TokenKind::InstAlloca},
+            {ConstName::instBranch, TokenKind::InstBranch},
 
-        // Register instructions & keywords.
-        TokenConst::pushKeyword(ConstName::instCall, TokenKind::InstCall);
-        TokenConst::pushKeyword(ConstName::instStore, TokenKind::InstStore);
-        TokenConst::pushKeyword(ConstName::instReturn, TokenKind::InstReturn);
-        TokenConst::pushKeyword(ConstName::instAlloca, TokenKind::InstAlloca);
-        TokenConst::pushKeyword(ConstName::instBranch, TokenKind::InstBranch);
-        TokenConst::pushKeyword("fn", TokenKind::KeywordFunction);
-        TokenConst::pushKeyword("module", TokenKind::KeywordModule);
-        TokenConst::pushKeyword("extern", TokenKind::KeywordExtern);
-        TokenConst::pushKeyword("global", TokenKind::KeywordGlobal);
-        TokenConst::pushKeyword("else", TokenKind::KeywordElse);
-        TokenConst::pushKeyword("mut", TokenKind::KeywordMutable);
-        TokenConst::pushKeyword(ConstName::typeVoid, TokenKind::TypeVoid);
-        TokenConst::pushKeyword(ConstName::typeString, TokenKind::TypeString);
-        TokenConst::pushKeyword(ConstName::typeInt16, TokenKind::TypeInt16);
-        TokenConst::pushKeyword(ConstName::typeInt32, TokenKind::TypeInt32);
-        TokenConst::pushKeyword(ConstName::typeInt64, TokenKind::TypeInt64);
+            // Keywords.
+            {"fn", TokenKind::KeywordFunction},
+            {"module", TokenKind::KeywordModule},
+            {"extern", TokenKind::KeywordExtern},
+            {"global", TokenKind::KeywordGlobal},
+            {"else", TokenKind::KeywordElse},
+            {"mut", TokenKind::KeywordMutable},
 
-        // Register operators.
-        TokenConst::pushOperator("+", TokenKind::OperatorAdd);
-        TokenConst::pushOperator("-", TokenKind::OperatorAdd);
-        TokenConst::pushOperator("*", TokenKind::OperatorMultiply);
-        TokenConst::pushOperator("/", TokenKind::OperatorDivide);
-        TokenConst::pushOperator("%", TokenKind::OperatorModulo);
-        TokenConst::pushOperator("^", TokenKind::OperatorExponent);
-        TokenConst::pushOperator(">", TokenKind::OperatorGreaterThan);
-        TokenConst::pushOperator("<", TokenKind::OperatorLessThan);
+            // Types keywords.
+            {ConstName::typeVoid, TokenKind::TypeVoid},
+            {ConstName::typeBool, TokenKind::TypeBool},
+            {ConstName::typeInt16, TokenKind::TypeInt16},
+            {ConstName::typeInt32, TokenKind::TypeInt32},
+            {ConstName::typeInt64, TokenKind::TypeInt64},
+            {ConstName::typeUnsignedInt16, TokenKind::TypeUnsignedInt16},
+            {ConstName::typeUnsignedInt32, TokenKind::TypeUnsignedInt32},
+            {ConstName::typeUnsignedInt64, TokenKind::TypeUnsignedInt64},
+            {ConstName::typeFloat16, TokenKind::TypeFloat16},
+            {ConstName::typeFloat32, TokenKind::TypeFloat32},
+            {ConstName::typeFloat64, TokenKind::TypeFloat64},
+            {ConstName::typeChar, TokenKind::TypeChar},
+            {ConstName::typeString, TokenKind::TypeString}
+        });
 
-        // Initialize complex map.
-        TokenConst::pushComplex(Regex::identifier, TokenKind::Identifier);
-        TokenConst::pushComplex(Regex::string, TokenKind::LiteralString);
-        TokenConst::pushComplex(Regex::decimal, TokenKind::LiteralDecimal);
-        TokenConst::pushComplex(Regex::integer, TokenKind::LiteralInt);
-        TokenConst::pushComplex(Regex::character, TokenKind::LiteralCharacter);
-        TokenConst::pushComplex(Regex::whitespace, TokenKind::Whitespace);
+        // Merge simple maps.
+        TokenConst::simple = TokenConst::symbols.merge(TokenConst::simple);
+        TokenConst::simple = TokenConst::keywords.merge(TokenConst::simple);
+        TokenConst::simple = TokenConst::operators.merge(TokenConst::simple);
 
-        // Raise initialized flag to prevent further attempts to re-initialize.
+        // Initialize complex maps.
+        TokenConst::complex = {
+            {Regex::identifier, TokenKind::Identifier},
+            {Regex::string, TokenKind::LiteralString},
+            {Regex::decimal, TokenKind::LiteralDecimal},
+            {Regex::integer, TokenKind::LiteralInt},
+            {Regex::character, TokenKind::LiteralCharacter},
+            {Regex::whitespace, TokenKind::Whitespace}
+        };
+
+        /**
+         * Raise initialized flag to prevent further
+         * attempts to re-initialize.
+         */
         TokenConst::isInitialized = true;
     }
 }

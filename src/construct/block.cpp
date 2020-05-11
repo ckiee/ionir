@@ -9,7 +9,9 @@ namespace ionir {
     }
 
     void Block::accept(Pass &visitor) {
-        visitor.visitBlock(this->cast<Block>());
+        // TODO: CRITICAL: Cast error.
+//        visitor.visitScopeAnchor(this->staticCast<ScopeAnchor<Section>>());
+        visitor.visitBlock(this->staticCast<Block>());
     }
 
     Ast Block::getChildNodes() const {
@@ -26,7 +28,7 @@ namespace ionir {
     }
 
     bool Block::hasEntrySection() {
-        return this->getEntrySection().has_value();
+        return Util::hasValue(this->getEntrySection());
     }
 
     void Block::insertSection(Ptr<Section> section) {

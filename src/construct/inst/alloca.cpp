@@ -3,12 +3,12 @@
 namespace ionir {
     // TODO: Finish init. implementation.
     AllocaInst::AllocaInst(AllocaInstOpts opts)
-        : Inst(opts.parent, InstKind::Alloca), Named(opts.id), type(opts.type) {
+        : Inst(opts.parent, InstKind::Alloca), InstYield(opts.yieldId), type(opts.type) {
         //
     }
 
     void AllocaInst::accept(Pass &visitor) {
-        visitor.visitAllocaInst(this->cast<AllocaInst>());
+        visitor.visitAllocaInst(this->dynamicCast<AllocaInst>());
     }
 
     Ptr<Type> AllocaInst::getType() const {

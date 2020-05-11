@@ -1,10 +1,9 @@
 #pragma once
 
-#include <optional>
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
 #include <ionir/reporting/notice.h>
-#include <ionir/tracking/scope.h>
+#include <ionir/tracking/scope_stack.h>
 
 namespace ionir {
     /**
@@ -18,11 +17,11 @@ namespace ionir {
         ScopeStack scopeStack;
 
     public:
-        NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
+        explicit NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
 
-        void visitModule(Ptr<Module> node) override {
-            this->scopeStack.push(node->getSymbolTable());
-        }
+        void visitModule(Ptr<Module> node) override;
+
+        void visitScopeAnchor(Ptr<ScopeAnchor<>> node) override;
 
         void visitRef(PtrRef<> node) override;
 

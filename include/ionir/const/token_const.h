@@ -9,21 +9,22 @@
 #include <ionir/lexical/token_kind.h>
 #include <ionir/misc/regex.h>
 #include <ionir/misc/helpers.h>
+#include <ionir/container/bi_map.h>
 
 namespace ionir {
     class TokenConst {
     private:
         static bool isInitialized;
 
-        static std::map<std::string, TokenKind> simple;
+        static BiMap<std::string, TokenKind> simple;
 
         static std::vector<std::pair<std::regex, TokenKind>> complex;
 
-        static TokenKindVector symbols;
+        static BiMap<std::string, TokenKind> keywords;
 
-        static TokenKindVector keywords;
+        static BiMap<std::string, TokenKind> symbols;
 
-        static TokenKindVector operators;
+        static BiMap<std::string, TokenKind> operators;
 
         static TokenKindVector types;
 
@@ -31,15 +32,7 @@ namespace ionir {
 
         static std::map<TokenKind, std::string> names;
 
-        static void pushComplex(std::regex regex, TokenKind tokenKind);
-
-        static void pushSimple(std::string value, TokenKind tokenKind);
-
-        static void pushSymbol(std::string value, TokenKind tokenKind);
-
-        static void pushKeyword(std::string value, TokenKind tokenKind);
-
-        static void pushOperator(std::string value, TokenKind tokenKind);
+        static bool pushSimple(std::string value, TokenKind tokenKind);
 
         static bool sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b);
 
@@ -48,21 +41,21 @@ namespace ionir {
     public:
         static bool contains(TokenKindVector subject, TokenKind item);
 
-        static std::map<std::string, TokenKind> getSimpleIds();
+        static const BiMap<std::string, TokenKind> &getSimpleIds();
 
-        static std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
+        static const std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
 
-        static std::vector<std::pair<std::regex, TokenKind>> getComplexIds();
+        static const std::vector<std::pair<std::regex, TokenKind>> &getComplexIds();
 
-        static TokenKindVector getSymbols();
+        static const BiMap<std::string, TokenKind> &getSymbols();
 
-        static TokenKindVector getKeywords();
+        static const BiMap<std::string, TokenKind> &getKeywords();
 
-        static TokenKindVector getOperators();
+        static const BiMap<std::string, TokenKind> &getOperators();
 
-        static TokenKindVector getTypes();
+        static const TokenKindVector &getTypes();
 
-        static TokenKindVector getInsts();
+        static const TokenKindVector &getInsts();
 
         static std::map<TokenKind, std::string> getNames();
 

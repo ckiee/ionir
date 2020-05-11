@@ -4,6 +4,16 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
+    void LlvmCodegenPass::visit(Ptr<Construct> node) {
+        /**
+         * Only instruct the node to visit this
+         * instance and not its children, since
+         * they're already visited by the other
+         * member methods.
+         */
+        node->accept(*this);
+    }
+
     void LlvmCodegenPass::visitExtern(Ptr<Extern> node) {
         if (node->getPrototype() == nullptr) {
             throw std::runtime_error("Unexpected external definition's prototype to be null");
@@ -26,8 +36,7 @@ namespace ionir {
         std::vector<llvm::Type *> arguments = {};
 
         // Attempt to retrieve an existing function.
-        llvm::Function *function =
-            this->module->getFunction(node->getId());
+        llvm::Function *function = this->module->getFunction(node->getId());
 
         // A function with a matching identifier already exists.
         if (function != nullptr) {
@@ -47,15 +56,19 @@ namespace ionir {
                 arguments.push_back(llvm::Type::getDoubleTy(*this->context));
             }
 
+            // Visit and pop the return type.
+            this->visitType(node->getReturnType());
+
+            llvm::Type *returnType = this->typeStack.pop();
+
             // TODO: Support for infinite arguments and hard-coded return type.
             // Create the function type.
             llvm::FunctionType *type =
-                llvm::FunctionType::get(llvm::Type::getVoidTy(*this->context), arguments,
-                    node->getArgs()->getIsInfinite());
+                llvm::FunctionType::get(returnType, arguments, node->getArgs()->getIsInfinite());
 
             // Cast the value to a function, since we know getCallee() will return a function.
             function =
-                (llvm::Function *)this->module->getOrInsertFunction(node->getId(), type).getCallee();
+                llvm::dyn_cast<llvm::Function>(this->module->getOrInsertFunction(node->getId(), type).getCallee());
 
             // Set the function's linkage.
             function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
@@ -83,16 +96,6 @@ namespace ionir {
         this->valueStack.push(function);
     }
 
-    void LlvmCodegenPass::visit(Ptr<Construct> node) {
-        /**
-         * Only instruct the node to visit this
-         * instance and not its children, since
-         * they're already visited by the other
-         * member methods.
-         */
-        node->accept(*this);
-    }
-
     void LlvmCodegenPass::visitFunction(Ptr<Function> node) {
         if (!node->verify()) {
             throw std::runtime_error("Function verification failed");
@@ -108,8 +111,7 @@ namespace ionir {
         this->visitPrototype(node->getPrototype());
 
         // Retrieve the resulting function off the stack.
-        auto *function = (llvm::Function *)
-            this->valueStack.pop();
+        auto *function = this->valueStack.popAs<llvm::Function>();
 
         // Set the function buffer.
         this->function = function;

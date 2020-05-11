@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void Function::accept(Pass &visitor) {
-        visitor.visitFunction(this->cast<Function>());
+        visitor.visitFunction(this->dynamicCast<Function>());
     }
 
     Ast Function::getChildNodes() const {

@@ -11,7 +11,11 @@ namespace ionir {
          * to provide. Acts sort of an LLVM integer value
          * wrapper.
          */
-        llvm::APInt apInt = llvm::APInt(node->getValue(), true, node->getType()->getIsSigned());
+        llvm::APInt apInt = llvm::APInt(
+            (unsigned)node->getType()->getIntegerKind(),
+            node->getValue(),
+            node->getType()->getIsSigned()
+        );
 
         Ptr<Type> nodeType = node->getType();
 
@@ -19,7 +23,7 @@ namespace ionir {
             throw std::runtime_error("Integer value's type must be integer type");
         }
 
-        this->visitIntegerType(nodeType->cast<IntegerType>());
+        this->visitIntegerType(nodeType->dynamicCast<IntegerType>());
 
         llvm::Type *type = this->typeStack.pop();
 

@@ -22,7 +22,7 @@
 #include <ionir/construct/extern.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/global.h>
-#include <ionir/container/stack.h>
+#include <ionir/container/llvm_stack.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
 
@@ -33,9 +33,9 @@ namespace ionir {
 
         llvm::Module *module;
 
-        Stack<llvm::Value *> valueStack;
+        LlvmStack<llvm::Value> valueStack;
 
-        Stack<llvm::Type *> typeStack;
+        LlvmStack<llvm::Type> typeStack;
 
         std::optional<llvm::Function *> function;
 
@@ -66,9 +66,9 @@ namespace ionir {
 
         llvm::Module *getModule() const;
 
-        Stack<llvm::Value *> getValueStack() const;
+        LlvmStack<llvm::Value> getValueStack() const;
 
-        Stack<llvm::Type *> getTypeStack() const;
+        LlvmStack<llvm::Type> getTypeStack() const;
 
         void visit(Ptr<Construct> node) override;
 

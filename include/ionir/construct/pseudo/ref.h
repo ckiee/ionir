@@ -4,6 +4,7 @@
 #include <string>
 #include <ionir/construct/construct.h>
 #include <ionir/misc/named.h>
+#include <ionir/misc/util.h>
 
 namespace ionir {
     // TODO: What if 'pass.h' is never included?
@@ -18,13 +19,13 @@ namespace ionir {
 
     public:
         Ref(std::string id, Ptr<Construct> owner, OptPtr<T> value = std::nullopt)
-            : Construct(ConstructKind::Reference), Named(id), owner(owner), value(value) {
+            : Construct(ConstructKind::Ref), Named(id), owner(owner), value(value) {
             //
         }
 
         void accept(Pass &visitor) override {
             // TODO: CRITICAL: Fix 'incomplete type' problem.
-            // visitor.visitRef(this->cast<Ref<T>>());
+            // visitor.visitRef(this->dynamicCast<Ref<T>>());
         }
 
         Ptr<Construct> getOwner() const {
@@ -45,8 +46,8 @@ namespace ionir {
 
             OptPtr<Construct> value = this->getValue();
 
-            if (value.has_value()) {
-                return value->get()->cast<TValue>();
+            if (Util::hasValue(value)) {
+                return value->get()->dynamicCast<TValue>();
             }
 
             return std::nullopt;

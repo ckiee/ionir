@@ -8,7 +8,7 @@ namespace ionir {
     }
 
     void ReturnInst::accept(Pass &visitor) {
-        visitor.visitReturnInst(this->cast<ReturnInst>());
+        visitor.visitReturnInst(this->dynamicCast<ReturnInst>());
     }
 
     OptPtr<Value<>> ReturnInst::getValue() const {

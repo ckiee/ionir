@@ -2,11 +2,11 @@
 
 namespace ionir {
     VariableRef::VariableRef(std::string id)
-        : Construct(ConstructKind::VariableReference), Named(id) {
+        : Construct(ConstructKind::VariableRef), Named(id) {
         //
     }
 
     void VariableRef::accept(Pass &visitor) {
-        visitor.visitVarReference(this->cast<VariableRef>());
+        visitor.visitVarReference(this->dynamicCast<VariableRef>());
     }
 }

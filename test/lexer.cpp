@@ -89,6 +89,24 @@ TEST(LexerTest, LexIdentifiers) {
     test::compare::tokenSets<2>(expected, actual);
 }
 
+TEST(LexerTest, LexTypes) {
+    Lexer lexer = Lexer("void bool i16 i32");// i64 ui16 ui32 ui64 f16 f32 f64 char string");
+
+    // Tokenize input and begin inspection.
+    std::vector<Token> actual = lexer.scan();
+
+    // TODO: Re-check positions.
+    std::array<Token, 4> expected = {
+        Token(TokenKind::TypeVoid, "void", 0),
+        Token(TokenKind::TypeBool, "bool", 5),
+        Token(TokenKind::TypeInt16, "i16", 10),
+        Token(TokenKind::TypeInt32, "i32", 14)
+    };
+
+    // Compare result with expected.
+    test::compare::tokenSets<4>(expected, actual);
+}
+
 TEST(LexerTest, IgnoreWhitespace) {
     Lexer lexer = Lexer("   " + test::constant::foobar + "   ");
 

@@ -6,12 +6,16 @@
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-    TokenIdentifier Parser::getTokenIdentifier() const {
-        return this->tokenIdentifier;
+    Classifier Parser::getClassifier() const {
+        return this->classifier;
     }
 
     bool Parser::is(TokenKind tokenKind) {
         return this->stream.get().getKind() == tokenKind;
+    }
+
+    bool Parser::isPeek(TokenKind tokenKind) {
+        return this->stream.peek()->getKind() == tokenKind;
     }
 
     bool Parser::expect(TokenKind tokenKind) {
@@ -25,9 +29,14 @@ namespace ionir {
         return true;
     }
 
-    void Parser::skipOver(TokenKind tokenKind) {
-        this->expect(tokenKind);
+    bool Parser::skipOver(TokenKind tokenKind) {
+        if (!this->expect(tokenKind)) {
+            return false;
+        }
+
         this->stream.skip();
+
+        return true;
     }
 
     NoticeFactory Parser::createNoticeFactory() {
@@ -48,7 +57,7 @@ namespace ionir {
     }
 
     Parser::Parser(TokenStream stream, StackTrace stackTrace, std::string filePath)
-        : stream(stream), stackTrace(stackTrace), filePath(filePath), tokenIdentifier() {
+        : stream(stream), stackTrace(stackTrace), filePath(filePath), classifier() {
         //
     }
 
@@ -60,7 +69,7 @@ namespace ionir {
         return this->filePath;
     }
 
-    ParserResult<Construct> Parser::parseTopLevel() {
+    OptPtr<Construct> Parser::parseTopLevel() {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordModule: {
                 return this->parseModule();
@@ -84,45 +93,10 @@ namespace ionir {
         }
     }
 
-    ParserResult<Type> Parser::parseType() {
-        std::optional<std::string> id = this->parseId();
+    OptPtr<Global> Parser::parseGlobal() {
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordGlobal))
 
-        IONIR_PARSER_ASSURE(id)
-
-        bool isPointer = false;
-
-        // Retrieve the current token.
-        Token token = this->stream.get();
-
-        // Type is a pointer.
-        if (token.getKind() == TokenKind::SymbolStar) {
-            isPointer = true;
-
-            // Skip onto and from star token.
-            this->stream.skip(2);
-        }
-
-        // Create and return the resulting type construct.
-        return std::make_shared<Type>(*id, Util::resolveTypeKind(*id), isPointer);
-    }
-
-    ParserResult<Type> Parser::parseTypePrefix() {
-        this->skipOver(TokenKind::SymbolBracketL);
-
-        std::optional<Ptr<Type>>
-            type = this->parseType();
-
-        IONIR_PARSER_ASSURE(type)
-
-        this->skipOver(TokenKind::SymbolBracketR);
-
-        return type;
-    }
-
-    ParserResult<Global> Parser::parseGlobal() {
-        this->skipOver(TokenKind::KeywordGlobal);
-
-        ParserResult<Type> type = this->parseType();
+        OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -132,20 +106,19 @@ namespace ionir {
 
         // TODO: Handle in-line initialization & pass std::optional<Value> into Global constructor.
 
-        this->skipOver(TokenKind::SymbolSemiColon);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon))
 
         return std::make_shared<Global>(*type, *id);
     }
 
-    ParserResult<Section> Parser::parseSection(Ptr<Block> parent) {
-        this->skipOver(TokenKind::SymbolAt);
+    OptPtr<Section> Parser::parseSection(Ptr<Block> parent) {
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolAt))
 
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
-
-        this->skipOver(TokenKind::SymbolColon);
-        this->skipOver(TokenKind::SymbolBraceL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolColon))
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         // Determine the section's kind.
         SectionKind kind = SectionKind::Label;
@@ -180,9 +153,9 @@ namespace ionir {
              * the resulting section's symbol table.
              */
             if (inst->get()->getInstKind() == InstKind::Alloca) {
-                Ptr<AllocaInst> allocaInst = inst->get()->cast<AllocaInst>();
+                Ptr<AllocaInst> allocaInst = inst->get()->dynamicCast<AllocaInst>();
 
-                (*symbolTable)[allocaInst->getId()] = allocaInst;
+                symbolTable->insert(*allocaInst->getYieldId(), allocaInst);
             }
         }
 
@@ -192,8 +165,8 @@ namespace ionir {
         return section;
     }
 
-    ParserResult<Block> Parser::parseBlock(Ptr<Function> parent) {
-        this->skipOver(TokenKind::SymbolBraceL);
+    OptPtr<Block> Parser::parseBlock(Ptr<Function> parent) {
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         Ptr<Block> block = std::make_shared<Block>(parent);
         PtrSymbolTable<Section> sections = std::make_shared<SymbolTable<Ptr<Section>>>();
@@ -203,7 +176,7 @@ namespace ionir {
 
             IONIR_PARSER_ASSURE(section)
 
-            (*sections)[section->get()->getId()] = *section;
+            sections->insert(section->get()->getId(), *section);
         }
 
         block->setSymbolTable(sections);
@@ -214,19 +187,18 @@ namespace ionir {
         return block;
     }
 
-    ParserResult<Module> Parser::parseModule() {
-        this->skipOver(TokenKind::KeywordModule);
+    OptPtr<Module> Parser::parseModule() {
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordModule))
 
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
-
-        this->skipOver(TokenKind::SymbolBraceL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         PtrSymbolTable<Construct> symbolTable = std::make_shared<SymbolTable<Ptr<Construct>>>();
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            ParserResult<Construct> topLevelConstruct = this->parseTopLevel();
+            OptPtr<Construct> topLevelConstruct = this->parseTopLevel();
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
             if (topLevelConstruct.has_value()) {
@@ -237,7 +209,7 @@ namespace ionir {
                 }
 
                 // TODO: Ensure we're not re-defining something, issue a notice otherwise.
-                (*symbolTable)[*name] = *topLevelConstruct;
+                symbolTable->insert(*name, *topLevelConstruct);
             }
 
             // No more tokens to process.
@@ -246,7 +218,7 @@ namespace ionir {
             }
         }
 
-        this->skipOver(TokenKind::SymbolBraceR);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceR))
 
         return std::make_shared<Module>(*id, symbolTable);
     }
@@ -257,7 +229,7 @@ namespace ionir {
     }
 
     std::optional<Directive> Parser::parseDirective() {
-        this->skipOver(TokenKind::SymbolHash);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolHash))
 
         std::optional<std::string> id = this->parseId();
 

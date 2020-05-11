@@ -8,7 +8,7 @@ namespace ionir {
     }
 
     void IntegerType::accept(Pass &pass) {
-        return pass.visitIntegerType(this->cast<IntegerType>());
+        return pass.visitIntegerType(this->dynamicCast<IntegerType>());
     }
 
     IntegerKind IntegerType::getIntegerKind() const {

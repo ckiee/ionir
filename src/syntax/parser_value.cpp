@@ -1,8 +1,4 @@
-#include <climits>
-#include <utility>
-#include <vector>
 #include <ionir/construct/expr.h>
-#include <ionir/construct/expr/binary_expr.h>
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
 #include <ionir/const/const_name.h>
@@ -10,15 +6,15 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    ParserResult<Value<>> Parser::parseValue() {
+    OptPtr<Value<>> Parser::parseValue() {
         Token token = this->stream.get();
 
         switch (token.getKind()) {
             case TokenKind::LiteralInt: {
-                ParserResult<IntegerValue> integerValue = this->parseInt();
+                OptPtr<IntegerValue> integerValue = this->parseInt();
 
-                if (integerValue.has_value()) {
-                    return integerValue->get()->cast<Value<>>();
+                if (Util::hasValue(integerValue)) {
+                    return integerValue->get()->staticCast<Value<>>();
                 }
 
                 return std::nullopt;
@@ -28,7 +24,7 @@ namespace ionir {
                 return this->parseChar();
             }
 
-                // TODO: Missing values.
+            // TODO: Missing values.
 
             default: {
                 return this->makeNotice("Expected valid value token");
@@ -36,21 +32,35 @@ namespace ionir {
         }
     }
 
-    ParserResult<IntegerValue> Parser::parseInt() {
-        std::optional<Ptr<Type>> type = this->parseTypePrefix();
-
-        IONIR_PARSER_ASSURE(type)
+    OptPtr<IntegerValue> Parser::parseInt() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralInt)
 
-        // Abstract the token's value to be used in the string -> long conversion.
+        /**
+         * Abstract the token's value to be used in the
+         * string to long integer conversion.
+         */
         std::string tokenValue = this->stream.get().getValue();
 
         // TODO: May stol() throw an error? If so, wrap in try-catch block for safety.
-        // Attempt to convert token's value to a long (int64_t for cross-platform support).
-        int64_t value = std::stol(tokenValue);
+        /**
+         * Attempt to convert token's value to a long
+         * (int64_t for cross-platform support).
+         */
+        int64_t value;
+
+        try {
+            value = std::stol(tokenValue);
+        }
+        catch (std::invalid_argument& exception) {
+            // Value conversion failed.
+            return this->makeNotice("Could not convert string to value");
+        }
+
+        // Create a long integer type for the value.
+        Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int64);
 
         // Create the integer instance.
-        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type->get()->cast<IntegerType>(), value);
+        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type, value);
 
         // Skip current token.
         this->stream.tryNext();
@@ -59,7 +69,7 @@ namespace ionir {
         return integer;
     }
 
-    ParserResult<CharValue> Parser::parseChar() {
+    OptPtr<CharValue> Parser::parseChar() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralCharacter);
 
         // Extract the value from the character token.
@@ -77,7 +87,7 @@ namespace ionir {
         return std::make_shared<CharValue>(stringValue[0]);
     }
 
-    ParserResult<StringValue> Parser::parseString() {
+    OptPtr<StringValue> Parser::parseString() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralString);
 
         // Extract the value from the string token.

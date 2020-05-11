@@ -7,7 +7,8 @@ namespace ionir {
     }
 
     void Module::accept(Pass &visitor) {
-        visitor.visitModule(this->cast<Module>());
+        visitor.visitScopeAnchor(this->dynamicCast<ScopeAnchor<>>());
+        visitor.visitModule(this->dynamicCast<Module>());
     }
 
     Ast Module::getChildNodes() const {
@@ -25,7 +26,7 @@ namespace ionir {
         OptPtr<Construct> functionConstruct = this->getSymbolTable()->lookup(id);
 
         if (functionConstruct.has_value()) {
-            return functionConstruct->get()->cast<Function>();
+            return functionConstruct->get()->dynamicCast<Function>();
         }
 
         return std::nullopt;

@@ -2,7 +2,9 @@
 
 namespace ionir {
     void TypeCheckPass::visitFunction(Ptr<Function> node) {
-        std::optional <Ptr<Section>> entrySection = node->getBody()->getEntrySection();
+        Pass::visitFunction(node);
+
+        OptPtr<Section> entrySection = node->getBody()->getEntrySection();
 
         if (!entrySection.has_value()) {
             throw std::runtime_error("Entry section for function body is not set");
@@ -17,13 +19,13 @@ namespace ionir {
 
         for (const auto inst : insts) {
             if (inst->getInstKind() == InstKind::Return) {
-                Ptr<ReturnInst> returnInst = inst->cast<ReturnInst>();
+                Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
 
                 /**
                  * Functions whose prototype's return type is non-void must provide
                  * a value to the return instruction.
                  */
-                if (!returnInst->getValue().has_value()) {
+                if (node->getPrototype()->getReturnType()->getTypeKind() != TypeKind ::Void && !returnInst->getValue().has_value()) {
                     throw std::runtime_error(
                         "Function whose prototype's return type is not void must return a corresponding value"
                     );
@@ -33,6 +35,8 @@ namespace ionir {
     }
 
     void TypeCheckPass::visitStoreInst(Ptr<StoreInst> node) {
-        // TODO
+        Pass::visitStoreInst(node);
+
+        // TODO: Implement.
     }
 }

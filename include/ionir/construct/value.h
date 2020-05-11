@@ -31,7 +31,7 @@ namespace ionir {
 
         void accept(Pass &visitor) {
             // TODO: CRITICAL: Fix 'incomplete type' problem.
-            //visitor.visitValue(this->cast<Value<>>());
+            //visitor.visitValue(this->dynamicCast<Value<>>());
         }
 
         ValueKind getValueKind() const {

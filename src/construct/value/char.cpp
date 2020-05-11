@@ -2,12 +2,12 @@
 
 namespace ionir {
     CharValue::CharValue(char value)
-        : Value(ValueKind::Character, StaticFactory::typeChar()), value(value) {
+        : Value(ValueKind::Character, TypeFactory::typeChar()), value(value) {
         //
     }
 
     void CharValue::accept(Pass &visitor) {
-        visitor.visitCharValue(this->cast<CharValue>());
+        visitor.visitCharValue(this->dynamicCast<CharValue>());
     }
 
     char CharValue::getValue() const {

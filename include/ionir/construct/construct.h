@@ -31,23 +31,23 @@ namespace ionir {
          */
         Extern,
 
-        Instruction,
+        Inst,
 
         Global,
 
         Section,
 
-        VariableReference,
+        VariableRef,
 
-        VariableDeclaration,
+        VariableDecl,
 
         Expr,
 
-        StructDeclaration,
+        StructDecl,
 
         Module,
 
-        Reference
+        Ref
     };
 
     class Construct;
@@ -103,9 +103,23 @@ namespace ionir {
 
         Ptr<Construct> getPtr();
 
-        template<class T>
-        Ptr<T> cast() {
+        /**
+         * Used to cast pointers to related types, for example casting
+         * void* to the appropriate type.
+         */
+        template<typename T>
+        Ptr<T> staticCast() {
             return std::static_pointer_cast<T>(this->getPtr());
+        }
+
+        /**
+         * Used to convert pointers and references at runtime.
+         * Should be generally used for casting a pointer or reference
+         * up or down an inheritance chain (inheritance hierarchy).
+         */
+        template<class T>
+        Ptr<T> dynamicCast() {
+            return std::dynamic_pointer_cast<T>(this->getPtr());
         }
 
         Ptr<Construct> nativeCast();

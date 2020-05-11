@@ -1,19 +1,20 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/syntax/parser.h>
+#include "../test_api/bootstrap.h"
 #include "../test_api/const.h"
 #include "../pch.h"
-#include "../test_api/bootstrap.h"
 
 using namespace ionir;
 
 TEST(ModuleConstructTest, ParseEmpty) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenKind::SymbolBraceL, "{"),
+        Token(TokenKind::KeywordModule, "module"),
         Token(TokenKind::Identifier, test::constant::foobar),
+        Token(TokenKind::SymbolBraceL, "{"),
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    ParserResult<Module> module = parser.parseModule();
+    OptPtr<Module> module = parser.parseModule();
 
     EXPECT_TRUE(module.has_value());
 

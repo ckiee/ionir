@@ -11,8 +11,16 @@ namespace ionir {
     }
 
     Ptr<Function> Bootstrap::function(std::string id) {
-        Ptr<Module> module = Bootstrap::functionAst(id)[0]->cast<Module>();
+        Ptr<Module> module = Bootstrap::functionAst(id)[0]->dynamicCast<Module>();
 
-        return (*module->getSymbolTable())[id]->cast<Function>();
+        return (*module->getSymbolTable())[id]->dynamicCast<Function>();
+    }
+
+    Ptr<Section> Bootstrap::section(Ptr<Block> parent, std::string id, SectionKind sectionKind) {
+        return std::make_shared<Section>(SectionOpts{
+            parent,
+            sectionKind,
+            id
+        });
     }
 }

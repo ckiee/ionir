@@ -6,7 +6,6 @@
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>
 #include <ionir/construct/inst/call.h>
-#include <ionir/syntax/scope.h>
 #include "helpers.h"
 
 namespace ionir {
@@ -34,10 +33,12 @@ namespace ionir {
 
         Ptr<AllocaInst> createAlloca(std::string id, Ptr<Type> type);
 
-        Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, PtrRef<Section> body, OptPtrRef<Section> otherwise = std::nullopt);
+        Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, PtrRef<Section> bodySection, PtrRef<Section> otherwiseSection);
+
+        Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, std::string bodySectionId, std::string otherwiseSectionId);
 
         Ptr<ReturnInst> createReturn(OptPtr<Value<>> value = std::nullopt);
 
-        Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt);
+        Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt, std::optional<std::string> yieldId = std::nullopt);
     };
 }

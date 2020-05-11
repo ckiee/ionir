@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void Type::accept(Pass &visitor) {
-        visitor.visitType(this->cast<Type>());
+        visitor.visitType(this->dynamicCast<Type>());
     }
 
     bool Type::equals(Ptr<Construct> other) {
@@ -15,7 +15,7 @@ namespace ionir {
             return false;
         }
 
-        Ptr<Type> otherType = other->cast<Type>();
+        Ptr<Type> otherType = other->dynamicCast<Type>();
 
         return otherType->getTypeKind() == this->getTypeKind()
             && otherType->getId() == this->getId()

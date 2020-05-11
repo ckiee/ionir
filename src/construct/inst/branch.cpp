@@ -2,22 +2,19 @@
 
 namespace ionir {
     BranchInst::BranchInst(BranchInstOpts opts)
-        : Inst(opts.parent, InstKind::Branch), condition(opts.condition), body(opts.body), otherwise(opts.otherwise) {
+        : Inst(opts.parent, InstKind::Branch), condition(opts.condition), bodySectionRef(opts.bodyRef), otherwiseSectionRef(opts.otherwiseRef) {
         //
     }
 
     void BranchInst::accept(Pass &visitor) {
-        visitor.visitBranchInst(this->cast<BranchInst>());
+        visitor.visitBranchInst(this->dynamicCast<BranchInst>());
     }
 
     Ast BranchInst::getChildNodes() const {
         Ast children = {
-            this->body
+            this->bodySectionRef,
+            this->otherwiseSectionRef
         };
-
-        if (this->otherwise.has_value()) {
-            children.push_back(*this->otherwise);
-        }
 
         return children;
     }
@@ -30,19 +27,21 @@ namespace ionir {
         this->condition = condition;
     }
 
-    PtrRef<Section> BranchInst::getBody() const {
-        return this->body;
+    PtrRef<Section> BranchInst::getBodyRef() const {
+        return this->bodySectionRef;
     }
 
-    void BranchInst::setBody(PtrRef<Section> body) {
-        this->body = body;
+    void BranchInst::setBodyRef(PtrRef<Section> bodyRef) {
+        this->bodySectionRef = bodyRef;
+        this->bodySectionRef->setOwner(this->getPtr());
     }
 
-    OptPtrRef<Section> BranchInst::getOtherwise() const {
-        return this->otherwise;
+    PtrRef<Section> BranchInst::getOtherwiseRef() const {
+        return this->otherwiseSectionRef;
     }
 
-    void BranchInst::setOtherwise(OptPtrRef<Section> otherwise) {
-        this->otherwise = otherwise;
+    void BranchInst::setOtherwiseRef(PtrRef<Section> otherwiseRef) {
+        this->otherwiseSectionRef = otherwiseRef;
+        this->otherwiseSectionRef->setOwner(this->getPtr());
     }
 }

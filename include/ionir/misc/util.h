@@ -6,7 +6,9 @@
 #include <string>
 #include <regex>
 #include <string_view>
+#include <math.h>
 #include <ionir/construct/type/integer_type.h>
+#include <ionir/construct/inst.h>
 #include <ionir/const/const_name.h>
 
 namespace ionir {
@@ -15,7 +17,7 @@ namespace ionir {
         static constexpr std::string_view specialChars{"{}$^.?\\[]()*+|<>-&"};
 
     public:
-        static bool stringStartsWith(std::string subject, std::string test);
+        static bool stringStartsWith(std::string subject, std::string value);
 
         static std::string escapeRegex(std::string subject);
 
@@ -62,9 +64,44 @@ namespace ionir {
 
         static std::optional<std::string> getConstructId(Ptr<Construct> construct);
 
+        static std::optional<std::string> getInstId(Ptr<Inst> inst);
+
+        /**
+         * Returns the number of binary digits, called bits, necessary
+         * to represent an integer as a binary number. See more information
+         * at: https://en.wikipedia.org/wiki/Bit-length.
+         */
+        static int calculateBitLength(int64_t number);
+
         template<typename TKey, typename TValue>
         static bool mapContains(std::map<TKey, TValue> map, TKey key) {
             return map.find(key) != map.end();
+        }
+
+        template<typename T>
+        static std::vector<T> mergeVectors(std::vector<T> a, std::vector<T> b) {
+            for (const auto item : b) {
+                a.push_back(item);
+            }
+
+            return a;
+        }
+
+        template<typename TKey, typename TValue>
+        static std::map<TValue, TKey> flipMap(std::map<TKey, TValue> map) {
+            // TODO: What about if different keys contain the same value? Maybe report an error.
+            std::map<TValue, TKey> flippedMap = {};
+
+            for (const auto &[key, value] : map) {
+                flippedMap[value] = key;
+            }
+
+            return flippedMap;
+        }
+
+        template<typename T>
+        static bool hasValue(OptPtr<T> pointer) {
+            return pointer != nullptr && pointer.has_value();
         }
     };
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+#include <string>
 #include <optional>
 #include <memory>
 #include <vector>
@@ -16,4 +18,6 @@ namespace ionir {
     using OptPtr = std::optional<Ptr<T>>;
 
     typedef std::vector<TokenKind> TokenKindVector;
+
+    typedef std::map<std::string, TokenKind> TokenKindMap;
 }

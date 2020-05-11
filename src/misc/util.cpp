@@ -3,10 +3,11 @@
 #include <ionir/construct/function.h>
 #include <ionir/construct/extern.h>
 #include <ionir/construct/global.h>
+#include <ionir/construct/inst/alloca.h>
 
 namespace ionir {
-    bool Util::stringStartsWith(std::string subject, std::string test) {
-        return subject.rfind(test, 0) == 0;
+    bool Util::stringStartsWith(std::string subject, std::string value) {
+        return subject.rfind(value, 0) == 0;
     }
 
     std::string Util::escapeRegex(std::string subject) {
@@ -76,10 +77,6 @@ namespace ionir {
                 return ConstName::typeInt64;
             }
 
-            case IntegerKind::Int128: {
-                return ConstName::typeInt128;
-            }
-
             default: {
                 throw std::runtime_error("Unknown integer kind");
             }
@@ -87,6 +84,8 @@ namespace ionir {
     }
 
     TypeKind Util::resolveTypeKind(std::string id) {
+        // TODO: CRITICAL: Add support new/missing types.
+
         if (id == ConstName::typeInt1) {
             return TypeKind::Integer;
         }
@@ -102,9 +101,6 @@ namespace ionir {
         else if (id == ConstName::typeInt64) {
             return TypeKind::Integer;
         }
-        else if (id == ConstName::typeInt128) {
-            return TypeKind::Integer;
-        }
         else if (id == ConstName::typeVoid) {
             return TypeKind::Void;
         }
@@ -118,20 +114,43 @@ namespace ionir {
     std::optional<std::string> Util::getConstructId(Ptr<Construct> construct) {
         switch (construct->getConstructKind()) {
             case ConstructKind::Function: {
-                return construct->cast<Function>()->getPrototype()->getId();
+                return construct->dynamicCast<Function>()->getPrototype()->getId();
             }
 
             case ConstructKind::Extern: {
-                return construct->cast<Extern>()->getPrototype()->getId();
+                return construct->dynamicCast<Extern>()->getPrototype()->getId();
             }
 
             case ConstructKind::Global: {
-                return construct->cast<Global>()->getId();
+                return construct->dynamicCast<Global>()->getId();
+            }
+
+            case ConstructKind::Inst: {
+                return Util::getInstId(construct->dynamicCast<Inst>());
             }
 
             default: {
                 return std::nullopt;
             }
         }
+    }
+
+    std::optional<std::string> Util::getInstId(Ptr<Inst> inst) {
+        switch (inst->getInstKind()) {
+            case InstKind::Alloca: {
+                return inst->dynamicCast<AllocaInst>()->getYieldId();
+            }
+
+            default: {
+                return std::nullopt;
+            }
+        }
+    }
+
+    int Util::calculateBitLength(int64_t number) {
+        /**
+         * Formula has been taken from Wikipedia.
+         */
+        return floor(log2(number + 1));
     }
 }

@@ -4,6 +4,18 @@
 #include <ionir/lexical/lexer.h>
 
 namespace ionir {
+    Lexer::Lexer(std::string input)
+        : input(input), length(input.length()), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
+        // Input string must contain at least one character.
+        if (!this->length || this->length < 1) {
+            throw std::invalid_argument("Input must be a string with one or more character(s)");
+        }
+
+        // TODO: Avoid invoking virtual member functions from constructor.
+        // Reset the index, setting its initial value.
+        this->begin();
+    }
+
     char Lexer::getChar() const {
         // Return null character if reached end of input.
         if (!this->hasNext()) {
@@ -57,10 +69,32 @@ namespace ionir {
                 throw std::runtime_error("Successful regex match may not contain a captured value");
             }
 
-            int index = opts.expectCapturedValue ? IONIR_MATCH_INDEX_CAPTURED : IONIR_MATCH_INDEX_MATCHED;
+            int index = opts.expectCapturedValue
+                ? IONIR_MATCH_INDEX_CAPTURED
+                : IONIR_MATCH_INDEX_MATCHED;
 
             // Extract the matched or captured value from the match.
             std::string value = match[index];
+
+            /**
+             * Since std::regex_search() returns true if any match
+             * is found, regardless of its position in the input
+             * string, it must be assured that the captured value
+             * is actually positioned at the beginning of the input
+             * string, otherwise in certain cases it may lead to some
+             * tokens being skipped. For example, when parsing a valid
+             * token, 'A', if after the value of such token in the input
+             * string is located another valid token, 'B', and its rule
+             * is processed first, then token 'B' would take precedence
+             * when it should not. Additionally, use the matched value
+             * index instead of the captured value, because patterns such
+             * as literal character and string capture values while skipping
+             * certain characters.
+             */
+            if (!Util::stringStartsWith(input, match[IONIR_MATCH_INDEX_MATCHED])) {
+                // Return default result at this point.
+                return result;
+            }
 
             // Finalize result's properties.
             result.success = true;
@@ -95,19 +129,6 @@ namespace ionir {
             this->skip();
             subject = this->getCharAsString();
         }
-    }
-
-    Lexer::Lexer(std::string input) : input(input), simpleIds(TokenConst::getSortedSimpleIds()),
-        complexIds(TokenConst::getComplexIds()) {
-        this->length = this->input.length();
-
-        // Input string must contain at least one character.
-        if (!this->length || this->length < 1) {
-            throw std::invalid_argument("Input must be a string with one or more character(s)");
-        }
-
-        // Reset the index, setting its initial value.
-        this->begin();
     }
 
     size_t Lexer::getIndex() const {
@@ -191,13 +212,13 @@ namespace ionir {
                 true
             });
 
-            // If it matches, return the Token (already modified by the matchExpression function).
+            // If it matches, return the token (already modified by the matchExpression function).
             if (matchResult.success) {
                 return token;
             }
         }
 
-        // At this point the Token was not identified. Skip over any captured value.
+        // At this point the token was not identified. Skip over any captured value.
         this->skip(tokenValue.length());
 
         // Return the default token. The token kind defaults to Unknown.

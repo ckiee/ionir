@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <ionir/misc/helpers.h>
-#include <ionir/misc/static_factory.h>
+#include <ionir/misc/type_factory.h>
 #include <ionir/tracking/scope_anchor.h>
 #include "pseudo/args.h"
 #include "inst.h"
@@ -15,6 +15,8 @@ namespace ionir {
     class Pass;
 
     class Block;
+
+    class InstBuilder;
 
     enum class SectionKind {
         /**
@@ -42,7 +44,7 @@ namespace ionir {
 
         std::vector<Ptr<Inst>> insts = {};
 
-        PtrSymbolTable<Inst> symbolTable = StaticFactory::makePtrSymbolTable<Inst>();
+        PtrSymbolTable<Inst> symbolTable = TypeFactory::makePtrSymbolTable<Inst>();
     };
 
     class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst>, public Named {
@@ -60,9 +62,11 @@ namespace ionir {
 
         SectionKind getKind() const;
 
-        std::vector<Ptr<Inst>> getInsts() const;
+        std::vector<Ptr<Inst>> &getInsts();
 
         void setInsts(std::vector<Ptr<Inst>> insts);
+
+        void insertInst(Ptr<Inst> inst);
 
         uint32_t relocateInsts(Section &target, uint32_t from = 0);
 
@@ -72,5 +76,7 @@ namespace ionir {
          * not found.
          */
         std::optional<uint32_t> locate(Ptr<Inst> inst) const;
+
+        Ptr<InstBuilder> createBuilder();
     };
 }

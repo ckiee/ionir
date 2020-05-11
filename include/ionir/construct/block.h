@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 #include <ionir/misc/helpers.h>
-#include <ionir/misc/static_factory.h>
+#include <ionir/misc/type_factory.h>
 #include <ionir/tracking/scope_anchor.h>
 #include "child_construct.h"
 #include "section.h"
@@ -16,7 +16,7 @@ namespace ionir {
 
     class Block : public ChildConstruct<Function>, public ScopeAnchor<Section> {
     public:
-        explicit Block(Ptr<Function> parent, PtrSymbolTable<Section> symbolTable = StaticFactory::makePtrSymbolTable<Section>());
+        explicit Block(Ptr<Function> parent, PtrSymbolTable<Section> symbolTable = TypeFactory::makePtrSymbolTable<Section>());
 
         void accept(Pass &visitor) override;
 

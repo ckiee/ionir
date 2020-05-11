@@ -1,4 +1,4 @@
 ; ModuleID = 'test'
 source_filename = "test"
 
-@foobar = global double 1
+@foobar = global i32 123

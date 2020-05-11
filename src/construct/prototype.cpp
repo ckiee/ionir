@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void Prototype::accept(Pass &visitor) {
-        visitor.visitPrototype(this->cast<Prototype>());
+        visitor.visitPrototype(this->dynamicCast<Prototype>());
     }
 
     Ast Prototype::getChildNodes() const {

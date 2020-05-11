@@ -5,7 +5,14 @@ namespace ionir {
         //
     }
 
+    void NameResolutionPass::visitModule(Ptr<Module> node) {
+        Pass::visitModule(node);
+        this->scopeStack.push(node->getSymbolTable());
+    }
+
     void NameResolutionPass::visitRef(PtrRef<> node) {
+        Pass::visitRef(node);
+
         // Node is already resolved, no need to continue.
         if (node->isResolved()) {
             return;
@@ -14,16 +21,16 @@ namespace ionir {
         Ptr<Construct> owner = node->getOwner();
         std::string id = node->getId();
 
+        // TODO: CRITICAL: Recently solved the problem which was that it was using the section's own symbol table instead of the function's to find the section (Dummy mistake). Verify that this is actually how it should be.
+
         switch (owner->getConstructKind()) {
-            case ConstructKind::Instruction: {
-                Ptr<Inst> inst = owner->cast<Inst>();
-                PtrSymbolTable<Inst> sectionSymbolTable = inst->getParent()->getSymbolTable();
+            case ConstructKind::Inst: {
+                Ptr<Inst> inst = owner->dynamicCast<Inst>();
+                PtrSymbolTable<Section> functionSymbolTable = inst->getParent()->getParent()->getSymbolTable();
 
-                // The section's symbol table contains the referenced entity.
-                if (sectionSymbolTable->contains(id)) {
-                    node->resolve((*sectionSymbolTable)[id]);
-
-                    std::cout << "Reference found and resolved" << std::endl;
+                // The function's symbol table contains the referenced entity.
+                if (functionSymbolTable->contains(id)) {
+                    node->resolve((*functionSymbolTable)[id]);
 
                     return;
                 }
@@ -37,7 +44,20 @@ namespace ionir {
 
                 break;
             }
+
+            // TODO: Finish implementation.
+            default: {
+                throw std::runtime_error("Unhandled construct kind");
+            }
         }
+    }
+
+    void NameResolutionPass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
+        Pass::visitScopeAnchor(node);
+
+        // TODO: ScopeStack should be pushed & popped, but its never popped.
+        // TODO: CRITICAL: Throwing SEGFAULT because node is NULL (casting fails).
+//        this->scopeStack.push(node->getSymbolTable());
     }
 
     Ptr<StackTrace> NameResolutionPass::getStackTrace() const {

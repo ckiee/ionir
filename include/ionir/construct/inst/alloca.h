@@ -2,19 +2,20 @@
 
 #include <string>
 #include <ionir/construct/type.h>
-#include <ionir/construct/section.h>
-#include <ionir/misc/helpers.h>
+#include <ionir/construct/inst_yield.h>
 #include <ionir/construct/inst.h>
-#include <ionir/misc/named.h>
+#include <ionir/misc/helpers.h>
 
 namespace ionir {
+    class Section;
+
     struct AllocaInstOpts : InstOpts {
-        std::string id;
+        std::string yieldId;
 
         Ptr<Type> type;
     };
 
-    class AllocaInst : public Inst, public Named {
+    class AllocaInst : public Inst, public InstYield {
     private:
         Ptr<Type> type;
 
@@ -24,8 +25,8 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ptr <Type> getType() const;
+        Ptr<Type> getType() const;
 
-        void setType(Ptr <Type> type);
+        void setType(Ptr<Type> type);
     };
 }

@@ -2,29 +2,29 @@
 
 #include <optional>
 #include <ionir/construct/expr.h>
-#include <ionir/construct/pseudo/partial_inst.h>
-#include <ionir/construct/section.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/construct/pseudo/ref.h>
 
 namespace ionir {
     class Pass;
 
+    class Section;
+
     struct BranchInstOpts : InstOpts {
         Ptr<Expr<>> condition;
 
-        PtrRef<Section> body;
+        PtrRef<Section> bodyRef;
 
-        OptPtrRef<Section> otherwise = std::nullopt;
+        PtrRef<Section> otherwiseRef;
     };
 
     class BranchInst : public Inst {
     private:
         Ptr<Expr<>> condition;
 
-        PtrRef<Section> body;
+        PtrRef<Section> bodySectionRef;
 
-        OptPtrRef<Section> otherwise;
+        PtrRef<Section> otherwiseSectionRef;
 
     public:
         explicit BranchInst(BranchInstOpts opts);
@@ -37,12 +37,12 @@ namespace ionir {
 
         void setCondition(Ptr<Expr<>> condition);
 
-        PtrRef<Section> getBody() const;
+        PtrRef<Section> getBodyRef() const;
 
-        void setBody(PtrRef<Section> body);
+        void setBodyRef(PtrRef<Section> bodyRef);
 
-        OptPtrRef<Section> getOtherwise() const;
+        PtrRef<Section> getOtherwiseRef() const;
 
-        void setOtherwise(OptPtrRef<Section> otherwise);
+        void setOtherwiseRef(PtrRef<Section> otherwiseRef);
     };
 }

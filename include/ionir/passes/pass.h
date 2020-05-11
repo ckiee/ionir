@@ -11,7 +11,6 @@
 #include <ionir/construct/inst/store.h>
 #include <ionir/construct/inst/call.h>
 #include <ionir/construct/type/struct_decl.h>
-#include <ionir/construct/type/variable_decl.h>
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
 #include <ionir/construct/pseudo/directive.h>
@@ -78,8 +77,6 @@ namespace ionir {
 
         virtual void visitStructDecl(Ptr<StructDecl> node);
 
-        virtual void visitVariableDecl(Ptr<VariableDecl> node);
-
         virtual void visitType(Ptr<Type> node);
 
         virtual void visitIntegerType(Ptr<IntegerType> node);
@@ -91,5 +88,7 @@ namespace ionir {
         virtual void visitDirective(Directive node);
 
         virtual void visitRef(PtrRef<> node);
+
+        virtual void visitScopeAnchor(Ptr<ScopeAnchor<>> node);
     };
 }

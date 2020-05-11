@@ -4,18 +4,18 @@ namespace ionir {
     void Pass::visit(Ptr<Construct> node) {
         node->accept(*this);
 
-        // TODO: Temporary fix for circular dep.
-        if (node->getConstructKind() == ConstructKind::Reference) {
-            this->visitRef(node->cast<Ref<>>());
+        // TODO: Hotfix for circular dep.
+        if (node->getConstructKind() == ConstructKind::Ref) {
+            this->visitRef(node->staticCast<Ref<>>());
 
             // No need to visit children for this node.
             return;
         }
         else if (node->getConstructKind() == ConstructKind::Expr) {
-            Ptr<Expr<>> expr = node->cast<Expr<>>();
+            Ptr<Expr<>> expr = node->dynamicCast<Expr<>>();
 
             if (expr->getExprKind() == ExprKind::Value) {
-                this->visitValue(node->cast<Value<>>());
+                this->visitValue(node->dynamicCast<Value<>>());
 
                 // No need to visit children for this node.
                 return;
@@ -64,13 +64,13 @@ namespace ionir {
     void Pass::visitExpr(Ptr<Expr<>> node) {
         switch (node->getExprKind()) {
             case ExprKind::Binary: {
-                this->visitBinaryExpr(node->cast<BinaryExpr>());
+                this->visitBinaryExpr(node->dynamicCast<BinaryExpr>());
 
                 break;
             }
 
             case ExprKind::Value: {
-                this->visitValue(node->cast<Value<>>());
+                this->visitValue(node->dynamicCast<Value<>>());
 
                 break;
             }
@@ -90,25 +90,25 @@ namespace ionir {
             // TODO: Missing boolean value kind.
 
             case ValueKind::Character: {
-                this->visitCharValue(node->cast<CharValue>());
+                this->visitCharValue(node->dynamicCast<CharValue>());
 
                 break;
             }
 
             case ValueKind::Integer: {
-                this->visitIntegerValue(node->cast<IntegerValue>());
+                this->visitIntegerValue(node->dynamicCast<IntegerValue>());
 
                 break;
             }
 
             case ValueKind::String: {
-                this->visitStringValue(node->cast<StringValue>());
+                this->visitStringValue(node->dynamicCast<StringValue>());
 
                 break;
             }
 
             case ValueKind::Boolean: {
-                this->visitBooleanValue(node->cast<BooleanValue>());
+                this->visitBooleanValue(node->dynamicCast<BooleanValue>());
 
                 break;
             }
@@ -138,13 +138,13 @@ namespace ionir {
     void Pass::visitInst(Ptr<Inst> node) {
         switch (node->getInstKind()) {
             case InstKind::Alloca: {
-                this->visitAllocaInst(node->cast<AllocaInst>());
+                this->visitAllocaInst(node->dynamicCast<AllocaInst>());
 
                 break;
             }
 
             case InstKind::Branch: {
-                this->visitBranchInst(node->cast<BranchInst>());
+                this->visitBranchInst(node->dynamicCast<BranchInst>());
 
                 break;
             }
@@ -152,13 +152,13 @@ namespace ionir {
             // TODO: Missing break inst.
 
             case InstKind::Return: {
-                this->visitReturnInst(node->cast<ReturnInst>());
+                this->visitReturnInst(node->dynamicCast<ReturnInst>());
 
                 break;
             }
 
             case InstKind::Call: {
-                this->visitCallInst(node->cast<CallInst>());
+                this->visitCallInst(node->dynamicCast<CallInst>());
 
                 break;
             }
@@ -199,10 +199,6 @@ namespace ionir {
         //
     }
 
-    void Pass::visitVariableDecl(Ptr<VariableDecl> node) {
-        //
-    }
-
     void Pass::visitType(Ptr<Type> node) {
         //
     }
@@ -224,6 +220,10 @@ namespace ionir {
     }
 
     void Pass::visitRef(PtrRef<> node) {
+        //
+    }
+
+    void Pass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
         //
     }
 }

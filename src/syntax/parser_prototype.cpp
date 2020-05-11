@@ -4,7 +4,7 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    std::optional<Ptr<Args>> Parser::parseArgs() {
+    OptPtr<Args> Parser::parseArgs() {
         SymbolTable<Arg> args = {};
         bool isInfinite = false;
 
@@ -26,17 +26,17 @@ namespace ionir {
 
             // Set the argument on the symbol table.
             args[arg->second] = *arg;
-        } while (this->is(TokenKind::SymbolComma));
+        }
+        while (this->is(TokenKind::SymbolComma));
 
         return std::make_shared<Args>(args, isInfinite);
     }
 
-    std::optional<Ptr<Prototype>> Parser::parsePrototype() {
+    OptPtr<Prototype> Parser::parsePrototype() {
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
-
-        this->skipOver(TokenKind::SymbolParenthesesL);
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolParenthesesL))
 
         Ptr<Args> args = std::make_shared<Args>();
 
@@ -50,30 +50,31 @@ namespace ionir {
         }
 
         this->stream.skip();
-        this->skipOver(TokenKind::SymbolArrow);
 
-        std::optional<Ptr<Type>> returnType = this->parseType();
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolArrow))
+
+        OptPtr<Type> returnType = this->parseType();
 
         IONIR_PARSER_ASSURE(returnType)
 
         return std::make_shared<Prototype>(*id, args, *returnType);
     }
 
-    std::optional<Ptr<Extern>> Parser::parseExtern() {
-        this->skipOver(TokenKind::KeywordExtern);
+    OptPtr<Extern> Parser::parseExtern() {
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordExtern))
 
-        std::optional<Ptr<Prototype>> prototype = this->parsePrototype();
+        OptPtr<Prototype> prototype = this->parsePrototype();
 
         IONIR_PARSER_ASSURE(prototype)
 
         return std::make_shared<Extern>(*prototype);
     }
 
-    std::optional<Ptr<Function>> Parser::parseFunction() {
-        this->skipOver(TokenKind::KeywordFunction);
+    OptPtr<Function> Parser::parseFunction() {
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordFunction))
 
-        std::optional<Ptr<Prototype>> prototype = this->parsePrototype();
-        std::optional<Ptr<Block>> body = this->parseBlock(nullptr);
+        OptPtr<Prototype> prototype = this->parsePrototype();
+        OptPtr<Block> body = this->parseBlock(nullptr);
 
         IONIR_PARSER_ASSURE(prototype)
         IONIR_PARSER_ASSURE(body)

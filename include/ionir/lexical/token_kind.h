@@ -4,9 +4,9 @@
 
 namespace ionir {
     enum class TokenKind {
-        Dummy,
-
         Unknown,
+
+        Dummy,
 
         Identifier,
 
@@ -76,13 +76,29 @@ namespace ionir {
 
         TypeVoid,
 
-        TypeString,
+        TypeBool,
 
         TypeInt16,
 
         TypeInt32,
 
         TypeInt64,
+
+        TypeUnsignedInt16,
+
+        TypeUnsignedInt32,
+
+        TypeUnsignedInt64,
+
+        TypeFloat16,
+
+        TypeFloat32,
+
+        TypeFloat64,
+
+        TypeChar,
+
+        TypeString,
 
         OperatorAdd,
 

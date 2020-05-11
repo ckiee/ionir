@@ -60,6 +60,8 @@ namespace ionir {
         void processWhitespace();
 
     public:
+        Lexer(std::string input);
+
         size_t getIndex() const;
 
         virtual void begin();
@@ -73,8 +75,6 @@ namespace ionir {
          * Process the next token.
          */
         virtual std::optional<Token> tryNext();
-
-        Lexer(std::string input);
 
         std::string getInput() const;
 

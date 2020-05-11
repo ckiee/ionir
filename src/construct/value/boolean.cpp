@@ -2,12 +2,12 @@
 
 namespace ionir {
     BooleanValue::BooleanValue(bool value)
-        : Value(ValueKind::Boolean, StaticFactory::typeBoolean()), value(value) {
+        : Value(ValueKind::Boolean, TypeFactory::typeBoolean()), value(value) {
         //
     }
 
     void BooleanValue::accept(Pass &visitor) {
-        visitor.visitBooleanValue(this->cast<BooleanValue>());
+        visitor.visitBooleanValue(this->dynamicCast<BooleanValue>());
     }
 
     bool BooleanValue::getValue() const {
