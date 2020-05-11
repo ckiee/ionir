@@ -66,6 +66,8 @@ namespace ionir {
     }
 
     OptPtr<AllocaInst> Parser::parseAllocaInst(Ptr<Section> parent) {
+        this->skipOver(TokenKind::InstAlloca);
+
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
@@ -82,6 +84,8 @@ namespace ionir {
     }
 
     OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<Section> parent) {
+        this->skipOver(TokenKind::InstReturn);
+
         /**
          * TODO: Return inst does not necessarily take a value. Instead,
          * it should be allowed to return without value, signaling void
@@ -98,39 +102,45 @@ namespace ionir {
     }
 
     OptPtr<BranchInst> Parser::parseBranchInst(Ptr<Section> parent) {
-         OptPtr<Expr<>> condition = this->parsePrimaryExpr();
+        this->skipOver(TokenKind::InstBranch);
 
-         // Condition must be set.
-         IONIR_PARSER_ASSURE(condition)
+        OptPtr<Expr<>> condition = this->parsePrimaryExpr();
 
-         Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
-             parent,
-             *condition,
-             nullptr,
-             nullptr
-         });
+        // Condition must be set.
+        IONIR_PARSER_ASSURE(condition)
 
-         OptPtr<Ref<Section>> bodySection = this->parseRef<Section>(branchInst);
+        Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
+            parent,
+            *condition,
+            nullptr,
+            nullptr
+        });
 
-         IONIR_PARSER_ASSURE(bodySection)
+        OptPtr<Ref<Section>> bodySection = this->parseRef<Section>(branchInst);
 
-         OptPtr<Ref<Section>> otherwiseSection = this->parseRef<Section>(branchInst);
+        IONIR_PARSER_ASSURE(bodySection)
+
+        OptPtr<Ref<Section>> otherwiseSection = this->parseRef<Section>(branchInst);
 
         IONIR_PARSER_ASSURE(otherwiseSection)
 
         branchInst->setBodyRef(*bodySection);
         branchInst->setOtherwiseRef(*otherwiseSection);
 
-         return branchInst;
+        return branchInst;
     }
 
     OptPtr<CallInst> Parser::parseCallInst(Ptr<Section> parent) {
+        this->skipOver(TokenKind::InstCall);
+
         // TODO
 
         return this->makeNotice("Not yet implemented");
     }
 
     OptPtr<StoreInst> Parser::parseStoreInst(Ptr<Section> parent) {
+        this->skipOver(TokenKind::InstStore);
+
         OptPtr<Value<>> value = this->parseValue();
 
         IONIR_PARSER_ASSURE(value)
