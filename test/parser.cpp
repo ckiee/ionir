@@ -175,7 +175,7 @@ TEST(ParserTest, ParseFunction) {
         Token(TokenKind::SymbolColon, ":"),
         Token(TokenKind::SymbolBraceL, "{"),
         Token(TokenKind::InstReturn, "ret"),
-        Token(TokenKind::LiteralInt, "5"),
+        Token(TokenKind::LiteralInt, "0"),
         Token(TokenKind::SymbolSemiColon, ";"),
         Token(TokenKind::SymbolBraceR, "}"),
         Token(TokenKind::SymbolBraceR, "}")

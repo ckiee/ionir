@@ -6,17 +6,17 @@ namespace ionir {
     class Pass;
 
     enum class IntegerKind {
-        Int1,
+        Int1 = 1,
 
-        Int8,
+        Int8 = 8,
 
-        Int16,
+        Int16 = 16,
 
-        Int32,
+        Int32 = 32,
 
-        Int64,
+        Int64 = 64,
 
-        Int128
+        Int128 = 128
     };
 
     class IntegerType : public Type {

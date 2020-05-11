@@ -14,7 +14,7 @@ namespace ionir {
                 OptPtr<IntegerValue> integerValue = this->parseInt();
 
                 if (Util::hasValue(integerValue)) {
-                    return integerValue->get()->dynamicCast<Value<>>();
+                    return integerValue->get()->staticCast<Value<>>();
                 }
 
                 return std::nullopt;
