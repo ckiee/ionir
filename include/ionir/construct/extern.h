@@ -18,8 +18,8 @@ namespace ionir {
 
         Ast getChildNodes() const override;
 
-        Ptr <Prototype> getPrototype() const;
+        Ptr <Prototype> getPrototype() const noexcept;
 
-        void setPrototype(Ptr <Prototype> prototype);
+        void setPrototype(Ptr <Prototype> prototype) noexcept;
     };
 }

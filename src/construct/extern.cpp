@@ -16,11 +16,11 @@ namespace ionir {
         };
     }
 
-    Ptr<Prototype> Extern::getPrototype() const {
+    Ptr<Prototype> Extern::getPrototype() const noexcept {
         return this->prototype;
     }
 
-    void Extern::setPrototype(Ptr<Prototype> prototype) {
+    void Extern::setPrototype(Ptr<Prototype> prototype) noexcept {
         this->prototype = prototype;
     }
 }

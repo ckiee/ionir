@@ -25,13 +25,13 @@ namespace ionir {
 
         Ast getChildNodes() const override;
 
-        Ptr<Prototype> getPrototype() const;
+        Ptr<Prototype> getPrototype() const noexcept;
 
         void setPrototype(Ptr<Prototype> prototype);
 
-        Ptr<Block> getBody() const;
+        Ptr<Block> getBody() const noexcept;
 
-        void setBody(Ptr<Block> body);
+        void setBody(Ptr<Block> body) noexcept;
 
         PtrSymbolTable<LocalVariableDescriptor> getLocalVariables() const;
 

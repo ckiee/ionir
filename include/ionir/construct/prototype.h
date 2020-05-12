@@ -26,13 +26,13 @@ namespace ionir {
 
         Ast getChildNodes() const override;
 
-        Ptr<Args> getArgs() const;
+        Ptr<Args> getArgs() const noexcept;
 
-        void setArgs(Ptr<Args> args);
+        void setArgs(Ptr<Args> args) noexcept;
 
-        Ptr<Type> getReturnType() const;
+        Ptr<Type> getReturnType() const noexcept;
 
-        void setReturnType(Ptr<Type> returnType);
+        void setReturnType(Ptr<Type> returnType) noexcept;
 
         bool verify() override;
     };

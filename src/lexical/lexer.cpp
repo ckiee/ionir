@@ -16,7 +16,7 @@ namespace ionir {
         this->begin();
     }
 
-    char Lexer::getChar() const {
+    char Lexer::getChar() const noexcept {
         // Return null character if reached end of input.
         if (!this->hasNext()) {
             return '\0';
@@ -26,15 +26,15 @@ namespace ionir {
         return this->input[this->index];
     }
 
-    std::string Lexer::getCharAsString() const {
+    std::string Lexer::getCharAsString() const noexcept {
         return std::string(1, this->getChar());
     }
 
-    size_t Lexer::getLength() const {
+    size_t Lexer::getLength() const noexcept {
         return this->length;
     }
 
-    size_t Lexer::setIndex(size_t index) {
+    size_t Lexer::setIndex(size_t index) noexcept {
         // Index cannot be negative.
         if (index < 0) {
             index = 0;
@@ -131,7 +131,7 @@ namespace ionir {
         }
     }
 
-    size_t Lexer::getIndex() const {
+    size_t Lexer::getIndex() const noexcept {
         return this->index;
     }
 
@@ -225,7 +225,7 @@ namespace ionir {
         return token;
     }
 
-    std::string Lexer::getInput() const {
+    std::string Lexer::getInput() const noexcept {
         return this->input;
     }
 

@@ -30,10 +30,10 @@ namespace ionir {
 
         void accept(Pass &pass) override;
 
-        IntegerKind getIntegerKind() const;
+        IntegerKind getIntegerKind() const noexcept;
 
-        bool getIsSigned() const;
+        bool getIsSigned() const noexcept;
 
-        void setIsSigned(bool isSigned);
+        void setIsSigned(bool isSigned) noexcept;
     };
 }

@@ -2,7 +2,7 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    Token Token::createDummy(uint32_t startPosition) {
+    Token Token::createDummy(uint32_t startPosition) noexcept {
         return Token(TokenKind::Dummy, "", startPosition);
     }
 
@@ -11,27 +11,27 @@ namespace ionir {
         //
     }
 
-    TokenKind Token::getKind() const {
+    TokenKind Token::getKind() const noexcept {
         return this->kind;
     }
 
-    std::string Token::getValue() const {
+    std::string Token::getValue() const noexcept {
         return this->value;
     }
 
-    uint32_t Token::getStartPosition() const {
+    uint32_t Token::getStartPosition() const noexcept {
         return this->startPosition;
     }
 
-    uint32_t Token::getEndPosition() const {
+    uint32_t Token::getEndPosition() const noexcept {
         return this->startPosition + this->value.length();
     }
 
-    uint32_t Token::getLineNumber() const {
+    uint32_t Token::getLineNumber() const noexcept {
         return this->lineNumber;
     }
 
-    bool Token::isDummy() const {
+    bool Token::isDummy() const noexcept {
         return this->kind == TokenKind::Dummy;
     }
 

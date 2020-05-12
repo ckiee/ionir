@@ -5,11 +5,11 @@ namespace ionir {
         //
     }
 
-    std::optional<std::string> InstYield::getYieldId() const {
+    std::optional<std::string> InstYield::getYieldId() const noexcept {
         return this->yieldId;
     }
 
-    void InstYield::setYieldId(std::optional<std::string> yieldId) {
+    void InstYield::setYieldId(std::optional<std::string> yieldId) noexcept {
         this->yieldId = yieldId;
     }
 }

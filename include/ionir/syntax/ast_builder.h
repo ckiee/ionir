@@ -39,7 +39,7 @@ namespace ionir {
     public:
         AstBuilder();
 
-        Ast make() const;
+        Ast make() const noexcept;
 
         AstBuilder &module(std::string id);
 

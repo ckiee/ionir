@@ -51,7 +51,7 @@ namespace ionir {
         //
     }
 
-    Ast AstBuilder::make() const {
+    Ast AstBuilder::make() const noexcept {
         return this->ast;
     }
 

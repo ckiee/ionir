@@ -45,13 +45,13 @@ namespace ionir {
         std::vector<std::pair<std::regex, TokenKind>> complexIds;
 
     protected:
-        char getChar() const;
+        char getChar() const noexcept;
 
-        std::string getCharAsString() const;
+        std::string getCharAsString() const noexcept;
 
-        size_t getLength() const;
+        size_t getLength() const noexcept;
 
-        size_t setIndex(size_t index);
+        size_t setIndex(size_t index) noexcept;
 
         size_t skip(size_t amount = 1);
 
@@ -62,7 +62,7 @@ namespace ionir {
     public:
         Lexer(std::string input);
 
-        size_t getIndex() const;
+        size_t getIndex() const noexcept;
 
         virtual void begin();
 
@@ -76,7 +76,7 @@ namespace ionir {
          */
         virtual std::optional<Token> tryNext();
 
-        std::string getInput() const;
+        std::string getInput() const noexcept;
 
         std::vector<Token> scan();
     };

@@ -17,11 +17,11 @@ namespace ionir {
         return Construct::convertChildren(this->insts);
     }
 
-    SectionKind Section::getKind() const {
+    SectionKind Section::getKind() const noexcept {
         return this->kind;
     }
 
-    std::vector<Ptr<Inst>> &Section::getInsts() {
+    std::vector<Ptr<Inst>> &Section::getInsts() noexcept {
         return this->insts;
     }
 

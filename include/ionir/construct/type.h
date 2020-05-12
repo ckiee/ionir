@@ -36,10 +36,10 @@ namespace ionir {
 
         bool equals(Ptr<Construct> other) override;
 
-        TypeKind getTypeKind() const;
+        TypeKind getTypeKind() const noexcept;
 
-        bool getIsPointer() const;
+        bool getIsPointer() const noexcept;
 
-        void setIsPointer(bool isPointer);
+        void setIsPointer(bool isPointer) noexcept;
     };
 }

@@ -43,9 +43,9 @@ namespace ionir {
         Classifier classifier;
 
     protected:
-        Classifier getClassifier() const;
+        Classifier getClassifier() const noexcept;
 
-        bool is(TokenKind tokenKind);
+        bool is(TokenKind tokenKind) noexcept;
 
         bool isPeek(TokenKind tokenKind);
 
@@ -53,7 +53,7 @@ namespace ionir {
 
         bool skipOver(TokenKind tokenKind);
 
-        NoticeFactory createNoticeFactory();
+        NoticeFactory createNoticeFactory() noexcept;
 
         std::nullopt_t makeNotice(std::string message, NoticeType type = NoticeType::Error);
 

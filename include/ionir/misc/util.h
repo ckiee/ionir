@@ -100,7 +100,7 @@ namespace ionir {
         }
 
         template<typename T>
-        static bool hasValue(OptPtr<T> pointer) {
+        static bool hasValue(OptPtr<T> pointer) noexcept {
             return pointer != nullptr && pointer.has_value();
         }
     };

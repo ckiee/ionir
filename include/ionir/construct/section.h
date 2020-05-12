@@ -60,9 +60,9 @@ namespace ionir {
 
         Ast getChildNodes() const override;
 
-        SectionKind getKind() const;
+        SectionKind getKind() const noexcept;
 
-        std::vector<Ptr<Inst>> &getInsts();
+        std::vector<Ptr<Inst>> &getInsts() noexcept;
 
         void setInsts(std::vector<Ptr<Inst>> insts);
 

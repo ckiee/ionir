@@ -12,7 +12,7 @@ namespace ionir {
         llvm::Type *type = this->typeStack.pop();
 
         /**
-         * Create the LLVM equivalent alloca instruction
+         * Create the LLVM-equivalent alloca instruction
          * using the buffered builder.
          */
         llvm::AllocaInst *allocaInst =

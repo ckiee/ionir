@@ -22,15 +22,15 @@ namespace ionir {
             && otherType->getIsPointer() == this->getIsPointer();
     }
 
-    TypeKind Type::getTypeKind() const {
+    TypeKind Type::getTypeKind() const noexcept {
         return this->kind;
     }
 
-    bool Type::getIsPointer() const {
+    bool Type::getIsPointer() const noexcept {
         return this->isPointer;
     }
 
-    void Type::setIsPointer(bool isPointer) {
+    void Type::setIsPointer(bool isPointer) noexcept {
         this->isPointer = isPointer;
     }
 }

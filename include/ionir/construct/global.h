@@ -25,12 +25,12 @@ namespace ionir {
 
         Ast getChildNodes() const override;
 
-        Ptr<Type> getType() const;
+        Ptr<Type> getType() const noexcept;
 
-        void setType(Ptr<Type> type);
+        void setType(Ptr<Type> type) noexcept;
 
-        OptPtr<Value<>> getValue() const;
+        OptPtr<Value<>> getValue() const noexcept;
 
-        void setValue(OptPtr<Value<>> value);
+        void setValue(OptPtr<Value<>> value) noexcept;
     };
 }

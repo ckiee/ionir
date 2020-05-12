@@ -7,11 +7,11 @@ namespace ionir {
         //
     }
 
-    InstKind Inst::getInstKind() {
+    InstKind Inst::getInstKind() noexcept {
         return this->kind;
     }
 
-    bool Inst::isTerminal() const {
+    bool Inst::isTerminal() const noexcept {
         return this->kind == InstKind::Return
             || this->kind == InstKind::Branch;
     }

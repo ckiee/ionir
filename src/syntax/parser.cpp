@@ -6,11 +6,11 @@
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-    Classifier Parser::getClassifier() const {
+    Classifier Parser::getClassifier() const noexcept {
         return this->classifier;
     }
 
-    bool Parser::is(TokenKind tokenKind) {
+    bool Parser::is(TokenKind tokenKind) noexcept {
         return this->stream.get().getKind() == tokenKind;
     }
 
@@ -39,7 +39,7 @@ namespace ionir {
         return true;
     }
 
-    NoticeFactory Parser::createNoticeFactory() {
+    NoticeFactory Parser::createNoticeFactory() noexcept {
         // Abstract current Token for easier access.
         Token token = this->stream.get();
 

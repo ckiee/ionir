@@ -64,14 +64,34 @@ TEST(ParserTest, ParseType) {
 
 TEST(ParserTest, ParseVoidType) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenKind::TypeVoid, "void")
+        Token(TokenKind::TypeVoid, ConstName::typeVoid)
     });
 
     OptPtr<Type> type = parser.parseType();
 
     EXPECT_TRUE(Util::hasValue(type));
-    EXPECT_EQ(type->get()->getId(), "void");
+    EXPECT_EQ(type->get()->getId(), ConstName::typeVoid);
+    EXPECT_EQ(type->get()->getTypeKind(), TypeKind::Void);
     EXPECT_FALSE(type->get()->getIsPointer());
+}
+
+TEST(ParserTest, ParseInteger32Type) {
+    Parser parser = test::bootstrap::parser({
+        Token(TokenKind::TypeInt32, ConstName::typeInt32)
+    });
+
+    OptPtr<Type> type = parser.parseType();
+
+    EXPECT_TRUE(Util::hasValue(type));
+    EXPECT_EQ(type->get()->getId(), ConstName::typeInt32);
+    EXPECT_EQ(type->get()->getTypeKind(), TypeKind::Integer);
+    EXPECT_FALSE(type->get()->getIsPointer());
+
+    // Convert to integer type and inspect.
+    Ptr<IntegerType> integerType = type->get()->staticCast<IntegerType>();
+
+    EXPECT_EQ(integerType->getIntegerKind(), IntegerKind::Int32);
+    EXPECT_TRUE(integerType->getIsSigned());
 }
 
 TEST(ParserTest, ParsePointerType) {

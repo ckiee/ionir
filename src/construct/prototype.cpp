@@ -17,19 +17,19 @@ namespace ionir {
         };
     }
 
-    Ptr<Args> Prototype::getArgs() const {
+    Ptr<Args> Prototype::getArgs() const noexcept {
         return this->args;
     }
 
-    void Prototype::setArgs(Ptr<Args> args) {
+    void Prototype::setArgs(Ptr<Args> args) noexcept {
         this->args = args;
     }
 
-    Ptr<Type> Prototype::getReturnType() const {
+    Ptr<Type> Prototype::getReturnType() const noexcept {
         return this->returnType;
     }
 
-    void Prototype::setReturnType(Ptr<Type> returnType) {
+    void Prototype::setReturnType(Ptr<Type> returnType) noexcept {
         this->returnType = returnType;
     }
 

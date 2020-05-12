@@ -32,7 +32,7 @@ namespace ionir {
          * from the token's value, otherwise default to an
          * user-defined type assumption.
          */
-        if (!type.has_value()) {
+        if (!Util::hasValue(type)) {
             type = std::make_shared<Type>(tokenValue, Util::resolveTypeKind(tokenValue));
             this->stream.skip();
         }

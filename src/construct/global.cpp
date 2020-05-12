@@ -22,19 +22,19 @@ namespace ionir {
         return children;
     }
 
-    Ptr<Type> Global::getType() const {
+    Ptr<Type> Global::getType() const noexcept {
         return this->type;
     }
 
-    void Global::setType(Ptr<Type> type) {
+    void Global::setType(Ptr<Type> type) noexcept {
         this->type = type;
     }
 
-    OptPtr<Value<>> Global::getValue() const {
+    OptPtr<Value<>> Global::getValue() const noexcept {
         return this->value;
     }
 
-    void Global::setValue(OptPtr<Value<>> value) {
+    void Global::setValue(OptPtr<Value<>> value) noexcept {
         this->value = value;
     }
 }

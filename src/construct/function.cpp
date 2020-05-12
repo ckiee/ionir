@@ -17,7 +17,7 @@ namespace ionir {
         };
     }
 
-    Ptr<Prototype> Function::getPrototype() const {
+    Ptr<Prototype> Function::getPrototype() const noexcept {
         return this->prototype;
     }
 
@@ -25,11 +25,11 @@ namespace ionir {
         this->prototype = prototype;
     }
 
-    Ptr<Block> Function::getBody() const {
+    Ptr<Block> Function::getBody() const noexcept {
         return this->body;
     }
 
-    void Function::setBody(Ptr<Block> body) {
+    void Function::setBody(Ptr<Block> body) noexcept {
         this->body = body;
     }
 

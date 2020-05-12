@@ -16,21 +16,21 @@ namespace ionir {
         uint32_t lineNumber;
 
     public:
-        static Token createDummy(uint32_t startPosition);
+        static Token createDummy(uint32_t startPosition) noexcept;
 
         Token(TokenKind kind, std::string value, uint32_t startPosition = 0, uint32_t lineNumber = 0);
 
-        TokenKind getKind() const;
+        TokenKind getKind() const noexcept;
 
-        std::string getValue() const;
+        std::string getValue() const noexcept;
 
-        uint32_t getStartPosition() const;
+        uint32_t getStartPosition() const noexcept;
 
-        uint32_t getEndPosition() const;
+        uint32_t getEndPosition() const noexcept;
 
-        uint32_t getLineNumber() const;
+        uint32_t getLineNumber() const noexcept;
 
-        bool isDummy() const;
+        bool isDummy() const noexcept;
 
         std::string getName() const;
 

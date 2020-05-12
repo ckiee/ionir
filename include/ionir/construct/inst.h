@@ -34,8 +34,8 @@ namespace ionir {
 
         virtual void accept(Pass &visitor) = 0;
 
-        InstKind getInstKind();
+        InstKind getInstKind() noexcept;
 
-        bool isTerminal() const;
+        bool isTerminal() const noexcept;
     };
 }
