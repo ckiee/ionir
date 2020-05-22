@@ -235,15 +235,32 @@ TEST(ParserTest, ParseFunction) {
 
 TEST(ParserTest, ParseAllocaInst) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenKind::Identifier, ConstName::instAlloca),
+        Token(TokenKind::InstAlloca, ConstName::instAlloca),
         Token(TokenKind::Identifier, test::constant::foobar),
-        Token(TokenKind::Identifier, ConstName::typeInt32)
+        Token(TokenKind::TypeInt32, ConstName::typeInt32)
     });
 
     OptPtr<AllocaInst> inst = parser.parseAllocaInst(nullptr);
 
     EXPECT_TRUE(Util::hasValue(inst));
     EXPECT_EQ(inst->get()->getInstKind(), InstKind::Alloca);
+
+    // TODO: Verify token kind(s)?
+}
+
+TEST(ParserTest, ParseReturnVoidInst) {
+    Parser parser = test::bootstrap::parser({
+        Token(TokenKind::InstReturn, ConstName::instReturn),
+        Token(TokenKind::TypeVoid, ConstName::typeVoid)
+    });
+
+    OptPtr<ReturnInst> inst = parser.parseReturnInst(nullptr);
+
+    EXPECT_TRUE(Util::hasValue(inst));
+    EXPECT_EQ(inst->get()->getInstKind(), InstKind::Return);
+    EXPECT_FALSE(Util::hasValue(inst->get()->getValue()));
+
+    // TODO: Verify token kind(s)?
 }
 
 TEST(ParserTest, ParseExtern) {

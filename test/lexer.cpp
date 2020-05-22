@@ -89,6 +89,22 @@ TEST(LexerTest, LexIdentifiers) {
     test::compare::tokenSets<2>(expected, actual);
 }
 
+TEST(LexerTest, LexMixedTight) {
+    Lexer lexer = Lexer("void;test");
+
+    // Tokenize input and begin inspection.
+    std::vector<Token> actual = lexer.scan();
+
+    std::array<Token, 3> expected = {
+        Token(TokenKind::TypeVoid, "void", 0),
+        Token(TokenKind::SymbolSemiColon, ";", 4),
+        Token(TokenKind::Identifier, "test", 5)
+    };
+
+    // Compare result with expected.
+    test::compare::tokenSets<3>(expected, actual);
+}
+
 TEST(LexerTest, LexTypes) {
     Lexer lexer = Lexer("void bool i16 i32");// i64 ui16 ui32 ui64 f16 f32 f64 char string");
 
@@ -187,4 +203,12 @@ TEST(LexerTest, LexDecimal) {
     Token expected = Token(TokenKind::LiteralDecimal, "3.14", 0);
 
     EXPECT_EQ(actual, expected);
+}
+
+// TODO: Just debugging.
+TEST(LexerTest, LexDebugging) {
+    Lexer lexer = Lexer("fn main() -> void { @entry: { ret void; } }");
+
+    // Tokenize input and begin inspection.
+    std::vector<Token> actual = lexer.scan();
 }

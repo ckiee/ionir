@@ -175,12 +175,17 @@ namespace ionir {
                 std::regex regex = Util::createPureRegex(pair.first);
 
                 /**
-                 * If the match starts with a letter, modify the regex to force
-                 * either whitespace or EOF at the end.
+                 * If the match starts with an identifier character, ensure that
+                 * the token's value ends with a non-identifier character.
                  */
                 if (std::regex_match(tokenValue, Regex::identifier)) {
-                    // Modify the plain regex to meet requirements at the end.
-                    regex = std::regex(pair.first + "(?:\\s|$)");
+                    // Ensure the requirement of a non-identifier character at the end is met.
+                    std::string requirementInput = this->input.substr(this->index);
+                    bool postCharacterRequirement = std::regex_search(requirementInput, std::regex("^" + pair.first + "(?:\\s|\\W|$)"));
+
+                    if (!postCharacterRequirement) {
+                        continue;
+                    }
                 }
 
                 MatchResult matchResult = this->matchExpression(MatchOpts{
@@ -245,9 +250,8 @@ namespace ionir {
             if (!token.has_value()) {
                 break;
             }
-
             // Display a warning if the token's type is unknown.
-            if (token->getKind() == TokenKind::Unknown) {
+            else if (token->getKind() == TokenKind::Unknown) {
                 // TODO: Issue warning instead of plain std::cout.
                 std::cout << "Warning: Unknown token encountered" << std::endl;
             }

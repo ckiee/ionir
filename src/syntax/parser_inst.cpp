@@ -86,18 +86,24 @@ namespace ionir {
     OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<Section> parent) {
         this->skipOver(TokenKind::InstReturn);
 
-        /**
-         * TODO: Return inst does not necessarily take a value. Instead,
-         * it should be allowed to return without value, signaling void
-         * (or with the keyword void itself).
-         */
-        OptPtr<Value<>> value = this->parseValue();
+        OptPtr<Value<>> value = std::nullopt;
 
-        IONIR_PARSER_ASSURE(value)
+        /**
+         * A non-void value is being returned.
+         */
+        if (!this->is(TokenKind::TypeVoid)) {
+            value = this->parseValue();
+        }
+        /**
+         * Void keyword is being returned, skip over its token.
+         */
+        else {
+            this->skipOver(TokenKind::TypeVoid);
+        }
 
         return std::make_shared<ReturnInst>(ReturnInstOpts{
             parent,
-            *value
+            value
         });
     }
 

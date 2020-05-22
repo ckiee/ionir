@@ -1,7 +1,7 @@
 #include <ionir/misc/regex.h>
 
 namespace ionir {
-    const std::regex Regex::identifier = std::regex("^([_a-zA-Z]+[_a-zA-Z0-9]*)");
+    const std::regex Regex::identifier = std::regex("^([_a-zA-Z]+[\\w]*)");
 
     const std::regex Regex::string = std::regex("^\"([^\\\"]*)\"");
 

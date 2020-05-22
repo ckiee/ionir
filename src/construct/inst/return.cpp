@@ -1,7 +1,6 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    // TODO: Finish init. implementation.
     ReturnInst::ReturnInst(ReturnInstOpts opts)
         : Inst(opts.parent, InstKind::Return), value(opts.value) {
         //
