@@ -22,24 +22,24 @@ namespace ionir {
                 Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
                 TypeKind returnTypeKind = node->getPrototype()->getReturnType()->getTypeKind();
                 OptPtr<Value<>> returnInstValue = returnInst->getValue();
+                bool returnInstValueSet = Util::hasValue(returnInstValue);
 
                 /**
                  * Functions whose prototype's return type is non-void must provide
                  * a value to the return instruction.
                  */
-                if (returnTypeKind != TypeKind::Void && !returnInstValue.has_value()) {
+                if (returnTypeKind != TypeKind::Void && !returnInstValueSet) {
                     throw std::runtime_error(
                         "Function whose prototype's return type is not void must return a corresponding value"
                     );
                 }
+                else if (returnInstValueSet) {
+                    /**
+                     * At this point, the function returns a non-void value. Abstract its
+                     * return value's type construct.
+                     */
+                    Ptr<Type> returnInstValueType = returnInstValue->get()->getType();
 
-                /**
-                 * At this point, the function returns a non-void value. Abstract its
-                 * return value's type construct.
-                 */
-                Ptr<Type> returnInstValueType = returnInstValue->get()->getType();
-
-                if (returnTypeKind != TypeKind::Void) {
                     /**
                      * Function's return type and the return instruction's value's type
                      * do not match. Issue a type error.

@@ -52,7 +52,9 @@ namespace ionir {
             runQueue.pop();
 
             for (auto &topLevelConstruct : ast) {
+                item.pass->prepare();
                 item.pass->visit(topLevelConstruct);
+                item.pass->finish();
             }
         }
     }

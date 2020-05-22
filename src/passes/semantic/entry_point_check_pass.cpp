@@ -3,6 +3,22 @@
 #include <ionir/passes/semantic/entry_point_check_pass.h>
 
 namespace ionir {
+    void EntryPointCheckPass::finish() {
+        /**
+         * An entry function could not be found.
+         */
+        if (!Util::hasValue(this->entryFunction)) {
+            throw std::runtime_error("No suitable entry point could be found");
+        }
+        /**
+         * At this point, the entry point exists. Clear up the entry
+         * function as it is no longer needed after the pass has ran.
+         */
+        else {
+            this->entryFunction.reset();
+        }
+    }
+
     void EntryPointCheckPass::visitFunction(Ptr<Function> node) {
         Pass::visitFunction(node);
 
@@ -17,10 +33,5 @@ namespace ionir {
 
             this->entryFunction = node;
         }
-
-        /**
-         * TODO: Missing code for when the entry point function
-         * is not found.
-         */
     }
 }

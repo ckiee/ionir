@@ -9,6 +9,8 @@ namespace ionir {
         OptPtr<Function> entryFunction;
 
     public:
+        void finish() override;
+
         void visitFunction(Ptr<Function> node) override;
     };
 }
