@@ -32,6 +32,7 @@ namespace ionir {
 
     void LlvmCodegenPass::setBuilder(llvm::BasicBlock *block) {
         this->builder.emplace(llvm::IRBuilder<>(block));
+        this->block = block;
     }
 
     bool LlvmCodegenPass::saveBuilder() {
@@ -39,6 +40,7 @@ namespace ionir {
             return false;
         }
 
+        // TODO: Save block as well?
         this->builderTracker.push(*this->builder);
 
         return true;
@@ -49,13 +51,14 @@ namespace ionir {
             return false;
         }
 
+        // TODO: Restore block as well?
         this->builder.emplace(this->builderTracker.pop());
 
         return true;
     }
 
     LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
-        : module(module), context(&module->getContext()), function(std::nullopt), valueStack(), typeStack(), builderTracker(), namedValues({}) {
+        : module(module), context(&module->getContext()), function(std::nullopt), builder(std::nullopt), block(std::nullopt), valueStack(), typeStack(), builderTracker(), namedValues({}) {
         //
     }
 
@@ -71,7 +74,7 @@ namespace ionir {
         // Create the basic block and at the same time register it under the buffer function.
         llvm::BasicBlock *block = llvm::BasicBlock::Create(*this->context, node->getId(), *this->function);
 
-        // Create and assign the block to the builder.
+        // Create and assign the block to the builder. This will also set/update the block buffer.
         this->setBuilder(block);
 
         // Visit and append instructions.

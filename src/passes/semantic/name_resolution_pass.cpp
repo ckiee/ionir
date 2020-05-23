@@ -13,8 +13,6 @@ namespace ionir {
     void NameResolutionPass::visitRef(PtrRef<> node) {
         Pass::visitRef(node);
 
-        std::cout << " ------ processing name res ...... ----" << std::endl;
-
         // Node is already resolved, no need to continue.
         if (node->isResolved()) {
             return;

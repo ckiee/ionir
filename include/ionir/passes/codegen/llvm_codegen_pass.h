@@ -41,6 +41,8 @@ namespace ionir {
 
         std::optional<llvm::IRBuilder<>> builder;
 
+        std::optional<llvm::BasicBlock *> block;
+
         std::map<std::string, llvm::Value *> namedValues;
 
         Stack<llvm::IRBuilder<>> builderTracker;
@@ -53,6 +55,10 @@ namespace ionir {
 
         void requireFunction();
 
+        /**
+         * Set the currently active builder if any. Modifying the builder
+         * will also set/update the active LLVM basic block buffer.
+         */
         void setBuilder(llvm::BasicBlock *block);
 
         bool saveBuilder();

@@ -47,6 +47,7 @@ namespace ionir {
         PtrSymbolTable<Inst> symbolTable = TypeFactory::makePtrSymbolTable<Inst>();
     };
 
+    // TODO: Must be verified to contain a single terminal instruction at the end.
     class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst>, public Named {
     private:
         SectionKind kind;

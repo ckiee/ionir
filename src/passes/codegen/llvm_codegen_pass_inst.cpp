@@ -122,7 +122,18 @@ namespace ionir {
             throw std::runtime_error("Store instruction's target has not been resolved");
         }
 
+        /**
+         * TODO: Re-visiting alloca instruction. This will create a completely
+         * different Alloca inst than the one intended. Instead, this should
+         * point to the existing, correct Alloca inst. Note that code-gen pass
+         * occurs after the name-resolution pass.
+         */
         this->visitAllocaInst(*target->getValue());
+
+        std::string targetId = target->getId();
+
+        this->requireFunction();
+
         this->visitValue(node->getValue());
 
         llvm::Value *llvmTarget = this->valueStack.pop();

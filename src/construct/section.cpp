@@ -62,7 +62,6 @@ namespace ionir {
     }
 
     OptPtr<Inst> Section::findTerminalInst() const {
-        // TODO: What if there are more than a single return instruction? Convert to 'findNextTerminalInst'.
         for (const auto inst : this->insts) {
             if (inst->isTerminal()) {
                 return inst;
