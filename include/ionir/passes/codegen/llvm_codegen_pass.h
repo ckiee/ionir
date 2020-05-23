@@ -100,6 +100,8 @@ namespace ionir {
 
         void visitCallInst(Ptr<CallInst> node) override;
 
+        void visitStoreInst(Ptr<StoreInst> node) override;
+
         void visitGlobal(Ptr<Global> node) override;
 
         void visitType(Ptr<Type> node) override;

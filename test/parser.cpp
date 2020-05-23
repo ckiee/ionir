@@ -248,6 +248,33 @@ TEST(ParserTest, ParseAllocaInst) {
     // TODO: Verify token kind(s)?
 }
 
+TEST(ParserTest, ParseStoreInst) {
+    Parser parser = test::bootstrap::parser({
+        Token(TokenKind::InstStore, ConstName::instStore),
+        Token(TokenKind::LiteralInt, "1"),
+        Token(TokenKind::Identifier, test::constant::foobar)
+    });
+
+    OptPtr<StoreInst> optInst = parser.parseStoreInst(nullptr);
+
+    EXPECT_TRUE(Util::hasValue(optInst));
+
+    StoreInst *inst = optInst->get();
+
+    // Verify the value.
+    Ptr<Value<>> instValue = inst->getValue();
+
+    EXPECT_EQ(inst->getInstKind(), InstKind::Store);
+    EXPECT_EQ(instValue->getValueKind(), ValueKind::Integer);
+
+    // Verify the target.
+    PtrRef<AllocaInst> instTarget = inst->getTarget();
+
+    EXPECT_EQ(instTarget->getId(), test::constant::foobar);
+
+    // TODO: Verify additional things.
+}
+
 TEST(ParserTest, ParseReturnVoidInst) {
     Parser parser = test::bootstrap::parser({
         Token(TokenKind::InstReturn, ConstName::instReturn),

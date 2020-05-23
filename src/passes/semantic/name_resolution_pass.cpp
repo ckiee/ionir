@@ -13,6 +13,8 @@ namespace ionir {
     void NameResolutionPass::visitRef(PtrRef<> node) {
         Pass::visitRef(node);
 
+        std::cout << " ------ processing name res ...... ----" << std::endl;
+
         // Node is already resolved, no need to continue.
         if (node->isResolved()) {
             return;
@@ -26,23 +28,30 @@ namespace ionir {
         switch (owner->getConstructKind()) {
             case ConstructKind::Inst: {
                 Ptr<Inst> inst = owner->dynamicCast<Inst>();
-                PtrSymbolTable<Section> functionSymbolTable = inst->getParent()->getParent()->getSymbolTable();
+                Ptr<Section> section = inst->getParent();
+                PtrSymbolTable<Section> functionSymbolTable = section->getParent()->getSymbolTable();
+                PtrSymbolTable<Inst> sectionSymbolTable = section->getSymbolTable();
 
-                // The function's symbol table contains the referenced entity.
-                if (functionSymbolTable->contains(id)) {
+                /**
+                 * Check on the section's symbol table. It should take precedence
+                 * before the function's symbol table.
+                 */
+                if (sectionSymbolTable->contains(id)) {
+                    node->resolve((*sectionSymbolTable)[id]);
+
+                    return;
+                }
+                // Check on the function's symbol table for the referenced entity.
+                else if (functionSymbolTable->contains(id)) {
                     node->resolve((*functionSymbolTable)[id]);
 
                     return;
                 }
-                // TODO: Check globals.
-
-                std::cout << "Does not contain" << std::endl;
+                // TODO: Check globals, externs & modules.
 
                 // Otherwise, report an undefined reference error.
                 // TODO: Create NoticeContext using some sort of factory, for now throw error.
                 throw std::runtime_error("Undefined reference to '" + id + "'");
-
-                break;
             }
 
             // TODO: Finish implementation.

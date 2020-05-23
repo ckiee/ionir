@@ -60,4 +60,15 @@ namespace ionir {
     Ptr<InstBuilder> Section::createBuilder() {
         return std::make_shared<InstBuilder>(this->dynamicCast<Section>());
     }
+
+    OptPtr<Inst> Section::findTerminalInst() const {
+        // TODO: What if there are more than a single return instruction? Convert to 'findNextTerminalInst'.
+        for (const auto inst : this->insts) {
+            if (inst->isTerminal()) {
+                return inst;
+            }
+        }
+
+        return std::nullopt;
+    }
 }

@@ -27,7 +27,7 @@ namespace ionir {
         OptPtr<Value<>> value = node->getValue();
         llvm::ReturnInst *returnInst = nullptr;
 
-        if (value.has_value()) {
+        if (Util::hasValue(value)) {
             this->visitValue(*value);
 
             llvm::Value *value = this->valueStack.pop();
@@ -92,7 +92,7 @@ namespace ionir {
         OptPtrRef<Function> callee = node->getCallee();
 
         // At this point, callee must have been resolved.
-        if (!callee.has_value()) {
+        if (!Util::hasValue(callee)) {
             // TODO: Use notices.
             throw std::runtime_error("Unresolved call instruction callee");
         }
@@ -108,5 +108,30 @@ namespace ionir {
         // TODO: What about arguments?
         // Otherwise, create the LLVM call instruction.
         this->builder->CreateCall(llvmCallee);
+
+        // TODO: Push into value stack.
+    }
+
+    void LlvmCodegenPass::visitStoreInst(Ptr<StoreInst> node) {
+        this->requireBuilder();
+
+        PtrRef<AllocaInst> target = node->getTarget();
+
+        // The target must be resolved before LLVM code generation.
+        if (!target->isResolved()) {
+            throw std::runtime_error("Store instruction's target has not been resolved");
+        }
+
+        this->visitAllocaInst(*target->getValue());
+        this->visitValue(node->getValue());
+
+        llvm::Value *llvmTarget = this->valueStack.pop();
+        llvm::Value *llvmValue = this->valueStack.pop();
+
+        // Create the LLVM store instruction.
+        llvm::StoreInst *storeInst = this->builder->CreateStore(llvmValue, llvmTarget);
+
+        // Finally, push the resulting branch instruction onto the value stack.
+        this->valueStack.push(storeInst);
     }
 }

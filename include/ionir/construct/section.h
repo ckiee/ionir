@@ -78,5 +78,7 @@ namespace ionir {
         std::optional<uint32_t> locate(Ptr<Inst> inst) const;
 
         Ptr<InstBuilder> createBuilder();
+
+        OptPtr<Inst> findTerminalInst() const;
     };
 }

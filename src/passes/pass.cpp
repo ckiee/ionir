@@ -20,10 +20,10 @@ namespace ionir {
             return;
         }
         else if (node->getConstructKind() == ConstructKind::Expr) {
-            Ptr<Expr<>> expr = node->dynamicCast<Expr<>>();
+            Ptr<Expr<>> expr = node->staticCast<Expr<>>();
 
             if (expr->getExprKind() == ExprKind::Value) {
-                this->visitValue(node->dynamicCast<Value<>>());
+                this->visitValue(node->staticCast<Value<>>());
 
                 // No need to visit children for this node.
                 return;
@@ -41,7 +41,7 @@ namespace ionir {
          */
         for (const auto child : node->getChildNodes()) {
             // TODO: CRITICAL: What if 'child' (AstNode) is not boxed under Construct?
-            this->visit(std::static_pointer_cast<Construct>(child));
+            this->visit(child->staticCast<Construct>());
         }
     }
 
@@ -171,7 +171,11 @@ namespace ionir {
                 break;
             }
 
-                // TODO: Missing store inst.
+            case InstKind::Store: {
+                this->visitStoreInst(node->dynamicCast<StoreInst>());
+
+                break;
+            }
 
             default: {
                 throw std::runtime_error("Unknown instruction kind");

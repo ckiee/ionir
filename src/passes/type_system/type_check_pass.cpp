@@ -6,14 +6,15 @@ namespace ionir {
 
         OptPtr<Section> entrySection = node->getBody()->getEntrySection();
 
-        if (!entrySection.has_value()) {
+        if (!Util::hasValue(entrySection)) {
             throw std::runtime_error("Entry section for function body is not set");
         }
 
         std::vector<Ptr<Inst>> insts = entrySection->get()->getInsts();
+        OptPtr<Inst> terminalInst = entrySection->get()->findTerminalInst();
 
         // All sections must contain at least a terminal instruction.
-        if (insts.empty() || !insts[0]->isTerminal()) {
+        if (insts.empty() || !Util::hasValue(terminalInst)) {
             throw std::runtime_error("Section must contain at least a terminal instruction");
         }
 

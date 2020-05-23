@@ -11,12 +11,12 @@ namespace ionir {
     }
 
     Ast BranchInst::getChildNodes() const {
-        Ast children = {
+        // TODO: What about condition?
+
+        return {
             this->bodySectionRef,
             this->otherwiseSectionRef
         };
-
-        return children;
     }
 
     Ptr<Expr<>> BranchInst::getCondition() const {

@@ -24,6 +24,8 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
+        Ast getChildNodes() const override;
+
         Ptr<Value<>> getValue() const;
 
         void setValue(Ptr<Value<>> value);

@@ -76,6 +76,10 @@ namespace ionir {
 
         IONIR_PARSER_ASSURE(type)
 
+        if (type->get()->getTypeKind() == TypeKind::Void) {
+            return this->makeNotice("Cannot allocate void type");
+        }
+
         return std::make_shared<AllocaInst>(AllocaInstOpts{
             parent,
             *id,

@@ -2,12 +2,19 @@
 
 namespace ionir {
     StoreInst::StoreInst(StoreInstOpts opts)
-        : Inst(opts.parent, InstKind::Branch), value(opts.value), target(opts.target) {
+        : Inst(opts.parent, InstKind::Store), value(opts.value), target(opts.target) {
         //
     }
 
     void StoreInst::accept(Pass &visitor) {
         visitor.visitStoreInst(this->dynamicCast<StoreInst>());
+    }
+
+    Ast StoreInst::getChildNodes() const {
+        return {
+            this->value,
+            this->target
+        };
     }
 
     Ptr<Value<>> StoreInst::getValue() const {
