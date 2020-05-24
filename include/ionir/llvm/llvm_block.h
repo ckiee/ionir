@@ -6,10 +6,10 @@
 #include <ionir/misc/helpers.h>
 #include "ir_builder.h"
 #include "llvm_inst.h"
-#include "llvm_entity_wrapper.h"
+#include "ionir/misc/safe_wrapper.h"
 
 namespace ionir {
-    class LlvmBlock : public LlvmEntityWrapper<llvm::BasicBlock *> {
+    class LlvmBlock : public SafeWrapper<llvm::BasicBlock *> {
     private:
         OptPtr<IrBuilder> cachedBuilder;
 

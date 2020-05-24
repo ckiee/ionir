@@ -3,7 +3,7 @@
 
 namespace ionir {
     Inst::Inst(Ptr<Section> parent, InstKind kind)
-        : ChildConstruct(parent, ConstructKind::Inst), kind(kind) {
+        : ChildConstruct(parent, ConstructKind::Inst), OptPtrWrapper<LlvmInst>(std::nullopt), kind(kind) {
         //
     }
 

@@ -1,7 +1,7 @@
 #include <ionir/llvm/llvm_block.h>
 
 namespace ionir {
-    LlvmBlock::LlvmBlock(llvm::BasicBlock *value) : LlvmEntityWrapper(value), cachedBuilder(std::nullopt) {
+    LlvmBlock::LlvmBlock(llvm::BasicBlock *value) : SafeWrapper(value), cachedBuilder(std::nullopt) {
         //
     }
 
@@ -26,10 +26,14 @@ namespace ionir {
     }
 
     OptPtr<LlvmInst> LlvmBlock::findInstById(std::string id) {
-        // TODO: Usage of auto keyword.
-        auto llvmValueSymbolTable = this->value->getValueSymbolTable();
+        for (const auto &inst : *this->value) {
+            if (inst.hasName() && inst.getName() == id) {
+                // TODO: Converting Instruction to Instruction*.
+                llvm::Instruction* instt = inst;
 
-        // TODO: Find the inst in the Block's value symbol table.
+                return std::make_shared<LlvmInst>(inst);
+            }
+        }
 
         return std::nullopt;
     }

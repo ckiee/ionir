@@ -2,10 +2,10 @@
 
 #include <llvm/IR/Instruction.h>
 #include <ionir/misc/wrapper.h>
-#include "llvm_entity_wrapper.h"
+#include "ionir/misc/safe_wrapper.h"
 
 namespace ionir {
-    class LlvmInst : public LlvmEntityWrapper<llvm::Instruction *> {
+    class LlvmInst : public SafeWrapper<llvm::Instruction *> {
     public:
         explicit LlvmInst(llvm::Instruction *value);
 

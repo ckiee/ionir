@@ -1,7 +1,7 @@
 #include <ionir/llvm/llvm_inst.h>
 
 namespace ionir {
-    LlvmInst::LlvmInst(llvm::Instruction *value) : LlvmEntityWrapper(value) {
+    LlvmInst::LlvmInst(llvm::Instruction *value) : SafeWrapper(value) {
         //
     }
 

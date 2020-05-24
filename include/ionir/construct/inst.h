@@ -3,6 +3,7 @@
 #include <ionir/construct/value.h>
 #include <ionir/construct/child_construct.h>
 #include <ionir/misc/helpers.h>
+#include <ionir/llvm/llvm_inst.h>
 
 namespace ionir {
     class Pass;
@@ -25,7 +26,7 @@ namespace ionir {
         Branch
     };
 
-    class Inst : public ChildConstruct<Section> {
+    class Inst : public ChildConstruct<Section>, public OptPtrWrapper<LlvmInst> {
     private:
         InstKind kind;
 

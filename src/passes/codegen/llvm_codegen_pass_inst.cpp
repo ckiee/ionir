@@ -130,9 +130,13 @@ namespace ionir {
          */
         this->visitAllocaInst(*target->getValue());
 
+        // TODO: !!! CRITICAL: FINISH IMPLEMENTING. USE CUSTOM LLVM-API TO ATTEMPT TO FIND GENERATED TARGET. !!!
+
         std::string targetId = target->getId();
 
         this->requireFunction();
+
+        // ---- !!! !!!!
 
         this->visitValue(node->getValue());
 
