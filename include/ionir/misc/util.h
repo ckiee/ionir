@@ -8,10 +8,13 @@
 #include <string_view>
 #include <math.h>
 #include <ionir/construct/type/integer_type.h>
-#include <ionir/construct/inst.h>
 #include <ionir/const/const_name.h>
 
 namespace ionir {
+    class Inst;
+
+    class IntegerType;
+
     class Util {
     private:
         static constexpr std::string_view specialChars{"{}$^.?\\[]()*+|<>-&"};

@@ -58,7 +58,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
-        : module(module), context(&module->getContext()), function(std::nullopt), builder(std::nullopt), block(std::nullopt), valueStack(), typeStack(), builderTracker(), namedValues({}) {
+        : module(module), context(&module->getContext()), function(std::nullopt), builder(std::nullopt), block(std::nullopt), valueStack(), typeStack(), builderTracker(), emittedEntities(), namedValues({}) {
         //
     }
 
@@ -145,6 +145,8 @@ namespace ionir {
             // TODO: CRITICAL: You can't just cast llvm::value to constant! See above.
             globalVar->setInitializer(llvm::dyn_cast<llvm::Constant>(value));
         }
+
+        // TODO: Push into valueStack and apply LLVM entity to the node.
     }
 
     void LlvmCodegenPass::visitType(Ptr<Type> node) {

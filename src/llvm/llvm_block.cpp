@@ -24,17 +24,4 @@ namespace ionir {
 
         return std::nullopt;
     }
-
-    OptPtr<LlvmInst> LlvmBlock::findInstById(std::string id) {
-        for (const auto &inst : *this->value) {
-            if (inst.hasName() && inst.getName() == id) {
-                // TODO: Converting Instruction to Instruction*.
-                llvm::Instruction* instt = inst;
-
-                return std::make_shared<LlvmInst>(inst);
-            }
-        }
-
-        return std::nullopt;
-    }
 }

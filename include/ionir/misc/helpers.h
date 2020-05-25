@@ -6,8 +6,6 @@
 #include <memory>
 #include <vector>
 #include <ionir/lexical/token_kind.h>
-#include "wrapper.h"
-#include "opt_wrapper.h"
 
 namespace ionir {
     template<typename T>
@@ -18,9 +16,6 @@ namespace ionir {
 
     template<typename T>
     using OptPtr = std::optional<Ptr<T>>;
-
-    template<typename T>
-    using OptPtrWrapper = OptWrapper<Ptr<T>>;
 
     typedef std::vector<TokenKind> TokenKindVector;
 

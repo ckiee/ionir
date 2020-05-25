@@ -47,6 +47,8 @@ namespace ionir {
 
         Stack<llvm::IRBuilder<>> builderTracker;
 
+        std::map<Ptr<Construct>, llvm::Value *> emittedEntities;
+
         /**
          * Ensure that the builder is instantiated, otherwise
          * throws a runtime error.

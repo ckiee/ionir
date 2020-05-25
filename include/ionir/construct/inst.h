@@ -26,7 +26,7 @@ namespace ionir {
         Branch
     };
 
-    class Inst : public ChildConstruct<Section>, public OptPtrWrapper<LlvmInst> {
+    class Inst : public ChildConstruct<Section> {
     private:
         InstKind kind;
 

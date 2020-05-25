@@ -2,7 +2,8 @@
 #include <ionir/const/const_name.h>
 
 namespace ionir {
-    VoidType::VoidType() : Type(ConstName::typeVoid, TypeKind::Void, false) {
+    VoidType::VoidType()
+        : Type(ConstName::typeVoid, TypeKind::Void, false) {
         //
     }
 
