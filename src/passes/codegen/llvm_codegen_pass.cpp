@@ -57,14 +57,28 @@ namespace ionir {
         return true;
     }
 
+    void LlvmCodegenPass::createScope() {
+        this->emittedEntities.push_front(Map<Ptr<Construct>, llvm::Value *>());
+    }
+
+    void LlvmCodegenPass::destroyScope() {
+        // TODO: Implement.
+    }
+
     LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
-        : module(module), context(&module->getContext()), function(std::nullopt), builder(std::nullopt), block(std::nullopt), valueStack(), typeStack(), builderTracker(), emittedEntities(), namedValues({}) {
+        : module(module), context(&module->getContext()), function(std::nullopt), builder(std::nullopt), block(std::nullopt), valueStack(), typeStack(), builderTracker(), emittedEntities({Map<Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //
     }
 
     LlvmCodegenPass::~LlvmCodegenPass() {
         this->typeStack.clear();
         this->valueStack.clear();
+    }
+
+    void LlvmCodegenPass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
+        Pass::visitScopeAnchor(node);
+        this->destroyScope();
+        this->createScope();
     }
 
     void LlvmCodegenPass::visitBasicBlock(Ptr<BasicBlock> node) {
@@ -89,7 +103,6 @@ namespace ionir {
             this->valueStack.pop();
         }
 
-        this->emittedEntities.push_front(std::list<ScopeListItem<TKey, TValue>)
         this->valueStack.push(block);
     }
 

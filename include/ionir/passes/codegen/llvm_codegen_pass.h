@@ -67,6 +67,10 @@ namespace ionir {
 
         bool restoreBuilder();
 
+        void createScope();
+
+        void destroyScope();
+
     public:
         explicit LlvmCodegenPass(llvm::Module *module);
 
@@ -79,6 +83,8 @@ namespace ionir {
         LlvmStack<llvm::Type> getTypeStack() const;
 
         void visit(Ptr<Construct> node) override;
+
+        void visitScopeAnchor(Ptr<ScopeAnchor<>> node) override;
 
         void visitFunction(Ptr<Function> node) override;
 
