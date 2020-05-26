@@ -65,7 +65,7 @@ namespace ionir {
         // TODO: Implement.
     }
 
-    void LlvmCodegenPass::addToScope(ionir::Ptr<ionir::Construct> construct, llvm::Value *value) {
+    void LlvmCodegenPass::addToScope(Ptr<Construct> construct, llvm::Value *value) {
         // TODO: Catch possible exception if front is undefined.
 
         this->emittedEntities.front()[construct] = value;

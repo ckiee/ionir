@@ -71,7 +71,7 @@ namespace ionir {
 
         void destroyScope();
 
-        void addToScope(ionir::Ptr<ionir::Construct> construct, llvm::Value *value);
+        void addToScope(Ptr<Construct> construct, llvm::Value *value);
 
     public:
         explicit LlvmCodegenPass(llvm::Module *module);

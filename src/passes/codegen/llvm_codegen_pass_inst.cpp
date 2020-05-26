@@ -127,13 +127,12 @@ namespace ionir {
             throw std::runtime_error("Store instruction's target has not been resolved");
         }
 
-        /**
-         * TODO: Re-visiting alloca instruction. This will create a completely
-         * different Alloca inst than the one intended. Instead, this should
-         * point to the existing, correct Alloca inst. Note that code-gen pass
-         * occurs after the name-resolution pass.
-         */
-        this->visitAllocaInst(*target->getValue());
+        Map<Ptr<Construct>, llvm::Value *> entitiesMap = this->emittedEntities.front();
+        llvm::Value *llvmTarget = entitiesMap[*target->getValue()];
+
+        if (llvmTarget == nullptr) {
+            throw std::runtime_error("Target could not be looked up in the emitted entities map");
+        }
 
         // TODO: !!! CRITICAL: FINISH IMPLEMENTING. USE CUSTOM LLVM-API TO ATTEMPT TO FIND GENERATED TARGET. !!!
 
@@ -145,7 +144,6 @@ namespace ionir {
 
         this->visitValue(node->getValue());
 
-        llvm::Value *llvmTarget = this->valueStack.pop();
         llvm::Value *llvmValue = this->valueStack.pop();
 
         // Create the LLVM store instruction.
