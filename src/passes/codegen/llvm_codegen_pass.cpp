@@ -65,6 +65,12 @@ namespace ionir {
         // TODO: Implement.
     }
 
+    void LlvmCodegenPass::addToScope(ionir::Ptr<ionir::Construct> construct, llvm::Value *value) {
+        // TODO: Catch possible exception if front is undefined.
+
+        this->emittedEntities.front()[construct] = value;
+    }
+
     LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
         : module(module), context(&module->getContext()), function(std::nullopt), builder(std::nullopt), block(std::nullopt), valueStack(), typeStack(), builderTracker(), emittedEntities({Map<Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //

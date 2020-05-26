@@ -18,7 +18,7 @@ namespace ionir {
         llvm::AllocaInst *allocaInst =
             this->builder->CreateAlloca(type, (llvm::Value *)nullptr, *node->getYieldId());
 
-        this->emittedEntities.front()[node] = allocaInst;
+        this->addToScope(node, allocaInst);
         this->valueStack.push(allocaInst);
     }
 
@@ -44,7 +44,7 @@ namespace ionir {
             returnInst = this->builder->CreateRetVoid();
         }
 
-        this->emittedEntities.front()[node] = returnInst;
+        this->addToScope(node, returnInst);
         this->valueStack.push(returnInst);
     }
 
@@ -84,7 +84,7 @@ namespace ionir {
         llvm::BranchInst *branchInst =
             this->builder->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
 
-        this->emittedEntities.front()[node] = branchInst;
+        this->addToScope(node, branchInst);
 
         // Finally, push the resulting branch instruction onto the value stack.
         this->valueStack.push(branchInst);
@@ -113,7 +113,7 @@ namespace ionir {
         // Otherwise, create the LLVM call instruction.
         llvm::CallInst *callInst = this->builder->CreateCall(llvmCallee);
 
-        this->emittedEntities.front()[node] = callInst;
+        this->addToScope(node, callInst);
         this->valueStack.push(callInst);
     }
 
@@ -151,7 +151,7 @@ namespace ionir {
         // Create the LLVM store instruction.
         llvm::StoreInst *storeInst = this->builder->CreateStore(llvmValue, llvmTarget);
 
-        this->emittedEntities.front()[node] = storeInst;
+        this->addToScope(node, storeInst);
 
         // Finally, push the resulting branch instruction onto the value stack.
         this->valueStack.push(storeInst);
