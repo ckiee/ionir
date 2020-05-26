@@ -22,7 +22,7 @@ namespace ionir {
             if (inst->getInstKind() == InstKind::Return) {
                 Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
                 TypeKind returnTypeKind = node->getPrototype()->getReturnType()->getTypeKind();
-                OptPtr<Value<>> returnInstValue = returnInst->getValue();
+                OptPtr<Construct> returnInstValue = returnInst->getValue();
                 bool returnInstValueSet = Util::hasValue(returnInstValue);
 
                 /**
@@ -34,22 +34,36 @@ namespace ionir {
                         "Function whose prototype's return type is not void must return a corresponding value"
                     );
                 }
+                /**
+                 * Return instruction's value construct is a literal value. Process
+                 * it simply by comparing its type.
+                 */
+                else if (returnInstValueSet && (*returnInstValue)->getConstructKind() == ConstructKind::Value) {
+                    // TODO: Broke when removed expr. Must fix.
+                    throw std::runtime_error("Not implemented / broken");
+//                    /**
+//                     * At this point, the function returns a non-void value. Abstract its
+//                     * return value's type construct.
+//                     */
+//                    Ptr<Type> returnInstValueType = (*returnInstValue)->staticCast<Value>()->getType();
+//
+//                    /**
+//                     * Function's return type and the return instruction's value's type
+//                     * do not match. Issue a type error.
+//                     */
+//                    if (returnInstValueType->getTypeKind() != returnTypeKind) {
+//                        throw std::runtime_error(
+//                            "Function prototype's return value's type and return instruction's value's type do not match"
+//                        );
+//                    }
+                }
+                /**
+                 * Return instruction's value is set, but it's a reference. The reference
+                 * must be resolved then compared.
+                 */
                 else if (returnInstValueSet) {
-                    /**
-                     * At this point, the function returns a non-void value. Abstract its
-                     * return value's type construct.
-                     */
-                    Ptr<Type> returnInstValueType = returnInstValue->get()->getType();
-
-                    /**
-                     * Function's return type and the return instruction's value's type
-                     * do not match. Issue a type error.
-                     */
-                    if (returnInstValueType->getTypeKind() != returnTypeKind) {
-                        throw std::runtime_error(
-                            "Function prototype's return value's type and return instruction's value's type do not match"
-                        );
-                    }
+                    // TODO
+                    throw std::runtime_error("Not implemented");
                 }
             }
         }

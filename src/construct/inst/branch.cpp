@@ -19,11 +19,11 @@ namespace ionir {
         };
     }
 
-    Ptr<Expr<>> BranchInst::getCondition() const {
+    Ptr<Construct> BranchInst::getCondition() const {
         return this->condition;
     }
 
-    void BranchInst::setCondition(Ptr<Expr<>> condition) {
+    void BranchInst::setCondition(Ptr<Construct> condition) {
         this->condition = condition;
     }
 

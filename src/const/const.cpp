@@ -28,10 +28,10 @@ namespace ionir {
         {ConstructKind::Section, "Section"},
         {ConstructKind::VariableRef, "VariableReference"},
         {ConstructKind::VariableDecl, "VariableDeclaration"},
-        {ConstructKind::Expr, "Expr"},
         {ConstructKind::StructDecl, "StructDeclaration"},
         {ConstructKind::Module, "Module"},
-        {ConstructKind::Ref, "Reference"}
+        {ConstructKind::Ref, "Reference"},
+        {ConstructKind::Value, "Value"}
     };
 
     // TODO: Refactor.

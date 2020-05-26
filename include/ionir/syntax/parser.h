@@ -2,8 +2,6 @@
 
 #include <optional>
 #include <string>
-#include <ionir/construct/expr.h>
-#include <ionir/construct/expr/id.h>
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
 #include <ionir/construct/value/string.h>
@@ -101,13 +99,9 @@ namespace ionir {
 
         OptPtr<Value<>> parseValue();
 
-        OptPtr<IdExpr> parseIdExpr();
+        OptPtr<Construct> parsePrimaryExpr(Ptr<Construct> parent);
 
-        OptPtr<Expr<>> parsePrimaryExpr();
-
-        OptPtr<Expr<>> parseBinaryExprRightSide(Ptr<Expr<>> leftSide, int minimalPrecedence);
-
-        OptPtr<BasicBlock> parseSection(Ptr<FunctionBody> parent);
+        OptPtr<BasicBlock> parseBasicBlock(Ptr<FunctionBody> parent);
 
         OptPtr<FunctionBody> parseFunctionBody(Ptr<Function> parent);
 

@@ -11,8 +11,6 @@ namespace ionir {
      */
     class NameShadowingPass : public Pass {
     public:
-        static OptPtr<Type> evaluateExprType(Ptr<Expr<>> expr);
-
         void visitInst(Ptr<Inst> node) override;
     };
 }

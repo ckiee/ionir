@@ -10,11 +10,11 @@ namespace ionir {
         visitor.visitReturnInst(this->dynamicCast<ReturnInst>());
     }
 
-    OptPtr<Value<>> ReturnInst::getValue() const {
+    OptPtr<Construct> ReturnInst::getValue() const noexcept {
         return this->value;
     }
 
-    void ReturnInst::setValue(OptPtr<Value<>> value) {
+    void ReturnInst::setValue(OptPtr<Construct> value) noexcept {
         this->value = value;
     }
 }

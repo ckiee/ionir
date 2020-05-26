@@ -41,13 +41,13 @@ namespace ionir {
 
         VariableDecl,
 
-        Expr,
-
         StructDecl,
 
         Module,
 
-        Ref
+        Ref,
+
+        Value
     };
 
     class Construct;

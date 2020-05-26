@@ -25,11 +25,11 @@ namespace ionir {
     void LlvmCodegenPass::visitReturnInst(Ptr<ReturnInst> node) {
         this->requireBuilder();
 
-        OptPtr<Value<>> value = node->getValue();
+        OptPtr<Construct> value = node->getValue();
         llvm::ReturnInst *returnInst = nullptr;
 
         if (Util::hasValue(value)) {
-            this->visitValue(*value);
+            this->visit(*value);
 
             llvm::Value *value = this->valueStack.pop();
 
@@ -52,7 +52,7 @@ namespace ionir {
         this->requireBuilder();
 
         // Visit condition.
-        this->visitExpr(node->getCondition());
+        this->visit(node->getCondition());
 
         llvm::Value *condition = this->valueStack.pop();
 
@@ -134,14 +134,9 @@ namespace ionir {
             throw std::runtime_error("Target could not be looked up in the emitted entities map");
         }
 
-        // TODO: !!! CRITICAL: FINISH IMPLEMENTING. USE CUSTOM LLVM-API TO ATTEMPT TO FIND GENERATED TARGET. !!!
-
         std::string targetId = target->getId();
 
         this->requireFunction();
-
-        // ---- !!! !!!!
-
         this->visitValue(node->getValue());
 
         llvm::Value *llvmValue = this->valueStack.pop();

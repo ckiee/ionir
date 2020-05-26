@@ -10,7 +10,6 @@
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
 #include <ionir/construct/value/string.h>
-#include <ionir/construct/expr/binary_expr.h>
 #include <ionir/construct/inst.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/alloca.h>
@@ -97,8 +96,6 @@ namespace ionir {
         void visitFunctionBody(Ptr<FunctionBody> node) override;
 
         void visitPrototype(Ptr<Prototype> node) override;
-
-        void visitBinaryExpr(Ptr<BinaryExpr> node) override;
 
         void visitIntegerValue(Ptr<IntegerValue> node) override;
 

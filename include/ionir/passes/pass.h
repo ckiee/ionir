@@ -1,6 +1,5 @@
 #pragma once
 
-#include <ionir/construct/expr/binary_expr.h>
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
 #include <ionir/construct/value/string.h>
@@ -23,7 +22,6 @@
 #include <ionir/construct/type.h>
 #include <ionir/construct/global.h>
 #include <ionir/construct/module.h>
-#include <ionir/construct/expr.h>
 #include <ionir/construct/value.h>
 #include <ionir/construct/inst.h>
 #include <ionir/misc/helpers.h>
@@ -56,10 +54,6 @@ namespace ionir {
         virtual void visitPrototype(Ptr<Prototype> node);
 
         virtual void visitVarReference(Ptr<VariableRef> node);
-
-        virtual void visitExpr(Ptr<Expr<>> node);
-
-        virtual void visitBinaryExpr(Ptr<BinaryExpr> node);
 
         virtual void visitValue(Ptr<Value<>> node);
 

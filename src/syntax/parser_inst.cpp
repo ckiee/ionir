@@ -1,4 +1,3 @@
-#include <ionir/construct/expr.h>
 #include <ionir/const/const_name.h>
 #include <ionir/syntax/parser.h>
 #include <ionir/syntax/parser_helpers.h>
@@ -90,13 +89,14 @@ namespace ionir {
     OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstReturn);
 
-        OptPtr<Value<>> value = std::nullopt;
+        OptPtr<Construct> value = std::nullopt;
 
         /**
          * A non-void value is being returned.
          */
         if (!this->is(TokenKind::TypeVoid)) {
-            value = this->parseValue();
+            // TODO: Parent is nullptr. Is this correct? Check.
+            value = this->parsePrimaryExpr(nullptr);
         }
         /**
          * Void keyword is being returned, skip over its token.
@@ -114,7 +114,8 @@ namespace ionir {
     OptPtr<BranchInst> Parser::parseBranchInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstBranch);
 
-        OptPtr<Expr<>> condition = this->parsePrimaryExpr();
+        // TODO: Not passing any parent to the parser. Should it be this way?
+        OptPtr<Construct> condition = this->parsePrimaryExpr(nullptr);
 
         // Condition must be set.
         IONIR_PARSER_ASSURE(condition)

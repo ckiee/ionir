@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ionir/construct/type.h>
-#include <ionir/construct/expr.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/misc/helpers.h>
 
@@ -19,13 +18,15 @@ namespace ionir {
     };
 
     template<typename T = Type>
-    class Value : public Expr<T> {
+    class Value : public Construct {
     private:
         ValueKind kind;
 
+        Ptr<T> type;
+
     public:
         Value(ValueKind kind, Ptr<T> type)
-            : Expr<T>(ExprKind::Value, type), kind(kind) {
+            : Construct(ConstructKind::Value), kind(kind), type(type) {
             //
         }
 
@@ -34,8 +35,12 @@ namespace ionir {
             //visitor.visitValue(this->dynamicCast<Value<>>());
         }
 
-        ValueKind getValueKind() const {
+        ValueKind getValueKind() const noexcept {
             return this->kind;
+        }
+
+        Ptr<T> getType() const noexcept {
+            return this->type;
         }
     };
 }

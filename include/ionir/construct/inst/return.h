@@ -1,30 +1,28 @@
 #pragma once
 
-#include <optional>
 #include <string>
 #include <ionir/construct/type.h>
-#include <ionir/construct/value.h>
-#include <ionir/misc/helpers.h>
 #include <ionir/construct/inst.h>
+#include <ionir/misc/helpers.h>
 
 namespace ionir {
     class Pass;
 
     struct ReturnInstOpts : InstOpts {
-        OptPtr<Value<>> value = std::nullopt;
+        OptPtr<Construct> value = std::nullopt;
     };
 
     class ReturnInst : public Inst {
     private:
-        OptPtr<Value<>> value;
+        OptPtr<Construct> value;
 
     public:
         explicit ReturnInst(ReturnInstOpts opts);
 
         void accept(Pass &visitor) override;
 
-        OptPtr<Value<>> getValue() const;
+        OptPtr<Construct> getValue() const noexcept;
 
-        void setValue(OptPtr<Value<>> value);
+        void setValue(OptPtr<Construct> value) noexcept;
     };
 }

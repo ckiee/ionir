@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <ionir/construct/expr.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/construct/pseudo/ref.h>
 
@@ -11,7 +10,7 @@ namespace ionir {
     class BasicBlock;
 
     struct BranchInstOpts : InstOpts {
-        Ptr<Expr<>> condition;
+        Ptr<Construct> condition;
 
         PtrRef<BasicBlock> bodyRef;
 
@@ -20,7 +19,7 @@ namespace ionir {
 
     class BranchInst : public Inst {
     private:
-        Ptr<Expr<>> condition;
+        Ptr<Construct> condition;
 
         PtrRef<BasicBlock> bodySectionRef;
 
@@ -33,9 +32,9 @@ namespace ionir {
 
         Ast getChildNodes() const override;
 
-        Ptr<Expr<>> getCondition() const;
+        Ptr<Construct> getCondition() const;
 
-        void setCondition(Ptr<Expr<>> condition);
+        void setCondition(Ptr<Construct> condition);
 
         PtrRef<BasicBlock> getBodyRef() const;
 

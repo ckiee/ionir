@@ -38,4 +38,11 @@ namespace ionir {
     bool Classifier::isInst(TokenKind tokenKind) {
         return TokenConst::contains(TokenConst::getInsts(), tokenKind);
     }
+
+    bool Classifier::isLiteral(TokenKind tokenKind) {
+        return tokenKind == TokenKind::LiteralInt
+            || tokenKind == TokenKind::LiteralDecimal
+            || tokenKind == TokenKind::LiteralCharacter
+            || tokenKind == TokenKind::LiteralString;
+    }
 }

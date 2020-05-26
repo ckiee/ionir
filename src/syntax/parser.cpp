@@ -1,5 +1,4 @@
 #include <vector>
-#include <ionir/construct/expr.h>
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
 #include <ionir/const/const_name.h>
@@ -111,7 +110,7 @@ namespace ionir {
         return std::make_shared<Global>(*type, *id);
     }
 
-    OptPtr<BasicBlock> Parser::parseSection(Ptr<FunctionBody> parent) {
+    OptPtr<BasicBlock> Parser::parseBasicBlock(Ptr<FunctionBody> parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolAt))
 
         std::optional<std::string> id = this->parseId();
@@ -172,7 +171,7 @@ namespace ionir {
         PtrSymbolTable<BasicBlock> basicBlocks = std::make_shared<SymbolTable<Ptr<BasicBlock>>>();
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            OptPtr<BasicBlock> basicBlock = this->parseSection(functionBody);
+            OptPtr<BasicBlock> basicBlock = this->parseBasicBlock(functionBody);
 
             IONIR_PARSER_ASSURE(basicBlock)
 

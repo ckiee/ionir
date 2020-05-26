@@ -25,7 +25,7 @@ namespace ionir {
         return allocaInst;
     }
 
-    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr<>> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection) {
+    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Construct> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection) {
         return this->make<BranchInst>(BranchInstOpts{
             this->basicBlock,
             condition,
@@ -34,7 +34,7 @@ namespace ionir {
         });
     }
 
-    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr<>> condition, std::string bodySectionId, std::string otherwiseSectionId) {
+    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Construct> condition, std::string bodySectionId, std::string otherwiseSectionId) {
         PtrRef<BasicBlock> bodyBlock = std::make_shared<Ref<BasicBlock>>(bodySectionId, nullptr);
         PtrRef<BasicBlock> otherwiseBlock = std::make_shared<Ref<BasicBlock>>(otherwiseSectionId, nullptr);
         Ptr<BranchInst> branchInst = this->createBranch(condition, bodyBlock, otherwiseBlock);

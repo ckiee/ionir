@@ -19,15 +19,11 @@ namespace ionir {
             // No need to visit children for this node.
             return;
         }
-        else if (node->getConstructKind() == ConstructKind::Expr) {
-            Ptr<Expr<>> expr = node->staticCast<Expr<>>();
+        else if (node->getConstructKind() == ConstructKind::Value) {
+            this->visitValue(node->staticCast<Value<>>());
 
-            if (expr->getExprKind() == ExprKind::Value) {
-                this->visitValue(node->staticCast<Value<>>());
-
-                // No need to visit children for this node.
-                return;
-            }
+            // No need to visit children for this node.
+            return;
         }
 
         this->visitChildren(node);
@@ -66,30 +62,6 @@ namespace ionir {
     }
 
     void Pass::visitVarReference(Ptr<VariableRef> node) {
-        //
-    }
-
-    void Pass::visitExpr(Ptr<Expr<>> node) {
-        switch (node->getExprKind()) {
-            case ExprKind::Binary: {
-                this->visitBinaryExpr(node->dynamicCast<BinaryExpr>());
-
-                break;
-            }
-
-            case ExprKind::Value: {
-                this->visitValue(node->dynamicCast<Value<>>());
-
-                break;
-            }
-
-            default: {
-                throw std::runtime_error("Unknown expression kind");
-            }
-        }
-    }
-
-    void Pass::visitBinaryExpr(Ptr<BinaryExpr> node) {
         //
     }
 
