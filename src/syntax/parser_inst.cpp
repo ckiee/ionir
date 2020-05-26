@@ -4,7 +4,7 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    OptPtr<Inst> Parser::parseInst(Ptr<Section> parent) {
+    OptPtr<Inst> Parser::parseInst(Ptr<BasicBlock> parent) {
         /**
          * Retrieve the current token's kind to
          * determine the instruction's name &
@@ -65,7 +65,7 @@ namespace ionir {
         return inst;
     }
 
-    OptPtr<AllocaInst> Parser::parseAllocaInst(Ptr<Section> parent) {
+    OptPtr<AllocaInst> Parser::parseAllocaInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstAlloca);
 
         std::optional<std::string> id = this->parseId();
@@ -87,7 +87,7 @@ namespace ionir {
         });
     }
 
-    OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<Section> parent) {
+    OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstReturn);
 
         OptPtr<Value<>> value = std::nullopt;
@@ -111,7 +111,7 @@ namespace ionir {
         });
     }
 
-    OptPtr<BranchInst> Parser::parseBranchInst(Ptr<Section> parent) {
+    OptPtr<BranchInst> Parser::parseBranchInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstBranch);
 
         OptPtr<Expr<>> condition = this->parsePrimaryExpr();
@@ -126,11 +126,11 @@ namespace ionir {
             nullptr
         });
 
-        OptPtr<Ref<Section>> bodySection = this->parseRef<Section>(branchInst);
+        OptPtr<Ref<BasicBlock>> bodySection = this->parseRef<BasicBlock>(branchInst);
 
         IONIR_PARSER_ASSURE(bodySection)
 
-        OptPtr<Ref<Section>> otherwiseSection = this->parseRef<Section>(branchInst);
+        OptPtr<Ref<BasicBlock>> otherwiseSection = this->parseRef<BasicBlock>(branchInst);
 
         IONIR_PARSER_ASSURE(otherwiseSection)
 
@@ -140,7 +140,7 @@ namespace ionir {
         return branchInst;
     }
 
-    OptPtr<CallInst> Parser::parseCallInst(Ptr<Section> parent) {
+    OptPtr<CallInst> Parser::parseCallInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstCall);
 
         // TODO
@@ -148,7 +148,7 @@ namespace ionir {
         return this->makeNotice("Not yet implemented");
     }
 
-    OptPtr<StoreInst> Parser::parseStoreInst(Ptr<Section> parent) {
+    OptPtr<StoreInst> Parser::parseStoreInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstStore);
 
         OptPtr<Value<>> value = this->parseValue();

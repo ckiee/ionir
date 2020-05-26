@@ -53,11 +53,11 @@ namespace ionir {
         //
     }
 
-    void Pass::visitSection(Ptr<Section> node) {
+    void Pass::visitBasicBlock(Ptr<BasicBlock> node) {
         //
     }
 
-    void Pass::visitBlock(Ptr<Block> node) {
+    void Pass::visitFunctionBody(Ptr<FunctionBody> node) {
         //
     }
 

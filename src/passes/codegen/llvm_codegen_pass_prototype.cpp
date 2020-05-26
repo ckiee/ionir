@@ -49,7 +49,7 @@ namespace ionir {
                 throw std::runtime_error("Re-definition of function with a different amount arguments");
             }
         }
-            // Otherwise, function will be created.
+        // Otherwise, function will be created.
         else {
             for (uint32_t i = 0; i < argumentCount; ++i) {
                 // TODO: Wrong type.
@@ -117,7 +117,7 @@ namespace ionir {
         this->function = function;
 
         // Visit the function's body.
-        this->visitBlock(node->getBody());
+        this->visitFunctionBody(node->getBody());
 
         // TODO: Verify the resulting LLVM function (through LLVM).
 

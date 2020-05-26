@@ -27,20 +27,20 @@ namespace ionir {
         this->condition = condition;
     }
 
-    PtrRef<Section> BranchInst::getBodyRef() const {
+    PtrRef<BasicBlock> BranchInst::getBodyRef() const {
         return this->bodySectionRef;
     }
 
-    void BranchInst::setBodyRef(PtrRef<Section> bodyRef) {
+    void BranchInst::setBodyRef(PtrRef<BasicBlock> bodyRef) {
         this->bodySectionRef = bodyRef;
         this->bodySectionRef->setOwner(this->getPtr());
     }
 
-    PtrRef<Section> BranchInst::getOtherwiseRef() const {
+    PtrRef<BasicBlock> BranchInst::getOtherwiseRef() const {
         return this->otherwiseSectionRef;
     }
 
-    void BranchInst::setOtherwiseRef(PtrRef<Section> otherwiseRef) {
+    void BranchInst::setOtherwiseRef(PtrRef<BasicBlock> otherwiseRef) {
         this->otherwiseSectionRef = otherwiseRef;
         this->otherwiseSectionRef->setOwner(this->getPtr());
     }

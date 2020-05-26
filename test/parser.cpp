@@ -127,7 +127,7 @@ TEST(ParserTest, ParseEmptyBlock) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    auto block = parser.parseBlock(nullptr);
+    auto block = parser.parseFunctionBody(nullptr);
 
     EXPECT_TRUE(Util::hasValue(block));
     EXPECT_TRUE(block->get()->getSymbolTable()->isEmpty());
@@ -184,7 +184,7 @@ TEST(ParserTest, ParseEmptyFunction) {
     EXPECT_FALSE(function->get()->verify());
 
     // Abstract the function's body block.
-    Ptr<Block> body = function->get()->getBody();
+    Ptr<FunctionBody> body = function->get()->getBody();
 
     /**
      * The function's body should not contain any section(s),
@@ -224,13 +224,13 @@ TEST(ParserTest, ParseFunction) {
     EXPECT_TRUE(function->get()->verify());
 
     // Abstract the function's body block.
-    Ptr<Block> body = function->get()->getBody();
+    Ptr<FunctionBody> body = function->get()->getBody();
 
     /**
      * The function's body block should contain the entry
      * section.
      */
-    EXPECT_TRUE(body->hasEntrySection());
+    EXPECT_TRUE(body->hasEntryBasicBlock());
 }
 
 TEST(ParserTest, ParseAllocaInst) {

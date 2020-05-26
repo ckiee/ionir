@@ -37,7 +37,7 @@ TEST(TypeCheckPassTest, Run) {
 
     prototype->setReturnType(TypeFactory::typeVoid());
 
-    Ptr<Section> entrySection = *function->get()->getBody()->getEntrySection();
+    Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
     InstBuilder instBuilder = InstBuilder(entrySection);
 
     instBuilder.createReturn();

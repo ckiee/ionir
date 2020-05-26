@@ -111,7 +111,7 @@ namespace ionir {
         return std::make_shared<Global>(*type, *id);
     }
 
-    OptPtr<Section> Parser::parseSection(Ptr<Block> parent) {
+    OptPtr<BasicBlock> Parser::parseSection(Ptr<FunctionBody> parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolAt))
 
         std::optional<std::string> id = this->parseId();
@@ -121,28 +121,28 @@ namespace ionir {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         // Determine the section's kind.
-        SectionKind kind = SectionKind::Label;
+        BasicBlockKind kind = BasicBlockKind::Label;
 
         // TODO: Id cannot possibly start with the internal prefix since parseId() does not support '.' on an id!
 
-        if (*id == Const::sectionEntryId) {
-            kind = SectionKind::Entry;
+        if (*id == Const::basicBlockEntryId) {
+            kind = BasicBlockKind::Entry;
         }
-        else if (Util::stringStartsWith(*id, Const::sectionInternalPrefix)) {
-            kind = SectionKind::Internal;
+        else if (Util::stringStartsWith(*id, Const::basicBlockInternalPrefix)) {
+            kind = BasicBlockKind::Internal;
         }
 
-        Ptr<Section> section = std::make_shared<Section>(SectionOpts{
+        Ptr<BasicBlock> basicBlock = std::make_shared<BasicBlock>(BasicBlockOpts{
             parent,
             kind,
             *id
         });
 
         std::vector<Ptr<Inst>> insts = {};
-        PtrSymbolTable<Inst> symbolTable = section->getSymbolTable();
+        PtrSymbolTable<Inst> symbolTable = basicBlock->getSymbolTable();
 
         while (!this->is(TokenKind::SymbolBraceR) && !this->is(TokenKind::SymbolAt)) {
-            OptPtr<Inst> inst = this->parseInst(section);
+            OptPtr<Inst> inst = this->parseInst(basicBlock);
 
             IONIR_PARSER_ASSURE(inst)
 
@@ -160,31 +160,31 @@ namespace ionir {
         }
 
         this->stream.skip();
-        section->setInsts(insts);
+        basicBlock->setInsts(insts);
 
-        return section;
+        return basicBlock;
     }
 
-    OptPtr<Block> Parser::parseBlock(Ptr<Function> parent) {
+    OptPtr<FunctionBody> Parser::parseFunctionBody(Ptr<Function> parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
-        Ptr<Block> block = std::make_shared<Block>(parent);
-        PtrSymbolTable<Section> sections = std::make_shared<SymbolTable<Ptr<Section>>>();
+        Ptr<FunctionBody> functionBody = std::make_shared<FunctionBody>(parent);
+        PtrSymbolTable<BasicBlock> basicBlocks = std::make_shared<SymbolTable<Ptr<BasicBlock>>>();
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            OptPtr<Section> section = this->parseSection(block);
+            OptPtr<BasicBlock> basicBlock = this->parseSection(functionBody);
 
-            IONIR_PARSER_ASSURE(section)
+            IONIR_PARSER_ASSURE(basicBlock)
 
-            sections->insert(section->get()->getId(), *section);
+            basicBlocks->insert(basicBlock->get()->getId(), *basicBlock);
         }
 
-        block->setSymbolTable(sections);
+        functionBody->setSymbolTable(basicBlocks);
 
         // Skip over right brace token.
         this->stream.skip();
 
-        return block;
+        return functionBody;
     }
 
     OptPtr<Module> Parser::parseModule() {

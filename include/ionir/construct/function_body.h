@@ -7,16 +7,16 @@
 #include <ionir/misc/type_factory.h>
 #include <ionir/tracking/scope_anchor.h>
 #include "child_construct.h"
-#include "section.h"
+#include "basic_block.h"
 
 namespace ionir {
     class Pass;
 
     class Function;
 
-    class Block : public ChildConstruct<Function>, public ScopeAnchor<Section> {
+    class FunctionBody : public ChildConstruct<Function>, public ScopeAnchor<BasicBlock> {
     public:
-        explicit Block(Ptr<Function> parent, PtrSymbolTable<Section> symbolTable = TypeFactory::makePtrSymbolTable<Section>());
+        explicit FunctionBody(Ptr<Function> parent, PtrSymbolTable<BasicBlock> symbolTable = TypeFactory::makePtrSymbolTable<BasicBlock>());
 
         void accept(Pass &visitor) override;
 
@@ -24,10 +24,10 @@ namespace ionir {
 
         bool verify() override;
 
-        OptPtr<Section> getEntrySection();
+        OptPtr<BasicBlock> findEntryBasicBlock();
 
-        bool hasEntrySection();
+        bool hasEntryBasicBlock();
 
-        void insertSection(Ptr<Section> section);
+        void insertBasicBlock(Ptr<BasicBlock> basicBlock);
     };
 }

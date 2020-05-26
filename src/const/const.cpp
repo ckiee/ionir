@@ -5,9 +5,9 @@
 namespace ionir {
     Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};
 
-    const std::string Const::sectionInternalPrefix = ".";
+    const std::string Const::basicBlockInternalPrefix = ".";
 
-    const std::string Const::sectionEntryId = "entry";
+    const std::string Const::basicBlockEntryId = "entry";
 
     std::map<TokenKind, int> Const::operatorPrecedence = {
         {TokenKind::OperatorAdd, 20}, {TokenKind::OperatorSub, 20},

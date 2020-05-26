@@ -17,9 +17,9 @@ namespace ionir {
         static Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
 
     public:
-        static const std::string sectionInternalPrefix;
+        static const std::string basicBlockInternalPrefix;
 
-        static const std::string sectionEntryId;
+        static const std::string basicBlockEntryId;
 
         static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 

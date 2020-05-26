@@ -74,7 +74,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordFunction))
 
         OptPtr<Prototype> prototype = this->parsePrototype();
-        OptPtr<Block> body = this->parseBlock(nullptr);
+        OptPtr<FunctionBody> body = this->parseFunctionBody(nullptr);
 
         IONIR_PARSER_ASSURE(prototype)
         IONIR_PARSER_ASSURE(body)

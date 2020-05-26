@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Function::Function(Ptr<Prototype> prototype, Ptr<Block> body)
+    Function::Function(Ptr<Prototype> prototype, Ptr<FunctionBody> body)
         : Construct(ConstructKind::Function), prototype(prototype), body(body) {
         //
     }
@@ -25,11 +25,11 @@ namespace ionir {
         this->prototype = prototype;
     }
 
-    Ptr<Block> Function::getBody() const noexcept {
+    Ptr<FunctionBody> Function::getBody() const noexcept {
         return this->body;
     }
 
-    void Function::setBody(Ptr<Block> body) noexcept {
+    void Function::setBody(Ptr<FunctionBody> body) noexcept {
         this->body = body;
     }
 

@@ -3,6 +3,6 @@
 
 namespace ionir {
     std::string NameMangler::internal(std::string id) {
-        return Const::sectionInternalPrefix + id;
+        return Const::basicBlockInternalPrefix + id;
     }
 }

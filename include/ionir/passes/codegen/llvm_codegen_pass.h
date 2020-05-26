@@ -18,7 +18,7 @@
 #include <ionir/construct/construct.h>
 #include <ionir/construct/function.h>
 #include <ionir/construct/type.h>
-#include <ionir/construct/block.h>
+#include <ionir/construct/function_body.h>
 #include <ionir/construct/extern.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/global.h>
@@ -47,7 +47,7 @@ namespace ionir {
 
         Stack<llvm::IRBuilder<>> builderTracker;
 
-        std::map<Ptr<Construct>, llvm::Value *> emittedEntities;
+        ScopeList<Ptr<Construct>, llvm::Value *> emittedEntities;
 
         /**
          * Ensure that the builder is instantiated, otherwise
@@ -84,9 +84,9 @@ namespace ionir {
 
         void visitExtern(Ptr<Extern> node) override;
 
-        void visitSection(Ptr<Section> node) override;
+        void visitBasicBlock(Ptr<BasicBlock> node) override;
 
-        void visitBlock(Ptr<Block> node) override;
+        void visitFunctionBody(Ptr<FunctionBody> node) override;
 
         void visitPrototype(Ptr<Prototype> node) override;
 

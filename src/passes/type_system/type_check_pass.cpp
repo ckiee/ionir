@@ -4,16 +4,16 @@ namespace ionir {
     void TypeCheckPass::visitFunction(Ptr<Function> node) {
         Pass::visitFunction(node);
 
-        OptPtr<Section> entrySection = node->getBody()->getEntrySection();
+        OptPtr<BasicBlock> entryBasicBlock = node->getBody()->findEntryBasicBlock();
 
-        if (!Util::hasValue(entrySection)) {
-            throw std::runtime_error("Entry section for function body is not set");
+        if (!Util::hasValue(entryBasicBlock)) {
+            throw std::runtime_error("Entry basic block for function body is not set");
         }
 
-        std::vector<Ptr<Inst>> insts = entrySection->get()->getInsts();
-        OptPtr<Inst> terminalInst = entrySection->get()->findTerminalInst();
+        std::vector<Ptr<Inst>> insts = entryBasicBlock->get()->getInsts();
+        OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
 
-        // All sections must contain at least a terminal instruction.
+        // All basic blocks must contain at least a terminal instruction.
         if (insts.empty() || !Util::hasValue(terminalInst)) {
             throw std::runtime_error("Section must contain at least a terminal instruction");
         }

@@ -1,13 +1,15 @@
 #include <ionir/passes/semantic/name_resolution_pass.h>
 
 namespace ionir {
-    NameResolutionPass::NameResolutionPass(Ptr<StackTrace> stackTrace) : stackTrace(stackTrace), scopeStack() {
+    NameResolutionPass::NameResolutionPass(Ptr<StackTrace> stackTrace) : stackTrace(stackTrace), scope() {
         //
     }
 
     void NameResolutionPass::visitModule(Ptr<Module> node) {
         Pass::visitModule(node);
-        this->scopeStack.push(node->getSymbolTable());
+
+        // TODO: Is it push_back() or push_front()?
+        this->scope.push_back(node->getSymbolTable());
     }
 
     void NameResolutionPass::visitRef(PtrRef<> node) {
@@ -21,21 +23,21 @@ namespace ionir {
         Ptr<Construct> owner = node->getOwner();
         std::string id = node->getId();
 
-        // TODO: CRITICAL: Recently solved the problem which was that it was using the section's own symbol table instead of the function's to find the section (Dummy mistake). Verify that this is actually how it should be.
+        // TODO: CRITICAL: Recently solved the problem which was that it was using the basic block's own symbol table instead of the function's to find the basic block (Dummy mistake). Verify that this is actually how it should be.
 
         switch (owner->getConstructKind()) {
             case ConstructKind::Inst: {
                 Ptr<Inst> inst = owner->dynamicCast<Inst>();
-                Ptr<Section> section = inst->getParent();
-                PtrSymbolTable<Section> functionSymbolTable = section->getParent()->getSymbolTable();
-                PtrSymbolTable<Inst> sectionSymbolTable = section->getSymbolTable();
+                Ptr<BasicBlock> basicBlock = inst->getParent();
+                PtrSymbolTable<BasicBlock> functionSymbolTable = basicBlock->getParent()->getSymbolTable();
+                PtrSymbolTable<Inst> basicBlockSymbolTable = basicBlock->getSymbolTable();
 
                 /**
                  * Check on the section's symbol table. It should take precedence
                  * before the function's symbol table.
                  */
-                if (sectionSymbolTable->contains(id)) {
-                    node->resolve((*sectionSymbolTable)[id]);
+                if (basicBlockSymbolTable->contains(id)) {
+                    node->resolve((*basicBlockSymbolTable)[id]);
 
                     return;
                 }
@@ -64,14 +66,14 @@ namespace ionir {
 
         // TODO: ScopeStack should be pushed & popped, but its never popped.
         // TODO: CRITICAL: Throwing SEGFAULT because node is NULL (casting fails).
-//        this->scopeStack.push(node->getSymbolTable());
+//        this->scopeStack.add(node->getSymbolTable());
     }
 
     Ptr<StackTrace> NameResolutionPass::getStackTrace() const {
         return this->stackTrace;
     }
 
-    const ScopeStack &NameResolutionPass::getScopeStack() const {
-        return this->scopeStack;
+    const std::list<PtrSymbolTable<Construct>> &NameResolutionPass::getScope() const {
+        return this->scope;
     }
 }

@@ -7,7 +7,7 @@
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
-    class Section;
+    class BasicBlock;
 
     struct AllocaInstOpts : InstOpts {
         std::string yieldId;

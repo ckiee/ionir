@@ -3,34 +3,34 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Section::Section(SectionOpts opts)
+    BasicBlock::BasicBlock(BasicBlockOpts opts)
         : ChildConstruct(opts.parent, ConstructKind::Section), ScopeAnchor<Inst>(), kind(opts.kind), Named(opts.id), insts(opts.insts) {
         //
     }
 
-    void Section::accept(Pass &visitor) {
+    void BasicBlock::accept(Pass &visitor) {
         visitor.visitScopeAnchor(this->dynamicCast<ScopeAnchor<>>());
-        visitor.visitSection(this->dynamicCast<Section>());
+        visitor.visitBasicBlock(this->dynamicCast<BasicBlock>());
     }
 
-    Ast Section::getChildNodes() const {
+    Ast BasicBlock::getChildNodes() const {
         return Construct::convertChildren(this->insts);
     }
 
-    SectionKind Section::getKind() const noexcept {
+    BasicBlockKind BasicBlock::getKind() const noexcept {
         return this->kind;
     }
 
-    std::vector<Ptr<Inst>> &Section::getInsts() noexcept {
+    std::vector<Ptr<Inst>> &BasicBlock::getInsts() noexcept {
         return this->insts;
     }
 
     // TODO: SymbolTable must be re-populated after changing insts vector.
-    void Section::setInsts(std::vector<Ptr<Inst>> insts) {
+    void BasicBlock::setInsts(std::vector<Ptr<Inst>> insts) {
         this->insts = insts;
     }
 
-    void Section::insertInst(Ptr<Inst> inst) {
+    void BasicBlock::insertInst(Ptr<Inst> inst) {
         this->insts.push_back(inst);
 
         std::optional<std::string> id = Util::getInstId(inst);
@@ -41,7 +41,7 @@ namespace ionir {
         }
     }
 
-    uint32_t Section::relocateInsts(Section &target, const uint32_t from) {
+    uint32_t BasicBlock::relocateInsts(BasicBlock &target, const uint32_t from) {
         uint32_t count = 0;
 
         for (uint32_t i = from; i < this->insts.size(); i++) {
@@ -53,15 +53,15 @@ namespace ionir {
         return count;
     }
 
-    std::optional<uint32_t> Section::locate(Ptr<Inst> inst) const {
+    std::optional<uint32_t> BasicBlock::locate(Ptr<Inst> inst) const {
         return Util::locateInVector<Ptr<Inst>>(this->insts, inst);
     }
 
-    Ptr<InstBuilder> Section::createBuilder() {
-        return std::make_shared<InstBuilder>(this->dynamicCast<Section>());
+    Ptr<InstBuilder> BasicBlock::createBuilder() {
+        return std::make_shared<InstBuilder>(this->dynamicCast<BasicBlock>());
     }
 
-    OptPtr<Inst> Section::findTerminalInst() const {
+    OptPtr<Inst> BasicBlock::findTerminalInst() const {
         for (const auto inst : this->insts) {
             if (inst->isTerminal()) {
                 return inst;

@@ -3,16 +3,16 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    void AstBuilder::setSectionBuffer(OptPtr<Section> sectionBuffer) {
-        if (!sectionBuffer.has_value()) {
-            this->sectionBuffer = std::nullopt;
+    void AstBuilder::setBasicBlockBuffer(OptPtr<BasicBlock> basicBlockBuffer) {
+        if (!basicBlockBuffer.has_value()) {
+            this->basicBlockBuffer = std::nullopt;
             this->instBuilder = std::nullopt;
 
             return;
         }
 
-        this->sectionBuffer = sectionBuffer;
-        this->instBuilder = std::make_shared<InstBuilder>(*this->sectionBuffer);
+        this->basicBlockBuffer = basicBlockBuffer;
+        this->instBuilder = std::make_shared<InstBuilder>(*this->basicBlockBuffer);
     }
 
     void AstBuilder::require(OptPtr<Construct> construct) const {
@@ -30,21 +30,21 @@ namespace ionir {
         this->require(this->functionBuffer);
     }
 
-    void AstBuilder::requireBlock() const {
+    void AstBuilder::requireFunctionBody() const {
         this->requireFunction();
         this->require(this->blockBuffer);
     }
 
-    void AstBuilder::requireSection() const {
-        this->requireBlock();
-        this->require(this->sectionBuffer);
+    void AstBuilder::requireBasicBlock() const {
+        this->requireFunctionBody();
+        this->require(this->basicBlockBuffer);
     }
 
     void AstBuilder::clearBuffers() {
         this->moduleBuffer = std::nullopt;
         this->functionBuffer = std::nullopt;
         this->blockBuffer = std::nullopt;
-        setSectionBuffer(std::nullopt);
+        setBasicBlockBuffer(std::nullopt);
     }
 
     AstBuilder::AstBuilder() : ast({}) {
@@ -68,16 +68,16 @@ namespace ionir {
     AstBuilder &AstBuilder::function(std::string id) {
         this->requireModule();
 
-        Ptr<Block> block = std::make_shared<Block>(nullptr);
+        Ptr<FunctionBody> block = std::make_shared<FunctionBody>(nullptr);
 
-        Ptr<Section> entrySection = std::make_shared<Section>(SectionOpts{
+        Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
             block,
-            SectionKind::Entry,
-            Const::sectionEntryId
+            BasicBlockKind::Entry,
+            Const::basicBlockEntryId
         });
 
-        block->insertSection(entrySection);
-        this->setSectionBuffer(entrySection);
+        block->insertBasicBlock(entrySection);
+        this->setBasicBlockBuffer(entrySection);
 
         Ptr<Type> returnType = std::make_shared<VoidType>();
         Ptr<Args> args = std::make_shared<Args>();
@@ -99,7 +99,7 @@ namespace ionir {
     }
 
     AstBuilder &AstBuilder::instAlloca(std::string id, Ptr<Type> type) {
-        this->requireSection();
+        this->requireBasicBlock();
         this->instBuilder->get()->createAlloca(id, type);
 
         return *this;

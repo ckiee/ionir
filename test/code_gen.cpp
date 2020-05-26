@@ -33,22 +33,22 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     Ptr<Prototype> prototype =
         std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType);
 
-    Ptr<Block> body = std::make_shared<Block>(nullptr);
+    Ptr<FunctionBody> body = std::make_shared<FunctionBody>(nullptr);
 
-    Ptr<Section> section = std::make_shared<Section>(SectionOpts{
+    Ptr<BasicBlock> section = std::make_shared<BasicBlock>(BasicBlockOpts{
         body,
-        SectionKind::Entry,
+        BasicBlockKind::Entry,
         "entry"
     });
 
     // TODO: Fix mumbo-jumbo debugging code.
     // --------------------------
 
-    typedef PtrSymbolTable<Section> t;
-    typedef SymbolTable<Ptr<Section>> tt;
+    typedef PtrSymbolTable<BasicBlock> t;
+    typedef SymbolTable<Ptr<BasicBlock>> tt;
 
-    auto sectionsVal = std::map<std::string, Ptr<Section>>{
-        {Const::sectionEntryId, section}
+    auto sectionsVal = std::map<std::string, Ptr<BasicBlock>>{
+        {Const::basicBlockEntryId, section}
     };
 
     t sectionsMap = std::make_shared<tt>(sectionsVal);
@@ -121,15 +121,15 @@ TEST(CodeGenTest, VisitBranchInst) {
 
     passManager.registerPass(std::make_shared<NameResolutionPass>());
 
-    Ptr<Section> body = std::make_shared<Section>(SectionOpts{
+    Ptr<BasicBlock> body = std::make_shared<BasicBlock>(BasicBlockOpts{
         nullptr,
-        SectionKind::Label,
+        BasicBlockKind::Label,
         "if_body",
         {}
     });
 
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
-    PtrRef<Section> bodySectionRef = std::make_shared<Ref<Section>>("if_body", nullptr, body);
+    PtrRef<BasicBlock> bodySectionRef = std::make_shared<Ref<BasicBlock>>("if_body", nullptr, body);
 
     // TODO: Use some sort of factory design pattern.
     auto branchInst = std::make_shared<BranchInst>(BranchInstOpts{

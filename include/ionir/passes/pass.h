@@ -19,7 +19,7 @@
 #include <ionir/construct/variable_ref.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/extern.h>
-#include <ionir/construct/block.h>
+#include <ionir/construct/function_body.h>
 #include <ionir/construct/type.h>
 #include <ionir/construct/global.h>
 #include <ionir/construct/module.h>
@@ -49,9 +49,9 @@ namespace ionir {
 
         virtual void visitExtern(Ptr<Extern> node);
 
-        virtual void visitSection(Ptr<Section> node);
+        virtual void visitBasicBlock(Ptr<BasicBlock> node);
 
-        virtual void visitBlock(Ptr<Block> node);
+        virtual void visitFunctionBody(Ptr<FunctionBody> node);
 
         virtual void visitPrototype(Ptr<Prototype> node);
 

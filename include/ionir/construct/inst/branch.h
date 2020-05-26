@@ -8,23 +8,23 @@
 namespace ionir {
     class Pass;
 
-    class Section;
+    class BasicBlock;
 
     struct BranchInstOpts : InstOpts {
         Ptr<Expr<>> condition;
 
-        PtrRef<Section> bodyRef;
+        PtrRef<BasicBlock> bodyRef;
 
-        PtrRef<Section> otherwiseRef;
+        PtrRef<BasicBlock> otherwiseRef;
     };
 
     class BranchInst : public Inst {
     private:
         Ptr<Expr<>> condition;
 
-        PtrRef<Section> bodySectionRef;
+        PtrRef<BasicBlock> bodySectionRef;
 
-        PtrRef<Section> otherwiseSectionRef;
+        PtrRef<BasicBlock> otherwiseSectionRef;
 
     public:
         explicit BranchInst(BranchInstOpts opts);
@@ -37,12 +37,12 @@ namespace ionir {
 
         void setCondition(Ptr<Expr<>> condition);
 
-        PtrRef<Section> getBodyRef() const;
+        PtrRef<BasicBlock> getBodyRef() const;
 
-        void setBodyRef(PtrRef<Section> bodyRef);
+        void setBodyRef(PtrRef<BasicBlock> bodyRef);
 
-        PtrRef<Section> getOtherwiseRef() const;
+        PtrRef<BasicBlock> getOtherwiseRef() const;
 
-        void setOtherwiseRef(PtrRef<Section> otherwiseRef);
+        void setOtherwiseRef(PtrRef<BasicBlock> otherwiseRef);
     };
 }

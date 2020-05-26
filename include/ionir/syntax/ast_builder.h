@@ -2,7 +2,7 @@
 
 #include <string>
 #include <ionir/construct/function.h>
-#include <ionir/construct/block.h>
+#include <ionir/construct/function_body.h>
 #include <ionir/construct/module.h>
 #include "ionir/misc/inst_builder.h"
 
@@ -15,13 +15,13 @@ namespace ionir {
 
         OptPtr<Function> functionBuffer;
 
-        OptPtr<Block> blockBuffer;
+        OptPtr<FunctionBody> blockBuffer;
 
-        OptPtr<Section> sectionBuffer;
+        OptPtr<BasicBlock> basicBlockBuffer;
 
         OptPtr<InstBuilder> instBuilder;
 
-        void setSectionBuffer(OptPtr<Section> sectionBuffer);
+        void setBasicBlockBuffer(OptPtr<BasicBlock> basicBlockBuffer);
 
     protected:
         void require(OptPtr<Construct> construct) const;
@@ -30,9 +30,9 @@ namespace ionir {
 
         void requireFunction() const;
 
-        void requireBlock() const;
+        void requireFunctionBody() const;
 
-        void requireSection() const;
+        void requireBasicBlock() const;
 
         void clearBuffers();
 

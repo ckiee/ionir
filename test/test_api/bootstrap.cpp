@@ -38,19 +38,19 @@ namespace ionir::test::bootstrap {
         Ptr<VoidType> returnType = TypeFactory::typeVoid();
         Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType);
 
-        Ptr<Section> entrySection = std::make_shared<Section>(SectionOpts{
+        Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
             nullptr,
-            SectionKind::Entry,
-            Const::sectionEntryId,
+            BasicBlockKind::Entry,
+            Const::basicBlockEntryId,
             insts,
         });
 
         // TODO: Fix mumbo-jumbo debugging code. -------------
 
-        typedef PtrSymbolTable<Section> t;
-        typedef SymbolTable<Ptr<Section>> tt;
+        typedef PtrSymbolTable<BasicBlock> t;
+        typedef SymbolTable<Ptr<BasicBlock>> tt;
 
-        auto t1 = std::map<std::string, Ptr<Section>>{
+        auto t1 = std::map<std::string, Ptr<BasicBlock>>{
             {entrySection->getId(), entrySection}
         };
 
@@ -59,7 +59,7 @@ namespace ionir::test::bootstrap {
         // --------------------
 
         Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);
-        Ptr<Block> body = std::make_shared<Block>(function, sections);
+        Ptr<FunctionBody> body = std::make_shared<FunctionBody>(function, sections);
 
         function->setBody(body);
 

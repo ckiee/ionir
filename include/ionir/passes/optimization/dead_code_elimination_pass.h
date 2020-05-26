@@ -5,6 +5,6 @@
 namespace ionir {
     class DeadCodeEliminationPass : public Pass {
     public:
-        void visitSection(Ptr<Section> node) override;
+        void visitBasicBlock(Ptr<BasicBlock> node) override;
     };
 }

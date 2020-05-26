@@ -22,8 +22,8 @@
 #include <ionir/construct/global.h>
 #include <ionir/construct/pseudo/args.h>
 #include <ionir/construct/prototype.h>
-#include <ionir/construct/block.h>
-#include <ionir/construct/section.h>
+#include <ionir/construct/function_body.h>
+#include <ionir/construct/basic_block.h>
 #include <ionir/construct/module.h>
 #include <ionir/reporting/notice_factory.h>
 #include <ionir/misc/helpers.h>
@@ -107,26 +107,26 @@ namespace ionir {
 
         OptPtr<Expr<>> parseBinaryExprRightSide(Ptr<Expr<>> leftSide, int minimalPrecedence);
 
-        OptPtr<Section> parseSection(Ptr<Block> parent);
+        OptPtr<BasicBlock> parseSection(Ptr<FunctionBody> parent);
 
-        OptPtr<Block> parseBlock(Ptr<Function> parent);
+        OptPtr<FunctionBody> parseFunctionBody(Ptr<Function> parent);
 
-        OptPtr<AllocaInst> parseAllocaInst(Ptr<Section> parent);
+        OptPtr<AllocaInst> parseAllocaInst(Ptr<BasicBlock> parent);
 
-        OptPtr<ReturnInst> parseReturnInst(Ptr<Section> parent);
+        OptPtr<ReturnInst> parseReturnInst(Ptr<BasicBlock> parent);
 
-        OptPtr<BranchInst> parseBranchInst(Ptr<Section> parent);
+        OptPtr<BranchInst> parseBranchInst(Ptr<BasicBlock> parent);
 
-        OptPtr<CallInst> parseCallInst(Ptr<Section> parent);
+        OptPtr<CallInst> parseCallInst(Ptr<BasicBlock> parent);
 
-        OptPtr<StoreInst> parseStoreInst(Ptr<Section> parent);
+        OptPtr<StoreInst> parseStoreInst(Ptr<BasicBlock> parent);
 
         /**
          * Parses an instruction, consuming its identifier.
          * Invokes the corresponding parser depending on its
          * identifier.
          */
-        OptPtr<Inst> parseInst(Ptr<Section> parent);
+        OptPtr<Inst> parseInst(Ptr<BasicBlock> parent);
 
         OptPtr<Module> parseModule();
 

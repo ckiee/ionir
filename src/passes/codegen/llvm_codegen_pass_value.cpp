@@ -30,6 +30,8 @@ namespace ionir {
         // Finally, create the LLVM value constant.
         llvm::Constant *value = llvm::ConstantInt::get(type, apInt);
 
+        this->emittedEntities.front()[node] = value;
+
         // Push the value onto the value stack.
         this->valueStack.push(value);
     }
@@ -40,6 +42,7 @@ namespace ionir {
         llvm::Type *charType = llvm::Type::getInt8Ty(*this->context);
         llvm::Constant *value = llvm::ConstantInt::get(charType, node->getValue());
 
+        this->emittedEntities.front()[node] = value;
         this->valueStack.push(value);
     }
 
@@ -47,9 +50,9 @@ namespace ionir {
         this->requireBuilder();
 
         // Create the global string pointer.
-        llvm::Constant *value =
-            this->builder->CreateGlobalStringPtr(node->getValue());
+        llvm::Constant *value = this->builder->CreateGlobalStringPtr(node->getValue());
 
+        this->emittedEntities.front()[node] = value;
         // Push the value onto the value stack.
         this->valueStack.push(value);
     }
@@ -58,6 +61,8 @@ namespace ionir {
         // Create the boolean type along with the LLVM value.
         llvm::IntegerType *type = llvm::Type::getInt1Ty(*this->context);
         llvm::Constant *value = llvm::ConstantInt::get(type, llvm::APInt(1, node->getValue(), false));
+
+        this->emittedEntities.front()[node] = value;
 
         // Push the resulting boolean constant onto the stack.
         this->valueStack.push(value);

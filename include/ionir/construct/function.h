@@ -5,7 +5,7 @@
 #include <ionir/tracking/symbol_table.h>
 #include "construct.h"
 #include "prototype.h"
-#include "block.h"
+#include "function_body.h"
 
 namespace ionir {
     class Pass;
@@ -14,12 +14,12 @@ namespace ionir {
     private:
         Ptr<Prototype> prototype;
 
-        Ptr<Block> body;
+        Ptr<FunctionBody> body;
 
         PtrSymbolTable<LocalVariableDescriptor> localVariables;
 
     public:
-        Function(Ptr<Prototype> prototype, Ptr<Block> body);
+        Function(Ptr<Prototype> prototype, Ptr<FunctionBody> body);
 
         void accept(Pass &visitor) override;
 
@@ -29,9 +29,9 @@ namespace ionir {
 
         void setPrototype(Ptr<Prototype> prototype);
 
-        Ptr<Block> getBody() const noexcept;
+        Ptr<FunctionBody> getBody() const noexcept;
 
-        void setBody(Ptr<Block> body) noexcept;
+        void setBody(Ptr<FunctionBody> body) noexcept;
 
         PtrSymbolTable<LocalVariableDescriptor> getLocalVariables() const;
 

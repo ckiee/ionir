@@ -1,33 +1,33 @@
 #include <ionir/misc/inst_builder.h>
 
 namespace ionir {
-    InstBuilder::InstBuilder(Ptr<Section> section) : section(section) {
+    InstBuilder::InstBuilder(Ptr<BasicBlock> basicBlock) : basicBlock(basicBlock) {
         //
     }
 
-    Ptr<Section> InstBuilder::getSection() const {
-        return this->section;
+    Ptr<BasicBlock> InstBuilder::getSection() const {
+        return this->basicBlock;
     }
 
     void InstBuilder::insert(Ptr<Inst> inst) {
-        this->section->getInsts().push_back(inst);
+        this->basicBlock->getInsts().push_back(inst);
     }
 
     Ptr<AllocaInst> InstBuilder::createAlloca(std::string id, Ptr<Type> type) {
         Ptr<AllocaInst> allocaInst = this->make<AllocaInst>(AllocaInstOpts{
-            this->section,
+            this->basicBlock,
             id,
             type
         });
 
-        this->section->insertInst(allocaInst);
+        this->basicBlock->insertInst(allocaInst);
 
         return allocaInst;
     }
 
-    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr<>> condition, PtrRef<Section> bodySection, PtrRef<Section> otherwiseSection) {
+    Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr<>> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection) {
         return this->make<BranchInst>(BranchInstOpts{
-            this->section,
+            this->basicBlock,
             condition,
             bodySection,
             otherwiseSection
@@ -35,8 +35,8 @@ namespace ionir {
     }
 
     Ptr<BranchInst> InstBuilder::createBranch(Ptr<Expr<>> condition, std::string bodySectionId, std::string otherwiseSectionId) {
-        PtrRef<Section> bodyBlock = std::make_shared<Ref<Section>>(bodySectionId, nullptr);
-        PtrRef<Section> otherwiseBlock = std::make_shared<Ref<Section>>(otherwiseSectionId, nullptr);
+        PtrRef<BasicBlock> bodyBlock = std::make_shared<Ref<BasicBlock>>(bodySectionId, nullptr);
+        PtrRef<BasicBlock> otherwiseBlock = std::make_shared<Ref<BasicBlock>>(otherwiseSectionId, nullptr);
         Ptr<BranchInst> branchInst = this->createBranch(condition, bodyBlock, otherwiseBlock);
 
         bodyBlock->setOwner(branchInst);
@@ -47,14 +47,14 @@ namespace ionir {
 
     Ptr<ReturnInst> InstBuilder::createReturn(OptPtr<Value<>> value) {
         return this->make<ReturnInst, ReturnInstOpts>(ReturnInstOpts{
-            this->section,
+            this->basicBlock,
             value
         });
     }
 
-    Ptr<CallInst> InstBuilder::createCall(Ptr<Section> section, OptPtrRef<Function> callee, std::optional<std::string> yieldId) {
+    Ptr<CallInst> InstBuilder::createCall(Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee, std::optional<std::string> yieldId) {
         return this->make<CallInst>(CallInstOpts{
-            this->section,
+            this->basicBlock,
             yieldId,
             callee
         });

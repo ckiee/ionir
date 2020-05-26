@@ -67,7 +67,7 @@ namespace ionir {
         this->valueStack.clear();
     }
 
-    void LlvmCodegenPass::visitSection(Ptr<Section> node) {
+    void LlvmCodegenPass::visitBasicBlock(Ptr<BasicBlock> node) {
         // Function buffer must not be null.
         this->requireFunction();
 
@@ -89,10 +89,11 @@ namespace ionir {
             this->valueStack.pop();
         }
 
+        this->emittedEntities.push_front(std::list<ScopeListItem<TKey, TValue>)
         this->valueStack.push(block);
     }
 
-    void LlvmCodegenPass::visitBlock(Ptr<Block> node) {
+    void LlvmCodegenPass::visitFunctionBody(Ptr<FunctionBody> node) {
         // Verify the block before continuing.
         if (!node->verify()) {
             throw std::runtime_error("Block failed to be verified");
@@ -102,7 +103,7 @@ namespace ionir {
          * Retrieve the entry section from the block.
          * At this point, it should be guaranteed to be set.
          */
-        OptPtr<Section> entry = node->getEntrySection();
+        OptPtr<BasicBlock> entry = node->findEntryBasicBlock();
 
         /**
          * Entry section must be set. Redundant check,
@@ -111,12 +112,12 @@ namespace ionir {
          * just to make sure.
          */
         if (!entry.has_value()) {
-            throw std::runtime_error("No entry section exists for block");
+            throw std::runtime_error("No entry basic block exists for block");
         }
 
         // Visit all the block's section(s).
-        for (const auto &[key, section] : node->getSymbolTable()->unwrap()) {
-            this->visitSection(section);
+        for (const auto &[key, basicBlock] : node->getSymbolTable()->unwrap()) {
+            this->visitBasicBlock(basicBlock);
             this->valueStack.pop();
         }
     }
@@ -132,8 +133,7 @@ namespace ionir {
         OptPtr<Value<>> nodeValue = node->getValue();
 
         // Assign value if applicable.
-        // TODO: 'nodeValue' can be NULL and still return .has_value() true.
-        if (nodeValue.has_value()) {
+        if (Util::hasValue(nodeValue)) {
             // Visit global variable value.
             this->visitValue(*nodeValue);
 

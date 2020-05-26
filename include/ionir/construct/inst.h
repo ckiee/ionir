@@ -8,9 +8,9 @@
 namespace ionir {
     class Pass;
 
-    class Section;
+    class BasicBlock;
 
-    typedef ChildConstructOpts<Section> InstOpts;
+    typedef ChildConstructOpts<BasicBlock> InstOpts;
 
     enum class InstKind {
         Alloca,
@@ -26,12 +26,12 @@ namespace ionir {
         Branch
     };
 
-    class Inst : public ChildConstruct<Section> {
+    class Inst : public ChildConstruct<BasicBlock> {
     private:
         InstKind kind;
 
     public:
-        Inst(Ptr<Section> parent, InstKind kind);
+        Inst(Ptr<BasicBlock> parent, InstKind kind);
 
         virtual void accept(Pass &visitor) = 0;
 

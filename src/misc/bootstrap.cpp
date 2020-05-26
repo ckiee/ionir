@@ -16,10 +16,10 @@ namespace ionir {
         return (*module->getSymbolTable())[id]->dynamicCast<Function>();
     }
 
-    Ptr<Section> Bootstrap::section(Ptr<Block> parent, std::string id, SectionKind sectionKind) {
-        return std::make_shared<Section>(SectionOpts{
+    Ptr<BasicBlock> Bootstrap::basicBlock(Ptr<FunctionBody> parent, std::string id, BasicBlockKind basicBlockKind) {
+        return std::make_shared<BasicBlock>(BasicBlockOpts{
             parent,
-            sectionKind,
+            basicBlockKind,
             id
         });
     }

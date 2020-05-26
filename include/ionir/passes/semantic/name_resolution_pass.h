@@ -3,7 +3,7 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
 #include <ionir/reporting/notice.h>
-#include <ionir/tracking/scope_stack.h>
+#include <ionir/tracking/symbol_table.h>
 
 namespace ionir {
     /**
@@ -14,7 +14,7 @@ namespace ionir {
     private:
         Ptr<StackTrace> stackTrace;
 
-        ScopeStack scopeStack;
+        std::list<PtrSymbolTable<Construct>> scope;
 
     public:
         explicit NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
@@ -27,6 +27,6 @@ namespace ionir {
 
         Ptr<StackTrace> getStackTrace() const;
 
-        const ScopeStack &getScopeStack() const;
+        const std::list<PtrSymbolTable<Construct>> &getScope() const;
     };
 }

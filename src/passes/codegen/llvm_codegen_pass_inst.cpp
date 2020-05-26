@@ -18,6 +18,7 @@ namespace ionir {
         llvm::AllocaInst *allocaInst =
             this->builder->CreateAlloca(type, (llvm::Value *)nullptr, *node->getYieldId());
 
+        this->emittedEntities.front()[node] = allocaInst;
         this->valueStack.push(allocaInst);
     }
 
@@ -43,6 +44,7 @@ namespace ionir {
             returnInst = this->builder->CreateRetVoid();
         }
 
+        this->emittedEntities.front()[node] = returnInst;
         this->valueStack.push(returnInst);
     }
 
@@ -56,8 +58,8 @@ namespace ionir {
 
         this->saveBuilder();
 
-        PtrRef<Section> bodyRef = node->getBodyRef();
-        PtrRef<Section> otherwiseRef = node->getOtherwiseRef();
+        PtrRef<BasicBlock> bodyRef = node->getBodyRef();
+        PtrRef<BasicBlock> otherwiseRef = node->getOtherwiseRef();
 
         // Body reference should have been resolved at this point.
         if (!bodyRef->isResolved()) {
@@ -69,8 +71,8 @@ namespace ionir {
         }
 
         // Visit body and otherwise references.
-        this->visitSection(*bodyRef->getValue());
-        this->visitSection(*otherwiseRef->getValue());
+        this->visitBasicBlock(*bodyRef->getValue());
+        this->visitBasicBlock(*otherwiseRef->getValue());
 
         // Pop both reference's values.
         auto *llvmBodyBlock = this->valueStack.popAs<llvm::BasicBlock>();
@@ -81,6 +83,8 @@ namespace ionir {
         // Create the LLVM branch instruction.
         llvm::BranchInst *branchInst =
             this->builder->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
+
+        this->emittedEntities.front()[node] = branchInst;
 
         // Finally, push the resulting branch instruction onto the value stack.
         this->valueStack.push(branchInst);
@@ -107,9 +111,10 @@ namespace ionir {
 
         // TODO: What about arguments?
         // Otherwise, create the LLVM call instruction.
-        this->builder->CreateCall(llvmCallee);
+        llvm::CallInst *callInst = this->builder->CreateCall(llvmCallee);
 
-        // TODO: Push into value stack.
+        this->emittedEntities.front()[node] = callInst;
+        this->valueStack.push(callInst);
     }
 
     void LlvmCodegenPass::visitStoreInst(Ptr<StoreInst> node) {
@@ -145,6 +150,8 @@ namespace ionir {
 
         // Create the LLVM store instruction.
         llvm::StoreInst *storeInst = this->builder->CreateStore(llvmValue, llvmTarget);
+
+        this->emittedEntities.front()[node] = storeInst;
 
         // Finally, push the resulting branch instruction onto the value stack.
         this->valueStack.push(storeInst);

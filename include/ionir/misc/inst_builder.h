@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ionir/construct/inst.h>
-#include <ionir/construct/section.h>
+#include <ionir/construct/basic_block.h>
 #include <ionir/construct/inst/alloca.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>
@@ -11,12 +11,12 @@
 namespace ionir {
     class InstBuilder {
     private:
-        Ptr<Section> section;
+        Ptr<BasicBlock> basicBlock;
 
     public:
-        InstBuilder(Ptr<Section> section);
+        InstBuilder(Ptr<BasicBlock> basicBlock);
 
-        Ptr<Section> getSection() const;
+        Ptr<BasicBlock> getSection() const;
 
         void insert(Ptr<Inst> inst);
 
@@ -33,12 +33,12 @@ namespace ionir {
 
         Ptr<AllocaInst> createAlloca(std::string id, Ptr<Type> type);
 
-        Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, PtrRef<Section> bodySection, PtrRef<Section> otherwiseSection);
+        Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection);
 
         Ptr<BranchInst> createBranch(Ptr<Expr<>> condition, std::string bodySectionId, std::string otherwiseSectionId);
 
         Ptr<ReturnInst> createReturn(OptPtr<Value<>> value = std::nullopt);
 
-        Ptr<CallInst> createCall(Ptr<Section> section, OptPtrRef<Function> callee = std::nullopt, std::optional<std::string> yieldId = std::nullopt);
+        Ptr<CallInst> createCall(Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee = std::nullopt, std::optional<std::string> yieldId = std::nullopt);
     };
 }

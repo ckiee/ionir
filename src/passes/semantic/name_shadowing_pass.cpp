@@ -1,5 +1,5 @@
 #include <string>
-#include <ionir/construct/section.h>
+#include <ionir/construct/basic_block.h>
 #include <ionir/passes/semantic/name_shadowing_pass.h>
 
 namespace ionir {

@@ -1,8 +1,8 @@
 #include <ionir/passes/optimization/dead_code_elimination_pass.h>
 
 namespace ionir {
-    void DeadCodeEliminationPass::visitSection(Ptr<Section> node) {
-        Pass::visitSection(node);
+    void DeadCodeEliminationPass::visitBasicBlock(Ptr<BasicBlock> node) {
+        Pass::visitBasicBlock(node);
         
         std::vector<Ptr<Inst>> insts = node->getInsts();
         bool erase = false;

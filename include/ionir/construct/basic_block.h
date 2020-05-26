@@ -15,31 +15,31 @@
 namespace ionir {
     class Pass;
 
-    class Block;
+    class FunctionBody;
 
     class InstBuilder;
 
-    enum class SectionKind {
+    enum class BasicBlockKind {
         /**
-         * The entry section of a block.
+         * The entry basic block of a function body.
          */
         Entry,
 
         /**
-         * A section defined by the user. Can be jumped to
+         * A basic block defined by the user. Can be jumped to
          * using a goto instruction.
          */
         Label,
 
         /**
-         * A section which forms part of a construct. Cannot be
+         * A basic block which forms part of a construct. Cannot be
          * directly accessed by the user.
          */
         Internal
     };
 
-    struct SectionOpts : ChildConstructOpts<Block> {
-        SectionKind kind;
+    struct BasicBlockOpts : ChildConstructOpts<FunctionBody> {
+        BasicBlockKind kind;
 
         std::string id;
 
@@ -49,20 +49,20 @@ namespace ionir {
     };
 
     // TODO: Must be verified to contain a single terminal instruction at the end.
-    class Section : public ChildConstruct<Block>, public ScopeAnchor<Inst>, public Named {
+    class BasicBlock : public ChildConstruct<FunctionBody>, public ScopeAnchor<Inst>, public Named {
     private:
-        SectionKind kind;
+        BasicBlockKind kind;
 
         std::vector<Ptr<Inst>> insts;
 
     public:
-        explicit Section(SectionOpts opts);
+        explicit BasicBlock(BasicBlockOpts opts);
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() const override;
 
-        SectionKind getKind() const noexcept;
+        BasicBlockKind getKind() const noexcept;
 
         std::vector<Ptr<Inst>> &getInsts() noexcept;
 
@@ -70,12 +70,11 @@ namespace ionir {
 
         void insertInst(Ptr<Inst> inst);
 
-        uint32_t relocateInsts(Section &target, uint32_t from = 0);
+        uint32_t relocateInsts(BasicBlock &target, uint32_t from = 0);
 
         /**
-         * Attempt to find the index location
-         * of an instruction. Returns null if
-         * not found.
+         * Attempt to find the index location of an instruction.
+         * Returns null if not found.
          */
         std::optional<uint32_t> locate(Ptr<Inst> inst) const;
 

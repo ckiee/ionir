@@ -22,17 +22,17 @@ TEST(NameResolutionPassTest, Run) {
 
     // Locate the function and retrieve it's entry section.
     OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
-    Ptr<Section> entrySection = *function->get()->getBody()->getEntrySection();
+    Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
 
     // Create an instruction builder instance and the branch instruction's condition.
     InstBuilder instBuilder = InstBuilder(entrySection);
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
 
     // Create the branch instruction pointing to the entry section on both true and false.
-    Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::sectionEntryId, Const::sectionEntryId);
+    Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::basicBlockEntryId, Const::basicBlockEntryId);
 
     // Abstract specific element(s) to be tested.
-    PtrRef<Section> bodyRef = branchInst->getBodyRef();
+    PtrRef<BasicBlock> bodyRef = branchInst->getBodyRef();
 
     // TODO: CRITICAL: Recently solved the problem which was that it was using the section's own symbol table instead of the function's to find the section (Dummy mistake). Verify that this is actually how it should be.
 
