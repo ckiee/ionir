@@ -36,16 +36,16 @@ namespace ionir {
         std::vector<llvm::Type *> arguments = {};
 
         // Attempt to retrieve an existing function.
-        llvm::Function *function = this->module->getFunction(node->getId());
+        llvm::Function *llvmFunction = this->module->getFunction(node->getId());
 
         // A function with a matching identifier already exists.
-        if (function != nullptr) {
+        if (llvmFunction != nullptr) {
             // Function already has a body, disallow re-definition.
-            if (function->getBasicBlockList().empty()) {
+            if (llvmFunction->getBasicBlockList().empty()) {
                 throw std::runtime_error("Cannot re-define function");
             }
                 // If the function takes a different number of arguments, reject.
-            else if (function->arg_size() != argumentCount) {
+            else if (llvmFunction->arg_size() != argumentCount) {
                 throw std::runtime_error("Re-definition of function with a different amount arguments");
             }
         }
@@ -59,29 +59,29 @@ namespace ionir {
             // Visit and pop the return type.
             this->visitType(node->getReturnType());
 
-            llvm::Type *returnType = this->typeStack.pop();
+            llvm::Type *llvmReturnType = this->typeStack.pop();
 
             // TODO: Support for infinite arguments and hard-coded return type.
             // Create the function type.
             llvm::FunctionType *type =
-                llvm::FunctionType::get(returnType, arguments, node->getArgs()->getIsInfinite());
+                llvm::FunctionType::get(llvmReturnType, arguments, node->getArgs()->getIsInfinite());
 
             // Cast the value to a function, since we know getCallee() will return a function.
-            function =
+            llvmFunction =
                 llvm::dyn_cast<llvm::Function>(this->module->getOrInsertFunction(node->getId(), type).getCallee());
 
             // Set the function's linkage.
-            function->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
+            llvmFunction->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
         }
 
         // Begin processing arguments. Argument count must be the same.
-        if (argumentCount != function->arg_size()) {
+        if (argumentCount != llvmFunction->arg_size()) {
             throw std::runtime_error("Expected argument count to be the same as the function's argument count");
         }
 
         int i = 0;
 
-        for (auto &arg : function->args()) {
+        for (auto &arg : llvmFunction->args()) {
             // TODO: getItems() no longer a vector; cannot index by index, only key.
             // Retrieve the name element from the argument tuple.
             //            std::string name = node->getArgs()->getItems()[i].second;
@@ -93,7 +93,7 @@ namespace ionir {
             i++;
         }
 
-        this->valueStack.push(function);
+        this->valueStack.push(llvmFunction);
     }
 
     void LlvmCodegenPass::visitFunction(Ptr<Function> node) {
@@ -111,10 +111,10 @@ namespace ionir {
         this->visitPrototype(node->getPrototype());
 
         // Retrieve the resulting function off the stack.
-        auto *function = this->valueStack.popAs<llvm::Function>();
+        auto *llvmFunction = this->valueStack.popAs<llvm::Function>();
 
         // Set the function buffer.
-        this->function = function;
+        this->function = llvmFunction;
 
         // Visit the function's body.
         this->visitFunctionBody(node->getBody());
@@ -122,6 +122,6 @@ namespace ionir {
         // TODO: Verify the resulting LLVM function (through LLVM).
 
         // Push the function back onto the stack.
-        this->valueStack.push(function);
+        this->valueStack.push(llvmFunction);
     }
 }

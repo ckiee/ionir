@@ -15,11 +15,11 @@ namespace ionir {
          * Create the LLVM-equivalent alloca instruction
          * using the buffered builder.
          */
-        llvm::AllocaInst *allocaInst =
+        llvm::AllocaInst *llvmAllocaInst =
             this->builder->CreateAlloca(type, (llvm::Value *)nullptr, *node->getYieldId());
 
-        this->addToScope(node, allocaInst);
-        this->valueStack.push(allocaInst);
+        this->addToScope(node, llvmAllocaInst);
+        this->valueStack.push(llvmAllocaInst);
     }
 
     void LlvmCodegenPass::visitReturnInst(Ptr<ReturnInst> node) {
@@ -103,13 +103,13 @@ namespace ionir {
         this->restoreBuilder();
 
         // Create the LLVM branch instruction.
-        llvm::BranchInst *branchInst =
+        llvm::BranchInst *llvmBranchInst =
             this->builder->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
 
-        this->addToScope(node, branchInst);
+        this->addToScope(node, llvmBranchInst);
 
         // Finally, push the resulting branch instruction onto the value stack.
-        this->valueStack.push(branchInst);
+        this->valueStack.push(llvmBranchInst);
     }
 
     void LlvmCodegenPass::visitCallInst(Ptr<CallInst> node) {
@@ -149,10 +149,9 @@ namespace ionir {
             throw std::runtime_error("Store instruction's target has not been resolved");
         }
 
-        Map<Ptr<Construct>, llvm::Value *> entitiesMap = this->emittedEntities.front();
-        llvm::Value *llvmTarget = entitiesMap[*target->getValue()];
+        std::optional<llvm::Value *> llvmTarget = this->findInScope(*target->getValue());
 
-        if (llvmTarget == nullptr) {
+        if (!Util::hasValue(llvmTarget)) {
             throw std::runtime_error("Target could not be looked up in the emitted entities map");
         }
 
@@ -164,11 +163,11 @@ namespace ionir {
         llvm::Value *llvmValue = this->valueStack.pop();
 
         // Create the LLVM store instruction.
-        llvm::StoreInst *storeInst = this->builder->CreateStore(llvmValue, llvmTarget);
+        llvm::StoreInst *llvmStoreInst = this->builder->CreateStore(llvmValue, *llvmTarget);
 
-        this->addToScope(node, storeInst);
+        this->addToScope(node, llvmStoreInst);
 
         // Finally, push the resulting branch instruction onto the value stack.
-        this->valueStack.push(storeInst);
+        this->valueStack.push(llvmStoreInst);
     }
 }
