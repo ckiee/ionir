@@ -14,9 +14,9 @@ namespace ionir {
         Type,
 
         /**
-         * A block, possibly containing statements.
+         * A function body, possibly containing statements.
          */
-        Block,
+        FunctionBody,
 
         /**
          * Function prototype used to declare externs
@@ -35,7 +35,7 @@ namespace ionir {
 
         Global,
 
-        Section,
+        BasicBlock,
 
         VariableRef,
 

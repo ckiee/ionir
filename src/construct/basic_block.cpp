@@ -4,7 +4,7 @@
 
 namespace ionir {
     BasicBlock::BasicBlock(BasicBlockOpts opts)
-        : ChildConstruct(opts.parent, ConstructKind::Section), ScopeAnchor<Inst>(), kind(opts.kind), Named(opts.id), insts(opts.insts) {
+        : ChildConstruct(opts.parent, ConstructKind::BasicBlock), ScopeAnchor<Inst>(), kind(opts.kind), Named(opts.id), insts(opts.insts) {
         //
     }
 

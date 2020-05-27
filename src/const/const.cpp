@@ -19,13 +19,13 @@ namespace ionir {
 
     std::map<ConstructKind, std::string> Const::constructNames = {
         {ConstructKind::Type, "Type"},
-        {ConstructKind::Block, "Block"},
+        {ConstructKind::FunctionBody, "Block"},
         {ConstructKind::Prototype, "Prototype"},
         {ConstructKind::Function, "Function"},
         {ConstructKind::Extern, "Extern"},
         {ConstructKind::Inst, "Instruction"},
         {ConstructKind::Global, "Global"},
-        {ConstructKind::Section, "Section"},
+        {ConstructKind::BasicBlock, "Section"},
         {ConstructKind::VariableRef, "VariableReference"},
         {ConstructKind::VariableDecl, "VariableDeclaration"},
         {ConstructKind::StructDecl, "StructDeclaration"},

@@ -72,6 +72,8 @@ namespace ionir {
 
         void addToScope(Ptr<Construct> construct, llvm::Value *value);
 
+        std::optional<llvm::Value *> findInScope(Ptr<Construct> key);
+
     public:
         explicit LlvmCodegenPass(llvm::Module *module);
 

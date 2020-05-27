@@ -71,6 +71,16 @@ namespace ionir {
         this->emittedEntities.front()[construct] = value;
     }
 
+    std::optional<llvm::Value *> LlvmCodegenPass::findInScope(Ptr<Construct> key) {
+        llvm::Value *value = this->emittedEntities.front()[key];
+
+        if (value != nullptr) {
+            return value;
+        }
+
+        return std::nullopt;
+    }
+
     LlvmCodegenPass::LlvmCodegenPass(llvm::Module *module)
         : module(module), context(&module->getContext()), function(std::nullopt), builder(std::nullopt), block(std::nullopt), valueStack(), typeStack(), builderTracker(), emittedEntities({Map<Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //

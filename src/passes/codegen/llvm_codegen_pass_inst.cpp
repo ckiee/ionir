@@ -25,27 +25,49 @@ namespace ionir {
     void LlvmCodegenPass::visitReturnInst(Ptr<ReturnInst> node) {
         this->requireBuilder();
 
-        OptPtr<Construct> value = node->getValue();
-        llvm::ReturnInst *returnInst = nullptr;
+        OptPtr<Construct> returnInstValue = node->getValue();
+        llvm::ReturnInst *llvmReturnInst = nullptr;
 
-        if (Util::hasValue(value)) {
-            this->visit(*value);
+        if (Util::hasValue(returnInstValue)) {
+            llvm::Value *llvmValue = nullptr;
 
-            llvm::Value *value = this->valueStack.pop();
+            // TODO: Hotfix. Clean up messy code.
+            if ((*returnInstValue)->getConstructKind() == ConstructKind::Value) {
+                this->visitValue((*returnInstValue)->dynamicCast<Value<>>());
+                llvmValue = this->valueStack.pop();
+            }
+            else {
+                auto ref = (*returnInstValue)->dynamicCast<Ref<>>();
+
+                if (!ref->isResolved()) {
+                    throw std::runtime_error("Return instruction's value is an unresolved reference");
+                }
+
+                auto key = *ref->getValueAs<Construct>();
+                auto llvmValueFromEntities = this->findInScope(key);
+
+                if (!llvmValueFromEntities.has_value() || *llvmValueFromEntities == nullptr) {
+                    throw std::runtime_error("Could not lookup corresponding LLVM value on the symbol table");
+                }
+
+                llvmValue = *llvmValueFromEntities;
+            }
+
+            // ------
 
             /**
              * Create the LLVM equivalent return instruction
              * using the buffered builder.
              */
-            returnInst = this->builder->CreateRet(value);
+            llvmReturnInst = this->builder->CreateRet(llvmValue);
         }
         // No value was specified. Simply return void.
         else {
-            returnInst = this->builder->CreateRetVoid();
+            llvmReturnInst = this->builder->CreateRetVoid();
         }
 
-        this->addToScope(node, returnInst);
-        this->valueStack.push(returnInst);
+        this->addToScope(node, llvmReturnInst);
+        this->valueStack.push(llvmReturnInst);
     }
 
     void LlvmCodegenPass::visitBranchInst(Ptr<BranchInst> node) {

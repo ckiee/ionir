@@ -4,7 +4,7 @@
 
 namespace ionir {
     FunctionBody::FunctionBody(Ptr<Function> parent, PtrSymbolTable<BasicBlock> symbolTable)
-        : ChildConstruct(parent, ConstructKind::Block), ScopeAnchor<BasicBlock>(symbolTable) {
+        : ChildConstruct(parent, ConstructKind::FunctionBody), ScopeAnchor<BasicBlock>(symbolTable) {
         //
     }
 
