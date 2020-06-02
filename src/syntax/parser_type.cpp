@@ -1,4 +1,5 @@
 #include <ionir/syntax/parser.h>
+#include <ionir/const/const.h>
 
 namespace ionir {
     // TODO: Consider using Ref<> to register pending type reference if user-defined type is parsed?
@@ -79,14 +80,23 @@ namespace ionir {
     }
 
     OptPtr<IntegerType> Parser::parseIntegerType() {
-        if (this->is(TokenKind::TypeInt32)) {
-            this->stream.skip();
+        TokenKind currentTokenKind = this->stream.get().getKind();
 
-            return std::make_shared<IntegerType>(IntegerKind::Int32);
+        if (!Classifier::isIntegerType(currentTokenKind)) {
+            return std::nullopt;
         }
 
-        // TODO: Missing support for others.
+        // TODO: Missing support for is signed or not, as well as is pointer.
 
-        return std::nullopt;
+        std::optional<IntegerKind> integerKind = Const::getIntegerKind(currentTokenKind);
+
+        if (!integerKind.has_value()) {
+            return std::nullopt;
+        }
+
+        // Skip over the type token.
+        this->stream.skip();
+
+        return std::make_shared<IntegerType>(*integerKind);
     }
 }

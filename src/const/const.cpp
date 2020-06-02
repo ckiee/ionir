@@ -1,4 +1,3 @@
-#include <ionir/const/token_const.h>
 #include <ionir/const/const.h>
 #include <ionir/misc/util.h>
 
@@ -34,6 +33,14 @@ namespace ionir {
         {ConstructKind::Value, "Value"}
     };
 
+    std::map<TokenKind, IntegerKind> Const::tokenKindToIntegerKind = {
+        {TokenKind::TypeInt16, IntegerKind::Int16},
+        {TokenKind::TypeInt32, IntegerKind::Int32},
+        {TokenKind::TypeInt64, IntegerKind::Int64}
+
+        // TODO: Missing unsigned ones? Or should it be operator-based?
+    };
+
     // TODO: Refactor.
     // Const::Const()
     // {
@@ -54,6 +61,14 @@ namespace ionir {
     std::optional<std::string> Const::getConstructKindName(ConstructKind constructKind) {
         if (Util::mapContains<ConstructKind, std::string>(Const::constructNames, constructKind)) {
             return Const::constructNames[constructKind];
+        }
+
+        return std::nullopt;
+    }
+
+    std::optional<IntegerKind> Const::getIntegerKind(TokenKind tokenKind) {
+        if (Util::mapContains<TokenKind, IntegerKind>(Const::tokenKindToIntegerKind, tokenKind)) {
+            return Const::tokenKindToIntegerKind[tokenKind];
         }
 
         return std::nullopt;
