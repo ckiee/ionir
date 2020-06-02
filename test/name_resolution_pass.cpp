@@ -20,25 +20,26 @@ TEST(NameResolutionPassTest, Run) {
     // Bootstrap the initial AST.
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
 
-    // Locate the function and retrieve it's entry section.
+    // Locate the function and retrieve it's entry block.
     OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
-    Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
+    Ptr<BasicBlock> entryBlock = *function->get()->getBody()->findEntryBasicBlock();
 
     // Create an instruction builder instance and the branch instruction's condition.
-    InstBuilder instBuilder = InstBuilder(entrySection);
+    InstBuilder instBuilder = InstBuilder(entryBlock);
     Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
 
-    // Create the branch instruction pointing to the entry section on both true and false.
+    // Create the branch instruction pointing to the entry block on both true and false.
     Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::basicBlockEntryId, Const::basicBlockEntryId);
 
     // Abstract specific element(s) to be tested.
-    PtrRef<BasicBlock> bodyRef = branchInst->getBodyRef();
+    PtrRef<BasicBlock> blockRef = branchInst->getBlockRef();
 
     // TODO: CRITICAL: Recently solved the problem which was that it was using the section's own symbol table instead of the function's to find the section (Dummy mistake). Verify that this is actually how it should be.
 
     passManager.run(ast);
 
-    // TODO: Add tests.
+    // TODO: Add more tests.
 
-    EXPECT_TRUE(bodyRef->isResolved());
+    EXPECT_TRUE(blockRef->isResolved());
+    EXPECT_EQ(blockRef->getValue(), entryBlock);
 }

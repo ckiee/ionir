@@ -32,11 +32,13 @@ namespace ionir {
             llvm::Value *llvmValue = nullptr;
 
             // TODO: Hotfix. Clean up messy code.
+            // Process the value if applicable.
             if ((*returnInstValue)->getConstructKind() == ConstructKind::Value) {
-                this->visitValue((*returnInstValue)->dynamicCast<Value<>>());
+                this->visitValue((*returnInstValue)->staticCast<Value<>>());
                 llvmValue = this->valueStack.pop();
             }
-            else {
+            // Otherwise, it must be a reference.
+            else if ((*returnInstValue)->getConstructKind() == ConstructKind::Ref) {
                 auto ref = (*returnInstValue)->dynamicCast<Ref<>>();
 
                 if (!ref->isResolved()) {
@@ -51,6 +53,9 @@ namespace ionir {
                 }
 
                 llvmValue = *llvmValueFromEntities;
+            }
+            else {
+                throw std::runtime_error("Unexpected construct as return instruction return value");
             }
 
             // ------
@@ -80,8 +85,8 @@ namespace ionir {
 
         this->saveBuilder();
 
-        PtrRef<BasicBlock> bodyRef = node->getBodyRef();
-        PtrRef<BasicBlock> otherwiseRef = node->getOtherwiseRef();
+        PtrRef<BasicBlock> bodyRef = node->getBlockRef();
+        PtrRef<BasicBlock> otherwiseRef = node->getOtherwiseBlockRef();
 
         // Body reference should have been resolved at this point.
         if (!bodyRef->isResolved()) {

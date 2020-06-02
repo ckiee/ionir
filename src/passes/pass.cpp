@@ -14,6 +14,7 @@ namespace ionir {
 
         // TODO: Hotfix for circular dep.
         if (node->getConstructKind() == ConstructKind::Ref) {
+            std::cout << "-- !! Pass::visit() -> VISITING REF !! --" << std::endl;
             this->visitRef(node->staticCast<Ref<>>());
 
             // No need to visit children for this node.

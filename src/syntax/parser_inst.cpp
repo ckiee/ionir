@@ -89,14 +89,21 @@ namespace ionir {
     OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstReturn);
 
+        Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
+            parent,
+            nullptr
+        });
+
         OptPtr<Construct> value = std::nullopt;
 
         /**
-         * A non-void value is being returned.
+         * A non-void value is being returned. Parse a primary
+         * expression as the return instruction's value, and if
+         * it is a reference, pass in the return instruction to
+         * be set as its owner.
          */
         if (!this->is(TokenKind::TypeVoid)) {
-            // TODO: Parent is nullptr. Is this correct? Check.
-            value = this->parsePrimaryExpr(nullptr);
+            value = this->parsePrimaryExpr(returnInst);
         }
         /**
          * Void keyword is being returned, skip over its token.
@@ -105,10 +112,9 @@ namespace ionir {
             this->skipOver(TokenKind::TypeVoid);
         }
 
-        return std::make_shared<ReturnInst>(ReturnInstOpts{
-            parent,
-            value
-        });
+        returnInst->setValue(value);
+
+        return returnInst;
     }
 
     OptPtr<BranchInst> Parser::parseBranchInst(Ptr<BasicBlock> parent) {
@@ -135,8 +141,8 @@ namespace ionir {
 
         IONIR_PARSER_ASSURE(otherwiseSection)
 
-        branchInst->setBodyRef(*bodySection);
-        branchInst->setOtherwiseRef(*otherwiseSection);
+        branchInst->setBlockRef(*bodySection);
+        branchInst->setOtherwiseBlockRef(*otherwiseSection);
 
         return branchInst;
     }

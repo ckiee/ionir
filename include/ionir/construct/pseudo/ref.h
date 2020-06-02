@@ -28,15 +28,15 @@ namespace ionir {
             // visitor.visitRef(this->dynamicCast<Ref<T>>());
         }
 
-        Ptr<Construct> getOwner() const {
+        Ptr<Construct> getOwner() const noexcept {
             return this->owner;
         }
 
-        void setOwner(Ptr<Construct> owner) {
+        void setOwner(Ptr<Construct> owner) noexcept {
             this->owner = owner;
         }
 
-        OptPtr<T> getValue() const {
+        OptPtr<T> getValue() const noexcept {
             return this->value;
         }
 
@@ -53,11 +53,19 @@ namespace ionir {
             return std::nullopt;
         }
 
-        bool isResolved() const {
-            return this->getValue() != std::nullopt;
+        bool isResolved() noexcept {
+            return Util::hasValue(this->value);
         }
 
         void resolve(OptPtr<T> value) {
+            /**
+             * Make sure the value is not a nullptr. To un-resolve the reference,
+             * std::nullopt should be used instead.
+             */
+            if (value.has_value() && *value == nullptr) {
+                throw std::runtime_error("Cannot resolve reference with a nullptr");
+            }
+
             this->value = value;
         }
     };

@@ -12,7 +12,7 @@ namespace ionir {
     struct BranchInstOpts : InstOpts {
         Ptr<Construct> condition;
 
-        PtrRef<BasicBlock> bodyRef;
+        PtrRef<BasicBlock> blockRef;
 
         PtrRef<BasicBlock> otherwiseRef;
     };
@@ -21,9 +21,9 @@ namespace ionir {
     private:
         Ptr<Construct> condition;
 
-        PtrRef<BasicBlock> bodySectionRef;
+        PtrRef<BasicBlock> blockRef;
 
-        PtrRef<BasicBlock> otherwiseSectionRef;
+        PtrRef<BasicBlock> otherwiseBlockRef;
 
     public:
         explicit BranchInst(BranchInstOpts opts);
@@ -36,12 +36,12 @@ namespace ionir {
 
         void setCondition(Ptr<Construct> condition);
 
-        PtrRef<BasicBlock> getBodyRef() const;
+        PtrRef<BasicBlock> getBlockRef() const;
 
-        void setBodyRef(PtrRef<BasicBlock> bodyRef);
+        void setBlockRef(PtrRef<BasicBlock> blockRef);
 
-        PtrRef<BasicBlock> getOtherwiseRef() const;
+        PtrRef<BasicBlock> getOtherwiseBlockRef() const;
 
-        void setOtherwiseRef(PtrRef<BasicBlock> otherwiseRef);
+        void setOtherwiseBlockRef(PtrRef<BasicBlock> otherwiseBlockRef);
     };
 }

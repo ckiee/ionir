@@ -116,6 +116,104 @@ TEST(CodeGenTest, VisitAllocaInst) {
     EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_alloca"));
 }
 
+TEST(CodeGenTest, VisitReturnInst) {
+    Ptr<LlvmCodegenPass> visitor = test::bootstrap::llvmCodegenPass();
+
+    std::vector<Ptr<Inst>> insts = {
+        std::make_shared<ReturnInst>(ReturnInstOpts{
+            nullptr,
+            std::make_shared<IntegerValue>(TypeFactory::typeInteger(IntegerKind::Int32), 1)
+        })
+    };
+
+    Ptr<Function> function = test::bootstrap::emptyFunction(insts);
+
+    visitor->visitFunction(function);
+
+    LlvmModule module = LlvmModule(visitor->getModule());
+
+    EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_return"));
+}
+
+TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
+    Ptr<NameResolutionPass> nameResolutionPass = std::make_shared<NameResolutionPass>();
+    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+
+    // TODO: Return value type is being reused, even tho in both contexts it's independent (alloca inst, and return inst).
+    Ptr<IntegerType> returnValueType = TypeFactory::typeInteger(IntegerKind::Int32);
+
+    Ptr<Function> function = test::bootstrap::emptyFunction();
+    OptPtr<BasicBlock> functionEntryBlock = function->getBody()->findEntryBasicBlock();
+
+    /**
+     * Entry basic block must be set in the bootstrapped function
+     * in order to perform the test.
+     */
+    EXPECT_TRUE(Util::hasValue(functionEntryBlock));
+
+    Ptr<AllocaInst> allocaInst = std::make_shared<AllocaInst>(AllocaInstOpts{
+        /**
+         * The alloca instruction needs it's parent to be set in order
+         * to be resolved.
+         */
+        *functionEntryBlock,
+
+        test::constant::foo,
+        returnValueType
+    });
+
+    PtrRef<AllocaInst> allocaInstRef1 = std::make_shared<Ref<AllocaInst>>(test::constant::foo, nullptr, allocaInst);
+
+    Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
+        // No need for parent to be set.
+        nullptr,
+
+        std::make_shared<IntegerValue>(returnValueType, 1)->staticCast<Value<>>(),
+        allocaInstRef1
+    });
+
+    allocaInstRef1->setOwner(storeInst);
+
+    auto allocaInstRef2 = std::make_shared<Ref<>>(test::constant::foo, nullptr, allocaInst);
+
+    Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
+        /**
+         * The return instruction needs it's parent to be set in order
+         * for its return value reference to be resolved.
+         */
+        *functionEntryBlock,
+
+        allocaInstRef2
+    });
+
+    /**
+     * Associate the return instruction's return value reference with
+     * itself in order for it to be resolved.
+     */
+    allocaInstRef2->setOwner(returnInst);
+
+    std::vector<Ptr<Inst>> insts = {
+        allocaInst,
+        storeInst,
+        returnInst
+    };
+
+    // Resolve references first.
+    nameResolutionPass->visitRef(allocaInstRef1->staticCast<Ref<>>());
+    nameResolutionPass->visitRef(allocaInstRef2);
+
+    /**
+     * Associate the instructions with the function's body,
+     * and visit the function.
+     */
+    functionEntryBlock->get()->setInsts(insts);
+    llvmCodegenPass->visitFunction(function);
+
+    LlvmModule module = LlvmModule(llvmCodegenPass->getModule());
+
+    EXPECT_TRUE(test::compare::ir(module.getAsString(), "inst_alloca_store_return_ref"));
+}
+
 TEST(CodeGenTest, VisitBranchInst) {
     PassManager passManager = PassManager();
 
@@ -149,8 +247,8 @@ TEST(CodeGenTest, VisitBranchInst) {
         bodySectionRef
     });
 
-    branchInst->getBodyRef()->setOwner(branchInst);
-    branchInst->getOtherwiseRef()->setOwner(branchInst);
+    branchInst->getBlockRef()->setOwner(branchInst);
+    branchInst->getOtherwiseBlockRef()->setOwner(branchInst);
 
     Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 

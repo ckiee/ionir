@@ -61,6 +61,7 @@ namespace ionir::test::bootstrap {
         Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);
         Ptr<FunctionBody> body = std::make_shared<FunctionBody>(function, sections);
 
+        entrySection->setParent(body);
         function->setBody(body);
 
         return function;

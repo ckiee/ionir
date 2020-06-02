@@ -2,7 +2,7 @@
 
 namespace ionir {
     BranchInst::BranchInst(BranchInstOpts opts)
-        : Inst(opts.parent, InstKind::Branch), condition(opts.condition), bodySectionRef(opts.bodyRef), otherwiseSectionRef(opts.otherwiseRef) {
+        : Inst(opts.parent, InstKind::Branch), condition(opts.condition), blockRef(opts.blockRef), otherwiseBlockRef(opts.otherwiseRef) {
         //
     }
 
@@ -14,8 +14,8 @@ namespace ionir {
         // TODO: What about condition?
 
         return {
-            this->bodySectionRef,
-            this->otherwiseSectionRef
+            this->blockRef,
+            this->otherwiseBlockRef
         };
     }
 
@@ -27,21 +27,21 @@ namespace ionir {
         this->condition = condition;
     }
 
-    PtrRef<BasicBlock> BranchInst::getBodyRef() const {
-        return this->bodySectionRef;
+    PtrRef<BasicBlock> BranchInst::getBlockRef() const {
+        return this->blockRef;
     }
 
-    void BranchInst::setBodyRef(PtrRef<BasicBlock> bodyRef) {
-        this->bodySectionRef = bodyRef;
-        this->bodySectionRef->setOwner(this->getPtr());
+    void BranchInst::setBlockRef(PtrRef<BasicBlock> blockRef) {
+        this->blockRef = blockRef;
+        this->blockRef->setOwner(this->getPtr());
     }
 
-    PtrRef<BasicBlock> BranchInst::getOtherwiseRef() const {
-        return this->otherwiseSectionRef;
+    PtrRef<BasicBlock> BranchInst::getOtherwiseBlockRef() const {
+        return this->otherwiseBlockRef;
     }
 
-    void BranchInst::setOtherwiseRef(PtrRef<BasicBlock> otherwiseRef) {
-        this->otherwiseSectionRef = otherwiseRef;
-        this->otherwiseSectionRef->setOwner(this->getPtr());
+    void BranchInst::setOtherwiseBlockRef(PtrRef<BasicBlock> otherwiseBlockRef) {
+        this->otherwiseBlockRef = otherwiseBlockRef;
+        this->otherwiseBlockRef->setOwner(this->getPtr());
     }
 }

@@ -28,6 +28,9 @@ namespace ionir {
         switch (owner->getConstructKind()) {
             case ConstructKind::Inst: {
                 Ptr<Inst> inst = owner->dynamicCast<Inst>();
+
+                std::cout << " -- !! :::: VISITING INST REF OF TYPE : :::: " << (int)inst->getInstKind() << std::endl;
+
                 Ptr<BasicBlock> basicBlock = inst->getParent();
                 PtrSymbolTable<BasicBlock> functionSymbolTable = basicBlock->getParent()->getSymbolTable();
                 PtrSymbolTable<Inst> basicBlockSymbolTable = basicBlock->getSymbolTable();
@@ -37,13 +40,13 @@ namespace ionir {
                  * before the function's symbol table.
                  */
                 if (basicBlockSymbolTable->contains(id)) {
-                    node->resolve((*basicBlockSymbolTable)[id]);
+                    node->resolve(basicBlockSymbolTable->lookup(id));
 
                     return;
                 }
                 // Check on the function's symbol table for the referenced entity.
                 else if (functionSymbolTable->contains(id)) {
-                    node->resolve((*functionSymbolTable)[id]);
+                    node->resolve(functionSymbolTable->lookup(id));
 
                     return;
                 }
