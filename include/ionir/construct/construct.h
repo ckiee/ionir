@@ -86,11 +86,11 @@ namespace ionir {
 
         virtual void accept(Pass &visitor) = 0;
 
-        virtual Ast getChildNodes() const;
+        virtual Ast getChildNodes();
 
         virtual bool equals(Ptr<Construct> other);
 
-        bool isLeafNode() const;
+        bool isLeafNode();
 
         ConstructKind getConstructKind() const;
 

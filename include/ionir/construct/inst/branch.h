@@ -30,7 +30,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() const override;
+        Ast getChildNodes() override;
 
         Ptr<Construct> getCondition() const;
 

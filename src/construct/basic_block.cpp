@@ -13,7 +13,7 @@ namespace ionir {
         visitor.visitBasicBlock(this->dynamicCast<BasicBlock>());
     }
 
-    Ast BasicBlock::getChildNodes() const {
+    Ast BasicBlock::getChildNodes() {
         return Construct::convertChildren(this->insts);
     }
 

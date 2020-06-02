@@ -21,8 +21,12 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
+        Ast getChildNodes() override;
+
         OptPtr<Construct> getValue() const noexcept;
 
         void setValue(OptPtr<Construct> value) noexcept;
+
+        bool hasValue() noexcept;
     };
 }

@@ -10,11 +10,25 @@ namespace ionir {
         visitor.visitReturnInst(this->dynamicCast<ReturnInst>());
     }
 
+    Ast ReturnInst::getChildNodes() {
+        if (!this->hasValue()) {
+            return Construct::getChildNodes();
+        }
+
+        return {
+            *this->value
+        };
+    }
+
     OptPtr<Construct> ReturnInst::getValue() const noexcept {
         return this->value;
     }
 
     void ReturnInst::setValue(OptPtr<Construct> value) noexcept {
         this->value = value;
+    }
+
+    bool ReturnInst::hasValue() noexcept {
+        return Util::hasValue(this->value);
     }
 }

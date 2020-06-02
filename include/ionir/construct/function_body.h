@@ -20,7 +20,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() const override;
+        Ast getChildNodes() override;
 
         bool verify() override;
 

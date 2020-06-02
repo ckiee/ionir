@@ -6,7 +6,7 @@ namespace ionir {
         //
     }
 
-    Ast Construct::getChildNodes() const {
+    Ast Construct::getChildNodes() {
         // By default, construct contains no children.
         return {};
     }
@@ -15,7 +15,7 @@ namespace ionir {
         return other == this->shared_from_this();
     }
 
-    bool Construct::isLeafNode() const {
+    bool Construct::isLeafNode() {
         return this->getChildNodes().empty();
     }
 

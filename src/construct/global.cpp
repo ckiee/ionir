@@ -10,7 +10,7 @@ namespace ionir {
         visitor.visitGlobal(this->dynamicCast<Global>());
     }
 
-    Ast Global::getChildNodes() const {
+    Ast Global::getChildNodes() {
         Ast children = {
             this->type->nativeCast()
         };

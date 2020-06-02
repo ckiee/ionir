@@ -10,7 +10,7 @@ namespace ionir {
         visitor.visitExtern(this->dynamicCast<Extern>());
     }
 
-    Ast Extern::getChildNodes() const {
+    Ast Extern::getChildNodes() {
         return {
             this->prototype->nativeCast()
         };

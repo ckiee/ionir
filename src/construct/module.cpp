@@ -11,7 +11,7 @@ namespace ionir {
         visitor.visitModule(this->dynamicCast<Module>());
     }
 
-    Ast Module::getChildNodes() const {
+    Ast Module::getChildNodes() {
         auto ast = Construct::convertChildren(*this->getSymbolTable());
         // TODO: De-referencing symbol table, so it's copying and it won't link back? Review.
         return ast;

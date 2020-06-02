@@ -174,7 +174,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
 
     allocaInstRef1->setOwner(storeInst);
 
-    auto allocaInstRef2 = std::make_shared<Ref<>>(test::constant::foo, nullptr, allocaInst);
+    PtrRef<> allocaInstRef2 = std::make_shared<Ref<>>(test::constant::foo, nullptr, allocaInst);
 
     Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
         /**

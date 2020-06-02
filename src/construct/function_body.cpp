@@ -14,7 +14,7 @@ namespace ionir {
         visitor.visitFunctionBody(this->staticCast<FunctionBody>());
     }
 
-    Ast FunctionBody::getChildNodes() const {
+    Ast FunctionBody::getChildNodes() {
         // TODO: De-referencing symbol table, so it's copying and it won't link back? Review.
         return Construct::convertChildren(*this->getSymbolTable());
     }

@@ -10,7 +10,7 @@ namespace ionir {
         visitor.visitPrototype(this->dynamicCast<Prototype>());
     }
 
-    Ast Prototype::getChildNodes() const {
+    Ast Prototype::getChildNodes() {
         // TODO: What about 'args'?
         return {
             this->returnType->nativeCast()
