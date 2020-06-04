@@ -17,6 +17,8 @@ namespace ionir {
 
         ~LlvmModule();
 
+        std::string getId() const;
+
         Context *getContext() const;
 
         std::string getAsString() const;

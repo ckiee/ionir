@@ -15,10 +15,12 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitExtern(Ptr<Extern> node) {
+        this->requireModule();
+
         if (node->getPrototype() == nullptr) {
             throw std::runtime_error("Unexpected external definition's prototype to be null");
         }
-        else if (this->module->getFunction(node->getPrototype()->getId()) != nullptr) {
+        else if ((*this->moduleBuffer)->getFunction(node->getPrototype()->getId()) != nullptr) {
             throw std::runtime_error("Re-definition of extern not allowed");
         }
 
@@ -29,6 +31,9 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitPrototype(Ptr<Prototype> node) {
+        this->requireModule();
+        this->requireContext();
+
         // Retrieve argument count from the argument vector.
         uint32_t argumentCount = node->getArgs()->getItems().getSize();
 
@@ -36,7 +41,7 @@ namespace ionir {
         std::vector<llvm::Type *> arguments = {};
 
         // Attempt to retrieve an existing function.
-        llvm::Function *llvmFunction = this->module->getFunction(node->getId());
+        llvm::Function *llvmFunction = (*this->moduleBuffer)->getFunction(node->getId());
 
         // A function with a matching identifier already exists.
         if (llvmFunction != nullptr) {
@@ -53,7 +58,7 @@ namespace ionir {
         else {
             for (uint32_t i = 0; i < argumentCount; ++i) {
                 // TODO: Wrong type.
-                arguments.push_back(llvm::Type::getDoubleTy(*this->context));
+                arguments.push_back(llvm::Type::getDoubleTy(**this->contextBuffer));
             }
 
             // Visit and pop the return type.
@@ -68,7 +73,7 @@ namespace ionir {
 
             // Cast the value to a function, since we know getCallee() will return a function.
             llvmFunction =
-                llvm::dyn_cast<llvm::Function>(this->module->getOrInsertFunction(node->getId(), type).getCallee());
+                llvm::dyn_cast<llvm::Function>((*this->moduleBuffer)->getOrInsertFunction(node->getId(), type).getCallee());
 
             // Set the function's linkage.
             llvmFunction->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
@@ -97,10 +102,12 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitFunction(Ptr<Function> node) {
+        this->requireModule();
+
         if (!node->verify()) {
             throw std::runtime_error("Function verification failed");
         }
-        else if (this->module->getFunction(node->getPrototype()->getId()) != nullptr) {
+        else if ((*this->moduleBuffer)->getFunction(node->getPrototype()->getId()) != nullptr) {
             throw std::runtime_error("A function with the same identifier has been already previously defined");
         }
 
@@ -114,7 +121,7 @@ namespace ionir {
         auto *llvmFunction = this->valueStack.popAs<llvm::Function>();
 
         // Set the function buffer.
-        this->function = llvmFunction;
+        this->functionBuffer = llvmFunction;
 
         // Visit the function's body.
         this->visitFunctionBody(node->getBody());

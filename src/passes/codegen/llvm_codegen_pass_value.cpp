@@ -37,9 +37,10 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitCharValue(Ptr<CharValue> node) {
+        this->requireContext();
         this->requireBuilder();
 
-        llvm::Type *charType = llvm::Type::getInt8Ty(*this->context);
+        llvm::Type *charType = llvm::Type::getInt8Ty(**this->contextBuffer);
         llvm::Constant *value = llvm::ConstantInt::get(charType, node->getValue());
 
         this->addToScope(node, value);
@@ -50,7 +51,7 @@ namespace ionir {
         this->requireBuilder();
 
         // Create the global string pointer.
-        llvm::Constant *value = this->builder->CreateGlobalStringPtr(node->getValue());
+        llvm::Constant *value = this->builderBuffer->CreateGlobalStringPtr(node->getValue());
 
         this->addToScope(node, value);
 
@@ -59,8 +60,10 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitBooleanValue(Ptr<BooleanValue> node) {
+        this->requireContext();
+
         // Create the boolean type along with the LLVM value.
-        llvm::IntegerType *type = llvm::Type::getInt1Ty(*this->context);
+        llvm::IntegerType *type = llvm::Type::getInt1Ty(**this->contextBuffer);
         llvm::Constant *value = llvm::ConstantInt::get(type, llvm::APInt(1, node->getValue(), false));
 
         this->addToScope(node, value);

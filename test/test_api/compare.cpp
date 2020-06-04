@@ -1,3 +1,4 @@
+#include <ionir/llvm/llvm_module.h>
 #include "compare.h"
 #include "util.h"
 #include "filesystem.h"
@@ -20,5 +21,15 @@ namespace ionir::test::compare {
 
         // Trim and compare expected output and actual file content.
         return util::trim(output) == util::trim(*contents);
+    }
+
+    bool ir(Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName) {
+        std::optional<llvm::Module *> llvmModuleBuffer = llvmCodegenPass->getModuleBuffer();
+
+        if (!Util::hasValue(llvmModuleBuffer)) {
+            throw std::runtime_error("Module buffer in LlvmCodegenPass is not set");
+        }
+
+        return compare::ir(LlvmModule(*llvmModuleBuffer).getAsString(), fileName);
     }
 }

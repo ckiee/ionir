@@ -16,6 +16,11 @@ namespace ionir {
         delete this->context;
     }
 
+    std::string LlvmModule::getId() const {
+        // TODO: Can it possibly be null?
+        return this->value->getModuleIdentifier();
+    }
+
     Context *LlvmModule::getContext() const {
         return this->context;
     }

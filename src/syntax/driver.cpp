@@ -37,8 +37,7 @@ namespace ionir {
         // Function definition (Token should be a type name representing the function's return type).
         if (token.getKind() == TokenKind::Identifier) {
             // TODO
-            std::cout << "Identifier token detected ~> Expecting function definition. (Token is considered function return type.)"
-                << std::endl;
+            std::cout << "Identifier token detected ~> Expecting function definition. (Token is considered function return type.)" << std::endl;
         }
 
         // TODO: Debugging.

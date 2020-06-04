@@ -3,7 +3,8 @@
 #include <iostream>
 #include <array>
 #include <string>
-#include "../../include/ionir/lexical/token.h"
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
+#include <ionir/lexical/token.h>
 #include "util.h"
 #include "../pch.h"
 
@@ -21,6 +22,8 @@ namespace ionir::test::compare {
      * LLVM IR file does not exist.
      */
     bool ir(std::string output, std::string fileName);
+
+    bool ir(Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName);
 
     template<unsigned int N>
     void tokenSets(std::array<Token, N> expected, std::vector<Token> actual) {

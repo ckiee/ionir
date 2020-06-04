@@ -200,7 +200,8 @@ namespace ionir {
             OptPtr<Construct> topLevelConstruct = this->parseTopLevel();
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
-            if (topLevelConstruct.has_value()) {
+            if (Util::hasValue(topLevelConstruct)) {
+                std::cout << "parsed top level ---- " << std::endl;
                 std::optional<std::string> name = Util::getConstructId(*topLevelConstruct);
 
                 if (!name.has_value()) {

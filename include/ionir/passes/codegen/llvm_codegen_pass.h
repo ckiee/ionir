@@ -28,19 +28,27 @@
 namespace ionir {
     class LlvmCodegenPass : public Pass {
     private:
-        llvm::LLVMContext *context;
-
-        llvm::Module *module;
-
         LlvmStack<llvm::Value> valueStack;
 
         LlvmStack<llvm::Type> typeStack;
 
-        std::optional<llvm::Function *> function;
+        SymbolTable<llvm::Module *> modules;
 
-        std::optional<llvm::IRBuilder<>> builder;
+        /**
+         * The currently active LLVM context;
+         */
+        std::optional<llvm::LLVMContext *> contextBuffer;
 
-        std::optional<llvm::BasicBlock *> block;
+        /**
+         * The currently active LLVM module.
+         */
+        std::optional<llvm::Module *> moduleBuffer;
+
+        std::optional<llvm::Function *> functionBuffer;
+
+        std::optional<llvm::IRBuilder<>> builderBuffer;
+
+        std::optional<llvm::BasicBlock *> blockBuffer;
 
         std::map<std::string, llvm::Value *> namedValues;
 
@@ -55,6 +63,10 @@ namespace ionir {
         void requireBuilder();
 
         void requireFunction();
+
+        void requireModule();
+
+        void requireContext();
 
         /**
          * Set the currently active builder if any. Modifying the builder
@@ -75,15 +87,19 @@ namespace ionir {
         std::optional<llvm::Value *> findInScope(Ptr<Construct> key);
 
     public:
-        explicit LlvmCodegenPass(llvm::Module *module);
+        explicit LlvmCodegenPass(SymbolTable<llvm::Module *> modules = SymbolTable<llvm::Module *>());
 
         ~LlvmCodegenPass();
-
-        llvm::Module *getModule() const;
 
         LlvmStack<llvm::Value> getValueStack() const;
 
         LlvmStack<llvm::Type> getTypeStack() const;
+
+        SymbolTable<llvm::Module *> getModules() const;
+
+        std::optional<llvm::Module *> getModuleBuffer() const;
+
+        bool setModuleBuffer(std::string id);
 
         void visit(Ptr<Construct> node) override;
 

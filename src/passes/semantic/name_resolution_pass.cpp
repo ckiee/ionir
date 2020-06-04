@@ -28,9 +28,6 @@ namespace ionir {
         switch (owner->getConstructKind()) {
             case ConstructKind::Inst: {
                 Ptr<Inst> inst = owner->dynamicCast<Inst>();
-
-                std::cout << " -- !! :::: VISITING INST REF OF TYPE : :::: " << (int)inst->getInstKind() << std::endl;
-
                 Ptr<BasicBlock> basicBlock = inst->getParent();
                 PtrSymbolTable<BasicBlock> functionSymbolTable = basicBlock->getParent()->getSymbolTable();
                 PtrSymbolTable<Inst> basicBlockSymbolTable = basicBlock->getSymbolTable();
