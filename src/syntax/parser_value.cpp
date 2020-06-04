@@ -48,15 +48,28 @@ namespace ionir {
         int64_t value;
 
         try {
+            /**
+             * May throw an exception if invalid arguments are provided,
+             * or of the integer is too large to be held in any integer
+             * type native to C++.
+             */
             value = std::stol(tokenValue);
         }
-        catch (std::invalid_argument& exception) {
+        catch (std::exception& exception) {
             // Value conversion failed.
-            return this->makeNotice("Could not convert string to value");
+            return this->makeNotice("Could not convert string to value, integer may be invalid or too large");
+        }
+
+        // Calculate the value's bit-length and it's corresponding integer kind.
+        uint32_t valueBitLength = Util::calculateBitLength(value);
+        std::optional<IntegerKind> valueIntegerKind = Util::calculateIntegerKindFromBitLength(valueBitLength);
+
+        if (!valueIntegerKind.has_value()) {
+            return this->makeNotice("Integer value's type kind could not be determined");
         }
 
         // Create a long integer type for the value.
-        Ptr<IntegerType> type = std::make_shared<IntegerType>(IntegerKind::Int64);
+        Ptr<IntegerType> type = std::make_shared<IntegerType>(*valueIntegerKind);
 
         // Create the integer instance.
         Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type, value);

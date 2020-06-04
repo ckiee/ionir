@@ -33,9 +33,11 @@ namespace ionir::test::bootstrap {
     Ptr<LlvmCodegenPass> llvmCodegenPass() {
         Ptr<LlvmModule> module = llvmModule();
 
-        Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>(Map<std::string, llvm::Module *>({
+        Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>(SymbolTable<llvm::Module *>({
             {module->getId(), module->unwrap()}
         }));
+
+        Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>(modules);
 
         if (!llvmCodegenPass->setModuleBuffer(module->getId())) {
             throw std::runtime_error("Could not set active module buffer during bootstrap process");

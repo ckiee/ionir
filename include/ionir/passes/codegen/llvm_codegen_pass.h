@@ -32,7 +32,7 @@ namespace ionir {
 
         LlvmStack<llvm::Type> typeStack;
 
-        SymbolTable<llvm::Module *> modules;
+        Ptr<SymbolTable<llvm::Module *>> modules;
 
         /**
          * The currently active LLVM context;
@@ -87,7 +87,7 @@ namespace ionir {
         std::optional<llvm::Value *> findInScope(Ptr<Construct> key);
 
     public:
-        explicit LlvmCodegenPass(SymbolTable<llvm::Module *> modules = SymbolTable<llvm::Module *>());
+        explicit LlvmCodegenPass(Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>());
 
         ~LlvmCodegenPass();
 
@@ -95,7 +95,7 @@ namespace ionir {
 
         LlvmStack<llvm::Type> getTypeStack() const;
 
-        SymbolTable<llvm::Module *> getModules() const;
+        Ptr<SymbolTable<llvm::Module *>> getModules() const;
 
         std::optional<llvm::Module *> getModuleBuffer() const;
 

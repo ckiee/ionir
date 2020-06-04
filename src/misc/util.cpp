@@ -136,7 +136,7 @@ namespace ionir {
         }
     }
 
-    std::optional<std::string> Util::getInstId(Ptr<Inst> inst) {
+    std::optional<std::string> Util::getInstId(Ptr<Inst> inst) noexcept {
         switch (inst->getInstKind()) {
             case InstKind::Alloca: {
                 return inst->dynamicCast<AllocaInst>()->getYieldId();
@@ -148,10 +148,40 @@ namespace ionir {
         }
     }
 
-    int Util::calculateBitLength(int64_t number) {
+    uint32_t Util::calculateBitLength(int64_t number) {
+        if (number < 0) {
+            throw std::runtime_error("Number cannot be less than zero");
+        }
+        else if (number == 0) {
+            return 1;
+        }
+
         /**
          * Formula has been taken from Wikipedia.
          */
         return floor(log2(number + 1));
+    }
+
+    std::optional<IntegerKind> Util::calculateIntegerKindFromBitLength(uint32_t bitLength) noexcept {
+        if (bitLength == 1) {
+            return IntegerKind::Int1;
+        }
+        else if (bitLength <= 8) {
+            return IntegerKind::Int8;
+        }
+        else if (bitLength <= 16) {
+            return IntegerKind::Int16;
+        }
+        else if (bitLength <= 32) {
+            return IntegerKind::Int32;
+        }
+        else if (bitLength <= 64) {
+            return IntegerKind::Int64;
+        }
+        else if (bitLength <= 128) {
+            return IntegerKind::Int128;
+        }
+
+        return std::nullopt;
     }
 }

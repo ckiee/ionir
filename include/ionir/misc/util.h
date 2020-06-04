@@ -67,14 +67,16 @@ namespace ionir {
 
         static std::optional<std::string> getConstructId(Ptr<Construct> construct);
 
-        static std::optional<std::string> getInstId(Ptr<Inst> inst);
+        static std::optional<std::string> getInstId(Ptr<Inst> inst) noexcept;
 
         /**
          * Returns the number of binary digits, called bits, necessary
          * to represent an integer as a binary number. See more information
          * at: https://en.wikipedia.org/wiki/Bit-length.
          */
-        static int calculateBitLength(int64_t number);
+        static uint32_t calculateBitLength(int64_t number);
+
+        static std::optional<IntegerKind> calculateIntegerKindFromBitLength(uint32_t bitLength) noexcept;
 
         template<typename TKey, typename TValue>
         static bool mapContains(std::map<TKey, TValue> map, TKey key) {

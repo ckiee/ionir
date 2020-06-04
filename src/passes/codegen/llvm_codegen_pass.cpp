@@ -12,7 +12,7 @@ namespace ionir {
         return this->typeStack;
     }
 
-    SymbolTable<llvm::Module *> LlvmCodegenPass::getModules() const {
+    Ptr<SymbolTable<llvm::Module *>> LlvmCodegenPass::getModules() const {
         return this->modules;
     }
 
@@ -21,8 +21,8 @@ namespace ionir {
     }
 
     bool LlvmCodegenPass::setModuleBuffer(std::string id) {
-        if (this->modules.contains(id)) {
-            this->moduleBuffer = this->modules[id];
+        if (this->modules->contains(id)) {
+            this->moduleBuffer = this->modules->lookup(id);
             this->contextBuffer = &(*this->moduleBuffer)->getContext();
 
             return true;
@@ -108,7 +108,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    LlvmCodegenPass::LlvmCodegenPass(SymbolTable<llvm::Module *> modules)
+    LlvmCodegenPass::LlvmCodegenPass(Ptr<SymbolTable<llvm::Module *>> modules)
         : modules(modules), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), blockBuffer(std::nullopt), valueStack(), typeStack(), builderTracker(), emittedEntities({Map<Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //
     }
@@ -314,7 +314,7 @@ namespace ionir {
         this->moduleBuffer = new llvm::Module(node->getId(), **this->contextBuffer);
 
         // Set the module on the modules symbol table.
-        this->modules[node->getId()] = *this->moduleBuffer;
+        this->modules->insert(node->getId(), *this->moduleBuffer);
 
         // Proceed to visit all the module's children (top-level constructs).
         std::map<std::string, Ptr<Construct>> moduleSymbolTable = node->getSymbolTable()->unwrap();
