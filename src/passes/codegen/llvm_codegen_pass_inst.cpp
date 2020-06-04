@@ -97,6 +97,7 @@ namespace ionir {
             throw std::runtime_error("Unresolved branch instruction otherwise reference");
         }
 
+        // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
         // Visit body and otherwise references.
         this->visitBasicBlock(*bodyRef->getValue());
         this->visitBasicBlock(*otherwiseRef->getValue());

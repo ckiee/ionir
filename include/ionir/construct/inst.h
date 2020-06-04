@@ -30,12 +30,16 @@ namespace ionir {
     private:
         InstKind kind;
 
+        OptPtr<Inst> yields;
+
     public:
-        Inst(Ptr<BasicBlock> parent, InstKind kind);
+        Inst(Ptr<BasicBlock> parent, InstKind kind, OptPtr<Inst> yields = std::nullopt);
 
         virtual void accept(Pass &visitor) = 0;
 
-        InstKind getInstKind() noexcept;
+        InstKind getInstKind() const noexcept;
+
+        OptPtr<Inst> getYields() const noexcept;
 
         bool isTerminal() const noexcept;
     };

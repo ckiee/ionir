@@ -40,6 +40,7 @@ TEST(ParserTest, ParseChar) {
 
 TEST(ParserTest, ParseIdentifier) {
     Parser parser = test::bootstrap::parser({
+        Token(TokenKind::OperatorModulo, "%"),
         Token(TokenKind::Identifier, "test")
     });
 

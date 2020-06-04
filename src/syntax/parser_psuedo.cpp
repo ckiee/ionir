@@ -6,6 +6,8 @@
 
 namespace ionir {
     std::optional<std::string> Parser::parseId() {
+        this->skipOver(TokenKind::OperatorModulo);
+
         IONIR_PARSER_EXPECT(TokenKind::Identifier)
 
         Token id = this->stream.get();
