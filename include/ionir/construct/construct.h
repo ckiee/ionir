@@ -47,7 +47,9 @@ namespace ionir {
 
         Ref,
 
-        Value
+        Value,
+
+        Variable
     };
 
     class Construct;

@@ -23,7 +23,15 @@ namespace ionir {
 
         Break,
 
-        Branch
+        Branch,
+
+        PtrToInt,
+
+        Zext,
+
+        Trunc,
+
+        Icmp
     };
 
     class Inst : public ChildConstruct<BasicBlock> {

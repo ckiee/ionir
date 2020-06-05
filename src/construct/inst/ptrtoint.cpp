@@ -3,11 +3,11 @@
 
 namespace ionir {
     PtrToIntInst::PtrToIntInst(PtrToIntInstOpts opts)
-        : Inst(opts.parent, InstKind::Call) {
+        : Inst(opts.parent, InstKind::PtrToInt) {
         //
     }
 
-    void CallInst::accept(Pass &visitor) {
+    void PtrToIntInst::accept(Pass &visitor) {
         // TODO: Implement.
 //        visitor.visitCallInst(this->dynamicCast<CallInst>());
     }
