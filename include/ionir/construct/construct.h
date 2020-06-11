@@ -49,7 +49,7 @@ namespace ionir {
 
         Value,
 
-        Variable
+        RegisterAssign
     };
 
     class Construct;

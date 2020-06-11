@@ -1,21 +1,26 @@
 #pragma once
 
-#include <ionir/misc/helpers.h>
 #include "construct.h"
 
 namespace ionir {
     class Pass;
 
-    class Variable : public Construct {
+    class RegisterAssign : public Construct {
     private:
+        std::string id;
+
         Ptr<Construct> value;
 
     public:
-        explicit Variable(Ptr<Construct> value);
+        explicit RegisterAssign(std::string id, Ptr<Construct> value);
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() override;
+
+        std::string getId() const noexcept;
+
+        void setId(std::string value) noexcept;
 
         Ptr<Construct> getValue() const noexcept;
 

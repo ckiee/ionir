@@ -138,10 +138,6 @@ namespace ionir {
 
     std::optional<std::string> Util::getInstId(Ptr<Inst> inst) noexcept {
         switch (inst->getInstKind()) {
-            case InstKind::Alloca: {
-                return inst->dynamicCast<AllocaInst>()->getYieldId();
-            }
-
             default: {
                 return std::nullopt;
             }

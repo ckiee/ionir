@@ -12,6 +12,10 @@ namespace ionir {
         return this->typeStack;
     }
 
+    Stack<std::string> LlvmCodegenPass::getRegisterStack() const {
+        return this->registerStack;
+    }
+
     Ptr<SymbolTable<llvm::Module *>> LlvmCodegenPass::getModules() const {
         return this->modules;
     }
@@ -109,7 +113,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(Ptr<SymbolTable<llvm::Module *>> modules)
-        : modules(modules), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), blockBuffer(std::nullopt), valueStack(), typeStack(), builderTracker(), emittedEntities({Map<Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
+        : modules(modules), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), blockBuffer(std::nullopt), valueStack(), typeStack(), registerStack(), builderTracker(), emittedEntities({Map<Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //
     }
 
@@ -322,5 +326,9 @@ namespace ionir {
         for (const auto &[id, topLevelConstruct] : moduleSymbolTable) {
             this->visit(topLevelConstruct);
         }
+    }
+
+    void LlvmCodegenPass::visitRegisterAssign(Ptr<RegisterAssign> node) {
+        this->registerStack.push(node->getId());
     }
 }

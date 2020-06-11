@@ -16,7 +16,7 @@ namespace ionir {
          * using the buffered builder.
          */
         llvm::AllocaInst *llvmAllocaInst =
-            this->builderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, *node->getYieldId());
+            this->builderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, this->registerStack.pop());
 
         this->addToScope(node, llvmAllocaInst);
         this->valueStack.push(llvmAllocaInst);

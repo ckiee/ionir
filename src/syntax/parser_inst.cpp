@@ -67,10 +67,6 @@ namespace ionir {
     OptPtr<AllocaInst> Parser::parseAllocaInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstAlloca);
 
-        std::optional<std::string> id = this->parseId();
-
-        IONIR_PARSER_ASSURE(id)
-
         OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
@@ -81,7 +77,6 @@ namespace ionir {
 
         return std::make_shared<AllocaInst>(AllocaInstOpts{
             parent,
-            *id,
             *type,
         });
     }

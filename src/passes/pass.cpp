@@ -210,4 +210,8 @@ namespace ionir {
     void Pass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
         //
     }
+
+    void Pass::visitRegisterAssign(Ptr<ionir::RegisterAssign> node) {
+        //
+    }
 }

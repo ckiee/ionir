@@ -32,6 +32,8 @@ namespace ionir {
 
         LlvmStack<llvm::Type> typeStack;
 
+        Stack<std::string> registerStack;
+
         Ptr<SymbolTable<llvm::Module *>> modules;
 
         /**
@@ -95,6 +97,8 @@ namespace ionir {
 
         LlvmStack<llvm::Type> getTypeStack() const;
 
+        Stack<std::string> getRegisterStack() const;
+
         Ptr<SymbolTable<llvm::Module *>> getModules() const;
 
         std::optional<llvm::Module *> getModuleBuffer() const;
@@ -142,5 +146,7 @@ namespace ionir {
         void visitVoidType(Ptr<VoidType> node) override;
 
         void visitModule(Ptr<Module> node) override;
+
+        void visitRegisterAssign(Ptr<RegisterAssign> node) override;
     };
 }

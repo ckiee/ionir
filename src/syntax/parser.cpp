@@ -141,21 +141,31 @@ namespace ionir {
         PtrSymbolTable<Inst> symbolTable = basicBlock->getSymbolTable();
 
         while (!this->is(TokenKind::SymbolBraceR) && !this->is(TokenKind::SymbolAt)) {
-            OptPtr<Inst> inst = this->parseInst(basicBlock);
+            OptPtr<Inst> inst = std::nullopt;
+
+            // TODO: This means that allocas without register assigns are possible (lonely, redundant allocas).
+            // Register assignment. This includes an instruction.
+            if (this->is(TokenKind::OperatorModulo)) {
+                OptPtr<RegisterAssign> registerAssign = this->parseRegisterAssign(basicBlock);
+
+                IONIR_PARSER_ASSURE(registerAssign)
+
+                inst = registerAssign->get()->getValue()->dynamicCast<Inst>();
+
+                /**
+                 * Register the instruction on the resulting block's symbol
+                 * table.
+                 */
+                symbolTable->insert(registerAssign->get()->getId(), *inst);
+            }
+            // Otherwise, it must be just an instruction.
+            else {
+                inst = this->parseInst(basicBlock);
+            }
 
             IONIR_PARSER_ASSURE(inst)
 
             insts.push_back(*inst);
-
-            /**
-             * Register the alloca instruction on
-             * the resulting section's symbol table.
-             */
-            if (inst->get()->getInstKind() == InstKind::Alloca) {
-                Ptr<AllocaInst> allocaInst = inst->get()->dynamicCast<AllocaInst>();
-
-                symbolTable->insert(*allocaInst->getYieldId(), allocaInst);
-            }
         }
 
         this->stream.skip();
@@ -221,6 +231,21 @@ namespace ionir {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceR))
 
         return std::make_shared<Module>(*id, symbolTable);
+    }
+
+    OptPtr<RegisterAssign> Parser::parseRegisterAssign(Ptr<BasicBlock> parent) {
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::OperatorModulo))
+
+        std::optional<std::string> id = this->parseId();
+
+        IONIR_PARSER_ASSURE(id)
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolEqual))
+
+        OptPtr<Inst> inst = this->parseInst(parent);
+
+        IONIR_PARSER_ASSURE(inst)
+
+        return std::make_shared<RegisterAssign>(*id, *inst);
     }
 
     std::optional<std::string> Parser::parseLine() {

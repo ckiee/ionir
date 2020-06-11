@@ -24,6 +24,7 @@
 #include <ionir/construct/module.h>
 #include <ionir/construct/value.h>
 #include <ionir/construct/inst.h>
+#include <ionir/construct/register_assign.h>
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
@@ -94,5 +95,7 @@ namespace ionir {
         virtual void visitRef(PtrRef<> node);
 
         virtual void visitScopeAnchor(Ptr<ScopeAnchor<>> node);
+
+        virtual void visitRegisterAssign(Ptr<RegisterAssign> node);
     };
 }

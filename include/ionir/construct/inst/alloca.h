@@ -10,12 +10,10 @@ namespace ionir {
     class BasicBlock;
 
     struct AllocaInstOpts : InstOpts {
-        std::string yieldId;
-
         Ptr<Type> type;
     };
 
-    class AllocaInst : public Inst, public InstYield {
+    class AllocaInst : public Inst {
     private:
         Ptr<Type> type;
 

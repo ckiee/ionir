@@ -16,7 +16,6 @@ namespace ionir {
     Ptr<AllocaInst> InstBuilder::createAlloca(std::string id, Ptr<Type> type) {
         Ptr<AllocaInst> allocaInst = this->make<AllocaInst>(AllocaInstOpts{
             this->basicBlock,
-            id,
             type
         });
 

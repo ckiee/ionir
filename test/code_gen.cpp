@@ -93,7 +93,6 @@ TEST(CodeGenTest, VisitAllocaInst) {
     std::vector<Ptr<Inst>> insts = {
         std::make_shared<AllocaInst>(AllocaInstOpts{
             nullptr,
-            test::constant::foobar,
             TypeFactory::typeInteger(IntegerKind::Int32)
         })
     };
@@ -145,7 +144,6 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
          */
         *functionEntryBlock,
 
-        test::constant::foo,
         returnValueType
     });
 
