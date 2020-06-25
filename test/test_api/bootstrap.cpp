@@ -54,7 +54,8 @@ namespace ionir::test::bootstrap {
             nullptr,
             BasicBlockKind::Entry,
             Const::basicBlockEntryId,
-            insts,
+            {},
+            insts
         });
 
         // TODO: Fix mumbo-jumbo debugging code. -------------

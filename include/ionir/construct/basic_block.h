@@ -44,6 +44,8 @@ namespace ionir {
 
         std::string id;
 
+        std::vector<Ptr<RegisterAssign>> registers = {};
+
         std::vector<Ptr<Inst>> insts = {};
 
         PtrSymbolTable<Inst> symbolTable = TypeFactory::makePtrSymbolTable<Inst>();
