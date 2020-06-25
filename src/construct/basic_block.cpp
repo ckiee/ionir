@@ -14,11 +14,22 @@ namespace ionir {
     }
 
     Ast BasicBlock::getChildNodes() {
-        return Construct::convertChildren(this->insts);
+        return Construct::mergeChildren(
+            Construct::convertChildren(this->insts),
+            Construct::convertChildren(this->registers)
+        );
     }
 
     BasicBlockKind BasicBlock::getKind() const noexcept {
         return this->kind;
+    }
+
+    std::vector<Ptr<RegisterAssign>> &BasicBlock::getRegisters() noexcept {
+        return this->registers;
+    }
+
+    void BasicBlock::setRegisters(std::vector<Ptr<RegisterAssign>> registers) {
+        this->registers = registers;
     }
 
     std::vector<Ptr<Inst>> &BasicBlock::getInsts() noexcept {

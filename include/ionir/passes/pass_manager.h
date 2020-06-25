@@ -28,9 +28,8 @@ namespace ionir {
     class PassManager {
     private:
         /**
-         * Internal container on which pass
-         * manager items will be both stored
-         * and processed from.
+         * Internal container on which pass manager items will
+         * be both stored and processed from.
          */
         std::vector<PassManagerItem> passes;
 
@@ -42,9 +41,9 @@ namespace ionir {
         void setPasses(std::vector<PassManagerItem> passes);
 
         /**
-         * Register a pass in the set. Returns whether
-         * the provided pass was successfully registered
-         * in the internal set.
+         * Register a pass in the set. Returns whether the provided
+         * pass was successfully registered in the internal set.
+         *
          */
         void registerPass(PassManagerItem item);
 

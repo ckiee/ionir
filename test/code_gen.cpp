@@ -90,6 +90,11 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
 TEST(CodeGenTest, VisitAllocaInst) {
     Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 
+    llvmCodegenPass->visitRegisterAssign(std::make_shared<RegisterAssign>(
+        test::constant::foobar,
+        nullptr
+    ));
+
     std::vector<Ptr<Inst>> insts = {
         std::make_shared<AllocaInst>(AllocaInstOpts{
             nullptr,
@@ -124,6 +129,11 @@ TEST(CodeGenTest, VisitReturnInst) {
 TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
     Ptr<NameResolutionPass> nameResolutionPass = std::make_shared<NameResolutionPass>();
     Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+
+    llvmCodegenPass->visitRegisterAssign(std::make_shared<RegisterAssign>(
+        test::constant::foo,
+        nullptr
+    ));
 
     // TODO: Return value type is being reused, even tho in both contexts it's independent (alloca inst, and return inst).
     Ptr<IntegerType> returnValueType = TypeFactory::typeInteger(IntegerKind::Int32);

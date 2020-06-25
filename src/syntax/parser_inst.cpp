@@ -1,4 +1,3 @@
-#include <ionir/const/const_name.h>
 #include <ionir/syntax/parser.h>
 #include <ionir/syntax/parser_helpers.h>
 

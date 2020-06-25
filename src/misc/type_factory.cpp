@@ -5,8 +5,8 @@ namespace ionir {
         return std::make_shared<IntegerType>(integerKind, isSigned);
     }
 
-    Ptr<IntegerType> TypeFactory::typeBoolean() {
-        return TypeFactory::typeInteger(IntegerKind::Int1);
+    Ptr<BooleanType> TypeFactory::typeBoolean() {
+        return std::make_shared<BooleanType>();
     }
 
     Ptr<IntegerType> TypeFactory::typeChar() {

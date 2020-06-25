@@ -9,7 +9,8 @@ namespace ionir {
     const std::string Const::basicBlockEntryId = "entry";
 
     std::map<TokenKind, int> Const::operatorPrecedence = {
-        {TokenKind::OperatorAdd, 20}, {TokenKind::OperatorSub, 20},
+        {TokenKind::OperatorAdd, 20},
+        {TokenKind::OperatorSub, 20},
         {TokenKind::OperatorMultiply, 40},
         {TokenKind::OperatorDivide, 40},
         {TokenKind::OperatorModulo, 40},
@@ -34,6 +35,7 @@ namespace ionir {
     };
 
     std::map<TokenKind, IntegerKind> Const::tokenKindToIntegerKind = {
+        {TokenKind::TypeInt8, IntegerKind::Int8},
         {TokenKind::TypeInt16, IntegerKind::Int16},
         {TokenKind::TypeInt32, IntegerKind::Int32},
         {TokenKind::TypeInt64, IntegerKind::Int64}

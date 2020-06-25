@@ -12,6 +12,7 @@
 #include <ionir/construct/type/struct_decl.h>
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
+#include <ionir/construct/type/boolean_type.h>
 #include <ionir/construct/pseudo/directive.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/function.h>
@@ -87,6 +88,8 @@ namespace ionir {
         virtual void visitIntegerType(Ptr<IntegerType> node);
 
         virtual void visitVoidType(Ptr<VoidType> node);
+
+        virtual void visitBooleanType(Ptr<BooleanType> node);
 
         virtual void visitModule(Ptr<Module> node);
 

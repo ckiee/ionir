@@ -19,13 +19,15 @@ namespace ionir {
     }
 
     bool Classifier::isUnsignedIntegerType(TokenKind tokenKind) {
-        return tokenKind == TokenKind::TypeUnsignedInt16
+        return tokenKind == TokenKind::TypeUnsignedInt8
+            || tokenKind == TokenKind::TypeUnsignedInt16
             || tokenKind == TokenKind::TypeUnsignedInt32
             || tokenKind == TokenKind::TypeUnsignedInt64;
     }
 
     bool Classifier::isIntegerType(TokenKind tokenKind) {
-        return tokenKind == TokenKind::TypeInt16
+        return tokenKind == TokenKind::TypeInt8
+            || tokenKind == TokenKind::TypeInt16
             || tokenKind == TokenKind::TypeInt32
             || tokenKind == TokenKind::TypeInt64
             || Classifier::isUnsignedIntegerType(tokenKind);

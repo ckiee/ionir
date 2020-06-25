@@ -11,6 +11,7 @@
 #include "inst.h"
 #include "child_construct.h"
 #include "type.h"
+#include "register_assign.h"
 
 namespace ionir {
     class Pass;
@@ -53,6 +54,8 @@ namespace ionir {
     private:
         BasicBlockKind kind;
 
+        std::vector<Ptr<RegisterAssign>> registers;
+
         std::vector<Ptr<Inst>> insts;
 
     public:
@@ -63,6 +66,10 @@ namespace ionir {
         Ast getChildNodes() override;
 
         BasicBlockKind getKind() const noexcept;
+
+        std::vector<Ptr<RegisterAssign>> &getRegisters() noexcept;
+
+        void setRegisters(std::vector<Ptr<RegisterAssign>> registers);
 
         std::vector<Ptr<Inst>> &getInsts() noexcept;
 

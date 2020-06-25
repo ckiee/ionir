@@ -58,10 +58,6 @@ namespace ionir {
 
     std::string Util::resolveIntegerKindName(IntegerKind kind) {
         switch (kind) {
-            case IntegerKind::Int1: {
-                return ConstName::typeInt1;
-            }
-
             case IntegerKind ::Int8: {
                 return ConstName::typeInt8;
             }
@@ -87,10 +83,7 @@ namespace ionir {
     TypeKind Util::resolveTypeKind(std::string id) {
         // TODO: CRITICAL: Add support new/missing types.
 
-        if (id == ConstName::typeInt1) {
-            return TypeKind::Integer;
-        }
-        else if (id == ConstName::typeInt8) {
+        if (id == ConstName::typeInt8) {
             return TypeKind::Integer;
         }
         else if (id == ConstName::typeInt16) {
@@ -159,10 +152,7 @@ namespace ionir {
     }
 
     std::optional<IntegerKind> Util::calculateIntegerKindFromBitLength(uint32_t bitLength) noexcept {
-        if (bitLength == 1) {
-            return IntegerKind::Int1;
-        }
-        else if (bitLength <= 8) {
+        if (bitLength <= 8) {
             return IntegerKind::Int8;
         }
         else if (bitLength <= 16) {

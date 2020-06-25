@@ -7,8 +7,6 @@ namespace ionir {
     class Pass;
 
     enum class IntegerKind {
-        Int1 = 1,
-
         Int8 = 8,
 
         Int16 = 16,

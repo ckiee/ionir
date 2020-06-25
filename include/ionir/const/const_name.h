@@ -13,8 +13,6 @@ namespace ionir {
 
         static const std::string typeBool;
 
-        static const std::string typeInt1;
-
         static const std::string typeInt8;
 
         static const std::string typeInt16;

@@ -195,6 +195,10 @@ namespace ionir {
         //
     }
 
+    void Pass::visitBooleanType(Ptr<BooleanType> node) {
+        //
+    }
+
     void Pass::visitModule(Ptr<Module> node) {
         //
     }

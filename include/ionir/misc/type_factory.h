@@ -3,6 +3,7 @@
 #include <memory>
 #include <ionir/construct/type/integer_type.h>
 #include <ionir/construct/type/void_type.h>
+#include <ionir/construct/type/boolean_type.h>
 #include <ionir/construct/construct.h>
 #include <ionir/tracking/symbol_table.h>
 #include "util.h"
@@ -23,7 +24,7 @@ namespace ionir {
 
         static Ptr<IntegerType> typeInteger(IntegerKind integerKind, bool isSigned = true);
 
-        static Ptr<IntegerType> typeBoolean();
+        static Ptr<BooleanType> typeBoolean();
 
         static Ptr<IntegerType> typeChar();
 

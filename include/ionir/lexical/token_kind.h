@@ -78,11 +78,15 @@ namespace ionir {
 
         TypeBool,
 
+        TypeInt8,
+
         TypeInt16,
 
         TypeInt32,
 
         TypeInt64,
+
+        TypeUnsignedInt8,
 
         TypeUnsignedInt16,
 

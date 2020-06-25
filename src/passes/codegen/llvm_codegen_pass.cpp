@@ -255,16 +255,10 @@ namespace ionir {
         std::optional<llvm::IntegerType *> type;
 
         /**
-         * Create the corresponding LLVM integer type
-         * based off the node's integer kind.
+         * Create the corresponding LLVM integer type based off the
+         * node's integer kind.
          */
         switch (node->getIntegerKind()) {
-            case IntegerKind::Int1: {
-                type = llvm::Type::getInt1Ty(**this->contextBuffer);
-
-                break;
-            }
-
             case IntegerKind::Int8: {
                 type = llvm::Type::getInt8Ty(**this->contextBuffer);
 

@@ -9,8 +9,6 @@ namespace ionir {
 
     const std::string ConstName::typeBool = "bool";
 
-    const std::string ConstName::typeInt1 = "i1";
-
     const std::string ConstName::typeInt8 = "i8";
 
     const std::string ConstName::typeInt16 = "i16";

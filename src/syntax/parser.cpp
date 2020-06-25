@@ -137,6 +137,7 @@ namespace ionir {
             *id
         });
 
+        std::vector<Ptr<RegisterAssign>> registers = {};
         std::vector<Ptr<Inst>> insts = {};
         PtrSymbolTable<Inst> symbolTable = basicBlock->getSymbolTable();
 
@@ -157,6 +158,12 @@ namespace ionir {
                  * table.
                  */
                 symbolTable->insert(registerAssign->get()->getId(), *inst);
+
+                /**
+                 * Add the register to the block's registers to be processed later
+                 * for code-gen.
+                 */
+                registers.push_back(*registerAssign);
             }
             // Otherwise, it must be just an instruction.
             else {
@@ -211,7 +218,6 @@ namespace ionir {
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
             if (Util::hasValue(topLevelConstruct)) {
-                std::cout << "parsed top level ---- " << std::endl;
                 std::optional<std::string> name = Util::getConstructId(*topLevelConstruct);
 
                 if (!name.has_value()) {

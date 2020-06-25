@@ -15,7 +15,9 @@ namespace ionir {
 
         Integer,
 
-        String
+        String,
+
+        Boolean
     };
 
     class Type : public Construct, public Named {

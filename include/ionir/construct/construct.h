@@ -84,6 +84,21 @@ namespace ionir {
             return children;
         }
 
+        template<typename TFirst, typename TSecond>
+        static Ast mergeChildren(TFirst first, TSecond second) {
+            Ast children = {};
+
+            for (const auto item : second) {
+                children.push_back(item);
+            }
+
+            for (const auto item : first) {
+                children.push_back(item);
+            }
+
+            return children;
+        }
+
         explicit Construct(ConstructKind kind);
 
         virtual void accept(Pass &visitor) = 0;
