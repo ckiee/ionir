@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <stack>
+#include <queue>
 #include <llvm/IR/Module.h>
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/IR/Type.h>
@@ -32,7 +33,7 @@ namespace ionir {
 
         LlvmStack<llvm::Type> typeStack;
 
-        Stack<std::string> registerStack;
+        std::queue<std::string> registerQueue;
 
         Ptr<SymbolTable<llvm::Module *>> modules;
 
@@ -97,7 +98,7 @@ namespace ionir {
 
         LlvmStack<llvm::Type> getTypeStack() const;
 
-        Stack<std::string> getRegisterStack() const;
+        std::queue<std::string> getRegisterQueue() const;
 
         Ptr<SymbolTable<llvm::Module *>> getModules() const;
 

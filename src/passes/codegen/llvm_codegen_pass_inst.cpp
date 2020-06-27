@@ -11,12 +11,16 @@ namespace ionir {
 
         llvm::Type *type = this->typeStack.pop();
 
+        std::string _register = this->registerQueue.front();
+
+        this->registerQueue.pop();
+
         /**
          * Create the LLVM-equivalent alloca instruction
          * using the buffered builder.
          */
         llvm::AllocaInst *llvmAllocaInst =
-            this->builderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, this->registerStack.pop());
+            this->builderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, _register);
 
         this->addToScope(node, llvmAllocaInst);
         this->valueStack.push(llvmAllocaInst);
