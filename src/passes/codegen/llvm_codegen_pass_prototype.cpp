@@ -6,10 +6,9 @@
 namespace ionir {
     void LlvmCodegenPass::visit(Ptr<Construct> node) {
         /**
-         * Only instruct the node to visit this
-         * instance and not its children, since
-         * they're already visited by the other
-         * member methods.
+         * Only instruct the node to visit this instance and
+         * not its children, since they're already visited by
+         * the other member methods.
          */
         node->accept(*this);
     }

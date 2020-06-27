@@ -139,8 +139,14 @@ namespace ionir {
         // Create and assign the block to the builder. This will also set/update the block buffer.
         this->setBuilder(block);
 
-        // Visit and append instructions.
+        // Visit registers & instructions.
+        std::vector<Ptr<RegisterAssign>> registers = node->getRegisters();
         std::vector<Ptr<Inst>> insts = node->getInsts();
+
+        // Process registers.
+        for (const auto &_register : registers) {
+            this->visitRegisterAssign(_register);
+        }
 
         // Process instructions.
         for (const auto &inst : insts) {

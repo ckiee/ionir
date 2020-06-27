@@ -16,8 +16,6 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() override;
-
         std::string getId() const noexcept;
 
         void setId(std::string value) noexcept;

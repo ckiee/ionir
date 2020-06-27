@@ -1,3 +1,4 @@
+#include <ionir/passes/pass.h>
 #include <ionir/construct/register_assign.h>
 
 namespace ionir {
@@ -7,13 +8,7 @@ namespace ionir {
     }
 
     void RegisterAssign::accept(Pass &visitor) {
-        // TODO: Implement.
-        throw std::runtime_error("Not yet implemented");
-    }
-
-    Ast RegisterAssign::getChildNodes() {
-        // TODO: Not implemented.
-        throw std::runtime_error("Not yet implemented");
+        visitor.visitRegisterAssign(this->dynamicCast<RegisterAssign>());
     }
 
     std::string RegisterAssign::getId() const noexcept {

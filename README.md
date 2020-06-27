@@ -87,12 +87,10 @@ int main() {
     Ast ast = driver.invoke();
 
     /**
-     * Create a PassManager instance and register 
-     * various passes which will traverse, analyze
-     * and modify the resulting, parsed AST. It is
-     * important to note that the order in which passes
-     * are registered matters since those registered
-     * and executed first may modify the AST.
+     * Create a PassManager instance and register various passes which
+     * will traverse, analyze and modify the resulting, parsed AST. It is
+     * important to note that the order in which passes are registered matters
+     * since those registered and executed first may modify the AST.
      */
     PassManager passManager;
 

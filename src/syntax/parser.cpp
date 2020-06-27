@@ -176,6 +176,7 @@ namespace ionir {
         }
 
         this->stream.skip();
+        basicBlock->setRegisters(registers);
         basicBlock->setInsts(insts);
 
         return basicBlock;

@@ -88,11 +88,11 @@ namespace ionir {
         static Ast mergeChildren(TFirst first, TSecond second) {
             Ast children = {};
 
-            for (const auto item : second) {
+            for (const auto item : first) {
                 children.push_back(item);
             }
 
-            for (const auto item : first) {
+            for (const auto item : second) {
                 children.push_back(item);
             }
 

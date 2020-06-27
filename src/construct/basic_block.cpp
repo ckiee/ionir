@@ -15,8 +15,8 @@ namespace ionir {
 
     Ast BasicBlock::getChildNodes() {
         return Construct::mergeChildren(
-            Construct::convertChildren(this->insts),
-            Construct::convertChildren(this->registers)
+            Construct::convertChildren(this->registers),
+            Construct::convertChildren(this->insts)
         );
     }
 

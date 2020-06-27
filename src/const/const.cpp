@@ -31,7 +31,8 @@ namespace ionir {
         {ConstructKind::StructDecl, "StructDeclaration"},
         {ConstructKind::Module, "Module"},
         {ConstructKind::Ref, "Reference"},
-        {ConstructKind::Value, "Value"}
+        {ConstructKind::Value, "Value"},
+        {ConstructKind::RegisterAssign, "RegisterAssign"}
     };
 
     std::map<TokenKind, IntegerKind> Const::tokenKindToIntegerKind = {
