@@ -5,13 +5,14 @@
 #include <ionir/construct/pseudo/args.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/misc/named.h>
+#include "child_construct.h"
 #include "type.h"
-#include "construct.h"
+#include "module.h"
 
 namespace ionir {
     class Pass;
 
-    class Prototype : public Construct, public Named {
+    class Prototype : public ChildConstruct<Module>, public Named {
     private:
         std::string id;
 
@@ -20,7 +21,7 @@ namespace ionir {
         Ptr<Type> returnType;
 
     public:
-        Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType);
+        Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType, Ptr<Module> parent);
 
         void accept(Pass &visitor) override;
 

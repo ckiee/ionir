@@ -10,12 +10,10 @@ namespace ionir {
     class Function;
 
     struct CallInstOpts : InstOpts {
-        std::optional<std::string> yieldId;
-
         OptPtrRef<Function> callee = std::nullopt;
     };
 
-    class CallInst : public Inst, public InstYield {
+    class CallInst : public Inst {
     private:
         OptPtrRef<Function> callee;
 

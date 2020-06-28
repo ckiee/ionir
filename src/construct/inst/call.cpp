@@ -2,7 +2,7 @@
 
 namespace ionir {
     CallInst::CallInst(CallInstOpts opts)
-        : Inst(opts.parent, InstKind::Call), InstYield(opts.yieldId), callee(opts.callee) {
+        : Inst(opts.parent, InstKind::Call), callee(opts.callee) {
         //
     }
 

@@ -31,7 +31,7 @@ namespace ionir {
 
         Ptr<FunctionBody> getBody() const noexcept;
 
-        // TOOD: Should this automatically set the body's parent as well?
+        // TODO: Should this automatically set the body's parent as well?
         void setBody(Ptr<FunctionBody> body) noexcept;
 
         PtrSymbolTable<LocalVariableDescriptor> getLocalVariables() const;

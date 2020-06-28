@@ -48,12 +48,13 @@ namespace ionir {
         int64_t value;
 
         try {
+            // TODO: Need to add support for 128-bit length.
             /**
              * May throw an exception if invalid arguments are provided,
              * or of the integer is too large to be held in any integer
-             * type native to C++.
+             * type native to C++ (maximum is 64-bit length).
              */
-            value = std::stol(tokenValue);
+            value = std::stoll(tokenValue);
         }
         catch (std::exception& exception) {
             // Value conversion failed.

@@ -29,25 +29,39 @@ namespace ionir {
             case ConstructKind::Inst: {
                 Ptr<Inst> inst = owner->dynamicCast<Inst>();
                 Ptr<BasicBlock> basicBlock = inst->getParent();
-                PtrSymbolTable<BasicBlock> functionSymbolTable = basicBlock->getParent()->getSymbolTable();
                 PtrSymbolTable<Inst> basicBlockSymbolTable = basicBlock->getSymbolTable();
+                Ptr<FunctionBody> functionBody = basicBlock->getParent();
+                PtrSymbolTable<BasicBlock> functionSymbolTable = functionBody->getSymbolTable();
+                Ptr<Module> module = functionBody->getParent()->getPrototype()->getParent();
+                PtrSymbolTable<Construct> moduleSymbolTable = module->getSymbolTable();
 
                 /**
                  * Check on the section's symbol table. It should take precedence
-                 * before the function's symbol table.
+                 * before the function's symbol table. This will look for instructions.
                  */
                 if (basicBlockSymbolTable->contains(id)) {
                     node->resolve(basicBlockSymbolTable->lookup(id));
 
                     return;
                 }
-                // Check on the function's symbol table for the referenced entity.
+                /**
+                 * Check on the function's symbol table for the referenced entity.
+                 * This will look for sections.
+                 */
                 else if (functionSymbolTable->contains(id)) {
                     node->resolve(functionSymbolTable->lookup(id));
 
                     return;
                 }
-                // TODO: Check globals, externs & modules.
+                /**
+                 * Finally, check on the module's symbol table for the referenced
+                 * entity. This will look for functions, externs, and globals.
+                 */
+                else if (moduleSymbolTable->contains(id)) {
+                    node->resolve(moduleSymbolTable->lookup(id));
+
+                    return;
+                }
 
                 // Otherwise, report an undefined reference error.
                 // TODO: Create NoticeContext using some sort of factory, for now throw error.
@@ -56,7 +70,7 @@ namespace ionir {
 
             // TODO: Finish implementation.
             default: {
-                throw std::runtime_error("Unhandled construct kind");
+                throw std::runtime_error("Unhandled construct kind when trying to resolve reference");
             }
         }
     }

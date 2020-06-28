@@ -51,10 +51,9 @@ namespace ionir {
         });
     }
 
-    Ptr<CallInst> InstBuilder::createCall(Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee, std::optional<std::string> yieldId) {
+    Ptr<CallInst> InstBuilder::createCall(Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee) {
         return this->make<CallInst>(CallInstOpts{
             this->basicBlock,
-            yieldId,
             callee
         });
     }

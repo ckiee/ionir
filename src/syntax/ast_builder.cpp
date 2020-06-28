@@ -81,7 +81,7 @@ namespace ionir {
 
         Ptr<Type> returnType = std::make_shared<VoidType>();
         Ptr<Args> args = std::make_shared<Args>();
-        Ptr<Prototype> prototype = std::make_shared<Prototype>(id, args, returnType);
+        Ptr<Prototype> prototype = std::make_shared<Prototype>(id, args, returnType, *this->moduleBuffer);
         Ptr<Function> function = std::make_shared<Function>(prototype, block);
 
         block->setParent(function);

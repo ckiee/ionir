@@ -68,14 +68,14 @@ namespace ionir {
         return this->filePath;
     }
 
-    OptPtr<Construct> Parser::parseTopLevel() {
+    OptPtr<Construct> Parser::parseTopLevel(Ptr<Module> parent) {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordModule: {
                 return this->parseModule();
             }
 
             case TokenKind::KeywordFunction: {
-                return this->parseFunction();
+                return this->parseFunction(parent);
             }
 
             case TokenKind::KeywordGlobal: {
@@ -83,7 +83,7 @@ namespace ionir {
             }
 
             case TokenKind::KeywordExtern: {
-                return this->parseExtern();
+                return this->parseExtern(parent);
             }
 
             default: {
@@ -213,9 +213,10 @@ namespace ionir {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         PtrSymbolTable<Construct> symbolTable = std::make_shared<SymbolTable<Ptr<Construct>>>();
+        Ptr<Module> module = std::make_shared<Module>(*id, symbolTable);
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            OptPtr<Construct> topLevelConstruct = this->parseTopLevel();
+            OptPtr<Construct> topLevelConstruct = this->parseTopLevel(module);
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
             if (Util::hasValue(topLevelConstruct)) {
@@ -237,7 +238,7 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceR))
 
-        return std::make_shared<Module>(*id, symbolTable);
+        return module;
     }
 
     OptPtr<RegisterAssign> Parser::parseRegisterAssign(Ptr<BasicBlock> parent) {

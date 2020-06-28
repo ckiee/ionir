@@ -63,7 +63,7 @@ namespace ionir {
 
         std::string getFilePath() const;
 
-        OptPtr<Construct> parseTopLevel();
+        OptPtr<Construct> parseTopLevel(Ptr<Module> parent);
 
         /**
          * Parses a integer literal in the form of
@@ -89,11 +89,11 @@ namespace ionir {
 
         OptPtr<Args> parseArgs();
 
-        OptPtr<Prototype> parsePrototype();
+        OptPtr<Prototype> parsePrototype(Ptr<Module> parent);
 
-        OptPtr<Extern> parseExtern();
+        OptPtr<Extern> parseExtern(Ptr<Module> parent);
 
-        OptPtr<Function> parseFunction();
+        OptPtr<Function> parseFunction(Ptr<Module> parent);
 
         OptPtr<Global> parseGlobal();
 

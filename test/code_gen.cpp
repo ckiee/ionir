@@ -15,7 +15,7 @@ TEST(CodeGenTest, VisitExtern) {
     Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
     Ptr<VoidType> returnType = TypeFactory::typeVoid();
     Ptr<Args> args = std::make_shared<Args>();
-    Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, args, returnType);
+    Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, args, returnType, nullptr);
     Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
 
     llvmCodegenPass->visitExtern(externConstruct);
@@ -28,7 +28,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     Ptr<VoidType> returnType = TypeFactory::typeVoid();
 
     Ptr<Prototype> prototype =
-        std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType);
+        std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType, nullptr);
 
     Ptr<FunctionBody> body = std::make_shared<FunctionBody>(nullptr);
 

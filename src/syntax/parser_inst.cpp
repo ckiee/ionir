@@ -144,9 +144,17 @@ namespace ionir {
     OptPtr<CallInst> Parser::parseCallInst(Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstCall);
 
-        // TODO
+        std::optional<std::string> calleeId = this->parseId();
 
-        return this->makeNotice("Not yet implemented");
+        IONIR_PARSER_ASSURE(calleeId)
+
+        // TODO: Is the BasicBlock parent the correct one? Just passing it because it seems like so. Check.
+        Ptr<Ref<Function>> callee = std::make_shared<Ref<Function>>(*calleeId, parent);
+
+        return std::make_shared<CallInst>(CallInstOpts{
+            parent,
+            callee
+        });;
     }
 
     OptPtr<StoreInst> Parser::parseStoreInst(Ptr<BasicBlock> parent) {

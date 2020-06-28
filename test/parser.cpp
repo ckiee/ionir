@@ -143,7 +143,7 @@ TEST(ParserTest, ParseEmptyPrototype) {
         Token(TokenKind::Identifier, "type")
     });
 
-    auto prototype = parser.parsePrototype();
+    auto prototype = parser.parsePrototype(nullptr);
 
     EXPECT_TRUE(Util::hasValue(prototype));
 
@@ -174,7 +174,7 @@ TEST(ParserTest, ParseEmptyFunction) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    OptPtr<Function> function = parser.parseFunction();
+    OptPtr<Function> function = parser.parseFunction(nullptr);
 
     EXPECT_TRUE(Util::hasValue(function));
 
@@ -214,7 +214,7 @@ TEST(ParserTest, ParseFunction) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    OptPtr<Function> function = parser.parseFunction();
+    OptPtr<Function> function = parser.parseFunction(nullptr);
 
     EXPECT_TRUE(Util::hasValue(function));
 
@@ -301,7 +301,7 @@ TEST(ParserTest, ParseExtern) {
         Token(TokenKind::Identifier, "type")
     });
 
-    OptPtr<Extern> externConstruct = parser.parseExtern();
+    OptPtr<Extern> externConstruct = parser.parseExtern(nullptr);
 
     EXPECT_TRUE(Util::hasValue(externConstruct));
 

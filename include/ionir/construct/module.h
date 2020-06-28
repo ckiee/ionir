@@ -9,6 +9,8 @@
 namespace ionir {
     class Pass;
 
+    class Function;
+
     class Module : public Construct, public ScopeAnchor<>, public Named {
     public:
         explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = TypeFactory::makePtrSymbolTable<>());

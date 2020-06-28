@@ -1,4 +1,5 @@
 #include <ionir/passes/pass.h>
+#include <ionir/construct/function.h>
 
 namespace ionir {
     Module::Module(std::string id, PtrSymbolTable<Construct> symbolTable)
