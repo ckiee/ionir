@@ -5,8 +5,8 @@
 
 #include <string>
 #include <vector>
+#include <ionshared/reporting/notice.h>
 #include <ionir/lexical/token.h>
-#include "notice.h"
 
 namespace ionir {
     struct CodeBlockLine {
@@ -41,8 +41,8 @@ namespace ionir {
 
         std::optional<CodeBlock> createCodeBlockNear(Token token, uint32_t grace = IONIR_DEFAULT_GRACE);
 
-        std::optional<CodeBlock> createCodeBlockNear(NoticeContext noticeContext, uint32_t grace = IONIR_DEFAULT_GRACE);
+        std::optional<CodeBlock> createCodeBlockNear(ionshared::NoticeContext noticeContext, uint32_t grace = IONIR_DEFAULT_GRACE);
 
-        std::optional<CodeBlock> createCodeBlockNear(Notice notice, uint32_t grace = IONIR_DEFAULT_GRACE);
+        std::optional<CodeBlock> createCodeBlockNear(ionshared::Notice notice, uint32_t grace = IONIR_DEFAULT_GRACE);
     };
 }

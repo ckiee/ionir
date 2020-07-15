@@ -12,6 +12,9 @@ set(PROJECT_URL "https://github.com/ionlang/ionir")
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
+# Scan dependencies.
+find_package(ionshared REQUIRED)
+
 # Setup default build flags.
 #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} /MT")
@@ -78,8 +81,8 @@ target_include_directories(
 # that we wish to use.
 llvm_map_components_to_libnames(llvm_libs all)
 
-# Link against LLVM libraries.
-target_link_libraries("${PROJECT_NAME}" LLVM)
+# Link against various libraries including LLVM & libionshared.
+target_link_libraries("${PROJECT_NAME}" LLVM ionshared::ionshared)
 
 # TODO: Adding subdirs eitherway.
 add_subdirectory(libs/googletest)

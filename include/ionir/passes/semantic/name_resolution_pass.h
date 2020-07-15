@@ -1,8 +1,8 @@
 #pragma once
 
+#include <ionshared/reporting/notice.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/passes/pass.h>
-#include <ionir/reporting/notice.h>
 #include <ionir/tracking/symbol_table.h>
 
 namespace ionir {
@@ -12,12 +12,12 @@ namespace ionir {
      */
     class NameResolutionPass : public Pass {
     private:
-        Ptr<StackTrace> stackTrace;
+        Ptr<ionshared::StackTrace> stackTrace;
 
         std::list<PtrSymbolTable<Construct>> scope;
 
     public:
-        explicit NameResolutionPass(Ptr<StackTrace> stackTrace = std::make_shared<StackTrace>());
+        explicit NameResolutionPass(Ptr<ionshared::StackTrace> stackTrace = std::make_shared<ionshared::StackTrace>());
 
         void visitModule(Ptr<Module> node) override;
 
@@ -25,7 +25,7 @@ namespace ionir {
 
         void visitRef(PtrRef<> node) override;
 
-        Ptr<StackTrace> getStackTrace() const;
+        Ptr<ionshared::StackTrace> getStackTrace() const;
 
         const std::list<PtrSymbolTable<Construct>> &getScope() const;
     };

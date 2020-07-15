@@ -37,29 +37,29 @@ namespace ionir {
         return true;
     }
 
-    NoticeFactory Parser::createNoticeFactory() noexcept {
+    ionshared::NoticeFactory Parser::createNoticeFactory() noexcept {
         // Abstract current Token for easier access.
         Token token = this->stream.get();
 
-        return NoticeFactory(NoticeContext{
+        return ionshared::NoticeFactory(ionshared::NoticeContext{
             this->filePath,
             token.getLineNumber(),
             token.getStartPosition()
         });
     }
 
-    std::nullopt_t Parser::makeNotice(std::string message, NoticeType type) {
+    std::nullopt_t Parser::makeNotice(std::string message, ionshared::NoticeType type) {
         this->stackTrace.push_back(this->createNoticeFactory().make(type, message));
 
         return std::nullopt;
     }
 
-    Parser::Parser(TokenStream stream, StackTrace stackTrace, std::string filePath)
+    Parser::Parser(TokenStream stream, ionshared::StackTrace stackTrace, std::string filePath)
         : stream(stream), stackTrace(stackTrace), filePath(filePath), classifier() {
         //
     }
 
-    StackTrace Parser::getStackTrace() const {
+    ionshared::StackTrace Parser::getStackTrace() const {
         return this->stackTrace;
     }
 

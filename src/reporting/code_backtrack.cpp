@@ -104,11 +104,11 @@ namespace ionir {
         return this->createCodeBlockNear(token.getLineNumber(), grace);
     }
 
-    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(NoticeContext noticeContext, uint32_t grace) {
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(ionshared::NoticeContext noticeContext, uint32_t grace) {
         return this->createCodeBlockNear(noticeContext.lineNumber);
     }
 
-    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(Notice notice, uint32_t grace) {
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(ionshared::Notice notice, uint32_t grace) {
         return this->createCodeBlockNear(notice.getContext());
     }
 }

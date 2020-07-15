@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <string>
+#include <ionshared/reporting/notice_factory.h>
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
 #include <ionir/construct/value/string.h>
@@ -24,7 +25,6 @@
 #include <ionir/construct/basic_block.h>
 #include <ionir/construct/module.h>
 #include <ionir/construct/register_assign.h>
-#include <ionir/reporting/notice_factory.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/const/const_name.h>
 #include "scope.h"
@@ -35,7 +35,7 @@ namespace ionir {
     private:
         TokenStream stream;
 
-        StackTrace stackTrace;
+        ionshared::StackTrace stackTrace;
 
         std::string filePath;
 
@@ -52,14 +52,14 @@ namespace ionir {
 
         bool skipOver(TokenKind tokenKind);
 
-        NoticeFactory createNoticeFactory() noexcept;
+        ionshared::NoticeFactory createNoticeFactory() noexcept;
 
-        std::nullopt_t makeNotice(std::string message, NoticeType type = NoticeType::Error);
+        std::nullopt_t makeNotice(std::string message, ionshared::NoticeType type = ionshared::NoticeType::Error);
 
     public:
-        explicit Parser(TokenStream stream, StackTrace stackTrace = {}, std::string filePath = ConstName::anonymous);
+        explicit Parser(TokenStream stream, ionshared::StackTrace stackTrace = {}, std::string filePath = ConstName::anonymous);
 
-        StackTrace getStackTrace() const;
+        ionshared::StackTrace getStackTrace() const;
 
         std::string getFilePath() const;
 
