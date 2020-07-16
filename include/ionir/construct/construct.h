@@ -56,7 +56,7 @@ namespace ionir {
 
     typedef std::vector<ionshared::Ptr<Construct>> Ast;
 
-    class Construct : private std::enable_shared_from_this<Construct> {
+    class Construct : public std::enable_shared_from_this<Construct> {
     private:
         ConstructKind constructKind;
 
