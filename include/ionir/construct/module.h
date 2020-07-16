@@ -11,7 +11,7 @@ namespace ionir {
 
     class Function;
 
-    class Module : public Construct, public ScopeAnchor<>, public Named {
+    class Module : public Construct, public ScopeAnchor<>, public ionshared::Named {
     public:
         explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = TypeFactory::makePtrSymbolTable<>());
 

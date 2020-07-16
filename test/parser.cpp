@@ -10,7 +10,7 @@ using namespace ionir;
 
 TEST(ParserTest, ParseInt) {
     Parser parser = test::bootstrap::parser({
-        Token(TokenKind::LiteralInt, "5")
+        Token(TokenKind::LiteralInteger, "5")
     });
 
     OptPtr<IntegerValue> integer = parser.parseInt();
@@ -208,7 +208,7 @@ TEST(ParserTest, ParseFunction) {
         Token(TokenKind::SymbolColon, ":"),
         Token(TokenKind::SymbolBraceL, "{"),
         Token(TokenKind::InstReturn, "ret"),
-        Token(TokenKind::LiteralInt, "0"),
+        Token(TokenKind::LiteralInteger, "0"),
         Token(TokenKind::SymbolSemiColon, ";"),
         Token(TokenKind::SymbolBraceR, "}"),
         Token(TokenKind::SymbolBraceR, "}")
@@ -252,7 +252,7 @@ TEST(ParserTest, ParseAllocaInst) {
 TEST(ParserTest, ParseStoreInst) {
     Parser parser = test::bootstrap::parser({
         Token(TokenKind::InstStore, ConstName::instStore),
-        Token(TokenKind::LiteralInt, "1"),
+        Token(TokenKind::LiteralInteger, "1"),
         Token(TokenKind::Identifier, test::constant::foobar)
     });
 

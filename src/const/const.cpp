@@ -10,7 +10,7 @@ namespace ionir {
 
     std::map<TokenKind, int> Const::operatorPrecedence = {
         {TokenKind::OperatorAdd, 20},
-        {TokenKind::OperatorSub, 20},
+        {TokenKind::OperatorSubtract, 20},
         {TokenKind::OperatorMultiply, 40},
         {TokenKind::OperatorDivide, 40},
         {TokenKind::OperatorModulo, 40},

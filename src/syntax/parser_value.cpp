@@ -9,7 +9,7 @@ namespace ionir {
         Token token = this->stream.get();
 
         switch (token.getKind()) {
-            case TokenKind::LiteralInt: {
+            case TokenKind::LiteralInteger: {
                 OptPtr<IntegerValue> integerValue = this->parseInt();
 
                 if (Util::hasValue(integerValue)) {
@@ -32,7 +32,7 @@ namespace ionir {
     }
 
     OptPtr<IntegerValue> Parser::parseInt() {
-        IONIR_PARSER_EXPECT(TokenKind::LiteralInt)
+        IONIR_PARSER_EXPECT(TokenKind::LiteralInteger)
 
         /**
          * Abstract the token's value to be used in the

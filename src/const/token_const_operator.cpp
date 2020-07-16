@@ -3,7 +3,7 @@
 namespace ionir {
     BiMap<std::string, TokenKind> TokenConst::operators = BiMap<std::string, TokenKind>(std::map<std::string, TokenKind>{
         {"+", TokenKind::OperatorAdd},
-        {"-", TokenKind::OperatorSub},
+        {"-", TokenKind::OperatorSubtract},
         {"*", TokenKind::OperatorMultiply},
         {"/", TokenKind::OperatorDivide},
         {"%", TokenKind::OperatorModulo},

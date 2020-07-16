@@ -10,7 +10,7 @@
 namespace ionir {
     class Pass;
 
-    class Global : public Construct, public Named {
+    class Global : public Construct, public ionshared::Named {
     private:
         Ptr<Type> type;
 

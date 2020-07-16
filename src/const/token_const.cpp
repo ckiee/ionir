@@ -188,7 +188,7 @@ namespace ionir {
             {Regex::identifier, TokenKind::Identifier},
             {Regex::string, TokenKind::LiteralString},
             {Regex::decimal, TokenKind::LiteralDecimal},
-            {Regex::integer, TokenKind::LiteralInt},
+            {Regex::integer, TokenKind::LiteralInteger},
             {Regex::character, TokenKind::LiteralCharacter},
             {Regex::whitespace, TokenKind::Whitespace}
         };

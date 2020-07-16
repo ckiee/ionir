@@ -1,14 +1,14 @@
 #pragma once
 
 #include <string>
+#include <ionshared/misc/named.h>
 #include <ionir/misc/helpers.h>
-#include <ionir/misc/named.h>
 #include "construct.h"
 
 namespace ionir {
     class Pass;
 
-    class VariableRef : public Construct, public Named {
+    class VariableRef : public Construct, public ionshared::Named {
     public:
         explicit VariableRef(std::string id);
 

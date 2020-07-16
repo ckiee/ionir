@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
+#include <ionshared/misc/named.h>
 #include <ionir/misc/helpers.h>
-#include <ionir/misc/named.h>
 #include "construct.h"
 
 namespace ionir {
@@ -20,7 +20,7 @@ namespace ionir {
         Boolean
     };
 
-    class Type : public Construct, public Named {
+    class Type : public Construct, public ionshared::Named {
     private:
         TypeKind kind;
 

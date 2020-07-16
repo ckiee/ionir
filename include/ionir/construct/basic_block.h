@@ -52,7 +52,7 @@ namespace ionir {
     };
 
     // TODO: Must be verified to contain a single terminal instruction at the end.
-    class BasicBlock : public ChildConstruct<FunctionBody>, public ScopeAnchor<Inst>, public Named {
+    class BasicBlock : public ChildConstruct<FunctionBody>, public ScopeAnchor<Inst>, public ionshared::Named {
     private:
         BasicBlockKind kind;
 

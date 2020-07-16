@@ -7,10 +7,10 @@
 #include <stdexcept>
 #include <optional>
 #include <utility>
+#include <ionshared/misc/iterable.h>
 #include <ionir/const/token_const.h>
 #include <ionir/misc/util.h>
 #include <ionir/misc/regex.h>
-#include <ionir/misc/iterable.h>
 #include "token.h"
 
 namespace ionir {
@@ -32,7 +32,7 @@ namespace ionir {
         bool expectCapturedValue = false;
     };
 
-    class Lexer : public Generator<Token> {
+    class Lexer : public ionshared::Generator<Token> {
     private:
         std::string input;
 

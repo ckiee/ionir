@@ -2,8 +2,8 @@
 
 #include <optional>
 #include <string>
+#include <ionshared/misc/named.h>
 #include <ionir/construct/construct.h>
-#include <ionir/misc/named.h>
 #include <ionir/misc/util.h>
 
 namespace ionir {
@@ -11,7 +11,7 @@ namespace ionir {
     class Pass;
 
     template<typename T = Construct>
-    class Ref : public Construct, public Named {
+    class Ref : public Construct, public ionshared::Named {
     private:
         Ptr<Construct> owner;
 

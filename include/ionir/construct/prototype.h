@@ -2,9 +2,9 @@
 
 #include <string>
 #include <vector>
+#include <ionshared/misc/named.h>
 #include <ionir/construct/pseudo/args.h>
 #include <ionir/misc/helpers.h>
-#include <ionir/misc/named.h>
 #include "child_construct.h"
 #include "type.h"
 #include "module.h"
@@ -12,7 +12,7 @@
 namespace ionir {
     class Pass;
 
-    class Prototype : public ChildConstruct<Module>, public Named {
+    class Prototype : public ChildConstruct<Module>, public ionshared::Named {
     private:
         std::string id;
 

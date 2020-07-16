@@ -42,7 +42,7 @@ namespace ionir {
     }
 
     bool Classifier::isLiteral(TokenKind tokenKind) {
-        return tokenKind == TokenKind::LiteralInt
+        return tokenKind == TokenKind::LiteralInteger
             || tokenKind == TokenKind::LiteralDecimal
             || tokenKind == TokenKind::LiteralCharacter
             || tokenKind == TokenKind::LiteralString;

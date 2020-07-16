@@ -192,7 +192,7 @@ TEST(LexerTest, LexEmptyString) {
 TEST(LexerTest, LexInteger) {
     Lexer lexer = Lexer("1");
     Token actual = lexer.scan()[0];
-    Token expected = Token(TokenKind::LiteralInt, "1", 0);
+    Token expected = Token(TokenKind::LiteralInteger, "1", 0);
 
     EXPECT_EQ(actual, expected);
 }

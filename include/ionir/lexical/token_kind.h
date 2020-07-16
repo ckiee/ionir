@@ -8,17 +8,17 @@ namespace ionir {
 
         Dummy,
 
+        Whitespace,
+
         Identifier,
 
         LiteralString,
 
         LiteralDecimal,
 
-        LiteralInt,
+        LiteralInteger,
 
         LiteralCharacter,
-
-        Whitespace,
 
         SymbolAt,
 
@@ -106,7 +106,7 @@ namespace ionir {
 
         OperatorAdd,
 
-        OperatorSub,
+        OperatorSubtract,
 
         OperatorMultiply,
 
