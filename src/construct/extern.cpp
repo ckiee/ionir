@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Extern::Extern(Ptr<Prototype> prototype)
+    Extern::Extern(ionshared::Ptr<Prototype> prototype)
         : Construct(ConstructKind::Extern), prototype(prototype) {
         //
     }
@@ -16,11 +16,11 @@ namespace ionir {
         };
     }
 
-    Ptr<Prototype> Extern::getPrototype() const noexcept {
+    ionshared::Ptr<Prototype> Extern::getPrototype() const noexcept {
         return this->prototype;
     }
 
-    void Extern::setPrototype(Ptr<Prototype> prototype) noexcept {
+    void Extern::setPrototype(ionshared::Ptr<Prototype> prototype) noexcept {
         this->prototype = prototype;
     }
 }

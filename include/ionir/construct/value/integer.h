@@ -12,7 +12,7 @@ namespace ionir {
         int64_t value;
 
     public:
-        IntegerValue(Ptr<IntegerType> type, int64_t value);
+        IntegerValue(ionshared::Ptr<IntegerType> type, int64_t value);
 
         void accept(Pass &visitor) override;
 

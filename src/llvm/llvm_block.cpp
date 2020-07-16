@@ -5,7 +5,7 @@ namespace ionir {
         //
     }
 
-    Ptr<IrBuilder> LlvmBlock::getBuilder() {
+    ionshared::Ptr<IrBuilder> LlvmBlock::getBuilder() {
         if (this->cachedBuilder.has_value()) {
             return *this->cachedBuilder;
         }
@@ -15,7 +15,7 @@ namespace ionir {
         return *this->cachedBuilder;
     }
 
-    OptPtr<LlvmInst> LlvmBlock::findTerminatorInst() const {
+    ionshared::OptPtr<LlvmInst> LlvmBlock::findTerminatorInst() const {
         llvm::Instruction *llvmTerminatorInst = this->value->getTerminator();
 
         if (llvmTerminatorInst != nullptr) {

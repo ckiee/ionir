@@ -11,7 +11,7 @@ namespace ionir {
         return {};
     }
 
-    bool Construct::equals(Ptr<Construct> other) {
+    bool Construct::equals(ionshared::Ptr<Construct> other) {
         return other == this->shared_from_this();
     }
 
@@ -27,11 +27,11 @@ namespace ionir {
         return true;
     }
 
-    Ptr<Construct> Construct::getPtr() {
+    ionshared::Ptr<Construct> Construct::getPtr() {
         return this->shared_from_this();
     }
 
-    Ptr<Construct> Construct::nativeCast() {
+    ionshared::Ptr<Construct> Construct::nativeCast() {
         return this->dynamicCast<Construct>();
     }
 

@@ -13,7 +13,7 @@ TEST(ParserTest, ParseInt) {
         Token(TokenKind::LiteralInteger, "5")
     });
 
-    OptPtr<IntegerValue> integer = parser.parseInt();
+    ionshared::OptPtr<IntegerValue> integer = parser.parseInt();
 
     // TODO: Verify integer type?
 
@@ -68,7 +68,7 @@ TEST(ParserTest, ParseVoidType) {
         Token(TokenKind::TypeVoid, ConstName::typeVoid)
     });
 
-    OptPtr<Type> type = parser.parseType();
+    ionshared::OptPtr<Type> type = parser.parseType();
 
     EXPECT_TRUE(Util::hasValue(type));
     EXPECT_EQ(type->get()->getId(), ConstName::typeVoid);
@@ -81,7 +81,7 @@ TEST(ParserTest, ParseInteger32Type) {
         Token(TokenKind::TypeInt32, ConstName::typeInt32)
     });
 
-    OptPtr<Type> type = parser.parseType();
+    ionshared::OptPtr<Type> type = parser.parseType();
 
     EXPECT_TRUE(Util::hasValue(type));
     EXPECT_EQ(type->get()->getId(), ConstName::typeInt32);
@@ -89,7 +89,7 @@ TEST(ParserTest, ParseInteger32Type) {
     EXPECT_FALSE(type->get()->getIsPointer());
 
     // Convert to integer type and inspect.
-    Ptr<IntegerType> integerType = type->get()->staticCast<IntegerType>();
+    ionshared::Ptr<IntegerType> integerType = type->get()->staticCast<IntegerType>();
 
     EXPECT_EQ(integerType->getIntegerKind(), IntegerKind::Int32);
     EXPECT_TRUE(integerType->getIsSigned());
@@ -174,7 +174,7 @@ TEST(ParserTest, ParseEmptyFunction) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    OptPtr<Function> function = parser.parseFunction(nullptr);
+    ionshared::OptPtr<Function> function = parser.parseFunction(nullptr);
 
     EXPECT_TRUE(Util::hasValue(function));
 
@@ -185,7 +185,7 @@ TEST(ParserTest, ParseEmptyFunction) {
     EXPECT_FALSE(function->get()->verify());
 
     // Abstract the function's body block.
-    Ptr<FunctionBody> body = function->get()->getBody();
+    ionshared::Ptr<FunctionBody> body = function->get()->getBody();
 
     /**
      * The function's body should not contain any section(s),
@@ -214,7 +214,7 @@ TEST(ParserTest, ParseFunction) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    OptPtr<Function> function = parser.parseFunction(nullptr);
+    ionshared::OptPtr<Function> function = parser.parseFunction(nullptr);
 
     EXPECT_TRUE(Util::hasValue(function));
 
@@ -225,7 +225,7 @@ TEST(ParserTest, ParseFunction) {
     EXPECT_TRUE(function->get()->verify());
 
     // Abstract the function's body block.
-    Ptr<FunctionBody> body = function->get()->getBody();
+    ionshared::Ptr<FunctionBody> body = function->get()->getBody();
 
     /**
      * The function's body block should contain the entry
@@ -241,7 +241,7 @@ TEST(ParserTest, ParseAllocaInst) {
         Token(TokenKind::TypeInt32, ConstName::typeInt32)
     });
 
-    OptPtr<AllocaInst> inst = parser.parseAllocaInst(nullptr);
+    ionshared::OptPtr<AllocaInst> inst = parser.parseAllocaInst(nullptr);
 
     EXPECT_TRUE(Util::hasValue(inst));
     EXPECT_EQ(inst->get()->getInstKind(), InstKind::Alloca);
@@ -256,14 +256,14 @@ TEST(ParserTest, ParseStoreInst) {
         Token(TokenKind::Identifier, test::constant::foobar)
     });
 
-    OptPtr<StoreInst> optInst = parser.parseStoreInst(nullptr);
+    ionshared::OptPtr<StoreInst> optInst = parser.parseStoreInst(nullptr);
 
     EXPECT_TRUE(Util::hasValue(optInst));
 
     StoreInst *inst = optInst->get();
 
     // Verify the value.
-    Ptr<Value<>> instValue = inst->getValue();
+    ionshared::Ptr<Value<>> instValue = inst->getValue();
 
     EXPECT_EQ(inst->getInstKind(), InstKind::Store);
     EXPECT_EQ(instValue->getValueKind(), ValueKind::Integer);
@@ -282,7 +282,7 @@ TEST(ParserTest, ParseReturnVoidInst) {
         Token(TokenKind::TypeVoid, ConstName::typeVoid)
     });
 
-    OptPtr<ReturnInst> inst = parser.parseReturnInst(nullptr);
+    ionshared::OptPtr<ReturnInst> inst = parser.parseReturnInst(nullptr);
 
     EXPECT_TRUE(Util::hasValue(inst));
     EXPECT_EQ(inst->get()->getInstKind(), InstKind::Return);
@@ -301,11 +301,11 @@ TEST(ParserTest, ParseExtern) {
         Token(TokenKind::Identifier, "type")
     });
 
-    OptPtr<Extern> externConstruct = parser.parseExtern(nullptr);
+    ionshared::OptPtr<Extern> externConstruct = parser.parseExtern(nullptr);
 
     EXPECT_TRUE(Util::hasValue(externConstruct));
 
-    Ptr<Prototype> prototype = externConstruct->get()->getPrototype();
+    ionshared::Ptr<Prototype> prototype = externConstruct->get()->getPrototype();
     auto args = prototype->getArgs();
 
     // Verify prototype.

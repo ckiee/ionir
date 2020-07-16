@@ -16,24 +16,24 @@ namespace ionir {
     private:
         std::string id;
 
-        Ptr<Args> args;
+        ionshared::Ptr<Args> args;
 
-        Ptr<Type> returnType;
+        ionshared::Ptr<Type> returnType;
 
     public:
-        Prototype(std::string id, Ptr<Args> args, Ptr<Type> returnType, Ptr<Module> parent);
+        Prototype(std::string id, ionshared::Ptr<Args> args, ionshared::Ptr<Type> returnType, ionshared::Ptr<Module> parent);
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() override;
 
-        Ptr<Args> getArgs() const noexcept;
+        ionshared::Ptr<Args> getArgs() const noexcept;
 
-        void setArgs(Ptr<Args> args) noexcept;
+        void setArgs(ionshared::Ptr<Args> args) noexcept;
 
-        Ptr<Type> getReturnType() const noexcept;
+        ionshared::Ptr<Type> getReturnType() const noexcept;
 
-        void setReturnType(Ptr<Type> returnType) noexcept;
+        void setReturnType(ionshared::Ptr<Type> returnType) noexcept;
 
         bool verify() override;
     };

@@ -4,7 +4,7 @@
 
 namespace ionir {
     struct ArrayDescriptor {
-        Ptr<Type> type;
+        ionshared::Ptr<Type> type;
 
         uint32_t size;
     };

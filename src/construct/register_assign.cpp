@@ -2,7 +2,7 @@
 #include <ionir/construct/register_assign.h>
 
 namespace ionir {
-    RegisterAssign::RegisterAssign(std::string id, Ptr<Construct> value)
+    RegisterAssign::RegisterAssign(std::string id, ionshared::Ptr<Construct> value)
         : Construct(ConstructKind::RegisterAssign), id(id), value(value) {
         //
     }
@@ -19,11 +19,11 @@ namespace ionir {
         this->id = value;
     }
 
-    Ptr<Construct> RegisterAssign::getValue() const noexcept {
+    ionshared::Ptr<Construct> RegisterAssign::getValue() const noexcept {
         return this->value;
     }
 
-    void RegisterAssign::setValue(Ptr<Construct> value) noexcept {
+    void RegisterAssign::setValue(ionshared::Ptr<Construct> value) noexcept {
         this->value = value;
     }
 }

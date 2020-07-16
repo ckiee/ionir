@@ -3,7 +3,7 @@
 
 namespace ionir {
     // TODO: Consider using Ref<> to register pending type reference if user-defined type is parsed?
-    OptPtr<Type> Parser::parseType() {
+    ionshared::OptPtr<Type> Parser::parseType() {
         // Retrieve the current token.
         Token token = this->stream.get();
 
@@ -16,7 +16,7 @@ namespace ionir {
             || tokenKind == TokenKind::Identifier
         ))
 
-        OptPtr<Type> type;
+        ionshared::OptPtr<Type> type;
 
         if (tokenKind == TokenKind::TypeVoid) {
             type = this->parseVoidType();
@@ -58,10 +58,10 @@ namespace ionir {
         return type;
     }
 
-    OptPtr<Type> Parser::parseTypePrefix() {
+    ionshared::OptPtr<Type> Parser::parseTypePrefix() {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketL))
 
-        OptPtr<Type> type = this->parseType();
+        ionshared::OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketR))
@@ -69,7 +69,7 @@ namespace ionir {
         return type;
     }
 
-    OptPtr<VoidType> Parser::parseVoidType() {
+    ionshared::OptPtr<VoidType> Parser::parseVoidType() {
         /**
          * Void type does not accept references nor pointer
          * specifiers, so just simply skip over its token.
@@ -79,7 +79,7 @@ namespace ionir {
         return std::make_shared<VoidType>();
     }
 
-    OptPtr<IntegerType> Parser::parseIntegerType() {
+    ionshared::OptPtr<IntegerType> Parser::parseIntegerType() {
         TokenKind currentTokenKind = this->stream.get().getKind();
 
         if (!Classifier::isIntegerType(currentTokenKind)) {

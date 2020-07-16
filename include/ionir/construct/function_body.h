@@ -16,7 +16,7 @@ namespace ionir {
 
     class FunctionBody : public ChildConstruct<Function>, public ScopeAnchor<BasicBlock> {
     public:
-        explicit FunctionBody(Ptr<Function> parent, PtrSymbolTable<BasicBlock> symbolTable = TypeFactory::makePtrSymbolTable<BasicBlock>());
+        explicit FunctionBody(ionshared::Ptr<Function> parent, PtrSymbolTable<BasicBlock> symbolTable = TypeFactory::makePtrSymbolTable<BasicBlock>());
 
         void accept(Pass &visitor) override;
 
@@ -24,10 +24,10 @@ namespace ionir {
 
         bool verify() override;
 
-        OptPtr<BasicBlock> findEntryBasicBlock();
+        ionshared::OptPtr<BasicBlock> findEntryBasicBlock();
 
         bool hasEntryBasicBlock();
 
-        void insertBasicBlock(Ptr<BasicBlock> basicBlock);
+        void insertBasicBlock(ionshared::Ptr<BasicBlock> basicBlock);
     };
 }

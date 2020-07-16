@@ -11,20 +11,20 @@ namespace ionir {
     private:
         Ast ast;
 
-        OptPtr<Module> moduleBuffer;
+        ionshared::OptPtr<Module> moduleBuffer;
 
-        OptPtr<Function> functionBuffer;
+        ionshared::OptPtr<Function> functionBuffer;
 
-        OptPtr<FunctionBody> blockBuffer;
+        ionshared::OptPtr<FunctionBody> blockBuffer;
 
-        OptPtr<BasicBlock> basicBlockBuffer;
+        ionshared::OptPtr<BasicBlock> basicBlockBuffer;
 
-        OptPtr<InstBuilder> instBuilder;
+        ionshared::OptPtr<InstBuilder> instBuilder;
 
-        void setBasicBlockBuffer(OptPtr<BasicBlock> basicBlockBuffer);
+        void setBasicBlockBuffer(ionshared::OptPtr<BasicBlock> basicBlockBuffer);
 
     protected:
-        void require(OptPtr<Construct> construct) const;
+        void require(ionshared::OptPtr<Construct> construct) const;
 
         void requireModule() const;
 
@@ -45,8 +45,8 @@ namespace ionir {
 
         AstBuilder &function(std::string id);
 
-        AstBuilder &functionReturnType(Ptr<Type> returnType);
+        AstBuilder &functionReturnType(ionshared::Ptr<Type> returnType);
 
-        AstBuilder &instAlloca(std::string id, Ptr<Type> type);
+        AstBuilder &instAlloca(std::string id, ionshared::Ptr<Type> type);
     };
 }

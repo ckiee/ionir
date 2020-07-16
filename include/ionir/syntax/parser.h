@@ -63,68 +63,68 @@ namespace ionir {
 
         std::string getFilePath() const;
 
-        OptPtr<Construct> parseTopLevel(Ptr<Module> parent);
+        ionshared::OptPtr<Construct> parseTopLevel(ionshared::Ptr<Module> parent);
 
         /**
          * Parses a integer literal in the form of
          * long (or integer 64).
          */
-        OptPtr<IntegerValue> parseInt();
+        ionshared::OptPtr<IntegerValue> parseInt();
 
-        OptPtr<CharValue> parseChar();
+        ionshared::OptPtr<CharValue> parseChar();
 
-        OptPtr<StringValue> parseString();
+        ionshared::OptPtr<StringValue> parseString();
 
         std::optional<std::string> parseId();
 
-        OptPtr<Type> parseType();
+        ionshared::OptPtr<Type> parseType();
 
-        OptPtr<Type> parseTypePrefix();
+        ionshared::OptPtr<Type> parseTypePrefix();
 
-        OptPtr<VoidType> parseVoidType();
+        ionshared::OptPtr<VoidType> parseVoidType();
 
-        OptPtr<IntegerType> parseIntegerType();
+        ionshared::OptPtr<IntegerType> parseIntegerType();
 
         std::optional<Arg> parseArg();
 
-        OptPtr<Args> parseArgs();
+        ionshared::OptPtr<Args> parseArgs();
 
-        OptPtr<Prototype> parsePrototype(Ptr<Module> parent);
+        ionshared::OptPtr<Prototype> parsePrototype(ionshared::Ptr<Module> parent);
 
-        OptPtr<Extern> parseExtern(Ptr<Module> parent);
+        ionshared::OptPtr<Extern> parseExtern(ionshared::Ptr<Module> parent);
 
-        OptPtr<Function> parseFunction(Ptr<Module> parent);
+        ionshared::OptPtr<Function> parseFunction(ionshared::Ptr<Module> parent);
 
-        OptPtr<Global> parseGlobal();
+        ionshared::OptPtr<Global> parseGlobal();
 
-        OptPtr<Value<>> parseValue();
+        ionshared::OptPtr<Value<>> parseValue();
 
-        OptPtr<Construct> parsePrimaryExpr(Ptr<Construct> parent);
+        ionshared::OptPtr<Construct> parsePrimaryExpr(ionshared::Ptr<Construct> parent);
 
-        OptPtr<BasicBlock> parseBasicBlock(Ptr<FunctionBody> parent);
+        ionshared::OptPtr<BasicBlock> parseBasicBlock(ionshared::Ptr<FunctionBody> parent);
 
-        OptPtr<FunctionBody> parseFunctionBody(Ptr<Function> parent);
+        ionshared::OptPtr<FunctionBody> parseFunctionBody(ionshared::Ptr<Function> parent);
 
-        OptPtr<AllocaInst> parseAllocaInst(Ptr<BasicBlock> parent);
+        ionshared::OptPtr<AllocaInst> parseAllocaInst(ionshared::Ptr<BasicBlock> parent);
 
-        OptPtr<ReturnInst> parseReturnInst(Ptr<BasicBlock> parent);
+        ionshared::OptPtr<ReturnInst> parseReturnInst(ionshared::Ptr<BasicBlock> parent);
 
-        OptPtr<BranchInst> parseBranchInst(Ptr<BasicBlock> parent);
+        ionshared::OptPtr<BranchInst> parseBranchInst(ionshared::Ptr<BasicBlock> parent);
 
-        OptPtr<CallInst> parseCallInst(Ptr<BasicBlock> parent);
+        ionshared::OptPtr<CallInst> parseCallInst(ionshared::Ptr<BasicBlock> parent);
 
-        OptPtr<StoreInst> parseStoreInst(Ptr<BasicBlock> parent);
+        ionshared::OptPtr<StoreInst> parseStoreInst(ionshared::Ptr<BasicBlock> parent);
 
         /**
          * Parses an instruction, consuming its identifier.
          * Invokes the corresponding parser depending on its
          * identifier.
          */
-        OptPtr<Inst> parseInst(Ptr<BasicBlock> parent);
+        ionshared::OptPtr<Inst> parseInst(ionshared::Ptr<BasicBlock> parent);
 
-        OptPtr<Module> parseModule();
+        ionshared::OptPtr<Module> parseModule();
 
-        OptPtr<RegisterAssign> parseRegisterAssign(Ptr<BasicBlock> parent);
+        ionshared::OptPtr<RegisterAssign> parseRegisterAssign(ionshared::Ptr<BasicBlock> parent);
 
         std::optional<std::string> parseLine();
 
@@ -133,7 +133,7 @@ namespace ionir {
         std::optional<Directive> parseDirective();
 
         template<typename T = Construct>
-        OptPtr<Ref<T>> parseRef(Ptr<Construct> owner) {
+        ionshared::OptPtr<Ref<T>> parseRef(ionshared::Ptr<Construct> owner) {
             std::optional<std::string> id = this->parseId();
 
             IONIR_PARSER_ASSURE(id)

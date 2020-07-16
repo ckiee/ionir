@@ -24,24 +24,24 @@ namespace ionir {
         return this->kind;
     }
 
-    std::vector<Ptr<RegisterAssign>> &BasicBlock::getRegisters() noexcept {
+    std::vector<ionshared::Ptr<RegisterAssign>> &BasicBlock::getRegisters() noexcept {
         return this->registers;
     }
 
-    void BasicBlock::setRegisters(std::vector<Ptr<RegisterAssign>> registers) {
+    void BasicBlock::setRegisters(std::vector<ionshared::Ptr<RegisterAssign>> registers) {
         this->registers = registers;
     }
 
-    std::vector<Ptr<Inst>> &BasicBlock::getInsts() noexcept {
+    std::vector<ionshared::Ptr<Inst>> &BasicBlock::getInsts() noexcept {
         return this->insts;
     }
 
     // TODO: SymbolTable must be re-populated after changing insts vector.
-    void BasicBlock::setInsts(std::vector<Ptr<Inst>> insts) {
+    void BasicBlock::setInsts(std::vector<ionshared::Ptr<Inst>> insts) {
         this->insts = insts;
     }
 
-    void BasicBlock::insertInst(Ptr<Inst> inst) {
+    void BasicBlock::insertInst(ionshared::Ptr<Inst> inst) {
         this->insts.push_back(inst);
 
         std::optional<std::string> id = Util::getInstId(inst);
@@ -64,15 +64,15 @@ namespace ionir {
         return count;
     }
 
-    std::optional<uint32_t> BasicBlock::locate(Ptr<Inst> inst) const {
-        return Util::locateInVector<Ptr<Inst>>(this->insts, inst);
+    std::optional<uint32_t> BasicBlock::locate(ionshared::Ptr<Inst> inst) const {
+        return Util::locateInVector<ionshared::Ptr<Inst>>(this->insts, inst);
     }
 
-    Ptr<InstBuilder> BasicBlock::createBuilder() {
+    ionshared::Ptr<InstBuilder> BasicBlock::createBuilder() {
         return std::make_shared<InstBuilder>(this->dynamicCast<BasicBlock>());
     }
 
-    OptPtr<Inst> BasicBlock::findTerminalInst() const {
+    ionshared::OptPtr<Inst> BasicBlock::findTerminalInst() const {
         for (const auto inst : this->insts) {
             if (inst->isTerminal()) {
                 return inst;

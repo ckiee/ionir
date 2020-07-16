@@ -8,7 +8,7 @@
 #include <ionir/tracking/symbol_table.h>
 
 namespace ionir {
-    typedef std::pair<Ptr<Type>, std::string> Arg;
+    typedef std::pair<ionshared::Ptr<Type>, std::string> Arg;
 
     class Args {
     private:

@@ -19,7 +19,7 @@ namespace ionir {
         }
     }
 
-    void EntryPointCheckPass::visitFunction(Ptr<Function> node) {
+    void EntryPointCheckPass::visitFunction(ionshared::Ptr<Function> node) {
         Pass::visitFunction(node);
 
         if (node->getPrototype()->getId() == ConstName::main) {

@@ -23,7 +23,7 @@ namespace ionir::test::compare {
         return util::trim(output) == util::trim(*contents);
     }
 
-    bool ir(Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName) {
+    bool ir(ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName) {
         std::optional<llvm::Module *> llvmModuleBuffer = llvmCodegenPass->getModuleBuffer();
 
         if (!Util::hasValue(llvmModuleBuffer)) {

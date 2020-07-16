@@ -4,7 +4,7 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmCodegenPass::visit(Ptr<Construct> node) {
+    void LlvmCodegenPass::visit(ionshared::Ptr<Construct> node) {
         /**
          * Only instruct the node to visit this instance and
          * not its children, since they're already visited by
@@ -13,7 +13,7 @@ namespace ionir {
         node->accept(*this);
     }
 
-    void LlvmCodegenPass::visitExtern(Ptr<Extern> node) {
+    void LlvmCodegenPass::visitExtern(ionshared::Ptr<Extern> node) {
         this->requireModule();
 
         if (node->getPrototype() == nullptr) {
@@ -29,7 +29,7 @@ namespace ionir {
         // No need to push the resulting function onto the stack.
     }
 
-    void LlvmCodegenPass::visitPrototype(Ptr<Prototype> node) {
+    void LlvmCodegenPass::visitPrototype(ionshared::Ptr<Prototype> node) {
         this->requireModule();
         this->requireContext();
 
@@ -100,7 +100,7 @@ namespace ionir {
         this->valueStack.push(llvmFunction);
     }
 
-    void LlvmCodegenPass::visitFunction(Ptr<Function> node) {
+    void LlvmCodegenPass::visitFunction(ionshared::Ptr<Function> node) {
         this->requireModule();
 
         if (!node->verify()) {

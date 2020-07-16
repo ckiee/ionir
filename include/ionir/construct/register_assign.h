@@ -9,10 +9,10 @@ namespace ionir {
     private:
         std::string id;
 
-        Ptr<Construct> value;
+        ionshared::Ptr<Construct> value;
 
     public:
-        explicit RegisterAssign(std::string id, Ptr<Construct> value);
+        explicit RegisterAssign(std::string id, ionshared::Ptr<Construct> value);
 
         void accept(Pass &visitor) override;
 
@@ -20,8 +20,8 @@ namespace ionir {
 
         void setId(std::string value) noexcept;
 
-        Ptr<Construct> getValue() const noexcept;
+        ionshared::Ptr<Construct> getValue() const noexcept;
 
-        void setValue(Ptr<Construct> value) noexcept;
+        void setValue(ionshared::Ptr<Construct> value) noexcept;
     };
 }

@@ -11,34 +11,34 @@
 namespace ionir {
     class InstBuilder {
     private:
-        Ptr<BasicBlock> basicBlock;
+        ionshared::Ptr<BasicBlock> basicBlock;
 
     public:
-        InstBuilder(Ptr<BasicBlock> basicBlock);
+        InstBuilder(ionshared::Ptr<BasicBlock> basicBlock);
 
-        Ptr<BasicBlock> getSection() const;
+        ionshared::Ptr<BasicBlock> getSection() const;
 
-        void insert(Ptr<Inst> inst);
+        void insert(ionshared::Ptr<Inst> inst);
 
         template<class TInst, typename... TArgs>
-        Ptr<TInst> make(TArgs... args) {
+        ionshared::Ptr<TInst> make(TArgs... args) {
             // TODO: Ensure T inherits from Inst or derived.
 
-            Ptr<TInst> inst = std::make_shared<TInst>(args...);
+            ionshared::Ptr<TInst> inst = std::make_shared<TInst>(args...);
 
             this->insert(inst);
 
             return inst;
         }
 
-        Ptr<AllocaInst> createAlloca(std::string id, Ptr<Type> type);
+        ionshared::Ptr<AllocaInst> createAlloca(std::string id, ionshared::Ptr<Type> type);
 
-        Ptr<BranchInst> createBranch(Ptr<Construct> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection);
+        ionshared::Ptr<BranchInst> createBranch(ionshared::Ptr<Construct> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection);
 
-        Ptr<BranchInst> createBranch(Ptr<Construct> condition, std::string bodySectionId, std::string otherwiseSectionId);
+        ionshared::Ptr<BranchInst> createBranch(ionshared::Ptr<Construct> condition, std::string bodySectionId, std::string otherwiseSectionId);
 
-        Ptr<ReturnInst> createReturn(OptPtr<Value<>> value = std::nullopt);
+        ionshared::Ptr<ReturnInst> createReturn(ionshared::OptPtr<Value<>> value = std::nullopt);
 
-        Ptr<CallInst> createCall(Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee = std::nullopt);
+        ionshared::Ptr<CallInst> createCall(ionshared::Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee = std::nullopt);
     };
 }

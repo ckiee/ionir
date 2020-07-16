@@ -12,20 +12,20 @@ namespace ionir {
      */
     class NameResolutionPass : public Pass {
     private:
-        Ptr<ionshared::StackTrace> stackTrace;
+        ionshared::Ptr<ionshared::StackTrace> stackTrace;
 
         std::list<PtrSymbolTable<Construct>> scope;
 
     public:
-        explicit NameResolutionPass(Ptr<ionshared::StackTrace> stackTrace = std::make_shared<ionshared::StackTrace>());
+        explicit NameResolutionPass(ionshared::Ptr<ionshared::StackTrace> stackTrace = std::make_shared<ionshared::StackTrace>());
 
-        void visitModule(Ptr<Module> node) override;
+        void visitModule(ionshared::Ptr<Module> node) override;
 
-        void visitScopeAnchor(Ptr<ScopeAnchor<>> node) override;
+        void visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node) override;
 
         void visitRef(PtrRef<> node) override;
 
-        Ptr<ionshared::StackTrace> getStackTrace() const;
+        ionshared::Ptr<ionshared::StackTrace> getStackTrace() const;
 
         const std::list<PtrSymbolTable<Construct>> &getScope() const;
     };

@@ -65,9 +65,9 @@ namespace ionir {
 
         static TypeKind resolveTypeKind(std::string id);
 
-        static std::optional<std::string> getConstructId(Ptr<Construct> construct);
+        static std::optional<std::string> getConstructId(ionshared::Ptr<Construct> construct);
 
-        static std::optional<std::string> getInstId(Ptr<Inst> inst) noexcept;
+        static std::optional<std::string> getInstId(ionshared::Ptr<Inst> inst) noexcept;
 
         /**
          * Returns the number of binary digits, called bits, necessary
@@ -105,7 +105,7 @@ namespace ionir {
         }
 
         template<typename T>
-        static bool hasValue(OptPtr<T> pointer) noexcept {
+        static bool hasValue(ionshared::OptPtr<T> pointer) noexcept {
             return pointer.has_value() && pointer != nullptr;
         }
 

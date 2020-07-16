@@ -9,7 +9,7 @@
 using namespace ionir;
 
 TEST(NameResolutionPassTest, Run) {
-    Ptr<NameResolutionPass> pass = std::make_shared<NameResolutionPass>();
+    ionshared::Ptr<NameResolutionPass> pass = std::make_shared<NameResolutionPass>();
 
     PassManager passManager = PassManager({
         PassManagerItem{
@@ -21,15 +21,15 @@ TEST(NameResolutionPassTest, Run) {
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
 
     // Locate the function and retrieve it's entry block.
-    OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
-    Ptr<BasicBlock> entryBlock = *function->get()->getBody()->findEntryBasicBlock();
+    ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
+    ionshared::Ptr<BasicBlock> entryBlock = *function->get()->getBody()->findEntryBasicBlock();
 
     // Create an instruction builder instance and the branch instruction's condition.
     InstBuilder instBuilder = InstBuilder(entryBlock);
-    Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
+    ionshared::Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
 
     // Create the branch instruction pointing to the entry block on both true and false.
-    Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::basicBlockEntryId, Const::basicBlockEntryId);
+    ionshared::Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::basicBlockEntryId, Const::basicBlockEntryId);
 
     // Abstract specific element(s) to be tested.
     PtrRef<BasicBlock> blockRef = branchInst->getBlockRef();

@@ -7,8 +7,8 @@
 using namespace ionir;
 
 TEST(InstBuilderTest, GetSection) {
-    Ptr<BasicBlock> section = Bootstrap::basicBlock();
-    Ptr<InstBuilder> builder = section->createBuilder();
+    ionshared::Ptr<BasicBlock> section = Bootstrap::basicBlock();
+    ionshared::Ptr<InstBuilder> builder = section->createBuilder();
 
     EXPECT_EQ(builder->getSection(), section);
 }

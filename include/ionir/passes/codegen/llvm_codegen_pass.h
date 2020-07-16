@@ -35,7 +35,7 @@ namespace ionir {
 
         std::queue<std::string> registerQueue;
 
-        Ptr<SymbolTable<llvm::Module *>> modules;
+        ionshared::Ptr<SymbolTable<llvm::Module *>> modules;
 
         /**
          * The currently active LLVM context;
@@ -57,7 +57,7 @@ namespace ionir {
 
         Stack<llvm::IRBuilder<>> builderTracker;
 
-        ScopeList<Ptr<Construct>, llvm::Value *> emittedEntities;
+        ScopeList<ionshared::Ptr<Construct>, llvm::Value *> emittedEntities;
 
         /**
          * Ensure that the builder is instantiated, otherwise
@@ -85,12 +85,12 @@ namespace ionir {
 
         void destroyScope();
 
-        void addToScope(Ptr<Construct> construct, llvm::Value *value);
+        void addToScope(ionshared::Ptr<Construct> construct, llvm::Value *value);
 
-        std::optional<llvm::Value *> findInScope(Ptr<Construct> key);
+        std::optional<llvm::Value *> findInScope(ionshared::Ptr<Construct> key);
 
     public:
-        explicit LlvmCodegenPass(Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>());
+        explicit LlvmCodegenPass(ionshared::Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>());
 
         ~LlvmCodegenPass();
 
@@ -100,54 +100,54 @@ namespace ionir {
 
         std::queue<std::string> getRegisterQueue() const;
 
-        Ptr<SymbolTable<llvm::Module *>> getModules() const;
+        ionshared::Ptr<SymbolTable<llvm::Module *>> getModules() const;
 
         std::optional<llvm::Module *> getModuleBuffer() const;
 
         bool setModuleBuffer(std::string id);
 
-        void visit(Ptr<Construct> node) override;
+        void visit(ionshared::Ptr<Construct> node) override;
 
-        void visitScopeAnchor(Ptr<ScopeAnchor<>> node) override;
+        void visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node) override;
 
-        void visitFunction(Ptr<Function> node) override;
+        void visitFunction(ionshared::Ptr<Function> node) override;
 
-        void visitExtern(Ptr<Extern> node) override;
+        void visitExtern(ionshared::Ptr<Extern> node) override;
 
-        void visitBasicBlock(Ptr<BasicBlock> node) override;
+        void visitBasicBlock(ionshared::Ptr<BasicBlock> node) override;
 
-        void visitFunctionBody(Ptr<FunctionBody> node) override;
+        void visitFunctionBody(ionshared::Ptr<FunctionBody> node) override;
 
-        void visitPrototype(Ptr<Prototype> node) override;
+        void visitPrototype(ionshared::Ptr<Prototype> node) override;
 
-        void visitIntegerValue(Ptr<IntegerValue> node) override;
+        void visitIntegerValue(ionshared::Ptr<IntegerValue> node) override;
 
-        void visitCharValue(Ptr<CharValue> node) override;
+        void visitCharValue(ionshared::Ptr<CharValue> node) override;
 
-        void visitStringValue(Ptr<StringValue> node) override;
+        void visitStringValue(ionshared::Ptr<StringValue> node) override;
 
-        void visitBooleanValue(Ptr<BooleanValue> node) override;
+        void visitBooleanValue(ionshared::Ptr<BooleanValue> node) override;
 
-        void visitAllocaInst(Ptr<AllocaInst> node) override;
+        void visitAllocaInst(ionshared::Ptr<AllocaInst> node) override;
 
-        void visitReturnInst(Ptr<ReturnInst> node) override;
+        void visitReturnInst(ionshared::Ptr<ReturnInst> node) override;
 
-        void visitBranchInst(Ptr<BranchInst> node) override;
+        void visitBranchInst(ionshared::Ptr<BranchInst> node) override;
 
-        void visitCallInst(Ptr<CallInst> node) override;
+        void visitCallInst(ionshared::Ptr<CallInst> node) override;
 
-        void visitStoreInst(Ptr<StoreInst> node) override;
+        void visitStoreInst(ionshared::Ptr<StoreInst> node) override;
 
-        void visitGlobal(Ptr<Global> node) override;
+        void visitGlobal(ionshared::Ptr<Global> node) override;
 
-        void visitType(Ptr<Type> node) override;
+        void visitType(ionshared::Ptr<Type> node) override;
 
-        void visitIntegerType(Ptr<IntegerType> node) override;
+        void visitIntegerType(ionshared::Ptr<IntegerType> node) override;
 
-        void visitVoidType(Ptr<VoidType> node) override;
+        void visitVoidType(ionshared::Ptr<VoidType> node) override;
 
-        void visitModule(Ptr<Module> node) override;
+        void visitModule(ionshared::Ptr<Module> node) override;
 
-        void visitRegisterAssign(Ptr<RegisterAssign> node) override;
+        void visitRegisterAssign(ionshared::Ptr<RegisterAssign> node) override;
     };
 }

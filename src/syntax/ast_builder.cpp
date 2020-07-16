@@ -3,7 +3,7 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    void AstBuilder::setBasicBlockBuffer(OptPtr<BasicBlock> basicBlockBuffer) {
+    void AstBuilder::setBasicBlockBuffer(ionshared::OptPtr<BasicBlock> basicBlockBuffer) {
         if (!basicBlockBuffer.has_value()) {
             this->basicBlockBuffer = std::nullopt;
             this->instBuilder = std::nullopt;
@@ -15,7 +15,7 @@ namespace ionir {
         this->instBuilder = std::make_shared<InstBuilder>(*this->basicBlockBuffer);
     }
 
-    void AstBuilder::require(OptPtr<Construct> construct) const {
+    void AstBuilder::require(ionshared::OptPtr<Construct> construct) const {
         if (!construct.has_value()) {
             throw std::runtime_error("Required construct is null");
         }
@@ -56,7 +56,7 @@ namespace ionir {
     }
 
     AstBuilder &AstBuilder::module(std::string id) {
-        Ptr<Module> module = std::make_shared<Module>(id);
+        ionshared::Ptr<Module> module = std::make_shared<Module>(id);
 
         this->clearBuffers();
         this->moduleBuffer = module;
@@ -68,9 +68,9 @@ namespace ionir {
     AstBuilder &AstBuilder::function(std::string id) {
         this->requireModule();
 
-        Ptr<FunctionBody> block = std::make_shared<FunctionBody>(nullptr);
+        ionshared::Ptr<FunctionBody> block = std::make_shared<FunctionBody>(nullptr);
 
-        Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
+        ionshared::Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
             block,
             BasicBlockKind::Entry,
             Const::basicBlockEntryId
@@ -79,10 +79,10 @@ namespace ionir {
         block->insertBasicBlock(entrySection);
         this->setBasicBlockBuffer(entrySection);
 
-        Ptr<Type> returnType = std::make_shared<VoidType>();
-        Ptr<Args> args = std::make_shared<Args>();
-        Ptr<Prototype> prototype = std::make_shared<Prototype>(id, args, returnType, *this->moduleBuffer);
-        Ptr<Function> function = std::make_shared<Function>(prototype, block);
+        ionshared::Ptr<Type> returnType = std::make_shared<VoidType>();
+        ionshared::Ptr<Args> args = std::make_shared<Args>();
+        ionshared::Ptr<Prototype> prototype = std::make_shared<Prototype>(id, args, returnType, *this->moduleBuffer);
+        ionshared::Ptr<Function> function = std::make_shared<Function>(prototype, block);
 
         block->setParent(function);
         this->functionBuffer = function;
@@ -91,14 +91,14 @@ namespace ionir {
         return *this;
     }
 
-    AstBuilder &AstBuilder::functionReturnType(Ptr<Type> returnType) {
+    AstBuilder &AstBuilder::functionReturnType(ionshared::Ptr<Type> returnType) {
         this->requireFunction();
         this->functionBuffer->get()->getPrototype()->setReturnType(returnType);
 
         return *this;
     }
 
-    AstBuilder &AstBuilder::instAlloca(std::string id, Ptr<Type> type) {
+    AstBuilder &AstBuilder::instAlloca(std::string id, ionshared::Ptr<Type> type) {
         this->requireBasicBlock();
         this->instBuilder->get()->createAlloca(id, type);
 

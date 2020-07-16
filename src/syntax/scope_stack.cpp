@@ -1,7 +1,7 @@
 #include <ionir/syntax/scope.h>
 
 namespace ionir {
-    Scope::Scope(Ptr<Construct> value, ScopeKind kind) : Wrapper(value), kind(kind) {
+    Scope::Scope(ionshared::Ptr<Construct> value, ScopeKind kind) : Wrapper(value), kind(kind) {
         //
     }
 

@@ -14,11 +14,11 @@ TEST(ModuleConstructTest, ParseEmpty) {
         Token(TokenKind::SymbolBraceR, "}")
     });
 
-    OptPtr<Module> module = parser.parseModule();
+    ionshared::OptPtr<Module> module = parser.parseModule();
 
     EXPECT_TRUE(module.has_value());
 
-    Ptr<Module> moduleValue = *module;
+    ionshared::Ptr<Module> moduleValue = *module;
 
     EXPECT_EQ(moduleValue->getId(), test::constant::foobar);
     EXPECT_TRUE(moduleValue->getSymbolTable()->isEmpty());

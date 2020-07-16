@@ -5,7 +5,7 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmCodegenPass::visitIntegerValue(Ptr<IntegerValue> node) {
+    void LlvmCodegenPass::visitIntegerValue(ionshared::Ptr<IntegerValue> node) {
         /**
          * Create the APInt (Arbitrary-precision integer)
          * to provide. Acts sort of an LLVM integer value
@@ -17,7 +17,7 @@ namespace ionir {
             node->getType()->getIsSigned()
         );
 
-        Ptr<Type> nodeType = node->getType();
+        ionshared::Ptr<Type> nodeType = node->getType();
 
         if (nodeType->getTypeKind() != TypeKind::Integer) {
             throw std::runtime_error("Integer value's type must be integer type");
@@ -36,7 +36,7 @@ namespace ionir {
         this->valueStack.push(value);
     }
 
-    void LlvmCodegenPass::visitCharValue(Ptr<CharValue> node) {
+    void LlvmCodegenPass::visitCharValue(ionshared::Ptr<CharValue> node) {
         this->requireContext();
         this->requireBuilder();
 
@@ -47,7 +47,7 @@ namespace ionir {
         this->valueStack.push(value);
     }
 
-    void LlvmCodegenPass::visitStringValue(Ptr<StringValue> node) {
+    void LlvmCodegenPass::visitStringValue(ionshared::Ptr<StringValue> node) {
         this->requireBuilder();
 
         // Create the global string pointer.
@@ -59,7 +59,7 @@ namespace ionir {
         this->valueStack.push(value);
     }
 
-    void LlvmCodegenPass::visitBooleanValue(Ptr<BooleanValue> node) {
+    void LlvmCodegenPass::visitBooleanValue(ionshared::Ptr<BooleanValue> node) {
         this->requireContext();
 
         // Create the boolean type along with the LLVM value.

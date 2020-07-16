@@ -9,12 +9,12 @@ namespace ionir {
     class Pass;
 
     struct ReturnInstOpts : InstOpts {
-        OptPtr<Construct> value = std::nullopt;
+        ionshared::OptPtr<Construct> value = std::nullopt;
     };
 
     class ReturnInst : public Inst {
     private:
-        OptPtr<Construct> value;
+        ionshared::OptPtr<Construct> value;
 
     public:
         explicit ReturnInst(ReturnInstOpts opts);
@@ -23,9 +23,9 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        OptPtr<Construct> getValue() const noexcept;
+        ionshared::OptPtr<Construct> getValue() const noexcept;
 
-        void setValue(OptPtr<Construct> value) noexcept;
+        void setValue(ionshared::OptPtr<Construct> value) noexcept;
 
         bool hasValue() noexcept;
     };

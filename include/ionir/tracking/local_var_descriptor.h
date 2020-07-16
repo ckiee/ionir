@@ -7,6 +7,6 @@ namespace ionir {
     struct LocalVariableDescriptor {
         std::string name;
 
-        Ptr<Type> type;
+        ionshared::Ptr<Type> type;
     };
 }

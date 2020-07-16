@@ -9,17 +9,17 @@ namespace ionir {
 
     class Extern : public Construct {
     private:
-        Ptr<Prototype> prototype;
+        ionshared::Ptr<Prototype> prototype;
 
     public:
-        explicit Extern(Ptr<Prototype> prototype);
+        explicit Extern(ionshared::Ptr<Prototype> prototype);
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() override;
 
-        Ptr<Prototype> getPrototype() const noexcept;
+        ionshared::Ptr<Prototype> getPrototype() const noexcept;
 
-        void setPrototype(Ptr<Prototype> prototype) noexcept;
+        void setPrototype(ionshared::Ptr<Prototype> prototype) noexcept;
     };
 }

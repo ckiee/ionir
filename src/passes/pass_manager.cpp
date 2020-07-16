@@ -19,7 +19,7 @@ namespace ionir {
         this->passes.push_back(item);
     }
 
-    void PassManager::registerPass(Ptr<Pass> pass) {
+    void PassManager::registerPass(ionshared::Ptr<Pass> pass) {
         this->registerPass(PassManagerItem{
             pass
         });

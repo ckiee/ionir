@@ -36,7 +36,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        bool equals(Ptr<Construct> other) override;
+        bool equals(ionshared::Ptr<Construct> other) override;
 
         TypeKind getTypeKind() const noexcept;
 

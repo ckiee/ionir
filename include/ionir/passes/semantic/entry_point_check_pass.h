@@ -6,11 +6,11 @@
 namespace ionir {
     class EntryPointCheckPass : public Pass {
     private:
-        OptPtr<Function> entryFunction;
+        ionshared::OptPtr<Function> entryFunction;
 
     public:
         void finish() override;
 
-        void visitFunction(Ptr<Function> node) override;
+        void visitFunction(ionshared::Ptr<Function> node) override;
     };
 }

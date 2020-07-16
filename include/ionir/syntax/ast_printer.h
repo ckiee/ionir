@@ -11,7 +11,7 @@ namespace ionir {
 
         bool isLeaf;
 
-        Ptr<Construct> construct;
+        ionshared::Ptr<Construct> construct;
     };
 
     class AstPrinter {

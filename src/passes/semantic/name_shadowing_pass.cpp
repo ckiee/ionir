@@ -3,11 +3,11 @@
 #include <ionir/passes/semantic/name_shadowing_pass.h>
 
 namespace ionir {
-    void NameShadowingPass::visitInst(Ptr<Inst> node) {
+    void NameShadowingPass::visitInst(ionshared::Ptr<Inst> node) {
         Pass::visitInst(node);
 
-        Ptr<Function> function = node->getParent()->getParent()->getParent();
-        Ptr<Args> args = function->getPrototype()->getArgs();
+        ionshared::Ptr<Function> function = node->getParent()->getParent()->getParent();
+        ionshared::Ptr<Args> args = function->getPrototype()->getArgs();
 
         /**
          * Compare the function's parameters against

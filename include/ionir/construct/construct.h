@@ -54,15 +54,15 @@ namespace ionir {
 
     class Construct;
 
-    typedef std::vector<Ptr<Construct>> Ast;
+    typedef std::vector<ionshared::Ptr<Construct>> Ast;
 
-    class Construct : public std::enable_shared_from_this<Construct> {
+    class Construct : private std::enable_shared_from_this<Construct> {
     private:
         ConstructKind constructKind;
 
     public:
         template<class T>
-        static Ast convertChildren(std::vector<Ptr<T>> vector) {
+        static Ast convertChildren(std::vector<ionshared::Ptr<T>> vector) {
             // TODO: Ensure T is child of AstNode.
             Ast children = {};
 
@@ -105,7 +105,7 @@ namespace ionir {
 
         virtual Ast getChildNodes();
 
-        virtual bool equals(Ptr<Construct> other);
+        virtual bool equals(ionshared::Ptr<Construct> other);
 
         bool isLeafNode();
 
@@ -118,14 +118,14 @@ namespace ionir {
          */
         virtual bool verify();
 
-        Ptr<Construct> getPtr();
+        ionshared::Ptr<Construct> getPtr();
 
         /**
          * Used to cast pointers to related types, for example casting
          * void* to the appropriate type.
          */
         template<typename T>
-        Ptr<T> staticCast() {
+        ionshared::Ptr<T> staticCast() {
             return std::static_pointer_cast<T>(this->getPtr());
         }
 
@@ -135,11 +135,11 @@ namespace ionir {
          * up or down an inheritance chain (inheritance hierarchy).
          */
         template<class T>
-        Ptr<T> dynamicCast() {
+        ionshared::Ptr<T> dynamicCast() {
             return std::dynamic_pointer_cast<T>(this->getPtr());
         }
 
-        Ptr<Construct> nativeCast();
+        ionshared::Ptr<Construct> nativeCast();
 
         std::optional<std::string> getConstructName();
     };

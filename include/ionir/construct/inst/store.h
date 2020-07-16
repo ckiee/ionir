@@ -8,14 +8,14 @@ namespace ionir {
     class Pass;
 
     struct StoreInstOpts : InstOpts {
-        Ptr<Value<>> value;
+        ionshared::Ptr<Value<>> value;
 
         PtrRef<AllocaInst> target;
     };
 
     class StoreInst : public Inst {
     private:
-        Ptr<Value<>> value;
+        ionshared::Ptr<Value<>> value;
 
         PtrRef<AllocaInst> target;
 
@@ -26,9 +26,9 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        Ptr<Value<>> getValue() const;
+        ionshared::Ptr<Value<>> getValue() const;
 
-        void setValue(Ptr<Value<>> value);
+        void setValue(ionshared::Ptr<Value<>> value);
 
         PtrRef<AllocaInst> getTarget() const;
 

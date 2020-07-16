@@ -17,11 +17,11 @@ namespace ionir {
         };
     }
 
-    Ptr<Value<>> StoreInst::getValue() const {
+    ionshared::Ptr<Value<>> StoreInst::getValue() const {
         return this->value;
     }
 
-    void StoreInst::setValue(Ptr<Value<>> value) {
+    void StoreInst::setValue(ionshared::Ptr<Value<>> value) {
         this->value = value;
     }
 

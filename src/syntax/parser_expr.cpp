@@ -1,7 +1,7 @@
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-    OptPtr<Construct> Parser::parsePrimaryExpr(Ptr<Construct> parent) {
+    ionshared::OptPtr<Construct> Parser::parsePrimaryExpr(ionshared::Ptr<Construct> parent) {
         TokenKind tokenKind = this->stream.get().getKind();
 
         // Expression is a literal.

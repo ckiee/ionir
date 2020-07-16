@@ -105,7 +105,7 @@ namespace ionir {
         return TypeKind::UserDefined;
     }
 
-    std::optional<std::string> Util::getConstructId(Ptr<Construct> construct) {
+    std::optional<std::string> Util::getConstructId(ionshared::Ptr<Construct> construct) {
         switch (construct->getConstructKind()) {
             case ConstructKind::Function: {
                 return construct->dynamicCast<Function>()->getPrototype()->getId();
@@ -129,7 +129,7 @@ namespace ionir {
         }
     }
 
-    std::optional<std::string> Util::getInstId(Ptr<Inst> inst) noexcept {
+    std::optional<std::string> Util::getInstId(ionshared::Ptr<Inst> inst) noexcept {
         switch (inst->getInstKind()) {
             default: {
                 return std::nullopt;

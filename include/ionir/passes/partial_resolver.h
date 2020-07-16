@@ -8,11 +8,11 @@
 namespace ionir {
     class PartialResolverPass : public Pass {
     protected:
-        std::vector<Ptr<Inst>> partials;
+        std::vector<ionshared::Ptr<Inst>> partials;
 
     public:
-        PartialResolverPass(std::vector<Ptr<Inst>> partials);
+        PartialResolverPass(std::vector<ionshared::Ptr<Inst>> partials);
 
-        std::vector<Ptr<Inst>> getPartials() const;
+        std::vector<ionshared::Ptr<Inst>> getPartials() const;
     };
 }

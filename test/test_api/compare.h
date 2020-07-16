@@ -23,7 +23,7 @@ namespace ionir::test::compare {
      */
     bool ir(std::string output, std::string fileName);
 
-    bool ir(Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName);
+    bool ir(ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName);
 
     template<unsigned int N>
     void tokenSets(std::array<Token, N> expected, std::vector<Token> actual) {

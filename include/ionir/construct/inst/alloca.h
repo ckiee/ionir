@@ -10,12 +10,12 @@ namespace ionir {
     class BasicBlock;
 
     struct AllocaInstOpts : InstOpts {
-        Ptr<Type> type;
+        ionshared::Ptr<Type> type;
     };
 
     class AllocaInst : public Inst {
     private:
-        Ptr<Type> type;
+        ionshared::Ptr<Type> type;
 
     public:
         // TODO: Missing support for array-type allocas.
@@ -23,8 +23,8 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ptr<Type> getType() const;
+        ionshared::Ptr<Type> getType() const;
 
-        void setType(Ptr<Type> type);
+        void setType(ionshared::Ptr<Type> type);
     };
 }

@@ -18,13 +18,13 @@ namespace ionir {
         return ast;
     }
 
-    void Module::insertFunction(Ptr<Function> function) {
+    void Module::insertFunction(ionshared::Ptr<Function> function) {
         // TODO: Check if function exists first?
         (*this->getSymbolTable())[function->getPrototype()->getId()] = function;
     }
 
-    OptPtr<Function> Module::lookupFunction(std::string id) {
-        OptPtr<Construct> functionConstruct = this->getSymbolTable()->lookup(id);
+    ionshared::OptPtr<Function> Module::lookupFunction(std::string id) {
+        ionshared::OptPtr<Construct> functionConstruct = this->getSymbolTable()->lookup(id);
 
         if (functionConstruct.has_value()) {
             return functionConstruct->get()->dynamicCast<Function>();

@@ -9,12 +9,12 @@ namespace ionir {
         Block
     };
 
-    class Scope : public Wrapper<Ptr<Construct>> {
+    class Scope : public Wrapper<ionshared::Ptr<Construct>> {
     private:
         ScopeKind kind;
 
     public:
-        Scope(Ptr<Construct> value, ScopeKind kind);
+        Scope(ionshared::Ptr<Construct> value, ScopeKind kind);
 
         ScopeKind getKind() const;
     };

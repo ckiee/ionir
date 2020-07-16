@@ -19,8 +19,8 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        void insertFunction(Ptr<Function> function);
+        void insertFunction(ionshared::Ptr<Function> function);
 
-        OptPtr<Function> lookupFunction(std::string id);
+        ionshared::OptPtr<Function> lookupFunction(std::string id);
     };
 }

@@ -1,11 +1,11 @@
 #include <ionir/passes/semantic/name_resolution_pass.h>
 
 namespace ionir {
-    NameResolutionPass::NameResolutionPass(Ptr<ionshared::StackTrace> stackTrace) : stackTrace(stackTrace), scope() {
+    NameResolutionPass::NameResolutionPass(ionshared::Ptr<ionshared::StackTrace> stackTrace) : stackTrace(stackTrace), scope() {
         //
     }
 
-    void NameResolutionPass::visitModule(Ptr<Module> node) {
+    void NameResolutionPass::visitModule(ionshared::Ptr<Module> node) {
         Pass::visitModule(node);
 
         // TODO: Is it push_back() or push_front()?
@@ -20,19 +20,19 @@ namespace ionir {
             return;
         }
 
-        Ptr<Construct> owner = node->getOwner();
+        ionshared::Ptr<Construct> owner = node->getOwner();
         std::string id = node->getId();
 
         // TODO: CRITICAL: Recently solved the problem which was that it was using the basic block's own symbol table instead of the function's to find the basic block (Dummy mistake). Verify that this is actually how it should be.
 
         switch (owner->getConstructKind()) {
             case ConstructKind::Inst: {
-                Ptr<Inst> inst = owner->dynamicCast<Inst>();
-                Ptr<BasicBlock> basicBlock = inst->getParent();
+                ionshared::Ptr<Inst> inst = owner->dynamicCast<Inst>();
+                ionshared::Ptr<BasicBlock> basicBlock = inst->getParent();
                 PtrSymbolTable<Inst> basicBlockSymbolTable = basicBlock->getSymbolTable();
-                Ptr<FunctionBody> functionBody = basicBlock->getParent();
+                ionshared::Ptr<FunctionBody> functionBody = basicBlock->getParent();
                 PtrSymbolTable<BasicBlock> functionSymbolTable = functionBody->getSymbolTable();
-                Ptr<Module> module = functionBody->getParent()->getPrototype()->getParent();
+                ionshared::Ptr<Module> module = functionBody->getParent()->getPrototype()->getParent();
                 PtrSymbolTable<Construct> moduleSymbolTable = module->getSymbolTable();
 
                 /**
@@ -75,7 +75,7 @@ namespace ionir {
         }
     }
 
-    void NameResolutionPass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
+    void NameResolutionPass::visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node) {
         Pass::visitScopeAnchor(node);
 
         // TODO: ScopeStack should be pushed & popped, but its never popped.
@@ -83,7 +83,7 @@ namespace ionir {
 //        this->scopeStack.add(node->getSymbolTable());
     }
 
-    Ptr<ionshared::StackTrace> NameResolutionPass::getStackTrace() const {
+    ionshared::Ptr<ionshared::StackTrace> NameResolutionPass::getStackTrace() const {
         return this->stackTrace;
     }
 

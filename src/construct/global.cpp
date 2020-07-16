@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Global::Global(Ptr<Type> type, std::string id, OptPtr<Value<>> value)
+    Global::Global(ionshared::Ptr<Type> type, std::string id, ionshared::OptPtr<Value<>> value)
         : Construct(ConstructKind::Global), type(type), Named(id), value(value) {
         //
     }
@@ -22,19 +22,19 @@ namespace ionir {
         return children;
     }
 
-    Ptr<Type> Global::getType() const noexcept {
+    ionshared::Ptr<Type> Global::getType() const noexcept {
         return this->type;
     }
 
-    void Global::setType(Ptr<Type> type) noexcept {
+    void Global::setType(ionshared::Ptr<Type> type) noexcept {
         this->type = type;
     }
 
-    OptPtr<Value<>> Global::getValue() const noexcept {
+    ionshared::OptPtr<Value<>> Global::getValue() const noexcept {
         return this->value;
     }
 
-    void Global::setValue(OptPtr<Value<>> value) noexcept {
+    void Global::setValue(ionshared::OptPtr<Value<>> value) noexcept {
         this->value = value;
     }
 }

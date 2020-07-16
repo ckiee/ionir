@@ -3,7 +3,7 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    FunctionBody::FunctionBody(Ptr<Function> parent, PtrSymbolTable<BasicBlock> symbolTable)
+    FunctionBody::FunctionBody(ionshared::Ptr<Function> parent, PtrSymbolTable<BasicBlock> symbolTable)
         : ChildConstruct(parent, ConstructKind::FunctionBody), ScopeAnchor<BasicBlock>(symbolTable) {
         //
     }
@@ -23,7 +23,7 @@ namespace ionir {
         return this->hasEntryBasicBlock();
     }
 
-    OptPtr<BasicBlock> FunctionBody::findEntryBasicBlock() {
+    ionshared::OptPtr<BasicBlock> FunctionBody::findEntryBasicBlock() {
         return this->getSymbolTable()->lookup(Const::basicBlockEntryId);
     }
 
@@ -31,7 +31,7 @@ namespace ionir {
         return Util::hasValue(this->findEntryBasicBlock());
     }
 
-    void FunctionBody::insertBasicBlock(Ptr<BasicBlock> basicBlock) {
+    void FunctionBody::insertBasicBlock(ionshared::Ptr<BasicBlock> basicBlock) {
         // TODO: Check if section exists first?
         (*this->getSymbolTable())[basicBlock->getId()] = basicBlock;
     }

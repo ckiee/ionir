@@ -29,6 +29,6 @@ namespace ionir {
          * Processed the current iterable item and increments the
          * list's index if applicable.
          */
-        OptPtr<Construct> tryNext(); // override;
+        ionshared::OptPtr<Construct> tryNext(); // override;
     };
 }

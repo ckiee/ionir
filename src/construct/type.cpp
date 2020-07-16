@@ -10,12 +10,12 @@ namespace ionir {
         visitor.visitType(this->dynamicCast<Type>());
     }
 
-    bool Type::equals(Ptr<Construct> other) {
+    bool Type::equals(ionshared::Ptr<Construct> other) {
         if (other->getConstructKind() != ConstructKind::Type) {
             return false;
         }
 
-        Ptr<Type> otherType = other->dynamicCast<Type>();
+        ionshared::Ptr<Type> otherType = other->dynamicCast<Type>();
 
         return otherType->getTypeKind() == this->getTypeKind()
             && otherType->getId() == this->getId()

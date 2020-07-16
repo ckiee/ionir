@@ -20,7 +20,7 @@ namespace ionir {
     }
 
     std::optional<Arg> Parser::parseArg() {
-        std::optional<Ptr<Type>> type = this->parseType();
+        std::optional<ionshared::Ptr<Type>> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 

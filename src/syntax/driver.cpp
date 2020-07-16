@@ -30,7 +30,7 @@ namespace ionir {
         return false;
     }
 
-    OptPtr<Construct> Driver::tryNext() {
+    ionshared::OptPtr<Construct> Driver::tryNext() {
         // Retrieve the current token from the token stream.
         Token token = this->stream.get();
 

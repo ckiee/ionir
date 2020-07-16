@@ -23,21 +23,21 @@ namespace ionir::test::bootstrap {
         return ionir::Parser(ionir::TokenStream(tokens));
     }
 
-    Ptr<LlvmModule> llvmModule(std::string identifier) {
+    ionshared::Ptr<LlvmModule> llvmModule(std::string identifier) {
         llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
         llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);
 
         return std::make_shared<LlvmModule>(llvmModule);
     }
 
-    Ptr<LlvmCodegenPass> llvmCodegenPass() {
-        Ptr<LlvmModule> module = llvmModule();
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass() {
+        ionshared::Ptr<LlvmModule> module = llvmModule();
 
-        Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>(SymbolTable<llvm::Module *>({
+        ionshared::Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>(SymbolTable<llvm::Module *>({
             {module->getId(), module->unwrap()}
         }));
 
-        Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>(modules);
+        ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>(modules);
 
         if (!llvmCodegenPass->setModuleBuffer(module->getId())) {
             throw std::runtime_error("Could not set active module buffer during bootstrap process");
@@ -46,13 +46,13 @@ namespace ionir::test::bootstrap {
         return llvmCodegenPass;
     }
 
-    Ptr<Function> emptyFunction(std::vector<Ptr<Inst>> insts) {
-        Ptr<VoidType> returnType = TypeFactory::typeVoid();
+    ionshared::Ptr<Function> emptyFunction(std::vector<ionshared::Ptr<Inst>> insts) {
+        ionshared::Ptr<VoidType> returnType = TypeFactory::typeVoid();
 
         // TODO: Consider support for module here.
-        Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType, nullptr);
+        ionshared::Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType, nullptr);
 
-        Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
+        ionshared::Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
             nullptr,
             BasicBlockKind::Entry,
             Const::basicBlockEntryId,
@@ -63,9 +63,9 @@ namespace ionir::test::bootstrap {
         // TODO: Fix mumbo-jumbo debugging code. -------------
 
         typedef PtrSymbolTable<BasicBlock> t;
-        typedef SymbolTable<Ptr<BasicBlock>> tt;
+        typedef SymbolTable<ionshared::Ptr<BasicBlock>> tt;
 
-        auto t1 = std::map<std::string, Ptr<BasicBlock>>{
+        auto t1 = std::map<std::string, ionshared::Ptr<BasicBlock>>{
             {entrySection->getId(), entrySection}
         };
 
@@ -73,8 +73,8 @@ namespace ionir::test::bootstrap {
 
         // --------------------
 
-        Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);
-        Ptr<FunctionBody> body = std::make_shared<FunctionBody>(function, sections);
+        ionshared::Ptr<Function> function = std::make_shared<Function>(prototype, nullptr);
+        ionshared::Ptr<FunctionBody> body = std::make_shared<FunctionBody>(function, sections);
 
         entrySection->setParent(body);
         function->setBody(body);

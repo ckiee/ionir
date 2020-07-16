@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Function::Function(Ptr<Prototype> prototype, Ptr<FunctionBody> body)
+    Function::Function(ionshared::Ptr<Prototype> prototype, ionshared::Ptr<FunctionBody> body)
         : Construct(ConstructKind::Function), prototype(prototype), body(body) {
         //
     }
@@ -17,19 +17,19 @@ namespace ionir {
         };
     }
 
-    Ptr<Prototype> Function::getPrototype() const noexcept {
+    ionshared::Ptr<Prototype> Function::getPrototype() const noexcept {
         return this->prototype;
     }
 
-    void Function::setPrototype(Ptr<Prototype> prototype) {
+    void Function::setPrototype(ionshared::Ptr<Prototype> prototype) {
         this->prototype = prototype;
     }
 
-    Ptr<FunctionBody> Function::getBody() const noexcept {
+    ionshared::Ptr<FunctionBody> Function::getBody() const noexcept {
         return this->body;
     }
 
-    void Function::setBody(Ptr<FunctionBody> body) noexcept {
+    void Function::setBody(ionshared::Ptr<FunctionBody> body) noexcept {
         this->body = body;
     }
 

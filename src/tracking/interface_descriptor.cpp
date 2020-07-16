@@ -25,21 +25,21 @@ namespace ionir {
     //        this->methods = methods;
     //    }
 
-    std::vector<Ptr<InterfaceDescriptor>> InterfaceDescriptor::getInterfaces() const {
+    std::vector<ionshared::Ptr<InterfaceDescriptor>> InterfaceDescriptor::getInterfaces() const {
         return this->interfaces;
     }
 
-    void InterfaceDescriptor::setInterfaces(std::vector<Ptr<InterfaceDescriptor>> interfaces) {
+    void InterfaceDescriptor::setInterfaces(std::vector<ionshared::Ptr<InterfaceDescriptor>> interfaces) {
         this->interfaces = interfaces;
     }
 
-    std::optional<Ptr<FieldDescriptor>> InterfaceDescriptor::findField(std::string name) {
+    std::optional<ionshared::Ptr<FieldDescriptor>> InterfaceDescriptor::findField(std::string name) {
         if (this->fields->contains(name)) {
             return (*this->fields)[name];
         }
 
         for (const auto &interface : this->interfaces) {
-            std::optional<Ptr<FieldDescriptor>> field = interface->findField(name);
+            std::optional<ionshared::Ptr<FieldDescriptor>> field = interface->findField(name);
 
             if (field.has_value()) {
                 return field;

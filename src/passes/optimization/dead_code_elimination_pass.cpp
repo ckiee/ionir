@@ -1,14 +1,14 @@
 #include <ionir/passes/optimization/dead_code_elimination_pass.h>
 
 namespace ionir {
-    void DeadCodeEliminationPass::visitBasicBlock(Ptr<BasicBlock> node) {
+    void DeadCodeEliminationPass::visitBasicBlock(ionshared::Ptr<BasicBlock> node) {
         Pass::visitBasicBlock(node);
         
-        std::vector<Ptr<Inst>> insts = node->getInsts();
+        std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
         bool erase = false;
 
         for (auto iterator = insts.begin(); iterator < insts.end(); ++iterator) {
-            Ptr<Inst> inst = *iterator;
+            ionshared::Ptr<Inst> inst = *iterator;
 
             /**
              * If applicable, erase all further instructions,

@@ -12,11 +12,11 @@
 using namespace ionir;
 
 TEST(CodeGenTest, VisitExtern) {
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
-    Ptr<VoidType> returnType = TypeFactory::typeVoid();
-    Ptr<Args> args = std::make_shared<Args>();
-    Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, args, returnType, nullptr);
-    Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<VoidType> returnType = TypeFactory::typeVoid();
+    ionshared::Ptr<Args> args = std::make_shared<Args>();
+    ionshared::Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, args, returnType, nullptr);
+    ionshared::Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
 
     llvmCodegenPass->visitExtern(externConstruct);
 
@@ -24,15 +24,15 @@ TEST(CodeGenTest, VisitExtern) {
 }
 
 TEST(CodeGenTest, VisitEmptyFunction) {
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
-    Ptr<VoidType> returnType = TypeFactory::typeVoid();
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<VoidType> returnType = TypeFactory::typeVoid();
 
-    Ptr<Prototype> prototype =
+    ionshared::Ptr<Prototype> prototype =
         std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType, nullptr);
 
-    Ptr<FunctionBody> body = std::make_shared<FunctionBody>(nullptr);
+    ionshared::Ptr<FunctionBody> body = std::make_shared<FunctionBody>(nullptr);
 
-    Ptr<BasicBlock> section = std::make_shared<BasicBlock>(BasicBlockOpts{
+    ionshared::Ptr<BasicBlock> section = std::make_shared<BasicBlock>(BasicBlockOpts{
         body,
         BasicBlockKind::Entry,
         "entry"
@@ -42,9 +42,9 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     // --------------------------
 
     typedef PtrSymbolTable<BasicBlock> t;
-    typedef SymbolTable<Ptr<BasicBlock>> tt;
+    typedef SymbolTable<ionshared::Ptr<BasicBlock>> tt;
 
-    auto sectionsVal = std::map<std::string, Ptr<BasicBlock>>{
+    auto sectionsVal = std::map<std::string, ionshared::Ptr<BasicBlock>>{
         {Const::basicBlockEntryId, section}
     };
 
@@ -54,7 +54,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 
     body->setSymbolTable(sectionsMap);
 
-    Ptr<Function> function = std::make_shared<Function>(prototype, body);
+    ionshared::Ptr<Function> function = std::make_shared<Function>(prototype, body);
 
     body->setParent(function);
     llvmCodegenPass->visitFunction(function);
@@ -63,9 +63,9 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 }
 
 TEST(CodeGenTest, VisitEmptyGlobal) {
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
-    Ptr<IntegerType> type = TypeFactory::typeInteger(IntegerKind::Int32);
-    Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar);
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<IntegerType> type = TypeFactory::typeInteger(IntegerKind::Int32);
+    ionshared::Ptr<Global> globalVar = std::make_shared<Global>(type, test::constant::foobar);
 
     llvmCodegenPass->visitGlobal(globalVar);
 
@@ -73,10 +73,10 @@ TEST(CodeGenTest, VisitEmptyGlobal) {
 }
 
 TEST(CodeGenTest, VisitGlobalWithValue) {
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
-    Ptr<IntegerType> type = TypeFactory::typeInteger(IntegerKind::Int32);
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<IntegerType> type = TypeFactory::typeInteger(IntegerKind::Int32);
 
-    Ptr<Global> globalVar = std::make_shared<Global>(
+    ionshared::Ptr<Global> globalVar = std::make_shared<Global>(
         type,
         test::constant::foobar,
         std::make_shared<IntegerValue>(type, 123)->staticCast<Value<>>()
@@ -88,21 +88,21 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
 }
 
 TEST(CodeGenTest, VisitAllocaInst) {
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 
     llvmCodegenPass->visitRegisterAssign(std::make_shared<RegisterAssign>(
         test::constant::foobar,
         nullptr
     ));
 
-    std::vector<Ptr<Inst>> insts = {
+    std::vector<ionshared::Ptr<Inst>> insts = {
         std::make_shared<AllocaInst>(AllocaInstOpts{
             nullptr,
             TypeFactory::typeInteger(IntegerKind::Int32)
         })
     };
 
-    Ptr<Function> function = test::bootstrap::emptyFunction(insts);
+    ionshared::Ptr<Function> function = test::bootstrap::emptyFunction(insts);
 
     llvmCodegenPass->visitFunction(function);
 
@@ -110,16 +110,16 @@ TEST(CodeGenTest, VisitAllocaInst) {
 }
 
 TEST(CodeGenTest, VisitReturnInst) {
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 
-    std::vector<Ptr<Inst>> insts = {
+    std::vector<ionshared::Ptr<Inst>> insts = {
         std::make_shared<ReturnInst>(ReturnInstOpts{
             nullptr,
             std::make_shared<IntegerValue>(TypeFactory::typeInteger(IntegerKind::Int32), 1)
         })
     };
 
-    Ptr<Function> function = test::bootstrap::emptyFunction(insts);
+    ionshared::Ptr<Function> function = test::bootstrap::emptyFunction(insts);
 
     llvmCodegenPass->visitFunction(function);
 
@@ -127,8 +127,8 @@ TEST(CodeGenTest, VisitReturnInst) {
 }
 
 TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
-    Ptr<NameResolutionPass> nameResolutionPass = std::make_shared<NameResolutionPass>();
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<NameResolutionPass> nameResolutionPass = std::make_shared<NameResolutionPass>();
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 
     llvmCodegenPass->visitRegisterAssign(std::make_shared<RegisterAssign>(
         test::constant::foo,
@@ -136,10 +136,10 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
     ));
 
     // TODO: Return value type is being reused, even tho in both contexts it's independent (alloca inst, and return inst).
-    Ptr<IntegerType> returnValueType = TypeFactory::typeInteger(IntegerKind::Int32);
+    ionshared::Ptr<IntegerType> returnValueType = TypeFactory::typeInteger(IntegerKind::Int32);
 
-    Ptr<Function> function = test::bootstrap::emptyFunction();
-    OptPtr<BasicBlock> functionEntryBlock = function->getBody()->findEntryBasicBlock();
+    ionshared::Ptr<Function> function = test::bootstrap::emptyFunction();
+    ionshared::OptPtr<BasicBlock> functionEntryBlock = function->getBody()->findEntryBasicBlock();
 
     /**
      * Entry basic block must be set in the bootstrapped function
@@ -147,7 +147,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
      */
     EXPECT_TRUE(Util::hasValue(functionEntryBlock));
 
-    Ptr<AllocaInst> allocaInst = std::make_shared<AllocaInst>(AllocaInstOpts{
+    ionshared::Ptr<AllocaInst> allocaInst = std::make_shared<AllocaInst>(AllocaInstOpts{
         /**
          * The alloca instruction needs it's parent to be set in order
          * to be resolved.
@@ -159,7 +159,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
 
     PtrRef<AllocaInst> allocaInstRef1 = std::make_shared<Ref<AllocaInst>>(test::constant::foo, nullptr, allocaInst);
 
-    Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
+    ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
         // No need for parent to be set.
         nullptr,
 
@@ -171,7 +171,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
 
     PtrRef<> allocaInstRef2 = std::make_shared<Ref<>>(test::constant::foo, nullptr, allocaInst);
 
-    Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
+    ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
         /**
          * The return instruction needs it's parent to be set in order
          * for its return value reference to be resolved.
@@ -187,7 +187,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
      */
     allocaInstRef2->setOwner(returnInst);
 
-    std::vector<Ptr<Inst>> insts = {
+    std::vector<ionshared::Ptr<Inst>> insts = {
         allocaInst,
         storeInst,
         returnInst
@@ -212,14 +212,14 @@ TEST(CodeGenTest, VisitBranchInst) {
 
     passManager.registerPass(std::make_shared<NameResolutionPass>());
 
-    Ptr<BasicBlock> body = std::make_shared<BasicBlock>(BasicBlockOpts{
+    ionshared::Ptr<BasicBlock> body = std::make_shared<BasicBlock>(BasicBlockOpts{
         nullptr,
         BasicBlockKind::Label,
         "if_body",
         {}
     });
 
-    Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
+    ionshared::Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
     PtrRef<BasicBlock> bodySectionRef = std::make_shared<Ref<BasicBlock>>("if_body", nullptr, body);
 
     // TODO: Use some sort of factory design pattern.
@@ -243,9 +243,9 @@ TEST(CodeGenTest, VisitBranchInst) {
     branchInst->getBlockRef()->setOwner(branchInst);
     branchInst->getOtherwiseBlockRef()->setOwner(branchInst);
 
-    Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
+    ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 
-    Ptr<Function> function = test::bootstrap::emptyFunction({
+    ionshared::Ptr<Function> function = test::bootstrap::emptyFunction({
         branchInst
     });
 

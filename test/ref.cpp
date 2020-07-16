@@ -25,7 +25,7 @@ TEST(RefTest, SetId) {
 
 TEST(RefTest, SetOwner) {
     Ref<> ref = Ref<>(test::constant::foobar, nullptr);
-    Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{});
+    ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{});
 
     ref.setOwner(returnInst);
 
@@ -34,7 +34,7 @@ TEST(RefTest, SetOwner) {
 
 TEST(RefTest, SetValue) {
     Ref<> ref = Ref<>(test::constant::foobar, nullptr);
-    Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{});
+    ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{});
 
     ref.setOwner(returnInst);
 

@@ -9,7 +9,7 @@ using namespace ionir;
 
 // TODO: Separate into multiple tests.
 TEST(TypeCheckPassTest, Run) {
-    Ptr<TypeCheckPass> pass = std::make_shared<TypeCheckPass>();
+    ionshared::Ptr<TypeCheckPass> pass = std::make_shared<TypeCheckPass>();
 
     PassManager passManager = PassManager({
         PassManagerItem{
@@ -18,11 +18,11 @@ TEST(TypeCheckPassTest, Run) {
     });
 
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
-    OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
+    ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
 
     EXPECT_TRUE(function.has_value());
 
-    Ptr<Prototype> prototype = function->get()->getPrototype();
+    ionshared::Ptr<Prototype> prototype = function->get()->getPrototype();
 
     prototype->setReturnType(TypeFactory::typeInteger(IntegerKind::Int32));
 
@@ -37,7 +37,7 @@ TEST(TypeCheckPassTest, Run) {
 
     prototype->setReturnType(TypeFactory::typeVoid());
 
-    Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
+    ionshared::Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
     InstBuilder instBuilder = InstBuilder(entrySection);
 
     instBuilder.createReturn();

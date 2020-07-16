@@ -20,11 +20,11 @@ namespace ionir {
         };
     }
 
-    OptPtr<Construct> ReturnInst::getValue() const noexcept {
+    ionshared::OptPtr<Construct> ReturnInst::getValue() const noexcept {
         return this->value;
     }
 
-    void ReturnInst::setValue(OptPtr<Construct> value) noexcept {
+    void ReturnInst::setValue(ionshared::OptPtr<Construct> value) noexcept {
         this->value = value;
     }
 

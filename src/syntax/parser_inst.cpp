@@ -2,7 +2,7 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    OptPtr<Inst> Parser::parseInst(Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<Inst> Parser::parseInst(ionshared::Ptr<BasicBlock> parent) {
         /**
          * Retrieve the current token's kind to
          * determine the instruction's name &
@@ -11,7 +11,7 @@ namespace ionir {
         TokenKind tokenKind = this->stream.get().getKind();
 
         // Create a buffer instruction to serve as the result.
-        OptPtr<Inst> inst;
+        ionshared::OptPtr<Inst> inst;
 
         /**
          * First off, ensure the name is actually
@@ -63,10 +63,10 @@ namespace ionir {
         return inst;
     }
 
-    OptPtr<AllocaInst> Parser::parseAllocaInst(Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<AllocaInst> Parser::parseAllocaInst(ionshared::Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstAlloca);
 
-        OptPtr<Type> type = this->parseType();
+        ionshared::OptPtr<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -80,15 +80,15 @@ namespace ionir {
         });
     }
 
-    OptPtr<ReturnInst> Parser::parseReturnInst(Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<ReturnInst> Parser::parseReturnInst(ionshared::Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstReturn);
 
-        Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
+        ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
             parent,
             nullptr
         });
 
-        OptPtr<Construct> value = std::nullopt;
+        ionshared::OptPtr<Construct> value = std::nullopt;
 
         /**
          * A non-void value is being returned. Parse a primary
@@ -111,27 +111,27 @@ namespace ionir {
         return returnInst;
     }
 
-    OptPtr<BranchInst> Parser::parseBranchInst(Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<BranchInst> Parser::parseBranchInst(ionshared::Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstBranch);
 
         // TODO: Not passing any parent to the parser. Should it be this way?
-        OptPtr<Construct> condition = this->parsePrimaryExpr(nullptr);
+        ionshared::OptPtr<Construct> condition = this->parsePrimaryExpr(nullptr);
 
         // Condition must be set.
         IONIR_PARSER_ASSURE(condition)
 
-        Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
+        ionshared::Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
             parent,
             *condition,
             nullptr,
             nullptr
         });
 
-        OptPtr<Ref<BasicBlock>> bodySection = this->parseRef<BasicBlock>(branchInst);
+        ionshared::OptPtr<Ref<BasicBlock>> bodySection = this->parseRef<BasicBlock>(branchInst);
 
         IONIR_PARSER_ASSURE(bodySection)
 
-        OptPtr<Ref<BasicBlock>> otherwiseSection = this->parseRef<BasicBlock>(branchInst);
+        ionshared::OptPtr<Ref<BasicBlock>> otherwiseSection = this->parseRef<BasicBlock>(branchInst);
 
         IONIR_PARSER_ASSURE(otherwiseSection)
 
@@ -141,7 +141,7 @@ namespace ionir {
         return branchInst;
     }
 
-    OptPtr<CallInst> Parser::parseCallInst(Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<CallInst> Parser::parseCallInst(ionshared::Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstCall);
 
         std::optional<std::string> calleeId = this->parseId();
@@ -149,7 +149,7 @@ namespace ionir {
         IONIR_PARSER_ASSURE(calleeId)
 
         // TODO: Is the BasicBlock parent the correct one? Just passing it because it seems like so. Check.
-        Ptr<Ref<Function>> callee = std::make_shared<Ref<Function>>(*calleeId, parent);
+        ionshared::Ptr<Ref<Function>> callee = std::make_shared<Ref<Function>>(*calleeId, parent);
 
         return std::make_shared<CallInst>(CallInstOpts{
             parent,
@@ -157,20 +157,20 @@ namespace ionir {
         });;
     }
 
-    OptPtr<StoreInst> Parser::parseStoreInst(Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<StoreInst> Parser::parseStoreInst(ionshared::Ptr<BasicBlock> parent) {
         this->skipOver(TokenKind::InstStore);
 
-        OptPtr<Value<>> value = this->parseValue();
+        ionshared::OptPtr<Value<>> value = this->parseValue();
 
         IONIR_PARSER_ASSURE(value)
 
-        Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
+        ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
             parent,
             *value,
             nullptr
         });
 
-        OptPtr<Ref<AllocaInst>> target = this->parseRef<AllocaInst>(storeInst);
+        ionshared::OptPtr<Ref<AllocaInst>> target = this->parseRef<AllocaInst>(storeInst);
 
         IONIR_PARSER_ASSURE(target)
 

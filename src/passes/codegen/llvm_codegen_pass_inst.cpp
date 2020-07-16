@@ -5,7 +5,7 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmCodegenPass::visitAllocaInst(Ptr<AllocaInst> node) {
+    void LlvmCodegenPass::visitAllocaInst(ionshared::Ptr<AllocaInst> node) {
         this->requireBuilder();
         this->visitType(node->getType());
 
@@ -26,10 +26,10 @@ namespace ionir {
         this->valueStack.push(llvmAllocaInst);
     }
 
-    void LlvmCodegenPass::visitReturnInst(Ptr<ReturnInst> node) {
+    void LlvmCodegenPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
         this->requireBuilder();
 
-        OptPtr<Construct> returnInstValue = node->getValue();
+        ionshared::OptPtr<Construct> returnInstValue = node->getValue();
         llvm::ReturnInst *llvmReturnInst = nullptr;
 
         if (Util::hasValue(returnInstValue)) {
@@ -79,7 +79,7 @@ namespace ionir {
         this->valueStack.push(llvmReturnInst);
     }
 
-    void LlvmCodegenPass::visitBranchInst(Ptr<BranchInst> node) {
+    void LlvmCodegenPass::visitBranchInst(ionshared::Ptr<BranchInst> node) {
         this->requireBuilder();
 
         // Visit condition.
@@ -122,7 +122,7 @@ namespace ionir {
         this->valueStack.push(llvmBranchInst);
     }
 
-    void LlvmCodegenPass::visitCallInst(Ptr<CallInst> node) {
+    void LlvmCodegenPass::visitCallInst(ionshared::Ptr<CallInst> node) {
         this->requireModule();
         this->requireBuilder();
 
@@ -150,7 +150,7 @@ namespace ionir {
         this->valueStack.push(callInst);
     }
 
-    void LlvmCodegenPass::visitStoreInst(Ptr<StoreInst> node) {
+    void LlvmCodegenPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
         this->requireBuilder();
 
         PtrRef<AllocaInst> target = node->getTarget();

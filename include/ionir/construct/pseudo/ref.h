@@ -13,12 +13,12 @@ namespace ionir {
     template<typename T = Construct>
     class Ref : public Construct, public ionshared::Named {
     private:
-        Ptr<Construct> owner;
+        ionshared::Ptr<Construct> owner;
 
-        OptPtr<T> value;
+        ionshared::OptPtr<T> value;
 
     public:
-        Ref(std::string id, Ptr<Construct> owner, OptPtr<T> value = std::nullopt)
+        Ref(std::string id, ionshared::Ptr<Construct> owner, ionshared::OptPtr<T> value = std::nullopt)
             : Construct(ConstructKind::Ref), Named(id), owner(owner), value(value) {
             //
         }
@@ -28,23 +28,23 @@ namespace ionir {
             // visitor.visitRef(this->dynamicCast<Ref<T>>());
         }
 
-        Ptr<Construct> getOwner() const noexcept {
+        ionshared::Ptr<Construct> getOwner() const noexcept {
             return this->owner;
         }
 
-        void setOwner(Ptr<Construct> owner) noexcept {
+        void setOwner(ionshared::Ptr<Construct> owner) noexcept {
             this->owner = owner;
         }
 
-        OptPtr<T> getValue() const noexcept {
+        ionshared::OptPtr<T> getValue() const noexcept {
             return this->value;
         }
 
         template<typename TValue>
-        OptPtr<TValue> getValueAs() const {
+        ionshared::OptPtr<TValue> getValueAs() const {
             // TODO: Ensure T is or derives from Construct.
 
-            OptPtr<Construct> value = this->getValue();
+            ionshared::OptPtr<Construct> value = this->getValue();
 
             if (Util::hasValue(value)) {
                 return value->get()->dynamicCast<TValue>();
@@ -57,7 +57,7 @@ namespace ionir {
             return Util::hasValue(this->value);
         }
 
-        void resolve(OptPtr<T> value) {
+        void resolve(ionshared::OptPtr<T> value) {
             /**
              * Make sure the value is not a nullptr. To un-resolve the reference,
              * std::nullopt should be used instead.
@@ -71,7 +71,7 @@ namespace ionir {
     };
 
     template<typename T = Construct>
-    using PtrRef = Ptr<Ref<T>>;
+    using PtrRef = ionshared::Ptr<Ref<T>>;
 
     template<typename T = Construct>
     using OptPtrRef = std::optional<PtrRef<T>>;

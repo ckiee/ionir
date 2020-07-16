@@ -22,10 +22,10 @@ namespace ionir {
     private:
         ValueKind kind;
 
-        Ptr<T> type;
+        ionshared::Ptr<T> type;
 
     public:
-        Value(ValueKind kind, Ptr<T> type)
+        Value(ValueKind kind, ionshared::Ptr<T> type)
             : Construct(ConstructKind::Value), kind(kind), type(type) {
             //
         }
@@ -39,7 +39,7 @@ namespace ionir {
             return this->kind;
         }
 
-        Ptr<T> getType() const noexcept {
+        ionshared::Ptr<T> getType() const noexcept {
             return this->type;
         }
     };

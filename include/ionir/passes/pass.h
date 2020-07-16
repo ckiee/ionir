@@ -41,64 +41,64 @@ namespace ionir {
          */
         virtual void finish();
 
-        virtual void visit(Ptr<Construct> node);
+        virtual void visit(ionshared::Ptr<Construct> node);
 
-        virtual void visitChildren(Ptr<Construct> node);
+        virtual void visitChildren(ionshared::Ptr<Construct> node);
 
-        virtual void visitFunction(Ptr<Function> node);
+        virtual void visitFunction(ionshared::Ptr<Function> node);
 
-        virtual void visitExtern(Ptr<Extern> node);
+        virtual void visitExtern(ionshared::Ptr<Extern> node);
 
-        virtual void visitBasicBlock(Ptr<BasicBlock> node);
+        virtual void visitBasicBlock(ionshared::Ptr<BasicBlock> node);
 
-        virtual void visitFunctionBody(Ptr<FunctionBody> node);
+        virtual void visitFunctionBody(ionshared::Ptr<FunctionBody> node);
 
-        virtual void visitPrototype(Ptr<Prototype> node);
+        virtual void visitPrototype(ionshared::Ptr<Prototype> node);
 
-        virtual void visitVarReference(Ptr<VariableRef> node);
+        virtual void visitVarReference(ionshared::Ptr<VariableRef> node);
 
-        virtual void visitValue(Ptr<Value<>> node);
+        virtual void visitValue(ionshared::Ptr<Value<>> node);
 
-        virtual void visitIntegerValue(Ptr<IntegerValue> node);
+        virtual void visitIntegerValue(ionshared::Ptr<IntegerValue> node);
 
-        virtual void visitCharValue(Ptr<CharValue> node);
+        virtual void visitCharValue(ionshared::Ptr<CharValue> node);
 
-        virtual void visitStringValue(Ptr<StringValue> node);
+        virtual void visitStringValue(ionshared::Ptr<StringValue> node);
 
-        virtual void visitBooleanValue(Ptr<BooleanValue> node);
+        virtual void visitBooleanValue(ionshared::Ptr<BooleanValue> node);
 
-        virtual void visitInst(Ptr<Inst> node);
+        virtual void visitInst(ionshared::Ptr<Inst> node);
 
-        virtual void visitAllocaInst(Ptr<AllocaInst> node);
+        virtual void visitAllocaInst(ionshared::Ptr<AllocaInst> node);
 
-        virtual void visitReturnInst(Ptr<ReturnInst> node);
+        virtual void visitReturnInst(ionshared::Ptr<ReturnInst> node);
 
-        virtual void visitBranchInst(Ptr<BranchInst> node);
+        virtual void visitBranchInst(ionshared::Ptr<BranchInst> node);
 
-        virtual void visitCallInst(Ptr<CallInst> node);
+        virtual void visitCallInst(ionshared::Ptr<CallInst> node);
 
-        virtual void visitStoreInst(Ptr<StoreInst> node);
+        virtual void visitStoreInst(ionshared::Ptr<StoreInst> node);
 
-        virtual void visitGlobal(Ptr<Global> node);
+        virtual void visitGlobal(ionshared::Ptr<Global> node);
 
-        virtual void visitStructDecl(Ptr<StructDecl> node);
+        virtual void visitStructDecl(ionshared::Ptr<StructDecl> node);
 
-        virtual void visitType(Ptr<Type> node);
+        virtual void visitType(ionshared::Ptr<Type> node);
 
-        virtual void visitIntegerType(Ptr<IntegerType> node);
+        virtual void visitIntegerType(ionshared::Ptr<IntegerType> node);
 
-        virtual void visitVoidType(Ptr<VoidType> node);
+        virtual void visitVoidType(ionshared::Ptr<VoidType> node);
 
-        virtual void visitBooleanType(Ptr<BooleanType> node);
+        virtual void visitBooleanType(ionshared::Ptr<BooleanType> node);
 
-        virtual void visitModule(Ptr<Module> node);
+        virtual void visitModule(ionshared::Ptr<Module> node);
 
         virtual void visitDirective(Directive node);
 
         virtual void visitRef(PtrRef<> node);
 
-        virtual void visitScopeAnchor(Ptr<ScopeAnchor<>> node);
+        virtual void visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node);
 
-        virtual void visitRegisterAssign(Ptr<RegisterAssign> node);
+        virtual void visitRegisterAssign(ionshared::Ptr<RegisterAssign> node);
     };
 }

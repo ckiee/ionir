@@ -9,7 +9,7 @@ namespace ionir {
         //
     }
 
-    void Pass::visit(Ptr<Construct> node) {
+    void Pass::visit(ionshared::Ptr<Construct> node) {
         node->accept(*this);
 
         // TODO: Hotfix for circular dep.
@@ -29,7 +29,7 @@ namespace ionir {
         this->visitChildren(node);
     }
 
-    void Pass::visitChildren(Ptr<Construct> node) {
+    void Pass::visitChildren(ionshared::Ptr<Construct> node) {
         // TODO: Will it cause StackOverflow error with large ASTs?
         /**
          * After visiting the node, attempt to
@@ -41,31 +41,31 @@ namespace ionir {
         }
     }
 
-    void Pass::visitFunction(Ptr<Function> node) {
+    void Pass::visitFunction(ionshared::Ptr<Function> node) {
         //
     }
 
-    void Pass::visitExtern(Ptr<Extern> node) {
+    void Pass::visitExtern(ionshared::Ptr<Extern> node) {
         //
     }
 
-    void Pass::visitBasicBlock(Ptr<BasicBlock> node) {
+    void Pass::visitBasicBlock(ionshared::Ptr<BasicBlock> node) {
         //
     }
 
-    void Pass::visitFunctionBody(Ptr<FunctionBody> node) {
+    void Pass::visitFunctionBody(ionshared::Ptr<FunctionBody> node) {
         //
     }
 
-    void Pass::visitPrototype(Ptr<Prototype> node) {
+    void Pass::visitPrototype(ionshared::Ptr<Prototype> node) {
         //
     }
 
-    void Pass::visitVarReference(Ptr<VariableRef> node) {
+    void Pass::visitVarReference(ionshared::Ptr<VariableRef> node) {
         //
     }
 
-    void Pass::visitValue(Ptr<Value<>> node) {
+    void Pass::visitValue(ionshared::Ptr<Value<>> node) {
         switch (node->getValueKind()) {
             // TODO: Missing boolean value kind.
 
@@ -99,23 +99,23 @@ namespace ionir {
         }
     }
 
-    void Pass::visitIntegerValue(Ptr<IntegerValue> node) {
+    void Pass::visitIntegerValue(ionshared::Ptr<IntegerValue> node) {
         //
     }
 
-    void Pass::visitCharValue(Ptr<CharValue> node) {
+    void Pass::visitCharValue(ionshared::Ptr<CharValue> node) {
         //
     }
 
-    void Pass::visitStringValue(Ptr<StringValue> node) {
+    void Pass::visitStringValue(ionshared::Ptr<StringValue> node) {
         //
     }
 
-    void Pass::visitBooleanValue(Ptr<BooleanValue> node) {
+    void Pass::visitBooleanValue(ionshared::Ptr<BooleanValue> node) {
         //
     }
 
-    void Pass::visitInst(Ptr<Inst> node) {
+    void Pass::visitInst(ionshared::Ptr<Inst> node) {
         switch (node->getInstKind()) {
             case InstKind::Alloca: {
                 this->visitAllocaInst(node->dynamicCast<AllocaInst>());
@@ -155,51 +155,51 @@ namespace ionir {
         }
     }
 
-    void Pass::visitAllocaInst(Ptr<AllocaInst> node) {
+    void Pass::visitAllocaInst(ionshared::Ptr<AllocaInst> node) {
         //
     }
 
-    void Pass::visitReturnInst(Ptr<ReturnInst> node) {
+    void Pass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
         //
     }
 
-    void Pass::visitBranchInst(Ptr<BranchInst> node) {
+    void Pass::visitBranchInst(ionshared::Ptr<BranchInst> node) {
         //
     }
 
-    void Pass::visitCallInst(Ptr<CallInst> node) {
+    void Pass::visitCallInst(ionshared::Ptr<CallInst> node) {
         //
     }
 
-    void Pass::visitStoreInst(Ptr<StoreInst> node) {
+    void Pass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
         //
     }
 
-    void Pass::visitGlobal(Ptr<Global> node) {
+    void Pass::visitGlobal(ionshared::Ptr<Global> node) {
         //
     }
 
-    void Pass::visitStructDecl(Ptr<StructDecl> node) {
+    void Pass::visitStructDecl(ionshared::Ptr<StructDecl> node) {
         //
     }
 
-    void Pass::visitType(Ptr<Type> node) {
+    void Pass::visitType(ionshared::Ptr<Type> node) {
         //
     }
 
-    void Pass::visitIntegerType(Ptr<IntegerType> node) {
+    void Pass::visitIntegerType(ionshared::Ptr<IntegerType> node) {
         //
     }
 
-    void Pass::visitVoidType(Ptr<VoidType> node) {
+    void Pass::visitVoidType(ionshared::Ptr<VoidType> node) {
         //
     }
 
-    void Pass::visitBooleanType(Ptr<BooleanType> node) {
+    void Pass::visitBooleanType(ionshared::Ptr<BooleanType> node) {
         //
     }
 
-    void Pass::visitModule(Ptr<Module> node) {
+    void Pass::visitModule(ionshared::Ptr<Module> node) {
         //
     }
 
@@ -211,11 +211,11 @@ namespace ionir {
         //
     }
 
-    void Pass::visitScopeAnchor(Ptr<ScopeAnchor<>> node) {
+    void Pass::visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node) {
         //
     }
 
-    void Pass::visitRegisterAssign(Ptr<ionir::RegisterAssign> node) {
+    void Pass::visitRegisterAssign(ionshared::Ptr<ionir::RegisterAssign> node) {
         //
     }
 }

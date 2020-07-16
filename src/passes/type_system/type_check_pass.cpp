@@ -1,17 +1,17 @@
 #include <ionir/passes/type_system/type_check_pass.h>
 
 namespace ionir {
-    void TypeCheckPass::visitFunction(Ptr<Function> node) {
+    void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
         Pass::visitFunction(node);
 
-        OptPtr<BasicBlock> entryBasicBlock = node->getBody()->findEntryBasicBlock();
+        ionshared::OptPtr<BasicBlock> entryBasicBlock = node->getBody()->findEntryBasicBlock();
 
         if (!Util::hasValue(entryBasicBlock)) {
             throw std::runtime_error("Entry basic block for function body is not set");
         }
 
-        std::vector<Ptr<Inst>> insts = entryBasicBlock->get()->getInsts();
-        OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
+        std::vector<ionshared::Ptr<Inst>> insts = entryBasicBlock->get()->getInsts();
+        ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
 
         // All basic blocks must contain at least a terminal instruction.
         if (insts.empty() || !Util::hasValue(terminalInst)) {
@@ -20,9 +20,9 @@ namespace ionir {
 
         for (const auto inst : insts) {
             if (inst->getInstKind() == InstKind::Return) {
-                Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
+                ionshared::Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
                 TypeKind returnTypeKind = node->getPrototype()->getReturnType()->getTypeKind();
-                OptPtr<Construct> returnInstValue = returnInst->getValue();
+                ionshared::OptPtr<Construct> returnInstValue = returnInst->getValue();
                 bool returnInstValueSet = Util::hasValue(returnInstValue);
 
                 /**
@@ -45,7 +45,7 @@ namespace ionir {
 //                     * At this point, the function returns a non-void value. Abstract its
 //                     * return value's type construct.
 //                     */
-//                    Ptr<Type> returnInstValueType = (*returnInstValue)->staticCast<Value>()->getType();
+//                    ionshared::Ptr<Type> returnInstValueType = (*returnInstValue)->staticCast<Value>()->getType();
 //
 //                    /**
 //                     * Function's return type and the return instruction's value's type
@@ -69,7 +69,7 @@ namespace ionir {
         }
     }
 
-    void TypeCheckPass::visitStoreInst(Ptr<StoreInst> node) {
+    void TypeCheckPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
         Pass::visitStoreInst(node);
 
         // TODO: Implement.

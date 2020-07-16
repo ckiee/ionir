@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    IntegerValue::IntegerValue(Ptr<IntegerType> type, int64_t value)
+    IntegerValue::IntegerValue(ionshared::Ptr<IntegerType> type, int64_t value)
         : Value(ValueKind::Integer, type), value(value) {
         //
     }

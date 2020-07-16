@@ -5,12 +5,12 @@
 #include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    OptPtr<Value<>> Parser::parseValue() {
+    ionshared::OptPtr<Value<>> Parser::parseValue() {
         Token token = this->stream.get();
 
         switch (token.getKind()) {
             case TokenKind::LiteralInteger: {
-                OptPtr<IntegerValue> integerValue = this->parseInt();
+                ionshared::OptPtr<IntegerValue> integerValue = this->parseInt();
 
                 if (Util::hasValue(integerValue)) {
                     return integerValue->get()->staticCast<Value<>>();
@@ -31,7 +31,7 @@ namespace ionir {
         }
     }
 
-    OptPtr<IntegerValue> Parser::parseInt() {
+    ionshared::OptPtr<IntegerValue> Parser::parseInt() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralInteger)
 
         /**
@@ -70,10 +70,10 @@ namespace ionir {
         }
 
         // Create a long integer type for the value.
-        Ptr<IntegerType> type = std::make_shared<IntegerType>(*valueIntegerKind);
+        ionshared::Ptr<IntegerType> type = std::make_shared<IntegerType>(*valueIntegerKind);
 
         // Create the integer instance.
-        Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type, value);
+        ionshared::Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type, value);
 
         // Skip current token.
         this->stream.tryNext();
@@ -82,7 +82,7 @@ namespace ionir {
         return integer;
     }
 
-    OptPtr<CharValue> Parser::parseChar() {
+    ionshared::OptPtr<CharValue> Parser::parseChar() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralCharacter);
 
         // Extract the value from the character token.
@@ -100,7 +100,7 @@ namespace ionir {
         return std::make_shared<CharValue>(stringValue[0]);
     }
 
-    OptPtr<StringValue> Parser::parseString() {
+    ionshared::OptPtr<StringValue> Parser::parseString() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralString);
 
         // Extract the value from the string token.

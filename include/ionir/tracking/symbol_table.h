@@ -2,6 +2,7 @@
 
 #include <list>
 #include <string>
+#include <ionshared/misc/helpers.h>
 #include <ionir/container/map.h>
 #include <ionir/misc/helpers.h>
 
@@ -10,7 +11,7 @@ namespace ionir {
     using SymbolTable = Map<std::string, T>;
 
     template<typename T>
-    using PtrSymbolTable = Ptr<SymbolTable<Ptr<T>>>;
+    using PtrSymbolTable = ionshared::Ptr<SymbolTable<ionshared::Ptr<T>>>;
 
     template<typename TKey, typename TValue>
     using ScopeListItem = Map<TKey, TValue>;

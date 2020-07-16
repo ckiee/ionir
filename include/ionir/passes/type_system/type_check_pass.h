@@ -5,8 +5,8 @@
 namespace ionir {
     class TypeCheckPass : public Pass {
     public:
-        void visitFunction(Ptr <Function> node) override;
+        void visitFunction(ionshared::Ptr<Function> node) override;
 
-        void visitStoreInst(Ptr<StoreInst> node) override;
+        void visitStoreInst(ionshared::Ptr<StoreInst> node) override;
     };
 }

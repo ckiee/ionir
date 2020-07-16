@@ -10,7 +10,7 @@ namespace ionir {
     class BasicBlock;
 
     struct BranchInstOpts : InstOpts {
-        Ptr<Construct> condition;
+        ionshared::Ptr<Construct> condition;
 
         PtrRef<BasicBlock> blockRef;
 
@@ -19,7 +19,7 @@ namespace ionir {
 
     class BranchInst : public Inst {
     private:
-        Ptr<Construct> condition;
+        ionshared::Ptr<Construct> condition;
 
         PtrRef<BasicBlock> blockRef;
 
@@ -32,9 +32,9 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        Ptr<Construct> getCondition() const;
+        ionshared::Ptr<Construct> getCondition() const;
 
-        void setCondition(Ptr<Construct> condition);
+        void setCondition(ionshared::Ptr<Construct> condition);
 
         PtrRef<BasicBlock> getBlockRef() const;
 

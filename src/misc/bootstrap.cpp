@@ -10,13 +10,13 @@ namespace ionir {
             .make();
     }
 
-    Ptr<Function> Bootstrap::function(std::string id) {
-        Ptr<Module> module = Bootstrap::functionAst(id)[0]->dynamicCast<Module>();
+    ionshared::Ptr<Function> Bootstrap::function(std::string id) {
+        ionshared::Ptr<Module> module = Bootstrap::functionAst(id)[0]->dynamicCast<Module>();
 
         return (*module->getSymbolTable())[id]->dynamicCast<Function>();
     }
 
-    Ptr<BasicBlock> Bootstrap::basicBlock(Ptr<FunctionBody> parent, std::string id, BasicBlockKind basicBlockKind) {
+    ionshared::Ptr<BasicBlock> Bootstrap::basicBlock(ionshared::Ptr<FunctionBody> parent, std::string id, BasicBlockKind basicBlockKind) {
         return std::make_shared<BasicBlock>(BasicBlockOpts{
             parent,
             basicBlockKind,

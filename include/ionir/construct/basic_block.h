@@ -44,9 +44,9 @@ namespace ionir {
 
         std::string id;
 
-        std::vector<Ptr<RegisterAssign>> registers = {};
+        std::vector<ionshared::Ptr<RegisterAssign>> registers = {};
 
-        std::vector<Ptr<Inst>> insts = {};
+        std::vector<ionshared::Ptr<Inst>> insts = {};
 
         PtrSymbolTable<Inst> symbolTable = TypeFactory::makePtrSymbolTable<Inst>();
     };
@@ -56,9 +56,9 @@ namespace ionir {
     private:
         BasicBlockKind kind;
 
-        std::vector<Ptr<RegisterAssign>> registers;
+        std::vector<ionshared::Ptr<RegisterAssign>> registers;
 
-        std::vector<Ptr<Inst>> insts;
+        std::vector<ionshared::Ptr<Inst>> insts;
 
     public:
         explicit BasicBlock(BasicBlockOpts opts);
@@ -69,15 +69,15 @@ namespace ionir {
 
         BasicBlockKind getKind() const noexcept;
 
-        std::vector<Ptr<RegisterAssign>> &getRegisters() noexcept;
+        std::vector<ionshared::Ptr<RegisterAssign>> &getRegisters() noexcept;
 
-        void setRegisters(std::vector<Ptr<RegisterAssign>> registers);
+        void setRegisters(std::vector<ionshared::Ptr<RegisterAssign>> registers);
 
-        std::vector<Ptr<Inst>> &getInsts() noexcept;
+        std::vector<ionshared::Ptr<Inst>> &getInsts() noexcept;
 
-        void setInsts(std::vector<Ptr<Inst>> insts);
+        void setInsts(std::vector<ionshared::Ptr<Inst>> insts);
 
-        void insertInst(Ptr<Inst> inst);
+        void insertInst(ionshared::Ptr<Inst> inst);
 
         uint32_t relocateInsts(BasicBlock &target, uint32_t from = 0);
 
@@ -85,10 +85,10 @@ namespace ionir {
          * Attempt to find the index location of an instruction.
          * Returns null if not found.
          */
-        std::optional<uint32_t> locate(Ptr<Inst> inst) const;
+        std::optional<uint32_t> locate(ionshared::Ptr<Inst> inst) const;
 
-        Ptr<InstBuilder> createBuilder();
+        ionshared::Ptr<InstBuilder> createBuilder();
 
-        OptPtr<Inst> findTerminalInst() const;
+        ionshared::OptPtr<Inst> findTerminalInst() const;
     };
 }

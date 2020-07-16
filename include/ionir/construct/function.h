@@ -12,27 +12,27 @@ namespace ionir {
 
     class Function : public Construct {
     private:
-        Ptr<Prototype> prototype;
+        ionshared::Ptr<Prototype> prototype;
 
-        Ptr<FunctionBody> body;
+        ionshared::Ptr<FunctionBody> body;
 
         PtrSymbolTable<LocalVariableDescriptor> localVariables;
 
     public:
-        Function(Ptr<Prototype> prototype, Ptr<FunctionBody> body);
+        Function(ionshared::Ptr<Prototype> prototype, ionshared::Ptr<FunctionBody> body);
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() override;
 
-        Ptr<Prototype> getPrototype() const noexcept;
+        ionshared::Ptr<Prototype> getPrototype() const noexcept;
 
-        void setPrototype(Ptr<Prototype> prototype);
+        void setPrototype(ionshared::Ptr<Prototype> prototype);
 
-        Ptr<FunctionBody> getBody() const noexcept;
+        ionshared::Ptr<FunctionBody> getBody() const noexcept;
 
         // TODO: Should this automatically set the body's parent as well?
-        void setBody(Ptr<FunctionBody> body) noexcept;
+        void setBody(ionshared::Ptr<FunctionBody> body) noexcept;
 
         PtrSymbolTable<LocalVariableDescriptor> getLocalVariables() const;
 

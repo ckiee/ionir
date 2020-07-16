@@ -11,6 +11,6 @@ namespace ionir {
      */
     class NameShadowingPass : public Pass {
     public:
-        void visitInst(Ptr<Inst> node) override;
+        void visitInst(ionshared::Ptr<Inst> node) override;
     };
 }

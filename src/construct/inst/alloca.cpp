@@ -11,11 +11,11 @@ namespace ionir {
         visitor.visitAllocaInst(this->dynamicCast<AllocaInst>());
     }
 
-    Ptr<Type> AllocaInst::getType() const {
+    ionshared::Ptr<Type> AllocaInst::getType() const {
         return this->type;
     }
 
-    void AllocaInst::setType(Ptr<Type> type) {
+    void AllocaInst::setType(ionshared::Ptr<Type> type) {
         this->type = type;
     }
 }

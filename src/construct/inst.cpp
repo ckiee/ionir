@@ -2,7 +2,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Inst::Inst(Ptr<BasicBlock> parent, InstKind kind, OptPtr<Inst> yields)
+    Inst::Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind, ionshared::OptPtr<Inst> yields)
         : ChildConstruct(parent, ConstructKind::Inst), kind(kind), yields(yields) {
         //
     }
@@ -11,7 +11,7 @@ namespace ionir {
         return this->kind;
     }
 
-    OptPtr<Inst> Inst::getYields() const noexcept {
+    ionshared::OptPtr<Inst> Inst::getYields() const noexcept {
         return std::nullopt;
     }
 

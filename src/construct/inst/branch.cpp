@@ -19,11 +19,11 @@ namespace ionir {
         };
     }
 
-    Ptr<Construct> BranchInst::getCondition() const {
+    ionshared::Ptr<Construct> BranchInst::getCondition() const {
         return this->condition;
     }
 
-    void BranchInst::setCondition(Ptr<Construct> condition) {
+    void BranchInst::setCondition(ionshared::Ptr<Construct> condition) {
         this->condition = condition;
     }
 

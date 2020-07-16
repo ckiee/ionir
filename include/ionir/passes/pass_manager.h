@@ -20,7 +20,7 @@ namespace ionir {
     };
 
     struct PassManagerItem {
-        Ptr<Pass> pass;
+        ionshared::Ptr<Pass> pass;
 
         PassPriority priority = PassPriority::Normal;
     };
@@ -47,7 +47,7 @@ namespace ionir {
          */
         void registerPass(PassManagerItem item);
 
-        void registerPass(Ptr<Pass> pass);
+        void registerPass(ionshared::Ptr<Pass> pass);
 
         template<typename T>
         void registerPass();
