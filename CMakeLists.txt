@@ -57,9 +57,12 @@ add_definitions(${LLVM_DEFINITIONS})
 #target_sources(llvm INTERFACE)
 #target_include_directories(llvm PRIVATE include/ SYSTEM INTERFACE include/)
 
-# Set source files.
+# Set source file(s).
 file(
-    GLOB_RECURSE SOURCES "include/${PROJECT_NAME}/*.h" "src/*.cpp" "src/*.h"
+    GLOB_RECURSE SOURCES
+    "include/${PROJECT_NAME}/*.h"
+    "src/*.cpp"
+    "src/*.h"
 )
 
 # Specify that this project is a library.
@@ -84,7 +87,7 @@ llvm_map_components_to_libnames(llvm_libs all)
 # Link against various libraries including LLVM & libionshared.
 target_link_libraries("${PROJECT_NAME}" LLVM ionshared::ionshared)
 
-# TODO: Adding subdirs eitherway.
+# TODO: Adding subdirs either way.
 add_subdirectory(libs/googletest)
 add_subdirectory(test)
 
@@ -117,8 +120,8 @@ install(
 
 # Support for CLion install target.
 add_custom_target(
-    install_${PROJECT_NAME}
+    "install_${PROJECT_NAME}"
     "${CMAKE_COMMAND}" --build "${CMAKE_BINARY_DIR}" --target install
-    DEPENDS ${PROJECT_NAME}
+    DEPENDS "${PROJECT_NAME}"
     COMMENT "Installing ${PROJECT_NAME}"
 )
