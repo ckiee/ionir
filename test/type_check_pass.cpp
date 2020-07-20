@@ -1,5 +1,4 @@
 #include <ionir/passes/type_system/type_check_pass.h>
-#include <ionir/passes/pass_manager.h>
 #include <ionir/misc/bootstrap.h>
 #include <ionir/syntax/ast_builder.h>
 #include "test_api/const.h"

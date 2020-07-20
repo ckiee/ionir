@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <ionshared/construct/bare_construct.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/tracking/symbol_table.h>
 
@@ -54,7 +55,7 @@ namespace ionir {
 
     class Construct;
 
-    typedef std::vector<ionshared::Ptr<Construct>> Ast;
+    typedef ionshared::Ast<Construct> Ast;
 
     class Construct : public std::enable_shared_from_this<Construct> {
     private:

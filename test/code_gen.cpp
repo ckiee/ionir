@@ -1,10 +1,7 @@
 #include <vector>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 #include <ionir/passes/semantic/name_resolution_pass.h>
-#include <ionir/construct/pseudo/ref.h>
 #include <ionir/const/const.h>
-#include <ionir/const/const_name.h>
-#include <ionir/passes/pass_manager.h>
 #include "test_api/bootstrap.h"
 #include "test_api/compare.h"
 #include "test_api/const.h"

@@ -1,5 +1,4 @@
 #include <ionir/passes/semantic/name_resolution_pass.h>
-#include <ionir/passes/pass_manager.h>
 #include <ionir/misc/bootstrap.h>
 #include <ionir/misc/inst_builder.h>
 #include <ionir/const/const.h>

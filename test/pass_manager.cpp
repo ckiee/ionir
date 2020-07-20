@@ -1,4 +1,4 @@
-#include <ionir/passes/pass_manager.h>
+#include <ionir/passes/pass.h>
 #include "pch.h"
 
 using namespace ionir;
