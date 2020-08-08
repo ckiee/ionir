@@ -15,6 +15,8 @@ namespace ionir {
             this->type->nativeCast()
         };
 
+        auto e = this->type->nativeCast();
+
         if (this->value.has_value()) {
             children.push_back(this->value->get()->nativeCast());
         }

@@ -16,7 +16,7 @@ namespace ionir {
         return this->registerQueue;
     }
 
-    ionshared::Ptr<SymbolTable<llvm::Module *>> LlvmCodegenPass::getModules() const {
+    ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> LlvmCodegenPass::getModules() const {
         return this->modules;
     }
 
@@ -112,7 +112,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<SymbolTable<llvm::Module *>> modules)
+    LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules)
         : modules(modules), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), blockBuffer(std::nullopt), valueStack(), typeStack(), registerQueue(), builderTracker(), emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //
     }

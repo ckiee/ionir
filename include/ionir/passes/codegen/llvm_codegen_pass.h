@@ -35,7 +35,7 @@ namespace ionir {
 
         std::queue<std::string> registerQueue;
 
-        ionshared::Ptr<SymbolTable<llvm::Module *>> modules;
+        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
 
         /**
          * The currently active LLVM context;
@@ -90,7 +90,7 @@ namespace ionir {
         std::optional<llvm::Value *> findInScope(ionshared::Ptr<Construct> key);
 
     public:
-        explicit LlvmCodegenPass(ionshared::Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>());
+        explicit LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules = std::make_shared<ionshared::SymbolTable<llvm::Module *>>());
 
         ~LlvmCodegenPass();
 
@@ -100,7 +100,7 @@ namespace ionir {
 
         std::queue<std::string> getRegisterQueue() const;
 
-        ionshared::Ptr<SymbolTable<llvm::Module *>> getModules() const;
+        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> getModules() const;
 
         std::optional<llvm::Module *> getModuleBuffer() const;
 

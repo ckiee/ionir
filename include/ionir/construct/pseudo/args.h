@@ -12,19 +12,19 @@ namespace ionir {
 
     class Args {
     private:
-        SymbolTable<Arg> items;
+        ionshared::SymbolTable<Arg> items;
 
-        bool isInfinite;
+        bool isVariable;
 
     public:
-        explicit Args(SymbolTable<Arg> items = {}, bool isInfinite = false);
+        explicit Args(ionshared::SymbolTable<Arg> items = {}, bool isVariable = false);
 
-        SymbolTable<Arg> getItems() const;
+        ionshared::SymbolTable<Arg> getItems() const noexcept;
 
-        void setItems(SymbolTable<Arg> items);
+        void setItems(ionshared::SymbolTable<Arg> items) noexcept;
 
-        bool getIsInfinite() const;
+        bool getIsVariable() const noexcept;
 
-        void setIsInfinite(bool isInfinite);
+        void setIsVariable(bool isInfinite) noexcept;
     };
 }

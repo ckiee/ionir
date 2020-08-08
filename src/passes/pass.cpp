@@ -1,14 +1,6 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    void Pass::prepare() {
-        //
-    }
-
-    void Pass::finish() {
-        //
-    }
-
     void Pass::visit(ionshared::Ptr<Construct> node) {
         node->accept(*this);
 

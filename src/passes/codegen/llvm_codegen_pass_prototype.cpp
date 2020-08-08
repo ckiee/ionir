@@ -68,7 +68,7 @@ namespace ionir {
             // TODO: Support for infinite arguments and hard-coded return type.
             // Create the function type.
             llvm::FunctionType *type =
-                llvm::FunctionType::get(llvmReturnType, arguments, node->getArgs()->getIsInfinite());
+                llvm::FunctionType::get(llvmReturnType, arguments, node->getArgs()->getIsVariable());
 
             // Cast the value to a function, since we know getCallee() will return a function.
             llvmFunction =

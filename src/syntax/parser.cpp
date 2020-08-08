@@ -181,7 +181,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         ionshared::Ptr<FunctionBody> functionBody = std::make_shared<FunctionBody>(parent);
-        PtrSymbolTable<BasicBlock> basicBlocks = std::make_shared<SymbolTable<ionshared::Ptr<BasicBlock>>>();
+        PtrSymbolTable<BasicBlock> basicBlocks = std::make_shared<ionshared::SymbolTable<ionshared::Ptr<BasicBlock>>>();
 
         while (!this->is(TokenKind::SymbolBraceR)) {
             ionshared::OptPtr<BasicBlock> basicBlock = this->parseBasicBlock(functionBody);
@@ -207,7 +207,7 @@ namespace ionir {
         IONIR_PARSER_ASSURE(id)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
-        PtrSymbolTable<Construct> symbolTable = std::make_shared<SymbolTable<ionshared::Ptr<Construct>>>();
+        PtrSymbolTable<Construct> symbolTable = std::make_shared<ionshared::SymbolTable<ionshared::Ptr<Construct>>>();
         ionshared::Ptr<Module> module = std::make_shared<Module>(*id, symbolTable);
 
         while (!this->is(TokenKind::SymbolBraceR)) {

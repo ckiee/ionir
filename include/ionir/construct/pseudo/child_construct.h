@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ionir/misc/helpers.h>
-#include "construct.h"
+#include "ionir/construct/construct.h"
 
 namespace ionir {
     template<typename T>
@@ -19,11 +19,11 @@ namespace ionir {
             //
         }
 
-        ionshared::Ptr<T> getParent() const {
+        ionshared::Ptr<T> getParent() const noexcept {
             return this->parent;
         }
 
-        void setParent(ionshared::Ptr<T> parent) {
+        void setParent(ionshared::Ptr<T> parent) noexcept {
             this->parent = parent;
         }
     };

@@ -1,23 +1,23 @@
 #include <ionir/construct/pseudo/args.h>
 
 namespace ionir {
-    Args::Args(SymbolTable<Arg> items, bool isInfinite) : items(items), isInfinite(isInfinite) {
+    Args::Args(ionshared::SymbolTable<Arg> items, bool isVariable) : items(items), isVariable(isVariable) {
         //
     }
 
-    SymbolTable<Arg> Args::getItems() const {
+    ionshared::SymbolTable<Arg> Args::getItems() const noexcept {
         return this->items;
     }
 
-    void Args::setItems(SymbolTable<Arg> items) {
+    void Args::setItems(ionshared::SymbolTable<Arg> items) noexcept {
         this->items = items;
     }
 
-    bool Args::getIsInfinite() const {
-        return this->isInfinite;
+    bool Args::getIsVariable() const noexcept {
+        return this->isVariable;
     }
 
-    void Args::setIsInfinite(bool isInfinite) {
-        this->isInfinite = isInfinite;
+    void Args::setIsVariable(bool isInfinite) noexcept {
+        this->isVariable = isInfinite;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ionir {
     Prototype::Prototype(std::string id, ionshared::Ptr<Args> args, ionshared::Ptr<Type> returnType, ionshared::Ptr<Module> parent)
-        : ChildConstruct<Module>(parent, ConstructKind::Prototype), Named(id), args(args), returnType(returnType) {
+        : ChildConstruct<Module>(parent, ConstructKind::Prototype), Named(id), args(std::move(args)), returnType(std::move(returnType)) {
         //
     }
 

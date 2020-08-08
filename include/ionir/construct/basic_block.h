@@ -9,7 +9,7 @@
 #include <ionir/llvm/llvm_block.h>
 #include "pseudo/args.h"
 #include "inst.h"
-#include "child_construct.h"
+#include "ionir/construct/pseudo/child_construct.h"
 #include "type.h"
 #include "register_assign.h"
 

@@ -33,7 +33,7 @@ namespace ionir::test::bootstrap {
     ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass() {
         ionshared::Ptr<LlvmModule> module = llvmModule();
 
-        ionshared::Ptr<SymbolTable<llvm::Module *>> modules = std::make_shared<SymbolTable<llvm::Module *>>(SymbolTable<llvm::Module *>({
+        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules = std::make_shared<ionshared::SymbolTable<llvm::Module *>>(ionshared::SymbolTable<llvm::Module *>({
             {module->getId(), module->unwrap()}
         }));
 
@@ -63,7 +63,7 @@ namespace ionir::test::bootstrap {
         // TODO: Fix mumbo-jumbo debugging code. -------------
 
         typedef PtrSymbolTable<BasicBlock> t;
-        typedef SymbolTable<ionshared::Ptr<BasicBlock>> tt;
+        typedef ionshared::SymbolTable<ionshared::Ptr<BasicBlock>> tt;
 
         auto t1 = std::map<std::string, ionshared::Ptr<BasicBlock>>{
             {entrySection->getId(), entrySection}

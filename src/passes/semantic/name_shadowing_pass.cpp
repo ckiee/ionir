@@ -14,7 +14,7 @@ namespace ionir {
          * its local variable symbol table to ensure
          * no name shadowing occurs.
          */
-        if (!args->getIsInfinite()) {
+        if (!args->getIsVariable()) {
             for (const auto argEntry : args->getItems().unwrap()) {
                 std::string name = argEntry.first;
 

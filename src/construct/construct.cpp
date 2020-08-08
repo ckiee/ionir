@@ -2,8 +2,12 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Construct::Construct(ConstructKind kind) : constructKind(kind) {
+    Construct::Construct(ConstructKind kind) : ionshared::BareConstruct<Construct, ConstructKind>(kind) {
         //
+    }
+
+    void Construct::accept(ionshared::BarePass<Construct> visitor) {
+        // TODO
     }
 
     Ast Construct::getChildNodes() {
@@ -15,24 +19,8 @@ namespace ionir {
         return other == this->shared_from_this();
     }
 
-    bool Construct::isLeafNode() {
-        return this->getChildNodes().empty();
-    }
-
-    ConstructKind Construct::getConstructKind() const {
-        return this->constructKind;
-    }
-
     bool Construct::verify() {
         return true;
-    }
-
-    ionshared::Ptr<Construct> Construct::getPtr() {
-        return this->shared_from_this();
-    }
-
-    ionshared::Ptr<Construct> Construct::nativeCast() {
-        return this->dynamicCast<Construct>();
     }
 
     std::optional<std::string> Construct::getConstructName() {

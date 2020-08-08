@@ -1,7 +1,7 @@
 #pragma once
 
 #include <type_traits>
-#include <exception>
+#include <stdexcept>
 #include <optional>
 #include <stack>
 #include <ionir/misc/wrapper.h>

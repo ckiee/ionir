@@ -13,13 +13,13 @@ namespace ionir {
     public:
         // TODO: Move elsewhere.
         template<typename T = Construct>
-        static PtrSymbolTable<T> makePtrSymbolTable(SymbolTable<ionshared::Ptr<T>> symbolTable) {
-            return std::make_shared<SymbolTable<ionshared::Ptr<T>>>(symbolTable);
+        static PtrSymbolTable<T> makePtrSymbolTable(ionshared::SymbolTable<ionshared::Ptr<T>> symbolTable) {
+            return std::make_shared<ionshared::SymbolTable<ionshared::Ptr<T>>>(symbolTable);
         }
 
         template<typename T = Construct>
         static PtrSymbolTable<T> makePtrSymbolTable() {
-            return std::make_shared<SymbolTable<ionshared::Ptr<T>>>();
+            return std::make_shared<ionshared::SymbolTable<ionshared::Ptr<T>>>();
         }
 
         static ionshared::Ptr<IntegerType> typeInteger(IntegerKind integerKind, bool isSigned = true);

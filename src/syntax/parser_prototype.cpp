@@ -4,7 +4,7 @@
 
 namespace ionir {
     ionshared::OptPtr<Args> Parser::parseArgs() {
-        SymbolTable<Arg> args = {};
+        ionshared::SymbolTable<Arg> args = {};
         bool isInfinite = false;
 
         do {

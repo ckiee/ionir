@@ -1,6 +1,7 @@
 #pragma once
 
-#include <ionshared/passes/pass_manager.h>
+#include <ionshared/passes/bare_pass.h>
+#include <ionshared/passes/bare_pass_manager.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
@@ -30,18 +31,8 @@
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
-    class Pass {
+    class Pass : public ionshared::BarePass<Construct> {
     public:
-        /**
-         * Invoked when the pass is about to process the AST.
-         */
-        virtual void prepare();
-
-        /**
-         * Invoked when the pass has traversed the entire AST.
-         */
-        virtual void finish();
-
         virtual void visit(ionshared::Ptr<Construct> node);
 
         virtual void visitChildren(ionshared::Ptr<Construct> node);

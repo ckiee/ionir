@@ -159,7 +159,7 @@ TEST(ParserTest, ParseEmptyPrototype) {
 
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().getSize(), 0);
-    EXPECT_FALSE(args->getIsInfinite());
+    EXPECT_FALSE(args->getIsVariable());
 }
 
 TEST(ParserTest, ParseEmptyFunction) {
@@ -313,5 +313,5 @@ TEST(ParserTest, ParseExtern) {
 
     // Verify prototype's arguments.
     EXPECT_EQ(args->getItems().getSize(), 0);
-    EXPECT_FALSE(args->getIsInfinite());
+    EXPECT_FALSE(args->getIsVariable());
 }

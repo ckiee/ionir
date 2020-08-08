@@ -39,7 +39,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     // --------------------------
 
     typedef PtrSymbolTable<BasicBlock> t;
-    typedef SymbolTable<ionshared::Ptr<BasicBlock>> tt;
+    typedef ionshared::SymbolTable<ionshared::Ptr<BasicBlock>> tt;
 
     auto sectionsVal = std::map<std::string, ionshared::Ptr<BasicBlock>>{
         {Const::basicBlockEntryId, section}

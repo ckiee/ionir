@@ -57,7 +57,7 @@ namespace ionir {
 
     typedef ionshared::Ast<Construct> Ast;
 
-    class Construct : public std::enable_shared_from_this<Construct> {
+    class Construct : public ionshared::BareConstruct<Construct, ConstructKind> {
     private:
         ConstructKind constructKind;
 
@@ -75,7 +75,7 @@ namespace ionir {
         }
 
         template<class T>
-        static Ast convertChildren(SymbolTable<T> symbolTable) {
+        static Ast convertChildren(ionshared::SymbolTable<T> symbolTable) {
             Ast children = {};
 
             for (const auto &[key, value] : symbolTable.unwrap()) {
@@ -102,15 +102,13 @@ namespace ionir {
 
         explicit Construct(ConstructKind kind);
 
+        void accept(ionshared::BarePass<Construct> visitor) override;
+
         virtual void accept(Pass &visitor) = 0;
 
         virtual Ast getChildNodes();
 
         virtual bool equals(ionshared::Ptr<Construct> other);
-
-        bool isLeafNode();
-
-        ConstructKind getConstructKind() const;
 
         /**
          * Verify the members and properties of the node.
@@ -118,29 +116,6 @@ namespace ionir {
          * this will always return true.
          */
         virtual bool verify();
-
-        ionshared::Ptr<Construct> getPtr();
-
-        /**
-         * Used to cast pointers to related types, for example casting
-         * void* to the appropriate type.
-         */
-        template<typename T>
-        ionshared::Ptr<T> staticCast() {
-            return std::static_pointer_cast<T>(this->getPtr());
-        }
-
-        /**
-         * Used to convert pointers and references at runtime.
-         * Should be generally used for casting a pointer or reference
-         * up or down an inheritance chain (inheritance hierarchy).
-         */
-        template<class T>
-        ionshared::Ptr<T> dynamicCast() {
-            return std::dynamic_pointer_cast<T>(this->getPtr());
-        }
-
-        ionshared::Ptr<Construct> nativeCast();
 
         std::optional<std::string> getConstructName();
     };
