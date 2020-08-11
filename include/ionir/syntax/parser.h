@@ -3,9 +3,9 @@
 #include <optional>
 #include <string>
 #include <ionshared/reporting/notice_factory.h>
-#include <ionir/construct/value/integer.h>
-#include <ionir/construct/value/char.h>
-#include <ionir/construct/value/string.h>
+#include <ionir/construct/value/integer_value.h>
+#include <ionir/construct/value/char_value.h>
+#include <ionir/construct/value/string_value.h>
 #include <ionir/construct/inst.h>
 #include <ionir/construct/inst/alloca.h>
 #include <ionir/construct/inst/return.h>

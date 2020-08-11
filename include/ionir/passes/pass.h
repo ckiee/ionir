@@ -3,10 +3,10 @@
 #include <ionshared/passes/base_pass.h>
 #include <ionshared/passes/base_pass_manager.h>
 #include <ionir/construct/construct.h>
-#include <ionir/construct/value/integer.h>
-#include <ionir/construct/value/char.h>
-#include <ionir/construct/value/string.h>
-#include <ionir/construct/value/boolean.h>
+#include <ionir/construct/value/integer_value.h>
+#include <ionir/construct/value/char_value.h>
+#include <ionir/construct/value/string_value.h>
+#include <ionir/construct/value/boolean_value.h>
 #include <ionir/construct/inst/alloca.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>

@@ -4,15 +4,15 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    LlvmStack<llvm::Value> LlvmCodegenPass::getValueStack() const {
+    LlvmStack<llvm::Value> LlvmCodegenPass::getValueStack() const noexcept {
         return this->valueStack;
     }
 
-    LlvmStack<llvm::Type> LlvmCodegenPass::getTypeStack() const {
+    LlvmStack<llvm::Type> LlvmCodegenPass::getTypeStack() const noexcept {
         return this->typeStack;
     }
 
-    std::queue<std::string> LlvmCodegenPass::getRegisterQueue() const {
+    std::queue<std::string> LlvmCodegenPass::getRegisterQueue() const noexcept {
         return this->registerQueue;
     }
 

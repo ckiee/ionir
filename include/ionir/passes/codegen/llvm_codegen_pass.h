@@ -8,9 +8,9 @@
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Value.h>
 #include <llvm/IR/BasicBlock.h>
-#include <ionir/construct/value/integer.h>
-#include <ionir/construct/value/char.h>
-#include <ionir/construct/value/string.h>
+#include <ionir/construct/value/integer_value.h>
+#include <ionir/construct/value/char_value.h>
+#include <ionir/construct/value/string_value.h>
 #include <ionir/construct/inst.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/alloca.h>
@@ -94,11 +94,11 @@ namespace ionir {
 
         ~LlvmCodegenPass();
 
-        LlvmStack<llvm::Value> getValueStack() const;
+        LlvmStack<llvm::Value> getValueStack() const noexcept;
 
-        LlvmStack<llvm::Type> getTypeStack() const;
+        LlvmStack<llvm::Type> getTypeStack() const noexcept;
 
-        std::queue<std::string> getRegisterQueue() const;
+        std::queue<std::string> getRegisterQueue() const noexcept;
 
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> getModules() const;
 
