@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ionshared/misc/util.h>
 #include <ionir/construct/construct.h>
 #include <ionir/tracking/symbol_table.h>
 #include <ionir/misc/type_factory.h>
@@ -12,7 +13,7 @@ namespace ionir {
         PtrSymbolTable<T> symbolTable;
 
     public:
-        explicit ScopeAnchor(PtrSymbolTable<T> symbolTable = TypeFactory::makePtrSymbolTable<T>())
+        explicit ScopeAnchor(PtrSymbolTable<T> symbolTable = ionshared::Util::makePtrSymbolTable<T>())
             : symbolTable(symbolTable) {
             //
         }

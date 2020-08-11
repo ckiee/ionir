@@ -1,6 +1,5 @@
 #pragma once
 
-#include <ionir/misc/helpers.h>
 #include <ionir/construct/value.h>
 
 namespace ionir {
@@ -17,6 +16,6 @@ namespace ionir {
 
         bool getValue() const;
 
-        void setValue(const bool value);
+        void setValue(bool value);
     };
 }

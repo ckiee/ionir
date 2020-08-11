@@ -14,7 +14,7 @@ namespace ionir {
         return this->value;
     }
 
-    void BooleanValue::setValue(const bool value) {
+    void BooleanValue::setValue(bool value) {
         this->value = value;
     }
 }

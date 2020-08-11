@@ -12,7 +12,7 @@ namespace ionir {
         return this->stream.get().getKind() == tokenKind;
     }
 
-    bool Parser::isPeek(TokenKind tokenKind) {
+    bool Parser::isNext(TokenKind tokenKind) {
         return this->stream.peek()->getKind() == tokenKind;
     }
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ionir/construct/type.h>
-#include <llvm/IR/DerivedTypes.h>
 
 namespace ionir {
     class Pass;

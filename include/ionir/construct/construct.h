@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include <ionshared/construct/bare_construct.h>
+#include <ionshared/construct/base_construct.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/tracking/symbol_table.h>
 
@@ -57,7 +57,7 @@ namespace ionir {
 
     typedef ionshared::Ast<Construct> Ast;
 
-    class Construct : public ionshared::BareConstruct<Construct, ConstructKind> {
+    class Construct : public ionshared::BaseConstruct<Construct, ConstructKind> {
     private:
         ConstructKind constructKind;
 
@@ -102,7 +102,7 @@ namespace ionir {
 
         explicit Construct(ConstructKind kind);
 
-        void accept(ionshared::BarePass<Construct> visitor) override;
+        void accept(ionshared::BasePass<Construct> visitor) override;
 
         virtual void accept(Pass &visitor) = 0;
 

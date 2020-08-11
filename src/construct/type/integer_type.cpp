@@ -1,5 +1,4 @@
 #include <ionir/passes/pass.h>
-#include <ionir/misc/util.h>
 
 namespace ionir {
     IntegerType::IntegerType(IntegerKind kind, bool isSigned, bool isPointer)

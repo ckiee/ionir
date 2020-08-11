@@ -2,11 +2,11 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Construct::Construct(ConstructKind kind) : ionshared::BareConstruct<Construct, ConstructKind>(kind) {
+    Construct::Construct(ConstructKind kind) : ionshared::BaseConstruct<Construct, ConstructKind>(kind) {
         //
     }
 
-    void Construct::accept(ionshared::BarePass<Construct> visitor) {
+    void Construct::accept(ionshared::BasePass<Construct> visitor) {
         // TODO
     }
 

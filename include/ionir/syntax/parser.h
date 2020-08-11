@@ -46,7 +46,7 @@ namespace ionir {
 
         bool is(TokenKind tokenKind) noexcept;
 
-        bool isPeek(TokenKind tokenKind);
+        bool isNext(TokenKind tokenKind);
 
         bool expect(TokenKind tokenKind);
 
@@ -66,8 +66,7 @@ namespace ionir {
         ionshared::OptPtr<Construct> parseTopLevel(ionshared::Ptr<Module> parent);
 
         /**
-         * Parses a integer literal in the form of
-         * long (or integer 64).
+         * Parses a integer literal in the form of long (or integer 64).
          */
         ionshared::OptPtr<IntegerValue> parseInt();
 

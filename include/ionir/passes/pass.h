@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ionshared/passes/bare_pass.h>
-#include <ionshared/passes/bare_pass_manager.h>
+#include <ionshared/passes/base_pass.h>
+#include <ionshared/passes/base_pass_manager.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/value/integer.h>
 #include <ionir/construct/value/char.h>
@@ -31,7 +31,7 @@
 #include <ionir/misc/helpers.h>
 
 namespace ionir {
-    class Pass : public ionshared::BarePass<Construct> {
+    class Pass : public ionshared::BasePass<Construct> {
     public:
         virtual void visit(ionshared::Ptr<Construct> node);
 
@@ -94,7 +94,7 @@ namespace ionir {
         virtual void visitRegisterAssign(ionshared::Ptr<RegisterAssign> node);
     };
 
-    typedef ionshared::BarePassManager<Pass, Construct> PassManager;
+    typedef ionshared::BasePassManager<Pass, Construct> PassManager;
 
     typedef ionshared::PassManagerItem<Pass> PassManagerItem;
 }
