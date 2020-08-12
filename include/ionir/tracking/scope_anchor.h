@@ -1,5 +1,6 @@
 #pragma once
 
+#include <queue>
 #include <ionshared/misc/util.h>
 #include <ionir/construct/construct.h>
 #include <ionir/tracking/symbol_table.h>

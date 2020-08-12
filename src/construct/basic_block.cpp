@@ -1,5 +1,4 @@
 #include <ionir/misc/inst_builder.h>
-#include <ionir/misc/util.h>
 #include <ionir/passes/pass.h>
 
 namespace ionir {

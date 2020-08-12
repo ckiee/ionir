@@ -43,9 +43,9 @@ namespace ionir {
             return this->type;
         }
 
-        ionshared::Ptr<Value<>> asValue() const {
-            // TODO: Causing error, but no highlight locally.
-            return this->dynamicCast<Value<>>();
-        }
+//        ionshared::Ptr<Value<>> asValue() const {
+//            // TODO: Causing error, but no highlight locally.
+//            return this->dynamicCast<Value<>>();
+//        }
     };
 }
