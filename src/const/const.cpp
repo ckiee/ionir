@@ -1,5 +1,4 @@
 #include <ionir/const/const.h>
-#include <ionir/misc/util.h>
 
 namespace ionir {
     Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};
