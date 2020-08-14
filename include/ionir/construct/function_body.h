@@ -28,6 +28,6 @@ namespace ionir {
 
         bool hasEntryBasicBlock();
 
-        void insertBasicBlock(ionshared::Ptr<BasicBlock> basicBlock);
+        void insertBasicBlock(const ionshared::Ptr<BasicBlock> &basicBlock);
     };
 }

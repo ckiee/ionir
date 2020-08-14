@@ -2,7 +2,7 @@
 
 namespace ionir {
     Function::Function(ionshared::Ptr<Prototype> prototype, ionshared::Ptr<FunctionBody> body)
-        : Construct(ConstructKind::Function), prototype(prototype), body(body) {
+        : Construct(ConstructKind::Function), prototype(std::move(prototype)), body(std::move(body)) {
         //
     }
 
@@ -22,7 +22,7 @@ namespace ionir {
     }
 
     void Function::setPrototype(ionshared::Ptr<Prototype> prototype) {
-        this->prototype = prototype;
+        this->prototype = std::move(prototype);
     }
 
     ionshared::Ptr<FunctionBody> Function::getBody() const noexcept {
@@ -30,7 +30,7 @@ namespace ionir {
     }
 
     void Function::setBody(ionshared::Ptr<FunctionBody> body) noexcept {
-        this->body = body;
+        this->body = std::move(body);
     }
 
     PtrSymbolTable<LocalVariableDescriptor> Function::getLocalVariables() const {
@@ -38,7 +38,7 @@ namespace ionir {
     }
 
     void Function::setLocalVariables(PtrSymbolTable<LocalVariableDescriptor> localVariables) {
-        this->localVariables = localVariables;
+        this->localVariables = std::move(localVariables);
     }
 
     bool Function::verify() {

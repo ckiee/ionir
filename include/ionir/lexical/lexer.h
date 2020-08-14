@@ -60,21 +60,21 @@ namespace ionir {
         void processWhitespace();
 
     public:
-        Lexer(std::string input);
+        explicit Lexer(std::string input);
 
         size_t getIndex() const noexcept;
 
-        virtual void begin();
+        void begin() override;
 
         /**
          * Whether the index has not reached the input's length.
          */
-        virtual bool hasNext() const;
+        bool hasNext() const override;
 
         /**
          * Process the next token.
          */
-        virtual std::optional<Token> tryNext();
+        std::optional<Token> tryNext() override;
 
         std::string getInput() const noexcept;
 

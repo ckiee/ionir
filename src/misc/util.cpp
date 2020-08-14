@@ -4,7 +4,6 @@
 #include <ionir/construct/function.h>
 #include <ionir/construct/extern.h>
 #include <ionir/construct/global.h>
-#include <ionir/construct/inst/alloca.h>
 
 namespace ionir {
     bool Util::stringStartsWith(std::string subject, std::string value) {
@@ -33,7 +32,7 @@ namespace ionir {
     std::regex Util::createPureRegex(std::string value) {
         return std::regex(Util::escapeRegex(value));
     }
-
+;
     bool Util::withinRange(long value, long from, long to) {
         return value >= from && value <= to;
     }

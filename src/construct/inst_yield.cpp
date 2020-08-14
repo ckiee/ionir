@@ -1,7 +1,7 @@
 #include <ionir/construct/inst_yield.h>
 
 namespace ionir {
-    InstYield::InstYield(std::optional<std::string> yieldId) : yieldId(yieldId) {
+    InstYield::InstYield(std::optional<std::string> yieldId) : yieldId(std::move(yieldId)) {
         //
     }
 
@@ -10,6 +10,6 @@ namespace ionir {
     }
 
     void InstYield::setYieldId(std::optional<std::string> yieldId) noexcept {
-        this->yieldId = yieldId;
+        this->yieldId = std::move(yieldId);
     }
 }

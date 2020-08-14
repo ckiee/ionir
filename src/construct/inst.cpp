@@ -3,7 +3,7 @@
 
 namespace ionir {
     Inst::Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind, ionshared::OptPtr<Inst> yields)
-        : ChildConstruct(parent, ConstructKind::Inst), kind(kind), yields(yields) {
+        : ChildConstruct(std::move(parent), ConstructKind::Inst), kind(kind), yields(std::move(yields)) {
         //
     }
 
@@ -12,7 +12,7 @@ namespace ionir {
     }
 
     ionshared::OptPtr<Inst> Inst::getYields() const noexcept {
-        return std::nullopt;
+        return this->yields;
     }
 
     bool Inst::isTerminal() const noexcept {

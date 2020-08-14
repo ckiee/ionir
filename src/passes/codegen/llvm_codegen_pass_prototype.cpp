@@ -72,7 +72,9 @@ namespace ionir {
 
             // Cast the value to a function, since we know getCallee() will return a function.
             llvmFunction =
-                llvm::dyn_cast<llvm::Function>((*this->moduleBuffer)->getOrInsertFunction(node->getId(), type).getCallee());
+                llvm::dyn_cast<llvm::Function>(
+                    (*this->moduleBuffer)->getOrInsertFunction(node->getId(), type).getCallee()
+                );
 
             // Set the function's linkage.
             llvmFunction->setLinkage(llvm::GlobalValue::LinkageTypes::ExternalLinkage);
