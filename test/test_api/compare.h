@@ -10,20 +10,19 @@
 
 namespace ionir::test::compare {
     /**
-     * Compare 2 strings. Both strings are trimmed
-     * before comparison.
+     * Compare 2 strings. Both strings are trimmed before
+     * comparison.
      */
     bool strings(std::string expected, std::string actual);
 
     /**
-     * Compare an LLVM IR output string with
-     * a stored LLVM IR file. Both inputs are trimmed
-     * before comparison. Returns false if the stored
-     * LLVM IR file does not exist.
+     * Compare an LLVM IR output string with a stored LLVM IR
+     * file. Both inputs are trimmed before comparison. Returns
+     * false if the stored LLVM IR file does not exist.
      */
-    bool ir(std::string output, std::string fileName);
+    bool ir(std::string output, const std::string &fileName);
 
-    bool ir(ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName);
+    bool ir(const ionshared::Ptr<LlvmCodegenPass> &llvmCodegenPass, const std::string &fileName);
 
     template<unsigned int N>
     void tokenSets(std::array<Token, N> expected, std::vector<Token> actual) {

@@ -1,6 +1,5 @@
-#include <ionir/tracking/interface_descriptor.h>
-
 #include <utility>
+#include <ionir/tracking/interface_descriptor.h>
 
 namespace ionir {
     std::string InterfaceDescriptor::getName() const {

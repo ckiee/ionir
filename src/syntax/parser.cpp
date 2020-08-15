@@ -237,7 +237,7 @@ namespace ionir {
         return module;
     }
 
-    ionshared::OptPtr<RegisterAssign> Parser::parseRegisterAssign(ionshared::Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<RegisterAssign> Parser::parseRegisterAssign(const ionshared::Ptr<BasicBlock> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::OperatorModulo))
 
         std::optional<std::string> id = this->parseId();
@@ -245,7 +245,7 @@ namespace ionir {
         IONIR_PARSER_ASSURE(id)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolEqual))
 
-        ionshared::OptPtr<Inst> inst = this->parseInst(std::move(parent));
+        ionshared::OptPtr<Inst> inst = this->parseInst(parent);
 
         IONIR_PARSER_ASSURE(inst)
 

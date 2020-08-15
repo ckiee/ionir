@@ -17,7 +17,7 @@ namespace ionir::test::bootstrap {
 
     Parser parser(std::vector<Token> tokens);
 
-    ionshared::Ptr<LlvmModule> llvmModule(std::string identifier = "test");
+    ionshared::Ptr<LlvmModule> llvmModule(const std::string &identifier = "test");
 
     ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass();
 

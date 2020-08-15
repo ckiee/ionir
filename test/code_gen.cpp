@@ -12,7 +12,10 @@ TEST(CodeGenTest, VisitExtern) {
     ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
     ionshared::Ptr<VoidType> returnType = TypeFactory::typeVoid();
     ionshared::Ptr<Args> args = std::make_shared<Args>();
-    ionshared::Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, args, returnType, nullptr);
+
+    ionshared::Ptr<Prototype> prototype =
+        std::make_shared<Prototype>(test::constant::foobar, args, returnType, nullptr);
+
     ionshared::Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
 
     llvmCodegenPass->visitExtern(externConstruct);
@@ -154,7 +157,8 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
         returnValueType
     });
 
-    PtrRef<AllocaInst> allocaInstRef1 = std::make_shared<Ref<AllocaInst>>(test::constant::foo, nullptr, allocaInst);
+    PtrRef<AllocaInst> allocaInstRef1 =
+        std::make_shared<Ref<AllocaInst>>(test::constant::foo, nullptr, allocaInst);
 
     ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
         // No need for parent to be set.

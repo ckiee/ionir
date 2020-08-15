@@ -49,7 +49,7 @@ namespace ionir {
         std::queue<AstPrinterTreeNode> queue = {};
         std::stringstream tree;
 
-        for (const auto construct : this->ast) {
+        for (const auto &construct : this->ast) {
             queue.push(AstPrinterTreeNode{
                 depth,
                 construct->isLeafNode(),
@@ -63,7 +63,7 @@ namespace ionir {
             queue.pop();
             depth = node.depth;
 
-            for (const auto child : node.construct->getChildNodes()) {
+            for (const auto &child : node.construct->getChildNodes()) {
                 queue.push(AstPrinterTreeNode{
                     depth + 1,
                     child->isLeafNode(),
@@ -76,7 +76,7 @@ namespace ionir {
 
         std::string treeString = this->tree.str();
 
-        if (treeString == "") {
+        if (treeString.empty()) {
             return std::nullopt;
         }
 

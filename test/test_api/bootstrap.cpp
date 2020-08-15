@@ -1,5 +1,7 @@
 #include <ionir/const/const.h>
 #include "const.h"
+
+#include <utility>
 #include "bootstrap.h"
 
 namespace ionir::test::bootstrap {
@@ -9,6 +11,9 @@ namespace ionir::test::bootstrap {
 
     TokenStream tokenStream(int amountOfItems) {
         std::vector<Token> tokens = {};
+
+        // Reserve the space for the items to be added.
+        tokens.reserve(amountOfItems);
 
         // Populate the tokens vector.
         for (int i = 0; i < amountOfItems; i++) {
@@ -20,10 +25,10 @@ namespace ionir::test::bootstrap {
     }
 
     Parser parser(std::vector<Token> tokens) {
-        return ionir::Parser(ionir::TokenStream(tokens));
+        return ionir::Parser(ionir::TokenStream(std::move(tokens)));
     }
 
-    ionshared::Ptr<LlvmModule> llvmModule(std::string identifier) {
+    ionshared::Ptr<LlvmModule> llvmModule(const std::string &identifier) {
         llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
         llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);
 
@@ -50,14 +55,19 @@ namespace ionir::test::bootstrap {
         ionshared::Ptr<VoidType> returnType = TypeFactory::typeVoid();
 
         // TODO: Consider support for module here.
-        ionshared::Ptr<Prototype> prototype = std::make_shared<Prototype>(test::constant::foobar, std::make_shared<Args>(), returnType, nullptr);
+        ionshared::Ptr<Prototype> prototype = std::make_shared<Prototype>(
+            test::constant::foobar,
+            std::make_shared<Args>(),
+            returnType,
+            nullptr
+        );
 
         ionshared::Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
             nullptr,
             BasicBlockKind::Entry,
             Const::basicBlockEntryId,
             {},
-            insts
+            std::move(insts)
         });
 
         // TODO: Fix mumbo-jumbo debugging code. -------------

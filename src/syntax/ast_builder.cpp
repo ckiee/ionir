@@ -2,8 +2,6 @@
 #include <ionir/syntax/ast_builder.h>
 #include <ionir/const/const.h>
 
-#include <utility>
-
 namespace ionir {
     void AstBuilder::setBasicBlockBuffer(const ionshared::OptPtr<BasicBlock> &basicBlockBuffer) {
         if (!basicBlockBuffer.has_value()) {
@@ -67,7 +65,7 @@ namespace ionir {
         return *this;
     }
 
-    AstBuilder &AstBuilder::function(const std::string& id) {
+    AstBuilder &AstBuilder::function(const std::string &id) {
         this->requireModule();
 
         ionshared::Ptr<FunctionBody> block = std::make_shared<FunctionBody>(nullptr);
@@ -100,7 +98,7 @@ namespace ionir {
         return *this;
     }
 
-    AstBuilder &AstBuilder::instAlloca(const std::string& id, ionshared::Ptr<Type> type) {
+    AstBuilder &AstBuilder::instAlloca(const std::string &id, ionshared::Ptr<Type> type) {
         this->requireBasicBlock();
         this->instBuilder->get()->createAlloca(id, std::move(type));
 

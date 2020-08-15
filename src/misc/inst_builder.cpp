@@ -27,9 +27,9 @@ namespace ionir {
     ionshared::Ptr<BranchInst> InstBuilder::createBranch(ionshared::Ptr<Construct> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection) {
         return this->make<BranchInst>(BranchInstOpts{
             this->basicBlock,
-            condition,
-            bodySection,
-            otherwiseSection
+            std::move(condition),
+            std::move(bodySection),
+            std::move(otherwiseSection)
         });
     }
 
@@ -51,7 +51,7 @@ namespace ionir {
         });
     }
 
-    ionshared::Ptr<CallInst> InstBuilder::createCall(ionshared::Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee) {
+    ionshared::Ptr<CallInst> InstBuilder::createCall(const ionshared::Ptr<BasicBlock> &basicBlock, OptPtrRef<Function> callee) {
         return this->make<CallInst>(CallInstOpts{
             this->basicBlock,
             std::move(callee)

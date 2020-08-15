@@ -1,17 +1,18 @@
+#define IONIR_LLVM_IR_FILE_EXT ".ll"
+
 #include <ionir/llvm/llvm_module.h>
 #include "compare.h"
-#include "util.h"
 #include "filesystem.h"
 
 namespace ionir::test::compare {
     const std::string irPath = "ir";
 
     bool strings(std::string expected, std::string actual) {
-        return util::trim(expected) == util::trim(actual);
+        return util::trim(std::move(expected)) == util::trim(std::move(actual));
     }
 
-    bool ir(std::string output, std::string fileName) {
-        std::optional<std::string> contents = fs::readTestFile(fs::joinPaths(irPath, fileName + ".ll"));
+    bool ir(std::string output, const std::string &fileName) {
+        std::optional<std::string> contents = fs::readTestFile(fs::joinPaths(irPath, fileName + IONIR_LLVM_IR_FILE_EXT));
 
         // TODO: Consider returning int or enum for better verbosity.
         // File contents could not be retrieved. Fail process.
@@ -20,10 +21,10 @@ namespace ionir::test::compare {
         }
 
         // Trim and compare expected output and actual file content.
-        return util::trim(output) == util::trim(*contents);
+        return util::trim(std::move(output)) == util::trim(*contents);
     }
 
-    bool ir(ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass, std::string fileName) {
+    bool ir(const ionshared::Ptr<LlvmCodegenPass> &llvmCodegenPass, const std::string &fileName) {
         std::optional<llvm::Module *> llvmModuleBuffer = llvmCodegenPass->getModuleBuffer();
 
         if (!Util::hasValue(llvmModuleBuffer)) {

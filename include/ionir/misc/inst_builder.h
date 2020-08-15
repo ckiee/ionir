@@ -48,7 +48,7 @@ namespace ionir {
         ionshared::Ptr<ReturnInst> createReturn(const ionshared::OptPtr<Value<>> &value = std::nullopt);
 
         ionshared::Ptr<CallInst> createCall(
-            ionshared::Ptr<BasicBlock> basicBlock,
+            const ionshared::Ptr<BasicBlock> &basicBlock,
             OptPtrRef<Function> callee = std::nullopt
         );
     };

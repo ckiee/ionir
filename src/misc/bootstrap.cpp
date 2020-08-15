@@ -3,10 +3,10 @@
 #include <ionir/misc/bootstrap.h>
 
 namespace ionir {
-    Ast Bootstrap::functionAst(std::string id) {
+    Ast Bootstrap::functionAst(const std::string &id) {
         return AstBuilder()
             .module(ConstName::anonymous)
-            .function(std::move(id))
+            .function(id)
             .make();
     }
 

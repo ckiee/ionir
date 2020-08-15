@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <utility>
 #include "util.h"
 
 namespace ionir::test::util {
@@ -17,6 +18,6 @@ namespace ionir::test::util {
     }
 
     std::string trim(std::string subject) {
-        return leftTrim(rightTrim(subject));
+        return leftTrim(rightTrim(std::move(subject)));
     }
 }

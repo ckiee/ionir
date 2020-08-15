@@ -27,7 +27,7 @@ namespace ionir {
          * After visiting the node, attempt to
          * visit all its children as well.
          */
-        for (const auto child : node->getChildNodes()) {
+        for (const auto &child : node->getChildNodes()) {
             // TODO: CRITICAL: What if 'child' (AstNode) is not boxed under Construct?
             this->visit(child->staticCast<Construct>());
         }

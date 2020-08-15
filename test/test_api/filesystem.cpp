@@ -1,4 +1,5 @@
 #include <fstream>
+#include <utility>
 #include "filesystem.h"
 #include "util.h"
 
@@ -7,20 +8,20 @@ namespace ionir::test::fs {
 
     const std::string testPath = "test";
 
-    std::string resolvePath(std::string path) {
+    std::string resolvePath(const std::string &path) {
         return joinPaths(rootPath, path);
     }
 
-    std::string resolveTestPath(std::string path) {
+    std::string resolveTestPath(const std::string &path) {
         return resolvePath(joinPaths(testPath, path));
     }
 
-    std::string joinPaths(std::string path1, std::string path2) {
+    std::string joinPaths(const std::string &pathA, const std::string &pathB) {
         // TODO: What if path1 contains a trailing directory separator?
-        return path1 + "/" + path2;
+        return pathA + "/" + pathB;
     }
 
-    std::optional<std::string> readFileContents(std::string filePath) {
+    std::optional<std::string> readFileContents(const std::string &filePath) {
         // Target file does not exist, do not continue.
         if (!exists(filePath)) {
             return std::nullopt;
@@ -36,7 +37,7 @@ namespace ionir::test::fs {
     }
 
     std::optional<std::string> readTestFile(std::string filePath) {
-        std::string finalPath = resolveTestPath(filePath);
+        std::string finalPath = resolveTestPath(std::move(filePath));
 
         return readFileContents(finalPath);
     }

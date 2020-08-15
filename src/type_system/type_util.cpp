@@ -9,7 +9,7 @@ namespace ionir {
         else if (typeKindA == TypeKind::Void || typeKindB == TypeKind::Void) {
             return false;
         }
-            // Same, non-void atomic types. They are compatible.
+        // Same, non-void atomic types. They are compatible.
         else if (typeKindA == typeKindB) {
             return true;
         }

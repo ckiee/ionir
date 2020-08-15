@@ -126,7 +126,7 @@ namespace ionir {
 
         ionshared::OptPtr<Module> parseModule();
 
-        ionshared::OptPtr<RegisterAssign> parseRegisterAssign(ionshared::Ptr<BasicBlock> parent);
+        ionshared::OptPtr<RegisterAssign> parseRegisterAssign(const ionshared::Ptr<BasicBlock> &parent);
 
         std::optional<std::string> parseLine();
 

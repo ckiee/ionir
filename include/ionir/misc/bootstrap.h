@@ -6,7 +6,7 @@
 namespace ionir {
     class Bootstrap {
     public:
-        static Ast functionAst(std::string id = ConstName::anonymous);
+        static Ast functionAst(const std::string &id = ConstName::anonymous);
 
         static ionshared::Ptr<Function> function(const std::string &id = ConstName::anonymous);
 
