@@ -5,7 +5,7 @@ namespace ionir {
         if (typeKindA == TypeKind::UserDefined || typeKindB == TypeKind::UserDefined) {
             throw std::invalid_argument("Neither argument may be user-defined type kind");
         }
-            // Void is incompatible with everything.
+        // Void is incompatible with everything.
         else if (typeKindA == TypeKind::Void || typeKindB == TypeKind::Void) {
             return false;
         }
