@@ -2,7 +2,7 @@
 #include <ionir/tracking/name_mangler.h>
 
 namespace ionir {
-    std::string NameMangler::internal(std::string id) {
+    std::string NameMangler::internal(const std::string &id) {
         return Const::basicBlockInternalPrefix + id;
     }
 }

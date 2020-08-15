@@ -2,7 +2,7 @@
 
 namespace ionir {
     Type::Type(std::string id, TypeKind kind, bool isPointer)
-        : Construct(ConstructKind::Type), Named(id), kind(kind), isPointer(isPointer) {
+        : Construct(ConstructKind::Type), Named(std::move(id)), kind(kind), isPointer(isPointer) {
         //
     }
 
@@ -10,7 +10,7 @@ namespace ionir {
         visitor.visitType(this->dynamicCast<Type>());
     }
 
-    bool Type::equals(ionshared::Ptr<Construct> other) {
+    bool Type::equals(const ionshared::Ptr<Construct> &other) {
         if (other->getConstructKind() != ConstructKind::Type) {
             return false;
         }

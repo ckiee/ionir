@@ -2,8 +2,13 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    BasicBlock::BasicBlock(BasicBlockOpts opts)
-        : ChildConstruct(opts.parent, ConstructKind::BasicBlock), ScopeAnchor<Inst>(), kind(opts.kind), Named(opts.id), registers(opts.registers), insts(opts.insts) {
+    BasicBlock::BasicBlock(const BasicBlockOpts &opts)
+        : ChildConstruct(opts.parent, ConstructKind::BasicBlock),
+            ScopeAnchor<Inst>(),
+            kind(opts.kind),
+            Named(opts.id),
+            registers(opts.registers),
+            insts(opts.insts) {
         //
     }
 
@@ -28,7 +33,7 @@ namespace ionir {
     }
 
     void BasicBlock::setRegisters(std::vector<ionshared::Ptr<RegisterAssign>> registers) {
-        this->registers = registers;
+        this->registers = std::move(registers);
     }
 
     std::vector<ionshared::Ptr<Inst>> &BasicBlock::getInsts() noexcept {
@@ -37,7 +42,7 @@ namespace ionir {
 
     // TODO: SymbolTable must be re-populated after changing insts vector.
     void BasicBlock::setInsts(std::vector<ionshared::Ptr<Inst>> insts) {
-        this->insts = insts;
+        this->insts = std::move(insts);
     }
 
     void BasicBlock::insertInst(ionshared::Ptr<Inst> inst) {
@@ -64,7 +69,7 @@ namespace ionir {
     }
 
     std::optional<uint32_t> BasicBlock::locate(ionshared::Ptr<Inst> inst) const {
-        return Util::locateInVector<ionshared::Ptr<Inst>>(this->insts, inst);
+        return Util::locateInVector<ionshared::Ptr<Inst>>(this->insts, std::move(inst));
     }
 
     ionshared::Ptr<InstBuilder> BasicBlock::createBuilder() {
@@ -72,7 +77,7 @@ namespace ionir {
     }
 
     ionshared::OptPtr<Inst> BasicBlock::findTerminalInst() const {
-        for (const auto inst : this->insts) {
+        for (const auto &inst : this->insts) {
             if (inst->isTerminal()) {
                 return inst;
             }

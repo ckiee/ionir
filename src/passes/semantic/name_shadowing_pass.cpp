@@ -15,7 +15,7 @@ namespace ionir {
          * no name shadowing occurs.
          */
         if (!args->getIsVariable()) {
-            for (const auto argEntry : args->getItems().unwrap()) {
+            for (const auto &argEntry : args->getItems().unwrap()) {
                 std::string name = argEntry.first;
 
                 // Shadowing function parameter.

@@ -23,7 +23,7 @@ namespace ionir {
 
         std::string getAsString() const;
 
-        void print();
+        void print() const;
 
         void printToLlvmErrs() const;
     };

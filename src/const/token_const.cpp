@@ -37,11 +37,10 @@ namespace ionir {
     };
 
     bool TokenConst::pushSimple(std::string value, TokenKind tokenKind) {
-        return TokenConst::simple.insert(value, tokenKind);
+        return TokenConst::simple.insert(std::move(value), tokenKind);
     }
 
-    bool TokenConst::sortByKeyLength(const std::pair<std::string, TokenKind> &a,
-        const std::pair<std::string, TokenKind> &b) {
+    bool TokenConst::sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b) {
         return a.first > b.first;
     }
 
@@ -130,7 +129,7 @@ namespace ionir {
     }
 
     std::optional<std::string> TokenConst::findSimpleValue(TokenKind tokenKind) {
-        for (const auto entry : TokenConst::simple.getFirstMap().unwrapConst()) {
+        for (const auto &entry : TokenConst::simple.getFirstMap().unwrapConst()) {
             if (entry.second == tokenKind) {
                 return entry.first;
             }

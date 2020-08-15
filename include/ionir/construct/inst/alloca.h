@@ -19,7 +19,7 @@ namespace ionir {
 
     public:
         // TODO: Missing support for array-type allocas.
-        explicit AllocaInst(AllocaInstOpts opts);
+        explicit AllocaInst(const AllocaInstOpts &opts);
 
         void accept(Pass &visitor) override;
 

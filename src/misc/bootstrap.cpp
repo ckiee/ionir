@@ -6,11 +6,11 @@ namespace ionir {
     Ast Bootstrap::functionAst(std::string id) {
         return AstBuilder()
             .module(ConstName::anonymous)
-            .function(id)
+            .function(std::move(id))
             .make();
     }
 
-    ionshared::Ptr<Function> Bootstrap::function(std::string id) {
+    ionshared::Ptr<Function> Bootstrap::function(const std::string &id) {
         ionshared::Ptr<Module> module = Bootstrap::functionAst(id)[0]->dynamicCast<Module>();
 
         return (*module->getSymbolTable())[id]->dynamicCast<Function>();
@@ -18,9 +18,9 @@ namespace ionir {
 
     ionshared::Ptr<BasicBlock> Bootstrap::basicBlock(ionshared::Ptr<FunctionBody> parent, std::string id, BasicBlockKind basicBlockKind) {
         return std::make_shared<BasicBlock>(BasicBlockOpts{
-            parent,
+            std::move(parent),
             basicBlockKind,
-            id
+            std::move(id)
         });
     }
 }

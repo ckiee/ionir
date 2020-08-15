@@ -1,8 +1,8 @@
+#include <utility>
 #include <ionir/syntax/parser.h>
-#include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
-    ionshared::OptPtr<Inst> Parser::parseInst(ionshared::Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<Inst> Parser::parseInst(const ionshared::Ptr<BasicBlock> &parent) {
         /**
          * Retrieve the current token's kind to
          * determine the instruction's name &
@@ -75,7 +75,7 @@ namespace ionir {
         }
 
         return std::make_shared<AllocaInst>(AllocaInstOpts{
-            parent,
+            std::move(parent),
             *type,
         });
     }
@@ -84,7 +84,7 @@ namespace ionir {
         this->skipOver(TokenKind::InstReturn);
 
         ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
-            parent,
+            std::move(parent),
             nullptr
         });
 
@@ -121,7 +121,7 @@ namespace ionir {
         IONIR_PARSER_ASSURE(condition)
 
         ionshared::Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
-            parent,
+            std::move(parent),
             *condition,
             nullptr,
             nullptr
@@ -141,7 +141,7 @@ namespace ionir {
         return branchInst;
     }
 
-    ionshared::OptPtr<CallInst> Parser::parseCallInst(ionshared::Ptr<BasicBlock> parent) {
+    ionshared::OptPtr<CallInst> Parser::parseCallInst(const ionshared::Ptr<BasicBlock> &parent) {
         this->skipOver(TokenKind::InstCall);
 
         std::optional<std::string> calleeId = this->parseId();
@@ -165,7 +165,7 @@ namespace ionir {
         IONIR_PARSER_ASSURE(value)
 
         ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
-            parent,
+            std::move(parent),
             *value,
             nullptr
         });

@@ -7,7 +7,7 @@ namespace ionir {
     template<typename T>
     class Set : public Wrapper<std::set<T>> {
     public:
-        Set(std::set<T> value = {}) : Wrapper<std::set<T>>(value) {
+        explicit Set(std::set<T> value = {}) : Wrapper<std::set<T>>(value) {
             //
         }
 

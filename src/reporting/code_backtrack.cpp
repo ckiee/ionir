@@ -3,7 +3,7 @@
 #include <ionir/reporting/code_backtrack.h>
 
 namespace ionir {
-    std::string CodeBacktrack::resolveInputText(std::string input, std::vector<Token> lineBuffer) {
+    std::string CodeBacktrack::resolveInputText(const std::string &input, std::vector<Token> lineBuffer) {
         if (lineBuffer.empty() || input.empty()) {
             throw std::invalid_argument("Both input and line buffer arguments must contain value(s)");
         }
@@ -13,7 +13,7 @@ namespace ionir {
             : lineBuffer[0].getValue();
     }
 
-    CodeBacktrack::CodeBacktrack(std::string input, TokenStream stream) : input(input), stream(stream) {
+    CodeBacktrack::CodeBacktrack(std::string input, TokenStream stream) : input(std::move(input)), stream(std::move(stream)) {
         //
     }
 
@@ -100,11 +100,11 @@ namespace ionir {
         return codeBlock;
     }
 
-    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(Token token, uint32_t grace) {
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(const Token &token, uint32_t grace) {
         return this->createCodeBlockNear(token.getLineNumber(), grace);
     }
 
-    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(ionshared::NoticeContext noticeContext, uint32_t grace) {
+    std::optional<CodeBlock> CodeBacktrack::createCodeBlockNear(const ionshared::NoticeContext &noticeContext, uint32_t grace) {
         return this->createCodeBlockNear(noticeContext.lineNumber);
     }
 

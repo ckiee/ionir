@@ -14,13 +14,17 @@ namespace ionir {
 
     class Module : public Construct, public ScopeAnchor<>, public ionshared::Named {
     public:
-        explicit Module(std::string id, PtrSymbolTable<Construct> symbolTable = ionshared::Util::makePtrSymbolTable<Construct>());
+        explicit Module(
+            std::string id,
+            PtrSymbolTable<Construct> symbolTable =
+                ionshared::Util::makePtrSymbolTable<Construct>()
+        );
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() override;
 
-        void insertFunction(ionshared::Ptr<Function> function);
+        void insertFunction(const ionshared::Ptr<Function> &function);
 
         ionshared::OptPtr<Function> lookupFunction(std::string id);
     };

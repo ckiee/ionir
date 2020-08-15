@@ -1,9 +1,7 @@
 #include <ionir/passes/pass.h>
-#include <ionir/misc/util.h>
 
 namespace ionir {
-    BooleanType::BooleanType(bool isPointer)
-        : Type(ConstName::typeBool, TypeKind::Boolean, isPointer) {
+    BooleanType::BooleanType(bool isPointer) : Type(ConstName::typeBool, TypeKind::Boolean, isPointer) {
         //
     }
 

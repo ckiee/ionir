@@ -2,8 +2,10 @@
 #include <ionir/syntax/ast_builder.h>
 #include <ionir/const/const.h>
 
+#include <utility>
+
 namespace ionir {
-    void AstBuilder::setBasicBlockBuffer(ionshared::OptPtr<BasicBlock> basicBlockBuffer) {
+    void AstBuilder::setBasicBlockBuffer(const ionshared::OptPtr<BasicBlock> &basicBlockBuffer) {
         if (!basicBlockBuffer.has_value()) {
             this->basicBlockBuffer = std::nullopt;
             this->instBuilder = std::nullopt;
@@ -15,7 +17,7 @@ namespace ionir {
         this->instBuilder = std::make_shared<InstBuilder>(*this->basicBlockBuffer);
     }
 
-    void AstBuilder::require(ionshared::OptPtr<Construct> construct) const {
+    void AstBuilder::require(const ionshared::OptPtr<Construct> &construct) const {
         if (!construct.has_value()) {
             throw std::runtime_error("Required construct is null");
         }
@@ -55,7 +57,7 @@ namespace ionir {
         return this->ast;
     }
 
-    AstBuilder &AstBuilder::module(std::string id) {
+    AstBuilder &AstBuilder::module(const std::string &id) {
         ionshared::Ptr<Module> module = std::make_shared<Module>(id);
 
         this->clearBuffers();
@@ -65,7 +67,7 @@ namespace ionir {
         return *this;
     }
 
-    AstBuilder &AstBuilder::function(std::string id) {
+    AstBuilder &AstBuilder::function(const std::string& id) {
         this->requireModule();
 
         ionshared::Ptr<FunctionBody> block = std::make_shared<FunctionBody>(nullptr);
@@ -93,14 +95,14 @@ namespace ionir {
 
     AstBuilder &AstBuilder::functionReturnType(ionshared::Ptr<Type> returnType) {
         this->requireFunction();
-        this->functionBuffer->get()->getPrototype()->setReturnType(returnType);
+        this->functionBuffer->get()->getPrototype()->setReturnType(std::move(returnType));
 
         return *this;
     }
 
-    AstBuilder &AstBuilder::instAlloca(std::string id, ionshared::Ptr<Type> type) {
+    AstBuilder &AstBuilder::instAlloca(const std::string& id, ionshared::Ptr<Type> type) {
         this->requireBasicBlock();
-        this->instBuilder->get()->createAlloca(id, type);
+        this->instBuilder->get()->createAlloca(id, std::move(type));
 
         return *this;
     }

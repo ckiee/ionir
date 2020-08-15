@@ -1,7 +1,6 @@
 #pragma once
 
-// TODO: Not being specific enough on name.
-#define IONIR_DEFAULT_GRACE 2
+#define IONIR_CODE_BACKTRACK_DEFAULT_GRACE 2
 
 #include <string>
 #include <vector>
@@ -28,7 +27,7 @@ namespace ionir {
         TokenStream stream;
 
     protected:
-        static std::string resolveInputText(std::string input, std::vector<Token> lineBuffer);
+        static std::string resolveInputText(const std::string &input, std::vector<Token> lineBuffer);
 
     public:
         CodeBacktrack(std::string input, TokenStream stream);
@@ -37,12 +36,15 @@ namespace ionir {
 
         TokenStream getTokenStream() const;
 
-        std::optional<CodeBlock> createCodeBlockNear(uint32_t lineNumber, uint32_t grace = IONIR_DEFAULT_GRACE);
+        std::optional<CodeBlock> createCodeBlockNear(uint32_t lineNumber, uint32_t grace = IONIR_CODE_BACKTRACK_DEFAULT_GRACE);
 
-        std::optional<CodeBlock> createCodeBlockNear(Token token, uint32_t grace = IONIR_DEFAULT_GRACE);
+        std::optional<CodeBlock> createCodeBlockNear(const Token &token, uint32_t grace = IONIR_CODE_BACKTRACK_DEFAULT_GRACE);
 
-        std::optional<CodeBlock> createCodeBlockNear(ionshared::NoticeContext noticeContext, uint32_t grace = IONIR_DEFAULT_GRACE);
+        std::optional<CodeBlock> createCodeBlockNear(
+            const ionshared::NoticeContext &noticeContext,
+            uint32_t grace = IONIR_CODE_BACKTRACK_DEFAULT_GRACE
+        );
 
-        std::optional<CodeBlock> createCodeBlockNear(ionshared::Notice notice, uint32_t grace = IONIR_DEFAULT_GRACE);
+        std::optional<CodeBlock> createCodeBlockNear(ionshared::Notice notice, uint32_t grace = IONIR_CODE_BACKTRACK_DEFAULT_GRACE);
     };
 }

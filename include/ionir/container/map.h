@@ -8,7 +8,7 @@ namespace ionir {
     template<typename TKey, typename TValue>
     class Map : public Wrapper<std::map<TKey, TValue>> {
     public:
-        Map(std::map<TKey, TValue> value = {}) : Wrapper<std::map<TKey, TValue>>(value) {
+        explicit Map(std::map<TKey, TValue> value = {}) : Wrapper<std::map<TKey, TValue>>(value) {
             //
         }
 

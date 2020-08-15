@@ -1,6 +1,5 @@
 #include <ionir/const/const_name.h>
 #include <ionir/syntax/parser.h>
-#include <ionir/syntax/parser_helpers.h>
 
 namespace ionir {
     ionshared::OptPtr<Args> Parser::parseArgs() {
@@ -31,7 +30,7 @@ namespace ionir {
         return std::make_shared<Args>(args, isInfinite);
     }
 
-    ionshared::OptPtr<Prototype> Parser::parsePrototype(ionshared::Ptr<Module> parent) {
+    ionshared::OptPtr<Prototype> Parser::parsePrototype(const ionshared::Ptr<Module> &parent) {
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
@@ -59,7 +58,7 @@ namespace ionir {
         return std::make_shared<Prototype>(*id, args, *returnType, parent);
     }
 
-    ionshared::OptPtr<Extern> Parser::parseExtern(ionshared::Ptr<Module> parent) {
+    ionshared::OptPtr<Extern> Parser::parseExtern(const ionshared::Ptr<Module> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordExtern))
 
         ionshared::OptPtr<Prototype> prototype = this->parsePrototype(parent);
@@ -69,7 +68,7 @@ namespace ionir {
         return std::make_shared<Extern>(*prototype);
     }
 
-    ionshared::OptPtr<Function> Parser::parseFunction(ionshared::Ptr<Module> parent) {
+    ionshared::OptPtr<Function> Parser::parseFunction(const ionshared::Ptr<Module> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordFunction))
 
         ionshared::OptPtr<Prototype> prototype = this->parsePrototype(parent);

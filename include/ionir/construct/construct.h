@@ -58,9 +58,6 @@ namespace ionir {
     typedef ionshared::Ast<Construct> Ast;
 
     class Construct : public ionshared::BaseConstruct<Construct, ConstructKind> {
-    private:
-        ConstructKind constructKind;
-
     public:
         template<class T>
         static Ast convertChildren(std::vector<ionshared::Ptr<T>> vector) {
@@ -108,7 +105,7 @@ namespace ionir {
 
         virtual Ast getChildNodes();
 
-        virtual bool equals(ionshared::Ptr<Construct> other);
+        virtual bool equals(const ionshared::Ptr<Construct> &other);
 
         /**
          * Verify the members and properties of the node.

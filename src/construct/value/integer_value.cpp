@@ -2,7 +2,7 @@
 
 namespace ionir {
     IntegerValue::IntegerValue(ionshared::Ptr<IntegerType> type, int64_t value)
-        : Value(ValueKind::Integer, type), value(value) {
+        : Value(ValueKind::Integer, std::move(type)), value(value) {
         //
     }
 

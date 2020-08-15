@@ -1,3 +1,4 @@
+#include <utility>
 #include <vector>
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
@@ -49,13 +50,13 @@ namespace ionir {
     }
 
     std::nullopt_t Parser::makeNotice(std::string message, ionshared::NoticeType type) {
-        this->stackTrace.push_back(this->createNoticeFactory().make(type, message));
+        this->stackTrace.push_back(this->createNoticeFactory().make(type, std::move(message)));
 
         return std::nullopt;
     }
 
     Parser::Parser(TokenStream stream, ionshared::StackTrace stackTrace, std::string filePath)
-        : stream(stream), stackTrace(stackTrace), filePath(filePath), classifier() {
+        : stream(std::move(stream)), stackTrace(std::move(stackTrace)), filePath(std::move(filePath)), classifier() {
         //
     }
 
@@ -67,7 +68,7 @@ namespace ionir {
         return this->filePath;
     }
 
-    ionshared::OptPtr<Construct> Parser::parseTopLevel(ionshared::Ptr<Module> parent) {
+    ionshared::OptPtr<Construct> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordFunction: {
                 return this->parseFunction(parent);
@@ -127,7 +128,7 @@ namespace ionir {
         }
 
         ionshared::Ptr<BasicBlock> basicBlock = std::make_shared<BasicBlock>(BasicBlockOpts{
-            parent,
+            std::move(parent),
             kind,
             *id
         });
@@ -177,7 +178,7 @@ namespace ionir {
         return basicBlock;
     }
 
-    ionshared::OptPtr<FunctionBody> Parser::parseFunctionBody(ionshared::Ptr<Function> parent) {
+    ionshared::OptPtr<FunctionBody> Parser::parseFunctionBody(const ionshared::Ptr<Function> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         ionshared::Ptr<FunctionBody> functionBody = std::make_shared<FunctionBody>(parent);
@@ -244,7 +245,7 @@ namespace ionir {
         IONIR_PARSER_ASSURE(id)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolEqual))
 
-        ionshared::OptPtr<Inst> inst = this->parseInst(parent);
+        ionshared::OptPtr<Inst> inst = this->parseInst(std::move(parent));
 
         IONIR_PARSER_ASSURE(inst)
 

@@ -1,19 +1,16 @@
 #define IONIR_MATCH_INDEX_MATCHED 0
 #define IONIR_MATCH_INDEX_CAPTURED 1
+#define IONIR_LEXER_INDEX_DEFAULT 0
 
 #include <ionir/lexical/lexer.h>
 
 namespace ionir {
     Lexer::Lexer(std::string input)
-        : input(input), length(input.length()), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
+        : input(input), length(input.length()), index(IONIR_LEXER_INDEX_DEFAULT), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
         // Input string must contain at least one character.
         if (!this->length || this->length < 1) {
             throw std::invalid_argument("Input must be a string with one or more character(s)");
         }
-
-        // TODO: Avoid invoking virtual member functions from constructor.
-        // Reset the index, setting its initial value.
-        this->begin();
     }
 
     char Lexer::getChar() const noexcept {
@@ -136,7 +133,7 @@ namespace ionir {
     }
 
     void Lexer::begin() {
-        this->index = 0;
+        this->index = IONIR_LEXER_INDEX_DEFAULT;
     }
 
     bool Lexer::hasNext() const {
@@ -164,7 +161,7 @@ namespace ionir {
         std::string tokenValue = token.getValue();
 
         // Begin by testing against all simple until a possible match is found.
-        for (const auto pair : this->simpleIds) {
+        for (const auto &pair : this->simpleIds) {
             // Test the first letter of the subject to continue.
             if (tokenValue[0] == pair.first[0]) {
                 /**
@@ -209,7 +206,7 @@ namespace ionir {
         }
 
         // No simple was matched, proceed to test complex.
-        for (const auto pair : this->complexIds) {
+        for (const auto &pair : this->complexIds) {
             MatchResult matchResult = this->matchExpression(MatchOpts{
                 token,
                 pair.second,

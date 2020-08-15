@@ -35,7 +35,7 @@ namespace ionir {
         return result;
     }
 
-    void LlvmModule::print() {
+    void LlvmModule::print() const {
         std::cout << this->getAsString();
     }
 

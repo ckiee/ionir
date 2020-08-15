@@ -25,8 +25,7 @@ namespace ionir {
         ionshared::Ptr<T> type;
 
     public:
-        Value(ValueKind kind, ionshared::Ptr<T> type)
-            : Construct(ConstructKind::Value), kind(kind), type(type) {
+        Value(ValueKind kind, ionshared::Ptr<T> type) : Construct(ConstructKind::Value), kind(kind), type(type) {
             //
         }
 

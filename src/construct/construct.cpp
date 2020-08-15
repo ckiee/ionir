@@ -15,7 +15,7 @@ namespace ionir {
         return {};
     }
 
-    bool Construct::equals(ionshared::Ptr<Construct> other) {
+    bool Construct::equals(const ionshared::Ptr<Construct> &other) {
         return other == this->shared_from_this();
     }
 
@@ -24,6 +24,6 @@ namespace ionir {
     }
 
     std::optional<std::string> Construct::getConstructName() {
-        return Const::getConstructKindName(this->constructKind);
+        return Const::getConstructKindName(this->getConstructKind());
     }
 }

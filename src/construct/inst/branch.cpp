@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    BranchInst::BranchInst(BranchInstOpts opts)
+    BranchInst::BranchInst(const BranchInstOpts &opts)
         : Inst(opts.parent, InstKind::Branch), condition(opts.condition), blockRef(opts.blockRef), otherwiseBlockRef(opts.otherwiseRef) {
         //
     }

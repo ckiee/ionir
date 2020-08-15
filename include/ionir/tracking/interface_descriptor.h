@@ -34,8 +34,8 @@ namespace ionir {
 
         void setInterfaces(std::vector<ionshared::Ptr<InterfaceDescriptor>> interfaces);
 
-        std::optional<ionshared::Ptr<FieldDescriptor>> findField(std::string name);
+        std::optional<ionshared::Ptr<FieldDescriptor>> findField(const std::string &name);
 
-        bool containsField(std::string name);
+        bool containsField(const std::string &name);
     };
 }

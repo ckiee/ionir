@@ -1,8 +1,12 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Prototype::Prototype(std::string id, ionshared::Ptr<Args> args, ionshared::Ptr<Type> returnType, ionshared::Ptr<Module> parent)
-        : ChildConstruct<Module>(parent, ConstructKind::Prototype), Named(id), args(std::move(args)), returnType(std::move(returnType)) {
+    Prototype::Prototype(
+        std::string id,
+        ionshared::Ptr<Args> args,
+        ionshared::Ptr<Type> returnType,
+        ionshared::Ptr<Module> parent
+    ) : ChildConstruct<Module>(std::move(parent), ConstructKind::Prototype), Named(std::move(id)), args(std::move(args)), returnType(std::move(returnType)) {
         //
     }
 
@@ -22,7 +26,7 @@ namespace ionir {
     }
 
     void Prototype::setArgs(ionshared::Ptr<Args> args) noexcept {
-        this->args = args;
+        this->args = std::move(args);
     }
 
     ionshared::Ptr<Type> Prototype::getReturnType() const noexcept {
@@ -30,7 +34,7 @@ namespace ionir {
     }
 
     void Prototype::setReturnType(ionshared::Ptr<Type> returnType) noexcept {
-        this->returnType = returnType;
+        this->returnType = std::move(returnType);
     }
 
     bool Prototype::verify() {

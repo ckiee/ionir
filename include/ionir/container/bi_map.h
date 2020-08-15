@@ -14,7 +14,7 @@ namespace ionir {
 
     public:
         explicit BiMap(std::map<TFirst, TSecond> value = {})
-            :  firstMap(Map<TFirst, TSecond>(value)), secondMap(Map<TSecond, TFirst>(Util::flipMap<TFirst, TSecond>(value))) {
+            : firstMap(Map<TFirst, TSecond>(value)), secondMap(Map<TSecond, TFirst>(Util::flipMap<TFirst, TSecond>(value))) {
             //
         }
 

@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     Token::Token(TokenKind kind, std::string value, uint32_t startPosition, uint32_t lineNumber)
-        : BareToken(kind, value, startPosition, lineNumber) {
+        : BareToken(kind, std::move(value), startPosition, lineNumber) {
         //
     }
 

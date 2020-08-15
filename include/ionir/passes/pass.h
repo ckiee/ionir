@@ -33,7 +33,7 @@
 namespace ionir {
     class Pass : public ionshared::BasePass<Construct> {
     public:
-        virtual void visit(ionshared::Ptr<Construct> node);
+        void visit(ionshared::Ptr<Construct> node) override;
 
         virtual void visitChildren(ionshared::Ptr<Construct> node);
 

@@ -57,13 +57,17 @@ namespace ionir {
         std::nullopt_t makeNotice(std::string message, ionshared::NoticeType type = ionshared::NoticeType::Error);
 
     public:
-        explicit Parser(TokenStream stream, ionshared::StackTrace stackTrace = {}, std::string filePath = ConstName::anonymous);
+        explicit Parser(
+            TokenStream stream,
+            ionshared::StackTrace stackTrace = {},
+            std::string filePath = ConstName::anonymous
+        );
 
         ionshared::StackTrace getStackTrace() const;
 
         std::string getFilePath() const;
 
-        ionshared::OptPtr<Construct> parseTopLevel(ionshared::Ptr<Module> parent);
+        ionshared::OptPtr<Construct> parseTopLevel(const ionshared::Ptr<Module> &parent);
 
         /**
          * Parses a integer literal in the form of long (or integer 64).
@@ -88,11 +92,11 @@ namespace ionir {
 
         ionshared::OptPtr<Args> parseArgs();
 
-        ionshared::OptPtr<Prototype> parsePrototype(ionshared::Ptr<Module> parent);
+        ionshared::OptPtr<Prototype> parsePrototype(const ionshared::Ptr<Module> &parent);
 
-        ionshared::OptPtr<Extern> parseExtern(ionshared::Ptr<Module> parent);
+        ionshared::OptPtr<Extern> parseExtern(const ionshared::Ptr<Module> &parent);
 
-        ionshared::OptPtr<Function> parseFunction(ionshared::Ptr<Module> parent);
+        ionshared::OptPtr<Function> parseFunction(const ionshared::Ptr<Module> &parent);
 
         ionshared::OptPtr<Global> parseGlobal();
 
@@ -102,7 +106,7 @@ namespace ionir {
 
         ionshared::OptPtr<BasicBlock> parseBasicBlock(ionshared::Ptr<FunctionBody> parent);
 
-        ionshared::OptPtr<FunctionBody> parseFunctionBody(ionshared::Ptr<Function> parent);
+        ionshared::OptPtr<FunctionBody> parseFunctionBody(const ionshared::Ptr<Function> &parent);
 
         ionshared::OptPtr<AllocaInst> parseAllocaInst(ionshared::Ptr<BasicBlock> parent);
 
@@ -110,16 +114,15 @@ namespace ionir {
 
         ionshared::OptPtr<BranchInst> parseBranchInst(ionshared::Ptr<BasicBlock> parent);
 
-        ionshared::OptPtr<CallInst> parseCallInst(ionshared::Ptr<BasicBlock> parent);
+        ionshared::OptPtr<CallInst> parseCallInst(const ionshared::Ptr<BasicBlock> &parent);
 
         ionshared::OptPtr<StoreInst> parseStoreInst(ionshared::Ptr<BasicBlock> parent);
 
         /**
-         * Parses an instruction, consuming its identifier.
-         * Invokes the corresponding parser depending on its
-         * identifier.
+         * Parses an instruction, consuming its identifier. Invokes the corresponding
+         * parser depending on its identifier.
          */
-        ionshared::OptPtr<Inst> parseInst(ionshared::Ptr<BasicBlock> parent);
+        ionshared::OptPtr<Inst> parseInst(const ionshared::Ptr<BasicBlock> &parent);
 
         ionshared::OptPtr<Module> parseModule();
 

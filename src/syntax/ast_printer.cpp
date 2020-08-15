@@ -10,7 +10,7 @@
 #define IONIR_TREE_LEAF "└"
 
 namespace ionir {
-    void AstPrinter::visitNode(AstPrinterTreeNode node) {
+    void AstPrinter::visitNode(const AstPrinterTreeNode &node) {
         if (this->depth != 0) {
             this->tree << IONIR_TREE_V_LINE << AstPrinter::makeSpaces(2);
         }

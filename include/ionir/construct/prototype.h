@@ -21,7 +21,12 @@ namespace ionir {
         ionshared::Ptr<Type> returnType;
 
     public:
-        Prototype(std::string id, ionshared::Ptr<Args> args, ionshared::Ptr<Type> returnType, ionshared::Ptr<Module> parent);
+        Prototype(
+            std::string id,
+            ionshared::Ptr<Args> args,
+            ionshared::Ptr<Type> returnType,
+            ionshared::Ptr<Module> parent
+        );
 
         void accept(Pass &visitor) override;
 

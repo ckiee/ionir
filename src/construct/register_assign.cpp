@@ -1,9 +1,8 @@
 #include <ionir/passes/pass.h>
-#include <ionir/construct/register_assign.h>
 
 namespace ionir {
     RegisterAssign::RegisterAssign(std::string id, ionshared::Ptr<Construct> value)
-        : Construct(ConstructKind::RegisterAssign), id(id), value(value) {
+        : Construct(ConstructKind::RegisterAssign), id(std::move(id)), value(std::move(value)) {
         //
     }
 
@@ -16,7 +15,7 @@ namespace ionir {
     }
 
     void RegisterAssign::setId(std::string value) noexcept {
-        this->id = value;
+        this->id = std::move(value);
     }
 
     ionshared::Ptr<Construct> RegisterAssign::getValue() const noexcept {
@@ -24,6 +23,6 @@ namespace ionir {
     }
 
     void RegisterAssign::setValue(ionshared::Ptr<Construct> value) noexcept {
-        this->value = value;
+        this->value = std::move(value);
     }
 }

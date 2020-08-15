@@ -1,5 +1,4 @@
 #include <ionir/passes/pass.h>
-#include <ionir/const/const_name.h>
 
 namespace ionir {
     VoidType::VoidType()

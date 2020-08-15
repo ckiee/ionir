@@ -1,5 +1,4 @@
 #include <ionir/type_system/type_util.h>
-#include <ionir/misc/util.h>
 
 namespace ionir {
     bool TypeUtil::isAtomicTypesCompatible(TypeKind typeKindA, TypeKind typeKindB) {

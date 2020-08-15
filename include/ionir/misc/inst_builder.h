@@ -18,7 +18,7 @@ namespace ionir {
 
         ionshared::Ptr<BasicBlock> getSection() const;
 
-        void insert(ionshared::Ptr<Inst> inst);
+        void insert(const ionshared::Ptr<Inst> &inst);
 
         template<class TInst, typename... TArgs>
         ionshared::Ptr<TInst> make(TArgs... args) {
@@ -31,14 +31,25 @@ namespace ionir {
             return inst;
         }
 
-        ionshared::Ptr<AllocaInst> createAlloca(std::string id, ionshared::Ptr<Type> type);
+        ionshared::Ptr<AllocaInst> createAlloca(const std::string &id, ionshared::Ptr<Type> type);
 
-        ionshared::Ptr<BranchInst> createBranch(ionshared::Ptr<Construct> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection);
+        ionshared::Ptr<BranchInst> createBranch(
+            ionshared::Ptr<Construct> condition,
+            PtrRef<BasicBlock> bodySection,
+            PtrRef<BasicBlock> otherwiseSection
+        );
 
-        ionshared::Ptr<BranchInst> createBranch(ionshared::Ptr<Construct> condition, std::string bodySectionId, std::string otherwiseSectionId);
+        ionshared::Ptr<BranchInst> createBranch(
+            ionshared::Ptr<Construct> condition,
+            const std::string &bodySectionId,
+            const std::string &otherwiseSectionId
+        );
 
-        ionshared::Ptr<ReturnInst> createReturn(ionshared::OptPtr<Value<>> value = std::nullopt);
+        ionshared::Ptr<ReturnInst> createReturn(const ionshared::OptPtr<Value<>> &value = std::nullopt);
 
-        ionshared::Ptr<CallInst> createCall(ionshared::Ptr<BasicBlock> basicBlock, OptPtrRef<Function> callee = std::nullopt);
+        ionshared::Ptr<CallInst> createCall(
+            ionshared::Ptr<BasicBlock> basicBlock,
+            OptPtrRef<Function> callee = std::nullopt
+        );
     };
 }

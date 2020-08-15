@@ -8,8 +8,12 @@ namespace ionir {
     public:
         static Ast functionAst(std::string id = ConstName::anonymous);
 
-        static ionshared::Ptr<Function> function(std::string id = ConstName::anonymous);
+        static ionshared::Ptr<Function> function(const std::string &id = ConstName::anonymous);
 
-        static ionshared::Ptr<BasicBlock> basicBlock(ionshared::Ptr<FunctionBody> parent = nullptr, std::string id = ConstName::anonymous, BasicBlockKind basicBlockKind = BasicBlockKind::Entry);
+        static ionshared::Ptr<BasicBlock> basicBlock(
+            ionshared::Ptr<FunctionBody> parent = nullptr,
+            std::string id = ConstName::anonymous,
+            BasicBlockKind basicBlockKind = BasicBlockKind::Entry
+        );
     };
 }

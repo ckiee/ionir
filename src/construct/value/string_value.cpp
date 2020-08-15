@@ -2,7 +2,7 @@
 
 namespace ionir {
     StringValue::StringValue(std::string value)
-        : Value(ValueKind::String, TypeFactory::typeString()), value(value) {
+        : Value(ValueKind::String, TypeFactory::typeString()), value(std::move(value)) {
         //
     }
 
@@ -15,6 +15,6 @@ namespace ionir {
     }
 
     void StringValue::setValue(std::string value) {
-        this->value = value;
+        this->value = std::move(value);
     }
 }

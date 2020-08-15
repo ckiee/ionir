@@ -6,14 +6,14 @@
 #include <ionir/construct/global.h>
 
 namespace ionir {
-    bool Util::stringStartsWith(std::string subject, std::string value) {
+    bool Util::stringStartsWith(const std::string &subject, const std::string &value) {
         return subject.rfind(value, 0) == 0;
     }
 
-    std::string Util::escapeRegex(std::string subject) {
+    std::string Util::escapeRegex(const std::string &subject) {
         std::string result;
 
-        for (char &character : subject) {
+        for (const char &character : subject) {
             // Determine if the character is denoted special.
             if (Util::specialChars.find(character) != Util::specialChars.npos) {
                 // If so, escape the character and append it to the result.
@@ -29,7 +29,7 @@ namespace ionir {
         return result;
     }
 
-    std::regex Util::createPureRegex(std::string value) {
+    std::regex Util::createPureRegex(const std::string &value) {
         return std::regex(Util::escapeRegex(value));
     }
 ;
@@ -79,7 +79,7 @@ namespace ionir {
         }
     }
 
-    TypeKind Util::resolveTypeKind(std::string id) {
+    TypeKind Util::resolveTypeKind(const std::string &id) {
         // TODO: CRITICAL: Add support new/missing types.
 
         if (id == ConstName::typeInt8) {
@@ -104,7 +104,7 @@ namespace ionir {
         return TypeKind::UserDefined;
     }
 
-    std::optional<std::string> Util::getConstructId(ionshared::Ptr<Construct> construct) {
+    std::optional<std::string> Util::getConstructId(const ionshared::Ptr<Construct> &construct) {
         switch (construct->getConstructKind()) {
             case ConstructKind::Function: {
                 return construct->dynamicCast<Function>()->getPrototype()->getId();
@@ -128,7 +128,7 @@ namespace ionir {
         }
     }
 
-    std::optional<std::string> Util::getInstId(ionshared::Ptr<Inst> inst) noexcept {
+    std::optional<std::string> Util::getInstId(const ionshared::Ptr<Inst> &inst) noexcept {
         switch (inst->getInstKind()) {
             default: {
                 return std::nullopt;

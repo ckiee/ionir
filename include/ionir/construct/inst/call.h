@@ -18,7 +18,7 @@ namespace ionir {
         OptPtrRef<Function> callee;
 
     public:
-        explicit CallInst(CallInstOpts opts);
+        explicit CallInst(const CallInstOpts &opts);
 
         void accept(Pass &visitor) override;
 

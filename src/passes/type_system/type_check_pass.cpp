@@ -18,7 +18,7 @@ namespace ionir {
             throw std::runtime_error("Section must contain at least a terminal instruction");
         }
 
-        for (const auto inst : insts) {
+        for (const auto &inst : insts) {
             if (inst->getInstKind() == InstKind::Return) {
                 ionshared::Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
                 TypeKind returnTypeKind = node->getPrototype()->getReturnType()->getTypeKind();

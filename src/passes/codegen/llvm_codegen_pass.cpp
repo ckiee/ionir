@@ -1,6 +1,5 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/BasicBlock.h>
-#include <llvm/IR/Constant.h>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
@@ -24,7 +23,7 @@ namespace ionir {
         return this->moduleBuffer;
     }
 
-    bool LlvmCodegenPass::setModuleBuffer(std::string id) {
+    bool LlvmCodegenPass::setModuleBuffer(const std::string &id) {
         if (this->modules->contains(id)) {
             this->moduleBuffer = this->modules->lookup(id);
             this->contextBuffer = &(*this->moduleBuffer)->getContext();
@@ -99,11 +98,11 @@ namespace ionir {
     void LlvmCodegenPass::addToScope(ionshared::Ptr<Construct> construct, llvm::Value *value) {
         // TODO: Catch possible exception if front is undefined.
 
-        this->emittedEntities.front()[construct] = value;
+        this->emittedEntities.front()[std::move(construct)] = value;
     }
 
     std::optional<llvm::Value *> LlvmCodegenPass::findInScope(ionshared::Ptr<Construct> key) {
-        llvm::Value *value = this->emittedEntities.front()[key];
+        llvm::Value *value = this->emittedEntities.front()[std::move(key)];
 
         if (value != nullptr) {
             return value;
@@ -113,7 +112,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules)
-        : modules(modules), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), blockBuffer(std::nullopt), valueStack(), typeStack(), registerQueue(), builderTracker(), emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
+        : modules(std::move(modules)), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), blockBuffer(std::nullopt), valueStack(), typeStack(), registerQueue(), builderTracker(), emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //
     }
 

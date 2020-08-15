@@ -2,8 +2,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    IcmpInst::IcmpInst(IcmpInstOpts opts)
-        : Inst(opts.parent, InstKind::Icmp) {
+    IcmpInst::IcmpInst(IcmpInstOpts opts) : Inst(opts.parent, InstKind::Icmp) {
         //
     }
 

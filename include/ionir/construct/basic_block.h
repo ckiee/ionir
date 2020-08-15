@@ -61,7 +61,7 @@ namespace ionir {
         std::vector<ionshared::Ptr<Inst>> insts;
 
     public:
-        explicit BasicBlock(BasicBlockOpts opts);
+        explicit BasicBlock(const BasicBlockOpts &opts);
 
         void accept(Pass &visitor) override;
 

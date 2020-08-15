@@ -90,7 +90,10 @@ namespace ionir {
         std::optional<llvm::Value *> findInScope(ionshared::Ptr<Construct> key);
 
     public:
-        explicit LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules = std::make_shared<ionshared::SymbolTable<llvm::Module *>>());
+        explicit LlvmCodegenPass(
+            ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules =
+                std::make_shared<ionshared::SymbolTable<llvm::Module *>>()
+        );
 
         ~LlvmCodegenPass();
 
@@ -104,7 +107,7 @@ namespace ionir {
 
         std::optional<llvm::Module *> getModuleBuffer() const;
 
-        bool setModuleBuffer(std::string id);
+        bool setModuleBuffer(const std::string &id);
 
         void visit(ionshared::Ptr<Construct> node) override;
 

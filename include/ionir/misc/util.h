@@ -20,15 +20,15 @@ namespace ionir {
         static constexpr std::string_view specialChars{"{}$^.?\\[]()*+|<>-&"};
 
     public:
-        static bool stringStartsWith(std::string subject, std::string value);
+        static bool stringStartsWith(const std::string &subject, const std::string &value);
 
-        static std::string escapeRegex(std::string subject);
+        static std::string escapeRegex(const std::string &subject);
 
         /**
          * Create a Regex instance containing a string literal as its value.
          * Escapes any special characters that may be present in the value.
          */
-        static std::regex createPureRegex(std::string value);
+        static std::regex createPureRegex(const std::string &value);
 
         template<typename T, typename U>
         static bool instanceOf(T *value) {
@@ -63,11 +63,11 @@ namespace ionir {
 
         static std::string resolveIntegerKindName(IntegerKind kind);
 
-        static TypeKind resolveTypeKind(std::string id);
+        static TypeKind resolveTypeKind(const std::string &id);
 
-        static std::optional<std::string> getConstructId(ionshared::Ptr<Construct> construct);
+        static std::optional<std::string> getConstructId(const ionshared::Ptr<Construct> &construct);
 
-        static std::optional<std::string> getInstId(ionshared::Ptr<Inst> inst) noexcept;
+        static std::optional<std::string> getInstId(const ionshared::Ptr<Inst> &inst) noexcept;
 
         /**
          * Returns the number of binary digits, called bits, necessary

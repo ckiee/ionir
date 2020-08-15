@@ -1,6 +1,5 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/BasicBlock.h>
-#include <llvm/IR/Constant.h>
 #include <ionir/construct/value.h>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 

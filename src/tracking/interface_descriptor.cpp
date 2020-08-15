@@ -1,12 +1,14 @@
 #include <ionir/tracking/interface_descriptor.h>
 
+#include <utility>
+
 namespace ionir {
     std::string InterfaceDescriptor::getName() const {
         return this->name;
     }
 
     void InterfaceDescriptor::setName(std::string name) {
-        this->name = name;
+        this->name = std::move(name);
     }
 
     PtrSymbolTable<FieldDescriptor> InterfaceDescriptor::getFields() const {
@@ -14,7 +16,7 @@ namespace ionir {
     }
 
     void InterfaceDescriptor::setFields(PtrSymbolTable<FieldDescriptor> fields) {
-        this->fields = fields;
+        this->fields = std::move(fields);
     }
 
     //    PtrSymbolTable<MethodDescriptor> InterfaceDescriptor::getMethods() const {
@@ -30,10 +32,10 @@ namespace ionir {
     }
 
     void InterfaceDescriptor::setInterfaces(std::vector<ionshared::Ptr<InterfaceDescriptor>> interfaces) {
-        this->interfaces = interfaces;
+        this->interfaces = std::move(interfaces);
     }
 
-    std::optional<ionshared::Ptr<FieldDescriptor>> InterfaceDescriptor::findField(std::string name) {
+    std::optional<ionshared::Ptr<FieldDescriptor>> InterfaceDescriptor::findField(const std::string &name) {
         if (this->fields->contains(name)) {
             return (*this->fields)[name];
         }
@@ -49,7 +51,7 @@ namespace ionir {
         return std::nullopt;
     }
 
-    bool InterfaceDescriptor::containsField(std::string name) {
+    bool InterfaceDescriptor::containsField(const std::string &name) {
         return this->findField(name) != std::nullopt;
     }
 }

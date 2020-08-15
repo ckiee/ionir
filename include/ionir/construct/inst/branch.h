@@ -26,7 +26,7 @@ namespace ionir {
         PtrRef<BasicBlock> otherwiseBlockRef;
 
     public:
-        explicit BranchInst(BranchInstOpts opts);
+        explicit BranchInst(const BranchInstOpts &opts);
 
         void accept(Pass &visitor) override;
 

@@ -1,7 +1,8 @@
 #include <ionir/construct/pseudo/args.h>
 
 namespace ionir {
-    Args::Args(ionshared::SymbolTable<Arg> items, bool isVariable) : items(items), isVariable(isVariable) {
+    Args::Args(ionshared::SymbolTable<Arg> items, bool isVariable) :
+        items(std::move(items)), isVariable(isVariable) {
         //
     }
 
@@ -10,7 +11,7 @@ namespace ionir {
     }
 
     void Args::setItems(ionshared::SymbolTable<Arg> items) noexcept {
-        this->items = items;
+        this->items = std::move(items);
     }
 
     bool Args::getIsVariable() const noexcept {

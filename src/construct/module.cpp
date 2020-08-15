@@ -1,9 +1,8 @@
 #include <ionir/passes/pass.h>
-#include <ionir/construct/function.h>
 
 namespace ionir {
     Module::Module(std::string id, PtrSymbolTable<Construct> symbolTable)
-        : Construct(ConstructKind::Module), ScopeAnchor<>(symbolTable), Named(id) {
+        : Construct(ConstructKind::Module), ScopeAnchor<>(std::move(symbolTable)), Named(std::move(id)) {
         //
     }
 
@@ -18,13 +17,13 @@ namespace ionir {
         return ast;
     }
 
-    void Module::insertFunction(ionshared::Ptr<Function> function) {
+    void Module::insertFunction(const ionshared::Ptr<Function> &function) {
         // TODO: Check if function exists first?
         (*this->getSymbolTable())[function->getPrototype()->getId()] = function;
     }
 
     ionshared::OptPtr<Function> Module::lookupFunction(std::string id) {
-        ionshared::OptPtr<Construct> functionConstruct = this->getSymbolTable()->lookup(id);
+        ionshared::OptPtr<Construct> functionConstruct = this->getSymbolTable()->lookup(std::move(id));
 
         if (functionConstruct.has_value()) {
             return functionConstruct->get()->dynamicCast<Function>();

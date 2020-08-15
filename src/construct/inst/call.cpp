@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    CallInst::CallInst(CallInstOpts opts)
+    CallInst::CallInst(const CallInstOpts &opts)
         : Inst(opts.parent, InstKind::Call), callee(opts.callee) {
         //
     }
@@ -15,6 +15,6 @@ namespace ionir {
     }
 
     void CallInst::setCallee(OptPtrRef<Function> callee) {
-        this->callee = callee;
+        this->callee = std::move(callee);
     }
 }

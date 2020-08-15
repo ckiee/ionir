@@ -2,7 +2,7 @@
 
 namespace ionir {
     Comment::Comment(bool isMultiline, std::optional<std::string> text)
-        : isMultiline(isMultiline), text(text) {
+        : isMultiline(isMultiline), text(std::move(text)) {
         //
     }
 
@@ -19,6 +19,6 @@ namespace ionir {
     }
 
     void Comment::setText(std::optional<std::string> text) {
-        this->text = text;
+        this->text = std::move(text);
     }
 }

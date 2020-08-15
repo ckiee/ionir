@@ -17,7 +17,10 @@ namespace ionir {
         std::list<PtrSymbolTable<Construct>> scope;
 
     public:
-        explicit NameResolutionPass(ionshared::Ptr<ionshared::StackTrace> stackTrace = std::make_shared<ionshared::StackTrace>());
+        explicit NameResolutionPass(
+            ionshared::Ptr<ionshared::StackTrace> stackTrace =
+                std::make_shared<ionshared::StackTrace>()
+        );
 
         void visitModule(ionshared::Ptr<Module> node) override;
 

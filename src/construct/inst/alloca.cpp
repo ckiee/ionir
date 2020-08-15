@@ -2,7 +2,7 @@
 
 namespace ionir {
     // TODO: Finish init. implementation.
-    AllocaInst::AllocaInst(AllocaInstOpts opts)
+    AllocaInst::AllocaInst(const AllocaInstOpts &opts)
         : Inst(opts.parent, InstKind::Alloca), type(opts.type) {
         //
     }
@@ -16,6 +16,6 @@ namespace ionir {
     }
 
     void AllocaInst::setType(ionshared::Ptr<Type> type) {
-        this->type = type;
+        this->type = std::move(type);
     }
 }

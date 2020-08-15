@@ -10,7 +10,7 @@ namespace ionir {
     template<typename T>
     class Stack : public Wrapper<std::stack<T>> {
     public:
-        Stack(std::stack<T> value = std::stack<T>())
+        explicit Stack(std::stack<T> value = std::stack<T>())
             : Wrapper<std::stack<T>>(value) {
             //
         }

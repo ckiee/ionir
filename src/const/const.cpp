@@ -1,7 +1,7 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = {};
+    Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = Map<IntegerKind, LlvmIntTypeResolver>();
 
     const std::string Const::basicBlockInternalPrefix = ".";
 

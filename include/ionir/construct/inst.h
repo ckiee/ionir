@@ -43,7 +43,7 @@ namespace ionir {
     public:
         Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind, ionshared::OptPtr<Inst> yields = std::nullopt);
 
-        virtual void accept(Pass &visitor) = 0;
+        void accept(Pass &visitor) override = 0;
 
         InstKind getInstKind() const noexcept;
 

@@ -1,5 +1,7 @@
 #include <ionir/syntax/parser.h>
 
+#include <utility>
+
 namespace ionir {
     ionshared::OptPtr<Construct> Parser::parsePrimaryExpr(ionshared::Ptr<Construct> parent) {
         TokenKind tokenKind = this->stream.get().getKind();
@@ -10,6 +12,6 @@ namespace ionir {
         }
 
         // Otherwise, it must be a reference.
-        return this->parseRef<>(parent);
+        return this->parseRef<>(std::move(parent));
     }
 }

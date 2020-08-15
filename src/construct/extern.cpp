@@ -2,7 +2,7 @@
 
 namespace ionir {
     Extern::Extern(ionshared::Ptr<Prototype> prototype)
-        : Construct(ConstructKind::Extern), prototype(prototype) {
+        : Construct(ConstructKind::Extern), prototype(std::move(prototype)) {
         //
     }
 
@@ -21,6 +21,6 @@ namespace ionir {
     }
 
     void Extern::setPrototype(ionshared::Ptr<Prototype> prototype) noexcept {
-        this->prototype = prototype;
+        this->prototype = std::move(prototype);
     }
 }
