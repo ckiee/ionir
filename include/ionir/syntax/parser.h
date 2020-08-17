@@ -29,20 +29,21 @@
 #include <ionir/const/const_name.h>
 #include "scope.h"
 #include "parser_helpers.h"
+#include "ast_result.h"
 
 namespace ionir {
     class Parser {
     private:
         TokenStream stream;
 
-        ionshared::StackTrace stackTrace;
+        ionshared::NoticeStack noticeStack;
 
         std::string filePath;
 
         Classifier classifier;
 
     protected:
-        Classifier getClassifier() const noexcept;
+        [[nodiscard]] Classifier getClassifier() const noexcept;
 
         bool is(TokenKind tokenKind) noexcept;
 
@@ -59,15 +60,15 @@ namespace ionir {
     public:
         explicit Parser(
             TokenStream stream,
-            ionshared::StackTrace stackTrace = {},
+            ionshared::NoticeStack noticeStack = {},
             std::string filePath = ConstName::anonymous
         );
 
-        ionshared::StackTrace getStackTrace() const;
+        [[nodiscard]] ionshared::NoticeStack getNoticeStack() const;
 
-        std::string getFilePath() const;
+        [[nodiscard]] std::string getFilePath() const;
 
-        ionshared::OptPtr<Construct> parseTopLevel(const ionshared::Ptr<Module> &parent);
+        AstPtrResult<Construct> parseTopLevel(const ionshared::Ptr<Module> &parent);
 
         /**
          * Parses a integer literal in the form of long (or integer 64).

@@ -50,25 +50,25 @@ namespace ionir {
     }
 
     std::nullopt_t Parser::makeNotice(std::string message, ionshared::NoticeType type) {
-        this->stackTrace.push_back(this->createNoticeFactory().make(type, std::move(message)));
+        this->noticeStack.push_back(this->createNoticeFactory().make(type, std::move(message)));
 
         return std::nullopt;
     }
 
-    Parser::Parser(TokenStream stream, ionshared::StackTrace stackTrace, std::string filePath)
-        : stream(std::move(stream)), stackTrace(std::move(stackTrace)), filePath(std::move(filePath)), classifier() {
+    Parser::Parser(TokenStream stream, ionshared::StackTrace noticeStack, std::string filePath)
+        : stream(std::move(stream)), stackTrace(std::move(noticeSentinel)), filePath(std::move(filePath)), classifier() {
         //
     }
 
-    ionshared::StackTrace Parser::getStackTrace() const {
-        return this->stackTrace;
+    ionshared::StackTrace Parser::getNoticeStack() const {
+        return this->noticeStack;
     }
 
     std::string Parser::getFilePath() const {
         return this->filePath;
     }
 
-    ionshared::OptPtr<Construct> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
+    AstPtrResult<Construct> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordFunction: {
                 return this->parseFunction(parent);

@@ -210,4 +210,8 @@ namespace ionir {
     void Pass::visitRegisterAssign(ionshared::Ptr<ionir::RegisterAssign> node) {
         //
     }
+
+    void Pass::visitErrorMarker(ionshared::Ptr<ErrorMarker> node) {
+        //
+    }
 }
