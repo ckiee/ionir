@@ -1,8 +1,8 @@
 #include <ionir/passes/semantic/name_resolution_pass.h>
 
 namespace ionir {
-    NameResolutionPass::NameResolutionPass(ionshared::Ptr<ionshared::StackTrace> stackTrace)
-        : stackTrace(std::move(stackTrace)), scope() {
+    NameResolutionPass::NameResolutionPass(ionshared::Ptr<ionshared::NoticeStack> noticeStack)
+        : noticeStack(std::move(noticeStack)), scope() {
         //
     }
 
@@ -84,8 +84,8 @@ namespace ionir {
 //        this->scopeStack.add(node->getSymbolTable());
     }
 
-    ionshared::Ptr<ionshared::StackTrace> NameResolutionPass::getStackTrace() const {
-        return this->stackTrace;
+    ionshared::Ptr<ionshared::NoticeStack> NameResolutionPass::getNoticeStack() const {
+        return this->noticeStack;
     }
 
     const std::list<PtrSymbolTable<Construct>> &NameResolutionPass::getScope() const {

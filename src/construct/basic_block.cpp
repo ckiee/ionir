@@ -45,7 +45,7 @@ namespace ionir {
         this->insts = std::move(insts);
     }
 
-    void BasicBlock::insertInst(ionshared::Ptr<Inst> inst) {
+    void BasicBlock::insertInst(const ionshared::Ptr<Inst> &inst) {
         this->insts.push_back(inst);
 
         std::optional<std::string> id = Util::getInstId(inst);
@@ -69,7 +69,7 @@ namespace ionir {
     }
 
     std::optional<uint32_t> BasicBlock::locate(ionshared::Ptr<Inst> inst) const {
-        return Util::locateInVector<ionshared::Ptr<Inst>>(this->insts, std::move(inst));
+        return ionshared::Util::locateInVector<ionshared::Ptr<Inst>>(this->insts, std::move(inst));
     }
 
     ionshared::Ptr<InstBuilder> BasicBlock::createBuilder() {

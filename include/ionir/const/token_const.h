@@ -43,7 +43,7 @@ namespace ionir {
 
         static const BiMap<std::string, TokenKind> &getSimpleIds();
 
-        static const std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
+        static std::vector<std::pair<std::string, TokenKind>> getSortedSimpleIds();
 
         static const std::vector<std::pair<std::regex, TokenKind>> &getComplexIds();
 

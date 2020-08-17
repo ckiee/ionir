@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <ionshared/misc/util.h>
 #include <ionir/misc/util.h>
 #include "map.h"
 
@@ -14,7 +15,7 @@ namespace ionir {
 
     public:
         explicit BiMap(std::map<TFirst, TSecond> value = {})
-            : firstMap(Map<TFirst, TSecond>(value)), secondMap(Map<TSecond, TFirst>(Util::flipMap<TFirst, TSecond>(value))) {
+            : firstMap(Map<TFirst, TSecond>(value)), secondMap(Map<TSecond, TFirst>(ionshared::Util::flipMap<TFirst, TSecond>(value))) {
             //
         }
 

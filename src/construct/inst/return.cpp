@@ -1,7 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    ReturnInst::ReturnInst(ReturnInstOpts opts) : Inst(opts.parent, InstKind::Return), value(opts.value) {
+    ReturnInst::ReturnInst(const ReturnInstOpts &opts)
+        : Inst(opts.parent, InstKind::Return), value(opts.value) {
         //
     }
 
@@ -28,6 +29,6 @@ namespace ionir {
     }
 
     bool ReturnInst::hasValue() noexcept {
-        return Util::hasValue(this->value);
+        return ionshared::Util::hasValue(this->value);
     }
 }

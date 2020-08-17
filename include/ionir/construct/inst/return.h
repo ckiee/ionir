@@ -17,7 +17,7 @@ namespace ionir {
         ionshared::OptPtr<Construct> value;
 
     public:
-        explicit ReturnInst(ReturnInstOpts opts);
+        explicit ReturnInst(const ReturnInstOpts &opts);
 
         void accept(Pass &visitor) override;
 

@@ -61,7 +61,7 @@ namespace ionir {
     }
 
     std::optional<std::string> Const::getConstructKindName(ConstructKind constructKind) {
-        if (Util::mapContains<ConstructKind, std::string>(Const::constructNames, constructKind)) {
+        if (ionshared::Util::mapContains<ConstructKind, std::string>(Const::constructNames, constructKind)) {
             return Const::constructNames[constructKind];
         }
 
@@ -69,7 +69,7 @@ namespace ionir {
     }
 
     std::optional<IntegerKind> Const::getIntegerKind(TokenKind tokenKind) {
-        if (Util::mapContains<TokenKind, IntegerKind>(Const::tokenKindToIntegerKind, tokenKind)) {
+        if (ionshared::Util::mapContains<TokenKind, IntegerKind>(Const::tokenKindToIntegerKind, tokenKind)) {
             return Const::tokenKindToIntegerKind[tokenKind];
         }
 

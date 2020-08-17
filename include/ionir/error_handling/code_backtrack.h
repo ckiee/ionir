@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include <ionshared/reporting/notice.h>
+#include <ionshared/error_handling/notice.h>
 #include <ionir/lexical/token.h>
 
 namespace ionir {

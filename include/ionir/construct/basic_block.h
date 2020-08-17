@@ -77,7 +77,7 @@ namespace ionir {
 
         void setInsts(std::vector<ionshared::Ptr<Inst>> insts);
 
-        void insertInst(ionshared::Ptr<Inst> inst);
+        void insertInst(const ionshared::Ptr<Inst> &inst);
 
         uint32_t relocateInsts(BasicBlock &target, uint32_t from = 0);
 

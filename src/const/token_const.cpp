@@ -58,7 +58,7 @@ namespace ionir {
         return TokenConst::simple;
     }
 
-    const SimplePairVector TokenConst::getSortedSimpleIds() {
+    SimplePairVector TokenConst::getSortedSimpleIds() {
         TokenConst::ensureInit();
 
         SimplePairVector result = {};
@@ -117,7 +117,7 @@ namespace ionir {
     std::optional<std::string> TokenConst::getTokenKindName(TokenKind tokenKind) {
         TokenConst::ensureInit();
 
-        if (!Util::mapContains<TokenKind, std::string>(TokenConst::names, tokenKind)) {
+        if (!ionshared::Util::mapContains<TokenKind, std::string>(TokenConst::names, tokenKind)) {
             return std::nullopt;
         }
 

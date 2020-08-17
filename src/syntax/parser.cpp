@@ -55,12 +55,12 @@ namespace ionir {
         return std::nullopt;
     }
 
-    Parser::Parser(TokenStream stream, ionshared::StackTrace noticeStack, std::string filePath)
-        : stream(std::move(stream)), stackTrace(std::move(noticeSentinel)), filePath(std::move(filePath)), classifier() {
+    Parser::Parser(TokenStream stream, ionshared::Ptr<ionshared::NoticeStack> noticeStack, std::string filePath)
+        : stream(std::move(stream)), noticeStack(std::move(noticeStack)), filePath(std::move(filePath)), classifier() {
         //
     }
 
-    ionshared::StackTrace Parser::getNoticeStack() const {
+    ionshared::Ptr<ionshared::NoticeStack> Parser::getNoticeStack() const {
         return this->noticeStack;
     }
 
@@ -68,7 +68,7 @@ namespace ionir {
         return this->filePath;
     }
 
-    AstPtrResult<Construct> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
+    AstPtrResult<> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordFunction: {
                 return this->parseFunction(parent);
@@ -212,18 +212,19 @@ namespace ionir {
         ionshared::Ptr<Module> module = std::make_shared<Module>(*id, symbolTable);
 
         while (!this->is(TokenKind::SymbolBraceR)) {
-            ionshared::OptPtr<Construct> topLevelConstruct = this->parseTopLevel(module);
+            AstPtrResult<> topLevelConstructResult = this->parseTopLevel(module);
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
-            if (Util::hasValue(topLevelConstruct)) {
-                std::optional<std::string> name = Util::getConstructId(*topLevelConstruct);
+            if (Util::hasValue(topLevelConstructResult)) {
+                ionshared::Ptr<Construct> topLevelConstruct = Util::getResultPtrValue(topLevelConstructResult);
+                std::optional<std::string> name = Util::getConstructId(topLevelConstruct);
 
                 if (!name.has_value()) {
                     throw std::runtime_error("Unexpected construct name to be null");
                 }
 
                 // TODO: Ensure we're not re-defining something, issue a notice otherwise.
-                symbolTable->insert(*name, *topLevelConstruct);
+                symbolTable->insert(*name, topLevelConstruct);
             }
 
             // No more tokens to process.

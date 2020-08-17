@@ -2,7 +2,7 @@
 
 #include <optional>
 #include <string>
-#include <ionshared/reporting/notice_factory.h>
+#include <ionshared/error_handling/notice_factory.h>
 #include <ionir/construct/value/integer_value.h>
 #include <ionir/construct/value/char_value.h>
 #include <ionir/construct/value/string_value.h>
@@ -36,7 +36,7 @@ namespace ionir {
     private:
         TokenStream stream;
 
-        ionshared::NoticeStack noticeStack;
+        ionshared::Ptr<ionshared::NoticeStack> noticeStack;
 
         std::string filePath;
 
@@ -60,11 +60,14 @@ namespace ionir {
     public:
         explicit Parser(
             TokenStream stream,
-            ionshared::NoticeStack noticeStack = {},
+
+            ionshared::Ptr<ionshared::NoticeStack> noticeStack =
+                std::make_shared<ionshared::Stack<ionshared::Notice>>(),
+
             std::string filePath = ConstName::anonymous
         );
 
-        [[nodiscard]] ionshared::NoticeStack getNoticeStack() const;
+        [[nodiscard]] ionshared::Ptr<ionshared::NoticeStack> getNoticeStack() const;
 
         [[nodiscard]] std::string getFilePath() const;
 

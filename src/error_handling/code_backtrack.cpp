@@ -1,6 +1,6 @@
 #include <sstream>
 #include <ionir/misc/util.h>
-#include <ionir/reporting/code_backtrack.h>
+#include <ionir/error_handling/code_backtrack.h>
 
 namespace ionir {
     std::string CodeBacktrack::resolveInputText(const std::string &input, std::vector<Token> lineBuffer) {

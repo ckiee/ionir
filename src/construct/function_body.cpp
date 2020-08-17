@@ -28,7 +28,7 @@ namespace ionir {
     }
 
     bool FunctionBody::hasEntryBasicBlock() {
-        return Util::hasValue(this->findEntryBasicBlock());
+        return ionshared::Util::hasValue(this->findEntryBasicBlock());
     }
 
     void FunctionBody::insertBasicBlock(const ionshared::Ptr<BasicBlock> &basicBlock) {
