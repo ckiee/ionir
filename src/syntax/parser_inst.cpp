@@ -149,7 +149,7 @@ namespace ionir {
         return std::make_shared<CallInst>(CallInstOpts{
             parent,
             callee
-        });;
+        });
     }
 
     AstPtrResult<StoreInst> Parser::parseStoreInst(ionshared::Ptr<BasicBlock> parent) {
