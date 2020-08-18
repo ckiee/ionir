@@ -12,10 +12,10 @@ namespace ionir {
         std::string tokenValue = token.getValue();
         TokenKind tokenKind = token.getKind();
 
-        IONIR_PARSER_ASSERT((
+        this->assertOrError((
             Classifier::isType(tokenKind)
             || tokenKind == TokenKind::Identifier
-        ))
+        ));
 
         AstPtrResult<Type> type;
 
@@ -29,10 +29,9 @@ namespace ionir {
         // TODO: Add support for missing types.
 
         /**
-         * Type could not be identified as integer nor void
-         * type, attempt to resolve its an internal type kind
-         * from the token's value, otherwise default to an
-         * user-defined type assumption.
+         * Type could not be identified as integer nor void type, attempt
+         * to resolve its an internal type kind from the token's value,
+         * otherwise default to an user-defined type assumption.
          */
         if (!Util::hasValue(type)) {
             type = std::make_shared<Type>(tokenValue, Util::resolveTypeKind(tokenValue));
@@ -61,12 +60,12 @@ namespace ionir {
     }
 
     AstPtrResult<Type> Parser::parseTypePrefix() {
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketL))
+        this->assertOrError(this->skipOver(TokenKind::SymbolBracketL));
 
         AstPtrResult<Type> type = this->parseType();
 
-        IONIR_PARSER_ASSURE(type)
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketR))
+        this->assertHasValue(type);
+        this->assertOrError(this->skipOver(TokenKind::SymbolBracketR));
 
         return type;
     }
@@ -92,9 +91,7 @@ namespace ionir {
 
         std::optional<IntegerKind> integerKind = Const::getIntegerKind(currentTokenKind);
 
-        if (!integerKind.has_value()) {
-            return std::nullopt;
-        }
+        this->assertHasValue(integerKind);
 
         // Skip over the type token.
         this->stream.skip();

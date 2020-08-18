@@ -17,7 +17,7 @@ namespace ionir {
 
         [[nodiscard]] ionshared::Ptr<ionshared::NoticeStack> getNoticeStack() const noexcept;
 
-        template<typename T>
+        template<typename T = Construct>
         AstPtrResult<T> makeError(std::string message) {
             // TODO: Review.
             return std::make_shared<ErrorMarker>(message);

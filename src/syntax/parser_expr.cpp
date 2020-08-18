@@ -3,7 +3,7 @@
 #include <utility>
 
 namespace ionir {
-    ionshared::OptPtr<Construct> Parser::parsePrimaryExpr(ionshared::Ptr<Construct> parent) {
+    AstPtrResult<> Parser::parsePrimaryExpr(const ionshared::Ptr<Construct> &parent) {
         TokenKind tokenKind = this->stream.get().getKind();
 
         // Expression is a literal.

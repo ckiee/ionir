@@ -28,6 +28,7 @@
 #include <ionir/construct/register_assign.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/const/const_name.h>
+#include <ionir/const/notice.h>
 #include "scope.h"
 #include "parser_helpers.h"
 #include "ast_result.h"
@@ -46,11 +47,33 @@ namespace ionir {
         Classifier classifier;
 
     protected:
+        template<typename T = Construct>
+        inline AstPtrResult<T> assertOrError(bool expression) {
+            if (!expression) {
+                return this->makeNotice(IONIR_NOTICE_MISC_ASSERTION_FAILED);
+            }
+        }
+
+        template<typename TVariable, typename TConstruct = Construct>
+        inline AstPtrResult<TConstruct> assertHasValue(std::optional<TVariable> variable) {
+            return this->assertOrError<TConstruct>(ionshared::Util::hasValue(variable));
+        }
+
+        template<typename T = Construct>
+        inline AstPtrResult<T> assertHasValue(AstPtrResult<T> result) {
+            return this->assertOrError<T>(Util::hasValue(result));
+        }
+
+        template<typename T = Construct>
+        inline AstPtrResult<T> assertTokenKind(TokenKind tokenKind) {
+            return this->assertOrError<T>(this->is(tokenKind));
+        }
+
         [[nodiscard]] Classifier getClassifier() const noexcept;
 
-        bool is(TokenKind tokenKind) noexcept;
+        [[nodiscard]] bool is(TokenKind tokenKind) noexcept;
 
-        bool isNext(TokenKind tokenKind);
+        [[nodiscard]] bool isNext(TokenKind tokenKind);
 
         bool expect(TokenKind tokenKind);
 
@@ -58,7 +81,10 @@ namespace ionir {
 
         ionshared::NoticeFactory createNoticeFactory() noexcept;
 
-        std::nullopt_t makeNotice(std::string message, ionshared::NoticeType type = ionshared::NoticeType::Error);
+        std::nullopt_t makeNotice(
+            std::string message,
+            ionshared::NoticeType type = ionshared::NoticeType::Error
+        );
 
     public:
         explicit Parser(
@@ -109,7 +135,7 @@ namespace ionir {
 
         AstPtrResult<Value<>> parseValue();
 
-        AstPtrResult<> parsePrimaryExpr(ionshared::Ptr<Construct> parent);
+        AstPtrResult<> parsePrimaryExpr(const ionshared::Ptr<Construct> &parent);
 
         AstPtrResult<BasicBlock> parseBasicBlock(ionshared::Ptr<FunctionBody> parent);
 

@@ -20,11 +20,11 @@ namespace ionir {
     std::optional<Arg> Parser::parseArg() {
         AstPtrResult<Type> type = this->parseType();
 
-        IONIR_PARSER_ASSURE(type)
+        this->assertHasValue(type);
 
         std::optional<std::string> id = this->parseId();
 
-        IONIR_PARSER_ASSURE(id)
+        this->assertHasValue(id);
 
         return std::make_pair(Util::getResultPtrValue(type), *id);
     }

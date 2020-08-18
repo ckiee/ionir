@@ -32,7 +32,7 @@ namespace ionir {
     }
 
     AstPtrResult<IntegerValue> Parser::parseInt() {
-        IONIR_PARSER_EXPECT(TokenKind::LiteralInteger)
+        this->assertTokenKind(TokenKind::LiteralInteger);
 
         /**
          * Abstract the token's value to be used in the
@@ -58,12 +58,16 @@ namespace ionir {
         }
         catch (std::exception& exception) {
             // Value conversion failed.
-            return this->noticeSentinel->makeError<IntegerValue>(IONIR_NOTICE_VALUE_CONVERT_STRING_TO_INT_FAILED);
+            return this->noticeSentinel->makeError<IntegerValue>(
+                IONIR_NOTICE_VALUE_CONVERT_STRING_TO_INT_FAILED
+            );
         }
 
         // Calculate the value's bit-length and it's corresponding integer kind.
         uint32_t valueBitLength = ionshared::Util::calculateBitLength(value);
-        std::optional<IntegerKind> valueIntegerKind = Util::calculateIntegerKindFromBitLength(valueBitLength);
+
+        std::optional<IntegerKind> valueIntegerKind =
+            Util::calculateIntegerKindFromBitLength(valueBitLength);
 
         if (!valueIntegerKind.has_value()) {
             // TODO: Hard-coded message. Use consts.
@@ -84,7 +88,7 @@ namespace ionir {
     }
 
     AstPtrResult<CharValue> Parser::parseChar() {
-        IONIR_PARSER_EXPECT(TokenKind::LiteralCharacter);
+        this->assertTokenKind(TokenKind::LiteralCharacter);
 
         // Extract the value from the character token.
         std::string stringValue = this->stream.get().getValue();
@@ -102,7 +106,7 @@ namespace ionir {
     }
 
     AstPtrResult<StringValue> Parser::parseString() {
-        IONIR_PARSER_EXPECT(TokenKind::LiteralString);
+        this->assertTokenKind(TokenKind::LiteralString);
 
         // Extract the value from the string token.
         std::string value = this->stream.get().getValue();

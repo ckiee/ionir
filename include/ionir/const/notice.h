@@ -3,6 +3,7 @@
 // Misc.
 #define IONIR_NOTICE_MISC_UNEXPECTED_TOKEN "Encountered an unexpected token"
 #define IONIR_NOTICE_MISC_UNEXPECTED_EOF "Unexpected end of input"
+#define IONIR_NOTICE_MISC_ASSERTION_FAILED "Assertion failed"
 
 // Function.
 #define IONIR_NOTICE_FUNCTION_CALL_UNDEFINED "Call to undefined function '%s'"

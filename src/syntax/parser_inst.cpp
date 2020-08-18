@@ -50,7 +50,7 @@ namespace ionir {
         }
 
         // All instructions should end denoted by a semi-colon.
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon))
+        this->assertOrError(this->skipOver(TokenKind::SymbolSemiColon));
 
         return inst;
     }
@@ -60,7 +60,7 @@ namespace ionir {
 
         AstPtrResult<Type> typeResult = this->parseType();
 
-        IONIR_PARSER_ASSURE(typeResult)
+        this->assertHasValue(typeResult);
 
         ionshared::Ptr<Type> type = Util::getResultPtrValue(typeResult);
 
@@ -113,7 +113,7 @@ namespace ionir {
         AstPtrResult<> condition = this->parsePrimaryExpr(nullptr);
 
         // Condition must be set.
-        IONIR_PARSER_ASSURE(condition)
+        this->assertHasValue(condition);
 
         ionshared::Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
             std::move(parent),
@@ -124,11 +124,11 @@ namespace ionir {
 
         AstPtrResult<Ref<BasicBlock>> bodySection = this->parseRef<BasicBlock>(branchInst);
 
-        IONIR_PARSER_ASSURE(bodySection)
+        this->assertHasValue(bodySection);
 
         AstPtrResult<Ref<BasicBlock>> otherwiseSection = this->parseRef<BasicBlock>(branchInst);
 
-        IONIR_PARSER_ASSURE(otherwiseSection)
+        this->assertHasValue(otherwiseSection);
 
         branchInst->setBlockRef(Util::getResultPtrValue(bodySection));
         branchInst->setOtherwiseBlockRef(Util::getResultPtrValue(otherwiseSection));
@@ -141,7 +141,7 @@ namespace ionir {
 
         std::optional<std::string> calleeId = this->parseId();
 
-        IONIR_PARSER_ASSURE(calleeId)
+        this->assertHasValue(calleeId);
 
         // TODO: Is the BasicBlock parent the correct one? Just passing it because it seems like so. Check.
         ionshared::Ptr<Ref<Function>> callee = std::make_shared<Ref<Function>>(*calleeId, parent);
@@ -157,7 +157,7 @@ namespace ionir {
 
         AstPtrResult<Value<>> value = this->parseValue();
 
-        IONIR_PARSER_ASSURE(value)
+        this->assertHasValue(value);
 
         ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
             std::move(parent),
@@ -167,7 +167,7 @@ namespace ionir {
 
         AstPtrResult<Ref<AllocaInst>> target = this->parseRef<AllocaInst>(storeInst);
 
-        IONIR_PARSER_ASSURE(target)
+        this->assertHasValue(target);
 
         storeInst->setTarget(Util::getResultPtrValue(target));
 

@@ -2,7 +2,6 @@
 #include <vector>
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
-#include <ionir/const/notice.h>
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
@@ -84,25 +83,25 @@ namespace ionir {
             }
 
             default: {
-                return this->makeNotice("Unknown top-level construct");
+                return this->noticeSentinel->makeError(IONIR_NOTICE_MISC_UNEXPECTED_TOKEN);
             }
         }
     }
 
     AstPtrResult<Global> Parser::parseGlobal() {
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordGlobal))
+        this->assertOrError(this->skipOver(TokenKind::KeywordGlobal));
 
         AstPtrResult<Type> type = this->parseType();
 
-        IONIR_PARSER_ASSURE(type)
+        this->assertHasValue(type);
 
         std::optional<std::string> id = this->parseId();
 
-        IONIR_PARSER_ASSURE(id)
+        this->assertHasValue(id);
 
         // TODO: Handle in-line initialization & pass std::optional<Value> into Global constructor.
 
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon))
+        this->assertOrError(this->skipOver(TokenKind::SymbolSemiColon));
 
         return std::make_shared<Global>(Util::getResultPtrValue(type), *id);
     }
@@ -202,12 +201,12 @@ namespace ionir {
     }
 
     AstPtrResult<Module> Parser::parseModule() {
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordModule))
+        this->assertOrError(this->skipOver(TokenKind::KeywordModule));
 
         std::optional<std::string> id = this->parseId();
 
-        IONIR_PARSER_ASSURE(id)
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
+        this->assertHasValue(id);
+        this->assertOrError(this->skipOver(TokenKind::SymbolBraceL));
 
         PtrSymbolTable<Construct> symbolTable =
             std::make_shared<ionshared::SymbolTable<ionshared::Ptr<Construct>>>();
@@ -236,22 +235,22 @@ namespace ionir {
             }
         }
 
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceR))
+        this->assertOrError(this->skipOver(TokenKind::SymbolBraceR));
 
         return module;
     }
 
     AstPtrResult<RegisterAssign> Parser::parseRegisterAssign(const ionshared::Ptr<BasicBlock> &parent) {
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::OperatorModulo))
+        this->assertOrError(this->skipOver(TokenKind::OperatorModulo));
 
         std::optional<std::string> id = this->parseId();
 
-        IONIR_PARSER_ASSURE(id)
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolEqual))
+        this->assertHasValue(id);
+        this->assertOrError(this->skipOver(TokenKind::SymbolEqual));
 
         AstPtrResult<Inst> inst = this->parseInst(parent);
 
-        IONIR_PARSER_ASSURE(inst)
+        this->assertHasValue(inst);
 
         return std::make_shared<RegisterAssign>(*id, Util::getResultPtrValue(inst));
     }

@@ -21,7 +21,7 @@ namespace ionir {
 
             std::optional<Arg> arg = this->parseArg();
 
-            IONIR_PARSER_ASSURE(arg)
+            this->assertHasValue(arg);
 
             // Set the argument on the symbol table.
             args[arg->second] = *arg;
@@ -34,8 +34,8 @@ namespace ionir {
     AstPtrResult<Prototype> Parser::parsePrototype(const ionshared::Ptr<Module> &parent) {
         std::optional<std::string> id = this->parseId();
 
-        IONIR_PARSER_ASSURE(id)
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolParenthesesL))
+        this->assertHasValue(id);
+        this->assertOrError(this->skipOver(TokenKind::SymbolParenthesesL));
 
         ionshared::Ptr<Args> args = std::make_shared<Args>();
 
@@ -43,48 +43,49 @@ namespace ionir {
         if (!this->is(TokenKind::SymbolParenthesesR)) {
             AstPtrResult<Args> temporaryArgs = this->parseArgs();
 
-            IONIR_PARSER_ASSURE(temporaryArgs)
+            this->assertHasValue(temporaryArgs);
 
             args = Util::getResultPtrValue(temporaryArgs);
         }
 
         this->stream.skip();
-
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolArrow))
+        this->assertOrError(this->skipOver(TokenKind::SymbolArrow));
 
         AstPtrResult<Type> returnType = this->parseType();
 
-        IONIR_PARSER_ASSURE(returnType)
+        this->assertHasValue(returnType);
 
         return std::make_shared<Prototype>(*id, args, Util::getResultPtrValue(returnType), parent);
     }
 
     AstPtrResult<Extern> Parser::parseExtern(const ionshared::Ptr<Module> &parent) {
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordExtern))
+        this->assertOrError(this->skipOver(TokenKind::KeywordExtern));
 
         AstPtrResult<Prototype> prototype = this->parsePrototype(parent);
 
-        IONIR_PARSER_ASSURE(prototype)
+        this->assertHasValue(prototype);
 
         return std::make_shared<Extern>(Util::getResultPtrValue(prototype));
     }
 
     AstPtrResult<Function> Parser::parseFunction(const ionshared::Ptr<Module> &parent) {
-        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordFunction))
+        this->assertOrError(this->skipOver(TokenKind::KeywordFunction));
 
         AstPtrResult<Prototype> prototype = this->parsePrototype(parent);
-        AstPtrResult<FunctionBody> body = this->parseFunctionBody(nullptr);
+        AstPtrResult<FunctionBody> bodyResult = this->parseFunctionBody(nullptr);
 
-        IONIR_PARSER_ASSURE(prototype)
-        IONIR_PARSER_ASSURE(body)
+        this->assertHasValue(prototype);
+        this->assertHasValue(bodyResult);
+
+        ionshared::Ptr<FunctionBody> body = Util::getResultPtrValue(bodyResult);
 
         ionshared::Ptr<Function> function =
             std::make_shared<Function>(
                 Util::getResultPtrValue(prototype),
-                Util::getResultPtrValue(body)
+                body
             );
 
-        body->get()->setParent(function);
+        body->setParent(function);
 
         return function;
     }
