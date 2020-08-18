@@ -3,7 +3,6 @@
 #include <optional>
 #include <string>
 #include <ionir/construct/construct.h>
-#include <ionir/misc/util.h>
 
 namespace ionir {
     // TODO: What if 'pass.h' is never included?
@@ -16,12 +15,9 @@ namespace ionir {
     public:
         explicit ErrorMarker(std::string message);
 
-        void accept(Pass &visitor) override {
-            // TODO: CRITICAL: Fix 'incomplete type' problem.
-            // visitor.visitRef(this->dynamicCast<Ref<T>>());
-        }
+        void accept(Pass &visitor) override;
 
-        std::string getMessage() const noexcept;
+        [[nodiscard]] std::string getMessage() const noexcept;
 
         void setMessage(std::string message) noexcept;
     };

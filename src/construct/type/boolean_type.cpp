@@ -1,11 +1,12 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    BooleanType::BooleanType(bool isPointer) : Type(ConstName::typeBool, TypeKind::Boolean, isPointer) {
+    BooleanType::BooleanType()
+        : Type(ConstName::typeBool, TypeKind::Boolean) {
         //
     }
 
     void BooleanType::accept(Pass &pass) {
-        return pass.visitBooleanType(this->dynamicCast<BooleanType>());
+        pass.visitBooleanType(this->dynamicCast<BooleanType>());
     }
 }

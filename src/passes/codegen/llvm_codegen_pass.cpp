@@ -43,19 +43,19 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::requireFunction() {
-        if (!Util::hasValue(this->functionBuffer)) {
+        if (!ionshared::Util::hasValue(this->functionBuffer)) {
             throw std::runtime_error("Expected the function buffer to be set, but was null");
         }
     }
 
     void LlvmCodegenPass::requireModule() {
-        if (!Util::hasValue(this->moduleBuffer)) {
+        if (!ionshared::Util::hasValue(this->moduleBuffer)) {
             throw std::runtime_error("Expected the module buffer to be set, but was null");
         }
     }
 
     void LlvmCodegenPass::requireContext() {
-        if (!Util::hasValue(this->contextBuffer)) {
+        if (!ionshared::Util::hasValue(this->contextBuffer)) {
             throw std::runtime_error("Expected the context buffer to be set, but was null");
         }
     }
@@ -202,7 +202,7 @@ namespace ionir {
         ionshared::OptPtr<Value<>> nodeValue = node->getValue();
 
         // Assign value if applicable.
-        if (Util::hasValue(nodeValue)) {
+        if (ionshared::Util::hasValue(nodeValue)) {
             // Visit global variable value.
             this->visitValue(*nodeValue);
 
@@ -219,14 +219,6 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitType(ionshared::Ptr<Type> node) {
-        // Convert type to a pointer if applicable.
-        if (node->getIsPointer()) {
-            /**
-             * TODO: Convert type to pointer before passing on
-             * to explicit handlers, thus saving time and code.
-             */
-        }
-
         switch (node->getTypeKind()) {
             case TypeKind::Void: {
                 return this->visitVoidType(node->staticCast<VoidType>());
@@ -237,6 +229,12 @@ namespace ionir {
             }
 
             case TypeKind::String: {
+                // TODO
+
+                throw std::runtime_error("Not implemented");
+            }
+
+            case TypeKind::Pointer: {
                 // TODO
 
                 throw std::runtime_error("Not implemented");

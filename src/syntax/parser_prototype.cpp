@@ -1,8 +1,9 @@
 #include <ionir/const/const_name.h>
+#include <ionir/const/notice.h>
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-    ionshared::OptPtr<Args> Parser::parseArgs() {
+    AstPtrResult<Args> Parser::parseArgs() {
         ionshared::SymbolTable<Arg> args = {};
         bool isInfinite = false;
 
@@ -11,7 +12,7 @@ namespace ionir {
             if (this->is(TokenKind::SymbolComma)) {
                 // Prevent leading, lonely comma.
                 if (args.isEmpty()) {
-                    return this->makeNotice("Leading comma in argument list is not allowed");
+                    return this->noticeSentinel->makeError<Args>(IONIR_NOTICE_FUNCTION_CALL_LEADING_COMMA);
                 }
 
                 // Skip over comma token.
@@ -30,7 +31,7 @@ namespace ionir {
         return std::make_shared<Args>(args, isInfinite);
     }
 
-    ionshared::OptPtr<Prototype> Parser::parsePrototype(const ionshared::Ptr<Module> &parent) {
+    AstPtrResult<Prototype> Parser::parsePrototype(const ionshared::Ptr<Module> &parent) {
         std::optional<std::string> id = this->parseId();
 
         IONIR_PARSER_ASSURE(id)
@@ -40,44 +41,48 @@ namespace ionir {
 
         // Parse arguments if applicable.
         if (!this->is(TokenKind::SymbolParenthesesR)) {
-            std::optional<ionshared::Ptr<Args>> temporaryArgs = this->parseArgs();
+            AstPtrResult<Args> temporaryArgs = this->parseArgs();
 
             IONIR_PARSER_ASSURE(temporaryArgs)
 
-            args = *temporaryArgs;
+            args = Util::getResultPtrValue(temporaryArgs);
         }
 
         this->stream.skip();
 
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolArrow))
 
-        ionshared::OptPtr<Type> returnType = this->parseType();
+        AstPtrResult<Type> returnType = this->parseType();
 
         IONIR_PARSER_ASSURE(returnType)
 
-        return std::make_shared<Prototype>(*id, args, *returnType, parent);
+        return std::make_shared<Prototype>(*id, args, Util::getResultPtrValue(returnType), parent);
     }
 
-    ionshared::OptPtr<Extern> Parser::parseExtern(const ionshared::Ptr<Module> &parent) {
+    AstPtrResult<Extern> Parser::parseExtern(const ionshared::Ptr<Module> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordExtern))
 
-        ionshared::OptPtr<Prototype> prototype = this->parsePrototype(parent);
+        AstPtrResult<Prototype> prototype = this->parsePrototype(parent);
 
         IONIR_PARSER_ASSURE(prototype)
 
-        return std::make_shared<Extern>(*prototype);
+        return std::make_shared<Extern>(Util::getResultPtrValue(prototype));
     }
 
-    ionshared::OptPtr<Function> Parser::parseFunction(const ionshared::Ptr<Module> &parent) {
+    AstPtrResult<Function> Parser::parseFunction(const ionshared::Ptr<Module> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordFunction))
 
-        ionshared::OptPtr<Prototype> prototype = this->parsePrototype(parent);
-        ionshared::OptPtr<FunctionBody> body = this->parseFunctionBody(nullptr);
+        AstPtrResult<Prototype> prototype = this->parsePrototype(parent);
+        AstPtrResult<FunctionBody> body = this->parseFunctionBody(nullptr);
 
         IONIR_PARSER_ASSURE(prototype)
         IONIR_PARSER_ASSURE(body)
 
-        ionshared::Ptr<Function> function = std::make_shared<Function>(*prototype, *body);
+        ionshared::Ptr<Function> function =
+            std::make_shared<Function>(
+                Util::getResultPtrValue(prototype),
+                Util::getResultPtrValue(body)
+            );
 
         body->get()->setParent(function);
 

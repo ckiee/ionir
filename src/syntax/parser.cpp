@@ -2,6 +2,7 @@
 #include <vector>
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
+#include <ionir/const/notice.h>
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
@@ -50,13 +51,13 @@ namespace ionir {
     }
 
     std::nullopt_t Parser::makeNotice(std::string message, ionshared::NoticeType type) {
-        this->noticeStack.push_back(this->createNoticeFactory().make(type, std::move(message)));
+        this->noticeStack->push(this->createNoticeFactory().make(type, std::move(message)));
 
         return std::nullopt;
     }
 
-    Parser::Parser(TokenStream stream, ionshared::Ptr<ionshared::NoticeStack> noticeStack, std::string filePath)
-        : stream(std::move(stream)), noticeStack(std::move(noticeStack)), filePath(std::move(filePath)), classifier() {
+    Parser::Parser(TokenStream stream, const ionshared::Ptr<ionshared::NoticeStack> &noticeStack, std::string filePath)
+        : stream(std::move(stream)), noticeStack(noticeStack), noticeSentinel(std::make_shared<NoticeSentinel>(noticeStack)), filePath(std::move(filePath)), classifier() {
         //
     }
 
@@ -88,10 +89,10 @@ namespace ionir {
         }
     }
 
-    ionshared::OptPtr<Global> Parser::parseGlobal() {
+    AstPtrResult<Global> Parser::parseGlobal() {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordGlobal))
 
-        ionshared::OptPtr<Type> type = this->parseType();
+        AstPtrResult<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -103,10 +104,10 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon))
 
-        return std::make_shared<Global>(*type, *id);
+        return std::make_shared<Global>(Util::getResultPtrValue(type), *id);
     }
 
-    ionshared::OptPtr<BasicBlock> Parser::parseBasicBlock(ionshared::Ptr<FunctionBody> parent) {
+    AstPtrResult<BasicBlock> Parser::parseBasicBlock(ionshared::Ptr<FunctionBody> parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolAt))
 
         std::optional<std::string> id = this->parseId();
@@ -178,7 +179,7 @@ namespace ionir {
         return basicBlock;
     }
 
-    ionshared::OptPtr<FunctionBody> Parser::parseFunctionBody(const ionshared::Ptr<Function> &parent) {
+    AstPtrResult<FunctionBody> Parser::parseFunctionBody(const ionshared::Ptr<Function> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
         ionshared::Ptr<FunctionBody> functionBody = std::make_shared<FunctionBody>(parent);
@@ -200,7 +201,7 @@ namespace ionir {
         return functionBody;
     }
 
-    ionshared::OptPtr<Module> Parser::parseModule() {
+    AstPtrResult<Module> Parser::parseModule() {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordModule))
 
         std::optional<std::string> id = this->parseId();
@@ -208,7 +209,9 @@ namespace ionir {
         IONIR_PARSER_ASSURE(id)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL))
 
-        PtrSymbolTable<Construct> symbolTable = std::make_shared<ionshared::SymbolTable<ionshared::Ptr<Construct>>>();
+        PtrSymbolTable<Construct> symbolTable =
+            std::make_shared<ionshared::SymbolTable<ionshared::Ptr<Construct>>>();
+
         ionshared::Ptr<Module> module = std::make_shared<Module>(*id, symbolTable);
 
         while (!this->is(TokenKind::SymbolBraceR)) {
@@ -229,7 +232,7 @@ namespace ionir {
 
             // No more tokens to process.
             if (!this->stream.hasNext() && !this->is(TokenKind::SymbolBraceR)) {
-                return this->makeNotice("Unexpected end of input");
+                return this->noticeSentinel->makeError<Module>(IONIR_NOTICE_MISC_UNEXPECTED_EOF);
             }
         }
 
@@ -238,7 +241,7 @@ namespace ionir {
         return module;
     }
 
-    ionshared::OptPtr<RegisterAssign> Parser::parseRegisterAssign(const ionshared::Ptr<BasicBlock> &parent) {
+    AstPtrResult<RegisterAssign> Parser::parseRegisterAssign(const ionshared::Ptr<BasicBlock> &parent) {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::OperatorModulo))
 
         std::optional<std::string> id = this->parseId();
@@ -246,11 +249,11 @@ namespace ionir {
         IONIR_PARSER_ASSURE(id)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolEqual))
 
-        ionshared::OptPtr<Inst> inst = this->parseInst(parent);
+        AstPtrResult<Inst> inst = this->parseInst(parent);
 
         IONIR_PARSER_ASSURE(inst)
 
-        return std::make_shared<RegisterAssign>(*id, *inst);
+        return std::make_shared<RegisterAssign>(*id, Util::getResultPtrValue(inst));
     }
 
     std::optional<std::string> Parser::parseLine() {

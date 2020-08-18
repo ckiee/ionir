@@ -18,7 +18,7 @@ namespace ionir {
     }
 
     std::optional<Arg> Parser::parseArg() {
-        std::optional<ionshared::Ptr<Type>> type = this->parseType();
+        AstPtrResult<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
 
@@ -26,6 +26,6 @@ namespace ionir {
 
         IONIR_PARSER_ASSURE(id)
 
-        return std::make_pair(*type, *id);
+        return std::make_pair(Util::getResultPtrValue(type), *id);
     }
 }

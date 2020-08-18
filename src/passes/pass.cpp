@@ -191,6 +191,10 @@ namespace ionir {
         //
     }
 
+    void Pass::visitPointerType(ionshared::Ptr<PointerType> node) {
+        //
+    }
+
     void Pass::visitModule(ionshared::Ptr<Module> node) {
         //
     }

@@ -5,9 +5,9 @@
 namespace ionir {
     class Pass;
 
-    class BooleanType : public Type {
+    class PointerType : public Type, public Wrapper<ionshared::Ptr<Type>> {
     public:
-        BooleanType();
+        explicit PointerType(ionshared::Ptr<Type> type);
 
         void accept(Pass &pass) override;
     };

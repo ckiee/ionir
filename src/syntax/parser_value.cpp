@@ -1,19 +1,21 @@
 #include <ionir/misc/util.h>
 #include <ionir/const/const.h>
+#include <ionir/const/notice.h>
 #include <ionir/syntax/parser.h>
 
 namespace ionir {
-    ionshared::OptPtr<Value<>> Parser::parseValue() {
+    AstPtrResult<Value<>> Parser::parseValue() {
         Token token = this->stream.get();
 
         switch (token.getKind()) {
             case TokenKind::LiteralInteger: {
-                ionshared::OptPtr<IntegerValue> integerValue = this->parseInt();
+                AstPtrResult<IntegerValue> integerValue = this->parseInt();
 
                 if (Util::hasValue(integerValue)) {
-                    return integerValue->get()->staticCast<Value<>>();
+                    return Util::getResultPtrValue(integerValue)->staticCast<Value<>>();
                 }
 
+                // TODO
                 return std::nullopt;
             }
 
@@ -24,12 +26,12 @@ namespace ionir {
             // TODO: Missing values.
 
             default: {
-                return this->makeNotice("Expected valid value token");
+                return this->noticeSentinel->makeError<Value<>>(IONIR_NOTICE_MISC_UNEXPECTED_TOKEN);
             }
         }
     }
 
-    ionshared::OptPtr<IntegerValue> Parser::parseInt() {
+    AstPtrResult<IntegerValue> Parser::parseInt() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralInteger)
 
         /**
@@ -56,15 +58,16 @@ namespace ionir {
         }
         catch (std::exception& exception) {
             // Value conversion failed.
-            return this->makeNotice("Could not convert string to value, integer may be invalid or too large");
+            return this->noticeSentinel->makeError<IntegerValue>(IONIR_NOTICE_VALUE_CONVERT_STRING_TO_INT_FAILED);
         }
 
         // Calculate the value's bit-length and it's corresponding integer kind.
-        uint32_t valueBitLength = Util::calculateBitLength(value);
+        uint32_t valueBitLength = ionshared::Util::calculateBitLength(value);
         std::optional<IntegerKind> valueIntegerKind = Util::calculateIntegerKindFromBitLength(valueBitLength);
 
         if (!valueIntegerKind.has_value()) {
-            return this->makeNotice("Integer value's type kind could not be determined");
+            // TODO: Hard-coded message. Use consts.
+            return this->noticeSentinel->makeError<IntegerValue>("Integer value's type kind could not be determined");
         }
 
         // Create a long integer type for the value.
@@ -80,7 +83,7 @@ namespace ionir {
         return integer;
     }
 
-    ionshared::OptPtr<CharValue> Parser::parseChar() {
+    AstPtrResult<CharValue> Parser::parseChar() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralCharacter);
 
         // Extract the value from the character token.
@@ -91,14 +94,14 @@ namespace ionir {
 
         // Ensure extracted value only contains a single character.
         if (stringValue.length() > 1) {
-            return this->makeNotice("Character value length must be at most 1 character");
+            return this->noticeSentinel->makeError<CharValue>(IONIR_NOTICE_VALUE_CHARACTER_MAX_ONE);
         }
 
         // Create the character construct with the first and only character of the captured value.
         return std::make_shared<CharValue>(stringValue[0]);
     }
 
-    ionshared::OptPtr<StringValue> Parser::parseString() {
+    AstPtrResult<StringValue> Parser::parseString() {
         IONIR_PARSER_EXPECT(TokenKind::LiteralString);
 
         // Extract the value from the string token.

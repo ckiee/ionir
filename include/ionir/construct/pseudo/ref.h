@@ -54,7 +54,7 @@ namespace ionir {
         }
 
         bool isResolved() noexcept {
-            return Util::hasValue(this->value);
+            return ionshared::Util::hasValue(this->value);
         }
 
         void resolve(ionshared::OptPtr<T> value) {

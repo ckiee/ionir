@@ -1,9 +1,10 @@
-#include <ionir/syntax/parser.h>
 #include <ionir/const/const.h>
+#include <ionir/const/notice.h>
+#include <ionir/syntax/parser.h>
 
 namespace ionir {
     // TODO: Consider using Ref<> to register pending type reference if user-defined type is parsed?
-    ionshared::OptPtr<Type> Parser::parseType() {
+    AstPtrResult<Type> Parser::parseType() {
         // Retrieve the current token.
         Token token = this->stream.get();
 
@@ -16,7 +17,7 @@ namespace ionir {
             || tokenKind == TokenKind::Identifier
         ))
 
-        ionshared::OptPtr<Type> type;
+        AstPtrResult<Type> type;
 
         if (tokenKind == TokenKind::TypeVoid) {
             type = this->parseVoidType();
@@ -41,6 +42,7 @@ namespace ionir {
         // If applicable, mark the type as a pointer.
         if (this->is(TokenKind::SymbolStar)) {
             // TODO: CRITICAL: Pointer must be an expression, since what about **?
+            // TODO: New! 8/17/2020: No longer are types 'marked' as pointers. Instead, there's a full Pointer type now. Make changes to reflect this.
             /**
              * Only mark the type as a pointer if marked so
              * by the star symbol. Since some types (for example
@@ -48,7 +50,7 @@ namespace ionir {
              * in this case would prevent it from being a pointer
              * unless a star symbol is present.
              */
-            type->get()->setIsPointer(true);
+//            type->get()->setIsPointer(true);
 
             // Skip from the star token.
             this->stream.skip();
@@ -58,10 +60,10 @@ namespace ionir {
         return type;
     }
 
-    ionshared::OptPtr<Type> Parser::parseTypePrefix() {
+    AstPtrResult<Type> Parser::parseTypePrefix() {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketL))
 
-        ionshared::OptPtr<Type> type = this->parseType();
+        AstPtrResult<Type> type = this->parseType();
 
         IONIR_PARSER_ASSURE(type)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketR))
@@ -69,7 +71,7 @@ namespace ionir {
         return type;
     }
 
-    ionshared::OptPtr<VoidType> Parser::parseVoidType() {
+    AstPtrResult<VoidType> Parser::parseVoidType() {
         /**
          * Void type does not accept references nor pointer
          * specifiers, so just simply skip over its token.
@@ -79,11 +81,11 @@ namespace ionir {
         return std::make_shared<VoidType>();
     }
 
-    ionshared::OptPtr<IntegerType> Parser::parseIntegerType() {
+    AstPtrResult<IntegerType> Parser::parseIntegerType() {
         TokenKind currentTokenKind = this->stream.get().getKind();
 
         if (!Classifier::isIntegerType(currentTokenKind)) {
-            return std::nullopt;
+            return this->noticeSentinel->makeError<IntegerType>(IONIR_NOTICE_MISC_UNEXPECTED_TOKEN);
         }
 
         // TODO: Missing support for is signed or not, as well as is pointer.

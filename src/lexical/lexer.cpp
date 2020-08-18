@@ -88,7 +88,7 @@ namespace ionir {
              * as literal character and string capture values while skipping
              * certain characters.
              */
-            if (!Util::stringStartsWith(input, match[IONIR_MATCH_INDEX_MATCHED])) {
+            if (!ionshared::Util::stringStartsWith(input, match[IONIR_MATCH_INDEX_MATCHED])) {
                 // Return default result at this point.
                 return result;
             }
@@ -169,7 +169,7 @@ namespace ionir {
                  * simple identifier. It is important that the initial value
                  * is escaped of any Regex special characters.
                  */
-                std::regex regex = Util::createPureRegex(pair.first);
+                std::regex regex = ionshared::Util::createPureRegex(pair.first);
 
                 /**
                  * If the match starts with an identifier character, ensure that

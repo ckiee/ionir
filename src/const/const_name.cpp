@@ -33,6 +33,8 @@ namespace ionir {
 
     const std::string ConstName::typeString = "str";
 
+    const std::string  ConstName::typePointer = "*";
+
     const std::string ConstName::instAlloca = "alloca";
 
     const std::string ConstName::instBranch = "branch";

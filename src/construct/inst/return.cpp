@@ -25,7 +25,7 @@ namespace ionir {
     }
 
     void ReturnInst::setValue(ionshared::OptPtr<Construct> value) noexcept {
-        this->value = value;
+        this->value = std::move(value);
     }
 
     bool ReturnInst::hasValue() noexcept {

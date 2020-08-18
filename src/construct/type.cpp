@@ -1,8 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Type::Type(std::string id, TypeKind kind, bool isPointer)
-        : Construct(ConstructKind::Type), Named(std::move(id)), kind(kind), isPointer(isPointer) {
+    Type::Type(std::string id, TypeKind kind)
+        : Construct(ConstructKind::Type), Named(std::move(id)), kind(kind) {
         //
     }
 
@@ -18,19 +18,10 @@ namespace ionir {
         ionshared::Ptr<Type> otherType = other->dynamicCast<Type>();
 
         return otherType->getTypeKind() == this->getTypeKind()
-            && otherType->getId() == this->getId()
-            && otherType->getIsPointer() == this->getIsPointer();
+            && otherType->getId() == this->getId();
     }
 
     TypeKind Type::getTypeKind() const noexcept {
         return this->kind;
-    }
-
-    bool Type::getIsPointer() const noexcept {
-        return this->isPointer;
-    }
-
-    void Type::setIsPointer(bool isPointer) noexcept {
-        this->isPointer = isPointer;
     }
 }

@@ -37,6 +37,8 @@ namespace ionir {
 
         static const std::string typeString;
 
+        static const std::string  typePointer;
+
         static const std::string instAlloca;
 
         static const std::string instBranch;

@@ -17,14 +17,14 @@ namespace ionir {
 
         String,
 
-        Boolean
+        Boolean,
+
+        Pointer
     };
 
     class Type : public Construct, public ionshared::Named {
     private:
         TypeKind kind;
-
-        bool isPointer;
 
     public:
         /**
@@ -32,16 +32,12 @@ namespace ionir {
          * Make 'Type' abstract and create UserDefinedType which
          * only takes 'id' (super class TypeKind::UserDefined).
          */
-        explicit Type(std::string id, TypeKind kind = TypeKind::UserDefined, bool isPointer = false);
+        explicit Type(std::string id, TypeKind kind = TypeKind::UserDefined);
 
         void accept(Pass &visitor) override;
 
         bool equals(const ionshared::Ptr<Construct> &other) override;
 
         TypeKind getTypeKind() const noexcept;
-
-        bool getIsPointer() const noexcept;
-
-        void setIsPointer(bool isPointer) noexcept;
     };
 }

@@ -1,8 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    IntegerType::IntegerType(IntegerKind kind, bool isSigned, bool isPointer)
-        : Type(Util::resolveIntegerKindName(kind), TypeKind::Integer, isPointer), kind(kind), isSigned(isSigned) {
+    IntegerType::IntegerType(IntegerKind kind, bool isSigned)
+        : Type(Util::resolveIntegerKindName(kind), TypeKind::Integer), kind(kind), isSigned(isSigned) {
         //
     }
 

@@ -31,7 +31,7 @@ namespace ionir {
         ionshared::OptPtr<Construct> returnInstValue = node->getValue();
         llvm::ReturnInst *llvmReturnInst = nullptr;
 
-        if (Util::hasValue(returnInstValue)) {
+        if (ionshared::Util::hasValue(returnInstValue)) {
             llvm::Value *llvmValue = nullptr;
 
             // TODO: Hotfix. Clean up messy code.
@@ -128,7 +128,7 @@ namespace ionir {
         OptPtrRef<Function> callee = node->getCallee();
 
         // At this point, callee must have been resolved.
-        if (!Util::hasValue(callee)) {
+        if (!ionshared::Util::hasValue(callee)) {
             // TODO: Use notices.
             throw std::runtime_error("Unresolved call instruction callee");
         }
@@ -161,7 +161,7 @@ namespace ionir {
 
         std::optional<llvm::Value *> llvmTarget = this->findInScope(*target->getValue());
 
-        if (!Util::hasValue(llvmTarget)) {
+        if (!ionshared::Util::hasValue(llvmTarget)) {
             throw std::runtime_error("Target could not be looked up in the emitted entities map");
         }
 
