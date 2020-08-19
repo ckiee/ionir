@@ -20,10 +20,14 @@ namespace ionir {
         AstPtrResult<Type> type;
 
         if (tokenKind == TokenKind::TypeVoid) {
-            type = this->parseVoidType();
+            type = Util::convertAstPtrResult<VoidType, Type>(
+                this->parseVoidType()
+            );
         }
         else if (Classifier::isIntegerType(tokenKind)) {
-            type = this->parseIntegerType();
+            type = Util::convertAstPtrResult<IntegerType, Type>(
+                this->parseIntegerType()
+            );
         }
 
         // TODO: Add support for missing types.

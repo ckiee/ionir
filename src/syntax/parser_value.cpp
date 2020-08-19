@@ -9,18 +9,11 @@ namespace ionir {
 
         switch (token.getKind()) {
             case TokenKind::LiteralInteger: {
-                AstPtrResult<IntegerValue> integerValue = this->parseInt();
-
-                if (Util::hasValue(integerValue)) {
-                    return Util::getResultPtrValue(integerValue)->staticCast<Value<>>();
-                }
-
-                // TODO
-                return std::nullopt;
+                return Util::convertAstPtrResult<IntegerValue, Value<>>(this->parseInt());
             }
 
             case TokenKind::LiteralCharacter: {
-                return this->parseChar();
+                return Util::convertAstPtrResult<CharValue, Value<>>(this->parseChar());
             }
 
             // TODO: Missing values.

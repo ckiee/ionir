@@ -30,7 +30,6 @@
 #include <ionir/const/const_name.h>
 #include <ionir/const/notice.h>
 #include "scope.h"
-#include "parser_helpers.h"
 #include "ast_result.h"
 
 namespace ionir {
@@ -171,7 +170,7 @@ namespace ionir {
         AstPtrResult<Ref<T>> parseRef(ionshared::Ptr<Construct> owner) {
             std::optional<std::string> id = this->parseId();
 
-            IONIR_PARSER_ASSURE(id)
+            this->assertHasValue(id);
 
             return std::make_shared<Ref<T>>(*id, owner);
         }

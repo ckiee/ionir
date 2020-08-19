@@ -15,42 +15,56 @@ namespace ionir {
 
         switch (tokenKind) {
             case TokenKind::InstAlloca: {
-                inst = this->parseAllocaInst(parent);
+                inst = Util::convertAstPtrResult<AllocaInst, Inst>(
+                    this->parseAllocaInst(parent)
+                );
 
                 break;
             }
 
             case TokenKind::InstBranch: {
-                inst = this->parseBranchInst(parent);
+                inst = Util::convertAstPtrResult<BranchInst, Inst>(
+                    this->parseBranchInst(parent)
+                );
 
                 break;
             }
 
             case TokenKind::InstCall: {
-                inst = this->parseCallInst(parent);
+                inst = Util::convertAstPtrResult<CallInst, Inst>(
+                    this->parseCallInst(parent)
+                );
 
                 break;
             }
 
             case TokenKind::InstReturn: {
-                inst = this->parseReturnInst(parent);
+                inst = Util::convertAstPtrResult<ReturnInst, Inst>(
+                    this->parseReturnInst(parent)
+                );
 
                 break;
             }
 
             case TokenKind::InstStore: {
-                inst = this->parseStoreInst(parent);
+                inst = Util::convertAstPtrResult<StoreInst, Inst>(
+                    this->parseStoreInst(parent)
+                );
 
                 break;
             }
 
             default: {
-                return this->noticeSentinel->makeError<Inst>(IONIR_NOTICE_MISC_UNEXPECTED_TOKEN);
+                return this->noticeSentinel->makeError<Inst>(
+                    IONIR_NOTICE_MISC_UNEXPECTED_TOKEN
+                );
             }
         }
 
         // All instructions should end denoted by a semi-colon.
-        this->assertOrError(this->skipOver(TokenKind::SymbolSemiColon));
+        this->assertOrError(
+            this->skipOver(TokenKind::SymbolSemiColon)
+        );
 
         return inst;
     }
@@ -83,7 +97,7 @@ namespace ionir {
         });
 
         // TODO: Cannot make error -- it must be std::nullopt. Need a way to handle this with new AstPtrResult<> addition.
-        AstPtrResult<> value = std::nullopt;
+        std::optional<AstPtrResult<>> value = std::nullopt;
 
         /**
          * A non-void value is being returned. Parse a primary
@@ -94,14 +108,18 @@ namespace ionir {
         if (!this->is(TokenKind::TypeVoid)) {
             value = this->parsePrimaryExpr(returnInst);
         }
-        /**
-         * Void keyword is being returned, skip over its token.
-         */
+        // Void keyword is being returned, skip over its token.
         else {
             this->skipOver(TokenKind::TypeVoid);
         }
 
-        returnInst->setValue(value);
+        /**
+         * Set the return value if applicable. No need to perform
+         * nullptr check as it's underlying value is not a pointer.
+         */
+        if (value.has_value()) {
+            returnInst->setValue(Util::getResultPtrValue(*value));
+        }
 
         return returnInst;
     }

@@ -49,5 +49,14 @@ namespace ionir {
         static ionshared::Ptr<T> getResultPtrValue(AstPtrResult<T> result) {
             return Util::getResultValue(result);
         }
+
+        template<typename TFrom, typename TTo = Construct>
+        static AstPtrResult<TTo> convertAstPtrResult(AstPtrResult<TFrom> from) {
+            if (Util::hasValue(from)) {
+                return Util::getResultPtrValue(from);
+            }
+
+            return std::get<ionshared::Ptr<ErrorMarker>>(from);
+        }
     };
 }
