@@ -6,7 +6,10 @@ namespace ionir {
     std::optional<std::string> Parser::parseId() {
         this->skipOver(TokenKind::OperatorModulo);
 
-        this->assertTokenKind(TokenKind::Identifier);
+        // TODO: No error?
+        if (!this->is(TokenKind::Identifier)) {
+            return std::nullopt;
+        }
 
         Token id = this->stream.get();
 
@@ -17,15 +20,23 @@ namespace ionir {
         return id.getValue();
     }
 
-    std::optional<Arg> Parser::parseArg() {
+    AstResult<Arg> Parser::parseArg() {
         AstPtrResult<Type> type = this->parseType();
 
-        this->assertHasValue(type);
+        // TODO: Function does not return a pointer. No assert is specialized for that case.
+//        IONIR_PARSER_ASSERT_RESULT(type, Arg)
+        if (!Util::hasValue(type)) {
+            throw std::runtime_error("Not implemented");
+        }
 
         std::optional<std::string> id = this->parseId();
 
-        this->assertHasValue(id);
+        // TODO: Function does not return a pointer. No assert is specialized for that case.
+        //        IONIR_PARSER_ASSERT_VALUE(id, Arg)
+        if (!id.has_value()) {
+            throw std::runtime_error("Not implemented");
+        }
 
-        return std::make_pair(Util::getResultPtrValue(type), *id);
+        return std::make_pair(Util::getResultValue(type), *id);
     }
 }

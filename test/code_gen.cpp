@@ -145,7 +145,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
      * Entry basic block must be set in the bootstrapped function
      * in order to perform the test.
      */
-    EXPECT_TRUE(Util::hasValue(functionEntryBlock));
+    EXPECT_TRUE(ionshared::Util::hasValue(functionEntryBlock));
 
     ionshared::Ptr<AllocaInst> allocaInst = std::make_shared<AllocaInst>(AllocaInstOpts{
         /**

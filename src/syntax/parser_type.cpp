@@ -12,10 +12,10 @@ namespace ionir {
         std::string tokenValue = token.getValue();
         TokenKind tokenKind = token.getKind();
 
-        this->assertOrError((
+        IONIR_PARSER_ASSERT((
             Classifier::isType(tokenKind)
             || tokenKind == TokenKind::Identifier
-        ));
+        ), Type)
 
         AstPtrResult<Type> type;
 
@@ -64,12 +64,12 @@ namespace ionir {
     }
 
     AstPtrResult<Type> Parser::parseTypePrefix() {
-        this->assertOrError(this->skipOver(TokenKind::SymbolBracketL));
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketL), Type)
 
         AstPtrResult<Type> type = this->parseType();
 
-        this->assertHasValue(type);
-        this->assertOrError(this->skipOver(TokenKind::SymbolBracketR));
+        IONIR_PARSER_ASSERT_RESULT(type, Type)
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBracketR), Type)
 
         return type;
     }
@@ -95,7 +95,7 @@ namespace ionir {
 
         std::optional<IntegerKind> integerKind = Const::getIntegerKind(currentTokenKind);
 
-        this->assertHasValue(integerKind);
+        IONIR_PARSER_ASSERT_VALUE(integerKind, IntegerType)
 
         // Skip over the type token.
         this->stream.skip();

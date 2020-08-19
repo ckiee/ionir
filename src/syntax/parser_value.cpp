@@ -25,7 +25,7 @@ namespace ionir {
     }
 
     AstPtrResult<IntegerValue> Parser::parseInt() {
-        this->assertTokenKind(TokenKind::LiteralInteger);
+        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralInteger, IntegerValue)
 
         /**
          * Abstract the token's value to be used in the
@@ -81,7 +81,7 @@ namespace ionir {
     }
 
     AstPtrResult<CharValue> Parser::parseChar() {
-        this->assertTokenKind(TokenKind::LiteralCharacter);
+        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralCharacter, CharValue)
 
         // Extract the value from the character token.
         std::string stringValue = this->stream.get().getValue();
@@ -99,7 +99,7 @@ namespace ionir {
     }
 
     AstPtrResult<StringValue> Parser::parseString() {
-        this->assertTokenKind(TokenKind::LiteralString);
+        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralString, StringValue)
 
         // Extract the value from the string token.
         std::string value = this->stream.get().getValue();

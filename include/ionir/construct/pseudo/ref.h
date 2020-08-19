@@ -3,6 +3,7 @@
 #include <optional>
 #include <string>
 #include <ionshared/misc/named.h>
+#include <ionshared/misc/util.h>
 #include <ionir/construct/construct.h>
 #include <ionir/misc/util.h>
 

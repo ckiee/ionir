@@ -31,9 +31,7 @@ namespace ionir {
 
         template<typename T = Construct>
         static bool hasValue(AstResult<T> result) {
-            // TODO
-
-            return false;
+            return std::holds_alternative<T>(result);
         }
 
         template<typename T = Construct>
@@ -46,14 +44,17 @@ namespace ionir {
         }
 
         template<typename T = Construct>
-        static ionshared::Ptr<T> getResultPtrValue(AstPtrResult<T> result) {
-            return Util::getResultValue(result);
+        static ionshared::Ptr<T> getResultValue(AstPtrResult<T> result) {
+            return Util::getResultValue<ionshared::Ptr<T>>(result);
         }
 
         template<typename TFrom, typename TTo = Construct>
         static AstPtrResult<TTo> convertAstPtrResult(AstPtrResult<TFrom> from) {
             if (Util::hasValue(from)) {
-                return Util::getResultPtrValue(from);
+                ionshared::Ptr<TFrom> fromT = std::get<ionshared::Ptr<TFrom>>(from);
+                ionshared::Ptr<Construct> construct = std::static_pointer_cast<Construct>(fromT);
+
+                return construct->dynamicCast<TTo>();
             }
 
             return std::get<ionshared::Ptr<ErrorMarker>>(from);

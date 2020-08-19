@@ -31,6 +31,7 @@
 #include <ionir/const/notice.h>
 #include "scope.h"
 #include "ast_result.h"
+#include "parser_helpers.h"
 
 namespace ionir {
     class Parser {
@@ -46,28 +47,6 @@ namespace ionir {
         Classifier classifier;
 
     protected:
-        template<typename T = Construct>
-        inline AstPtrResult<T> assertOrError(bool expression) {
-            if (!expression) {
-                return this->makeNotice(IONIR_NOTICE_MISC_ASSERTION_FAILED);
-            }
-        }
-
-        template<typename TVariable, typename TConstruct = Construct>
-        inline AstPtrResult<TConstruct> assertHasValue(std::optional<TVariable> variable) {
-            return this->assertOrError<TConstruct>(ionshared::Util::hasValue(variable));
-        }
-
-        template<typename T = Construct>
-        inline AstPtrResult<T> assertHasValue(AstPtrResult<T> result) {
-            return this->assertOrError<T>(Util::hasValue(result));
-        }
-
-        template<typename T = Construct>
-        inline AstPtrResult<T> assertTokenKind(TokenKind tokenKind) {
-            return this->assertOrError<T>(this->is(tokenKind));
-        }
-
         [[nodiscard]] Classifier getClassifier() const noexcept;
 
         [[nodiscard]] bool is(TokenKind tokenKind) noexcept;
@@ -120,7 +99,7 @@ namespace ionir {
 
         AstPtrResult<IntegerType> parseIntegerType();
 
-        std::optional<Arg> parseArg();
+        AstResult<Arg> parseArg();
 
         AstPtrResult<Args> parseArgs();
 
@@ -170,7 +149,7 @@ namespace ionir {
         AstPtrResult<Ref<T>> parseRef(ionshared::Ptr<Construct> owner) {
             std::optional<std::string> id = this->parseId();
 
-            this->assertHasValue(id);
+            IONIR_PARSER_ASSERT_VALUE(id, Ref<T>)
 
             return std::make_shared<Ref<T>>(*id, owner);
         }

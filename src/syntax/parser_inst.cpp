@@ -62,8 +62,9 @@ namespace ionir {
         }
 
         // All instructions should end denoted by a semi-colon.
-        this->assertOrError(
-            this->skipOver(TokenKind::SymbolSemiColon)
+        IONIR_PARSER_ASSERT(
+            this->skipOver(TokenKind::SymbolSemiColon),
+            Inst
         );
 
         return inst;
@@ -74,9 +75,9 @@ namespace ionir {
 
         AstPtrResult<Type> typeResult = this->parseType();
 
-        this->assertHasValue(typeResult);
+        IONIR_PARSER_ASSERT_RESULT(typeResult, AllocaInst)
 
-        ionshared::Ptr<Type> type = Util::getResultPtrValue(typeResult);
+        ionshared::Ptr<Type> type = Util::getResultValue(typeResult);
 
         if (type->getTypeKind() == TypeKind::Void) {
             return this->noticeSentinel->makeError<AllocaInst>(IONIR_NOTICE_INST_CANNOT_ALLOCATE_VOID);
@@ -118,7 +119,7 @@ namespace ionir {
          * nullptr check as it's underlying value is not a pointer.
          */
         if (value.has_value()) {
-            returnInst->setValue(Util::getResultPtrValue(*value));
+            returnInst->setValue(Util::getResultValue(*value));
         }
 
         return returnInst;
@@ -131,25 +132,25 @@ namespace ionir {
         AstPtrResult<> condition = this->parsePrimaryExpr(nullptr);
 
         // Condition must be set.
-        this->assertHasValue(condition);
+        IONIR_PARSER_ASSERT_RESULT(condition, BranchInst)
 
         ionshared::Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
             std::move(parent),
-            Util::getResultPtrValue(condition),
+            Util::getResultValue(condition),
             nullptr,
             nullptr
         });
 
         AstPtrResult<Ref<BasicBlock>> bodySection = this->parseRef<BasicBlock>(branchInst);
 
-        this->assertHasValue(bodySection);
+        IONIR_PARSER_ASSERT_RESULT(bodySection, BranchInst)
 
         AstPtrResult<Ref<BasicBlock>> otherwiseSection = this->parseRef<BasicBlock>(branchInst);
 
-        this->assertHasValue(otherwiseSection);
+        IONIR_PARSER_ASSERT_RESULT(otherwiseSection, BranchInst)
 
-        branchInst->setBlockRef(Util::getResultPtrValue(bodySection));
-        branchInst->setOtherwiseBlockRef(Util::getResultPtrValue(otherwiseSection));
+        branchInst->setBlockRef(Util::getResultValue(bodySection));
+        branchInst->setOtherwiseBlockRef(Util::getResultValue(otherwiseSection));
 
         return branchInst;
     }
@@ -159,7 +160,7 @@ namespace ionir {
 
         std::optional<std::string> calleeId = this->parseId();
 
-        this->assertHasValue(calleeId);
+        IONIR_PARSER_ASSERT_VALUE(calleeId, CallInst)
 
         // TODO: Is the BasicBlock parent the correct one? Just passing it because it seems like so. Check.
         ionshared::Ptr<Ref<Function>> callee = std::make_shared<Ref<Function>>(*calleeId, parent);
@@ -175,19 +176,19 @@ namespace ionir {
 
         AstPtrResult<Value<>> value = this->parseValue();
 
-        this->assertHasValue(value);
+        IONIR_PARSER_ASSERT_RESULT(value, StoreInst)
 
         ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
             std::move(parent),
-            Util::getResultPtrValue(value),
+            Util::getResultValue(value),
             nullptr
         });
 
         AstPtrResult<Ref<AllocaInst>> target = this->parseRef<AllocaInst>(storeInst);
 
-        this->assertHasValue(target);
+        IONIR_PARSER_ASSERT_RESULT(target, StoreInst)
 
-        storeInst->setTarget(Util::getResultPtrValue(target));
+        storeInst->setTarget(Util::getResultValue(target));
 
         return storeInst;
     }
