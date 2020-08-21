@@ -26,7 +26,6 @@ namespace ionir {
 
         static std::optional<std::string> getInstId(const ionshared::Ptr<Inst> &inst) noexcept;
 
-
         static std::optional<IntegerKind> calculateIntegerKindFromBitLength(uint32_t bitLength) noexcept;
 
         template<typename T = Construct>

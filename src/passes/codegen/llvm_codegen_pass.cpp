@@ -132,10 +132,17 @@ namespace ionir {
         this->requireContext();
         this->requireFunction();
 
-        // Create the basic block and at the same time register it under the buffer function.
-        llvm::BasicBlock *block = llvm::BasicBlock::Create(**this->contextBuffer, node->getId(), *this->functionBuffer);
+        /**
+         * Create the basic block and at the same time register it
+         * under the buffer function.
+         */
+        llvm::BasicBlock *block =
+            llvm::BasicBlock::Create(**this->contextBuffer, node->getId(), *this->functionBuffer);
 
-        // Create and assign the block to the builder. This will also set/update the block buffer.
+        /**
+         * Create and assign the block to the builder. This will also
+         * set/update the block buffer.
+         */
         this->setBuilder(block);
 
         // Visit registers & instructions.
@@ -143,8 +150,8 @@ namespace ionir {
         std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
 
         // Process registers.
-        for (const auto &_register : registers) {
-            this->visitRegisterAssign(_register);
+        for (const auto &registerAssign : registers) {
+            this->visitRegisterAssign(registerAssign);
         }
 
         // Process instructions.
@@ -166,15 +173,14 @@ namespace ionir {
         }
 
         /**
-         * Retrieve the entry section from the block.
-         * At this point, it should be guaranteed to be set.
+         * Retrieve the entry section from the block. At this point, it
+         * should be guaranteed to be set.
          */
         ionshared::OptPtr<BasicBlock> entry = node->findEntryBasicBlock();
 
         /**
-         * Entry section must be set. Redundant check,
-         * since the verify should function ensure that
-         * the block contains a single entry section, but
+         * Entry section must be set. Redundant check, since the verify should
+         * function ensure that the block contains a single entry section, but
          * just to make sure.
          */
         if (!entry.has_value()) {
