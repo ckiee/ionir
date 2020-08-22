@@ -19,7 +19,11 @@ namespace ionir {
         ionshared::OptPtr<Value<>> value;
 
     public:
-        Global(ionshared::Ptr<Type> type, std::string id, ionshared::OptPtr<Value<>> value = std::nullopt);
+        Global(
+            ionshared::Ptr<Type> type,
+            std::string id,
+            ionshared::OptPtr<Value<>> value = std::nullopt
+        );
 
         void accept(Pass &visitor) override;
 

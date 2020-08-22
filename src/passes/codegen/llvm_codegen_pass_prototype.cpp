@@ -119,7 +119,7 @@ namespace ionir {
         this->visitPrototype(node->getPrototype());
 
         // Retrieve the resulting function off the stack.
-        auto *llvmFunction = this->valueStack.popAs<llvm::Function>();
+        llvm::Function *llvmFunction = this->valueStack.popAs<llvm::Function>();
 
         // Set the function buffer.
         this->functionBuffer = llvmFunction;

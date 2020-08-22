@@ -16,6 +16,7 @@ namespace ionir {
     public:
         explicit Module(
             std::string id,
+
             PtrSymbolTable<Construct> symbolTable =
                 ionshared::Util::makePtrSymbolTable<Construct>()
         );

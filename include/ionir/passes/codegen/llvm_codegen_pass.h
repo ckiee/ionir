@@ -29,13 +29,13 @@
 namespace ionir {
     class LlvmCodegenPass : public Pass {
     private:
+        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
+
         LlvmStack<llvm::Value> valueStack;
 
         LlvmStack<llvm::Type> typeStack;
 
         std::queue<std::string> registerQueue;
-
-        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
 
         /**
          * The currently active LLVM context;
@@ -60,8 +60,8 @@ namespace ionir {
         ScopeList<ionshared::Ptr<Construct>, llvm::Value *> emittedEntities;
 
         /**
-         * Ensure that the builder is instantiated, otherwise
-         * throws a runtime error.
+         * Ensure that the builder is instantiated, otherwise throws
+         * a runtime error.
          */
         void requireBuilder();
 
@@ -97,13 +97,13 @@ namespace ionir {
 
         ~LlvmCodegenPass();
 
+        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> getModules() const;
+
         LlvmStack<llvm::Value> getValueStack() const noexcept;
 
         LlvmStack<llvm::Type> getTypeStack() const noexcept;
 
         std::queue<std::string> getRegisterQueue() const noexcept;
-
-        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> getModules() const;
 
         std::optional<llvm::Module *> getModuleBuffer() const;
 
@@ -146,6 +146,8 @@ namespace ionir {
         void visitType(ionshared::Ptr<Type> node) override;
 
         void visitIntegerType(ionshared::Ptr<IntegerType> node) override;
+
+        void visitBooleanType(ionshared::Ptr<BooleanType> node) override;
 
         void visitVoidType(ionshared::Ptr<VoidType> node) override;
 

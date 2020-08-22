@@ -311,6 +311,11 @@ namespace ionir {
         this->typeStack.push(*type);
     }
 
+    void LlvmCodegenPass::visitBooleanType(ionshared::Ptr<BooleanType> node) {
+        // TODO: Implement? Or already implemented as another form (integer?). Investigate.
+        throw std::runtime_error("Not implemented?");
+    }
+
     void LlvmCodegenPass::visitVoidType(ionshared::Ptr<VoidType> node) {
         this->requireContext();
         this->typeStack.push(llvm::Type::getVoidTy(**this->contextBuffer));

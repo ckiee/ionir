@@ -18,6 +18,7 @@ namespace ionir {
     public:
         explicit FunctionBody(
             ionshared::Ptr<Function> parent,
+
             PtrSymbolTable<BasicBlock> symbolTable =
                 ionshared::Util::makePtrSymbolTable<BasicBlock>()
         );
