@@ -213,7 +213,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT_VALUE(id, Module)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL), Module)
 
-        PtrSymbolTable<Construct> symbolTable =
+        ionshared::PtrSymbolTable<Construct> symbolTable =
             std::make_shared<ionshared::SymbolTable<ionshared::Ptr<Construct>>>();
 
         ionshared::Ptr<Module> module = std::make_shared<Module>(*id, symbolTable);

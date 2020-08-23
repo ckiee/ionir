@@ -3,12 +3,7 @@
 
 namespace ionir {
     BasicBlock::BasicBlock(const BasicBlockOpts &opts)
-        : ChildConstruct(opts.parent, ConstructKind::BasicBlock),
-            ScopeAnchor<Inst>(),
-            kind(opts.kind),
-            Named(opts.id),
-            registers(opts.registers),
-            insts(opts.insts) {
+        : ChildConstruct(opts.parent, ConstructKind::BasicBlock), ScopeAnchor<Inst>(opts.symbolTable), kind(opts.kind), Named(opts.id), registers(opts.registers), insts(opts.insts) {
         //
     }
 

@@ -28,15 +28,15 @@ namespace ionir::test::bootstrap {
         return ionir::Parser(ionir::TokenStream(std::move(tokens)));
     }
 
-    ionshared::Ptr<LlvmModule> llvmModule(const std::string &identifier) {
+    ionshared::Ptr<ionshared::LlvmModule> llvmModule(const std::string &identifier) {
         llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
         llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);
 
-        return std::make_shared<LlvmModule>(llvmModule);
+        return std::make_shared<ionshared::LlvmModule>(llvmModule);
     }
 
     ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass() {
-        ionshared::Ptr<LlvmModule> module = llvmModule();
+        ionshared::Ptr<ionshared::LlvmModule> module = llvmModule();
 
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules = std::make_shared<ionshared::SymbolTable<llvm::Module *>>(ionshared::SymbolTable<llvm::Module *>({
             {module->getId(), module->unwrap()}

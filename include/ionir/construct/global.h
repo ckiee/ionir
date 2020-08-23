@@ -14,8 +14,6 @@ namespace ionir {
     private:
         ionshared::Ptr<Type> type;
 
-        std::string id;
-
         ionshared::OptPtr<Value<>> value;
 
     public:

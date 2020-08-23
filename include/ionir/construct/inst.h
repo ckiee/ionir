@@ -3,7 +3,6 @@
 #include <ionir/construct/value.h>
 #include <ionir/construct/pseudo/child_construct.h>
 #include <ionir/misc/helpers.h>
-#include <ionir/llvm/llvm_inst.h>
 
 namespace ionir {
     class Pass;

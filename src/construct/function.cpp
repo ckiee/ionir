@@ -29,8 +29,11 @@ namespace ionir {
         return this->body;
     }
 
-    void Function::setBody(ionshared::Ptr<FunctionBody> body) noexcept {
-        this->body = std::move(body);
+    void Function::setBody(const ionshared::Ptr<FunctionBody> &body) noexcept {
+        this->body = body;
+
+        // TODO: Setting parent as a safeguard here. But in all other child construct's set() methods, the parent is not updated. Should it be updated on all methods? Investigate. Keep in mind these child constructs take parent as argument, so technically they should never be non-set.
+        body->setParent(this->dynamicCast<Function>());
     }
 
     PtrSymbolTable<LocalVariableDescriptor> Function::getLocalVariables() const {

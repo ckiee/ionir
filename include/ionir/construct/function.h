@@ -32,7 +32,7 @@ namespace ionir {
         ionshared::Ptr<FunctionBody> getBody() const noexcept;
 
         // TODO: Should this automatically set the body's parent as well?
-        void setBody(ionshared::Ptr<FunctionBody> body) noexcept;
+        void setBody(const ionshared::Ptr<FunctionBody> &body) noexcept;
 
         PtrSymbolTable<LocalVariableDescriptor> getLocalVariables() const;
 

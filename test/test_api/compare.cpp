@@ -1,6 +1,6 @@
 #define IONIR_LLVM_IR_FILE_EXT ".ll"
 
-#include <ionir/llvm/llvm_module.h>
+#include <ionshared/llvm/llvm_module.h>
 #include "compare.h"
 #include "filesystem.h"
 
@@ -31,6 +31,6 @@ namespace ionir::test::compare {
             throw std::runtime_error("Module buffer in LlvmCodegenPass is not set");
         }
 
-        return compare::ir(LlvmModule(*llvmModuleBuffer).getAsString(), fileName);
+        return compare::ir(ionshared::LlvmModule(*llvmModuleBuffer).getAsString(), fileName);
     }
 }
