@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <utility>
-#include "util.h"
+#include <ionir/test/util.h>
 
 namespace ionir::test::util {
     const char *whitespace = " \t\n\r\f\v";

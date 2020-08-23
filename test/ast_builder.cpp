@@ -1,6 +1,6 @@
 #include <ionir/syntax/ast_builder.h>
 #include "pch.h"
-#include "test_api/const.h"
+#include <ionir/test/const.h>
 
 using namespace ionir;
 

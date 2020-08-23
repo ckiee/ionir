@@ -1,7 +1,7 @@
-#include "test_api/util.h"
-#include "test_api/compare.h"
-#include "test_api/filesystem.h"
-#include "test_api/const.h"
+#include <ionir/test/util.h>
+#include <ionir/test/compare.h>
+#include <ionir/test/filesystem.h>
+#include <ionir/test/const.h>
 
 using namespace ionir::test;
 
@@ -47,14 +47,14 @@ TEST(TestApiTest, ResolvePath) {
 // TODO: Tests for resolveTestPath(...) missing.
 
 TEST(TestApiTest, ReadFileContents) {
-    std::optional<std::string> contents = fs::readFileContents(fs::resolvePath("test/data/test.txt"));
+    std::optional<std::string> contents = fs::readFileContents(fs::resolvePath("test/input/test.txt"));
 
     EXPECT_TRUE(contents.has_value());
     EXPECT_EQ(*contents, ionir::test::constant::foobar + "\n");
 }
 
 TEST(TestApiTest, ReadTestFile) {
-    std::optional<std::string> contents = fs::readTestFile("data/test.txt");
+    std::optional<std::string> contents = fs::readTestFile("input/test.txt");
 
     EXPECT_TRUE(contents.has_value());
     EXPECT_EQ(*contents, ionir::test::constant::foobar + "\n");

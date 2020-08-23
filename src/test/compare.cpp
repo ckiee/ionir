@@ -1,18 +1,18 @@
 #define IONIR_LLVM_IR_FILE_EXT ".ll"
 
 #include <ionshared/llvm/llvm_module.h>
-#include "compare.h"
-#include "filesystem.h"
+#include <ionir/test/compare.h>
+#include <ionir/test/filesystem.h>
 
 namespace ionir::test::compare {
-    const std::string irPath = "ir";
+    const std::string outputIrPath = "output";
 
     bool strings(std::string expected, std::string actual) {
         return util::trim(std::move(expected)) == util::trim(std::move(actual));
     }
 
     bool ir(std::string output, const std::string &fileName) {
-        std::optional<std::string> contents = fs::readTestFile(fs::joinPaths(irPath, fileName + IONIR_LLVM_IR_FILE_EXT));
+        std::optional<std::string> contents = fs::readTestFile(fs::joinPaths(outputIrPath, fileName + IONIR_LLVM_IR_FILE_EXT));
 
         // TODO: Consider returning int or enum for better verbosity.
         // File contents could not be retrieved. Fail process.

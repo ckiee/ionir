@@ -1,8 +1,6 @@
 #include <ionir/const/const.h>
-#include "const.h"
-
-#include <utility>
-#include "bootstrap.h"
+#include <ionir/test/const.h>
+#include <ionir/test/bootstrap.h>
 
 namespace ionir::test::bootstrap {
     Token token(TokenKind kind) {

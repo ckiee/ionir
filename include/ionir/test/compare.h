@@ -6,7 +6,7 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 #include <ionir/lexical/token.h>
 #include "util.h"
-#include "../pch.h"
+#include "../../../test/pch.h"
 
 namespace ionir::test::compare {
     /**

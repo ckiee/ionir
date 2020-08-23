@@ -1,7 +1,7 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/syntax/parser.h>
-#include "../test_api/bootstrap.h"
-#include "../test_api/const.h"
+#include <ionir/test/bootstrap.h>
+#include <ionir/test/const.h>
 #include "../pch.h"
 
 using namespace ionir;

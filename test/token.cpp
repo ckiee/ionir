@@ -1,5 +1,5 @@
 #include <ionir/lexical/token.h>
-#include "test_api/bootstrap.h"
+#include <ionir/test/bootstrap.h>
 #include "pch.h"
 
 using namespace ionir;

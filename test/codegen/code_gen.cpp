@@ -2,9 +2,9 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 #include <ionir/passes/semantic/name_resolution_pass.h>
 #include <ionir/const/const.h>
-#include "test_api/bootstrap.h"
-#include "test_api/compare.h"
-#include "test_api/const.h"
+#include <ionir/test/bootstrap.h>
+#include <ionir/test/compare.h>
+#include <ionir/test/const.h>
 
 using namespace ionir;
 

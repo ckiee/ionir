@@ -2,7 +2,7 @@
 #include <ionir/construct/pseudo/ref.h>
 #include <ionir/construct/inst/return.h>
 #include <ionir/misc/helpers.h>
-#include "test_api/const.h"
+#include <ionir/test/const.h>
 #include "pch.h"
 
 using namespace ionir;
