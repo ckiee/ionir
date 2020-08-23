@@ -3,6 +3,7 @@
 #include <ionir/construct/inst.h>
 #include <ionir/construct/basic_block.h>
 #include <ionir/construct/inst/alloca.h>
+#include <ionir/construct/inst/store.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>
 #include <ionir/construct/inst/call.h>
@@ -16,7 +17,7 @@ namespace ionir {
     public:
         explicit InstBuilder(ionshared::Ptr<BasicBlock> basicBlock);
 
-        ionshared::Ptr<BasicBlock> getSection() const;
+        [[nodiscard]] ionshared::Ptr<BasicBlock> getSection() const;
 
         void insert(const ionshared::Ptr<Inst> &inst);
 
@@ -31,7 +32,15 @@ namespace ionir {
             return inst;
         }
 
-        ionshared::Ptr<AllocaInst> createAlloca(const std::string &id, ionshared::Ptr<Type> type);
+        ionshared::Ptr<AllocaInst> createAlloca(
+            const std::string &id,
+            ionshared::Ptr<Type> type
+        );
+
+        ionshared::Ptr<StoreInst> createStore(
+            ionshared::Ptr<Value<>> value,
+            PtrRef<AllocaInst> target
+        );
 
         ionshared::Ptr<BranchInst> createBranch(
             ionshared::Ptr<Construct> condition,
@@ -45,7 +54,9 @@ namespace ionir {
             const std::string &otherwiseSectionId
         );
 
-        ionshared::Ptr<ReturnInst> createReturn(const ionshared::OptPtr<Value<>> &value = std::nullopt);
+        ionshared::Ptr<ReturnInst> createReturn(
+            const ionshared::OptPtr<Value<>> &value = std::nullopt
+        );
 
         ionshared::Ptr<CallInst> createCall(
             const ionshared::Ptr<BasicBlock> &basicBlock,

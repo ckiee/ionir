@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <string>
+#include <utility>
 #include <ionshared/misc/named.h>
 #include <ionshared/misc/util.h>
 #include <ionir/construct/construct.h>
@@ -19,8 +20,8 @@ namespace ionir {
         ionshared::OptPtr<T> value;
 
     public:
-        Ref(std::string id, ionshared::Ptr<Construct> owner, ionshared::OptPtr<T> value = std::nullopt)
-            : Construct(ConstructKind::Ref), Named(id), owner(owner), value(value) {
+        Ref(const std::string &id, ionshared::Ptr<Construct> owner, ionshared::OptPtr<T> value = std::nullopt)
+            : Construct(ConstructKind::Ref), Named(id), owner(std::move(owner)), value(value) {
             //
         }
 
@@ -33,7 +34,7 @@ namespace ionir {
             return this->owner;
         }
 
-        void setOwner(ionshared::Ptr<Construct> owner) noexcept {
+        void setOwner(const ionshared::Ptr<Construct> &owner) noexcept {
             this->owner = owner;
         }
 

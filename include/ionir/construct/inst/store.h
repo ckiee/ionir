@@ -3,6 +3,7 @@
 #include <ionir/construct/inst.h>
 #include <ionir/construct/value.h>
 #include <ionir/construct/pseudo/child_construct.h>
+#include <ionir/construct/pseudo/ref.h>
 
 namespace ionir {
     class Pass;

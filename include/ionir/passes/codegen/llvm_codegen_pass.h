@@ -51,7 +51,7 @@ namespace ionir {
 
         std::optional<llvm::IRBuilder<>> builderBuffer;
 
-        std::optional<llvm::BasicBlock *> blockBuffer;
+        std::optional<llvm::BasicBlock *> basicBlockBuffer;
 
         std::map<std::string, llvm::Value *> namedValues;
 
@@ -75,7 +75,7 @@ namespace ionir {
          * Set the currently active builder if any. Modifying the builder
          * will also set/update the active LLVM basic block buffer.
          */
-        void setBuilder(llvm::BasicBlock *block);
+        void setBuilder(llvm::BasicBlock *basicBlock);
 
         bool saveBuilder();
 
@@ -97,15 +97,15 @@ namespace ionir {
 
         ~LlvmCodegenPass();
 
-        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> getModules() const;
+        [[nodiscard]] ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> getModules() const;
 
-        LlvmStack<llvm::Value> getValueStack() const noexcept;
+        [[nodiscard]] LlvmStack<llvm::Value> getValueStack() const noexcept;
 
-        LlvmStack<llvm::Type> getTypeStack() const noexcept;
+        [[nodiscard]] LlvmStack<llvm::Type> getTypeStack() const noexcept;
 
-        std::queue<std::string> getRegisterQueue() const noexcept;
+        [[nodiscard]] std::queue<std::string> getRegisterQueue() const noexcept;
 
-        std::optional<llvm::Module *> getModuleBuffer() const;
+        [[nodiscard]] std::optional<llvm::Module *> getModuleBuffer() const;
 
         bool setModuleBuffer(const std::string &id);
 

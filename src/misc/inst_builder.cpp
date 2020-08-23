@@ -14,14 +14,18 @@ namespace ionir {
     }
 
     ionshared::Ptr<AllocaInst> InstBuilder::createAlloca(const std::string &id, ionshared::Ptr<Type> type) {
-        ionshared::Ptr<AllocaInst> allocaInst = this->make<AllocaInst>(AllocaInstOpts{
+        return this->make<AllocaInst>(AllocaInstOpts{
             this->basicBlock,
             std::move(type)
         });
+    }
 
-        this->basicBlock->insertInst(allocaInst);
-
-        return allocaInst;
+    ionshared::Ptr<StoreInst> InstBuilder::createStore(ionshared::Ptr<Value<>> value, PtrRef<AllocaInst> target) {
+        return this->make<StoreInst>(StoreInstOpts{
+            this->basicBlock,
+            std::move(value),
+            std::move(target)
+        });
     }
 
     ionshared::Ptr<BranchInst> InstBuilder::createBranch(ionshared::Ptr<Construct> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection) {

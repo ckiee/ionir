@@ -60,9 +60,9 @@ namespace ionir {
         }
     }
 
-    void LlvmCodegenPass::setBuilder(llvm::BasicBlock *block) {
-        this->builderBuffer.emplace(llvm::IRBuilder<>(block));
-        this->blockBuffer = block;
+    void LlvmCodegenPass::setBuilder(llvm::BasicBlock *basicBlock) {
+        this->builderBuffer.emplace(llvm::IRBuilder<>(basicBlock));
+        this->basicBlockBuffer = basicBlock;
     }
 
     bool LlvmCodegenPass::saveBuilder() {
@@ -112,7 +112,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules)
-        : modules(std::move(modules)), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), blockBuffer(std::nullopt), valueStack(), typeStack(), registerQueue(), builderTracker(), emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
+        : modules(std::move(modules)), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), basicBlockBuffer(std::nullopt), valueStack(), typeStack(), registerQueue(), builderTracker(), emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //
     }
 
