@@ -60,7 +60,7 @@ namespace ionir {
         void processWhitespace();
 
     public:
-        explicit Lexer(std::string input);
+        explicit Lexer(const std::string &input);
 
         size_t getIndex() const noexcept;
 

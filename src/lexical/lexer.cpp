@@ -5,7 +5,7 @@
 #include <ionir/lexical/lexer.h>
 
 namespace ionir {
-    Lexer::Lexer(std::string input)
+    Lexer::Lexer(const std::string &input)
         : input(input), length(input.length()), index(IONIR_LEXER_INDEX_DEFAULT), simpleIds(TokenConst::getSortedSimpleIds()), complexIds(TokenConst::getComplexIds()) {
         // Input string must contain at least one character.
         if (!this->length || this->length < 1) {
