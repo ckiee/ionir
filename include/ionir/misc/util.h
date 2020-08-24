@@ -26,16 +26,22 @@ namespace ionir {
 
         static std::optional<std::string> getInstId(const ionshared::Ptr<Inst> &inst) noexcept;
 
-        static std::optional<IntegerKind> calculateIntegerKindFromBitLength(uint32_t bitLength) noexcept;
+        static std::optional<IntegerKind> findIntegerKindFromBitLength(uint32_t bitLength) noexcept;
 
         template<typename T = Construct>
         static bool hasValue(AstResult<T> result) {
             return std::holds_alternative<T>(result);
         }
 
+        template<typename T>
+        static bool hasValue(AstPtrResult<T> result) {
+            return std::holds_alternative<ionshared::Ptr<T>>(result)
+                && std::get<ionshared::Ptr<T>>(result) != nullptr;
+        }
+
         template<typename T = Construct>
         static T getResultValue(AstResult<T> result) {
-            if (!Util::hasValue(result)) {
+            if (!Util::hasValue<T>(result)) {
                 throw std::runtime_error("Result has no value");
             }
 
@@ -44,19 +50,44 @@ namespace ionir {
 
         template<typename T = Construct>
         static ionshared::Ptr<T> getResultValue(AstPtrResult<T> result) {
-            return Util::getResultValue<ionshared::Ptr<T>>(result);
+            ionshared::Ptr<T> value = Util::getResultValue<ionshared::Ptr<T>>(result);
+
+            if (value == nullptr) {
+                throw std::runtime_error("Pointer value of result is nullptr");
+            }
+
+            return value;
         }
 
         template<typename TFrom, typename TTo = Construct>
-        static AstPtrResult<TTo> convertAstPtrResult(AstPtrResult<TFrom> from) {
-            if (Util::hasValue(from)) {
-                ionshared::Ptr<TFrom> fromT = std::get<ionshared::Ptr<TFrom>>(from);
-                ionshared::Ptr<Construct> construct = std::static_pointer_cast<Construct>(fromT);
+        static AstPtrResult<TTo> castAstPtrResult(AstPtrResult<TFrom> fromResult, bool useDynamicPointerCast = true) {
+            if (Util::hasValue(fromResult)) {
+                ionshared::Ptr<TFrom> fromValue = Util::getResultValue<TFrom>(fromResult);
+                ionshared::Ptr<TTo> toValue;
 
-                return construct->dynamicCast<TTo>();
+                /**
+                 * Certain cases require use of static pointer cast instead of dynamic,
+                 * otherwise it returns nullptr. An example of this would be a downcast
+                 * from 'Value<IntegerType>' to 'Value<>'. In that case, it's due to it's
+                 * template argument and the compiler not knowing how to convert it's
+                 * corresponding field 'type'.
+                 */
+                if (useDynamicPointerCast) {
+                    toValue = std::dynamic_pointer_cast<TTo>(fromValue);
+                }
+                else {
+                    toValue = std::static_pointer_cast<TTo>(fromValue);
+                }
+
+                // Conversion failed; construct is nullptr.
+                if (toValue == nullptr) {
+                    throw std::runtime_error("Pointer cast failed; resulting value is nullptr");
+                }
+
+                return toValue;
             }
 
-            return std::get<ionshared::Ptr<ErrorMarker>>(from);
+            return std::get<ionshared::Ptr<ErrorMarker>>(fromResult);
         }
     };
 }

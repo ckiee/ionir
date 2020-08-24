@@ -87,7 +87,7 @@ namespace ionir {
         }
     }
 
-    std::optional<IntegerKind> Util::calculateIntegerKindFromBitLength(uint32_t bitLength) noexcept {
+    std::optional<IntegerKind> Util::findIntegerKindFromBitLength(uint32_t bitLength) noexcept {
         if (bitLength <= 8) {
             return IntegerKind::Int8;
         }

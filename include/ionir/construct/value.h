@@ -31,8 +31,14 @@ namespace ionir {
         }
 
         void accept(Pass &visitor) {
-            // TODO: CRITICAL: Fix 'incomplete type' problem.
-            //visitor.visitValue(this->dynamicCast<Value<>>());
+            /**
+             * Must use static pointer cast instead of dynamic pointer case,
+             * otherwise the result will be nullptr. This is likely due to the
+             * template argument which Value takes, and because of that it fails
+             * during the conversion.
+             */
+             // TODO: Crossed off because cannot import pass.h in a header file! Need forward-decl solution (probably won't be easy!).
+//            visitor.visitValue(this->staticCast<Value<>>());
         }
 
         ValueKind getValueKind() const noexcept {

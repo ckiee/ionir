@@ -71,15 +71,15 @@ namespace ionir {
     AstPtrResult<> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordFunction: {
-                return Util::convertAstPtrResult(this->parseFunction(parent));
+                return Util::castAstPtrResult(this->parseFunction(parent));
             }
 
             case TokenKind::KeywordGlobal: {
-                return Util::convertAstPtrResult(this->parseGlobal());
+                return Util::castAstPtrResult(this->parseGlobal());
             }
 
             case TokenKind::KeywordExtern: {
-                return Util::convertAstPtrResult(this->parseExtern(parent));
+                return Util::castAstPtrResult(this->parseExtern(parent));
             }
 
             default: {

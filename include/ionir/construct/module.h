@@ -17,7 +17,7 @@ namespace ionir {
         explicit Module(
             std::string id,
 
-            PtrSymbolTable<Construct> symbolTable =
+            ionshared::PtrSymbolTable<Construct> symbolTable =
                 ionshared::Util::makePtrSymbolTable<Construct>()
         );
 
@@ -25,8 +25,10 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
+        // TODO: What about externs? ------------------------------------
         void insertFunction(const ionshared::Ptr<Function> &function);
 
         ionshared::OptPtr<Function> lookupFunction(std::string id);
+        // --------------------------------------------------------------
     };
 }

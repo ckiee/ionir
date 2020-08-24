@@ -68,10 +68,6 @@ namespace ionir {
 
     class Construct : public ionshared::BaseConstruct<Construct, ConstructKind> {
     public:
-        operator ionshared::Ptr<Value<Type>>();
-
-        operator ionshared::Ptr<Inst>();
-
         template<class T>
         static Ast convertChildren(std::vector<ionshared::Ptr<T>> vector) {
             // TODO: Ensure T is child of AstNode.

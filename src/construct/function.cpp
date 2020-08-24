@@ -45,6 +45,7 @@ namespace ionir {
     }
 
     bool Function::verify() {
+        // TODO: This will throw a SIGSEGV because 'body' or 'prototype' if nullptr are already being accessed (->verify()). First check if they are nullptr(s), then continue to ->verify().
         return this->body->verify() && this->prototype->verify();
     }
 }

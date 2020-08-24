@@ -5,21 +5,41 @@
 
 namespace ionir {
     AstPtrResult<Value<>> Parser::parseValue() {
-        Token token = this->stream.get();
+        TokenKind currentTokenKind = this->stream.get().getKind();
 
-        switch (token.getKind()) {
+        /**
+         * Must use static pointer cast when downcasting to Value<>, given
+         * Value's template argument.
+         */
+        switch (currentTokenKind) {
             case TokenKind::LiteralInteger: {
-                return Util::convertAstPtrResult<IntegerValue, Value<>>(this->parseInt());
+                // TODO: Should be done like below...
+                return Util::getResultValue(this->parseInt())->staticCast<Value<>>();
+
+                // TODO: Throwing error for some reason.
+//                return Util::castAstPtrResult<IntegerValue, Value<>>(
+//                    this->parseInt(),
+//                    false
+//                );
             }
 
             case TokenKind::LiteralCharacter: {
-                return Util::convertAstPtrResult<CharValue, Value<>>(this->parseChar());
+                // TODO: Should be done like below...
+                return Util::getResultValue(this->parseChar())->staticCast<Value<>>();
+
+                // TODO: Throwing error for some reason.
+//                return Util::castAstPtrResult<CharValue, Value<>>(
+//                    this->parseChar(),
+//                    false
+//                );
             }
 
             // TODO: Missing values.
 
             default: {
-                return this->noticeSentinel->makeError<Value<>>(IONIR_NOTICE_MISC_UNEXPECTED_TOKEN);
+                return this->noticeSentinel->makeError<Value<>>(
+                    IONIR_NOTICE_MISC_UNEXPECTED_TOKEN
+                );
             }
         }
     }
@@ -60,7 +80,7 @@ namespace ionir {
         uint32_t valueBitLength = ionshared::Util::calculateBitLength(value);
 
         std::optional<IntegerKind> valueIntegerKind =
-            Util::calculateIntegerKindFromBitLength(valueBitLength);
+            Util::findIntegerKindFromBitLength(valueBitLength);
 
         if (!valueIntegerKind.has_value()) {
             // TODO: Hard-coded message. Use consts.

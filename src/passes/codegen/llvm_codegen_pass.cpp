@@ -329,7 +329,8 @@ namespace ionir {
         this->modules->insert(node->getId(), *this->moduleBuffer);
 
         // Proceed to visit all the module's children (top-level constructs).
-        std::map<std::string, ionshared::Ptr<Construct>> moduleSymbolTable = node->getSymbolTable()->unwrap();
+        std::map<std::string, ionshared::Ptr<Construct>> moduleSymbolTable =
+            node->getSymbolTable()->unwrap();
 
         for (const auto &[id, topLevelConstruct] : moduleSymbolTable) {
             this->visit(topLevelConstruct);

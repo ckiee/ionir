@@ -1,7 +1,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Module::Module(std::string id, PtrSymbolTable<Construct> symbolTable)
+    Module::Module(std::string id, ionshared::PtrSymbolTable<Construct> symbolTable)
         : Construct(ConstructKind::Module), ScopeAnchor<>(std::move(symbolTable)), Named(std::move(id)) {
         //
     }
@@ -25,7 +25,7 @@ namespace ionir {
     ionshared::OptPtr<Function> Module::lookupFunction(std::string id) {
         ionshared::OptPtr<Construct> functionConstruct = this->getSymbolTable()->lookup(std::move(id));
 
-        if (functionConstruct.has_value()) {
+        if (ionshared::Util::hasValue(functionConstruct) && functionConstruct->get()->getConstructKind() == ConstructKind::Function) {
             return functionConstruct->get()->dynamicCast<Function>();
         }
 

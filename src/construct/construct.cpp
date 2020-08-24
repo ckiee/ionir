@@ -4,16 +4,6 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Construct::operator ionshared::Ptr<Value<>>() {
-        // TODO: Test.
-        return this->dynamicCast<Value<>>();
-    }
-
-    Construct::operator ionshared::Ptr<Inst>() {
-        // TODO: Test.
-        return this->dynamicCast<Inst>();
-    }
-
     Construct::Construct(ConstructKind kind) : ionshared::BaseConstruct<Construct, ConstructKind>(kind) {
         //
     }

@@ -20,12 +20,12 @@ namespace ionir {
         AstPtrResult<Type> type;
 
         if (tokenKind == TokenKind::TypeVoid) {
-            type = Util::convertAstPtrResult<VoidType, Type>(
+            type = Util::castAstPtrResult<VoidType, Type>(
                 this->parseVoidType()
             );
         }
         else if (Classifier::isIntegerType(tokenKind)) {
-            type = Util::convertAstPtrResult<IntegerType, Type>(
+            type = Util::castAstPtrResult<IntegerType, Type>(
                 this->parseIntegerType()
             );
         }

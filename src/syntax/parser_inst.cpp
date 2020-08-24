@@ -15,7 +15,7 @@ namespace ionir {
 
         switch (tokenKind) {
             case TokenKind::InstAlloca: {
-                inst = Util::convertAstPtrResult<AllocaInst, Inst>(
+                inst = Util::castAstPtrResult<AllocaInst, Inst>(
                     this->parseAllocaInst(parent)
                 );
 
@@ -23,7 +23,7 @@ namespace ionir {
             }
 
             case TokenKind::InstBranch: {
-                inst = Util::convertAstPtrResult<BranchInst, Inst>(
+                inst = Util::castAstPtrResult<BranchInst, Inst>(
                     this->parseBranchInst(parent)
                 );
 
@@ -31,7 +31,7 @@ namespace ionir {
             }
 
             case TokenKind::InstCall: {
-                inst = Util::convertAstPtrResult<CallInst, Inst>(
+                inst = Util::castAstPtrResult<CallInst, Inst>(
                     this->parseCallInst(parent)
                 );
 
@@ -39,7 +39,7 @@ namespace ionir {
             }
 
             case TokenKind::InstReturn: {
-                inst = Util::convertAstPtrResult<ReturnInst, Inst>(
+                inst = Util::castAstPtrResult<ReturnInst, Inst>(
                     this->parseReturnInst(parent)
                 );
 
@@ -47,7 +47,7 @@ namespace ionir {
             }
 
             case TokenKind::InstStore: {
-                inst = Util::convertAstPtrResult<StoreInst, Inst>(
+                inst = Util::castAstPtrResult<StoreInst, Inst>(
                     this->parseStoreInst(parent)
                 );
 
@@ -101,10 +101,9 @@ namespace ionir {
         std::optional<AstPtrResult<>> value = std::nullopt;
 
         /**
-         * A non-void value is being returned. Parse a primary
-         * expression as the return instruction's value, and if
-         * it is a reference, pass in the return instruction to
-         * be set as its owner.
+         * A non-void value is being returned. Parse a primary expression as the
+         * return instruction's value, and if it is a reference, pass in the return
+         * instruction to be set as its owner.
          */
         if (!this->is(TokenKind::TypeVoid)) {
             value = this->parsePrimaryExpr(returnInst);
