@@ -209,7 +209,6 @@ namespace ionir {
 
         // Assign value if applicable.
         if (ionshared::Util::hasValue(nodeValue)) {
-            // Visit global variable value.
             this->visitValue(*nodeValue);
 
             llvm::Value *value = this->valueStack.pop();
@@ -221,7 +220,9 @@ namespace ionir {
             globalVar->setInitializer(llvm::dyn_cast<llvm::Constant>(value));
         }
 
-        // TODO: Push into valueStack and apply LLVM entity to the node.
+        this->valueStack.push(globalVar);
+
+        // TODO: Apply LLVM entity to the node.
     }
 
     void LlvmCodegenPass::visitType(ionshared::Ptr<Type> node) {
@@ -334,6 +335,12 @@ namespace ionir {
 
         for (const auto &[id, topLevelConstruct] : moduleSymbolTable) {
             this->visit(topLevelConstruct);
+
+            /**
+             * Discard visited top-level constructs (such as functions and
+             * global variables) as they have no use elsewhere.
+             */
+             this->valueStack.pop();
         }
     }
 
