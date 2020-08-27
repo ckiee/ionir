@@ -302,7 +302,8 @@ TEST(ParserTest, ParseExtern) {
         Token(TokenKind::SymbolParenthesesL, "("),
         Token(TokenKind::SymbolParenthesesR, ")"),
         Token(TokenKind::SymbolArrow, "->"),
-        Token(TokenKind::Identifier, "type")
+        Token(TokenKind::Identifier, "type"),
+        Token(TokenKind::SymbolSemiColon, ";")
     });
 
     AstPtrResult<Extern> externResult = parser.parseExtern(nullptr);

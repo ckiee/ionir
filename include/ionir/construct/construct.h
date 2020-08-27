@@ -81,10 +81,13 @@ namespace ionir {
         }
 
         template<class T>
-        static Ast convertChildren(ionshared::SymbolTable<T> symbolTable) {
+        static Ast convertChildren(ionshared::PtrSymbolTable<T> symbolTable) {
             Ast children = {};
 
-            for (const auto &[key, value] : symbolTable.unwrap()) {
+            std::map<std::basic_string<char>, ionshared::Ptr<T>> symbolTableItems =
+                symbolTable->unwrap();
+
+            for (const auto &[key, value] : symbolTableItems) {
                 children.push_back(value);
             }
 

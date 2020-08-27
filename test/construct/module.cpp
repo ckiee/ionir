@@ -21,5 +21,5 @@ TEST(ModuleConstructTest, ParseEmpty) {
     ionshared::Ptr<Module> moduleValue = Util::getResultValue(module);
 
     EXPECT_EQ(moduleValue->getId(), test::constant::foobar);
-    EXPECT_TRUE(moduleValue->getSymbolTable()->isEmpty());
+    EXPECT_TRUE(moduleValue->getContext()->getGlobalScope()->isEmpty());
 }

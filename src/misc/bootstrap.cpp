@@ -12,8 +12,14 @@ namespace ionir {
 
     ionshared::Ptr<Function> Bootstrap::function(const std::string &id) {
         ionshared::Ptr<Module> module = Bootstrap::functionAst(id)[0]->dynamicCast<Module>();
+        ionshared::OptPtr<Function> function = module->lookupFunction(id);
 
-        return (*module->getSymbolTable())[id]->dynamicCast<Function>();
+        // Ensure the function was retrieved, as a precaution.
+        if (!ionshared::Util::hasValue(function)) {
+            throw std::runtime_error("Could not retrieve function from module's symbol table");
+        }
+
+        return *function;
     }
 
     ionshared::Ptr<BasicBlock> Bootstrap::basicBlock(ionshared::Ptr<FunctionBody> parent, std::string id, BasicBlockKind basicBlockKind) {

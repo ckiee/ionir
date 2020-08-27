@@ -30,10 +30,8 @@ namespace ionir {
         // Finally, create the LLVM value constant.
         llvm::Constant *value = llvm::ConstantInt::get(type, apInt);
 
-        this->addToScope(node, value);
-
-        // Push the value onto the value stack.
         this->valueStack.push(value);
+//        this->addToScope(node, value);
     }
 
     void LlvmCodegenPass::visitCharValue(ionshared::Ptr<CharValue> node) {
@@ -43,8 +41,8 @@ namespace ionir {
         llvm::Type *charType = llvm::Type::getInt8Ty(**this->llvmContextBuffer);
         llvm::Constant *value = llvm::ConstantInt::get(charType, node->getValue());
 
-        this->addToScope(node, value);
         this->valueStack.push(value);
+//        this->addToScope(node, value);
     }
 
     void LlvmCodegenPass::visitStringValue(ionshared::Ptr<StringValue> node) {
@@ -53,10 +51,8 @@ namespace ionir {
         // Create the global string pointer.
         llvm::Constant *value = this->llvmBuilderBuffer->CreateGlobalStringPtr(node->getValue());
 
-        this->addToScope(node, value);
-
-        // Push the value onto the value stack.
         this->valueStack.push(value);
+//        this->addToScope(node, value);
     }
 
     void LlvmCodegenPass::visitBooleanValue(ionshared::Ptr<BooleanValue> node) {
@@ -66,9 +62,7 @@ namespace ionir {
         llvm::IntegerType *type = llvm::Type::getInt1Ty(**this->llvmContextBuffer);
         llvm::Constant *value = llvm::ConstantInt::get(type, llvm::APInt(1, node->getValue(), false));
 
-        this->addToScope(node, value);
-
-        // Push the resulting boolean constant onto the stack.
         this->valueStack.push(value);
+//        this->addToScope(node, value);
     }
 }

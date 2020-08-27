@@ -9,7 +9,6 @@ namespace ionir {
         this->visitType(node->getType());
 
         llvm::Type *type = this->typeStack.pop();
-
         std::string _register = this->registerQueue.front();
 
         this->registerQueue.pop();
@@ -22,7 +21,9 @@ namespace ionir {
             this->llvmBuilderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, _register);
 
         this->valueStack.push(llvmAllocaInst);
-        this->addToScope(node, llvmAllocaInst);
+
+        // TODO: Remove dependency on this outdated system.
+        this->emittedEntities.front()[node] = llvmAllocaInst;
     }
 
     void LlvmCodegenPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
@@ -75,7 +76,7 @@ namespace ionir {
         }
 
         this->valueStack.push(llvmReturnInst);
-        this->addToScope(node, llvmReturnInst);
+//        this->addToScope(node, llvmReturnInst);
     }
 
     void LlvmCodegenPass::visitBranchInst(ionshared::Ptr<BranchInst> node) {
@@ -116,7 +117,7 @@ namespace ionir {
             this->llvmBuilderBuffer->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
 
         this->valueStack.push(llvmBranchInst);
-        this->addToScope(node, llvmBranchInst);
+//        this->addToScope(node, llvmBranchInst);
     }
 
     void LlvmCodegenPass::visitCallInst(ionshared::Ptr<CallInst> node) {
@@ -144,7 +145,7 @@ namespace ionir {
         llvm::CallInst *callInst = this->llvmBuilderBuffer->CreateCall(llvmCallee);
 
         this->valueStack.push(callInst);
-        this->addToScope(node, callInst);
+//        this->addToScope(node, callInst);
     }
 
     void LlvmCodegenPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
@@ -160,7 +161,7 @@ namespace ionir {
         std::optional<llvm::Value *> llvmTarget = this->findInScope(*target->getValue());
 
         if (!ionshared::Util::hasValue(llvmTarget)) {
-            throw std::runtime_error("Target could not be looked up in the emitted entities map");
+            throw std::runtime_error("Target could not be retrieved from the emitted entities map");
         }
 
         std::string targetId = target->getId();
@@ -172,7 +173,7 @@ namespace ionir {
         llvm::StoreInst *llvmStoreInst = this->llvmBuilderBuffer->CreateStore(llvmValue, *llvmTarget);
 
         this->valueStack.push(llvmStoreInst);
-        this->addToScope(node, llvmStoreInst);
+//        this->addToScope(node, llvmStoreInst);
     }
 
     void LlvmCodegenPass::visitJumpInst(ionshared::Ptr<JumpInst> node) {
@@ -210,7 +211,7 @@ namespace ionir {
             this->llvmBuilderBuffer->CreateBr(llvmBodyBlock);
 
         this->valueStack.push(llvmBranchInst);
-        this->addToScope(node, llvmBranchInst);
+//        this->addToScope(node, llvmBranchInst);
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------

@@ -124,12 +124,11 @@ namespace ionir {
         // Set the function buffer.
         this->llvmFunctionBuffer = llvmFunction;
 
-        // Visit the function's body.
+        // Visiting the function body's yields no value to the value stack.
         this->visitFunctionBody(node->getBody());
 
         // TODO: Verify the resulting LLVM function (through LLVM).
 
-        // Push the function back onto the stack.
         this->valueStack.push(llvmFunction);
     }
 }

@@ -102,7 +102,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules) :
-        contextBuffer(),
+        contextBuffer(std::make_shared<Context>()),
         modules(std::move(modules)),
         llvmContextBuffer(std::nullopt),
         llvmModuleBuffer(std::nullopt),

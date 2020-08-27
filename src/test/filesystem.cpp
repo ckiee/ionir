@@ -2,17 +2,16 @@
 #include <ionir/test/filesystem.h>
 #include <ionir/test/util.h>
 
+#define IONIR_TESTS_ROOT_PATH "../.."
+#define IONIR_TESTS_TEST_PATH "test"
+
 namespace ionir::test::fs {
-    const std::string rootPath = "../..";
-
-    const std::string testPath = "test";
-
     std::string resolvePath(const std::string &path) {
-        return joinPaths(rootPath, path);
+        return fs::joinPaths(IONIR_TESTS_ROOT_PATH, path);
     }
 
     std::string resolveTestPath(const std::string &path) {
-        return resolvePath(joinPaths(testPath, path));
+        return fs::resolvePath(fs::joinPaths(IONIR_TESTS_TEST_PATH, path));
     }
 
     std::string joinPaths(const std::string &pathA, const std::string &pathB) {
@@ -22,7 +21,7 @@ namespace ionir::test::fs {
 
     std::optional<std::string> readFileContents(const std::string &filePath) {
         // Target file does not exist, do not continue.
-        if (!exists(filePath)) {
+        if (!fs::exists(filePath)) {
             return std::nullopt;
         }
 
@@ -35,10 +34,10 @@ namespace ionir::test::fs {
         return content;
     }
 
-    std::optional<std::string> readTestFile(std::string filePath) {
-        std::string finalPath = resolveTestPath(std::move(filePath));
+    std::optional<std::string> readTestFile(const std::string &filePath) {
+        std::string finalPath = fs::resolveTestPath(filePath);
 
-        return readFileContents(finalPath);
+        return fs::readFileContents(finalPath);
     }
 
     bool exists(const std::string &filePath) {

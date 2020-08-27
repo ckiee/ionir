@@ -13,9 +13,9 @@ namespace ionir {
     }
 
     Ast Module::getChildNodes() {
-        auto ast = Construct::convertChildren(*this->getSymbolTable());
-        // TODO: De-referencing symbol table, so it's copying and it won't link back? Review.
-        return ast;
+        return Construct::convertChildren(
+            this->context->getGlobalScope()
+        );
     }
 
     ionshared::Ptr<Context> Module::getContext() const noexcept {

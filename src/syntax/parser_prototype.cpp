@@ -66,6 +66,7 @@ namespace ionir {
         AstPtrResult<Prototype> prototype = this->parsePrototype(parent);
 
         IONIR_PARSER_ASSERT_RESULT(prototype, Extern)
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon), Extern)
 
         return std::make_shared<Extern>(Util::getResultValue(prototype));
     }

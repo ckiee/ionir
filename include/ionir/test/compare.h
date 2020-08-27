@@ -13,7 +13,12 @@ namespace ionir::test::compare {
      * Compare 2 strings. Both strings are trimmed before
      * comparison.
      */
-    [[nodiscard]] bool strings(std::string expected, std::string actual);
+    [[nodiscard]] bool strings(std::string stringA, std::string stringB);
+
+    [[nodiscard]] bool inputAndOutput(
+        const std::string &inputFileName,
+        const std::string &outputFileName
+    );
 
     /**
      * Compare an LLVM IR output string with a stored LLVM IR
@@ -22,10 +27,13 @@ namespace ionir::test::compare {
      */
     [[nodiscard]] bool ir(std::string output, const std::string &fileName);
 
-    [[nodiscard]] bool ir(const ionshared::Ptr<LlvmCodegenPass> &llvmCodegenPass, const std::string &fileName);
+    [[nodiscard]] bool ir(
+        const ionshared::Ptr<LlvmCodegenPass> &llvmCodegenPass,
+        const std::string &fileName
+    );
 
     template<unsigned int N>
-    [[nodiscard]] void tokenSets(std::array<Token, N> expected, std::vector<Token> actual) {
+    void tokenSets(std::array<Token, N> expected, std::vector<Token> actual) {
         // Both sets should have the same length.
         EXPECT_EQ(expected.size(), actual.size());
 

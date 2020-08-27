@@ -221,10 +221,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT_VALUE(id, Module)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolBraceL), Module)
 
-        ionshared::PtrSymbolTable<Construct> symbolTable =
-            std::make_shared<ionshared::SymbolTable<ionshared::Ptr<Construct>>>();
-
-        ionshared::Ptr<Module> module = std::make_shared<Module>(*id, symbolTable);
+        ionshared::Ptr<Module> module = std::make_shared<Module>(*id);
 
         while (!this->is(TokenKind::SymbolBraceR)) {
             AstPtrResult<> topLevelConstructResult = this->parseTopLevel(module);
@@ -239,7 +236,7 @@ namespace ionir {
                 }
 
                 // TODO: Ensure we're not re-defining something, issue a notice otherwise.
-                symbolTable->insert(*name, topLevelConstruct);
+                module->getContext()->getGlobalScope()->insert(*name, topLevelConstruct);
             }
 
             // No more tokens to process.

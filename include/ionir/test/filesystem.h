@@ -10,6 +10,8 @@ namespace ionir::test::fs {
      */
     [[nodiscard]] std::string resolvePath(const std::string &path);
 
+    [[nodiscard]] std::string resolveTestPath(const std::string &path);
+
     /**
      * Joins two paths with a directory separator.
      */
@@ -21,7 +23,7 @@ namespace ionir::test::fs {
      */
     [[nodiscard]] std::optional<std::string> readFileContents(const std::string &path);
 
-    [[nodiscard]] std::optional<std::string> readTestFile(std::string filePath);
+    [[nodiscard]] std::optional<std::string> readTestFile(const std::string &filePath);
 
     /**
      * Determines whether a file path exists.
