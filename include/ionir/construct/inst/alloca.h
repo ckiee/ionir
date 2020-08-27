@@ -23,7 +23,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        ionshared::Ptr<Type> getType() const;
+        [[nodiscard]] ionshared::Ptr<Type> getType() const;
 
         void setType(ionshared::Ptr<Type> type);
     };

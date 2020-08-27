@@ -11,9 +11,9 @@ namespace ionir {
 
         Token(TokenKind kind, std::string value, uint32_t startPosition = 0, uint32_t lineNumber = 0);
 
-        bool isDummy() const noexcept;
+        [[nodiscard]] bool isDummy() const noexcept;
 
-        std::string getName() const;
+        [[nodiscard]] std::string getName() const;
     };
 
     std::ostream &operator<<(std::ostream &stream, Token &token);

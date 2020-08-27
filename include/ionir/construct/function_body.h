@@ -29,9 +29,9 @@ namespace ionir {
 
         bool verify() override;
 
-        ionshared::OptPtr<BasicBlock> findEntryBasicBlock();
+        [[nodiscard]] ionshared::OptPtr<BasicBlock> findEntryBasicBlock();
 
-        bool hasEntryBasicBlock();
+        [[nodiscard]] bool hasEntryBasicBlock();
 
         void insertBasicBlock(const ionshared::Ptr<BasicBlock> &basicBlock);
     };

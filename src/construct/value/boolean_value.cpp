@@ -1,8 +1,9 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    BooleanValue::BooleanValue(bool value)
-        : Value(ValueKind::Boolean, TypeFactory::typeBoolean()), value(value) {
+    BooleanValue::BooleanValue(bool value) :
+        Value(ValueKind::Boolean, TypeFactory::typeBoolean()),
+        value(value) {
         //
     }
 

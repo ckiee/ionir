@@ -1,8 +1,8 @@
 #include <ionir/passes/partial_resolver.h>
 
 namespace ionir {
-    PartialResolverPass::PartialResolverPass(std::vector<ionshared::Ptr<Inst>> partials)
-        : partials(partials) {
+    PartialResolverPass::PartialResolverPass(std::vector<ionshared::Ptr<Inst>> partials) :
+        partials(std::move(partials)) {
         //
     }
 

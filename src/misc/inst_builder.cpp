@@ -2,7 +2,8 @@
 #include <ionir/construct/function_body.h>
 
 namespace ionir {
-    InstBuilder::InstBuilder(ionshared::Ptr<BasicBlock> basicBlock) : basicBlock(std::move(basicBlock)) {
+    InstBuilder::InstBuilder(ionshared::Ptr<BasicBlock> basicBlock) :
+        basicBlock(std::move(basicBlock)) {
         //
     }
 

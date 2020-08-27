@@ -5,7 +5,7 @@
 namespace ionir {
     class TypeIdentifier {
     public:
-        bool isPrimitive(std::string type) {
+        [[nodiscard]] bool isPrimitive(const std::string &type) {
             // TODO
 
             return false;

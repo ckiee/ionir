@@ -19,7 +19,7 @@ namespace ionir {
          * using the buffered builder.
          */
         llvm::AllocaInst *llvmAllocaInst =
-            this->builderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, _register);
+            this->llvmBuilderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, _register);
 
         this->valueStack.push(llvmAllocaInst);
         this->addToScope(node, llvmAllocaInst);
@@ -67,11 +67,11 @@ namespace ionir {
              * Create the LLVM equivalent return instruction
              * using the buffered builder.
              */
-            llvmReturnInst = this->builderBuffer->CreateRet(llvmValue);
+            llvmReturnInst = this->llvmBuilderBuffer->CreateRet(llvmValue);
         }
         // No value was specified. Simply return void.
         else {
-            llvmReturnInst = this->builderBuffer->CreateRetVoid();
+            llvmReturnInst = this->llvmBuilderBuffer->CreateRetVoid();
         }
 
         this->valueStack.push(llvmReturnInst);
@@ -113,7 +113,7 @@ namespace ionir {
 
         // Create the LLVM conditional branch instruction.
         llvm::BranchInst *llvmBranchInst =
-            this->builderBuffer->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
+            this->llvmBuilderBuffer->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
 
         this->valueStack.push(llvmBranchInst);
         this->addToScope(node, llvmBranchInst);
@@ -132,7 +132,7 @@ namespace ionir {
         }
 
         // Attempt to resolve the callee LLVM-equivalent function.
-        llvm::Function* llvmCallee = (*this->moduleBuffer)->getFunction(callee->get()->getId());
+        llvm::Function* llvmCallee = (*this->llvmModuleBuffer)->getFunction(callee->get()->getId());
 
         // LLVM-equivalent function could not be found. Report an error.
         if (llvmCallee == nullptr) {
@@ -141,7 +141,7 @@ namespace ionir {
 
         // TODO: What about arguments?
         // Otherwise, create the LLVM call instruction.
-        llvm::CallInst *callInst = this->builderBuffer->CreateCall(llvmCallee);
+        llvm::CallInst *callInst = this->llvmBuilderBuffer->CreateCall(llvmCallee);
 
         this->valueStack.push(callInst);
         this->addToScope(node, callInst);
@@ -169,7 +169,7 @@ namespace ionir {
         this->visitValue(node->getValue());
 
         llvm::Value *llvmValue = this->valueStack.pop();
-        llvm::StoreInst *llvmStoreInst = this->builderBuffer->CreateStore(llvmValue, *llvmTarget);
+        llvm::StoreInst *llvmStoreInst = this->llvmBuilderBuffer->CreateStore(llvmValue, *llvmTarget);
 
         this->valueStack.push(llvmStoreInst);
         this->addToScope(node, llvmStoreInst);
@@ -207,7 +207,7 @@ namespace ionir {
 
         // Create the LLVM branch instruction (with no condition).
         llvm::BranchInst *llvmBranchInst =
-            this->builderBuffer->CreateBr(llvmBodyBlock);
+            this->llvmBuilderBuffer->CreateBr(llvmBodyBlock);
 
         this->valueStack.push(llvmBranchInst);
         this->addToScope(node, llvmBranchInst);

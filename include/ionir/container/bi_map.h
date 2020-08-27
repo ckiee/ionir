@@ -28,27 +28,27 @@ namespace ionir {
             return this->insert(first, second, overwrite);
         }
 
-        std::optional<TSecond> lookup(TFirst first) {
+        [[nodiscard]] std::optional<TSecond> lookup(TFirst first) {
             return this->firstMap.lookup(first);
         }
 
-        std::optional<TFirst> lookup(TSecond second) {
+        [[nodiscard]] std::optional<TFirst> lookup(TSecond second) {
             return this->secondMap.lookup(second);
         }
 
-        bool contains(TFirst first) const {
+        [[nodiscard]] bool contains(TFirst first) const {
             return this->firstMap.contains(first);
         }
 
-        bool contains(TSecond second) const {
+        [[nodiscard]] bool contains(TSecond second) const {
             return this->secondMap.contains(second);
         }
 
-        const Map<TFirst, TSecond> &getFirstMap() const {
+        [[nodiscard]] const Map<TFirst, TSecond> &getFirstMap() const {
             return this->firstMap;
         }
 
-        const Map<TSecond, TFirst> &getSecondMap() const {
+        [[nodiscard]] const Map<TSecond, TFirst> &getSecondMap() const {
             return this->secondMap;
         }
 

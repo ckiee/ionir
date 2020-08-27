@@ -13,11 +13,11 @@ namespace ionir {
     public:
         Comment(bool isMultiline, std::optional<std::string> text);
 
-        bool getIsMultiline() const;
+        [[nodiscard]] bool getIsMultiline() const;
 
         void setIsMultiline(bool isMultiline);
 
-        std::optional<std::string> getText() const;
+        [[nodiscard]] std::optional<std::string> getText() const;
 
         void setText(std::optional<std::string> text);
     };

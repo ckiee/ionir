@@ -13,7 +13,7 @@ namespace ionir {
 
     class PtrToIntInst : public Inst {
     public:
-        explicit PtrToIntInst(PtrToIntInstOpts opts);
+        explicit PtrToIntInst(const PtrToIntInstOpts &opts);
 
         void accept(Pass &visitor) override;
     };

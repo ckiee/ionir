@@ -1,8 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    BooleanType::BooleanType()
-        : Type(ConstName::typeBool, TypeKind::Boolean) {
+    BooleanType::BooleanType() :
+        Type(ConstName::typeBool, TypeKind::Boolean) {
         //
     }
 

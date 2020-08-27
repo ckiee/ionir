@@ -1,8 +1,9 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    JumpInst::JumpInst(const JumpInstOpts &opts)
-        : Inst(opts.parent, InstKind::Jump), blockRef(opts.blockRef) {
+    JumpInst::JumpInst(const JumpInstOpts &opts) :
+        Inst(opts.parent, InstKind::Jump),
+        blockRef(opts.blockRef) {
         //
     }
 

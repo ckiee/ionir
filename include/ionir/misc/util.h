@@ -18,29 +18,29 @@ namespace ionir {
 
     class Util {
     public:
-        static std::string resolveIntegerKindName(IntegerKind kind);
+        [[nodiscard]] static std::string resolveIntegerKindName(IntegerKind kind);
 
-        static TypeKind resolveTypeKind(const std::string &id);
+        [[nodiscard]] static TypeKind resolveTypeKind(const std::string &id);
 
-        static std::optional<std::string> getConstructId(const ionshared::Ptr<Construct> &construct);
+        [[nodiscard]] static std::optional<std::string> getConstructId(const ionshared::Ptr<Construct> &construct);
 
-        static std::optional<std::string> getInstId(const ionshared::Ptr<Inst> &inst) noexcept;
+        [[nodiscard]] static std::optional<std::string> getInstId(const ionshared::Ptr<Inst> &inst) noexcept;
 
-        static std::optional<IntegerKind> findIntegerKindFromBitLength(uint32_t bitLength) noexcept;
+        [[nodiscard]] static std::optional<IntegerKind> findIntegerKindFromBitLength(uint32_t bitLength) noexcept;
 
         template<typename T = Construct>
-        static bool hasValue(AstResult<T> result) {
+        [[nodiscard]] static bool hasValue(AstResult<T> result) {
             return std::holds_alternative<T>(result);
         }
 
         template<typename T>
-        static bool hasValue(AstPtrResult<T> result) {
+        [[nodiscard]] static bool hasValue(AstPtrResult<T> result) {
             return std::holds_alternative<ionshared::Ptr<T>>(result)
                 && std::get<ionshared::Ptr<T>>(result) != nullptr;
         }
 
         template<typename T = Construct>
-        static T getResultValue(AstResult<T> result) {
+        [[nodiscard]] static T getResultValue(AstResult<T> result) {
             if (!Util::hasValue<T>(result)) {
                 throw std::runtime_error("Result has no value");
             }
@@ -49,7 +49,7 @@ namespace ionir {
         }
 
         template<typename T = Construct>
-        static ionshared::Ptr<T> getResultValue(AstPtrResult<T> result) {
+        [[nodiscard]] static ionshared::Ptr<T> getResultValue(AstPtrResult<T> result) {
             ionshared::Ptr<T> value = Util::getResultValue<ionshared::Ptr<T>>(result);
 
             if (value == nullptr) {
@@ -60,7 +60,7 @@ namespace ionir {
         }
 
         template<typename TFrom, typename TTo = Construct>
-        static AstPtrResult<TTo> castAstPtrResult(AstPtrResult<TFrom> fromResult, bool useDynamicPointerCast = true) {
+        [[nodiscard]] static AstPtrResult<TTo> castAstPtrResult(AstPtrResult<TFrom> fromResult, bool useDynamicPointerCast = true) {
             if (Util::hasValue(fromResult)) {
                 ionshared::Ptr<TFrom> fromValue = Util::getResultValue<TFrom>(fromResult);
                 ionshared::Ptr<TTo> toValue;

@@ -2,7 +2,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    ZextInst::ZextInst(ZextInstOpts opts) : Inst(opts.parent, InstKind::Zext) {
+    ZextInst::ZextInst(ZextInstOpts opts) :
+        Inst(opts.parent, InstKind::Zext) {
         //
     }
 

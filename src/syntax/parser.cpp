@@ -55,8 +55,16 @@ namespace ionir {
         return std::nullopt;
     }
 
-    Parser::Parser(TokenStream stream, const ionshared::Ptr<ionshared::NoticeStack> &noticeStack, std::string filePath)
-        : stream(std::move(stream)), noticeStack(noticeStack), noticeSentinel(std::make_shared<NoticeSentinel>(noticeStack)), filePath(std::move(filePath)), classifier() {
+    Parser::Parser(
+        TokenStream stream,
+        const ionshared::Ptr<ionshared::NoticeStack> &noticeStack,
+        std::string filePath
+    ) :
+        stream(std::move(stream)),
+        noticeStack(noticeStack),
+        noticeSentinel(std::make_shared<NoticeSentinel>(noticeStack)),
+        filePath(std::move(filePath)),
+        classifier() {
         //
     }
 

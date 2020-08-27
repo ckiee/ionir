@@ -16,11 +16,11 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        std::string getId() const noexcept;
+        [[nodiscard]] std::string getId() const noexcept;
 
         void setId(std::string value) noexcept;
 
-        ionshared::Ptr<Construct> getValue() const noexcept;
+        [[nodiscard]] ionshared::Ptr<Construct> getValue() const noexcept;
 
         void setValue(ionshared::Ptr<Construct> value) noexcept;
     };

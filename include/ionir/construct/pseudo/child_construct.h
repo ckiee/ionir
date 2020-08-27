@@ -15,7 +15,9 @@ namespace ionir {
         ionshared::Ptr<T> parent;
 
     public:
-        ChildConstruct(ionshared::Ptr<T> parent, ConstructKind kind) : Construct(kind), parent(parent) {
+        ChildConstruct(ionshared::Ptr<T> parent, ConstructKind kind) :
+            Construct(kind),
+            parent(parent) {
             //
         }
 

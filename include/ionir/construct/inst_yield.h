@@ -12,7 +12,7 @@ namespace ionir {
     public:
         explicit InstYield(std::optional<std::string> yieldId);
 
-        std::optional<std::string> getYieldId() const noexcept;
+        [[nodiscard]] std::optional<std::string> getYieldId() const noexcept;
 
         void setYieldId(std::optional<std::string> yieldId) noexcept;
     };

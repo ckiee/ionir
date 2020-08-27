@@ -2,8 +2,10 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Inst::Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind, ionshared::OptPtr<Inst> yields)
-        : ChildConstruct(std::move(parent), ConstructKind::Inst), kind(kind), yields(std::move(yields)) {
+    Inst::Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind, ionshared::OptPtr<Inst> yields) :
+        ChildConstruct(std::move(parent), ConstructKind::Inst),
+        kind(kind),
+        yields(std::move(yields)) {
         //
     }
 

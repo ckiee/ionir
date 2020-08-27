@@ -25,16 +25,16 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        ionshared::Ptr<Prototype> getPrototype() const noexcept;
+        [[nodiscard]] ionshared::Ptr<Prototype> getPrototype() const noexcept;
 
         void setPrototype(ionshared::Ptr<Prototype> prototype);
 
-        ionshared::Ptr<FunctionBody> getBody() const noexcept;
+        [[nodiscard]] ionshared::Ptr<FunctionBody> getBody() const noexcept;
 
         // TODO: Should this automatically set the body's parent as well?
         void setBody(const ionshared::Ptr<FunctionBody> &body) noexcept;
 
-        PtrSymbolTable<LocalVariableDescriptor> getLocalVariables() const;
+        [[nodiscard]] PtrSymbolTable<LocalVariableDescriptor> getLocalVariables() const;
 
         void setLocalVariables(PtrSymbolTable<LocalVariableDescriptor> localVariables);
 

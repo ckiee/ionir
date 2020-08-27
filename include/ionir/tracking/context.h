@@ -12,12 +12,21 @@ namespace ionir {
     private:
         std::vector<Scope> scopes;
 
+        Scope globalScope;
+
     public:
-        explicit Context(std::vector<Scope> scopes = {});
+        explicit Context(
+            Scope globalScope = ionshared::Util::makePtrSymbolTable<Construct>(),
+            std::vector<Scope> scopes = {}
+        );
 
         [[nodiscard]] std::vector<Scope> getScopes() const noexcept;
 
         void setScopes(std::vector<Scope> scopes) noexcept;
+
+        [[nodiscard]] Scope getGlobalScope() const noexcept;
+
+        void setGlobalScope(Scope globalScope) noexcept;
 
         void appendScope(const Scope &scope) noexcept;
 

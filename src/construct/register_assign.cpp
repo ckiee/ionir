@@ -1,8 +1,10 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    RegisterAssign::RegisterAssign(std::string id, ionshared::Ptr<Construct> value)
-        : Construct(ConstructKind::RegisterAssign), id(std::move(id)), value(std::move(value)) {
+    RegisterAssign::RegisterAssign(std::string id, ionshared::Ptr<Construct> value) :
+        Construct(ConstructKind::RegisterAssign),
+        id(std::move(id)),
+        value(std::move(value)) {
         //
     }
 

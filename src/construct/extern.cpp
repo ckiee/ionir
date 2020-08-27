@@ -1,8 +1,9 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Extern::Extern(ionshared::Ptr<Prototype> prototype)
-        : Construct(ConstructKind::Extern), prototype(std::move(prototype)) {
+    Extern::Extern(ionshared::Ptr<Prototype> prototype) :
+        Construct(ConstructKind::Extern),
+        prototype(std::move(prototype)) {
         //
     }
 

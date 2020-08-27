@@ -17,13 +17,16 @@ namespace ionir {
         bool isVariable;
 
     public:
-        explicit Args(ionshared::SymbolTable<Arg> items = {}, bool isVariable = false);
+        explicit Args(
+            ionshared::SymbolTable<Arg> items = {},
+            bool isVariable = false
+        );
 
-        ionshared::SymbolTable<Arg> getItems() const noexcept;
+        [[nodiscard]] ionshared::SymbolTable<Arg> getItems() const noexcept;
 
         void setItems(ionshared::SymbolTable<Arg> items) noexcept;
 
-        bool getIsVariable() const noexcept;
+        [[nodiscard]] bool getIsVariable() const noexcept;
 
         void setIsVariable(bool isInfinite) noexcept;
     };

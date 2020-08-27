@@ -1,10 +1,11 @@
 #include <ionir/passes/pass.h>
 
-#include <utility>
-
 namespace ionir {
-    BranchInst::BranchInst(const BranchInstOpts &opts)
-        : Inst(opts.parent, InstKind::Branch), condition(opts.condition), blockRef(opts.blockRef), otherwiseBlockRef(opts.otherwiseRef) {
+    BranchInst::BranchInst(const BranchInstOpts &opts) :
+        Inst(opts.parent, InstKind::Branch),
+        condition(opts.condition),
+        blockRef(opts.blockRef),
+        otherwiseBlockRef(opts.otherwiseRef) {
         //
     }
 

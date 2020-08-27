@@ -1,8 +1,9 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    VariableRef::VariableRef(std::string id)
-        : Construct(ConstructKind::VariableRef), Named(std::move(id)) {
+    VariableRef::VariableRef(std::string id) :
+        Construct(ConstructKind::VariableRef),
+        Named(std::move(id)) {
         //
     }
 

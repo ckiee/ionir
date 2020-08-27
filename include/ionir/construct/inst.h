@@ -49,12 +49,12 @@ namespace ionir {
 
         void accept(Pass &visitor) override = 0;
 
-        InstKind getInstKind() const noexcept;
+        [[nodiscard]] InstKind getInstKind() const noexcept;
 
-        ionshared::OptPtr<Inst> getYields() const noexcept;
+        [[nodiscard]] ionshared::OptPtr<Inst> getYields() const noexcept;
 
-        bool isTerminal() const noexcept;
+        [[nodiscard]] bool isTerminal() const noexcept;
 
-        uint32_t getOrder();
+        [[nodiscard]] uint32_t getOrder();
     };
 }

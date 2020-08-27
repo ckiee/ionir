@@ -58,7 +58,7 @@ namespace ionir {
             return result;
         }
 
-        bool isEmpty() const {
+        [[nodiscard]] bool isEmpty() const {
             return this->value.empty();
         }
 
@@ -72,7 +72,7 @@ namespace ionir {
             }
         }
 
-        size_t size() const {
+        [[nodiscard]] size_t size() const {
             return this->value.size();
         }
     };

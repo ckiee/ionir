@@ -10,7 +10,7 @@ namespace ionir {
         Pass::visitModule(node);
 
         // TODO: Is it push_back() or push_front()?
-        this->scope.push_back(node->getSymbolTable());
+        this->scope.push_back(node->getContext()->getGlobalScope());
     }
 
     void NameResolutionPass::visitRef(PtrRef<> node) {
@@ -34,7 +34,7 @@ namespace ionir {
                 ionshared::Ptr<FunctionBody> functionBody = basicBlock->getParent();
                 PtrSymbolTable<BasicBlock> functionSymbolTable = functionBody->getSymbolTable();
                 ionshared::Ptr<Module> module = functionBody->getParent()->getPrototype()->getParent();
-                PtrSymbolTable<Construct> moduleSymbolTable = module->getSymbolTable();
+                PtrSymbolTable<Construct> moduleSymbolTable = module->getContext()->getGlobalScope();
 
                 /**
                  * Check on the section's symbol table. It should take precedence

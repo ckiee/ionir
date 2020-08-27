@@ -2,7 +2,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    PtrToIntInst::PtrToIntInst(PtrToIntInstOpts opts) : Inst(opts.parent, InstKind::PtrToInt) {
+    PtrToIntInst::PtrToIntInst(const PtrToIntInstOpts &opts) :
+        Inst(opts.parent, InstKind::PtrToInt) {
         //
     }
 

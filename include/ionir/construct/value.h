@@ -41,11 +41,11 @@ namespace ionir {
 //            visitor.visitValue(this->staticCast<Value<>>());
         }
 
-        ValueKind getValueKind() const noexcept {
+        [[nodiscard]] ValueKind getValueKind() const noexcept {
             return this->kind;
         }
 
-        ionshared::Ptr<T> getType() const noexcept {
+        [[nodiscard]] ionshared::Ptr<T> getType() const noexcept {
             return this->type;
         }
 

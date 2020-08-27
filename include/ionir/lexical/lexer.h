@@ -45,11 +45,11 @@ namespace ionir {
         std::vector<std::pair<std::regex, TokenKind>> complexIds;
 
     protected:
-        char getChar() const noexcept;
+        [[nodiscard]] char getChar() const noexcept;
 
-        std::string getCharAsString() const noexcept;
+        [[nodiscard]] std::string getCharAsString() const noexcept;
 
-        size_t getLength() const noexcept;
+        [[nodiscard]] size_t getLength() const noexcept;
 
         size_t setIndex(size_t index) noexcept;
 
@@ -62,7 +62,7 @@ namespace ionir {
     public:
         explicit Lexer(const std::string &input);
 
-        size_t getIndex() const noexcept;
+        [[nodiscard]] size_t getIndex() const noexcept;
 
         void begin() override;
 
@@ -76,7 +76,7 @@ namespace ionir {
          */
         std::optional<Token> tryNext() override;
 
-        std::string getInput() const noexcept;
+        [[nodiscard]] std::string getInput() const noexcept;
 
         std::vector<Token> scan();
     };

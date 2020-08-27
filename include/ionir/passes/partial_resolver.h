@@ -13,6 +13,6 @@ namespace ionir {
     public:
         explicit PartialResolverPass(std::vector<ionshared::Ptr<Inst>> partials);
 
-        std::vector<ionshared::Ptr<Inst>> getPartials() const;
+        [[nodiscard]] std::vector<ionshared::Ptr<Inst>> getPartials() const;
     };
 }

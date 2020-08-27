@@ -4,7 +4,8 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Construct::Construct(ConstructKind kind) : ionshared::BaseConstruct<Construct, ConstructKind>(kind) {
+    Construct::Construct(ConstructKind kind) :
+        ionshared::BaseConstruct<Construct, ConstructKind>(kind) {
         //
     }
 

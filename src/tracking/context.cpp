@@ -1,8 +1,17 @@
 #include <ionir/tracking/context.h>
 
 namespace ionir {
-    Context::Context(std::vector<Scope> scopes) : scopes(std::move(scopes)) {
+    Context::Context(Scope globalScope, std::vector<Scope> scopes)
+        : globalScope(std::move(globalScope)), scopes(std::move(scopes)) {
         //
+    }
+
+    Scope Context::getGlobalScope() const noexcept {
+        return this->globalScope;
+    }
+
+    void Context::setGlobalScope(Scope globalScope) noexcept {
+        this->globalScope = std::move(globalScope);
     }
 
     std::vector<Scope> Context::getScopes() const noexcept {
@@ -50,6 +59,7 @@ namespace ionir {
             }
         }
 
-        return std::nullopt;
+        // Lastly, check the global scope.
+        return this->globalScope->lookup(id);
     }
 }

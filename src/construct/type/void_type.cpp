@@ -1,7 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    VoidType::VoidType() : Type(ConstName::typeVoid, TypeKind::Void) {
+    VoidType::VoidType() :
+        Type(ConstName::typeVoid, TypeKind::Void) {
         //
     }
 

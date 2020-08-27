@@ -21,17 +21,17 @@ namespace ionir {
         PtrRef<AllocaInst> target;
 
     public:
-        explicit StoreInst(StoreInstOpts opts);
+        explicit StoreInst(const StoreInstOpts &opts);
 
         void accept(Pass &visitor) override;
 
         Ast getChildNodes() override;
 
-        ionshared::Ptr<Value<>> getValue() const;
+        [[nodiscard]] ionshared::Ptr<Value<>> getValue() const;
 
         void setValue(ionshared::Ptr<Value<>> value);
 
-        PtrRef<AllocaInst> getTarget() const;
+        [[nodiscard]] PtrRef<AllocaInst> getTarget() const;
 
         void setTarget(PtrRef<AllocaInst> target);
     };

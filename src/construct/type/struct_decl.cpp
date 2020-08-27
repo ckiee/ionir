@@ -1,7 +1,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    StructDecl::StructDecl() : Construct(ConstructKind::StructDecl) {
+    StructDecl::StructDecl() :
+        Construct(ConstructKind::StructDecl) {
         //
     }
 

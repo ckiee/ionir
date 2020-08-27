@@ -22,7 +22,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        OptPtrRef<Function> getCallee() const;
+        [[nodiscard]] OptPtrRef<Function> getCallee() const;
 
         void setCallee(OptPtrRef<Function> callee);
     };

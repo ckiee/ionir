@@ -1,8 +1,10 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    StoreInst::StoreInst(StoreInstOpts opts)
-        : Inst(opts.parent, InstKind::Store), value(opts.value), target(opts.target) {
+    StoreInst::StoreInst(const StoreInstOpts &opts) :
+        Inst(opts.parent, InstKind::Store),
+        value(opts.value),
+        target(opts.target) {
         //
     }
 

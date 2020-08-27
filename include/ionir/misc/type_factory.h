@@ -11,14 +11,14 @@
 namespace ionir {
     class TypeFactory {
     public:
-        static ionshared::Ptr<IntegerType> typeInteger(IntegerKind integerKind, bool isSigned = true);
+        [[nodiscard]] static ionshared::Ptr<IntegerType> typeInteger(IntegerKind integerKind, bool isSigned = true);
 
-        static ionshared::Ptr<BooleanType> typeBoolean();
+        [[nodiscard]] static ionshared::Ptr<BooleanType> typeBoolean();
 
-        static ionshared::Ptr<IntegerType> typeChar();
+        [[nodiscard]] static ionshared::Ptr<IntegerType> typeChar();
 
-        static ionshared::Ptr<Type> typeString();
+        [[nodiscard]] static ionshared::Ptr<Type> typeString();
 
-        static ionshared::Ptr<VoidType> typeVoid();
+        [[nodiscard]] static ionshared::Ptr<VoidType> typeVoid();
     };
 }

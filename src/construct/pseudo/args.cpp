@@ -2,7 +2,8 @@
 
 namespace ionir {
     Args::Args(ionshared::SymbolTable<Arg> items, bool isVariable) :
-        items(std::move(items)), isVariable(isVariable) {
+        items(std::move(items)),
+        isVariable(isVariable) {
         //
     }
 

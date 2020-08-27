@@ -7,15 +7,16 @@ namespace ionir {
         T value;
 
     public:
-        explicit Wrapper(T value) : value(value) {
+        explicit Wrapper(T value) :
+            value(value) {
             //
         }
 
-        virtual T &unwrap() {
+        [[nodiscard]] virtual T &unwrap() {
             return this->value;
         }
 
-        virtual const T &unwrapConst() const {
+        [[nodiscard]] virtual const T &unwrapConst() const {
             return this->value;
         }
     };

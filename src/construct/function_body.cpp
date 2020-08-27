@@ -3,8 +3,13 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    FunctionBody::FunctionBody(ionshared::Ptr<Function> parent, PtrSymbolTable<BasicBlock> symbolTable)
-        : ChildConstruct(std::move(parent), ConstructKind::FunctionBody), ScopeAnchor<BasicBlock>(std::move(symbolTable)) {
+    FunctionBody::FunctionBody(
+        ionshared::Ptr<Function> parent,
+        PtrSymbolTable<BasicBlock> symbolTable
+    ) :
+        ChildConstruct(std::move(parent),
+        ConstructKind::FunctionBody),
+        ScopeAnchor<BasicBlock>(std::move(symbolTable)) {
         //
     }
 

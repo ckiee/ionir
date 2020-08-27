@@ -21,7 +21,7 @@ namespace ionir {
 
         static const std::string basicBlockEntryId;
 
-        static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
+        [[nodiscard]] static std::optional<LlvmIntTypeResolver> tryGetIntTypeResolver(IntegerKind kind);
 
         static std::map<TokenKind, int> operatorPrecedence;
 
@@ -29,8 +29,8 @@ namespace ionir {
 
         static std::map<TokenKind, IntegerKind> tokenKindToIntegerKind;
 
-        static std::optional<std::string> getConstructKindName(ConstructKind constructKind);
+        [[nodiscard]] static std::optional<std::string> getConstructKindName(ConstructKind constructKind);
 
-        static std::optional<IntegerKind> getIntegerKind(TokenKind tokenKind);
+        [[nodiscard]] static std::optional<IntegerKind> getIntegerKind(TokenKind tokenKind);
     };
 }

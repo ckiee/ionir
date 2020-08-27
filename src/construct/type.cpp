@@ -1,8 +1,10 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Type::Type(std::string id, TypeKind kind)
-        : Construct(ConstructKind::Type), Named(std::move(id)), kind(kind) {
+    Type::Type(std::string id, TypeKind kind) :
+        Construct(ConstructKind::Type),
+        Named(std::move(id)),
+        kind(kind) {
         //
     }
 

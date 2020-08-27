@@ -1,7 +1,8 @@
 #include <ionir/construct/inst_yield.h>
 
 namespace ionir {
-    InstYield::InstYield(std::optional<std::string> yieldId) : yieldId(std::move(yieldId)) {
+    InstYield::InstYield(std::optional<std::string> yieldId) :
+        yieldId(std::move(yieldId)) {
         //
     }
 

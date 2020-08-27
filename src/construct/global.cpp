@@ -1,8 +1,15 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Global::Global(ionshared::Ptr<Type> type, std::string id, ionshared::OptPtr<Value<>> value)
-        : Construct(ConstructKind::Global), type(std::move(type)), Named(std::move(id)), value(std::move(value)) {
+    Global::Global(
+        ionshared::Ptr<Type> type,
+        std::string id,
+        ionshared::OptPtr<Value<>> value
+    ) :
+        Construct(ConstructKind::Global),
+        Named(std::move(id)),
+        type(std::move(type)),
+        value(std::move(value)) {
         //
     }
 

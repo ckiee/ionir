@@ -16,9 +16,9 @@ namespace ionir {
     public:
         CodeWriter();
 
-        std::string make(const ionshared::Ptr<Construct>& rootConstruct) const;
+        [[nodiscard]] std::string make(const ionshared::Ptr<Construct>& rootConstruct) const;
 
-        std::string getBuffer() const noexcept;
+        [[nodiscard]] std::string getBuffer() const noexcept;
 
         void clear() noexcept;
 

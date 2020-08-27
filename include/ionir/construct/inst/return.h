@@ -23,10 +23,10 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        ionshared::OptPtr<Construct> getValue() const noexcept;
+        [[nodiscard]] ionshared::OptPtr<Construct> getValue() const noexcept;
 
         void setValue(ionshared::OptPtr<Construct> value) noexcept;
 
-        bool hasValue() noexcept;
+        [[nodiscard]] bool hasValue() noexcept;
     };
 }

@@ -1,8 +1,8 @@
 #include <ionir/error_handling/notice_sentinel.h>
 
 namespace ionir {
-    NoticeSentinel::NoticeSentinel(ionshared::Ptr<ionshared::NoticeStack> noticeStack)
-        : noticeStack(std::move(noticeStack)) {
+    NoticeSentinel::NoticeSentinel(ionshared::Ptr<ionshared::NoticeStack> noticeStack) :
+        noticeStack(std::move(noticeStack)) {
         //
     }
 

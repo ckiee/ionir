@@ -20,8 +20,14 @@ namespace ionir {
         ionshared::OptPtr<T> value;
 
     public:
-        Ref(const std::string &id, ionshared::Ptr<Construct> owner, ionshared::OptPtr<T> value = std::nullopt)
-            : Construct(ConstructKind::Ref), Named(id), owner(std::move(owner)), value(value) {
+        Ref(
+            const std::string &id,
+            ionshared::Ptr<Construct> owner,
+            ionshared::OptPtr<T> value = std::nullopt
+        ) :
+            Construct(ConstructKind::Ref),
+            Named(id), owner(std::move(owner)),
+            value(value) {
             //
         }
 

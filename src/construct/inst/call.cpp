@@ -1,8 +1,9 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    CallInst::CallInst(const CallInstOpts &opts)
-        : Inst(opts.parent, InstKind::Call), callee(opts.callee) {
+    CallInst::CallInst(const CallInstOpts &opts) :
+        Inst(opts.parent, InstKind::Call),
+        callee(opts.callee) {
         //
     }
 

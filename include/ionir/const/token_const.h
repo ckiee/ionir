@@ -34,7 +34,10 @@ namespace ionir {
 
         static bool pushSimple(std::string value, TokenKind tokenKind);
 
-        static bool sortByKeyLength(const std::pair<std::string, TokenKind> &a, const std::pair<std::string, TokenKind> &b);
+        static bool sortByKeyLength(
+            const std::pair<std::string, TokenKind> &a,
+            const std::pair<std::string, TokenKind> &b
+        );
 
         static void ensureInit();
 

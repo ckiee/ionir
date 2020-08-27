@@ -32,11 +32,11 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        ionshared::Ptr<Args> getArgs() const noexcept;
+        [[nodiscard]] ionshared::Ptr<Args> getArgs() const noexcept;
 
         void setArgs(ionshared::Ptr<Args> args) noexcept;
 
-        ionshared::Ptr<Type> getReturnType() const noexcept;
+        [[nodiscard]] ionshared::Ptr<Type> getReturnType() const noexcept;
 
         void setReturnType(ionshared::Ptr<Type> returnType) noexcept;
 

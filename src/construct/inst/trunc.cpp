@@ -2,7 +2,8 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    TruncInst::TruncInst(TruncInstOpts opts) : Inst(opts.parent, InstKind::Trunc) {
+    TruncInst::TruncInst(TruncInstOpts opts) :
+        Inst(opts.parent, InstKind::Trunc) {
         //
     }
 

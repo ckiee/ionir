@@ -30,7 +30,7 @@
 namespace ionir {
     class LlvmCodegenPass : public Pass {
     private:
-        ionshared::Ptr<Context> context;
+        ionshared::Ptr<Context> contextBuffer;
 
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
 
@@ -43,18 +43,18 @@ namespace ionir {
         /**
          * The currently active LLVM context;
          */
-        std::optional<llvm::LLVMContext *> contextBuffer;
+        std::optional<llvm::LLVMContext *> llvmContextBuffer;
 
         /**
          * The currently active LLVM module.
          */
-        std::optional<llvm::Module *> moduleBuffer;
+        std::optional<llvm::Module *> llvmModuleBuffer;
 
-        std::optional<llvm::Function *> functionBuffer;
+        std::optional<llvm::Function *> llvmFunctionBuffer;
 
-        std::optional<llvm::IRBuilder<>> builderBuffer;
+        std::optional<llvm::IRBuilder<>> llvmBuilderBuffer;
 
-        std::optional<llvm::BasicBlock *> basicBlockBuffer;
+        std::optional<llvm::BasicBlock *> llvmBasicBlockBuffer;
 
         std::map<std::string, llvm::Value *> namedValues;
 
@@ -83,6 +83,8 @@ namespace ionir {
         bool saveBuilder();
 
         bool restoreBuilder();
+
+        void resetContextBuffer() noexcept;
 
         std::optional<llvm::Value *> findInScope(ionshared::Ptr<Construct> key);
 

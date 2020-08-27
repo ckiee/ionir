@@ -13,7 +13,7 @@ namespace ionir {
 
     class IcmpInst : public Inst {
     public:
-        explicit IcmpInst(IcmpInstOpts opts);
+        explicit IcmpInst(const IcmpInstOpts &opts);
 
         void accept(Pass &visitor) override;
     };

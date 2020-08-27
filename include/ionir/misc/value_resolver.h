@@ -13,6 +13,10 @@ namespace ionir {
     public:
         explicit ValueResolver(llvm::Module *module);
 
-        std::optional<llvm::Constant *> tryResolveInt(IntegerKind kind, long value, bool isSigned = true);
+        [[nodiscard]] std::optional<llvm::Constant *> tryResolveInt(
+            IntegerKind kind,
+            long value,
+            bool isSigned = true
+        );
     };
 }

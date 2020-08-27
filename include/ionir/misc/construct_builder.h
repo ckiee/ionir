@@ -15,7 +15,7 @@ namespace ionir {
             //
         }
 
-        std::vector<Construct> getParts() const {
+        [[nodiscard]] std::vector<Construct> getParts() const {
             return this->parts;
         }
 

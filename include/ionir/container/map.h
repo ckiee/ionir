@@ -16,7 +16,7 @@ namespace ionir {
             return this->value[key];
         }
 
-        bool contains(TKey key) const {
+        [[nodiscard]] bool contains(TKey key) const {
             return this->value.find(key) != this->value.end();
         }
 
@@ -38,7 +38,7 @@ namespace ionir {
             return this->value.erase(key);
         }
 
-        std::optional<TValue> lookup(TKey key) {
+        [[nodiscard]] std::optional<TValue> lookup(TKey key) {
             if (!this->contains(key)) {
                 return std::nullopt;
             }
@@ -46,7 +46,7 @@ namespace ionir {
             return this->value[key];
         }
 
-        TValue lookupOr(TKey key, TValue defaultValue) {
+        [[nodiscard]] TValue lookupOr(TKey key, TValue defaultValue) {
             std::optional<TValue> value = this->lookup(key);
 
             if (!value.has_value()) {
@@ -60,11 +60,11 @@ namespace ionir {
             this->value.clear();
         }
 
-        size_t getSize() const {
+        [[nodiscard]] size_t getSize() const {
             return this->value.size();
         }
 
-        bool isEmpty() const {
+        [[nodiscard]] bool isEmpty() const {
             return this->value.empty();
         }
     };

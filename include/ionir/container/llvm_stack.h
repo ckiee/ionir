@@ -8,7 +8,7 @@ namespace ionir {
     class LlvmStack : public Stack<T *> {
     public:
         template<typename TResult>
-        TResult *popAs() {
+        [[nodiscard]] TResult *popAs() {
             return llvm::dyn_cast<TResult>(this->pop());
         }
     };

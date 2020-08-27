@@ -38,6 +38,6 @@ namespace ionir {
 
         bool equals(const ionshared::Ptr<Construct> &other) override;
 
-        TypeKind getTypeKind() const noexcept;
+        [[nodiscard]] TypeKind getTypeKind() const noexcept;
     };
 }
