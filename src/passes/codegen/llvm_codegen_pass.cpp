@@ -87,10 +87,6 @@ namespace ionir {
         return true;
     }
 
-    void LlvmCodegenPass::resetContextBuffer() noexcept {
-        this->contextBuffer = std::make_shared<Context>();
-    }
-
     std::optional<llvm::Value *> LlvmCodegenPass::findInScope(ionshared::Ptr<Construct> key) {
         llvm::Value *value = this->emittedEntities.front()[std::move(key)];
 
@@ -139,17 +135,11 @@ namespace ionir {
         this->requireContext();
         this->requireFunction();
 
-        // TODO: Debugging. ------------
-        auto id = node->getId();
-        auto ctx = *this->llvmContextBuffer;
-        auto fb = *this->llvmFunctionBuffer;
-        // -----------------------------
-
         /**
          * Create the basic block and at the same time register it
          * under the buffer function.
          */
-        llvm::BasicBlock *block = llvm::BasicBlock::Create(
+        llvm::BasicBlock *llvmBasicBlock = llvm::BasicBlock::Create(
             **this->llvmContextBuffer,
             node->getId(),
             *this->llvmFunctionBuffer
@@ -159,7 +149,7 @@ namespace ionir {
          * Create and assign the block to the builder. This will also
          * set/update the block buffer.
          */
-        this->setBuilder(block);
+        this->setBuilder(llvmBasicBlock);
 
         // Visit registers & instructions.
         std::vector<ionshared::Ptr<RegisterAssign>> registers = node->getRegisters();
@@ -174,12 +164,15 @@ namespace ionir {
         for (const auto &inst : insts) {
             this->visitInst(inst);
 
-            // Clean the stack off the result.
+            // Discard the resulting instruction, as it is not needed.
             this->valueStack.pop();
         }
 
-        this->valueStack.push(block);
+        this->valueStack.push(llvmBasicBlock);
         this->contextBuffer->popScope();
+
+        // TODO: Avoid using emitted entities.
+        this->emittedEntities.front()[node] = llvmBasicBlock;
     }
 
     void LlvmCodegenPass::visitFunctionBody(ionshared::Ptr<FunctionBody> node) {
@@ -347,6 +340,9 @@ namespace ionir {
         // Set the module on the modules symbol table.
         this->modules->insert(node->getId(), *this->llvmModuleBuffer);
 
+        // Set the module's context as the context buffer.
+        this->contextBuffer = node->getContext();
+
         // Proceed to visit all the module's children (top-level constructs).
         std::map<std::string, ionshared::Ptr<Construct>> moduleSymbolTable =
             this->contextBuffer->getGlobalScope()->unwrap();
@@ -360,16 +356,6 @@ namespace ionir {
              */
              this->valueStack.pop();
         }
-
-        /**
-         * Set the module's context and reset it, leaving it clean and
-         * ready for the next module (if any). It's important to attach
-         * the buffered context onto the module node because otherwise
-         * if any passes visit the node again they won't be aware of any
-         * context or scopes (it'll just be a clean global scope).
-         */
-        node->setContext(this->contextBuffer);
-        this->resetContextBuffer();
     }
 
     void LlvmCodegenPass::visitRegisterAssign(ionshared::Ptr<RegisterAssign> node) {

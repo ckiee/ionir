@@ -30,6 +30,11 @@
 namespace ionir {
     class LlvmCodegenPass : public Pass {
     private:
+        /**
+         * The context buffer is always set. It's constructed as an
+         * independent, empty context, with an empty global scope and
+         * no other scopes.
+         */
         ionshared::Ptr<Context> contextBuffer;
 
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
@@ -83,8 +88,6 @@ namespace ionir {
         bool saveBuilder();
 
         bool restoreBuilder();
-
-        void resetContextBuffer() noexcept;
 
         std::optional<llvm::Value *> findInScope(ionshared::Ptr<Construct> key);
 

@@ -199,10 +199,16 @@ namespace ionir {
         }
 
         // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
-        this->visitBasicBlock(*bodyRef->getValue());
+//        this->visitBasicBlock(*bodyRef->getValue());
 
-        // Pop both reference's values.
-        llvm::BasicBlock *llvmBodyBlock = this->valueStack.popAs<llvm::BasicBlock>();
+        auto llvmBodyBlockResult = this->findInScope(*bodyRef->getValue());
+
+        if (!llvmBodyBlockResult.has_value()) {
+            throw std::runtime_error("Could not find llvm block in emitted entities");
+        }
+
+// TODO: Just temporarily as debugging using emittedEntities.
+        llvm::BasicBlock *llvmBodyBlock = llvm::dyn_cast<llvm::BasicBlock>(*llvmBodyBlockResult);
 
         this->restoreBuilder();
 
