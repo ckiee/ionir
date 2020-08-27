@@ -30,7 +30,9 @@ namespace ionir {
 
         Trunc,
 
-        Icmp
+        Icmp,
+
+        Jump
     };
 
     class Inst : public ChildConstruct<BasicBlock> {
@@ -40,7 +42,10 @@ namespace ionir {
         ionshared::OptPtr<Inst> yields;
 
     public:
-        Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind, ionshared::OptPtr<Inst> yields = std::nullopt);
+        Inst(
+            ionshared::Ptr<BasicBlock> parent,
+            InstKind kind, ionshared::OptPtr<Inst> yields = std::nullopt
+        );
 
         void accept(Pass &visitor) override = 0;
 
@@ -49,5 +54,7 @@ namespace ionir {
         ionshared::OptPtr<Inst> getYields() const noexcept;
 
         bool isTerminal() const noexcept;
+
+        uint32_t getOrder();
     };
 }

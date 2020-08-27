@@ -180,15 +180,39 @@ namespace ionir {
         ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
             std::move(parent),
             Util::getResultValue(value),
+
+            // The target reference will be filled below.
             nullptr
         });
 
         AstPtrResult<Ref<AllocaInst>> target = this->parseRef<AllocaInst>(storeInst);
 
+        // TODO: StoreInst?
         IONIR_PARSER_ASSERT_RESULT(target, StoreInst)
 
+        // Fill the target reference in the store instruction.
         storeInst->setTarget(Util::getResultValue(target));
 
         return storeInst;
+    }
+
+    AstPtrResult<JumpInst> Parser::parseJumpInst(ionshared::Ptr<BasicBlock> parent) {
+        this->skipOver(TokenKind::InstJump);
+
+        ionshared::Ptr<JumpInst> jumpInst = std::make_shared<JumpInst>(JumpInstOpts{
+            std::move(parent),
+
+            // The basic block reference will be filled below.
+            nullptr
+        });
+
+        AstPtrResult<Ref<BasicBlock>> target = this->parseRef<BasicBlock>(jumpInst);
+
+        IONIR_PARSER_ASSERT_RESULT(target, JumpInst)
+
+        // Fill the basic block reference in the jump instruction.
+        jumpInst->setBlockRef(Util::getResultValue(target));
+
+        return jumpInst;
     }
 }

@@ -1,5 +1,7 @@
 #include <ionir/passes/pass.h>
 
+#include <utility>
+
 namespace ionir {
     BranchInst::BranchInst(const BranchInstOpts &opts)
         : Inst(opts.parent, InstKind::Branch), condition(opts.condition), blockRef(opts.blockRef), otherwiseBlockRef(opts.otherwiseRef) {
@@ -24,7 +26,7 @@ namespace ionir {
     }
 
     void BranchInst::setCondition(ionshared::Ptr<Construct> condition) {
-        this->condition = condition;
+        this->condition = std::move(condition);
     }
 
     PtrRef<BasicBlock> BranchInst::getBlockRef() const {
@@ -32,7 +34,7 @@ namespace ionir {
     }
 
     void BranchInst::setBlockRef(PtrRef<BasicBlock> blockRef) {
-        this->blockRef = blockRef;
+        this->blockRef = std::move(blockRef);
         this->blockRef->setOwner(this->getPtr());
     }
 
@@ -41,7 +43,7 @@ namespace ionir {
     }
 
     void BranchInst::setOtherwiseBlockRef(PtrRef<BasicBlock> otherwiseBlockRef) {
-        this->otherwiseBlockRef = otherwiseBlockRef;
+        this->otherwiseBlockRef = std::move(otherwiseBlockRef);
         this->otherwiseBlockRef->setOwner(this->getPtr());
     }
 }

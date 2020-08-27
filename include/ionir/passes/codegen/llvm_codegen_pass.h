@@ -24,11 +24,14 @@
 #include <ionir/construct/global.h>
 #include <ionir/container/llvm_stack.h>
 #include <ionir/misc/helpers.h>
+#include <ionir/tracking/context.h>
 #include <ionir/passes/pass.h>
 
 namespace ionir {
     class LlvmCodegenPass : public Pass {
     private:
+        ionshared::Ptr<Context> context;
+
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
 
         LlvmStack<llvm::Value> valueStack;
@@ -80,12 +83,6 @@ namespace ionir {
         bool saveBuilder();
 
         bool restoreBuilder();
-
-        void createScope();
-
-        void destroyScope();
-
-        void addToScope(ionshared::Ptr<Construct> construct, llvm::Value *value);
 
         std::optional<llvm::Value *> findInScope(ionshared::Ptr<Construct> key);
 
@@ -140,6 +137,8 @@ namespace ionir {
         void visitCallInst(ionshared::Ptr<CallInst> node) override;
 
         void visitStoreInst(ionshared::Ptr<StoreInst> node) override;
+
+        void visitJumpInst(ionshared::Ptr<JumpInst> node) override;
 
         void visitGlobal(ionshared::Ptr<Global> node) override;
 

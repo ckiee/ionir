@@ -7,6 +7,7 @@
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>
 #include <ionir/construct/inst/call.h>
+#include <ionir/construct/inst/jump.h>
 #include "helpers.h"
 
 namespace ionir {
@@ -19,7 +20,7 @@ namespace ionir {
 
         [[nodiscard]] ionshared::Ptr<BasicBlock> getSection() const;
 
-        void insert(const ionshared::Ptr<Inst> &inst);
+        void appendInst(const ionshared::Ptr<Inst> &inst);
 
         template<class TInst, typename... TArgs>
         ionshared::Ptr<TInst> make(TArgs... args) {
@@ -27,7 +28,7 @@ namespace ionir {
 
             ionshared::Ptr<TInst> inst = std::make_shared<TInst>(args...);
 
-            this->insert(inst);
+            this->appendInst(inst);
 
             return inst;
         }
@@ -61,6 +62,10 @@ namespace ionir {
         ionshared::Ptr<CallInst> createCall(
             const ionshared::Ptr<BasicBlock> &basicBlock,
             OptPtrRef<Function> callee = std::nullopt
+        );
+
+        ionshared::Ptr<JumpInst> createJump(
+            const PtrRef<BasicBlock> &basicBlockRef
         );
     };
 }

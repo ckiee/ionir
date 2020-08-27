@@ -13,6 +13,7 @@
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/call.h>
 #include <ionir/construct/inst/store.h>
+#include <ionir/construct/inst/jump.h>
 #include <ionir/construct/pseudo/directive.h>
 #include <ionir/construct/pseudo/ref.h>
 #include <ionir/lexical/token.h>
@@ -29,7 +30,6 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/const/const_name.h>
 #include <ionir/const/notice.h>
-#include "scope.h"
 #include "ast_result.h"
 #include "parser_helpers.h"
 
@@ -128,6 +128,8 @@ namespace ionir {
         AstPtrResult<CallInst> parseCallInst(const ionshared::Ptr<BasicBlock> &parent);
 
         AstPtrResult<StoreInst> parseStoreInst(ionshared::Ptr<BasicBlock> parent);
+
+        AstPtrResult<JumpInst> parseJumpInst(ionshared::Ptr<BasicBlock> parent);
 
         /**
          * Parses an instruction, consuming its identifier. Invokes the corresponding

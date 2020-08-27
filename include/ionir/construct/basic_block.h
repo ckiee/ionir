@@ -6,9 +6,9 @@
 #include <ionir/misc/helpers.h>
 #include <ionir/misc/type_factory.h>
 #include <ionir/tracking/scope_anchor.h>
+#include <ionir/construct/pseudo/child_construct.h>
 #include "pseudo/args.h"
 #include "inst.h"
-#include "ionir/construct/pseudo/child_construct.h"
 #include "type.h"
 #include "register_assign.h"
 
@@ -18,6 +18,8 @@ namespace ionir {
     class FunctionBody;
 
     class InstBuilder;
+
+    class JumpInst;
 
     enum class BasicBlockKind {
         /**
@@ -59,6 +61,10 @@ namespace ionir {
 
         std::vector<ionshared::Ptr<Inst>> insts;
 
+        ionshared::Map<ionshared::Ptr<Inst>, uint32_t> instOrderMap;
+
+        void renumberInsts();
+
     public:
         explicit BasicBlock(const BasicBlockOpts &opts);
 
@@ -66,28 +72,57 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        BasicBlockKind getKind() const noexcept;
+        bool verify() override;
 
-        std::vector<ionshared::Ptr<RegisterAssign>> &getRegisters() noexcept;
+        [[nodiscard]] BasicBlockKind getKind() const noexcept;
+
+        [[nodiscard]] std::vector<ionshared::Ptr<RegisterAssign>> &getRegisters() noexcept;
 
         void setRegisters(std::vector<ionshared::Ptr<RegisterAssign>> registers);
 
-        std::vector<ionshared::Ptr<Inst>> &getInsts() noexcept;
+        [[nodiscard]] std::vector<ionshared::Ptr<Inst>> &getInsts() noexcept;
 
         void setInsts(std::vector<ionshared::Ptr<Inst>> insts);
 
-        void insertInst(const ionshared::Ptr<Inst> &inst);
+        void insertInst(uint32_t order, const ionshared::Ptr<Inst> &inst);
+
+        /**
+         * Inserts an instruction at the end of the instructions
+         * list.
+         */
+        void appendInst(const ionshared::Ptr<Inst> &inst);
+
+        /**
+         * Inserts an instruction at the beginning of the instructions
+         * list.
+         */
+        void prependInst(const ionshared::Ptr<Inst> &inst);
 
         uint32_t relocateInsts(BasicBlock &target, uint32_t from = 0);
 
+        ionshared::Ptr<BasicBlock> split(uint32_t atOrder, std::string id);
+
+        /**
+         * Create a jump instruction at the end of the local block
+         * targeting the provided block using an instruction builder
+         * instance. Returns the created jump instruction.
+         */
+        ionshared::Ptr<JumpInst> link(ionshared::Ptr<BasicBlock> basicBlock);
+
         /**
          * Attempt to find the index location of an instruction.
-         * Returns null if not found.
+         * Returns std::nullopt if not found.
          */
-        std::optional<uint32_t> locate(ionshared::Ptr<Inst> inst) const;
+        [[nodiscard]] std::optional<uint32_t> locate(ionshared::Ptr<Inst> inst);
 
-        ionshared::Ptr<InstBuilder> createBuilder();
+        [[nodiscard]] ionshared::OptPtr<Inst> findInstByOrder(uint32_t order) const noexcept;
 
-        ionshared::OptPtr<Inst> findTerminalInst() const;
+        [[nodiscard]] ionshared::Ptr<InstBuilder> createBuilder();
+
+        [[nodiscard]] ionshared::OptPtr<Inst> findTerminalInst() const;
+
+        [[nodiscard]] ionshared::OptPtr<Inst> findFirstInst() noexcept;
+
+        [[nodiscard]] ionshared::OptPtr<Inst> findLastInst() noexcept;
     };
 }

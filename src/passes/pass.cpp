@@ -141,6 +141,12 @@ namespace ionir {
                 break;
             }
 
+            case InstKind::Jump: {
+                this->visitJumpInst(node->dynamicCast<JumpInst>());
+
+                break;
+            }
+
             default: {
                 throw std::runtime_error("Unknown instruction kind");
             }
@@ -164,6 +170,10 @@ namespace ionir {
     }
 
     void Pass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
+        //
+    }
+
+    void Pass::visitJumpInst(ionshared::Ptr<JumpInst> node) {
         //
     }
 

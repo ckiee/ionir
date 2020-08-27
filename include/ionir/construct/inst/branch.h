@@ -32,15 +32,15 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        ionshared::Ptr<Construct> getCondition() const;
+        [[nodiscard]] ionshared::Ptr<Construct> getCondition() const;
 
         void setCondition(ionshared::Ptr<Construct> condition);
 
-        PtrRef<BasicBlock> getBlockRef() const;
+        [[nodiscard]] PtrRef<BasicBlock> getBlockRef() const;
 
         void setBlockRef(PtrRef<BasicBlock> blockRef);
 
-        PtrRef<BasicBlock> getOtherwiseBlockRef() const;
+        [[nodiscard]] PtrRef<BasicBlock> getOtherwiseBlockRef() const;
 
         void setOtherwiseBlockRef(PtrRef<BasicBlock> otherwiseBlockRef);
     };

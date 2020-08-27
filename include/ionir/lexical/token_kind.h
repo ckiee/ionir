@@ -62,6 +62,8 @@ namespace ionir {
 
         InstBranch,
 
+        InstJump,
+
         KeywordFunction,
 
         KeywordExtern,

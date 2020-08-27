@@ -117,9 +117,10 @@ namespace ionir {
         virtual bool equals(const ionshared::Ptr<Construct> &other);
 
         /**
-         * Verify the members and properties of the node.
-         * Without an implementation by the derived class,
-         * this will always return true.
+         * Verify the members and properties of the node, and it's children.
+         * Without an implementation by the derived class, this will return
+         * true if all the child nodes are successfully verified. If there
+         * are no child nodes, the result will be true by default.
          */
         virtual bool verify();
 

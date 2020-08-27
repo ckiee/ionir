@@ -22,6 +22,14 @@ namespace ionir {
     }
 
     bool Construct::verify() {
+        Ast children = this->getChildNodes();
+
+        for (const auto &child : children) {
+            if (!child->verify()) {
+                return false;
+            }
+        }
+
         return true;
     }
 

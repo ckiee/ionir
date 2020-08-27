@@ -21,8 +21,8 @@ namespace ionir {
         llvm::AllocaInst *llvmAllocaInst =
             this->builderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, _register);
 
-        this->addToScope(node, llvmAllocaInst);
         this->valueStack.push(llvmAllocaInst);
+        this->addToScope(node, llvmAllocaInst);
     }
 
     void LlvmCodegenPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
@@ -74,8 +74,8 @@ namespace ionir {
             llvmReturnInst = this->builderBuffer->CreateRetVoid();
         }
 
-        this->addToScope(node, llvmReturnInst);
         this->valueStack.push(llvmReturnInst);
+        this->addToScope(node, llvmReturnInst);
     }
 
     void LlvmCodegenPass::visitBranchInst(ionshared::Ptr<BranchInst> node) {
@@ -111,14 +111,12 @@ namespace ionir {
 
         this->restoreBuilder();
 
-        // Create the LLVM branch instruction.
+        // Create the LLVM conditional branch instruction.
         llvm::BranchInst *llvmBranchInst =
             this->builderBuffer->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
 
-        this->addToScope(node, llvmBranchInst);
-
-        // Finally, push the resulting branch instruction onto the value stack.
         this->valueStack.push(llvmBranchInst);
+        this->addToScope(node, llvmBranchInst);
     }
 
     void LlvmCodegenPass::visitCallInst(ionshared::Ptr<CallInst> node) {
@@ -145,8 +143,8 @@ namespace ionir {
         // Otherwise, create the LLVM call instruction.
         llvm::CallInst *callInst = this->builderBuffer->CreateCall(llvmCallee);
 
-        this->addToScope(node, callInst);
         this->valueStack.push(callInst);
+        this->addToScope(node, callInst);
     }
 
     void LlvmCodegenPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
@@ -171,13 +169,55 @@ namespace ionir {
         this->visitValue(node->getValue());
 
         llvm::Value *llvmValue = this->valueStack.pop();
-
-        // Create the LLVM store instruction.
         llvm::StoreInst *llvmStoreInst = this->builderBuffer->CreateStore(llvmValue, *llvmTarget);
 
-        this->addToScope(node, llvmStoreInst);
-
-        // Finally, push the resulting branch instruction onto the value stack.
         this->valueStack.push(llvmStoreInst);
+        this->addToScope(node, llvmStoreInst);
+    }
+
+    void LlvmCodegenPass::visitJumpInst(ionshared::Ptr<JumpInst> node) {
+        // TODO: Check everything throughly. Was just left there uncompleted!
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        this->requireBuilder();
+        this->saveBuilder();
+
+        PtrRef<BasicBlock> bodyRef = node->getBlockRef();
+
+        // Body reference should have been resolved at this point.
+        if (!bodyRef->isResolved()) {
+            throw std::runtime_error("Unresolved branch instruction body reference");
+        }
+
+        // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
+        this->visitBasicBlock(*bodyRef->getValue());
+
+        // Pop both reference's values.
+        llvm::BasicBlock *llvmBodyBlock = this->valueStack.popAs<llvm::BasicBlock>();
+
+        this->restoreBuilder();
+
+        // Create the LLVM branch instruction (with no condition).
+        llvm::BranchInst *llvmBranchInst =
+            this->builderBuffer->CreateBr(llvmBodyBlock);
+
+        this->valueStack.push(llvmBranchInst);
+        this->addToScope(node, llvmBranchInst);
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+        // ------------------------------------------------------------------
+
     }
 }

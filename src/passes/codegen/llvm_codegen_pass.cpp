@@ -87,20 +87,6 @@ namespace ionir {
         return true;
     }
 
-    void LlvmCodegenPass::createScope() {
-        this->emittedEntities.push_front(Map<ionshared::Ptr<Construct>, llvm::Value *>());
-    }
-
-    void LlvmCodegenPass::destroyScope() {
-        // TODO: Implement.
-    }
-
-    void LlvmCodegenPass::addToScope(ionshared::Ptr<Construct> construct, llvm::Value *value) {
-        // TODO: Catch possible exception if front is undefined.
-
-        this->emittedEntities.front()[std::move(construct)] = value;
-    }
-
     std::optional<llvm::Value *> LlvmCodegenPass::findInScope(ionshared::Ptr<Construct> key) {
         llvm::Value *value = this->emittedEntities.front()[std::move(key)];
 
@@ -112,7 +98,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules)
-        : modules(std::move(modules)), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), basicBlockBuffer(std::nullopt), valueStack(), typeStack(), registerQueue(), builderTracker(), emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
+        : context(), modules(std::move(modules)), contextBuffer(std::nullopt), moduleBuffer(std::nullopt), functionBuffer(std::nullopt), builderBuffer(std::nullopt), basicBlockBuffer(std::nullopt), valueStack(), typeStack(), registerQueue(), builderTracker(), emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}), namedValues({}) {
         //
     }
 
@@ -123,8 +109,13 @@ namespace ionir {
 
     void LlvmCodegenPass::visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node) {
         Pass::visitScopeAnchor(node);
-        this->destroyScope();
-        this->createScope();
+
+        /**
+         * Append the scope of the visited scope anchor construct.
+         * Before the visit method of the construct exits, it itself
+         * must pop the lastly added scope from the context.
+         */
+        this->context->appendScope(node->getSymbolTable());
     }
 
     void LlvmCodegenPass::visitBasicBlock(ionshared::Ptr<BasicBlock> node) {
@@ -132,12 +123,21 @@ namespace ionir {
         this->requireContext();
         this->requireFunction();
 
+        // TODO: Debugging. ------------
+        auto id = node->getId();
+        auto ctx = *this->contextBuffer;
+        auto fb = *this->functionBuffer;
+        // -----------------------------
+
         /**
          * Create the basic block and at the same time register it
          * under the buffer function.
          */
-        llvm::BasicBlock *block =
-            llvm::BasicBlock::Create(**this->contextBuffer, node->getId(), *this->functionBuffer);
+        llvm::BasicBlock *block = llvm::BasicBlock::Create(
+            **this->contextBuffer,
+            node->getId(),
+            *this->functionBuffer
+        );
 
         /**
          * Create and assign the block to the builder. This will also
@@ -156,7 +156,6 @@ namespace ionir {
 
         // Process instructions.
         for (const auto &inst : insts) {
-            // Visit the instruction.
             this->visitInst(inst);
 
             // Clean the stack off the result.
@@ -164,6 +163,7 @@ namespace ionir {
         }
 
         this->valueStack.push(block);
+        this->context->popScope();
     }
 
     void LlvmCodegenPass::visitFunctionBody(ionshared::Ptr<FunctionBody> node) {
@@ -192,6 +192,8 @@ namespace ionir {
             this->visitBasicBlock(basicBlock);
             this->valueStack.pop();
         }
+
+        this->context->popScope();
     }
 
     void LlvmCodegenPass::visitGlobal(ionshared::Ptr<Global> node) {
@@ -342,6 +344,8 @@ namespace ionir {
              */
              this->valueStack.pop();
         }
+
+        this->context->popScope();
     }
 
     void LlvmCodegenPass::visitRegisterAssign(ionshared::Ptr<RegisterAssign> node) {

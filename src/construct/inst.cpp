@@ -19,4 +19,15 @@ namespace ionir {
         return this->kind == InstKind::Return
             || this->kind == InstKind::Branch;
     }
+
+    uint32_t Inst::getOrder() {
+        std::optional<uint32_t> order =
+            this->getParent()->locate(this->dynamicCast<Inst>());
+
+        if (!order.has_value()) {
+            throw std::runtime_error("Could not locate instruction in parent");
+        }
+
+        return *order;
+    }
 }

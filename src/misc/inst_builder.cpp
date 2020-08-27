@@ -1,4 +1,5 @@
 #include <ionir/misc/inst_builder.h>
+#include <ionir/construct/function_body.h>
 
 namespace ionir {
     InstBuilder::InstBuilder(ionshared::Ptr<BasicBlock> basicBlock) : basicBlock(std::move(basicBlock)) {
@@ -9,7 +10,7 @@ namespace ionir {
         return this->basicBlock;
     }
 
-    void InstBuilder::insert(const ionshared::Ptr<Inst> &inst) {
+    void InstBuilder::appendInst(const ionshared::Ptr<Inst> &inst) {
         this->basicBlock->getInsts().push_back(inst);
     }
 
@@ -59,6 +60,21 @@ namespace ionir {
         return this->make<CallInst>(CallInstOpts{
             this->basicBlock,
             std::move(callee)
+        });
+    }
+
+    ionshared::Ptr<JumpInst> InstBuilder::createJump(const PtrRef<BasicBlock> &basicBlockRef) {
+        return this->make<JumpInst>(JumpInstOpts{
+            this->basicBlock,
+
+            std::make_shared<Ref<BasicBlock>>(
+                basicBlock->getId(),
+
+                // TODO: Should this be the correct owner? FunctionBody? or should it be Function? Probably FunctionBody, investigate as a precaution.
+                this->basicBlock->getParent(),
+
+                basicBlock
+            )
         });
     }
 }
