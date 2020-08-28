@@ -15,7 +15,7 @@ namespace ionir {
 
         switch (tokenKind) {
             case TokenKind::InstAlloca: {
-                inst = Util::castAstPtrResult<AllocaInst, Inst>(
+                inst = util::castAstPtrResult<AllocaInst, Inst>(
                     this->parseAllocaInst(parent)
                 );
 
@@ -23,7 +23,7 @@ namespace ionir {
             }
 
             case TokenKind::InstBranch: {
-                inst = Util::castAstPtrResult<BranchInst, Inst>(
+                inst = util::castAstPtrResult<BranchInst, Inst>(
                     this->parseBranchInst(parent)
                 );
 
@@ -31,7 +31,7 @@ namespace ionir {
             }
 
             case TokenKind::InstCall: {
-                inst = Util::castAstPtrResult<CallInst, Inst>(
+                inst = util::castAstPtrResult<CallInst, Inst>(
                     this->parseCallInst(parent)
                 );
 
@@ -39,7 +39,7 @@ namespace ionir {
             }
 
             case TokenKind::InstReturn: {
-                inst = Util::castAstPtrResult<ReturnInst, Inst>(
+                inst = util::castAstPtrResult<ReturnInst, Inst>(
                     this->parseReturnInst(parent)
                 );
 
@@ -47,7 +47,7 @@ namespace ionir {
             }
 
             case TokenKind::InstStore: {
-                inst = Util::castAstPtrResult<StoreInst, Inst>(
+                inst = util::castAstPtrResult<StoreInst, Inst>(
                     this->parseStoreInst(parent)
                 );
 
@@ -77,7 +77,7 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT_RESULT(typeResult, AllocaInst)
 
-        ionshared::Ptr<Type> type = Util::getResultValue(typeResult);
+        ionshared::Ptr<Type> type = util::getResultValue(typeResult);
 
         if (type->getTypeKind() == TypeKind::Void) {
             return this->noticeSentinel->makeError<AllocaInst>(IONIR_NOTICE_INST_CANNOT_ALLOCATE_VOID);
@@ -118,7 +118,7 @@ namespace ionir {
          * nullptr check as it's underlying value is not a pointer.
          */
         if (value.has_value()) {
-            returnInst->setValue(Util::getResultValue(*value));
+            returnInst->setValue(util::getResultValue(*value));
         }
 
         return returnInst;
@@ -135,7 +135,7 @@ namespace ionir {
 
         ionshared::Ptr<BranchInst> branchInst = std::make_shared<BranchInst>(BranchInstOpts{
             std::move(parent),
-            Util::getResultValue(condition),
+            util::getResultValue(condition),
             nullptr,
             nullptr
         });
@@ -148,8 +148,8 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT_RESULT(otherwiseSection, BranchInst)
 
-        branchInst->setBlockRef(Util::getResultValue(bodySection));
-        branchInst->setOtherwiseBlockRef(Util::getResultValue(otherwiseSection));
+        branchInst->setBlockRef(util::getResultValue(bodySection));
+        branchInst->setOtherwiseBlockRef(util::getResultValue(otherwiseSection));
 
         return branchInst;
     }
@@ -179,7 +179,7 @@ namespace ionir {
 
         ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
             std::move(parent),
-            Util::getResultValue(value),
+            util::getResultValue(value),
 
             // The target reference will be filled below.
             nullptr
@@ -191,7 +191,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT_RESULT(target, StoreInst)
 
         // Fill the target reference in the store instruction.
-        storeInst->setTarget(Util::getResultValue(target));
+        storeInst->setTarget(util::getResultValue(target));
 
         return storeInst;
     }
@@ -211,7 +211,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT_RESULT(target, JumpInst)
 
         // Fill the basic block reference in the jump instruction.
-        jumpInst->setBlockRef(Util::getResultValue(target));
+        jumpInst->setBlockRef(util::getResultValue(target));
 
         return jumpInst;
     }

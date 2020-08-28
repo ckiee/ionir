@@ -100,6 +100,12 @@ namespace ionir {
 
         uint32_t relocateInsts(BasicBlock &target, uint32_t from = 0);
 
+        /**
+         * Splits the local basic block, relocating all instructions
+         * at and after the provided index to a new basic block with
+         * the provided id, having the same parent as the local basic
+         * block.
+         */
         ionshared::Ptr<BasicBlock> split(uint32_t atOrder, std::string id);
 
         /**

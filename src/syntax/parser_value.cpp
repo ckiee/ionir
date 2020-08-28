@@ -14,10 +14,10 @@ namespace ionir {
         switch (currentTokenKind) {
             case TokenKind::LiteralInteger: {
                 // TODO: Should be done like below...
-                return Util::getResultValue(this->parseInt())->staticCast<Value<>>();
+                return util::getResultValue(this->parseInt())->staticCast<Value<>>();
 
                 // TODO: Throwing error for some reason.
-//                return Util::castAstPtrResult<IntegerValue, Value<>>(
+//                return util::castAstPtrResult<IntegerValue, Value<>>(
 //                    this->parseInt(),
 //                    false
 //                );
@@ -25,10 +25,10 @@ namespace ionir {
 
             case TokenKind::LiteralCharacter: {
                 // TODO: Should be done like below...
-                return Util::getResultValue(this->parseChar())->staticCast<Value<>>();
+                return util::getResultValue(this->parseChar())->staticCast<Value<>>();
 
                 // TODO: Throwing error for some reason.
-//                return Util::castAstPtrResult<CharValue, Value<>>(
+//                return util::castAstPtrResult<CharValue, Value<>>(
 //                    this->parseChar(),
 //                    false
 //                );
@@ -80,7 +80,7 @@ namespace ionir {
         uint32_t valueBitLength = ionshared::Util::calculateBitLength(value);
 
         std::optional<IntegerKind> valueIntegerKind =
-            Util::findIntegerKindFromBitLength(valueBitLength);
+            util::findIntegerKindFromBitLength(valueBitLength);
 
         if (!valueIntegerKind.has_value()) {
             // TODO: Hard-coded message. Use consts.

@@ -1,6 +1,8 @@
 #include <ionir/misc/inst_builder.h>
 #include <ionir/passes/pass.h>
 
+#include <utility>
+
 namespace ionir {
     void BasicBlock::renumberInsts() {
         this->instOrderMap.clear();
@@ -74,7 +76,7 @@ namespace ionir {
 
         // TODO: --- Repeated code below (appendInst). Simplify? Maybe create registerInst() function? ---
 
-        std::optional<std::string> id = Util::getInstId(inst);
+        std::optional<std::string> id = util::getInstId(inst);
 
         // Instruction is named. Register it in the symbol table.
         if (id.has_value()) {
@@ -92,7 +94,7 @@ namespace ionir {
 
         this->insts.push_back(inst);
 
-        std::optional<std::string> id = Util::getInstId(inst);
+        std::optional<std::string> id = util::getInstId(inst);
 
         // Instruction is named. Register it in the symbol table.
         if (id.has_value()) {
@@ -126,13 +128,24 @@ namespace ionir {
         // Erase the instructions from the local basic block.
         this->insts.erase(from, to);
 
-        return std::make_shared<BasicBlock>(BasicBlockOpts{
+        ionshared::Ptr<BasicBlock> newBasicBlock = std::make_shared<BasicBlock>(BasicBlockOpts{
             this->getParent(),
             this->kind,
-            id,
+            std::move(id),
+
+            // TODO: CRITICAL! What about registers? They are not being relocated!
             this->registers,
+
             insts
         });
+
+        /**
+         * Register the newly created basic block on the parent's
+         * symbol table (parent is a function body).
+         */
+        this->getParent()->insertBasicBlock(newBasicBlock);
+
+        return newBasicBlock;
     }
 
     ionshared::Ptr<JumpInst> BasicBlock::link(ionshared::Ptr<BasicBlock> basicBlock) {

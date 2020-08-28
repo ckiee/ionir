@@ -16,9 +16,9 @@ TEST(ModuleConstructTest, ParseEmpty) {
 
     AstPtrResult<Module> module = parser.parseModule();
 
-    EXPECT_TRUE(Util::hasValue(module));
+    EXPECT_TRUE(util::hasValue(module));
 
-    ionshared::Ptr<Module> moduleValue = Util::getResultValue(module);
+    ionshared::Ptr<Module> moduleValue = util::getResultValue(module);
 
     EXPECT_EQ(moduleValue->getId(), test::constant::foobar);
     EXPECT_TRUE(moduleValue->getContext()->getGlobalScope()->isEmpty());

@@ -6,10 +6,10 @@ namespace ionir {
 
         // Expression is a literal.
         if (Classifier::isLiteral(tokenKind)) {
-            return Util::castAstPtrResult<Value<>>(this->parseValue());
+            return util::castAstPtrResult<Value<>>(this->parseValue());
         }
 
         // Otherwise, it must be a reference.
-        return Util::castAstPtrResult<Ref<>>(this->parseRef<>(parent));
+        return util::castAstPtrResult<Ref<>>(this->parseRef<>(parent));
     }
 }

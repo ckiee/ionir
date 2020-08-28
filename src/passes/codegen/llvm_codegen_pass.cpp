@@ -155,6 +155,10 @@ namespace ionir {
         std::vector<ionshared::Ptr<RegisterAssign>> registers = node->getRegisters();
         std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
 
+        // Emit the entity at this point so visiting children can access it.
+        // TODO: Avoid using emitted entities.
+        this->emittedEntities.front()[node] = llvmBasicBlock;
+
         // Process registers.
         for (const auto &registerAssign : registers) {
             this->visitRegisterAssign(registerAssign);
@@ -170,9 +174,6 @@ namespace ionir {
 
         this->valueStack.push(llvmBasicBlock);
         this->contextBuffer->popScope();
-
-        // TODO: Avoid using emitted entities.
-        this->emittedEntities.front()[node] = llvmBasicBlock;
     }
 
     void LlvmCodegenPass::visitFunctionBody(ionshared::Ptr<FunctionBody> node) {

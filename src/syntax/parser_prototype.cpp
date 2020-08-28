@@ -23,7 +23,7 @@ namespace ionir {
 
             IONIR_PARSER_ASSERT_RESULT(argResult, Args)
 
-            Arg arg = Util::getResultValue(argResult);
+            Arg arg = util::getResultValue(argResult);
 
             // Set the argument on the symbol table.
             args[arg.second] = arg;
@@ -47,7 +47,7 @@ namespace ionir {
 
             IONIR_PARSER_ASSERT_RESULT(temporaryArgs, Prototype)
 
-            args = Util::getResultValue(temporaryArgs);
+            args = util::getResultValue(temporaryArgs);
         }
 
         this->stream.skip();
@@ -57,7 +57,7 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT_RESULT(returnType, Prototype)
 
-        return std::make_shared<Prototype>(*id, args, Util::getResultValue(returnType), parent);
+        return std::make_shared<Prototype>(*id, args, util::getResultValue(returnType), parent);
     }
 
     AstPtrResult<Extern> Parser::parseExtern(const ionshared::Ptr<Module> &parent) {
@@ -68,7 +68,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT_RESULT(prototype, Extern)
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon), Extern)
 
-        return std::make_shared<Extern>(Util::getResultValue(prototype));
+        return std::make_shared<Extern>(util::getResultValue(prototype));
     }
 
     AstPtrResult<Function> Parser::parseFunction(const ionshared::Ptr<Module> &parent) {
@@ -80,11 +80,11 @@ namespace ionir {
         IONIR_PARSER_ASSERT_RESULT(prototype, Function)
         IONIR_PARSER_ASSERT_RESULT(bodyResult, Function)
 
-        ionshared::Ptr<FunctionBody> body = Util::getResultValue(bodyResult);
+        ionshared::Ptr<FunctionBody> body = util::getResultValue(bodyResult);
 
         ionshared::Ptr<Function> function =
             std::make_shared<Function>(
-                Util::getResultValue(prototype),
+                util::getResultValue(prototype),
                 body
             );
 

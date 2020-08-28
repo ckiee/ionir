@@ -20,12 +20,12 @@ namespace ionir {
         AstPtrResult<Type> type;
 
         if (tokenKind == TokenKind::TypeVoid) {
-            type = Util::castAstPtrResult<VoidType, Type>(
+            type = util::castAstPtrResult<VoidType, Type>(
                 this->parseVoidType()
             );
         }
         else if (Classifier::isIntegerType(tokenKind)) {
-            type = Util::castAstPtrResult<IntegerType, Type>(
+            type = util::castAstPtrResult<IntegerType, Type>(
                 this->parseIntegerType()
             );
         }
@@ -37,8 +37,8 @@ namespace ionir {
          * to resolve its an internal type kind from the token's value,
          * otherwise default to an user-defined type assumption.
          */
-        if (!Util::hasValue(type)) {
-            type = std::make_shared<Type>(tokenValue, Util::resolveTypeKind(tokenValue));
+        if (!util::hasValue(type)) {
+            type = std::make_shared<Type>(tokenValue, util::resolveTypeKind(tokenValue));
             this->stream.skip();
         }
 

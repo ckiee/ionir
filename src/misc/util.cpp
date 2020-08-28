@@ -5,8 +5,8 @@
 #include <ionir/construct/extern.h>
 #include <ionir/construct/global.h>
 
-namespace ionir {
-    std::string Util::resolveIntegerKindName(IntegerKind kind) {
+namespace ionir::util {
+    std::string resolveIntegerKindName(IntegerKind kind) {
         switch (kind) {
             case IntegerKind ::Int8: {
                 return ConstName::typeInt8;
@@ -30,7 +30,7 @@ namespace ionir {
         }
     }
 
-    TypeKind Util::resolveTypeKind(const std::string &id) {
+    TypeKind resolveTypeKind(const std::string &id) {
         // TODO: CRITICAL: Add support new/missing types.
 
         if (id == ConstName::typeInt8) {
@@ -55,7 +55,7 @@ namespace ionir {
         return TypeKind::UserDefined;
     }
 
-    std::optional<std::string> Util::getConstructId(const ionshared::Ptr<Construct> &construct) {
+    std::optional<std::string> getConstructId(const ionshared::Ptr<Construct> &construct) {
         switch (construct->getConstructKind()) {
             case ConstructKind::Function: {
                 return construct->dynamicCast<Function>()->getPrototype()->getId();
@@ -70,7 +70,7 @@ namespace ionir {
             }
 
             case ConstructKind::Inst: {
-                return Util::getInstId(construct->dynamicCast<Inst>());
+                return util::getInstId(construct->dynamicCast<ionir::Inst>());
             }
 
             default: {
@@ -79,7 +79,7 @@ namespace ionir {
         }
     }
 
-    std::optional<std::string> Util::getInstId(const ionshared::Ptr<Inst> &inst) noexcept {
+    std::optional<std::string> getInstId(const ionshared::Ptr<ionir::Inst> &inst) noexcept {
         switch (inst->getInstKind()) {
             default: {
                 return std::nullopt;
@@ -87,7 +87,7 @@ namespace ionir {
         }
     }
 
-    std::optional<IntegerKind> Util::findIntegerKindFromBitLength(uint32_t bitLength) noexcept {
+    std::optional<IntegerKind> findIntegerKindFromBitLength(uint32_t bitLength) noexcept {
         if (bitLength <= 8) {
             return IntegerKind::Int8;
         }

@@ -17,14 +17,14 @@ TEST(ParserTest, ParseInt) {
 
     // TODO: Verify integer type?
 
-    EXPECT_TRUE(Util::hasValue(integer));
+    EXPECT_TRUE(util::hasValue(integer));
 
     // Prevent SEGFAULT when trying to access members of std::nullopt.
-    if (!Util::hasValue(integer)) {
+    if (!util::hasValue(integer)) {
         return;
     }
 
-    EXPECT_EQ(Util::getResultValue(integer)->getValue(), 5);
+    EXPECT_EQ(util::getResultValue(integer)->getValue(), 5);
 }
 
 TEST(ParserTest, ParseChar) {
@@ -34,8 +34,8 @@ TEST(ParserTest, ParseChar) {
 
     AstPtrResult<CharValue> character = parser.parseChar();
 
-    EXPECT_TRUE(Util::hasValue(character));
-    EXPECT_EQ(Util::getResultValue(character)->getValue(), 'a');
+    EXPECT_TRUE(util::hasValue(character));
+    EXPECT_EQ(util::getResultValue(character)->getValue(), 'a');
 }
 
 TEST(ParserTest, ParseIdentifier) {
@@ -58,8 +58,8 @@ TEST(ParserTest, ParseType) {
 
     AstPtrResult<Type> type = parser.parseType();
 
-    EXPECT_TRUE(Util::hasValue(type));
-    EXPECT_EQ(Util::getResultValue(type)->getId(), "type");
+    EXPECT_TRUE(util::hasValue(type));
+    EXPECT_EQ(util::getResultValue(type)->getId(), "type");
 }
 
 TEST(ParserTest, ParseVoidType) {
@@ -69,9 +69,9 @@ TEST(ParserTest, ParseVoidType) {
 
     AstPtrResult<Type> typeResult = parser.parseType();
 
-    EXPECT_TRUE(Util::hasValue(typeResult));
+    EXPECT_TRUE(util::hasValue(typeResult));
 
-    ionshared::Ptr<Type> type = Util::getResultValue(typeResult);
+    ionshared::Ptr<Type> type = util::getResultValue(typeResult);
 
     EXPECT_EQ(type->getId(), ConstName::typeVoid);
     EXPECT_EQ(type->getTypeKind(), TypeKind::Void);
@@ -84,9 +84,9 @@ TEST(ParserTest, ParseInteger32Type) {
 
     AstPtrResult<Type> typeResult = parser.parseType();
 
-    EXPECT_TRUE(Util::hasValue(typeResult));
+    EXPECT_TRUE(util::hasValue(typeResult));
 
-    ionshared::Ptr<Type> type = Util::getResultValue(typeResult);
+    ionshared::Ptr<Type> type = util::getResultValue(typeResult);
 
     EXPECT_EQ(type->getId(), ConstName::typeInt32);
     EXPECT_EQ(type->getTypeKind(), TypeKind::Integer);
@@ -110,9 +110,9 @@ TEST(ParserTest, ParseArg) {
 
     AstResult<Arg> argResult = parser.parseArg();
 
-    EXPECT_TRUE(Util::hasValue(argResult));
+    EXPECT_TRUE(util::hasValue(argResult));
 
-    Arg  arg = Util::getResultValue(argResult);
+    Arg  arg = util::getResultValue(argResult);
 
     EXPECT_EQ(arg.first->getId(), "type");
     EXPECT_EQ(arg.second, "test");
@@ -126,8 +126,8 @@ TEST(ParserTest, ParseFunctionBody) {
 
     AstPtrResult<FunctionBody> functionBodyResult = parser.parseFunctionBody(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(functionBodyResult));
-    EXPECT_TRUE(Util::getResultValue(functionBodyResult)->getSymbolTable()->isEmpty());
+    EXPECT_TRUE(util::hasValue(functionBodyResult));
+    EXPECT_TRUE(util::getResultValue(functionBodyResult)->getSymbolTable()->isEmpty());
 }
 
 TEST(ParserTest, ParseEmptyPrototype) {
@@ -141,9 +141,9 @@ TEST(ParserTest, ParseEmptyPrototype) {
 
     AstPtrResult<Prototype> prototypeResult = parser.parsePrototype(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(prototypeResult));
+    EXPECT_TRUE(util::hasValue(prototypeResult));
 
-    ionshared::Ptr<Prototype> prototype = Util::getResultValue(prototypeResult);
+    ionshared::Ptr<Prototype> prototype = util::getResultValue(prototypeResult);
 
     ionshared::Ptr<Type> returnType = prototype->getReturnType();
     ionshared::Ptr<Args> args = prototype->getArgs();
@@ -173,9 +173,9 @@ TEST(ParserTest, ParseEmptyFunction) {
 
     AstPtrResult<Function> functionResult = parser.parseFunction(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(functionResult));
+    EXPECT_TRUE(util::hasValue(functionResult));
 
-    ionshared::Ptr<Function> function = Util::getResultValue(functionResult);
+    ionshared::Ptr<Function> function = util::getResultValue(functionResult);
 
     /**
      * Function should not be able to be verified, since it's
@@ -215,9 +215,9 @@ TEST(ParserTest, ParseFunction) {
 
     AstPtrResult<Function> functionResult = parser.parseFunction(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(functionResult));
+    EXPECT_TRUE(util::hasValue(functionResult));
 
-    ionshared::Ptr<Function> function = Util::getResultValue(functionResult);
+    ionshared::Ptr<Function> function = util::getResultValue(functionResult);
 
     /**
      * Function should be able to be verified successfully,
@@ -244,8 +244,8 @@ TEST(ParserTest, ParseAllocaInst) {
 
     AstPtrResult<AllocaInst> instResult = parser.parseAllocaInst(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(instResult));
-    EXPECT_EQ(Util::getResultValue(instResult)->getInstKind(), InstKind::Alloca);
+    EXPECT_TRUE(util::hasValue(instResult));
+    EXPECT_EQ(util::getResultValue(instResult)->getInstKind(), InstKind::Alloca);
 
     // TODO: Verify token kind(s)?
 }
@@ -259,9 +259,9 @@ TEST(ParserTest, ParseStoreInst) {
 
     AstPtrResult<StoreInst> storeInstResult = parser.parseStoreInst(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(storeInstResult));
+    EXPECT_TRUE(util::hasValue(storeInstResult));
 
-    ionshared::Ptr<StoreInst> storeInst = Util::getResultValue(storeInstResult);
+    ionshared::Ptr<StoreInst> storeInst = util::getResultValue(storeInstResult);
 
     // Verify the value.
     ionshared::Ptr<Value<>> instValue = storeInst->getValue();
@@ -285,9 +285,9 @@ TEST(ParserTest, ParseReturnVoidInst) {
 
     AstPtrResult<ReturnInst> returnInstResult = parser.parseReturnInst(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(returnInstResult));
+    EXPECT_TRUE(util::hasValue(returnInstResult));
 
-    ionshared::Ptr<ReturnInst> returnInst = Util::getResultValue(returnInstResult);
+    ionshared::Ptr<ReturnInst> returnInst = util::getResultValue(returnInstResult);
 
     EXPECT_EQ(returnInst->getInstKind(), InstKind::Return);
     EXPECT_FALSE(ionshared::Util::hasValue(returnInst->getValue()));
@@ -308,9 +308,9 @@ TEST(ParserTest, ParseExtern) {
 
     AstPtrResult<Extern> externResult = parser.parseExtern(nullptr);
 
-    EXPECT_TRUE(Util::hasValue(externResult));
+    EXPECT_TRUE(util::hasValue(externResult));
 
-    ionshared::Ptr<Prototype> prototype = Util::getResultValue(externResult)->getPrototype();
+    ionshared::Ptr<Prototype> prototype = util::getResultValue(externResult)->getPrototype();
     ionshared::Ptr<Args> args = prototype->getArgs();
 
     // Verify prototype.

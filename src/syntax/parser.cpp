@@ -79,15 +79,15 @@ namespace ionir {
     AstPtrResult<> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
         switch (this->stream.get().getKind()) {
             case TokenKind::KeywordFunction: {
-                return Util::castAstPtrResult(this->parseFunction(parent));
+                return util::castAstPtrResult(this->parseFunction(parent));
             }
 
             case TokenKind::KeywordGlobal: {
-                return Util::castAstPtrResult(this->parseGlobal());
+                return util::castAstPtrResult(this->parseGlobal());
             }
 
             case TokenKind::KeywordExtern: {
-                return Util::castAstPtrResult(this->parseExtern(parent));
+                return util::castAstPtrResult(this->parseExtern(parent));
             }
 
             default: {
@@ -113,7 +113,7 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon), Global)
 
-        return std::make_shared<Global>(Util::getResultValue(type), *id);
+        return std::make_shared<Global>(util::getResultValue(type), *id);
     }
 
     AstPtrResult<BasicBlock> Parser::parseBasicBlock(ionshared::Ptr<FunctionBody> parent) {
@@ -157,7 +157,7 @@ namespace ionir {
 
                 IONIR_PARSER_ASSERT_RESULT(registerAssignResult, BasicBlock)
 
-                ionshared::Ptr<RegisterAssign> registerAssign = Util::getResultValue(registerAssignResult);
+                ionshared::Ptr<RegisterAssign> registerAssign = util::getResultValue(registerAssignResult);
 
                 inst = registerAssign->getValue()->dynamicCast<Inst>();
 
@@ -165,7 +165,7 @@ namespace ionir {
                  * Register the instruction on the resulting block's symbol
                  * table.
                  */
-                symbolTable->insert(registerAssign->getId(), Util::getResultValue(inst));
+                symbolTable->insert(registerAssign->getId(), util::getResultValue(inst));
 
                 /**
                  * Add the register to the block's registers to be processed
@@ -179,7 +179,7 @@ namespace ionir {
             }
 
             IONIR_PARSER_ASSERT_RESULT(inst, BasicBlock)
-            insts.push_back(Util::getResultValue(inst));
+            insts.push_back(util::getResultValue(inst));
         }
 
         this->stream.skip();
@@ -200,7 +200,7 @@ namespace ionir {
 
             IONIR_PARSER_ASSERT_RESULT(basicBlockResult, FunctionBody)
 
-            ionshared::Ptr<BasicBlock> basicBlock = Util::getResultValue(basicBlockResult);
+            ionshared::Ptr<BasicBlock> basicBlock = util::getResultValue(basicBlockResult);
 
             basicBlocks->insert(basicBlock->getId(), basicBlock);
         }
@@ -227,9 +227,9 @@ namespace ionir {
             AstPtrResult<> topLevelConstructResult = this->parseTopLevel(module);
 
             // TODO: Make notice if it has no value? Or is it enough with the notice under 'parseTopLevel()'?
-            if (Util::hasValue(topLevelConstructResult)) {
-                ionshared::Ptr<Construct> topLevelConstruct = Util::getResultValue(topLevelConstructResult);
-                std::optional<std::string> name = Util::getConstructId(topLevelConstruct);
+            if (util::hasValue(topLevelConstructResult)) {
+                ionshared::Ptr<Construct> topLevelConstruct = util::getResultValue(topLevelConstructResult);
+                std::optional<std::string> name = util::getConstructId(topLevelConstruct);
 
                 if (!name.has_value()) {
                     throw std::runtime_error("Unexpected construct name to be null");
@@ -262,7 +262,7 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT_RESULT(inst, RegisterAssign)
 
-        return std::make_shared<RegisterAssign>(*id, Util::getResultValue(inst));
+        return std::make_shared<RegisterAssign>(*id, util::getResultValue(inst));
     }
 
     std::optional<std::string> Parser::parseLine() {

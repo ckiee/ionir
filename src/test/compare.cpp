@@ -40,14 +40,14 @@ namespace ionir::test::compare {
         AstPtrResult<Module> moduleResult = parser.parseModule();
 
         // No module was parsed. Fail the process.
-        if (!Util::hasValue(moduleResult)) {
+        if (!ionir::util::hasValue(moduleResult)) {
             return false;
         }
 
         ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass =
             bootstrap::llvmCodegenPass();
 
-        llvmCodegenPass->visitModule(Util::getResultValue(moduleResult));
+        llvmCodegenPass->visitModule(ionir::util::getResultValue(moduleResult));
 
         std::optional<llvm::Module *> llvmModuleBuffer =
             llvmCodegenPass->getModuleBuffer();

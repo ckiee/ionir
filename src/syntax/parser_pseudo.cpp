@@ -25,7 +25,7 @@ namespace ionir {
 
         // TODO: Function does not return a pointer. No assert is specialized for that case.
 //        IONIR_PARSER_ASSERT_RESULT(type, Arg)
-        if (!Util::hasValue(type)) {
+        if (!util::hasValue(type)) {
             throw std::runtime_error("Not implemented");
         }
 
@@ -37,6 +37,6 @@ namespace ionir {
             throw std::runtime_error("Not implemented");
         }
 
-        return std::make_pair(Util::getResultValue(type), *id);
+        return std::make_pair(util::getResultValue(type), *id);
     }
 }

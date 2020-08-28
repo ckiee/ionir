@@ -177,7 +177,7 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitJumpInst(ionshared::Ptr<JumpInst> node) {
-        // TODO: Check everything throughly. Was just left there uncompleted!
+        // TODO: Check everything thoroughly. Was just left there uncompleted!
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------

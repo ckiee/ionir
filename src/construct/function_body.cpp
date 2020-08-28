@@ -38,5 +38,9 @@ namespace ionir {
     void FunctionBody::insertBasicBlock(const ionshared::Ptr<BasicBlock> &basicBlock) {
         // TODO: Check if section exists first?
         (*this->getSymbolTable())[basicBlock->getId()] = basicBlock;
+
+        // TODO: Consider making symbol table read-only so this is controlled.
+        // Update the basic block's parent.
+        basicBlock->setParent(this->dynamicCast<FunctionBody>());
     }
 }
