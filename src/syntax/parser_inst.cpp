@@ -94,6 +94,8 @@ namespace ionir {
 
         ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
             std::move(parent),
+
+            // Value will be filled in below.
             nullptr
         });
 

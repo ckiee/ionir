@@ -123,7 +123,7 @@ TEST(CodeGenTest, VisitReturnInst) {
 
     llvmCodegenPass->visitFunction(function);
 
-    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "inst_return"));
+    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "inst_return_i32"));
 }
 
 TEST(CodeGenTest, VisitAllocaStoreReturnRef) {

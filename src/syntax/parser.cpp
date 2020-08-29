@@ -109,11 +109,22 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT_VALUE(id, Global)
 
+        ionshared::OptPtr<Value<>> inlineValue = std::nullopt;
+
         // TODO: Handle in-line initialization & pass std::optional<Value> into Global constructor.
+        if (this->is(TokenKind::SymbolEqual)) {
+            IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolEqual), Global)
+
+            AstPtrResult<Value<>> valueResult = this->parseValue();
+
+            IONIR_PARSER_ASSERT_RESULT(valueResult, Global)
+
+            inlineValue = util::getResultValue(valueResult);
+        }
 
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolSemiColon), Global)
 
-        return std::make_shared<Global>(util::getResultValue(type), *id);
+        return std::make_shared<Global>(util::getResultValue(type), *id, inlineValue);
     }
 
     AstPtrResult<BasicBlock> Parser::parseBasicBlock(ionshared::Ptr<FunctionBody> parent) {
