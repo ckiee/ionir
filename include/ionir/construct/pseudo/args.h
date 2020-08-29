@@ -18,7 +18,7 @@ namespace ionir {
 
     public:
         explicit Args(
-            ionshared::SymbolTable<Arg> items = {},
+            ionshared::SymbolTable<Arg> items = ionshared::SymbolTable<Arg>(),
             bool isVariable = false
         );
 

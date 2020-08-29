@@ -36,7 +36,7 @@
 namespace ionir {
     class Parser {
     private:
-        TokenStream stream;
+        ionshared::Ptr<TokenStream> tokenStream;
 
         ionshared::Ptr<ionshared::NoticeStack> noticeStack;
 
@@ -57,7 +57,7 @@ namespace ionir {
 
         bool skipOver(TokenKind tokenKind);
 
-        ionshared::NoticeFactory createNoticeFactory() noexcept;
+        [[nodiscard]] ionshared::NoticeFactory createNoticeFactory() noexcept;
 
         std::nullopt_t makeNotice(
             std::string message,
@@ -66,7 +66,7 @@ namespace ionir {
 
     public:
         explicit Parser(
-            TokenStream stream,
+            ionshared::Ptr<TokenStream> tokenStream,
 
             const ionshared::Ptr<ionshared::NoticeStack> &noticeStack =
                 std::make_shared<ionshared::Stack<ionshared::Notice>>(),
@@ -74,9 +74,11 @@ namespace ionir {
             std::string filePath = ConstName::anonymous
         );
 
-        [[nodiscard]] ionshared::Ptr<ionshared::NoticeStack> getNoticeStack() const;
+        [[nodiscard]] ionshared::Ptr<TokenStream> getTokenStream() const noexcept;
 
-        [[nodiscard]] std::string getFilePath() const;
+        [[nodiscard]] ionshared::Ptr<ionshared::NoticeStack> getNoticeStack() const noexcept;
+
+        [[nodiscard]] std::string getFilePath() const noexcept;
 
         AstPtrResult<> parseTopLevel(const ionshared::Ptr<Module> &parent);
 

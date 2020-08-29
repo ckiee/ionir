@@ -40,12 +40,12 @@ namespace ionir {
     }
 
     ionshared::Ptr<BranchInst> InstBuilder::createBranch(ionshared::Ptr<Construct> condition, const std::string &bodySectionId, const std::string &otherwiseSectionId) {
-        PtrRef<BasicBlock> bodyBlock = std::make_shared<Ref<BasicBlock>>(bodySectionId, nullptr);
-        PtrRef<BasicBlock> otherwiseBlock = std::make_shared<Ref<BasicBlock>>(otherwiseSectionId, nullptr);
-        ionshared::Ptr<BranchInst> branchInst = this->createBranch(std::move(condition), bodyBlock, otherwiseBlock);
+        PtrRef<BasicBlock> consequentBasicBlock = std::make_shared<Ref<BasicBlock>>(bodySectionId, nullptr);
+        PtrRef<BasicBlock> alternativeBasicBlock = std::make_shared<Ref<BasicBlock>>(otherwiseSectionId, nullptr);
+        ionshared::Ptr<BranchInst> branchInst = this->createBranch(std::move(condition), consequentBasicBlock, alternativeBasicBlock);
 
-        bodyBlock->setOwner(branchInst);
-        otherwiseBlock->setOwner(branchInst);
+        consequentBasicBlock->setOwner(branchInst);
+        alternativeBasicBlock->setOwner(branchInst);
 
         return branchInst;
     }

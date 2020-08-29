@@ -10,17 +10,17 @@ namespace ionir {
     }
 
     bool Parser::is(TokenKind tokenKind) noexcept {
-        return this->stream.get().getKind() == tokenKind;
+        return this->tokenStream->get().getKind() == tokenKind;
     }
 
     bool Parser::isNext(TokenKind tokenKind) {
-        return this->stream.peek()->getKind() == tokenKind;
+        return this->tokenStream->peek()->getKind() == tokenKind;
     }
 
     bool Parser::expect(TokenKind tokenKind) {
         if (!this->is(tokenKind)) {
             this->makeNotice("Expected token kind: " + std::to_string((int)tokenKind) + ", but got: " +
-                std::to_string((int)this->stream.get().getKind()));
+                std::to_string((int)this->tokenStream->get().getKind()));
 
             return false;
         }
@@ -33,14 +33,14 @@ namespace ionir {
             return false;
         }
 
-        this->stream.skip();
+        this->tokenStream->skip();
 
         return true;
     }
 
     ionshared::NoticeFactory Parser::createNoticeFactory() noexcept {
         // Abstract current Token for easier access.
-        Token token = this->stream.get();
+        Token token = this->tokenStream->get();
 
         return ionshared::NoticeFactory(ionshared::NoticeContext{
             this->filePath,
@@ -56,11 +56,11 @@ namespace ionir {
     }
 
     Parser::Parser(
-        TokenStream stream,
+        ionshared::Ptr<TokenStream> tokenStream,
         const ionshared::Ptr<ionshared::NoticeStack> &noticeStack,
         std::string filePath
     ) :
-        stream(std::move(stream)),
+        tokenStream(std::move(tokenStream)),
         noticeStack(noticeStack),
         noticeSentinel(std::make_shared<NoticeSentinel>(noticeStack)),
         filePath(std::move(filePath)),
@@ -68,16 +68,16 @@ namespace ionir {
         //
     }
 
-    ionshared::Ptr<ionshared::NoticeStack> Parser::getNoticeStack() const {
+    ionshared::Ptr<ionshared::NoticeStack> Parser::getNoticeStack() const noexcept {
         return this->noticeStack;
     }
 
-    std::string Parser::getFilePath() const {
+    std::string Parser::getFilePath() const noexcept {
         return this->filePath;
     }
 
     AstPtrResult<> Parser::parseTopLevel(const ionshared::Ptr<Module> &parent) {
-        switch (this->stream.get().getKind()) {
+        switch (this->tokenStream->get().getKind()) {
             case TokenKind::KeywordFunction: {
                 return util::castAstPtrResult(this->parseFunction(parent));
             }
@@ -144,7 +144,7 @@ namespace ionir {
         if (*id == Const::basicBlockEntryId) {
             kind = BasicBlockKind::Entry;
         }
-        else if (ionshared::Util::stringStartsWith(*id, Const::basicBlockInternalPrefix)) {
+        else if (ionshared::util::stringStartsWith(*id, Const::basicBlockInternalPrefix)) {
             kind = BasicBlockKind::Internal;
         }
 
@@ -193,7 +193,7 @@ namespace ionir {
             insts.push_back(util::getResultValue(inst));
         }
 
-        this->stream.skip();
+        this->tokenStream->skip();
         basicBlock->setRegisters(registers);
         basicBlock->setInsts(insts);
 
@@ -219,7 +219,7 @@ namespace ionir {
         functionBody->setSymbolTable(basicBlocks);
 
         // Skip over right brace token.
-        this->stream.skip();
+        this->tokenStream->skip();
 
         return functionBody;
     }
@@ -250,8 +250,9 @@ namespace ionir {
                 module->getContext()->getGlobalScope()->insert(*name, topLevelConstruct);
             }
 
+            // TODO: Is this required? Or does skipping over SymbolBraceR handle it already?
             // No more tokens to process.
-            if (!this->stream.hasNext() && !this->is(TokenKind::SymbolBraceR)) {
+            if (!this->tokenStream->hasNext() && !this->is(TokenKind::SymbolBraceR)) {
                 return this->noticeSentinel->makeError<Module>(IONIR_NOTICE_MISC_UNEXPECTED_EOF);
             }
         }

@@ -24,7 +24,7 @@ namespace ionir {
 
     void Context::appendScope(const Scope &scope) noexcept {
         // Scope is already on the scopes vector.
-        if (ionshared::Util::locateInVector(this->scopes, scope) != std::nullopt) {
+        if (ionshared::util::locateInVector(this->scopes, scope) != std::nullopt) {
             return;
         }
 

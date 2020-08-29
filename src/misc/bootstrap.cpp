@@ -15,7 +15,7 @@ namespace ionir {
         ionshared::OptPtr<Function> function = module->lookupFunction(id);
 
         // Ensure the function was retrieved, as a precaution.
-        if (!ionshared::Util::hasValue(function)) {
+        if (!ionshared::util::hasValue(function)) {
             throw std::runtime_error("Could not retrieve function from module's symbol table");
         }
 

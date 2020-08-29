@@ -31,7 +31,7 @@ TEST(NameResolutionPassTest, Run) {
     ionshared::Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::basicBlockEntryId, Const::basicBlockEntryId);
 
     // Abstract specific element(s) to be tested.
-    PtrRef<BasicBlock> blockRef = branchInst->getBlockRef();
+    PtrRef<BasicBlock> blockRef = branchInst->getConsequentBlockRef();
 
     // TODO: CRITICAL: Recently solved the problem which was that it was using the section's own symbol table instead of the function's to find the section (Dummy mistake). Verify that this is actually how it should be.
 

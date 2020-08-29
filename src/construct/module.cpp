@@ -14,6 +14,7 @@ namespace ionir {
 
     Ast Module::getChildNodes() {
         return Construct::convertChildren(
+            // TODO: What about normal scopes? Merge that with global scope. Or actually, module just uses global context, right?
             this->context->getGlobalScope()
         );
     }
@@ -38,10 +39,41 @@ namespace ionir {
         ionshared::OptPtr<Construct> functionConstruct =
             this->context->getGlobalScope()->lookup(std::move(id));
 
-        if (ionshared::Util::hasValue(functionConstruct) && functionConstruct->get()->getConstructKind() == ConstructKind::Function) {
+        if (ionshared::util::hasValue(functionConstruct) && functionConstruct->get()->getConstructKind() == ConstructKind::Function) {
             return functionConstruct->get()->dynamicCast<Function>();
         }
 
         return std::nullopt;
+    }
+
+    bool Module::mergeInto(const ionshared::Ptr<Module> &module) {
+        auto localGlobalScopeMap = this->context->getGlobalScope()->unwrap();
+        std::vector<Scope> localScopes = this->context->getScopes();
+        std::vector<Scope> targetScopes = module->getContext()->getScopes();
+        Scope targetGlobalScope = module->getContext()->getGlobalScope();
+        Scope newGlobalScope = ionshared::util::makePtrSymbolTable<Construct>();
+        ionshared::Ptr<Context> newContext = std::make_shared<Context>(newGlobalScope);
+
+        // Attempt to merge global scope.
+        for (const auto &[key, construct] : localGlobalScopeMap) {
+            if (!newGlobalScope->insert(key, construct)) {
+                return false;
+            }
+        }
+
+        // Attempt to merge scopes.
+        for (const auto &scope : localScopes) {
+            // TODO: Use ionshared::util::vectorContains<T>(); Does the same thing.
+            if (ionshared::util::locateInVector<Scope>(targetScopes, scope) != std::nullopt) {
+                return false;
+            }
+
+            newContext->appendScope(scope);
+        }
+
+        // Update the target module's context.
+        module->setContext(newContext);
+
+        return true;
     }
 }

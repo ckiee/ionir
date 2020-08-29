@@ -5,7 +5,7 @@
 
 namespace ionir {
     AstPtrResult<Value<>> Parser::parseValue() {
-        TokenKind currentTokenKind = this->stream.get().getKind();
+        TokenKind currentTokenKind = this->tokenStream.get().getKind();
 
         /**
          * Must use static pointer cast when downcasting to Value<>, given
@@ -34,6 +34,13 @@ namespace ionir {
 //                );
             }
 
+            case TokenKind::LiteralString: {
+                return util::castAstPtrResult<StringValue, Value<>>(
+                    this->parseString(),
+                    false
+                );
+            }
+
             // TODO: Missing values.
 
             default: {
@@ -51,7 +58,7 @@ namespace ionir {
          * Abstract the token's value to be used in the
          * string to long integer conversion.
          */
-        std::string tokenValue = this->stream.get().getValue();
+        std::string tokenValue = this->tokenStream.get().getValue();
 
         // TODO: May stol() throw an error? If so, wrap in try-catch block for safety.
         /**
@@ -77,7 +84,7 @@ namespace ionir {
         }
 
         // Calculate the value's bit-length and it's corresponding integer kind.
-        uint32_t valueBitLength = ionshared::Util::calculateBitLength(value);
+        uint32_t valueBitLength = ionshared::util::calculateBitLength(value);
 
         std::optional<IntegerKind> valueIntegerKind =
             util::findIntegerKindFromBitLength(valueBitLength);
@@ -87,14 +94,27 @@ namespace ionir {
             return this->noticeSentinel->makeError<IntegerValue>("Integer value's type kind could not be determined");
         }
 
+        /**
+         * Default integers to 32-bit lengths. Use implicit casts later
+         * on if they must be used differently. Although technically inefficient
+         * in terms of storage, modern processors are built to handle integers of
+         * 32-64 bit lengths more efficiently. So it's a small space sacrifice for
+         * default performance.
+         */
+        if (*valueIntegerKind < IntegerKind::Int32) {
+            valueIntegerKind = IntegerKind::Int32;
+        }
+
         // Create a long integer type for the value.
-        ionshared::Ptr<IntegerType> type = std::make_shared<IntegerType>(*valueIntegerKind);
+        ionshared::Ptr<IntegerType> type =
+            std::make_shared<IntegerType>(*valueIntegerKind);
 
         // Create the integer instance.
-        ionshared::Ptr<IntegerValue> integer = std::make_shared<IntegerValue>(type, value);
+        ionshared::Ptr<IntegerValue> integer =
+            std::make_shared<IntegerValue>(type, value);
 
         // Skip current token.
-        this->stream.tryNext();
+        this->tokenStream.tryNext();
 
         // Finally, return the result.
         return integer;
@@ -104,10 +124,10 @@ namespace ionir {
         IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralCharacter, CharValue)
 
         // Extract the value from the character token.
-        std::string stringValue = this->stream.get().getValue();
+        std::string stringValue = this->tokenStream.get().getValue();
 
         // Skip over character token.
-        this->stream.skip();
+        this->tokenStream.skip();
 
         // Ensure extracted value only contains a single character.
         if (stringValue.length() > 1) {
@@ -122,10 +142,10 @@ namespace ionir {
         IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralString, StringValue)
 
         // Extract the value from the string token.
-        std::string value = this->stream.get().getValue();
+        std::string value = this->tokenStream.get().getValue();
 
         // Skip over string token.
-        this->stream.skip();
+        this->tokenStream.skip();
 
         return std::make_shared<StringValue>(value);
     }

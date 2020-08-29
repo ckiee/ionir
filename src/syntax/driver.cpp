@@ -1,56 +1,33 @@
-#include <utility>
 #include <ionir/syntax/driver.h>
+#include <ionir/lexical/lexer.h>
+#include <ionir/syntax/parser.h>
+#include <ionir/passes/codegen/llvm_codegen_pass.h>
 
-namespace ionir {
-    Driver::Driver(llvm::Module *module, TokenStream stream) :
-        module(module),
-        stream(std::move(stream)) {
-        //
-    }
+namespace ionir::driver {
+    ionshared::LlvmIrString run(const std::string &input) {
+        Lexer lexer = Lexer(input);
 
-    Ast Driver::consume() {
-        // TODO: Actually process result.
-        Ast result = {};
+        ionshared::Ptr<TokenStream> tokenStream =
+            std::make_shared<TokenStream>(lexer.scan());
 
-        while (this->stream.hasNext()) {
-            this->tryNext();
+        Parser parser = Parser(tokenStream);
+        LlvmCodegenPass llvmCodegenPass = LlvmCodegenPass();
+
+        while (tokenStream->hasNext()) {
+            AstPtrResult<Module> moduleResult = parser.parseModule();
+
+            if (util::hasValue(moduleResult)) {
+                llvmCodegenPass.visitModule(util::getResultValue(moduleResult));
+            }
         }
 
-        // Process the last item.
-        if (this->stream.getSize()) {
-            this->tryNext();
+        ionshared::LlvmIrString llvmIr;
+        auto llvmModules =  llvmCodegenPass.getModules()->unwrap();
+
+        for (const auto &[id, llvmModule] : llvmModules) {
+            llvmIr += ionshared::LlvmModule(llvmModule).getAsString();
         }
 
-        return result;
-    }
-
-    void Driver::begin() {
-        this->stream.begin();
-    }
-
-    bool Driver::hasNext() const {
-        // TODO
-        return false;
-    }
-
-    ionshared::OptPtr<Construct> Driver::tryNext() {
-        // Retrieve the current token from the token stream.
-        Token token = this->stream.get();
-
-        // Function definition (Token should be a type name representing the function's return type).
-        if (token.getKind() == TokenKind::Identifier) {
-            // TODO
-            std::cout << "Identifier token detected ~> Expecting function definition. (Token is considered function return type.)" << std::endl;
-        }
-
-        // TODO: Debugging.
-        std::cout << "Token type:" << token.getKind() << std::endl;
-
-        // Advance the Stream's index if applicable.
-        this->stream.tryNext();
-
-        // TODO: Return value.
-
-        return nullptr;
+        return llvmIr;
     }
 }

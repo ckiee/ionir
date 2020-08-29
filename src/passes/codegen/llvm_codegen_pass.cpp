@@ -3,11 +3,11 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    LlvmStack<llvm::Value> LlvmCodegenPass::getValueStack() const noexcept {
+    ionshared::LlvmStack<llvm::Value> LlvmCodegenPass::getValueStack() const noexcept {
         return this->valueStack;
     }
 
-    LlvmStack<llvm::Type> LlvmCodegenPass::getTypeStack() const noexcept {
+    ionshared::LlvmStack<llvm::Type> LlvmCodegenPass::getTypeStack() const noexcept {
         return this->typeStack;
     }
 
@@ -43,19 +43,19 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::requireFunction() {
-        if (!ionshared::Util::hasValue(this->llvmFunctionBuffer)) {
+        if (!ionshared::util::hasValue(this->llvmFunctionBuffer)) {
             throw std::runtime_error("Expected the function buffer to be set, but was null");
         }
     }
 
     void LlvmCodegenPass::requireModule() {
-        if (!ionshared::Util::hasValue(this->llvmModuleBuffer)) {
+        if (!ionshared::util::hasValue(this->llvmModuleBuffer)) {
             throw std::runtime_error("Expected the module buffer to be set, but was null");
         }
     }
 
     void LlvmCodegenPass::requireContext() {
-        if (!ionshared::Util::hasValue(this->llvmContextBuffer)) {
+        if (!ionshared::util::hasValue(this->llvmContextBuffer)) {
             throw std::runtime_error("Expected the context buffer to be set, but was null");
         }
     }
@@ -109,7 +109,7 @@ namespace ionir {
         typeStack(),
         registerQueue(),
         builderTracker(),
-        emittedEntities({Map<ionshared::Ptr<Construct>, llvm::Value *>()}),
+        emittedEntities({ionshared::Map<ionshared::Ptr<Construct>, llvm::Value *>()}),
         namedValues({}) {
         //
     }
@@ -220,7 +220,7 @@ namespace ionir {
         ionshared::OptPtr<Value<>> nodeValue = node->getValue();
 
         // Assign value if applicable.
-        if (ionshared::Util::hasValue(nodeValue)) {
+        if (ionshared::util::hasValue(nodeValue)) {
             this->visitValue(*nodeValue);
 
             llvm::Value *value = this->valueStack.pop();

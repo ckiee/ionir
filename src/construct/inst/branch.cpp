@@ -4,8 +4,8 @@ namespace ionir {
     BranchInst::BranchInst(const BranchInstOpts &opts) :
         Inst(opts.parent, InstKind::Branch),
         condition(opts.condition),
-        blockRef(opts.blockRef),
-        otherwiseBlockRef(opts.otherwiseRef) {
+        consequentBlockRef(opts.blockRef),
+        alternativeBlockRef(opts.otherwiseRef) {
         //
     }
 
@@ -17,8 +17,8 @@ namespace ionir {
         // TODO: What about condition?
 
         return {
-            this->blockRef,
-            this->otherwiseBlockRef
+            this->consequentBlockRef,
+            this->alternativeBlockRef
         };
     }
 
@@ -30,21 +30,21 @@ namespace ionir {
         this->condition = std::move(condition);
     }
 
-    PtrRef<BasicBlock> BranchInst::getBlockRef() const {
-        return this->blockRef;
+    PtrRef<BasicBlock> BranchInst::getConsequentBlockRef() const {
+        return this->consequentBlockRef;
     }
 
-    void BranchInst::setBlockRef(PtrRef<BasicBlock> blockRef) {
-        this->blockRef = std::move(blockRef);
-        this->blockRef->setOwner(this->getPtr());
+    void BranchInst::setConsequentBlockRef(PtrRef<BasicBlock> blockRef) {
+        this->consequentBlockRef = std::move(blockRef);
+        this->consequentBlockRef->setOwner(this->getPtr());
     }
 
-    PtrRef<BasicBlock> BranchInst::getOtherwiseBlockRef() const {
-        return this->otherwiseBlockRef;
+    PtrRef<BasicBlock> BranchInst::getAlternativeBlockRef() const {
+        return this->alternativeBlockRef;
     }
 
-    void BranchInst::setOtherwiseBlockRef(PtrRef<BasicBlock> otherwiseBlockRef) {
-        this->otherwiseBlockRef = std::move(otherwiseBlockRef);
-        this->otherwiseBlockRef->setOwner(this->getPtr());
+    void BranchInst::setAlternativeBlockRef(PtrRef<BasicBlock> otherwiseBlockRef) {
+        this->alternativeBlockRef = std::move(otherwiseBlockRef);
+        this->alternativeBlockRef->setOwner(this->getPtr());
     }
 }

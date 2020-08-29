@@ -6,7 +6,7 @@ namespace ionir {
     // TODO: Consider using Ref<> to register pending type reference if user-defined type is parsed?
     AstPtrResult<Type> Parser::parseType() {
         // Retrieve the current token.
-        Token token = this->stream.get();
+        Token token = this->tokenStream.get();
 
         // Abstract the token's properties
         std::string tokenValue = token.getValue();
@@ -39,7 +39,7 @@ namespace ionir {
          */
         if (!util::hasValue(type)) {
             type = std::make_shared<Type>(tokenValue, util::resolveTypeKind(tokenValue));
-            this->stream.skip();
+            this->tokenStream.skip();
         }
 
         // If applicable, mark the type as a pointer.
@@ -56,7 +56,7 @@ namespace ionir {
 //            type->get()->setIsPointer(true);
 
             // Skip from the star token.
-            this->stream.skip();
+            this->tokenStream.skip();
         }
 
         // Create and return the resulting type construct.
@@ -85,7 +85,7 @@ namespace ionir {
     }
 
     AstPtrResult<IntegerType> Parser::parseIntegerType() {
-        TokenKind currentTokenKind = this->stream.get().getKind();
+        TokenKind currentTokenKind = this->tokenStream.get().getKind();
 
         if (!Classifier::isIntegerType(currentTokenKind)) {
             return this->noticeSentinel->makeError<IntegerType>(IONIR_NOTICE_MISC_UNEXPECTED_TOKEN);
@@ -98,7 +98,7 @@ namespace ionir {
         IONIR_PARSER_ASSERT_VALUE(integerKind, IntegerType)
 
         // Skip over the type token.
-        this->stream.skip();
+        this->tokenStream.skip();
 
         return std::make_shared<IntegerType>(*integerKind);
     }

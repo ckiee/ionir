@@ -8,7 +8,7 @@ namespace ionir {
          * Retrieve the current token's kind to determine the
          * instruction's name & designated parser.
          */
-        TokenKind tokenKind = this->stream.get().getKind();
+        TokenKind tokenKind = this->tokenStream.get().getKind();
 
         // Create a buffer instruction to serve as the result.
         AstPtrResult<Inst> inst;
@@ -150,8 +150,8 @@ namespace ionir {
 
         IONIR_PARSER_ASSERT_RESULT(otherwiseSection, BranchInst)
 
-        branchInst->setBlockRef(util::getResultValue(bodySection));
-        branchInst->setOtherwiseBlockRef(util::getResultValue(otherwiseSection));
+        branchInst->setConsequentBlockRef(util::getResultValue(bodySection));
+        branchInst->setAlternativeBlockRef(util::getResultValue(otherwiseSection));
 
         return branchInst;
     }

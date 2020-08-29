@@ -37,7 +37,7 @@ namespace ionir {
     }
 
     bool BasicBlock::verify() {
-        return ionshared::Util::hasValue(this->findTerminalInst())
+        return ionshared::util::hasValue(this->findTerminalInst())
             && this->getParent() != nullptr
             && Construct::verify();
     }

@@ -49,7 +49,7 @@ namespace ionir {
 
         std::vector<ionshared::Ptr<Inst>> insts = {};
 
-        PtrSymbolTable<Inst> symbolTable = ionshared::Util::makePtrSymbolTable<Inst>();
+        PtrSymbolTable<Inst> symbolTable = ionshared::util::makePtrSymbolTable<Inst>();
     };
 
     // TODO: Must be verified to contain a single terminal instruction at the end.

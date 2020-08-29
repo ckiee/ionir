@@ -14,7 +14,7 @@ namespace ionir {
         PtrSymbolTable<T> symbolTable;
 
     public:
-        explicit ScopeAnchor(PtrSymbolTable<T> symbolTable = ionshared::Util::makePtrSymbolTable<T>())
+        explicit ScopeAnchor(PtrSymbolTable<T> symbolTable = ionshared::util::makePtrSymbolTable<T>())
             : symbolTable(symbolTable) {
             //
         }

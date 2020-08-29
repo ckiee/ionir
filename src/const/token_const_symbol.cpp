@@ -1,7 +1,7 @@
 #include <ionir/const/token_const.h>
 
 namespace ionir {
-    BiMap<std::string, TokenKind> TokenConst::symbols = BiMap<std::string, TokenKind>(std::map<std::string, TokenKind>({
+    ionshared::BiMap<std::string, TokenKind> TokenConst::symbols = ionshared::BiMap<std::string, TokenKind>(std::map<std::string, TokenKind>({
         {"@", TokenKind::SymbolAt},
         {":", TokenKind::SymbolColon},
         {"$", TokenKind::SymbolDollar},

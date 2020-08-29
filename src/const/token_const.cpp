@@ -6,11 +6,13 @@
 namespace ionir {
     bool TokenConst::isInitialized = false;
 
-    BiMap<std::string, TokenKind> TokenConst::simple = BiMap<std::string, TokenKind>();
+    ionshared::BiMap<std::string, TokenKind> TokenConst::simple =
+        ionshared::BiMap<std::string, TokenKind>();
 
     std::vector<std::pair<std::regex, TokenKind>> TokenConst::complex = {};
 
-    BiMap<std::string, TokenKind> TokenConst::keywords = BiMap<std::string, TokenKind>();
+    ionshared::BiMap<std::string, TokenKind> TokenConst::keywords =
+        ionshared::BiMap<std::string, TokenKind>();
 
     TokenKindVector TokenConst::types = {
         TokenKind::TypeVoid,
@@ -54,7 +56,7 @@ namespace ionir {
         return std::find(subject.begin(), subject.end(), item) != subject.end();
     }
 
-    const BiMap<std::string, TokenKind> &TokenConst::getSimpleIds() {
+    const ionshared::BiMap<std::string, TokenKind> &TokenConst::getSimpleIds() {
         return TokenConst::simple;
     }
 
@@ -78,19 +80,19 @@ namespace ionir {
         return TokenConst::complex;
     }
 
-    const BiMap<std::string, TokenKind> &TokenConst::getSymbols() {
+    const ionshared::BiMap<std::string, TokenKind> &TokenConst::getSymbols() {
         TokenConst::ensureInit();
 
         return TokenConst::symbols;
     }
 
-    const BiMap<std::string, TokenKind> &TokenConst::getKeywords() {
+    const ionshared::BiMap<std::string, TokenKind> &TokenConst::getKeywords() {
         TokenConst::ensureInit();
 
         return TokenConst::keywords;
     }
 
-    const BiMap<std::string, TokenKind> &TokenConst::getOperators() {
+    const ionshared::BiMap<std::string, TokenKind> &TokenConst::getOperators() {
         TokenConst::ensureInit();
 
         return TokenConst::operators;
@@ -117,7 +119,7 @@ namespace ionir {
     std::optional<std::string> TokenConst::getTokenKindName(TokenKind tokenKind) {
         TokenConst::ensureInit();
 
-        if (!ionshared::Util::mapContains<TokenKind, std::string>(TokenConst::names, tokenKind)) {
+        if (!ionshared::util::mapContains<TokenKind, std::string>(TokenConst::names, tokenKind)) {
             return std::nullopt;
         }
 
@@ -145,7 +147,7 @@ namespace ionir {
         }
 
         // Initialize keywords bidirectional map.
-        TokenConst::keywords = BiMap<std::string, TokenKind>(std::map<std::string, TokenKind>{
+        TokenConst::keywords = ionshared::BiMap<std::string, TokenKind>(std::map<std::string, TokenKind>{
             // Instructions.
             {ConstName::instCall, TokenKind::InstCall},
             {ConstName::instStore, TokenKind::InstStore},

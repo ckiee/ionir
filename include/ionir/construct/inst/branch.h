@@ -21,9 +21,9 @@ namespace ionir {
     private:
         ionshared::Ptr<Construct> condition;
 
-        PtrRef<BasicBlock> blockRef;
+        PtrRef<BasicBlock> consequentBlockRef;
 
-        PtrRef<BasicBlock> otherwiseBlockRef;
+        PtrRef<BasicBlock> alternativeBlockRef;
 
     public:
         explicit BranchInst(const BranchInstOpts &opts);
@@ -36,12 +36,12 @@ namespace ionir {
 
         void setCondition(ionshared::Ptr<Construct> condition);
 
-        [[nodiscard]] PtrRef<BasicBlock> getBlockRef() const;
+        [[nodiscard]] PtrRef<BasicBlock> getConsequentBlockRef() const;
 
-        void setBlockRef(PtrRef<BasicBlock> blockRef);
+        void setConsequentBlockRef(PtrRef<BasicBlock> blockRef);
 
-        [[nodiscard]] PtrRef<BasicBlock> getOtherwiseBlockRef() const;
+        [[nodiscard]] PtrRef<BasicBlock> getAlternativeBlockRef() const;
 
-        void setOtherwiseBlockRef(PtrRef<BasicBlock> otherwiseBlockRef);
+        void setAlternativeBlockRef(PtrRef<BasicBlock> otherwiseBlockRef);
     };
 }

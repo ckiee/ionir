@@ -8,6 +8,7 @@
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Value.h>
 #include <llvm/IR/BasicBlock.h>
+#include <ionshared/container/llvm_stack.h>
 #include <ionir/construct/value/integer_value.h>
 #include <ionir/construct/value/char_value.h>
 #include <ionir/construct/value/string_value.h>
@@ -22,7 +23,6 @@
 #include <ionir/construct/extern.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/global.h>
-#include <ionir/container/llvm_stack.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/tracking/context.h>
 #include <ionir/passes/pass.h>
@@ -39,9 +39,9 @@ namespace ionir {
 
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
 
-        LlvmStack<llvm::Value> valueStack;
+        ionshared::LlvmStack<llvm::Value> valueStack;
 
-        LlvmStack<llvm::Type> typeStack;
+        ionshared::LlvmStack<llvm::Type> typeStack;
 
         std::queue<std::string> registerQueue;
 
@@ -63,7 +63,7 @@ namespace ionir {
 
         std::map<std::string, llvm::Value *> namedValues;
 
-        Stack<llvm::IRBuilder<>> builderTracker;
+        ionshared::Stack<llvm::IRBuilder<>> builderTracker;
 
         ScopeList<ionshared::Ptr<Construct>, llvm::Value *> emittedEntities;
 
@@ -101,9 +101,9 @@ namespace ionir {
 
         [[nodiscard]] ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> getModules() const;
 
-        [[nodiscard]] LlvmStack<llvm::Value> getValueStack() const noexcept;
+        [[nodiscard]] ionshared::LlvmStack<llvm::Value> getValueStack() const noexcept;
 
-        [[nodiscard]] LlvmStack<llvm::Type> getTypeStack() const noexcept;
+        [[nodiscard]] ionshared::LlvmStack<llvm::Type> getTypeStack() const noexcept;
 
         [[nodiscard]] std::queue<std::string> getRegisterQueue() const noexcept;
 

@@ -2,7 +2,7 @@
 
 namespace ionir {
     AstPtrResult<> Parser::parsePrimaryExpr(const ionshared::Ptr<Construct> &parent) {
-        TokenKind tokenKind = this->stream.get().getKind();
+        TokenKind tokenKind = this->tokenStream.get().getKind();
 
         // Expression is a literal.
         if (Classifier::isLiteral(tokenKind)) {

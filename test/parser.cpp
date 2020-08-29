@@ -290,7 +290,7 @@ TEST(ParserTest, ParseReturnVoidInst) {
     ionshared::Ptr<ReturnInst> returnInst = util::getResultValue(returnInstResult);
 
     EXPECT_EQ(returnInst->getInstKind(), InstKind::Return);
-    EXPECT_FALSE(ionshared::Util::hasValue(returnInst->getValue()));
+    EXPECT_FALSE(ionshared::util::hasValue(returnInst->getValue()));
 
     // TODO: Verify token kind(s)?
 }

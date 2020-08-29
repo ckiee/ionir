@@ -6,7 +6,7 @@ namespace ionir {
 
         ionshared::OptPtr<BasicBlock> entryBasicBlock = node->getBody()->findEntryBasicBlock();
 
-        if (!ionshared::Util::hasValue(entryBasicBlock)) {
+        if (!ionshared::util::hasValue(entryBasicBlock)) {
             throw std::runtime_error("Entry basic block for function body is not set");
         }
 
@@ -14,7 +14,7 @@ namespace ionir {
         ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
 
         // All basic blocks must contain at least a terminal instruction.
-        if (insts.empty() || !ionshared::Util::hasValue(terminalInst)) {
+        if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
             throw std::runtime_error("Section must contain at least a terminal instruction");
         }
 
@@ -23,7 +23,7 @@ namespace ionir {
                 ionshared::Ptr<ReturnInst> returnInst = inst->staticCast<ReturnInst>();
                 TypeKind returnTypeKind = node->getPrototype()->getReturnType()->getTypeKind();
                 ionshared::OptPtr<Construct> returnInstValue = returnInst->getValue();
-                bool returnInstValueSet = ionshared::Util::hasValue(returnInstValue);
+                bool returnInstValueSet = ionshared::util::hasValue(returnInstValue);
 
                 /**
                  * Functions whose prototype's return type is non-void must provide

@@ -31,10 +31,19 @@ namespace ionir {
 
         void setContext(ionshared::Ptr<Context> context) noexcept;
 
-        // TODO: What about externs? ------------------------------------
+        // TODO: What about externs/globals/classes/structs? ------------
         void insertFunction(const ionshared::Ptr<Function> &function);
 
         [[nodiscard]] ionshared::OptPtr<Function> lookupFunction(std::string id);
         // --------------------------------------------------------------
+
+        /**
+         * Attempt to move context scopes (including global scope) from
+         * this module to another. Will return false if there are conflicts
+         * (keys which already exist on the target) or true otherwise. No
+         * changes will be committed if any conflict occurs (or the process
+         * fails).
+         */
+        bool mergeInto(const ionshared::Ptr<Module> &module);
     };
 }

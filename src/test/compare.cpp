@@ -53,7 +53,7 @@ namespace ionir::test::compare {
             llvmCodegenPass->getModuleBuffer();
 
         // Llvm module buffer is nullptr or was never set. Fail the process.
-        if (!ionshared::Util::hasValue(llvmModuleBuffer)) {
+        if (!ionshared::util::hasValue(llvmModuleBuffer)) {
             return false;
         }
 
@@ -87,7 +87,7 @@ namespace ionir::test::compare {
     bool ir(const ionshared::Ptr<LlvmCodegenPass> &llvmCodegenPass, const std::string &fileName) {
         std::optional<llvm::Module *> llvmModuleBuffer = llvmCodegenPass->getModuleBuffer();
 
-        if (!ionshared::Util::hasValue(llvmModuleBuffer)) {
+        if (!ionshared::util::hasValue(llvmModuleBuffer)) {
             throw std::runtime_error("Module buffer in LlvmCodegenPass is not set");
         }
 

@@ -7,7 +7,7 @@ namespace ionir {
         /**
          * An entry function could not be found.
          */
-        if (!ionshared::Util::hasValue(this->entryFunction)) {
+        if (!ionshared::util::hasValue(this->entryFunction)) {
             throw std::runtime_error("No suitable entry point could be found");
         }
         /**
@@ -27,7 +27,7 @@ namespace ionir {
              * Make sure there was not an entry point function
              * previously encountered.
              */
-            if (ionshared::Util::hasValue(this->entryFunction)) {
+            if (ionshared::util::hasValue(this->entryFunction)) {
                 throw std::runtime_error("Entry point function had already previously been declared");
             }
 

@@ -54,7 +54,7 @@ namespace ionir {
 
             ionshared::OptPtr<Construct> value = this->getValue();
 
-            if (ionshared::Util::hasValue(value)) {
+            if (ionshared::util::hasValue(value)) {
                 return value->get()->dynamicCast<TValue>();
             }
 
@@ -62,7 +62,7 @@ namespace ionir {
         }
 
         bool isResolved() noexcept {
-            return ionshared::Util::hasValue(this->value);
+            return ionshared::util::hasValue(this->value);
         }
 
         void resolve(ionshared::OptPtr<T> value) {

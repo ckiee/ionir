@@ -5,16 +5,16 @@
 #include <optional>
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/LLVMContext.h>
+#include <ionshared/container/map.h>
 #include <ionir/construct/value/integer_value.h>
 #include <ionir/lexical/token_kind.h>
-#include <ionir/container/map.h>
 
 namespace ionir {
     typedef llvm::IntegerType *(llvm::IntegerType::*LlvmIntTypeResolver)(llvm::LLVMContext &context);
 
     class Const {
     private:
-        static Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
+        static ionshared::Map<IntegerKind, LlvmIntTypeResolver> integerTypeResolverMap;
 
     public:
         static const std::string basicBlockInternalPrefix;

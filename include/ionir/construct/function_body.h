@@ -20,7 +20,7 @@ namespace ionir {
             ionshared::Ptr<Function> parent,
 
             PtrSymbolTable<BasicBlock> symbolTable =
-                ionshared::Util::makePtrSymbolTable<BasicBlock>()
+                ionshared::util::makePtrSymbolTable<BasicBlock>()
         );
 
         void accept(Pass &visitor) override;

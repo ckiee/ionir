@@ -4,7 +4,7 @@
 
 namespace ionir {
     AstPtrResult<Args> Parser::parseArgs() {
-        ionshared::SymbolTable<Arg> args = {};
+        ionshared::SymbolTable<Arg> args = ionshared::SymbolTable<Arg>();
         bool isInfinite = false;
 
         do {
@@ -16,7 +16,7 @@ namespace ionir {
                 }
 
                 // Skip over comma token.
-                this->stream.next();
+                this->tokenStream.next();
             }
 
             AstResult<Arg> argResult = this->parseArg();
@@ -50,7 +50,7 @@ namespace ionir {
             args = util::getResultValue(temporaryArgs);
         }
 
-        this->stream.skip();
+        this->tokenStream.skip();
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolArrow), Prototype)
 
         AstPtrResult<Type> returnType = this->parseType();
@@ -75,20 +75,22 @@ namespace ionir {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::KeywordFunction), Function)
 
         AstPtrResult<Prototype> prototype = this->parsePrototype(parent);
+
+        // Parent will be filled in below.
         AstPtrResult<FunctionBody> bodyResult = this->parseFunctionBody(nullptr);
 
         IONIR_PARSER_ASSERT_RESULT(prototype, Function)
         IONIR_PARSER_ASSERT_RESULT(bodyResult, Function)
 
-        ionshared::Ptr<FunctionBody> body = util::getResultValue(bodyResult);
+        ionshared::Ptr<FunctionBody> functionBody = util::getResultValue(bodyResult);
 
-        ionshared::Ptr<Function> function =
-            std::make_shared<Function>(
-                util::getResultValue(prototype),
-                body
-            );
+        ionshared::Ptr<Function> function = std::make_shared<Function>(
+            util::getResultValue(prototype),
+            functionBody
+        );
 
-        body->setParent(function);
+        // Fill in the function body's parent.
+        functionBody->setParent(function);
 
         return function;
     }

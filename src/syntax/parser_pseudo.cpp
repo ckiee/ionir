@@ -11,10 +11,10 @@ namespace ionir {
             return std::nullopt;
         }
 
-        Token id = this->stream.get();
+        Token id = this->tokenStream.get();
 
         // Skip over identifier token.
-        this->stream.skip();
+        this->tokenStream.skip();
 
         // Return the identifier's value.
         return id.getValue();

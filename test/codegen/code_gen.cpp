@@ -145,7 +145,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
      * Entry basic block must be set in the bootstrapped function
      * in order to perform the test.
      */
-    EXPECT_TRUE(ionshared::Util::hasValue(functionEntryBlock));
+    EXPECT_TRUE(ionshared::util::hasValue(functionEntryBlock));
 
     ionshared::Ptr<AllocaInst> allocaInst = std::make_shared<AllocaInst>(AllocaInstOpts{
         /**
@@ -241,8 +241,8 @@ TEST(CodeGenTest, VisitBranchInst) {
         bodySectionRef
     });
 
-    branchInst->getBlockRef()->setOwner(branchInst);
-    branchInst->getOtherwiseBlockRef()->setOwner(branchInst);
+    branchInst->getConsequentBlockRef()->setOwner(branchInst);
+    branchInst->getAlternativeBlockRef()->setOwner(branchInst);
 
     ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 

@@ -16,7 +16,7 @@ namespace ionir {
 
     public:
         explicit Context(
-            Scope globalScope = ionshared::Util::makePtrSymbolTable<Construct>(),
+            Scope globalScope = ionshared::util::makePtrSymbolTable<Construct>(),
             std::vector<Scope> scopes = {}
         );
 

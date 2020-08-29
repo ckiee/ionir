@@ -30,6 +30,6 @@ namespace ionir {
     }
 
     bool ReturnInst::hasValue() noexcept {
-        return ionshared::Util::hasValue(this->value);
+        return ionshared::util::hasValue(this->value);
     }
 }

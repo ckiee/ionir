@@ -1,7 +1,8 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap = Map<IntegerKind, LlvmIntTypeResolver>();
+    ionshared::Map<IntegerKind, LlvmIntTypeResolver> Const::integerTypeResolverMap =
+        ionshared::Map<IntegerKind, LlvmIntTypeResolver>();
 
     const std::string Const::basicBlockInternalPrefix = ".";
 
@@ -61,7 +62,7 @@ namespace ionir {
     }
 
     std::optional<std::string> Const::getConstructKindName(ConstructKind constructKind) {
-        if (ionshared::Util::mapContains<ConstructKind, std::string>(Const::constructNames, constructKind)) {
+        if (ionshared::util::mapContains<ConstructKind, std::string>(Const::constructNames, constructKind)) {
             return Const::constructNames[constructKind];
         }
 
@@ -69,7 +70,7 @@ namespace ionir {
     }
 
     std::optional<IntegerKind> Const::getIntegerKind(TokenKind tokenKind) {
-        if (ionshared::Util::mapContains<TokenKind, IntegerKind>(Const::tokenKindToIntegerKind, tokenKind)) {
+        if (ionshared::util::mapContains<TokenKind, IntegerKind>(Const::tokenKindToIntegerKind, tokenKind)) {
             return Const::tokenKindToIntegerKind[tokenKind];
         }
 

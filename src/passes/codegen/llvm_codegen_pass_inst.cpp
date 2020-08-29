@@ -32,7 +32,7 @@ namespace ionir {
         ionshared::OptPtr<Construct> returnInstValue = node->getValue();
         llvm::ReturnInst *llvmReturnInst = nullptr;
 
-        if (ionshared::Util::hasValue(returnInstValue)) {
+        if (ionshared::util::hasValue(returnInstValue)) {
             llvm::Value *llvmValue = nullptr;
 
             // TODO: Hotfix. Clean up messy code.
@@ -89,8 +89,8 @@ namespace ionir {
 
         this->saveBuilder();
 
-        PtrRef<BasicBlock> bodyRef = node->getBlockRef();
-        PtrRef<BasicBlock> otherwiseRef = node->getOtherwiseBlockRef();
+        PtrRef<BasicBlock> bodyRef = node->getConsequentBlockRef();
+        PtrRef<BasicBlock> otherwiseRef = node->getAlternativeBlockRef();
 
         // Body reference should have been resolved at this point.
         if (!bodyRef->isResolved()) {
@@ -127,7 +127,7 @@ namespace ionir {
         OptPtrRef<Function> callee = node->getCallee();
 
         // At this point, callee must have been resolved.
-        if (!ionshared::Util::hasValue(callee)) {
+        if (!ionshared::util::hasValue(callee)) {
             // TODO: Use notices.
             throw std::runtime_error("Unresolved call instruction callee");
         }
@@ -160,7 +160,7 @@ namespace ionir {
 
         std::optional<llvm::Value *> llvmTarget = this->findInScope(*target->getValue());
 
-        if (!ionshared::Util::hasValue(llvmTarget)) {
+        if (!ionshared::util::hasValue(llvmTarget)) {
             throw std::runtime_error("Target could not be retrieved from the emitted entities map");
         }
 
