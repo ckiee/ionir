@@ -5,7 +5,7 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
-    void LlvmCodegenPass::visitIntegerValue(ionshared::Ptr<IntegerLiteral> node) {
+    void LlvmCodegenPass::visitIntegerLiteral(ionshared::Ptr<IntegerLiteral> node) {
         /**
          * Create the APInt (Arbitrary-precision integer)
          * to provide. Acts sort of an LLVM integer value
@@ -34,7 +34,7 @@ namespace ionir {
 //        this->addToScope(node, value);
     }
 
-    void LlvmCodegenPass::visitCharValue(ionshared::Ptr<CharLiteral> node) {
+    void LlvmCodegenPass::visitCharLiteral(ionshared::Ptr<CharLiteral> node) {
         this->requireContext();
         this->requireBuilder();
 
@@ -45,7 +45,7 @@ namespace ionir {
 //        this->addToScope(node, value);
     }
 
-    void LlvmCodegenPass::visitStringValue(ionshared::Ptr<StringLiteral> node) {
+    void LlvmCodegenPass::visitStringLiteral(ionshared::Ptr<StringLiteral> node) {
         this->requireBuilder();
 
         // Create the global string pointer.
@@ -55,7 +55,7 @@ namespace ionir {
 //        this->addToScope(node, value);
     }
 
-    void LlvmCodegenPass::visitBooleanValue(ionshared::Ptr<BooleanLiteral> node) {
+    void LlvmCodegenPass::visitBooleanLiteral(ionshared::Ptr<BooleanLiteral> node) {
         this->requireContext();
 
         // Create the boolean type along with the LLVM value.

@@ -8,7 +8,7 @@ namespace ionir {
     }
 
     void IntegerLiteral::accept(Pass &visitor) {
-        visitor.visitIntegerValue(this->dynamicCast<IntegerLiteral>());
+        visitor.visitIntegerLiteral(this->dynamicCast<IntegerLiteral>());
     }
 
     int64_t IntegerLiteral::getValue() const {

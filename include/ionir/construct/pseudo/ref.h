@@ -12,21 +12,38 @@ namespace ionir {
     // TODO: What if 'pass.h' is never included?
     class Pass;
 
+    enum class RefKind {
+        Module,
+
+        Extern,
+
+        Function,
+
+        BasicBlock,
+
+        Inst
+    };
+
     template<typename T = Construct>
     class Ref : public Construct, public ionshared::Named {
     private:
+        RefKind kind;
+
         ionshared::Ptr<Construct> owner;
 
         ionshared::OptPtr<T> value;
 
     public:
         Ref(
+            RefKind kind,
             const std::string &id,
             ionshared::Ptr<Construct> owner,
             ionshared::OptPtr<T> value = std::nullopt
         ) :
             Construct(ConstructKind::Ref),
-            Named(id), owner(std::move(owner)),
+            Named(id),
+            kind(kind),
+            owner(std::move(owner)),
             value(value) {
             //
         }
@@ -36,7 +53,11 @@ namespace ionir {
             // visitor.visitRef(this->dynamicCast<Ref<T>>());
         }
 
-        ionshared::Ptr<Construct> getOwner() const noexcept {
+        [[nodiscard]] RefKind getRefKind() const noexcept {
+            return this->kind;
+        }
+
+        [[nodiscard]] ionshared::Ptr<Construct> getOwner() const noexcept {
             return this->owner;
         }
 
@@ -44,12 +65,12 @@ namespace ionir {
             this->owner = owner;
         }
 
-        ionshared::OptPtr<T> getValue() const noexcept {
+        [[nodiscard]] ionshared::OptPtr<T> getValue() const noexcept {
             return this->value;
         }
 
         template<typename TValue>
-        ionshared::OptPtr<TValue> getValueAs() const {
+        [[nodiscard]] ionshared::OptPtr<TValue> getValueAs() const {
             // TODO: Ensure T is or derives from Construct.
 
             ionshared::OptPtr<Construct> value = this->getValue();
@@ -61,7 +82,7 @@ namespace ionir {
             return std::nullopt;
         }
 
-        bool isResolved() noexcept {
+        [[nodiscard]] bool isResolved() noexcept {
             return ionshared::util::hasValue(this->value);
         }
 

@@ -125,13 +125,13 @@ namespace ionir {
 
         void visitPrototype(ionshared::Ptr<Prototype> node) override;
 
-        void visitIntegerValue(ionshared::Ptr<IntegerLiteral> node) override;
+        void visitIntegerLiteral(ionshared::Ptr<IntegerLiteral> node) override;
 
-        void visitCharValue(ionshared::Ptr<CharLiteral> node) override;
+        void visitCharLiteral(ionshared::Ptr<CharLiteral> node) override;
 
-        void visitStringValue(ionshared::Ptr<StringLiteral> node) override;
+        void visitStringLiteral(ionshared::Ptr<StringLiteral> node) override;
 
-        void visitBooleanValue(ionshared::Ptr<BooleanLiteral> node) override;
+        void visitBooleanLiteral(ionshared::Ptr<BooleanLiteral> node) override;
 
         void visitAllocaInst(ionshared::Ptr<AllocaInst> node) override;
 

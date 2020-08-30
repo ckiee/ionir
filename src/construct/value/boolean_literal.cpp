@@ -8,7 +8,7 @@ namespace ionir {
     }
 
     void BooleanLiteral::accept(Pass &visitor) {
-        visitor.visitBooleanValue(this->dynamicCast<BooleanLiteral>());
+        visitor.visitBooleanLiteral(this->dynamicCast<BooleanLiteral>());
     }
 
     bool BooleanLiteral::getValue() const noexcept {

@@ -62,25 +62,25 @@ namespace ionir {
             // TODO: Missing boolean value kind.
 
             case ValueKind::Character: {
-                this->visitCharValue(node->dynamicCast<CharLiteral>());
+                this->visitCharLiteral(node->dynamicCast<CharLiteral>());
 
                 break;
             }
 
             case ValueKind::Integer: {
-                this->visitIntegerValue(node->dynamicCast<IntegerLiteral>());
+                this->visitIntegerLiteral(node->dynamicCast<IntegerLiteral>());
 
                 break;
             }
 
             case ValueKind::String: {
-                this->visitStringValue(node->dynamicCast<StringLiteral>());
+                this->visitStringLiteral(node->dynamicCast<StringLiteral>());
 
                 break;
             }
 
             case ValueKind::Boolean: {
-                this->visitBooleanValue(node->dynamicCast<BooleanLiteral>());
+                this->visitBooleanLiteral(node->dynamicCast<BooleanLiteral>());
 
                 break;
             }
@@ -91,19 +91,19 @@ namespace ionir {
         }
     }
 
-    void Pass::visitIntegerValue(ionshared::Ptr<IntegerLiteral> node) {
+    void Pass::visitIntegerLiteral(ionshared::Ptr<IntegerLiteral> node) {
         //
     }
 
-    void Pass::visitCharValue(ionshared::Ptr<CharLiteral> node) {
+    void Pass::visitCharLiteral(ionshared::Ptr<CharLiteral> node) {
         //
     }
 
-    void Pass::visitStringValue(ionshared::Ptr<StringLiteral> node) {
+    void Pass::visitStringLiteral(ionshared::Ptr<StringLiteral> node) {
         //
     }
 
-    void Pass::visitBooleanValue(ionshared::Ptr<BooleanLiteral> node) {
+    void Pass::visitBooleanLiteral(ionshared::Ptr<BooleanLiteral> node) {
         //
     }
 

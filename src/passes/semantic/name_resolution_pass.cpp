@@ -1,21 +1,18 @@
 #include <ionir/passes/semantic/name_resolution_pass.h>
 
 namespace ionir {
-    NameResolutionPass::NameResolutionPass(ionshared::Ptr<ionshared::NoticeStack> noticeStack)
-        : noticeStack(std::move(noticeStack)), scope() {
+    NameResolutionPass::NameResolutionPass(ionshared::Ptr<ionshared::NoticeStack> noticeStack) :
+        noticeStack(std::move(noticeStack)),
+        scope() {
         //
     }
 
     void NameResolutionPass::visitModule(ionshared::Ptr<Module> node) {
-        Pass::visitModule(node);
-
         // TODO: Is it push_back() or push_front()?
         this->scope.push_back(node->getContext()->getGlobalScope());
     }
 
     void NameResolutionPass::visitRef(PtrRef<> node) {
-        Pass::visitRef(node);
-
         // Node is already resolved, no need to continue.
         if (node->isResolved()) {
             return;

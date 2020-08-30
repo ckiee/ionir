@@ -1,11 +1,11 @@
 #pragma once
 
-#include <ionshared/lexical/bare_token.h>
+#include <ionshared/lexical/base_token.h>
 #include <ionshared/misc/iterable.h>
 #include "token_kind.h"
 
 namespace ionir {
-    class Token : public ionshared::BareToken<TokenKind> {
+    class Token : public ionshared::BaseToken<TokenKind> {
     public:
         static Token createDummy(uint32_t startPosition) noexcept;
 
