@@ -1,7 +1,0 @@
-module test {
-    fn foobar() -> void {
-        @entry: {
-            ret 1;
-        }
-    }
-}

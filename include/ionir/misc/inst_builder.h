@@ -56,7 +56,7 @@ namespace ionir {
         );
 
         ionshared::Ptr<ReturnInst> createReturn(
-            const ionshared::OptPtr<Value<>> &value = std::nullopt
+            const ionshared::OptPtr<Construct> &value = std::nullopt
         );
 
         ionshared::Ptr<CallInst> createCall(

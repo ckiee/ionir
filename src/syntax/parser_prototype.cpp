@@ -16,7 +16,7 @@ namespace ionir {
                 }
 
                 // Skip over comma token.
-                this->tokenStream.next();
+                this->tokenStream->next();
             }
 
             AstResult<Arg> argResult = this->parseArg();
@@ -50,7 +50,7 @@ namespace ionir {
             args = util::getResultValue(temporaryArgs);
         }
 
-        this->tokenStream.skip();
+        this->tokenStream->skip();
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolArrow), Prototype)
 
         AstPtrResult<Type> returnType = this->parseType();

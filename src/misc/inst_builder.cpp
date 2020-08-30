@@ -50,7 +50,7 @@ namespace ionir {
         return branchInst;
     }
 
-    ionshared::Ptr<ReturnInst> InstBuilder::createReturn(const ionshared::OptPtr<Value<>> &value) {
+    ionshared::Ptr<ReturnInst> InstBuilder::createReturn(const ionshared::OptPtr<Construct> &value) {
         return this->make<ReturnInst, ReturnInstOpts>(ReturnInstOpts{
             this->basicBlock,
             value

@@ -8,11 +8,9 @@ using namespace ionir;
 
 // TODO: Separate into multiple tests.
 TEST(TypeCheckPassTest, Run) {
-    ionshared::Ptr<TypeCheckPass> pass = std::make_shared<TypeCheckPass>();
-
     PassManager passManager = PassManager({
         PassManagerItem{
-            pass
+            std::make_shared<TypeCheckPass>()
         }
     });
 
@@ -47,4 +45,37 @@ TEST(TypeCheckPassTest, Run) {
      * should no longer complain.
      */
     EXPECT_NO_THROW(passManager.run(ast));
+}
+
+TEST(TypeCheckPassTast, FunctionReturnTypeValueMismatch) {
+    ionshared::Ptr<TypeCheckPass> typeCheckPass = std::make_shared<TypeCheckPass>();
+
+    Ast ast = Bootstrap::functionAst(test::constant::foobar);
+    ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
+
+    EXPECT_TRUE(function.has_value());
+
+    ionshared::Ptr<Prototype> prototype = function->get()->getPrototype();
+
+    prototype->setReturnType(
+        TypeFactory::typeInteger(IntegerKind::Int32)
+    );
+
+    ionshared::Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
+    InstBuilder instBuilder = InstBuilder(entrySection);
+
+    ionshared::Ptr<ReturnInst> returnInst = instBuilder.createReturn(
+        std::make_shared<IntegerValue>(
+            std::make_shared<IntegerType>(IntegerKind::Int8),
+            2
+        )
+    );
+
+    /**
+     * When the return instruction is visited, a
+     */
+    EXPECT_THROW(
+        typeCheckPass->visitReturnInst(returnInst),
+        std::runtime_error
+    );
 }

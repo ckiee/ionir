@@ -34,7 +34,7 @@ namespace ionir::test::compare {
         }
 
         Lexer lexer = Lexer(*inputFileContents);
-        Parser parser = Parser(TokenStream(lexer.scan()));
+        Parser parser = Parser(std::make_shared<TokenStream>(lexer.scan()));
 
         // TODO: Currently limited to only parsing a single module.
         AstPtrResult<Module> moduleResult = parser.parseModule();

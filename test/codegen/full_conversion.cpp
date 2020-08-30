@@ -23,8 +23,8 @@ TEST(FullConversionTest, ChainInstAlloca) {
     EXPECT_TRUE(test::compare::inputAndOutput("inst_alloca.iox", "inst_alloca"));
 }
 
-TEST(FullConversionTest, ChainInstReturnI8) {
-    EXPECT_TRUE(test::compare::inputAndOutput("inst_return_i8.iox", "inst_return_i8"));
+TEST(FullConversionTest, ChainInstReturnI32) {
+    EXPECT_TRUE(test::compare::inputAndOutput("inst_return_i32.iox", "inst_return_i32"));
 }
 
 TEST(FullConversionTest, ChainInstReturnVoid) {

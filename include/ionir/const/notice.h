@@ -8,10 +8,13 @@
 // Function.
 #define IONIR_NOTICE_FUNCTION_CALL_UNDEFINED "Call to undefined function '%s'"
 #define IONIR_NOTICE_FUNCTION_CALL_LEADING_COMMA "Leading comma in argument list is disallowed"
+#define IONIR_NOTICE_FUNCTION_RETURN_TYPE_MISMATCH "Function '%s' return type and return value type mismatch"
 #define IONIR_NOTICE_FUNCTION_REDEFINED "Cannot redefine existing function '%s'"
 
 // Instruction.
-#define IONIR_NOTICE_INST_CANNOT_ALLOCATE_VOID "Cannot allocate void type"
+#define IONIR_NOTICE_INST_ALLOCA_VOID "Cannot allocate void type"
+#define IONIR_NOTICE_INST_STORE_UNRESOLVED_REF "Cannot store value to an unresolved reference '%s'"
+#define IONIR_NOTICE_INST_STORE_TYPE_MISMATCH "Cannot store value with different type than what was allocated to '%s'"
 
 // Value.
 #define IONIR_NOTICE_VALUE_CHARACTER_MAX_ONE "Character value length must be at most a single character"

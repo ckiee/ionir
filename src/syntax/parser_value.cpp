@@ -5,7 +5,7 @@
 
 namespace ionir {
     AstPtrResult<Value<>> Parser::parseValue() {
-        TokenKind currentTokenKind = this->tokenStream.get().getKind();
+        TokenKind currentTokenKind = this->tokenStream->get().getKind();
 
         /**
          * Must use static pointer cast when downcasting to Value<>, given
@@ -58,7 +58,7 @@ namespace ionir {
          * Abstract the token's value to be used in the
          * string to long integer conversion.
          */
-        std::string tokenValue = this->tokenStream.get().getValue();
+        std::string tokenValue = this->tokenStream->get().getValue();
 
         // TODO: May stol() throw an error? If so, wrap in try-catch block for safety.
         /**
@@ -114,7 +114,7 @@ namespace ionir {
             std::make_shared<IntegerValue>(type, value);
 
         // Skip current token.
-        this->tokenStream.tryNext();
+        this->tokenStream->tryNext();
 
         // Finally, return the result.
         return integer;
@@ -124,10 +124,10 @@ namespace ionir {
         IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralCharacter, CharValue)
 
         // Extract the value from the character token.
-        std::string stringValue = this->tokenStream.get().getValue();
+        std::string stringValue = this->tokenStream->get().getValue();
 
         // Skip over character token.
-        this->tokenStream.skip();
+        this->tokenStream->skip();
 
         // Ensure extracted value only contains a single character.
         if (stringValue.length() > 1) {
@@ -142,10 +142,10 @@ namespace ionir {
         IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralString, StringValue)
 
         // Extract the value from the string token.
-        std::string value = this->tokenStream.get().getValue();
+        std::string value = this->tokenStream->get().getValue();
 
         // Skip over string token.
-        this->tokenStream.skip();
+        this->tokenStream->skip();
 
         return std::make_shared<StringValue>(value);
     }

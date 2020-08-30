@@ -1,7 +1,8 @@
 #include <ionir/type_system/type_util.h>
+#include <ionir/construct/type/integer_type.h>
 
-namespace ionir {
-    bool TypeUtil::isAtomicTypesCompatible(TypeKind typeKindA, TypeKind typeKindB) {
+namespace ionir::type_util {
+    bool isAtomicTypesCompatible(TypeKind typeKindA, TypeKind typeKindB) {
         if (typeKindA == TypeKind::UserDefined || typeKindB == TypeKind::UserDefined) {
             throw std::invalid_argument("Neither argument may be user-defined type kind");
         }
@@ -18,5 +19,45 @@ namespace ionir {
 
         // Anything remaining is compatible.
         return true;
+    }
+
+    bool isSameType(const ionshared::Ptr<Type> &typeA, const ionshared::Ptr<Type> &typeB) {
+        TypeKind typeAKind = typeA->getTypeKind();
+        TypeKind typeBKind = typeB->getTypeKind();
+
+        if (typeAKind != typeBKind) {
+            return false;
+        }
+
+        switch (typeAKind) {
+            case TypeKind::Integer: {
+                ionshared::Ptr<IntegerType> integerTypeA = typeA->dynamicCast<IntegerType>();
+                ionshared::Ptr<IntegerType> integerTypeB = typeB->dynamicCast<IntegerType>();
+
+                return integerTypeA->getIntegerKind() == integerTypeB->getIntegerKind();
+            }
+
+            // TODO: Decimal types as well (copy integer code basically).
+
+            case TypeKind::Pointer: {
+                // TODO
+
+                throw std::runtime_error("Not implemented");
+
+                break;
+            }
+
+            case TypeKind::UserDefined: {
+                // TODO
+
+                throw std::runtime_error("Not implemented");
+
+                break;
+            }
+
+            default: {
+                return true;
+            }
+        }
     }
 }

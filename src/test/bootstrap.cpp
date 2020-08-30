@@ -23,7 +23,9 @@ namespace ionir::test::bootstrap {
     }
 
     Parser parser(std::vector<Token> tokens) {
-        return ionir::Parser(ionir::TokenStream(std::move(tokens)));
+        return ionir::Parser(
+            std::make_shared<ionir::TokenStream>(std::move(tokens))
+        );
     }
 
     ionshared::Ptr<ionshared::LlvmModule> llvmModule(const std::string &identifier) {

@@ -8,7 +8,7 @@ namespace ionir {
          * Retrieve the current token's kind to determine the
          * instruction's name & designated parser.
          */
-        TokenKind tokenKind = this->tokenStream.get().getKind();
+        TokenKind tokenKind = this->tokenStream->get().getKind();
 
         // Create a buffer instruction to serve as the result.
         AstPtrResult<Inst> inst;
@@ -80,7 +80,7 @@ namespace ionir {
         ionshared::Ptr<Type> type = util::getResultValue(typeResult);
 
         if (type->getTypeKind() == TypeKind::Void) {
-            return this->noticeSentinel->makeError<AllocaInst>(IONIR_NOTICE_INST_CANNOT_ALLOCATE_VOID);
+            return this->noticeSentinel->makeError<AllocaInst>(IONIR_NOTICE_INST_ALLOCA_VOID);
         }
 
         return std::make_shared<AllocaInst>(AllocaInstOpts{

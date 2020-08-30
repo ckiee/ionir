@@ -3,12 +3,14 @@
 #include <exception>
 #include <ionir/construct/type.h>
 
-namespace ionir {
-    class TypeUtil {
-    public:
-        static bool isAtomicTypesCompatible(
-            TypeKind typeKindA,
-            TypeKind typeKindB
-        );
-    };
+namespace ionir::type_util {
+    bool isAtomicTypesCompatible(
+        TypeKind typeKindA,
+        TypeKind typeKindB
+    );
+
+    bool isSameType(
+        const ionshared::Ptr<Type> &typeA,
+        const ionshared::Ptr<Type> &typeB
+    );
 }
