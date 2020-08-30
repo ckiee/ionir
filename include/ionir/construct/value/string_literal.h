@@ -7,17 +7,17 @@
 namespace ionir {
     class Pass;
 
-    class StringValue : public Value<> {
+    class StringLiteral : public Value<> {
     private:
         std::string value;
 
     public:
-        explicit StringValue(std::string value);
+        explicit StringLiteral(std::string value);
 
         void accept(Pass &visitor) override;
 
-        std::string getValue() const;
+        [[nodiscard]] std::string getValue() const noexcept;
 
-        void setValue(std::string value);
+        void setValue(std::string value) noexcept;
     };
 }

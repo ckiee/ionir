@@ -6,7 +6,7 @@
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/LLVMContext.h>
 #include <ionshared/container/map.h>
-#include <ionir/construct/value/integer_value.h>
+#include <ionir/construct/value/integer_literal.h>
 #include <ionir/lexical/token_kind.h>
 
 namespace ionir {

@@ -14,7 +14,7 @@ namespace ionir {
         switch (currentTokenKind) {
             case TokenKind::LiteralInteger: {
                 // TODO: Should be done like below...
-                return util::getResultValue(this->parseInt())->staticCast<Value<>>();
+                return util::getResultValue(this->parseIntegerLiteral())->staticCast<Value<>>();
 
                 // TODO: Throwing error for some reason.
 //                return util::castAstPtrResult<IntegerValue, Value<>>(
@@ -25,7 +25,7 @@ namespace ionir {
 
             case TokenKind::LiteralCharacter: {
                 // TODO: Should be done like below...
-                return util::getResultValue(this->parseChar())->staticCast<Value<>>();
+                return util::getResultValue(this->parseCharLiteral())->staticCast<Value<>>();
 
                 // TODO: Throwing error for some reason.
 //                return util::castAstPtrResult<CharValue, Value<>>(
@@ -35,8 +35,8 @@ namespace ionir {
             }
 
             case TokenKind::LiteralString: {
-                return util::castAstPtrResult<StringValue, Value<>>(
-                    this->parseString(),
+                return util::castAstPtrResult<StringLiteral, Value<>>(
+                    this->parseStringLiteral(),
                     false
                 );
             }
@@ -51,8 +51,8 @@ namespace ionir {
         }
     }
 
-    AstPtrResult<IntegerValue> Parser::parseInt() {
-        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralInteger, IntegerValue)
+    AstPtrResult<IntegerLiteral> Parser::parseIntegerLiteral() {
+        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralInteger, IntegerLiteral)
 
         /**
          * Abstract the token's value to be used in the
@@ -78,7 +78,7 @@ namespace ionir {
         }
         catch (std::exception& exception) {
             // Value conversion failed.
-            return this->noticeSentinel->makeError<IntegerValue>(
+            return this->noticeSentinel->makeError<IntegerLiteral>(
                 IONIR_NOTICE_VALUE_CONVERT_STRING_TO_INT_FAILED
             );
         }
@@ -91,7 +91,7 @@ namespace ionir {
 
         if (!valueIntegerKind.has_value()) {
             // TODO: Hard-coded message. Use consts.
-            return this->noticeSentinel->makeError<IntegerValue>("Integer value's type kind could not be determined");
+            return this->noticeSentinel->makeError<IntegerLiteral>("Integer value's type kind could not be determined");
         }
 
         /**
@@ -110,8 +110,8 @@ namespace ionir {
             std::make_shared<IntegerType>(*valueIntegerKind);
 
         // Create the integer instance.
-        ionshared::Ptr<IntegerValue> integer =
-            std::make_shared<IntegerValue>(type, value);
+        ionshared::Ptr<IntegerLiteral> integer =
+            std::make_shared<IntegerLiteral>(type, value);
 
         // Skip current token.
         this->tokenStream->tryNext();
@@ -120,8 +120,8 @@ namespace ionir {
         return integer;
     }
 
-    AstPtrResult<CharValue> Parser::parseChar() {
-        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralCharacter, CharValue)
+    AstPtrResult<CharLiteral> Parser::parseCharLiteral() {
+        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralCharacter, CharLiteral)
 
         // Extract the value from the character token.
         std::string stringValue = this->tokenStream->get().getValue();
@@ -131,15 +131,15 @@ namespace ionir {
 
         // Ensure extracted value only contains a single character.
         if (stringValue.length() > 1) {
-            return this->noticeSentinel->makeError<CharValue>(IONIR_NOTICE_VALUE_CHARACTER_MAX_ONE);
+            return this->noticeSentinel->makeError<CharLiteral>(IONIR_NOTICE_VALUE_CHARACTER_MAX_ONE);
         }
 
         // Create the character construct with the first and only character of the captured value.
-        return std::make_shared<CharValue>(stringValue[0]);
+        return std::make_shared<CharLiteral>(stringValue[0]);
     }
 
-    AstPtrResult<StringValue> Parser::parseString() {
-        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralString, StringValue)
+    AstPtrResult<StringLiteral> Parser::parseStringLiteral() {
+        IONIR_PARSER_TOKEN_KIND(TokenKind::LiteralString, StringLiteral)
 
         // Extract the value from the string token.
         std::string value = this->tokenStream->get().getValue();
@@ -147,6 +147,6 @@ namespace ionir {
         // Skip over string token.
         this->tokenStream->skip();
 
-        return std::make_shared<StringValue>(value);
+        return std::make_shared<StringLiteral>(value);
     }
 }

@@ -9,9 +9,9 @@
 #include <llvm/IR/Value.h>
 #include <llvm/IR/BasicBlock.h>
 #include <ionshared/container/llvm_stack.h>
-#include <ionir/construct/value/integer_value.h>
-#include <ionir/construct/value/char_value.h>
-#include <ionir/construct/value/string_value.h>
+#include <ionir/construct/value/integer_literal.h>
+#include <ionir/construct/value/char_literal.h>
+#include <ionir/construct/value/string_literal.h>
 #include <ionir/construct/inst.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/alloca.h>
@@ -125,13 +125,13 @@ namespace ionir {
 
         void visitPrototype(ionshared::Ptr<Prototype> node) override;
 
-        void visitIntegerValue(ionshared::Ptr<IntegerValue> node) override;
+        void visitIntegerValue(ionshared::Ptr<IntegerLiteral> node) override;
 
-        void visitCharValue(ionshared::Ptr<CharValue> node) override;
+        void visitCharValue(ionshared::Ptr<CharLiteral> node) override;
 
-        void visitStringValue(ionshared::Ptr<StringValue> node) override;
+        void visitStringValue(ionshared::Ptr<StringLiteral> node) override;
 
-        void visitBooleanValue(ionshared::Ptr<BooleanValue> node) override;
+        void visitBooleanValue(ionshared::Ptr<BooleanLiteral> node) override;
 
         void visitAllocaInst(ionshared::Ptr<AllocaInst> node) override;
 

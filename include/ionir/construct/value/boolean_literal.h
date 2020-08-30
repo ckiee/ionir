@@ -5,17 +5,17 @@
 namespace ionir {
     class Pass;
 
-    class BooleanValue : public Value<> {
+    class BooleanLiteral : public Value<> {
     private:
         bool value;
 
     public:
-        explicit BooleanValue(bool value);
+        explicit BooleanLiteral(bool value);
 
         void accept(Pass &visitor) override;
 
-        bool getValue() const;
+        [[nodiscard]] bool getValue() const noexcept;
 
-        void setValue(bool value);
+        void setValue(bool value) noexcept;
     };
 }

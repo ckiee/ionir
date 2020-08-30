@@ -13,7 +13,7 @@ TEST(ParserTest, ParseInt) {
         Token(TokenKind::LiteralInteger, "5")
     });
 
-    AstPtrResult<IntegerValue> integer = parser.parseInt();
+    AstPtrResult<IntegerLiteral> integer = parser.parseIntegerLiteral();
 
     // TODO: Verify integer type?
 
@@ -32,7 +32,7 @@ TEST(ParserTest, ParseChar) {
         Token(TokenKind::LiteralCharacter, "a")
     });
 
-    AstPtrResult<CharValue> character = parser.parseChar();
+    AstPtrResult<CharLiteral> character = parser.parseCharLiteral();
 
     EXPECT_TRUE(util::hasValue(character));
     EXPECT_EQ(util::getResultValue(character)->getValue(), 'a');

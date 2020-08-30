@@ -25,7 +25,7 @@ TEST(NameResolutionPassTest, Run) {
 
     // Create an instruction builder instance and the branch instruction's condition.
     InstBuilder instBuilder = InstBuilder(entryBlock);
-    ionshared::Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
+    ionshared::Ptr<BooleanLiteral> condition = std::make_shared<BooleanLiteral>(true);
 
     // Create the branch instruction pointing to the entry block on both true and false.
     ionshared::Ptr<BranchInst> branchInst = instBuilder.createBranch(condition, Const::basicBlockEntryId, Const::basicBlockEntryId);

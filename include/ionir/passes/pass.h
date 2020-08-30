@@ -3,10 +3,10 @@
 #include <ionshared/passes/base_pass.h>
 #include <ionshared/passes/base_pass_manager.h>
 #include <ionir/construct/construct.h>
-#include <ionir/construct/value/integer_value.h>
-#include <ionir/construct/value/char_value.h>
-#include <ionir/construct/value/string_value.h>
-#include <ionir/construct/value/boolean_value.h>
+#include <ionir/construct/value/integer_literal.h>
+#include <ionir/construct/value/char_literal.h>
+#include <ionir/construct/value/string_literal.h>
+#include <ionir/construct/value/boolean_literal.h>
 #include <ionir/construct/inst/alloca.h>
 #include <ionir/construct/inst/branch.h>
 #include <ionir/construct/inst/return.h>
@@ -54,13 +54,13 @@ namespace ionir {
 
         virtual void visitValue(ionshared::Ptr<Value<>> node);
 
-        virtual void visitIntegerValue(ionshared::Ptr<IntegerValue> node);
+        virtual void visitIntegerValue(ionshared::Ptr<IntegerLiteral> node);
 
-        virtual void visitCharValue(ionshared::Ptr<CharValue> node);
+        virtual void visitCharValue(ionshared::Ptr<CharLiteral> node);
 
-        virtual void visitStringValue(ionshared::Ptr<StringValue> node);
+        virtual void visitStringValue(ionshared::Ptr<StringLiteral> node);
 
-        virtual void visitBooleanValue(ionshared::Ptr<BooleanValue> node);
+        virtual void visitBooleanValue(ionshared::Ptr<BooleanLiteral> node);
 
         virtual void visitInst(ionshared::Ptr<Inst> node);
 

@@ -68,6 +68,10 @@ namespace ionir {
         //
     }
 
+    ionshared::Ptr<TokenStream> Parser::getTokenStream() const noexcept {
+        return this->tokenStream;
+    }
+
     ionshared::Ptr<ionshared::NoticeStack> Parser::getNoticeStack() const noexcept {
         return this->noticeStack;
     }

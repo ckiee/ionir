@@ -4,9 +4,9 @@
 #include <string>
 #include <ionshared/error_handling/notice_factory.h>
 #include <ionir/error_handling/notice_sentinel.h>
-#include <ionir/construct/value/integer_value.h>
-#include <ionir/construct/value/char_value.h>
-#include <ionir/construct/value/string_value.h>
+#include <ionir/construct/value/integer_literal.h>
+#include <ionir/construct/value/char_literal.h>
+#include <ionir/construct/value/string_literal.h>
 #include <ionir/construct/inst.h>
 #include <ionir/construct/inst/alloca.h>
 #include <ionir/construct/inst/return.h>
@@ -85,11 +85,11 @@ namespace ionir {
         /**
          * Parses a integer literal in the form of long (or integer 64).
          */
-        AstPtrResult<IntegerValue> parseInt();
+        AstPtrResult<IntegerLiteral> parseIntegerLiteral();
 
-        AstPtrResult<CharValue> parseChar();
+        AstPtrResult<CharLiteral> parseCharLiteral();
 
-        AstPtrResult<StringValue> parseString();
+        AstPtrResult<StringLiteral> parseStringLiteral();
 
         std::optional<std::string> parseId();
 

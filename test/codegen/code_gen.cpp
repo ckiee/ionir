@@ -79,7 +79,7 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
     ionshared::Ptr<Global> globalVar = std::make_shared<Global>(
         type,
         test::constant::foobar,
-        std::make_shared<IntegerValue>(type, 123)->staticCast<Value<>>()
+        std::make_shared<IntegerLiteral>(type, 123)->staticCast<Value<>>()
     );
 
     llvmCodegenPass->visitGlobal(globalVar);
@@ -115,7 +115,7 @@ TEST(CodeGenTest, VisitReturnInst) {
     std::vector<ionshared::Ptr<Inst>> insts = {
         std::make_shared<ReturnInst>(ReturnInstOpts{
             nullptr,
-            std::make_shared<IntegerValue>(TypeFactory::typeInteger(IntegerKind::Int32), 1)
+            std::make_shared<IntegerLiteral>(TypeFactory::typeInteger(IntegerKind::Int32), 1)
         })
     };
 
@@ -164,7 +164,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
         // No need for parent to be set.
         nullptr,
 
-        std::make_shared<IntegerValue>(returnValueType, 1)->staticCast<Value<>>(),
+        std::make_shared<IntegerLiteral>(returnValueType, 1)->staticCast<Value<>>(),
         allocaInstRef1
     });
 
@@ -220,7 +220,7 @@ TEST(CodeGenTest, VisitBranchInst) {
         {}
     });
 
-    ionshared::Ptr<BooleanValue> condition = std::make_shared<BooleanValue>(true);
+    ionshared::Ptr<BooleanLiteral> condition = std::make_shared<BooleanLiteral>(true);
     PtrRef<BasicBlock> bodySectionRef = std::make_shared<Ref<BasicBlock>>("if_body", nullptr, body);
 
     // TODO: Use some sort of factory design pattern.

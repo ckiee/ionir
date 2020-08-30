@@ -65,7 +65,7 @@ TEST(TypeCheckPassTast, FunctionReturnTypeValueMismatch) {
     InstBuilder instBuilder = InstBuilder(entrySection);
 
     ionshared::Ptr<ReturnInst> returnInst = instBuilder.createReturn(
-        std::make_shared<IntegerValue>(
+        std::make_shared<IntegerLiteral>(
             std::make_shared<IntegerType>(IntegerKind::Int8),
             2
         )

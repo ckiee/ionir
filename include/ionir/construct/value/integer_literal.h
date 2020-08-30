@@ -7,12 +7,12 @@
 namespace ionir {
     class Pass;
 
-    class IntegerValue : public Value<IntegerType> {
+    class IntegerLiteral : public Value<IntegerType> {
     private:
         int64_t value;
 
     public:
-        IntegerValue(ionshared::Ptr<IntegerType> type, int64_t value);
+        IntegerLiteral(ionshared::Ptr<IntegerType> type, int64_t value);
 
         void accept(Pass &visitor) override;
 

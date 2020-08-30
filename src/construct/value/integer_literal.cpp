@@ -1,17 +1,17 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    IntegerValue::IntegerValue(ionshared::Ptr<IntegerType> type, int64_t value) :
+    IntegerLiteral::IntegerLiteral(ionshared::Ptr<IntegerType> type, int64_t value) :
         Value(ValueKind::Integer, std::move(type)),
         value(value) {
         //
     }
 
-    void IntegerValue::accept(Pass &visitor) {
-        visitor.visitIntegerValue(this->dynamicCast<IntegerValue>());
+    void IntegerLiteral::accept(Pass &visitor) {
+        visitor.visitIntegerValue(this->dynamicCast<IntegerLiteral>());
     }
 
-    int64_t IntegerValue::getValue() const {
+    int64_t IntegerLiteral::getValue() const {
         if (!this->getType()->getIsSigned()) {
             return std::abs(this->value);
         }
@@ -19,7 +19,7 @@ namespace ionir {
         return this->value;
     }
 
-    void IntegerValue::setValue(int64_t value) {
+    void IntegerLiteral::setValue(int64_t value) {
         this->value = value;
     }
 }
