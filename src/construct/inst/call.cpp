@@ -3,7 +3,8 @@
 namespace ionir {
     CallInst::CallInst(const CallInstOpts &opts) :
         Inst(opts.parent, InstKind::Call),
-        callee(opts.callee) {
+        callee(opts.callee),
+        args(opts.args) {
         //
     }
 
@@ -11,11 +12,19 @@ namespace ionir {
         visitor.visitCallInst(this->dynamicCast<CallInst>());
     }
 
-    OptPtrRef<Function> CallInst::getCallee() const {
+    PtrRef<Function> CallInst::getCallee() const {
         return this->callee;
     }
 
-    void CallInst::setCallee(OptPtrRef<Function> callee) {
+    void CallInst::setCallee(PtrRef<Function> callee) {
         this->callee = std::move(callee);
+    }
+
+    std::vector<ionshared::Ptr<Construct>> CallInst::getArgs() const noexcept {
+        return this->args;
+    }
+
+    void CallInst::setArgs(std::vector<ionshared::Ptr<Construct>> args) noexcept {
+        this->args = std::move(args);
     }
 }

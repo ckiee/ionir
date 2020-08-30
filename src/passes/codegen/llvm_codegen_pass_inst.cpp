@@ -124,25 +124,36 @@ namespace ionir {
         this->requireModule();
         this->requireBuilder();
 
-        OptPtrRef<Function> callee = node->getCallee();
+        PtrRef<Function> calleeRef = node->getCallee();
 
         // At this point, callee must have been resolved.
-        if (!ionshared::util::hasValue(callee)) {
+        if (!calleeRef->isResolved()) {
             // TODO: Use notices.
             throw std::runtime_error("Unresolved call instruction callee");
         }
 
         // Attempt to resolve the callee LLVM-equivalent function.
-        llvm::Function* llvmCallee = (*this->llvmModuleBuffer)->getFunction(callee->get()->getId());
+        llvm::Function* llvmCallee = (*this->llvmModuleBuffer)->getFunction(calleeRef->getId());
 
         // LLVM-equivalent function could not be found. Report an error.
         if (llvmCallee == nullptr) {
             throw std::runtime_error("Call instruction referenced an undefined function");
         }
 
-        // TODO: What about arguments?
+        std::vector<ionshared::Ptr<Construct>> args = node->getArgs();
+        llvm::ArrayRef<llvm::Value *> llvmArgs = {};
+
+        for (const auto &arg : args) {
+            this->visit(arg);
+
+            // TODO: What if an arg was a Ref? Would it have emitted a value? No.
+            // TODO: Is .vec() correct? Remember . is copy.
+            llvmArgs.vec().push_back(this->valueStack.pop());
+        }
+
         // Otherwise, create the LLVM call instruction.
-        llvm::CallInst *callInst = this->llvmBuilderBuffer->CreateCall(llvmCallee);
+        llvm::CallInst *callInst =
+            this->llvmBuilderBuffer->CreateCall(llvmCallee, llvmArgs);
 
         this->valueStack.push(callInst);
 //        this->addToScope(node, callInst);

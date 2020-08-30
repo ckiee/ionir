@@ -162,13 +162,31 @@ namespace ionir {
         std::optional<std::string> calleeId = this->parseId();
 
         IONIR_PARSER_ASSERT_VALUE(calleeId, CallInst)
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolParenthesesL), CallInst)
+
+        std::vector<ionshared::Ptr<Construct>> args = {};
+
+        while (!this->is(TokenKind::SymbolParenthesesR)) {
+            AstPtrResult<> arg = this->parsePrimaryExpr(parent);
+
+            IONIR_PARSER_ASSERT_RESULT(arg, CallInst)
+
+            args.push_back(util::getResultValue(arg));
+
+            if (!this->is(TokenKind::SymbolParenthesesR)) {
+                IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolComma), CallInst)
+            }
+        }
+
+        IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolParenthesesR), CallInst)
 
         // TODO: Is the BasicBlock parent the correct one? Just passing it because it seems like so. Check.
         ionshared::Ptr<Ref<Function>> callee = std::make_shared<Ref<Function>>(*calleeId, parent);
 
         return std::make_shared<CallInst>(CallInstOpts{
             parent,
-            callee
+            callee,
+            args
         });
     }
 

@@ -10,20 +10,28 @@ namespace ionir {
     class Function;
 
     struct CallInstOpts : InstOpts {
-        OptPtrRef<Function> callee = std::nullopt;
+        PtrRef<Function> callee;
+
+        std::vector<ionshared::Ptr<Construct>> args = {};
     };
 
     class CallInst : public Inst {
     private:
-        OptPtrRef<Function> callee;
+        PtrRef<Function> callee;
+
+        std::vector<ionshared::Ptr<Construct>> args;
 
     public:
         explicit CallInst(const CallInstOpts &opts);
 
         void accept(Pass &visitor) override;
 
-        [[nodiscard]] OptPtrRef<Function> getCallee() const;
+        [[nodiscard]] PtrRef<Function> getCallee() const;
 
-        void setCallee(OptPtrRef<Function> callee);
+        void setCallee(PtrRef<Function> callee);
+
+        [[nodiscard]] std::vector<ionshared::Ptr<Construct>> getArgs() const noexcept;
+
+        void setArgs(std::vector<ionshared::Ptr<Construct>> args) noexcept;
     };
 }
