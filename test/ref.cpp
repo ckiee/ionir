@@ -8,7 +8,8 @@
 using namespace ionir;
 
 TEST(RefTest, Initialize) {
-    Ref<> ref = Ref<>(test::constant::foobar, nullptr);
+    // TODO: Just passing RefKind::Inst as a placeholder, doesn't really matter.
+    Ref<> ref = Ref<>(RefKind::Inst, test::constant::foobar, nullptr);
 
     EXPECT_EQ(ref.getId(), test::constant::foobar);
     EXPECT_EQ(ref.getOwner(), nullptr);
@@ -16,7 +17,8 @@ TEST(RefTest, Initialize) {
 }
 
 TEST(RefTest, SetId) {
-    Ref<> ref = Ref<>(test::constant::foo, nullptr);
+    // TODO: Just passing RefKind::Inst as a placeholder, doesn't really matter.
+    Ref<> ref = Ref<>(RefKind::Inst, test::constant::foo, nullptr);
 
     ref.setId(test::constant::bar);
 
@@ -24,7 +26,8 @@ TEST(RefTest, SetId) {
 }
 
 TEST(RefTest, SetOwner) {
-    Ref<> ref = Ref<>(test::constant::foobar, nullptr);
+    // TODO: Just passing RefKind::Inst as a placeholder, doesn't really matter.
+    Ref<> ref = Ref<>(RefKind::Inst, test::constant::foobar, nullptr);
     ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{});
 
     ref.setOwner(returnInst);
@@ -33,7 +36,8 @@ TEST(RefTest, SetOwner) {
 }
 
 TEST(RefTest, SetValue) {
-    Ref<> ref = Ref<>(test::constant::foobar, nullptr);
+    // TODO: Just passing RefKind::Inst as a placeholder, doesn't really matter.
+    Ref<> ref = Ref<>(RefKind::Inst, test::constant::foobar, nullptr);
     ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{});
 
     ref.setOwner(returnInst);

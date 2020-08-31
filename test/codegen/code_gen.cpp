@@ -157,8 +157,12 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
         returnValueType
     });
 
-    PtrRef<AllocaInst> allocaInstRef1 =
-        std::make_shared<Ref<AllocaInst>>(test::constant::foo, nullptr, allocaInst);
+    PtrRef<AllocaInst> allocaInstRef1 = std::make_shared<Ref<AllocaInst>>(
+        RefKind::Inst,
+        test::constant::foo,
+        nullptr,
+        allocaInst
+    );
 
     ionshared::Ptr<StoreInst> storeInst = std::make_shared<StoreInst>(StoreInstOpts{
         // No need for parent to be set.
@@ -170,7 +174,12 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
 
     allocaInstRef1->setOwner(storeInst);
 
-    PtrRef<> allocaInstRef2 = std::make_shared<Ref<>>(test::constant::foo, nullptr, allocaInst);
+    PtrRef<AllocaInst> allocaInstRef2 = std::make_shared<Ref<AllocaInst>>(
+        RefKind::Inst,
+        test::constant::foo,
+        nullptr,
+        allocaInst
+    );
 
     ionshared::Ptr<ReturnInst> returnInst = std::make_shared<ReturnInst>(ReturnInstOpts{
         /**
@@ -196,7 +205,7 @@ TEST(CodeGenTest, VisitAllocaStoreReturnRef) {
 
     // Resolve references first.
     nameResolutionPass->visitRef(allocaInstRef1->staticCast<Ref<>>());
-    nameResolutionPass->visitRef(allocaInstRef2);
+    nameResolutionPass->visitRef(allocaInstRef2->staticCast<Ref<>>());
 
     /**
      * Associate the instructions with the function's body,
@@ -221,7 +230,7 @@ TEST(CodeGenTest, VisitBranchInst) {
     });
 
     ionshared::Ptr<BooleanLiteral> condition = std::make_shared<BooleanLiteral>(true);
-    PtrRef<BasicBlock> bodySectionRef = std::make_shared<Ref<BasicBlock>>("if_body", nullptr, body);
+    PtrRef<BasicBlock> bodyBasicBlockRef = std::make_shared<Ref<BasicBlock>>(body);
 
     // TODO: Use some sort of factory design pattern.
     auto branchInst = std::make_shared<BranchInst>(BranchInstOpts{
@@ -237,12 +246,12 @@ TEST(CodeGenTest, VisitBranchInst) {
          * instructions if there were to be contained inside
          * the section once it creates the new label.
          */
-        bodySectionRef,
-        bodySectionRef
+        bodyBasicBlockRef,
+        bodyBasicBlockRef
     });
 
-    branchInst->getConsequentBlockRef()->setOwner(branchInst);
-    branchInst->getAlternativeBlockRef()->setOwner(branchInst);
+    branchInst->getConsequentBasicBlockRef()->setOwner(branchInst);
+    branchInst->getAlternativeBasicBlockRef()->setOwner(branchInst);
 
     ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 

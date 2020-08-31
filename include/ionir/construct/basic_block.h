@@ -113,7 +113,7 @@ namespace ionir {
          * targeting the provided block using an instruction builder
          * instance. Returns the created jump instruction.
          */
-        ionshared::Ptr<JumpInst> link(ionshared::Ptr<BasicBlock> basicBlock);
+        ionshared::Ptr<JumpInst> link(const ionshared::Ptr<BasicBlock> &basicBlock);
 
         /**
          * Attempt to find the index location of an instruction.

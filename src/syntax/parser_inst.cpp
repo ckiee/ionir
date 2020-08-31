@@ -142,16 +142,18 @@ namespace ionir {
             nullptr
         });
 
-        AstPtrResult<Ref<BasicBlock>> bodySection = this->parseRef<BasicBlock>(branchInst);
+        AstPtrResult<Ref<BasicBlock>> consequentBasicBlock =
+            this->parseRef<BasicBlock>(RefKind::BasicBlock, branchInst);
 
-        IONIR_PARSER_ASSERT_RESULT(bodySection, BranchInst)
+        IONIR_PARSER_ASSERT_RESULT(consequentBasicBlock, BranchInst)
 
-        AstPtrResult<Ref<BasicBlock>> otherwiseSection = this->parseRef<BasicBlock>(branchInst);
+        AstPtrResult<Ref<BasicBlock>> alternativeBasicBlock =
+            this->parseRef<BasicBlock>(RefKind::BasicBlock, branchInst);
 
-        IONIR_PARSER_ASSERT_RESULT(otherwiseSection, BranchInst)
+        IONIR_PARSER_ASSERT_RESULT(alternativeBasicBlock, BranchInst)
 
-        branchInst->setConsequentBlockRef(util::getResultValue(bodySection));
-        branchInst->setAlternativeBlockRef(util::getResultValue(otherwiseSection));
+        branchInst->setConsequentBlockRef(util::getResultValue(consequentBasicBlock));
+        branchInst->setAlternativeBlockRef(util::getResultValue(alternativeBasicBlock));
 
         return branchInst;
     }
@@ -181,7 +183,8 @@ namespace ionir {
         IONIR_PARSER_ASSERT(this->skipOver(TokenKind::SymbolParenthesesR), CallInst)
 
         // TODO: Is the BasicBlock parent the correct one? Just passing it because it seems like so. Check.
-        ionshared::Ptr<Ref<Function>> callee = std::make_shared<Ref<Function>>(*calleeId, parent);
+        ionshared::Ptr<Ref<Function>> callee =
+            std::make_shared<Ref<Function>>(RefKind::Function, *calleeId, parent);
 
         return std::make_shared<CallInst>(CallInstOpts{
             parent,
@@ -205,9 +208,9 @@ namespace ionir {
             nullptr
         });
 
-        AstPtrResult<Ref<AllocaInst>> target = this->parseRef<AllocaInst>(storeInst);
+        AstPtrResult<Ref<AllocaInst>> target =
+            this->parseRef<AllocaInst>(RefKind::Inst, storeInst);
 
-        // TODO: StoreInst?
         IONIR_PARSER_ASSERT_RESULT(target, StoreInst)
 
         // Fill the target reference in the store instruction.
@@ -226,7 +229,8 @@ namespace ionir {
             nullptr
         });
 
-        AstPtrResult<Ref<BasicBlock>> target = this->parseRef<BasicBlock>(jumpInst);
+        AstPtrResult<Ref<BasicBlock>> target =
+            this->parseRef<BasicBlock>(RefKind::BasicBlock, jumpInst);
 
         IONIR_PARSER_ASSERT_RESULT(target, JumpInst)
 

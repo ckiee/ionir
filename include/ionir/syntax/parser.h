@@ -150,12 +150,12 @@ namespace ionir {
         std::optional<Directive> parseDirective();
 
         template<typename T = Construct>
-        AstPtrResult<Ref<T>> parseRef(ionshared::Ptr<Construct> owner) {
+        AstPtrResult<Ref<T>> parseRef(RefKind refKind, ionshared::Ptr<Construct> owner) {
             std::optional<std::string> id = this->parseId();
 
             IONIR_PARSER_ASSERT_VALUE(id, Ref<T>)
 
-            return std::make_shared<Ref<T>>(*id, owner);
+            return std::make_shared<Ref<T>>(refKind, *id, owner);
         }
     };
 }

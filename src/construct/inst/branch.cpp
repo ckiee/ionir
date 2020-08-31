@@ -30,7 +30,7 @@ namespace ionir {
         this->condition = std::move(condition);
     }
 
-    PtrRef<BasicBlock> BranchInst::getConsequentBlockRef() const {
+    PtrRef<BasicBlock> BranchInst::getConsequentBasicBlockRef() const {
         return this->consequentBlockRef;
     }
 
@@ -39,7 +39,7 @@ namespace ionir {
         this->consequentBlockRef->setOwner(this->getPtr());
     }
 
-    PtrRef<BasicBlock> BranchInst::getAlternativeBlockRef() const {
+    PtrRef<BasicBlock> BranchInst::getAlternativeBasicBlockRef() const {
         return this->alternativeBlockRef;
     }
 

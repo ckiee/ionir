@@ -45,14 +45,20 @@ namespace ionir {
 
         ionshared::Ptr<BranchInst> createBranch(
             ionshared::Ptr<Construct> condition,
-            PtrRef<BasicBlock> bodySection,
-            PtrRef<BasicBlock> otherwiseSection
+            const ionshared::Ptr<BasicBlock> &consequentBasicBlock,
+            const ionshared::Ptr<BasicBlock> &alternativeBasicBlock
         );
 
         ionshared::Ptr<BranchInst> createBranch(
             ionshared::Ptr<Construct> condition,
-            const std::string &bodySectionId,
-            const std::string &otherwiseSectionId
+            PtrRef<BasicBlock> consequentBasicBlock,
+            PtrRef<BasicBlock> alternativeBasicBlock
+        );
+
+        ionshared::Ptr<BranchInst> createBranch(
+            ionshared::Ptr<Construct> condition,
+            const std::string &consequentBasicBlockId,
+            const std::string &alternativeBasicBlockId
         );
 
         ionshared::Ptr<ReturnInst> createReturn(

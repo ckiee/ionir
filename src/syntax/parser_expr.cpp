@@ -10,7 +10,8 @@ namespace ionir {
             return util::castAstPtrResult<Value<>>(this->parseValue());
         }
 
+        // TODO: What about globals for RefKind? It may be flawed.
         // Otherwise, it must be a reference.
-        return util::castAstPtrResult<Ref<>>(this->parseRef<>(parent));
+        return util::castAstPtrResult<Ref<>>(this->parseRef<>(RefKind::Inst, parent));
     }
 }

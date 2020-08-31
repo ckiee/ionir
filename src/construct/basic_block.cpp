@@ -148,15 +148,10 @@ namespace ionir {
         return newBasicBlock;
     }
 
-    ionshared::Ptr<JumpInst> BasicBlock::link(ionshared::Ptr<BasicBlock> basicBlock) {
-        return this->createBuilder()->createJump(std::make_shared<ionir::Ref<ionir::BasicBlock>>(
-            basicBlock->getId(),
-
-            // TODO: Is this the correct parent to provide for a ref? Or should it be a function instead? Investigate.
-            basicBlock->getParent(),
-
-            basicBlock
-        ));
+    ionshared::Ptr<JumpInst> BasicBlock::link(const ionshared::Ptr<BasicBlock> &basicBlock) {
+        return this->createBuilder()->createJump(
+            std::make_shared<ionir::Ref<ionir::BasicBlock>>(basicBlock)
+        );
     }
 
     std::optional<uint32_t> BasicBlock::locate(ionshared::Ptr<Inst> inst) {

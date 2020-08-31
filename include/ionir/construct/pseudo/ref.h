@@ -6,12 +6,15 @@
 #include <ionshared/misc/named.h>
 #include <ionshared/misc/util.h>
 #include <ionir/construct/construct.h>
+#include <ionir/construct/basic_block.h>
 #include <ionir/misc/util.h>
+#include <ionir/construct/inst/alloca.h>
 
 namespace ionir {
     // TODO: What if 'pass.h' is never included?
     class Pass;
 
+    // TODO: This RefKind system may be flawed. What about refs for Globals?
     enum class RefKind {
         Module,
 
@@ -47,6 +50,17 @@ namespace ionir {
             value(value) {
             //
         }
+
+        explicit Ref(const ionshared::Ptr<BasicBlock> &basicBlock) :
+            Ref(RefKind::BasicBlock, basicBlock->getId(), basicBlock->getParent(), basicBlock) {
+            //
+        }
+
+        // TODO: AllocaInst has no id. That's handled by RegisterAssign.
+//        explicit Ref(const ionshared::Ptr<AllocaInst> &allocaInst) :
+//            Ref(RefKind::Inst, allocaInst->, allocaInst->getParent(), allocaInst) {
+//            //
+//        }
 
         void accept(Pass &visitor) override {
             // TODO: CRITICAL: Fix 'incomplete type' problem.

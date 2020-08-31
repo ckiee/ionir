@@ -30,19 +30,53 @@ namespace ionir {
         });
     }
 
-    ionshared::Ptr<BranchInst> InstBuilder::createBranch(ionshared::Ptr<Construct> condition, PtrRef<BasicBlock> bodySection, PtrRef<BasicBlock> otherwiseSection) {
+    ionshared::Ptr<BranchInst> InstBuilder::createBranch(
+        ionshared::Ptr<Construct> condition,
+        const ionshared::Ptr<BasicBlock> &consequentBasicBlock,
+        const ionshared::Ptr<BasicBlock> &alternativeBasicBlock
+    ) {
+        return this->createBranch(
+            std::move(condition),
+            std::make_shared<Ref<BasicBlock>>(consequentBasicBlock),
+            std::make_shared<Ref<BasicBlock>>(alternativeBasicBlock)
+        );
+    }
+
+    ionshared::Ptr<BranchInst> InstBuilder::createBranch(
+        ionshared::Ptr<Construct> condition,
+        PtrRef<BasicBlock> consequentBasicBlock,
+        PtrRef<BasicBlock> alternativeBasicBlock
+    ) {
         return this->make<BranchInst>(BranchInstOpts{
             this->basicBlock,
             std::move(condition),
-            std::move(bodySection),
-            std::move(otherwiseSection)
+            std::move(consequentBasicBlock),
+            std::move(alternativeBasicBlock)
         });
     }
 
-    ionshared::Ptr<BranchInst> InstBuilder::createBranch(ionshared::Ptr<Construct> condition, const std::string &bodySectionId, const std::string &otherwiseSectionId) {
-        PtrRef<BasicBlock> consequentBasicBlock = std::make_shared<Ref<BasicBlock>>(bodySectionId, nullptr);
-        PtrRef<BasicBlock> alternativeBasicBlock = std::make_shared<Ref<BasicBlock>>(otherwiseSectionId, nullptr);
-        ionshared::Ptr<BranchInst> branchInst = this->createBranch(std::move(condition), consequentBasicBlock, alternativeBasicBlock);
+    ionshared::Ptr<BranchInst> InstBuilder::createBranch(
+        ionshared::Ptr<Construct> condition,
+        const std::string &consequentBasicBlockId,
+        const std::string &alternativeBasicBlockId
+    ) {
+        PtrRef<BasicBlock> consequentBasicBlock = std::make_shared<Ref<BasicBlock>>(
+            RefKind::BasicBlock,
+            consequentBasicBlockId,
+            nullptr
+        );
+
+        PtrRef<BasicBlock> alternativeBasicBlock = std::make_shared<Ref<BasicBlock>>(
+            RefKind::BasicBlock,
+            alternativeBasicBlockId,
+            nullptr
+        );
+
+        ionshared::Ptr<BranchInst> branchInst = this->createBranch(
+            std::move(condition),
+            consequentBasicBlock,
+            alternativeBasicBlock
+        );
 
         consequentBasicBlock->setOwner(branchInst);
         alternativeBasicBlock->setOwner(branchInst);
@@ -57,7 +91,10 @@ namespace ionir {
         });
     }
 
-    ionshared::Ptr<CallInst> InstBuilder::createCall(PtrRef<Function> callee, std::vector<ionshared::Ptr<Construct>> args) {
+    ionshared::Ptr<CallInst> InstBuilder::createCall(
+        PtrRef<Function> callee,
+        std::vector<ionshared::Ptr<Construct>> args
+    ) {
         return this->make<CallInst>(CallInstOpts{
             this->basicBlock,
             std::move(callee),
@@ -68,15 +105,7 @@ namespace ionir {
     ionshared::Ptr<JumpInst> InstBuilder::createJump(const PtrRef<BasicBlock> &basicBlockRef) {
         return this->make<JumpInst>(JumpInstOpts{
             this->basicBlock,
-
-            std::make_shared<Ref<BasicBlock>>(
-                basicBlock->getId(),
-
-                // TODO: Should this be the correct owner? FunctionBody? or should it be Function? Probably FunctionBody, investigate as a precaution.
-                this->basicBlock->getParent(),
-
-                basicBlock
-            )
+            basicBlockRef
         });
     }
 }

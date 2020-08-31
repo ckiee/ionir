@@ -89,32 +89,32 @@ namespace ionir {
 
         this->saveBuilder();
 
-        PtrRef<BasicBlock> bodyRef = node->getConsequentBlockRef();
-        PtrRef<BasicBlock> otherwiseRef = node->getAlternativeBlockRef();
+        PtrRef<BasicBlock> consequentBasicBlockRef = node->getConsequentBasicBlockRef();
+        PtrRef<BasicBlock> alternativeBasicBlockRef = node->getAlternativeBasicBlockRef();
 
         // Body reference should have been resolved at this point.
-        if (!bodyRef->isResolved()) {
+        if (!consequentBasicBlockRef->isResolved()) {
             throw std::runtime_error("Unresolved branch instruction body reference");
         }
         // Otherwise reference should have been resolved as well at this point.
-        else if (!otherwiseRef->isResolved()) {
+        else if (!alternativeBasicBlockRef->isResolved()) {
             throw std::runtime_error("Unresolved branch instruction otherwise reference");
         }
 
         // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
         // Visit body and otherwise references.
-        this->visitBasicBlock(*bodyRef->getValue());
-        this->visitBasicBlock(*otherwiseRef->getValue());
+        this->visitBasicBlock(*consequentBasicBlockRef->getValue());
+        this->visitBasicBlock(*alternativeBasicBlockRef->getValue());
 
         // Pop both reference's values.
-        auto *llvmBodyBlock = this->valueStack.popAs<llvm::BasicBlock>();
-        auto *llvmOtherwiseBlock = this->valueStack.popAs<llvm::BasicBlock>();
+        auto *llvmAlternativeBasicBlock = this->valueStack.popAs<llvm::BasicBlock>();
+        auto *llvmConsequentBasicBlock = this->valueStack.popAs<llvm::BasicBlock>();
 
         this->restoreBuilder();
 
         // Create the LLVM conditional branch instruction.
         llvm::BranchInst *llvmBranchInst =
-            this->llvmBuilderBuffer->CreateCondBr(condition, llvmBodyBlock, llvmOtherwiseBlock);
+            this->llvmBuilderBuffer->CreateCondBr(condition, llvmConsequentBasicBlock, llvmAlternativeBasicBlock);
 
         this->valueStack.push(llvmBranchInst);
 //        this->addToScope(node, llvmBranchInst);
@@ -202,30 +202,30 @@ namespace ionir {
         this->requireBuilder();
         this->saveBuilder();
 
-        PtrRef<BasicBlock> bodyRef = node->getBlockRef();
+        PtrRef<BasicBlock> basicBlockRef = node->getBasicBlockRef();
 
-        // Body reference should have been resolved at this point.
-        if (!bodyRef->isResolved()) {
+        // Basic block reference should have been resolved at this point.
+        if (!basicBlockRef->isResolved()) {
             throw std::runtime_error("Unresolved branch instruction body reference");
         }
 
         // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
 //        this->visitBasicBlock(*bodyRef->getValue());
 
-        auto llvmBodyBlockResult = this->findInScope(*bodyRef->getValue());
+        auto llvmBasicBlockResult = this->findInScope(*basicBlockRef->getValue());
 
-        if (!llvmBodyBlockResult.has_value()) {
+        if (!llvmBasicBlockResult.has_value()) {
             throw std::runtime_error("Could not find llvm block in emitted entities");
         }
 
 // TODO: Just temporarily as debugging using emittedEntities.
-        llvm::BasicBlock *llvmBodyBlock = llvm::dyn_cast<llvm::BasicBlock>(*llvmBodyBlockResult);
+        llvm::BasicBlock *llvmBasicBlock = llvm::dyn_cast<llvm::BasicBlock>(*llvmBasicBlockResult);
 
         this->restoreBuilder();
 
         // Create the LLVM branch instruction (with no condition).
         llvm::BranchInst *llvmBranchInst =
-            this->llvmBuilderBuffer->CreateBr(llvmBodyBlock);
+            this->llvmBuilderBuffer->CreateBr(llvmBasicBlock);
 
         this->valueStack.push(llvmBranchInst);
 //        this->addToScope(node, llvmBranchInst);

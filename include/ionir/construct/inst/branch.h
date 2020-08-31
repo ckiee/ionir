@@ -36,11 +36,11 @@ namespace ionir {
 
         void setCondition(ionshared::Ptr<Construct> condition);
 
-        [[nodiscard]] PtrRef<BasicBlock> getConsequentBlockRef() const;
+        [[nodiscard]] PtrRef<BasicBlock> getConsequentBasicBlockRef() const;
 
         void setConsequentBlockRef(PtrRef<BasicBlock> blockRef);
 
-        [[nodiscard]] PtrRef<BasicBlock> getAlternativeBlockRef() const;
+        [[nodiscard]] PtrRef<BasicBlock> getAlternativeBasicBlockRef() const;
 
         void setAlternativeBlockRef(PtrRef<BasicBlock> otherwiseBlockRef);
     };

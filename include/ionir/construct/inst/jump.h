@@ -24,7 +24,7 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        [[nodiscard]] PtrRef<BasicBlock> getBlockRef() const;
+        [[nodiscard]] PtrRef<BasicBlock> getBasicBlockRef() const;
 
         void setBlockRef(PtrRef<BasicBlock> blockRef);
     };

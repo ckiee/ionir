@@ -18,7 +18,7 @@ namespace ionir {
         };
     }
 
-    PtrRef<BasicBlock> JumpInst::getBlockRef() const {
+    PtrRef<BasicBlock> JumpInst::getBasicBlockRef() const {
         return this->blockRef;
     }
 
