@@ -1,6 +1,5 @@
 #define IONIR_TESTS_ROOT_FILENAME ".root"
 
-#include <ionir/misc/static_init.h>
 #include <ionir/test/filesystem.h>
 #include "pch.h"
 
@@ -13,9 +12,6 @@ int main(int argc, char **argv) {
 
     // Initialize Google tests.
     ::testing::InitGoogleTest(&argc, argv);
-
-    // Initialize IonIR static constants.
-    ionir::StaticInit::init();
 
     // Run tests.
     return RUN_ALL_TESTS();

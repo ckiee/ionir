@@ -15,11 +15,6 @@ namespace ionir::test::compare {
      */
     [[nodiscard]] bool strings(std::string stringA, std::string stringB);
 
-    [[nodiscard]] bool inputAndOutput(
-        const std::string &inputFileName,
-        const std::string &outputFileName
-    );
-
     /**
      * Compare an LLVM IR output string with a stored LLVM IR
      * file. Both inputs are trimmed before comparison. Returns

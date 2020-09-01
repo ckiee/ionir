@@ -1,10 +1,15 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Type::Type(std::string id, TypeKind kind) :
+    Type::Type(
+        std::string id,
+        TypeKind kind,
+        ionshared::Ptr<ionshared::Set<TypeQualifier>> qualifiers
+    ) :
         Construct(ConstructKind::Type),
         Named(std::move(id)),
-        kind(kind) {
+        kind(kind),
+        qualifiers(std::move(qualifiers)) {
         //
     }
 

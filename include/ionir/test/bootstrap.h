@@ -11,12 +11,6 @@
 #include "util.h"
 
 namespace ionir::test::bootstrap {
-    [[nodiscard]] Token token(TokenKind kind = TokenKind::Unknown);
-
-    [[nodiscard]] TokenStream tokenStream(int amountOfItems = 1);
-
-    [[nodiscard]] Parser parser(std::vector<Token> tokens);
-
     [[nodiscard]] ionshared::Ptr<ionshared::LlvmModule> llvmModule(
         const std::string &identifier = "test"
     );

@@ -52,6 +52,8 @@ namespace ionir {
 
         SymbolArrow,
 
+        SymbolAmpersand,
+
         InstCall,
 
         InstStore,
@@ -72,9 +74,9 @@ namespace ionir {
 
         KeywordGlobal,
 
-        KeywordMutable,
-
         KeywordModule,
+
+        KeywordUnsafe,
 
         TypeVoid,
 
@@ -105,6 +107,12 @@ namespace ionir {
         TypeChar,
 
         TypeString,
+
+        QualifierConst,
+
+        QualifierMutable,
+
+        QualifierPointer,
 
         OperatorAdd,
 

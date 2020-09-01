@@ -30,7 +30,5 @@ namespace ionir {
         static std::map<TokenKind, IntegerKind> tokenKindToIntegerKind;
 
         [[nodiscard]] static std::optional<std::string> getConstructKindName(ConstructKind constructKind);
-
-        [[nodiscard]] static std::optional<IntegerKind> getIntegerKind(TokenKind tokenKind);
     };
 }

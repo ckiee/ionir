@@ -3,31 +3,6 @@
 #include <ionir/test/bootstrap.h>
 
 namespace ionir::test::bootstrap {
-    Token token(TokenKind kind) {
-        return Token(kind, "");
-    }
-
-    TokenStream tokenStream(int amountOfItems) {
-        std::vector<Token> tokens = {};
-
-        // Reserve the space for the items to be added.
-        tokens.reserve(amountOfItems);
-
-        // Populate the tokens vector.
-        for (int i = 0; i < amountOfItems; i++) {
-            tokens.push_back(token());
-        }
-
-        // Create the Stream and provide the tokens.
-        return TokenStream(tokens);
-    }
-
-    Parser parser(std::vector<Token> tokens) {
-        return ionir::Parser(
-            std::make_shared<ionir::TokenStream>(std::move(tokens))
-        );
-    }
-
     ionshared::Ptr<ionshared::LlvmModule> llvmModule(const std::string &identifier) {
         llvm::LLVMContext *llvmContext = new llvm::LLVMContext();
         llvm::Module *llvmModule = new llvm::Module("test", *llvmContext);

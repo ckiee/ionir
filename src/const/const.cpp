@@ -68,12 +68,4 @@ namespace ionir {
 
         return std::nullopt;
     }
-
-    std::optional<IntegerKind> Const::getIntegerKind(TokenKind tokenKind) {
-        if (ionshared::util::mapContains<TokenKind, IntegerKind>(Const::tokenKindToIntegerKind, tokenKind)) {
-            return Const::tokenKindToIntegerKind[tokenKind];
-        }
-
-        return std::nullopt;
-    }
 }
