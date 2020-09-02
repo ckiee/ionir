@@ -85,8 +85,8 @@ namespace ionir {
             Ast children = {};
             auto symbolTableEntries = symbolTable->unwrap();
 
-            for (const auto &[key, value] : symbolTableEntries) {
-                children.push_back(value);
+            for (const auto &[id, construct] : symbolTableEntries) {
+                children.push_back(construct);
             }
 
             return children;
@@ -115,16 +115,18 @@ namespace ionir {
 
         virtual Ast getChildNodes();
 
-        virtual bool equals(const ionshared::Ptr<Construct> &other);
+        [[nodiscard]] virtual bool equals(const ionshared::Ptr<Construct> &other);
 
+        // TODO: Move to BaseConstruct<> in ionshared.
         /**
-         * Verify the members and properties of the node, and it's children.
-         * Without an implementation by the derived class, this will return
-         * true if all the child nodes are successfully verified. If there
-         * are no child nodes, the result will be true by default.
+         * Verify the members and properties of the node, and it's children
+         * against being nullptr. Without an implementation by the derived
+         * class, this will return true if all the child nodes are successfully
+         * verified. If there are no child nodes, the result will be true by
+         * default.
          */
-        virtual bool verify();
+        [[nodiscard]] virtual bool verify();
 
-        std::optional<std::string> getConstructName();
+        [[nodiscard]] std::optional<std::string> getConstructName();
     };
 }

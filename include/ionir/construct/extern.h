@@ -18,7 +18,7 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        ionshared::Ptr<Prototype> getPrototype() const noexcept;
+        [[nodiscard]] ionshared::Ptr<Prototype> getPrototype() const noexcept;
 
         void setPrototype(ionshared::Ptr<Prototype> prototype) noexcept;
     };
