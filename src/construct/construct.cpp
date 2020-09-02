@@ -1,6 +1,5 @@
 #include <ionir/construct/construct.h>
 #include <ionir/construct/value.h>
-#include <ionir/construct/inst.h>
 #include <ionir/const/const.h>
 
 namespace ionir {
