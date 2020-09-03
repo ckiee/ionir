@@ -2,18 +2,18 @@
 
 namespace ionir {
     void DeadCodeEliminationPass::visitBasicBlock(ionshared::Ptr<BasicBlock> node) {
-        std::vector<ionshared::Ptr<Statement>> statements = node->getStatements();
+        std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
         bool erase = false;
 
-        for (auto iterator = statements.begin(); iterator < statements.end(); ++iterator) {
-            ionshared::Ptr<Statement> statement = *iterator;
+        for (auto iterator = insts.begin(); iterator < insts.end(); ++iterator) {
+            ionshared::Ptr<Inst> inst = *iterator;
 
             /**
              * If applicable, erase all further instructions,
              * as they are considered dead code.
              */
             if (erase) {
-                statements.erase(iterator);
+                insts.erase(iterator);
 
                 continue;
             }
@@ -22,7 +22,7 @@ namespace ionir {
              * is of kind return and it is not the last
              * item in the vector.
              */
-            else if (statement->getStatementKind() == StatementKind::Return && ++iterator == statements.end()) {
+            else if (inst->getInstKind() == InstKind::Return && ++iterator == insts.end()) {
                 /**
                  * If so, erase all following instructions,
                  * as they are considered dead code at this

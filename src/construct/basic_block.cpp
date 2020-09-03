@@ -149,9 +149,7 @@ namespace ionir {
     }
 
     ionshared::Ptr<JumpInst> BasicBlock::link(const ionshared::Ptr<BasicBlock> &basicBlock) {
-        return this->createBuilder()->createJump(
-            std::make_shared<ionir::Ref<ionir::BasicBlock>>(basicBlock)
-        );
+        return this->createBuilder()->createJump(basicBlock);
     }
 
     std::optional<uint32_t> BasicBlock::locate(ionshared::Ptr<Inst> inst) {

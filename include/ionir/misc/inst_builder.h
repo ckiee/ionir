@@ -59,7 +59,7 @@ namespace ionir {
         );
 
         ionshared::Ptr<JumpInst> createJump(
-            const PtrRef<BasicBlock> &basicBlockRef
+            const ionshared::Ptr<BasicBlock> &basicBlock
         );
     };
 }

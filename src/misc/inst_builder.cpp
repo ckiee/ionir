@@ -61,10 +61,10 @@ namespace ionir {
         });
     }
 
-    ionshared::Ptr<JumpInst> InstBuilder::createJump(const PtrRef<BasicBlock> &basicBlockRef) {
+    ionshared::Ptr<JumpInst> InstBuilder::createJump(const ionshared::Ptr<BasicBlock> &basicBlock) {
         return this->make<JumpInst>(JumpInstOpts{
             this->basicBlock,
-            basicBlockRef
+            basicBlock
         });
     }
 }

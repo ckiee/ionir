@@ -6,14 +6,22 @@ namespace ionir {
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
         ionshared::OptPtr<FunctionBody> functionBody = node->getBody();
 
+        // TODO: Better exception.
         if (!ionshared::util::hasValue(functionBody)) {
+            throw std::runtime_error("Function body is not set");
+        }
+
+        ionshared::OptPtr<BasicBlock> entryBasicBlock = functionBody->get()->findEntryBasicBlock();
+
+        // TODO: Better exception.
+        if (!ionshared::util::hasValue(entryBasicBlock)) {
             throw std::runtime_error("Entry basic block for function body is not set");
         }
 
-        std::vector<ionshared::Ptr<Inst>> insts = functionBody->get()->getInsts();
+        std::vector<ionshared::Ptr<Inst>> insts = entryBasicBlock->get()->getInsts();
 
         // TODO: CRITICAL! There may be more than a single terminal statement on blocks.
-        ionshared::OptPtr<Inst> terminalInst = functionBody->get()->findTerminalStatement();
+        ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
 
         // All basic blocks must contain at least a terminal instruction.
         if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
@@ -92,23 +100,16 @@ namespace ionir {
     }
 
     void TypeCheckPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
-        std::string targetId = node->getTarget()->getId();
-
-        if (!node->getTarget()->isResolved()) {
-            throw ionshared::util::quickError(
-                IONIR_NOTICE_INST_STORE_UNRESOLVED_REF,
-                targetId
-            );
-        }
-
         TypeKind storeInstValueTypeKind = node->getValue()->getType()->getTypeKind();
-        ionshared::Ptr<AllocaInst> targetValue = *node->getTarget()->getValue();
+        ionshared::Ptr<AllocaInst> targetValue = node->getTarget();
 
         // Attempting to store a value with a different type than what was allocated.
         if (storeInstValueTypeKind != targetValue->getType()->getTypeKind()) {
             throw ionshared::util::quickError(
                 IONIR_NOTICE_INST_STORE_TYPE_MISMATCH,
-                targetId
+
+                // TODO
+                "FIX_ME_NAME"
             );
         }
     }
