@@ -1,7 +1,0 @@
-module test {
-    fn foobar() -> void {
-        @entry: {
-            %foobar = alloca i32;
-        }
-    }
-}

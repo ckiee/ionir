@@ -1,3 +1,0 @@
-module test {
-    global i32 foobar = 123;
-}

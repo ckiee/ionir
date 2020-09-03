@@ -46,16 +46,10 @@ TEST(TestApiTest, ResolvePath) {
 
 // TODO: Tests for resolveTestPath(...) missing.
 
-TEST(TestApiTest, ReadFileContents) {
-    std::optional<std::string> contents = fs::readFileContents(fs::resolvePath("test/input/test.txt"));
-
-    EXPECT_TRUE(contents.has_value());
-    EXPECT_EQ(*contents, ionir::test::constant::foobar + "\n");
-}
-
-TEST(TestApiTest, ReadTestFile) {
-    std::optional<std::string> contents = fs::readTestFile("input/test.txt");
-
-    EXPECT_TRUE(contents.has_value());
-    EXPECT_EQ(*contents, ionir::test::constant::foobar + "\n");
-}
+// TODO: 'input' folder was removed.
+//TEST(TestApiTest, ReadFileContents) {
+//    std::optional<std::string> contents = fs::readFileContents(fs::resolvePath("test/input/test.txt"));
+//
+//    EXPECT_TRUE(contents.has_value());
+//    EXPECT_EQ(*contents, ionir::test::constant::foobar + "\n");
+//}
