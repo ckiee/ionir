@@ -1,6 +1,6 @@
-#include <ionlang/const/notice.h>
-#include <ionlang/type_system/type_util.h>
-#include <ionlang/passes/type_system/type_check_pass.h>
+#include <ionir/const/notice.h>
+#include <ionir/type_system/type_util.h>
+#include <ionir/passes/type_system/type_check_pass.h>
 
 namespace ionir {
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
@@ -21,7 +21,7 @@ namespace ionir {
         }
     }
 
-    void TypeCheckPass::visitReturnStatement(ionshared::Ptr<ReturnStatement> node) {
+    void TypeCheckPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
         ionshared::Ptr<Construct> possibleFunctionParent = node->getParent()->getParent();
 
         // TODO: Improve exception.
@@ -91,7 +91,7 @@ namespace ionir {
         }
     }
 
-    void TypeCheckPass::visitVariableDecl(ionshared::Ptr<VariableDecl> node) {
+    void TypeCheckPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
         std::string targetId = node->getTarget()->getId();
 
         if (!node->getTarget()->isResolved()) {

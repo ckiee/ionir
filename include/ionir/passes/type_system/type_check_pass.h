@@ -7,8 +7,8 @@ namespace ionir {
     public:
         void visitFunction(ionshared::Ptr<Function> node) override;
 
-        void visitReturnStatement(ionshared::Ptr<ReturnStatement> node) override;
+        void visitReturnInst(ionshared::Ptr<ReturnInst> node) override;
 
-        void visitVariableDecl(ionshared::Ptr<VariableDecl> node) override;
+        void visitStoreInst(ionshared::Ptr<StoreInst> node) override;
     };
 }
