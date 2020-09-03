@@ -2,7 +2,7 @@
 
 #include <optional>
 #include <ionir/misc/helpers.h>
-#include <ionir/construct/pseudo/ref.h>
+#include <ionir/misc/ref.h>
 
 namespace ionir {
     class Pass;
@@ -10,12 +10,12 @@ namespace ionir {
     class BasicBlock;
 
     struct JumpInstOpts : InstOpts {
-        PtrRef<BasicBlock> blockRef;
+        ionshared::Ptr<BasicBlock> basicBlockTarget;
     };
 
     class JumpInst : public Inst {
     private:
-        PtrRef<BasicBlock> blockRef;
+        ionshared::Ptr<BasicBlock> basicBlockTarget;
 
     public:
         explicit JumpInst(const JumpInstOpts &opts);
@@ -24,8 +24,8 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        [[nodiscard]] PtrRef<BasicBlock> getBasicBlockRef() const;
+        [[nodiscard]] ionshared::Ptr<BasicBlock> getBasicBlockTarget() const noexcept;
 
-        void setBlockRef(PtrRef<BasicBlock> blockRef);
+        void setBasicBlockTarget(ionshared::Ptr<BasicBlock> basicBlockTarget) noexcept;
     };
 }

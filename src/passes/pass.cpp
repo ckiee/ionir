@@ -5,13 +5,7 @@ namespace ionir {
         node->accept(*this);
 
         // TODO: Hotfix for circular dep.
-        if (node->getConstructKind() == ConstructKind::Ref) {
-            this->visitRef(node->staticCast<Ref<>>());
-
-            // No need to visit children for this node.
-            return;
-        }
-        else if (node->getConstructKind() == ConstructKind::Value) {
+        if (node->getConstructKind() == ConstructKind::Value) {
             this->visitValue(node->staticCast<Value<>>());
 
             // No need to visit children for this node.
@@ -210,10 +204,6 @@ namespace ionir {
     }
 
     void Pass::visitDirective(Directive node) {
-        //
-    }
-
-    void Pass::visitRef(PtrRef<> node) {
         //
     }
 

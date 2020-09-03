@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <ionir/construct/pseudo/ref.h>
+#include <ionir/misc/ref.h>
 #include <ionir/construct/inst_yield.h>
 
 namespace ionir {

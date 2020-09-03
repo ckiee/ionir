@@ -41,23 +41,24 @@ namespace ionir {
                 this->visitValue((*returnInstValue)->staticCast<Value<>>());
                 llvmValue = this->valueStack.pop();
             }
-            // Otherwise, it must be a reference.
-            else if ((*returnInstValue)->getConstructKind() == ConstructKind::Ref) {
-                auto ref = (*returnInstValue)->dynamicCast<Ref<>>();
-
-                if (!ref->isResolved()) {
-                    throw std::runtime_error("Return instruction's value is an unresolved reference");
-                }
-
-                auto key = *ref->getValueAs<Construct>();
-                auto llvmValueFromEntities = this->findInScope(key);
-
-                if (!llvmValueFromEntities.has_value() || *llvmValueFromEntities == nullptr) {
-                    throw std::runtime_error("Could not lookup corresponding LLVM value on the symbol table");
-                }
-
-                llvmValue = *llvmValueFromEntities;
-            }
+            // TODO: Ref<> is no longer a construct nor should be used for name resolution (name resolution occurs on Ionlang).
+//            // Otherwise, it must be a reference.
+//            else if ((*returnInstValue)->getConstructKind() == ConstructKind::Ref) {
+//                auto ref = (*returnInstValue)->dynamicCast<Ref<>>();
+//
+//                if (!ref->isResolved()) {
+//                    throw std::runtime_error("Return instruction's value is an unresolved reference");
+//                }
+//
+//                auto key = *ref->getValueAs<Construct>();
+//                auto llvmValueFromEntities = this->findInScope(key);
+//
+//                if (!llvmValueFromEntities.has_value() || *llvmValueFromEntities == nullptr) {
+//                    throw std::runtime_error("Could not lookup corresponding LLVM value on the symbol table");
+//                }
+//
+//                llvmValue = *llvmValueFromEntities;
+//            }
             else {
                 throw std::runtime_error("Unexpected construct as return instruction return value");
             }
@@ -89,22 +90,13 @@ namespace ionir {
 
         this->saveBuilder();
 
-        PtrRef<BasicBlock> consequentBasicBlockRef = node->getConsequentBasicBlockRef();
-        PtrRef<BasicBlock> alternativeBasicBlockRef = node->getAlternativeBasicBlockRef();
-
-        // Body reference should have been resolved at this point.
-        if (!consequentBasicBlockRef->isResolved()) {
-            throw std::runtime_error("Unresolved branch instruction body reference");
-        }
-        // Otherwise reference should have been resolved as well at this point.
-        else if (!alternativeBasicBlockRef->isResolved()) {
-            throw std::runtime_error("Unresolved branch instruction otherwise reference");
-        }
+        ionshared::Ptr<BasicBlock> consequentBasicBlock = node->getConsequentBasicBlock();
+        ionshared::Ptr<BasicBlock> alternativeBasicBlock = node->getAlternativeBasicBlock();
 
         // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
         // Visit body and otherwise references.
-        this->visitBasicBlock(*consequentBasicBlockRef->getValue());
-        this->visitBasicBlock(*alternativeBasicBlockRef->getValue());
+        this->visitBasicBlock(consequentBasicBlock);
+        this->visitBasicBlock(alternativeBasicBlock);
 
         // Pop both reference's values.
         auto *llvmAlternativeBasicBlock = this->valueStack.popAs<llvm::BasicBlock>();
@@ -160,24 +152,17 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
+        this->requireFunction();
         this->requireBuilder();
 
-        PtrRef<AllocaInst> target = node->getTarget();
+        ionshared::Ptr<AllocaInst> target = node->getTarget();
 
-        // The target must be resolved before LLVM code generation.
-        if (!target->isResolved()) {
-            throw std::runtime_error("Store instruction's target has not been resolved");
-        }
-
-        std::optional<llvm::Value *> llvmTarget = this->findInScope(*target->getValue());
+        std::optional<llvm::Value *> llvmTarget = this->findInScope(target);
 
         if (!ionshared::util::hasValue(llvmTarget)) {
             throw std::runtime_error("Target could not be retrieved from the emitted entities map");
         }
 
-        std::string targetId = target->getId();
-
-        this->requireFunction();
         this->visitValue(node->getValue());
 
         llvm::Value *llvmValue = this->valueStack.pop();
@@ -202,17 +187,12 @@ namespace ionir {
         this->requireBuilder();
         this->saveBuilder();
 
-        PtrRef<BasicBlock> basicBlockRef = node->getBasicBlockRef();
-
-        // Basic block reference should have been resolved at this point.
-        if (!basicBlockRef->isResolved()) {
-            throw std::runtime_error("Unresolved branch instruction body reference");
-        }
+        ionshared::Ptr<BasicBlock> basicBlockTarget = node->getBasicBlockTarget();
 
         // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
 //        this->visitBasicBlock(*bodyRef->getValue());
 
-        auto llvmBasicBlockResult = this->findInScope(*basicBlockRef->getValue());
+        auto llvmBasicBlockResult = this->findInScope(basicBlockTarget);
 
         if (!llvmBasicBlockResult.has_value()) {
             throw std::runtime_error("Could not find llvm block in emitted entities");

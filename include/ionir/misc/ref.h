@@ -11,9 +11,6 @@
 #include <ionir/construct/inst/alloca.h>
 
 namespace ionir {
-    // TODO: What if 'pass.h' is never included?
-    class Pass;
-
     // TODO: This RefKind system may be flawed. What about refs for Globals?
     enum class RefKind {
         Module,
@@ -27,8 +24,8 @@ namespace ionir {
         Inst
     };
 
-    template<typename T = Construct>
-    class Ref : public Construct, public ionshared::Named {
+    template<typename T>
+    class Ref : public ionshared::Named {
     private:
         RefKind kind;
 
@@ -43,28 +40,11 @@ namespace ionir {
             ionshared::Ptr<Construct> owner,
             ionshared::OptPtr<T> value = std::nullopt
         ) :
-            Construct(ConstructKind::Ref),
             Named(id),
             kind(kind),
             owner(std::move(owner)),
             value(value) {
             //
-        }
-
-        explicit Ref(const ionshared::Ptr<BasicBlock> &basicBlock) :
-            Ref(RefKind::BasicBlock, basicBlock->getId(), basicBlock->getParent(), basicBlock) {
-            //
-        }
-
-        // TODO: AllocaInst has no id. That's handled by RegisterAssign.
-//        explicit Ref(const ionshared::Ptr<AllocaInst> &allocaInst) :
-//            Ref(RefKind::Inst, allocaInst->, allocaInst->getParent(), allocaInst) {
-//            //
-//        }
-
-        void accept(Pass &visitor) override {
-            // TODO: CRITICAL: Fix 'incomplete type' problem.
-            // visitor.visitRef(this->dynamicCast<Ref<T>>());
         }
 
         [[nodiscard]] RefKind getRefKind() const noexcept {
@@ -113,9 +93,9 @@ namespace ionir {
         }
     };
 
-    template<typename T = Construct>
+    template<typename T>
     using PtrRef = ionshared::Ptr<Ref<T>>;
 
-    template<typename T = Construct>
+    template<typename T>
     using OptPtrRef = std::optional<PtrRef<T>>;
 }

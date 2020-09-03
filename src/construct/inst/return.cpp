@@ -32,4 +32,8 @@ namespace ionir {
     bool ReturnInst::hasValue() noexcept {
         return ionshared::util::hasValue(this->value);
     }
+
+    void ReturnInst::removeValue() noexcept {
+        this->setValue(std::nullopt);
+    }
 }

@@ -24,14 +24,14 @@ namespace ionir {
     }
 
     void StoreInst::setValue(ionshared::Ptr<Value<>> value) {
-        this->value = value;
+        this->value = std::move(value);
     }
 
-    PtrRef<AllocaInst> StoreInst::getTarget() const {
+    ionshared::Ptr<AllocaInst> StoreInst::getTarget() const {
         return this->target;
     }
 
-    void StoreInst::setTarget(PtrRef<AllocaInst> target) {
-        this->target = target;
+    void StoreInst::setTarget(ionshared::Ptr<AllocaInst> target) {
+        this->target = std::move(target);
     }
 }

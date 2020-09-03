@@ -15,7 +15,7 @@
 #include <ionir/construct/inst/store.h>
 #include <ionir/construct/inst/jump.h>
 #include <ionir/construct/pseudo/directive.h>
-#include <ionir/construct/pseudo/ref.h>
+#include <ionir/misc/ref.h>
 #include <ionir/lexical/token.h>
 #include <ionir/lexical/classifier.h>
 #include <ionir/construct/extern.h>

@@ -1,5 +1,5 @@
 #include <optional>
-#include <ionir/construct/pseudo/ref.h>
+#include <ionir/misc/ref.h>
 #include <ionir/construct/inst/return.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/test/const.h>

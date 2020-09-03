@@ -2,7 +2,7 @@
 
 #include <optional>
 #include <ionir/misc/helpers.h>
-#include <ionir/construct/pseudo/ref.h>
+#include <ionir/misc/ref.h>
 
 namespace ionir {
     class Pass;
@@ -12,18 +12,18 @@ namespace ionir {
     struct BranchInstOpts : InstOpts {
         ionshared::Ptr<Construct> condition;
 
-        PtrRef<BasicBlock> blockRef;
+        ionshared::Ptr<BasicBlock> consequentBasicBlock;
 
-        PtrRef<BasicBlock> otherwiseRef;
+        ionshared::Ptr<BasicBlock> alternativeBasicBlock;
     };
 
     class BranchInst : public Inst {
     private:
         ionshared::Ptr<Construct> condition;
 
-        PtrRef<BasicBlock> consequentBlockRef;
+        ionshared::Ptr<BasicBlock> consequentBasicBlock;
 
-        PtrRef<BasicBlock> alternativeBlockRef;
+        ionshared::Ptr<BasicBlock> alternativeBasicBlock;
 
     public:
         explicit BranchInst(const BranchInstOpts &opts);
@@ -32,16 +32,16 @@ namespace ionir {
 
         Ast getChildNodes() override;
 
-        [[nodiscard]] ionshared::Ptr<Construct> getCondition() const;
+        [[nodiscard]] ionshared::Ptr<Construct> getCondition() const noexcept;
 
-        void setCondition(ionshared::Ptr<Construct> condition);
+        void setCondition(ionshared::Ptr<Construct> condition) noexcept;
 
-        [[nodiscard]] PtrRef<BasicBlock> getConsequentBasicBlockRef() const;
+        [[nodiscard]] ionshared::Ptr<BasicBlock> getConsequentBasicBlock() const noexcept;
 
-        void setConsequentBlockRef(PtrRef<BasicBlock> blockRef);
+        void setConsequentBasicBlock(ionshared::Ptr<BasicBlock> consequentBasicBlock) noexcept;
 
-        [[nodiscard]] PtrRef<BasicBlock> getAlternativeBasicBlockRef() const;
+        [[nodiscard]] ionshared::Ptr<BasicBlock> getAlternativeBasicBlock() const noexcept;
 
-        void setAlternativeBlockRef(PtrRef<BasicBlock> otherwiseBlockRef);
+        void setAlternativeBasicBlock(ionshared::Ptr<BasicBlock> alternativeBasicBlock) noexcept;
     };
 }

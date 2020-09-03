@@ -3,7 +3,7 @@
 namespace ionir {
     JumpInst::JumpInst(const JumpInstOpts &opts) :
         Inst(opts.parent, InstKind::Jump),
-        blockRef(opts.blockRef) {
+        basicBlockTarget(opts.basicBlockTarget) {
         //
     }
 
@@ -14,16 +14,15 @@ namespace ionir {
     Ast JumpInst::getChildNodes() {
         // TODO: Should have no children, function bodies should be LINEAR! BRANCH defines inline block! WRONG!
         return {
-            this->blockRef
+            this->basicBlockTarget
         };
     }
 
-    PtrRef<BasicBlock> JumpInst::getBasicBlockRef() const {
-        return this->blockRef;
+    ionshared::Ptr<BasicBlock> JumpInst::getBasicBlockTarget() const noexcept {
+        return this->basicBlockTarget;
     }
 
-    void JumpInst::setBlockRef(PtrRef<BasicBlock> blockRef) {
-        this->blockRef = std::move(blockRef);
-        this->blockRef->setOwner(this->getPtr());
+    void JumpInst::setBasicBlockTarget(ionshared::Ptr<BasicBlock> basicBlockTarget) noexcept {
+        this->basicBlockTarget = std::move(basicBlockTarget);
     }
 }

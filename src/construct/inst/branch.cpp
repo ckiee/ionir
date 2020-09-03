@@ -4,8 +4,8 @@ namespace ionir {
     BranchInst::BranchInst(const BranchInstOpts &opts) :
         Inst(opts.parent, InstKind::Branch),
         condition(opts.condition),
-        consequentBlockRef(opts.blockRef),
-        alternativeBlockRef(opts.otherwiseRef) {
+        consequentBasicBlock(opts.consequentBasicBlock),
+        alternativeBasicBlock(opts.alternativeBasicBlock) {
         //
     }
 
@@ -17,34 +17,32 @@ namespace ionir {
         // TODO: What about condition?
 
         return {
-            this->consequentBlockRef,
-            this->alternativeBlockRef
+            this->consequentBasicBlock,
+            this->alternativeBasicBlock
         };
     }
 
-    ionshared::Ptr<Construct> BranchInst::getCondition() const {
+    ionshared::Ptr<Construct> BranchInst::getCondition() const noexcept {
         return this->condition;
     }
 
-    void BranchInst::setCondition(ionshared::Ptr<Construct> condition) {
+    void BranchInst::setCondition(ionshared::Ptr<Construct> condition) noexcept {
         this->condition = std::move(condition);
     }
 
-    PtrRef<BasicBlock> BranchInst::getConsequentBasicBlockRef() const {
-        return this->consequentBlockRef;
+    ionshared::Ptr<BasicBlock> BranchInst::getConsequentBasicBlock() const noexcept {
+        return this->consequentBasicBlock;
     }
 
-    void BranchInst::setConsequentBlockRef(PtrRef<BasicBlock> blockRef) {
-        this->consequentBlockRef = std::move(blockRef);
-        this->consequentBlockRef->setOwner(this->getPtr());
+    void BranchInst::setConsequentBasicBlock(ionshared::Ptr<BasicBlock> consequentBasicBlock) noexcept {
+        this->consequentBasicBlock = std::move(consequentBasicBlock);
     }
 
-    PtrRef<BasicBlock> BranchInst::getAlternativeBasicBlockRef() const {
-        return this->alternativeBlockRef;
+    ionshared::Ptr<BasicBlock> BranchInst::getAlternativeBasicBlock() const noexcept {
+        return this->alternativeBasicBlock;
     }
 
-    void BranchInst::setAlternativeBlockRef(PtrRef<BasicBlock> otherwiseBlockRef) {
-        this->alternativeBlockRef = std::move(otherwiseBlockRef);
-        this->alternativeBlockRef->setOwner(this->getPtr());
+    void BranchInst::setAlternativeBasicBlock(ionshared::Ptr<BasicBlock> alternativeBasicBlock) noexcept {
+        this->alternativeBasicBlock = std::move(alternativeBasicBlock);
     }
 }

@@ -28,5 +28,7 @@ namespace ionir {
         void setValue(ionshared::OptPtr<Construct> value) noexcept;
 
         [[nodiscard]] bool hasValue() noexcept;
+
+        void removeValue() noexcept;
     };
 }

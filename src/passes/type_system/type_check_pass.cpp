@@ -4,19 +4,19 @@
 
 namespace ionir {
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
-        ionshared::OptPtr<Block> functionBody = node->getBody();
+        ionshared::OptPtr<FunctionBody> functionBody = node->getBody();
 
         if (!ionshared::util::hasValue(functionBody)) {
             throw std::runtime_error("Entry basic block for function body is not set");
         }
 
-        std::vector<ionshared::Ptr<Statement>> statements = functionBody->get()->getStatements();
+        std::vector<ionshared::Ptr<Inst>> insts = functionBody->get()->getInsts();
 
         // TODO: CRITICAL! There may be more than a single terminal statement on blocks.
-        ionshared::OptPtr<Statement> terminalStatement = functionBody->get()->findTerminalStatement();
+        ionshared::OptPtr<Inst> terminalInst = functionBody->get()->findTerminalStatement();
 
         // All basic blocks must contain at least a terminal instruction.
-        if (statements.empty() || !ionshared::util::hasValue(terminalStatement)) {
+        if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
             throw std::runtime_error("Section must contain at least a terminal instruction");
         }
     }
@@ -65,7 +65,7 @@ namespace ionir {
                      */
                     if (!type_util::isSameType(returnInstValueType, functionReturnType)) {
                         throw ionshared::util::quickError(
-                            IONLANG_NOTICE_FUNCTION_RETURN_TYPE_MISMATCH,
+                            IONIR_NOTICE_FUNCTION_RETURN_TYPE_MISMATCH,
                             function->getPrototype()->getId()
                         );
                     }

@@ -40,25 +40,13 @@ namespace ionir {
 
         ionshared::Ptr<StoreInst> createStore(
             ionshared::Ptr<Value<>> value,
-            PtrRef<AllocaInst> target
+            ionshared::Ptr<AllocaInst> target
         );
 
         ionshared::Ptr<BranchInst> createBranch(
             ionshared::Ptr<Construct> condition,
             const ionshared::Ptr<BasicBlock> &consequentBasicBlock,
             const ionshared::Ptr<BasicBlock> &alternativeBasicBlock
-        );
-
-        ionshared::Ptr<BranchInst> createBranch(
-            ionshared::Ptr<Construct> condition,
-            PtrRef<BasicBlock> consequentBasicBlock,
-            PtrRef<BasicBlock> alternativeBasicBlock
-        );
-
-        ionshared::Ptr<BranchInst> createBranch(
-            ionshared::Ptr<Construct> condition,
-            const std::string &consequentBasicBlockId,
-            const std::string &alternativeBasicBlockId
         );
 
         ionshared::Ptr<ReturnInst> createReturn(

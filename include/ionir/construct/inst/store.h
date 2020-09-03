@@ -3,7 +3,7 @@
 #include <ionir/construct/inst.h>
 #include <ionir/construct/value.h>
 #include <ionir/construct/pseudo/child_construct.h>
-#include <ionir/construct/pseudo/ref.h>
+#include <ionir/misc/ref.h>
 
 namespace ionir {
     class Pass;
@@ -11,14 +11,14 @@ namespace ionir {
     struct StoreInstOpts : InstOpts {
         ionshared::Ptr<Value<>> value;
 
-        PtrRef<AllocaInst> target;
+        ionshared::Ptr<AllocaInst> target;
     };
 
     class StoreInst : public Inst {
     private:
         ionshared::Ptr<Value<>> value;
 
-        PtrRef<AllocaInst> target;
+        ionshared::Ptr<AllocaInst> target;
 
     public:
         explicit StoreInst(const StoreInstOpts &opts);
@@ -31,8 +31,8 @@ namespace ionir {
 
         void setValue(ionshared::Ptr<Value<>> value);
 
-        [[nodiscard]] PtrRef<AllocaInst> getTarget() const;
+        [[nodiscard]] ionshared::Ptr<AllocaInst> getTarget() const;
 
-        void setTarget(PtrRef<AllocaInst> target);
+        void setTarget(ionshared::Ptr<AllocaInst> target);
     };
 }

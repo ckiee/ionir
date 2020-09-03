@@ -94,8 +94,6 @@ namespace ionir {
 
         virtual void visitDirective(Directive node);
 
-        virtual void visitRef(PtrRef<> node);
-
         virtual void visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node);
 
         virtual void visitRegisterAssign(ionshared::Ptr<RegisterAssign> node);
