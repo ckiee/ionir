@@ -87,16 +87,6 @@ namespace ionir {
         return true;
     }
 
-    std::optional<llvm::Value *> LlvmCodegenPass::findInScope(ionshared::Ptr<Construct> key) {
-        llvm::Value *value = this->emittedEntities.front()[std::move(key)];
-
-        if (value != nullptr) {
-            return value;
-        }
-
-        return std::nullopt;
-    }
-
     LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules) :
         contextBuffer(std::make_shared<Context>()),
         modules(std::move(modules)),
@@ -109,7 +99,7 @@ namespace ionir {
         typeStack(),
         registerQueue(),
         builderTracker(),
-        emittedEntities({ionshared::Map<ionshared::Ptr<Construct>, llvm::Value *>()}),
+        emittedEntities(),
         namedValues({}) {
         //
     }
@@ -156,8 +146,7 @@ namespace ionir {
         std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
 
         // Emit the entity at this point so visiting children can access it.
-        // TODO: Avoid using emitted entities.
-        this->emittedEntities.front()[node] = llvmBasicBlock;
+        this->emittedEntities.add(node, llvmBasicBlock);
 
         // Process registers.
         for (const auto &registerAssign : registers) {

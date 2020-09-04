@@ -30,7 +30,8 @@ namespace ionir {
     }
 
     void TypeCheckPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
-        ionshared::Ptr<Construct> possibleFunctionParent = node->getParent()->getParent();
+        ionshared::Ptr<Construct> possibleFunctionParent =
+            node->getParent()->getParent()->getParent();
 
         // TODO: Improve exception.
         if (possibleFunctionParent->getConstructKind() != ConstructKind::Function) {

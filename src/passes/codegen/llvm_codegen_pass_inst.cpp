@@ -9,7 +9,7 @@ namespace ionir {
         this->visitType(node->getType());
 
         llvm::Type *type = this->typeStack.pop();
-        std::string _register = this->registerQueue.front();
+        std::string reg = this->registerQueue.front();
 
         this->registerQueue.pop();
 
@@ -18,12 +18,10 @@ namespace ionir {
          * using the buffered builder.
          */
         llvm::AllocaInst *llvmAllocaInst =
-            this->llvmBuilderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, _register);
+            this->llvmBuilderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, reg);
 
         this->valueStack.push(llvmAllocaInst);
-
-        // TODO: Remove dependency on this outdated system.
-        this->emittedEntities.front()[node] = llvmAllocaInst;
+        this->emittedEntities.add(node, llvmAllocaInst);
     }
 
     void LlvmCodegenPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
@@ -88,25 +86,18 @@ namespace ionir {
 
         llvm::Value *condition = this->valueStack.pop();
 
-        this->saveBuilder();
+        std::optional<llvm::BasicBlock *> llvmConsequentBasicBlock =
+            this->emittedEntities.find<llvm::BasicBlock>(node->getConsequentBasicBlock());
 
-        ionshared::Ptr<BasicBlock> consequentBasicBlock = node->getConsequentBasicBlock();
-        ionshared::Ptr<BasicBlock> alternativeBasicBlock = node->getAlternativeBasicBlock();
-
-        // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
-        // Visit body and otherwise references.
-        this->visitBasicBlock(consequentBasicBlock);
-        this->visitBasicBlock(alternativeBasicBlock);
-
-        // Pop both reference's values.
-        auto *llvmAlternativeBasicBlock = this->valueStack.popAs<llvm::BasicBlock>();
-        auto *llvmConsequentBasicBlock = this->valueStack.popAs<llvm::BasicBlock>();
-
-        this->restoreBuilder();
+        std::optional<llvm::BasicBlock *> llvmAlternativeBasicBlock =
+            this->emittedEntities.find<llvm::BasicBlock>(node->getAlternativeBasicBlock());
 
         // Create the LLVM conditional branch instruction.
-        llvm::BranchInst *llvmBranchInst =
-            this->llvmBuilderBuffer->CreateCondBr(condition, llvmConsequentBasicBlock, llvmAlternativeBasicBlock);
+        llvm::BranchInst *llvmBranchInst = this->llvmBuilderBuffer->CreateCondBr(
+            condition,
+            *llvmConsequentBasicBlock,
+            *llvmAlternativeBasicBlock
+        );
 
         this->valueStack.push(llvmBranchInst);
 //        this->addToScope(node, llvmBranchInst);
@@ -157,7 +148,7 @@ namespace ionir {
 
         ionshared::Ptr<AllocaInst> target = node->getTarget();
 
-        std::optional<llvm::Value *> llvmTarget = this->findInScope(target);
+        std::optional<llvm::Value *> llvmTarget = this->emittedEntities.find(target);
 
         if (!ionshared::util::hasValue(llvmTarget)) {
             throw std::runtime_error("Target could not be retrieved from the emitted entities map");
@@ -185,27 +176,19 @@ namespace ionir {
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------
         this->requireBuilder();
-        this->saveBuilder();
 
         ionshared::Ptr<BasicBlock> basicBlockTarget = node->getBasicBlockTarget();
 
-        // TODO: Need to use emittedEntities map to find the blocks. Otherwise, it's creating new blocks here and emitting them.
-//        this->visitBasicBlock(*bodyRef->getValue());
+        std::optional<llvm::BasicBlock *> llvmBasicBlockResult =
+            this->emittedEntities.find<llvm::BasicBlock>(basicBlockTarget);
 
-        auto llvmBasicBlockResult = this->findInScope(basicBlockTarget);
-
-        if (!llvmBasicBlockResult.has_value()) {
-            throw std::runtime_error("Could not find llvm block in emitted entities");
+        if (!ionshared::util::hasValue(llvmBasicBlockResult)) {
+            throw std::runtime_error("Could not find llvm block in emitted entities: " + basicBlockTarget->getId());
         }
-
-// TODO: Just temporarily as debugging using emittedEntities.
-        llvm::BasicBlock *llvmBasicBlock = llvm::dyn_cast<llvm::BasicBlock>(*llvmBasicBlockResult);
-
-        this->restoreBuilder();
 
         // Create the LLVM branch instruction (with no condition).
         llvm::BranchInst *llvmBranchInst =
-            this->llvmBuilderBuffer->CreateBr(llvmBasicBlock);
+            this->llvmBuilderBuffer->CreateBr(*llvmBasicBlockResult);
 
         this->valueStack.push(llvmBranchInst);
 //        this->addToScope(node, llvmBranchInst);

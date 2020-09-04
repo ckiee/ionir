@@ -17,7 +17,7 @@ TEST(TypeCheckPassTest, Run) {
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
     ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
 
-    EXPECT_TRUE(function.has_value());
+    EXPECT_TRUE(ionshared::util::hasValue(function));
 
     ionshared::Ptr<Prototype> prototype = function->get()->getPrototype();
 

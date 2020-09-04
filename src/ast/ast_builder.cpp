@@ -68,23 +68,26 @@ namespace ionir {
     AstBuilder &AstBuilder::function(const std::string &id) {
         this->requireModule();
 
-        ionshared::Ptr<FunctionBody> block = std::make_shared<FunctionBody>(nullptr);
+        // Parent will be filled in below.
+        ionshared::Ptr<FunctionBody> functionBody = std::make_shared<FunctionBody>(nullptr);
 
         ionshared::Ptr<BasicBlock> entrySection = std::make_shared<BasicBlock>(BasicBlockOpts{
-            block,
+            functionBody,
             BasicBlockKind::Entry,
             Const::basicBlockEntryId
         });
 
-        block->insertBasicBlock(entrySection);
+        functionBody->insertBasicBlock(entrySection);
         this->setBasicBlockBuffer(entrySection);
 
         ionshared::Ptr<Type> returnType = std::make_shared<VoidType>();
         ionshared::Ptr<Args> args = std::make_shared<Args>();
         ionshared::Ptr<Prototype> prototype = std::make_shared<Prototype>(id, args, returnType, *this->moduleBuffer);
-        ionshared::Ptr<Function> function = std::make_shared<Function>(prototype, block);
+        ionshared::Ptr<Function> function = std::make_shared<Function>(prototype, functionBody);
 
-        block->setParent(function);
+        // Fill in the function body's parent.
+        functionBody->setParent(function);
+        
         this->functionBuffer = function;
         this->moduleBuffer->get()->insertFunction(function);
 

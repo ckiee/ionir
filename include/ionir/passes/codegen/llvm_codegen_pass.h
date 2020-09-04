@@ -25,6 +25,7 @@
 #include <ionir/construct/global.h>
 #include <ionir/misc/helpers.h>
 #include <ionir/tracking/context.h>
+#include <ionir/llvm/llvm_emitted_entities.h>
 #include <ionir/passes/pass.h>
 
 namespace ionir {
@@ -65,7 +66,7 @@ namespace ionir {
 
         ionshared::Stack<llvm::IRBuilder<>> builderTracker;
 
-        ScopeList<ionshared::Ptr<Construct>, llvm::Value *> emittedEntities;
+        LlvmEmittedEntities emittedEntities;
 
         /**
          * Ensure that the builder is instantiated, otherwise throws
@@ -88,8 +89,6 @@ namespace ionir {
         bool saveBuilder();
 
         bool restoreBuilder();
-
-        std::optional<llvm::Value *> findInScope(ionshared::Ptr<Construct> key);
 
     public:
         explicit LlvmCodegenPass(

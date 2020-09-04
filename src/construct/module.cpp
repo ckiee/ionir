@@ -27,12 +27,20 @@ namespace ionir {
         this->context = std::move(context);
     }
 
-    void Module::insertFunction(const ionshared::Ptr<Function> &function) {
-        // TODO: Check if function exists first?
-        this->context->getGlobalScope()->insert(
-            function->getPrototype()->getId(),
-            function
-        );
+    bool Module::insertFunction(const ionshared::Ptr<Function> &function) {
+        Scope globalScope = this->context->getGlobalScope();
+        std::string functionId = function->getPrototype()->getId();
+
+        if (!globalScope->contains(functionId)) {
+            globalScope->insert(
+                functionId,
+                function
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     ionshared::OptPtr<Function> Module::lookupFunction(std::string id) {

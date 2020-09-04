@@ -20,7 +20,8 @@ namespace ionir {
         Named(opts.id),
         kind(opts.kind),
         registers(opts.registers),
-        insts(opts.insts), instOrderMap() {
+        insts(opts.insts),
+        instOrderMap() {
         //
     }
 

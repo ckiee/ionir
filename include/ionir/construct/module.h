@@ -32,7 +32,7 @@ namespace ionir {
         void setContext(ionshared::Ptr<Context> context) noexcept;
 
         // TODO: What about externs/globals/classes/structs? ------------
-        void insertFunction(const ionshared::Ptr<Function> &function);
+        bool insertFunction(const ionshared::Ptr<Function> &function);
 
         [[nodiscard]] ionshared::OptPtr<Function> lookupFunction(std::string id);
         // --------------------------------------------------------------

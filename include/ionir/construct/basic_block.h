@@ -63,6 +63,7 @@ namespace ionir {
 
         ionshared::Map<ionshared::Ptr<Inst>, uint32_t> instOrderMap;
 
+        // TODO: Remove renumbering system as it can cause problems.
         void renumberInsts();
 
     public:
@@ -106,7 +107,7 @@ namespace ionir {
          * the provided id, having the same parent as the local basic
          * block.
          */
-        ionshared::Ptr<BasicBlock> split(uint32_t atOrder, std::string id);
+        [[nodiscard]] ionshared::Ptr<BasicBlock> split(uint32_t atOrder, std::string id);
 
         /**
          * Create a jump instruction at the end of the local block
