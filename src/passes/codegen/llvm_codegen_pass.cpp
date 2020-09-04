@@ -87,6 +87,12 @@ namespace ionir {
         return true;
     }
 
+    void LlvmCodegenPass::lockBuilder(const std::function<void()> &callback) {
+        this->saveBuilder();
+        callback();
+        this->restoreBuilder();
+    }
+
     LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules) :
         contextBuffer(std::make_shared<Context>()),
         modules(std::move(modules)),
@@ -121,6 +127,12 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitBasicBlock(ionshared::Ptr<BasicBlock> node) {
+        // TODO: This is a temporary fix? The other option is to place the block beforehand and emit it, but isn't it the same thing? Investigate.
+        // Node was already emitted.
+        if (this->emittedEntities.contains(node)) {
+            return;
+        }
+
         // Both context and function buffers must not be null.
         this->requireContext();
         this->requireFunction();

@@ -80,17 +80,33 @@ namespace ionir {
 
     void LlvmCodegenPass::visitBranchInst(ionshared::Ptr<BranchInst> node) {
         this->requireBuilder();
-
-        // Visit condition.
         this->visit(node->getCondition());
 
         llvm::Value *condition = this->valueStack.pop();
+
+        this->lockBuilder([=, this]{
+            /**
+             * Visit the consequent and alternative basic blocks. There's a
+             * mechanism in place to prevent the blocks from being processed
+             * twice, wherever they're first encountered. Then try to pop the
+             * resulting value because it might not have been emitted if it was
+             * processed already.
+             */
+            this->visitBasicBlock(node->getConsequentBasicBlock());
+            this->valueStack.tryPop();
+            this->visitBasicBlock(node->getAlternativeBasicBlock());
+            this->valueStack.tryPop();
+        });
 
         std::optional<llvm::BasicBlock *> llvmConsequentBasicBlock =
             this->emittedEntities.find<llvm::BasicBlock>(node->getConsequentBasicBlock());
 
         std::optional<llvm::BasicBlock *> llvmAlternativeBasicBlock =
             this->emittedEntities.find<llvm::BasicBlock>(node->getAlternativeBasicBlock());
+
+        if (!ionshared::util::hasValue(llvmConsequentBasicBlock) || !ionshared::util::hasValue(llvmAlternativeBasicBlock)) {
+            throw std::runtime_error("Emitted LLVM basic block could not be found");
+        }
 
         // Create the LLVM conditional branch instruction.
         llvm::BranchInst *llvmBranchInst = this->llvmBuilderBuffer->CreateCondBr(
@@ -178,6 +194,16 @@ namespace ionir {
         this->requireBuilder();
 
         ionshared::Ptr<BasicBlock> basicBlockTarget = node->getBasicBlockTarget();
+
+        this->lockBuilder([=, this]{
+            /**
+             * Visit the basic block. A mechanism will prevent it from being
+             * emitted twice. Try popping the resulting value because it might
+             * be processed if it has been previously emitted.
+             */
+            this->visitBasicBlock(basicBlockTarget);
+            this->valueStack.tryPop();
+        });
 
         std::optional<llvm::BasicBlock *> llvmBasicBlockResult =
             this->emittedEntities.find<llvm::BasicBlock>(basicBlockTarget);

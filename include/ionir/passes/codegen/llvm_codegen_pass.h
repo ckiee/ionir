@@ -90,6 +90,8 @@ namespace ionir {
 
         bool restoreBuilder();
 
+        void lockBuilder(const std::function<void()> &callback);
+
     public:
         explicit LlvmCodegenPass(
             ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules =

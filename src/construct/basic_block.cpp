@@ -120,14 +120,23 @@ namespace ionir {
     }
 
     ionshared::Ptr<BasicBlock> BasicBlock::split(uint32_t atOrder, std::string id) {
-        auto from = this->insts.begin() + atOrder;
-        auto to = this->insts.end();
+        // TODO: If insts are empty, atOrder parameter is ignored (useless). Address that.
 
-        std::vector<ionshared::Ptr<Inst>> insts =
-            std::vector<ionshared::Ptr<Inst>>(from, to);
+        if (!this->insts.empty() && (atOrder < 0 || atOrder > this->insts.size() - 1)) {
+            throw std::out_of_range("Provided order is outsize of bounds");
+        }
 
-        // Erase the instructions from the local basic block.
-        this->insts.erase(from, to);
+        std::vector<ionshared::Ptr<Inst>> insts = {};
+
+        if (!this->insts.empty()) {
+            auto from = this->insts.begin() + atOrder;
+            auto to = this->insts.end();
+
+            insts = std::vector<ionshared::Ptr<Inst>>(from, to);
+
+            // Erase the instructions from the local basic block.
+            this->insts.erase(from, to);
+        }
 
         ionshared::Ptr<BasicBlock> newBasicBlock = std::make_shared<BasicBlock>(BasicBlockOpts{
             this->getParent(),
