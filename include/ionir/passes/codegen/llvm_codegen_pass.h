@@ -23,7 +23,6 @@
 #include <ionir/construct/extern.h>
 #include <ionir/construct/prototype.h>
 #include <ionir/construct/global.h>
-#include <ionir/misc/helpers.h>
 #include <ionir/tracking/context.h>
 #include <ionir/llvm/llvm_emitted_entities.h>
 #include <ionir/passes/pass.h>

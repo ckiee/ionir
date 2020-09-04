@@ -31,7 +31,6 @@
 #include <ionir/construct/value.h>
 #include <ionir/construct/inst.h>
 #include <ionir/construct/register_assign.h>
-#include <ionir/misc/helpers.h>
 
 namespace ionir {
     class Pass : public ionshared::BasePass<Construct> {

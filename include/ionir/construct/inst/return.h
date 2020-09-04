@@ -3,7 +3,6 @@
 #include <string>
 #include <ionir/construct/type.h>
 #include <ionir/construct/inst.h>
-#include <ionir/misc/helpers.h>
 
 namespace ionir {
     class Pass;

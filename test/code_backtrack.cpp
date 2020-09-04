@@ -1,8 +1,5 @@
 #include <string>
-#include <ionir/error_handling/code_backtrack.h>
 #include "pch.h"
-
-using namespace ionir;
 
 // TODO: Need to verify that order after invoking Make() is preserved.
 //TEST(CodeBacktractTest, CreateCodeBlockNear) {

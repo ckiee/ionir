@@ -1,7 +1,6 @@
 #include <vector>
 #include <ionir/const/const_name.h>
 #include <ionir/construct/inst.h>
-#include <ionir/syntax/parser.h>
 #include <ionir/test/bootstrap.h>
 #include <ionir/test/const.h>
 #include "pch.h"

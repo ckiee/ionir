@@ -3,7 +3,6 @@
 #include <optional>
 #include <string>
 #include <vector>
-#include <ionir/misc/helpers.h>
 #include <ionir/misc/type_factory.h>
 #include <ionir/tracking/scope_anchor.h>
 #include <ionir/construct/pseudo/child_construct.h>

@@ -3,7 +3,6 @@
 #include <vector>
 #include <utility>
 #include <string>
-#include <ionir/misc/helpers.h>
 #include <ionir/construct/type.h>
 #include <ionir/tracking/symbol_table.h>
 

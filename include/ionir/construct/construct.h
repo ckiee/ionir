@@ -5,7 +5,6 @@
 #include <vector>
 #include <functional>
 #include <ionshared/construct/base_construct.h>
-#include <ionir/misc/helpers.h>
 #include <ionir/tracking/symbol_table.h>
 
 namespace ionir {

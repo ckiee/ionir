@@ -3,7 +3,6 @@
 #include <string>
 #include <ionshared/container/set.h>
 #include <ionshared/misc/named.h>
-#include <ionir/misc/helpers.h>
 #include "construct.h"
 
 namespace ionir {

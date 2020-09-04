@@ -5,7 +5,6 @@
 #include <ionshared/tracking/symbol_table.h>
 #include <ionshared/misc/helpers.h>
 #include <ionshared/container/map.h>
-#include <ionir/misc/helpers.h>
 
 namespace ionir {
     template<typename T>

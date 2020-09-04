@@ -2,7 +2,6 @@
 
 #include <string>
 #include <ionshared/misc/util.h>
-#include <ionir/misc/helpers.h>
 #include <ionir/tracking/scope_anchor.h>
 #include <ionir/tracking/context.h>
 #include "type.h"

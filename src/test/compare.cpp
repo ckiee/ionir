@@ -2,8 +2,6 @@
 #define IONIR_TESTS_OUTPUT_FOLDER_PATH "output"
 
 #include <ionshared/llvm/llvm_module.h>
-#include <ionir/lexical/lexer.h>
-#include <ionir/syntax/parser.h>
 #include <ionir/test/compare.h>
 #include <ionir/test/filesystem.h>
 #include <ionir/test/bootstrap.h>

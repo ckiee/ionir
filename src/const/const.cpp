@@ -8,15 +8,6 @@ namespace ionir {
 
     const std::string Const::basicBlockEntryId = "entry";
 
-    std::map<TokenKind, int> Const::operatorPrecedence = {
-        {TokenKind::OperatorAdd, 20},
-        {TokenKind::OperatorSubtract, 20},
-        {TokenKind::OperatorMultiply, 40},
-        {TokenKind::OperatorDivide, 40},
-        {TokenKind::OperatorModulo, 40},
-        {TokenKind::OperatorExponent, 80}
-    };
-
     std::map<ConstructKind, std::string> Const::constructNames = {
         {ConstructKind::Type, "Type"},
         {ConstructKind::FunctionBody, "FunctionBody"},
@@ -33,15 +24,6 @@ namespace ionir {
         {ConstructKind::Ref, "Reference"},
         {ConstructKind::Value, "Value"},
         {ConstructKind::RegisterAssign, "RegisterAssign"}
-    };
-
-    std::map<TokenKind, IntegerKind> Const::tokenKindToIntegerKind = {
-        {TokenKind::TypeInt8, IntegerKind::Int8},
-        {TokenKind::TypeInt16, IntegerKind::Int16},
-        {TokenKind::TypeInt32, IntegerKind::Int32},
-        {TokenKind::TypeInt64, IntegerKind::Int64}
-
-        // TODO: Missing unsigned ones? Or should it be operator-based?
     };
 
     // TODO: Refactor.

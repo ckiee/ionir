@@ -3,7 +3,6 @@
 #include <sstream>
 #include <vector>
 #include <ionir/construct/construct.h>
-#include <ionir/misc/helpers.h>
 
 namespace ionir {
     struct AstPrinterTreeNode {

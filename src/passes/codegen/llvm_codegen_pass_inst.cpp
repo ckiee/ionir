@@ -84,7 +84,7 @@ namespace ionir {
 
         llvm::Value *condition = this->valueStack.pop();
 
-        this->lockBuilder([=, this]{
+        this->lockBuilder([&, this]{
             /**
              * Visit the consequent and alternative basic blocks. There's a
              * mechanism in place to prevent the blocks from being processed
@@ -195,7 +195,7 @@ namespace ionir {
 
         ionshared::Ptr<BasicBlock> basicBlockTarget = node->getBasicBlockTarget();
 
-        this->lockBuilder([=, this]{
+        this->lockBuilder([&, this]{
             /**
              * Visit the basic block. A mechanism will prevent it from being
              * emitted twice. Try popping the resulting value because it might

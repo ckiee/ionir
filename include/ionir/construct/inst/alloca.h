@@ -4,7 +4,6 @@
 #include <ionir/construct/type.h>
 #include <ionir/construct/inst_yield.h>
 #include <ionir/construct/inst.h>
-#include <ionir/misc/helpers.h>
 
 namespace ionir {
     class BasicBlock;

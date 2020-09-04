@@ -4,7 +4,6 @@
 #include <vector>
 #include <ionshared/misc/named.h>
 #include <ionir/construct/pseudo/args.h>
-#include <ionir/misc/helpers.h>
 #include "ionir/construct/pseudo/child_construct.h"
 #include "type.h"
 #include "module.h"

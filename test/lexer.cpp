@@ -1,8 +1,6 @@
 #include <stdexcept>
 #include <vector>
 #include <array>
-#include <ionir/lexical/token.h>
-#include <ionir/lexical/lexer.h>
 #include <ionir/test/compare.h>
 #include <ionir/test/const.h>
 

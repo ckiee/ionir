@@ -1,7 +1,6 @@
 #include <optional>
 #include <ionir/misc/ref.h>
 #include <ionir/construct/inst/return.h>
-#include <ionir/misc/helpers.h>
 #include <ionir/test/const.h>
 #include "pch.h"
 

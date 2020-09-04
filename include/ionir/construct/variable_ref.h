@@ -2,7 +2,6 @@
 
 #include <string>
 #include <ionshared/misc/named.h>
-#include <ionir/misc/helpers.h>
 #include "construct.h"
 
 namespace ionir {

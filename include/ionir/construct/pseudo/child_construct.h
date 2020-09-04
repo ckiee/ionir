@@ -1,7 +1,6 @@
 #pragma once
 
-#include <ionir/misc/helpers.h>
-#include "ionir/construct/construct.h"
+#include <ionir/construct/construct.h>
 
 namespace ionir {
     template<typename T>
