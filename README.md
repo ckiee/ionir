@@ -1,3 +1,10 @@
+#### IonIR
+
+IonIR is a collection of in-memory intermediate representation constructs used by the Ion compiler. Type-checking,
+borrow checking, optimization, and other important passes except for macro expansion and name resolution passes are
+present and occur in IonIR. The [Ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
+and emits IonIR constructs which are then processed and emitted through the code generation pass to LLVM IR.
+
 #### Getting started
 
 Prepare the project, initialize and update required Git submodules:
@@ -10,30 +17,6 @@ Then, you'd want to invoke CMake to automatically build and compile the project:
 
 ```shell
 $ cmake --build .
-```
-
-#### IonIR Syntax
-
-Below is a simple IonIR syntax example. For a complete syntax & instruction reference, [see !not yet available!](#).
-
-```c++
-module foo { // Module declaration (encapsulation).
-    fn main(i32 argc) -> i32 { // Function declaration with atomic argument & return type (i32).
-        @entry: {
-            alloca i1 cond; // Allocate comparison boolean to be used in branch instruction.
-            compare argc 0 cond; // Compare equality of 'argc' and 0.
-            branch cond %br_0_body %br_0_otherwise; // Branch depending on the result of the comparison.        
-        }
-
-        @br_0_body: { // Label/basic block declaration.
-            ret 1; // Return instruction.
-        }
-
-        @br_0_otherwise: {
-            ret 0;
-        }
-    }
-}
 ```
 
 #### Library usage
@@ -100,21 +83,6 @@ int main() {
      * properties.
      */
     passManager.registerPass(std::make_shared<ConstructValidationPass>());
-
-    /**
-     * NameResolutionPass: Will resolve partial constructs
-     * which reference other constructs by their identifier(s).
-     * For example, constructs defined later within the code (after
-     * its identifier usage) will be resolved by this pass.
-     */
-    passManager.registerPass(std::make_shared<NameResolutionPass>());
-
-    /**
-     * NameShadowingPass: Ensures that locally-defined variables' names
-     * do not shadow (or override) previously existing ones, among other
-     * entities such as function argument names and method names.
-     */
-    passManager.registerPass(std::make_shared<NameShadowingPass>());
 
     /**
      * DeadCodeEliminationPass: An optimization pass which will remove
