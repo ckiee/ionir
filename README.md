@@ -1,8 +1,8 @@
 #### IonIR
 
 IonIR is a collection of in-memory intermediate representation constructs used by the Ion compiler. Type-checking,
-borrow checking, optimization, and other important passes except for macro expansion and name resolution passes are
-present and occur in IonIR. The [Ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
+borrow checking, optimization, and other important passes except for the macro expansion and name resolution passes
+are present and occur in IonIR. The [Ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
 and emits IonIR constructs which are then processed and emitted through the code generation pass to LLVM IR.
 
 #### Getting started
