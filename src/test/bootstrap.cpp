@@ -39,7 +39,6 @@ namespace ionir::test::bootstrap {
             nullptr,
             BasicBlockKind::Entry,
             Const::basicBlockEntryId,
-            {},
             std::move(insts)
         });
 

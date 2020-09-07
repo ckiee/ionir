@@ -19,7 +19,6 @@ namespace ionir {
         ScopeAnchor<Inst>(opts.symbolTable),
         Named(opts.id),
         kind(opts.kind),
-        registers(opts.registers),
         insts(opts.insts),
         instOrderMap() {
         //
@@ -31,10 +30,7 @@ namespace ionir {
     }
 
     Ast BasicBlock::getChildNodes() {
-        return Construct::mergeChildren(
-            Construct::convertChildren(this->registers),
-            Construct::convertChildren(this->insts)
-        );
+        return Construct::convertChildren(this->insts);
     }
 
     bool BasicBlock::verify() {
@@ -45,14 +41,6 @@ namespace ionir {
 
     BasicBlockKind BasicBlock::getKind() const noexcept {
         return this->kind;
-    }
-
-    std::vector<ionshared::Ptr<RegisterAssign>> &BasicBlock::getRegisters() noexcept {
-        return this->registers;
-    }
-
-    void BasicBlock::setRegisters(std::vector<ionshared::Ptr<RegisterAssign>> registers) {
-        this->registers = std::move(registers);
     }
 
     std::vector<ionshared::Ptr<Inst>> &BasicBlock::getInsts() noexcept {
@@ -66,7 +54,7 @@ namespace ionir {
     }
 
     void BasicBlock::insertInst(uint32_t order, const ionshared::Ptr<Inst> &inst) {
-        uint32_t maxOrder = this->insts.empty() ? 0 : this->insts.size() - 1;
+        const uint32_t maxOrder = this->insts.empty() ? 0 : this->insts.size() - 1;
 
         if (order > maxOrder) {
             throw std::out_of_range("Order is larger than the size of elements in the vector");
@@ -77,7 +65,7 @@ namespace ionir {
 
         // TODO: --- Repeated code below (appendInst). Simplify? Maybe create registerInst() function? ---
 
-        std::optional<std::string> id = util::getInstId(inst);
+        const std::optional<std::string> id = util::getInstId(inst);
 
         // Instruction is named. Register it in the symbol table.
         if (id.has_value()) {
@@ -121,6 +109,7 @@ namespace ionir {
 
     ionshared::Ptr<BasicBlock> BasicBlock::split(uint32_t atOrder, std::string id) {
         // TODO: If insts are empty, atOrder parameter is ignored (useless). Address that.
+        // TODO: Symbol table is not being relocated.
 
         if (!this->insts.empty() && (atOrder < 0 || atOrder > this->insts.size() - 1)) {
             throw std::out_of_range("Provided order is outsize of bounds");
@@ -142,10 +131,6 @@ namespace ionir {
             this->getParent(),
             this->kind,
             std::move(id),
-
-            // TODO: CRITICAL! What about registers? They are not being relocated!
-            this->registers,
-
             insts
         });
 
@@ -186,7 +171,7 @@ namespace ionir {
         return std::make_shared<InstBuilder>(this->dynamicCast<BasicBlock>());
     }
 
-    ionshared::OptPtr<Inst> BasicBlock::findTerminalInst() const {
+    ionshared::OptPtr<Inst> BasicBlock::findTerminalInst() const noexcept {
         // TODO: There can only be a single return instruction.
         for (const auto &inst : this->insts) {
             if (inst->isTerminal()) {
@@ -195,6 +180,10 @@ namespace ionir {
         }
 
         return std::nullopt;
+    }
+
+    bool BasicBlock::hasTerminalInst() const noexcept {
+        return ionshared::util::hasValue(this->findTerminalInst());
     }
 
     ionshared::OptPtr<Inst> BasicBlock::findFirstInst() noexcept {

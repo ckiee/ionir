@@ -81,6 +81,8 @@ namespace ionir::util {
 
     std::optional<std::string> getInstId(const ionshared::Ptr<ionir::Inst> &inst) noexcept {
         switch (inst->getInstKind()) {
+            // TODO: Implement.
+
             default: {
                 return std::nullopt;
             }

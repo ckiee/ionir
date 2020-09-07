@@ -9,7 +9,6 @@
 #include "pseudo/args.h"
 #include "inst.h"
 #include "type.h"
-#include "register_assign.h"
 
 namespace ionir {
     class Pass;
@@ -44,8 +43,6 @@ namespace ionir {
 
         std::string id;
 
-        std::vector<ionshared::Ptr<RegisterAssign>> registers = {};
-
         std::vector<ionshared::Ptr<Inst>> insts = {};
 
         PtrSymbolTable<Inst> symbolTable = ionshared::util::makePtrSymbolTable<Inst>();
@@ -55,8 +52,6 @@ namespace ionir {
     class BasicBlock : public ChildConstruct<FunctionBody>, public ScopeAnchor<Inst>, public ionshared::Named {
     private:
         BasicBlockKind kind;
-
-        std::vector<ionshared::Ptr<RegisterAssign>> registers;
 
         std::vector<ionshared::Ptr<Inst>> insts;
 
@@ -75,10 +70,6 @@ namespace ionir {
         bool verify() override;
 
         [[nodiscard]] BasicBlockKind getKind() const noexcept;
-
-        [[nodiscard]] std::vector<ionshared::Ptr<RegisterAssign>> &getRegisters() noexcept;
-
-        void setRegisters(std::vector<ionshared::Ptr<RegisterAssign>> registers);
 
         [[nodiscard]] std::vector<ionshared::Ptr<Inst>> &getInsts() noexcept;
 
@@ -125,7 +116,9 @@ namespace ionir {
 
         [[nodiscard]] ionshared::Ptr<InstBuilder> createBuilder();
 
-        [[nodiscard]] ionshared::OptPtr<Inst> findTerminalInst() const;
+        [[nodiscard]] ionshared::OptPtr<Inst> findTerminalInst() const noexcept;
+
+        [[nodiscard]] bool hasTerminalInst() const noexcept;
 
         [[nodiscard]] ionshared::OptPtr<Inst> findFirstInst() noexcept;
 

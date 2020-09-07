@@ -8,11 +8,11 @@
 namespace ionir {
     class BasicBlock;
 
-    struct AllocaInstOpts : InstOpts {
+    struct AllocaInstOpts : InstYieldOpts {
         ionshared::Ptr<Type> type;
     };
 
-    class AllocaInst : public Inst {
+    class AllocaInst : public Inst, public InstYield {
     private:
         ionshared::Ptr<Type> type;
 
@@ -22,8 +22,8 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        [[nodiscard]] ionshared::Ptr<Type> getType() const;
+        [[nodiscard]] ionshared::Ptr<Type> getType() const noexcept;
 
-        void setType(ionshared::Ptr<Type> type);
+        void setType(ionshared::Ptr<Type> type) noexcept;
     };
 }

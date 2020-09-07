@@ -12,6 +12,7 @@
 namespace ionir {
     void AstPrinter::visitNode(const AstPrinterTreeNode &node) {
         if (this->depth != 0) {
+            // TODO: Is depth correct?
             this->tree << IONIR_TREE_V_LINE << AstPrinter::makeSpaces(2);
         }
 
@@ -36,7 +37,9 @@ namespace ionir {
         return spaces.str();
     }
 
-    AstPrinter::AstPrinter(const Ast &ast) : ast(ast), depth(0) {
+    AstPrinter::AstPrinter(const Ast &ast) :
+        ast(ast),
+        depth(0) {
         //
     }
 
@@ -65,7 +68,7 @@ namespace ionir {
 
             for (const auto &child : node.construct->getChildNodes()) {
                 queue.push(AstPrinterTreeNode{
-                    depth + 1,
+                    depth++,
                     child->isLeafNode(),
                     child
                 });

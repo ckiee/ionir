@@ -9,16 +9,13 @@ namespace ionir {
         this->visitType(node->getType());
 
         llvm::Type *type = this->typeStack.pop();
-        std::string reg = this->registerQueue.front();
-
-        this->registerQueue.pop();
 
         /**
          * Create the LLVM-equivalent alloca instruction
          * using the buffered builder.
          */
         llvm::AllocaInst *llvmAllocaInst =
-            this->llvmBuilderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, reg);
+            this->llvmBuilderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, node->getYieldId());
 
         this->valueStack.push(llvmAllocaInst);
         this->emittedEntities.add(node, llvmAllocaInst);
@@ -163,7 +160,6 @@ namespace ionir {
         this->requireBuilder();
 
         ionshared::Ptr<AllocaInst> target = node->getTarget();
-
         std::optional<llvm::Value *> llvmTarget = this->emittedEntities.find(target);
 
         if (!ionshared::util::hasValue(llvmTarget)) {

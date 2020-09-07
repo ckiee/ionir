@@ -38,19 +38,12 @@ namespace ionir {
     private:
         InstKind kind;
 
-        ionshared::OptPtr<Inst> yields;
-
     public:
-        Inst(
-            ionshared::Ptr<BasicBlock> parent,
-            InstKind kind, ionshared::OptPtr<Inst> yields = std::nullopt
-        );
+        Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind);
 
         void accept(Pass &visitor) override = 0;
 
         [[nodiscard]] InstKind getInstKind() const noexcept;
-
-        [[nodiscard]] ionshared::OptPtr<Inst> getYields() const noexcept;
 
         [[nodiscard]] bool isTerminal() const noexcept;
 

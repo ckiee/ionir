@@ -1,7 +1,6 @@
 #include <ionir/test/util.h>
 #include <ionir/test/compare.h>
 #include <ionir/test/filesystem.h>
-#include <ionir/test/const.h>
 
 using namespace ionir::test;
 

@@ -11,7 +11,8 @@ namespace ionir {
         std::vector<Construct> parts;
 
     public:
-        ConstructBuilder() : parts({}) {
+        ConstructBuilder() :
+            parts({}) {
             //
         }
 

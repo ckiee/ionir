@@ -43,8 +43,6 @@ namespace ionir {
 
         ionshared::LlvmStack<llvm::Type> typeStack;
 
-        std::queue<std::string> registerQueue;
-
         /**
          * The currently active LLVM context;
          */
@@ -105,8 +103,6 @@ namespace ionir {
 
         [[nodiscard]] ionshared::LlvmStack<llvm::Type> getTypeStack() const noexcept;
 
-        [[nodiscard]] std::queue<std::string> getRegisterQueue() const noexcept;
-
         [[nodiscard]] std::optional<llvm::Module *> getModuleBuffer() const;
 
         bool setModuleBuffer(const std::string &id);
@@ -156,7 +152,5 @@ namespace ionir {
         void visitVoidType(ionshared::Ptr<VoidType> node) override;
 
         void visitModule(ionshared::Ptr<Module> node) override;
-
-        void visitRegisterAssign(ionshared::Ptr<RegisterAssign> node) override;
     };
 }

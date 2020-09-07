@@ -30,11 +30,20 @@
 #include <ionir/construct/module.h>
 #include <ionir/construct/value.h>
 #include <ionir/construct/inst.h>
-#include <ionir/construct/register_assign.h>
+#include "pass_context.h"
+
+#define IONIR_PASS_INTERNAL_ASSERT(condition) if (!this->getContext().getDiagnosticBuilder()->internalAssert(condition)) { return; }
 
 namespace ionir {
     class Pass : public ionshared::BasePass<Construct> {
+    private:
+        PassContext context;
+
     public:
+        explicit Pass(PassContext context);
+
+        [[nodiscard]] PassContext getContext() const noexcept;
+
         void visit(ionshared::Ptr<Construct> node) override;
 
         virtual void visitChildren(ionshared::Ptr<Construct> node);
@@ -94,8 +103,6 @@ namespace ionir {
         virtual void visitDirective(Directive node);
 
         virtual void visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node);
-
-        virtual void visitRegisterAssign(ionshared::Ptr<RegisterAssign> node);
 
         virtual void visitErrorMarker(ionshared::Ptr<ErrorMarker> node);
     };

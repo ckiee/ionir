@@ -6,26 +6,46 @@ namespace ionir {
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
         ionshared::OptPtr<FunctionBody> functionBody = node->getBody();
 
-        // TODO: Better exception.
-        if (!ionshared::util::hasValue(functionBody)) {
-            throw std::runtime_error("Function body is not set");
-        }
+        IONIR_PASS_INTERNAL_ASSERT(ionshared::util::hasValue(functionBody))
 
         ionshared::OptPtr<BasicBlock> entryBasicBlock = functionBody->get()->findEntryBasicBlock();
 
-        // TODO: Better exception.
         if (!ionshared::util::hasValue(entryBasicBlock)) {
-            throw std::runtime_error("Entry basic block for function body is not set");
+            this->getContext().getDiagnosticBuilder()->makeError(
+                // TODO: Use advanced errors instead of hard-coded string.
+                "Function is missing an entry basic block"
+            );
+
+            return;
         }
 
-        std::vector<ionshared::Ptr<Inst>> insts = entryBasicBlock->get()->getInsts();
+        TypeKind parentFunctionPrototypeReturnTypeKind = functionBody->get()
+            ->getParent()
+            ->getPrototype()
+            ->getReturnType()
+            ->getTypeKind();
 
-        // TODO: CRITICAL! There may be more than a single terminal statement on blocks.
-        ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
+        /**
+         * Entry basic blocks must contain at least a single terminal
+         * instruction if the parent function does not return void. If
+         * it returns void and there is no terminal instruction, the
+         * LLVM codegen pass will implicitly append a return instruction
+         * with no value.
+         */
+        if (parentFunctionPrototypeReturnTypeKind != TypeKind::Void) {
+            std::vector<ionshared::Ptr<Inst>> insts = entryBasicBlock->get()->getInsts();
 
-        // All basic blocks must contain at least a terminal instruction.
-        if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
-            throw std::runtime_error("Section must contain at least a terminal instruction");
+            // TODO: CRITICAL! There may be more than a single terminal statement on basic blocks? Technically speaking LLVM does not allow that to EXECUTE, however, it can OCCUR.
+            ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
+
+            if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
+                // TODO: Use advanced errors instead of hard-coded string.
+                this->getContext().getDiagnosticBuilder()->makeError(
+                    "Function whose prototype's return type is not void must return a value"
+                );
+
+                return;
+            }
         }
     }
 
@@ -47,7 +67,7 @@ namespace ionir {
          * Functions whose prototype's return type is non-void must provide
          * a value to the return instruction.
          */
-        if (functionReturnType->getTypeKind() != TypeKind::Void && !returnStatementValueSet) {
+        if ((functionReturnType->getTypeKind() != TypeKind::Void) && !returnStatementValueSet) {
             throw std::runtime_error(
                 "Function whose prototype's return type is not void must return a corresponding value"
             );

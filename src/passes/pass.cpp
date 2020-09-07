@@ -1,6 +1,15 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
+    Pass::Pass(PassContext context) :
+        context(std::move(context)) {
+        //
+    }
+
+    PassContext Pass::getContext() const noexcept {
+        return this->context;
+    }
+
     void Pass::visit(ionshared::Ptr<Construct> node) {
         node->accept(*this);
 
@@ -53,8 +62,6 @@ namespace ionir {
 
     void Pass::visitValue(ionshared::Ptr<Value<>> node) {
         switch (node->getValueKind()) {
-            // TODO: Missing boolean value kind.
-
             case ValueKind::Character: {
                 this->visitCharLiteral(node->dynamicCast<CharLiteral>());
 
@@ -208,10 +215,6 @@ namespace ionir {
     }
 
     void Pass::visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node) {
-        //
-    }
-
-    void Pass::visitRegisterAssign(ionshared::Ptr<ionir::RegisterAssign> node) {
         //
     }
 

@@ -2,6 +2,8 @@
 #include <llvm/IR/BasicBlock.h>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
+#include <iostream>
+
 namespace ionir {
     ionshared::LlvmStack<llvm::Value> LlvmCodegenPass::getValueStack() const noexcept {
         return this->valueStack;
@@ -9,10 +11,6 @@ namespace ionir {
 
     ionshared::LlvmStack<llvm::Type> LlvmCodegenPass::getTypeStack() const noexcept {
         return this->typeStack;
-    }
-
-    std::queue<std::string> LlvmCodegenPass::getRegisterQueue() const noexcept {
-        return this->registerQueue;
     }
 
     ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> LlvmCodegenPass::getModules() const {
@@ -103,7 +101,6 @@ namespace ionir {
         llvmBasicBlockBuffer(std::nullopt),
         valueStack(),
         typeStack(),
-        registerQueue(),
         builderTracker(),
         emittedEntities(),
         namedValues({}) {
@@ -153,19 +150,11 @@ namespace ionir {
          */
         this->setBuilder(llvmBasicBlock);
 
-        // Visit registers & instructions.
-        std::vector<ionshared::Ptr<RegisterAssign>> registers = node->getRegisters();
         std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
 
         // Emit the entity at this point so visiting children can access it.
         this->emittedEntities.add(node, llvmBasicBlock);
 
-        // Process registers.
-        for (const auto &registerAssign : registers) {
-            this->visitRegisterAssign(registerAssign);
-        }
-
-        // Process instructions.
         for (const auto &inst : insts) {
             this->visitInst(inst);
 
@@ -187,15 +176,28 @@ namespace ionir {
          * Retrieve the entry section from the block. At this point, it
          * should be guaranteed to be set.
          */
-        ionshared::OptPtr<BasicBlock> entry = node->findEntryBasicBlock();
+        ionshared::OptPtr<BasicBlock> entryBasicBlock = node->findEntryBasicBlock();
 
         /**
          * Entry section must be set. Redundant check, since the verify should
          * function ensure that the block contains a single entry section, but
          * just to make sure.
          */
-        if (!entry.has_value()) {
+        if (!ionshared::util::hasValue(entryBasicBlock)) {
             throw std::runtime_error("No entry basic block exists for block");
+        }
+
+        TypeKind parentFunctionPrototypeReturnKind = node->getParent()->getPrototype()->getReturnType()->getTypeKind();
+
+        /**
+         * The function body's entry basic block contains no terminal instruction.
+         * The parent function's prototype's return type is void. Implicitly append
+         * a return void instruction to satisfy LLVM's terminal instruction requirement.
+         */
+        if (!entryBasicBlock->get()->hasTerminalInst() && parentFunctionPrototypeReturnKind == TypeKind::Void) {
+            entryBasicBlock->get()->appendInst(std::make_shared<ReturnInst>(ReturnInstOpts{
+                *entryBasicBlock
+            }));
         }
 
         // Visit all the block's section(s).
@@ -246,6 +248,10 @@ namespace ionir {
 
             case TypeKind::Integer: {
                 return this->visitIntegerType(node->staticCast<IntegerType>());
+            }
+
+            case TypeKind::Boolean: {
+                return this->visitBooleanType(node->staticCast<BooleanType>());
             }
 
             case TypeKind::String: {
@@ -326,8 +332,8 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitBooleanType(ionshared::Ptr<BooleanType> node) {
-        // TODO: Implement? Or already implemented as another form (integer?). Investigate.
-        throw std::runtime_error("Not implemented?");
+        this->requireContext();
+        this->typeStack.push(llvm::Type::getInt1Ty(**this->llvmContextBuffer));
     }
 
     void LlvmCodegenPass::visitVoidType(ionshared::Ptr<VoidType> node) {
@@ -358,9 +364,5 @@ namespace ionir {
              */
              this->valueStack.pop();
         }
-    }
-
-    void LlvmCodegenPass::visitRegisterAssign(ionshared::Ptr<RegisterAssign> node) {
-        this->registerQueue.push(node->getId());
     }
 }

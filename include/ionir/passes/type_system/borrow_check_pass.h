@@ -1,6 +1,8 @@
 #pragma once
 
+#include <ionir/passes/pass.h>
+
 namespace ionir {
     // TODO
-    class BorrowCheckPass {};
+    class BorrowCheckPass : public Pass {};
 }

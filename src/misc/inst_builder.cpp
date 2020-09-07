@@ -18,6 +18,7 @@ namespace ionir {
     ionshared::Ptr<AllocaInst> InstBuilder::createAlloca(const std::string &id, ionshared::Ptr<Type> type) {
         return this->make<AllocaInst>(AllocaInstOpts{
             this->basicBlock,
+            id,
             std::move(type)
         });
     }

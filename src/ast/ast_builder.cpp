@@ -47,7 +47,8 @@ namespace ionir {
         setBasicBlockBuffer(std::nullopt);
     }
 
-    AstBuilder::AstBuilder() : ast({}) {
+    AstBuilder::AstBuilder() :
+        ast({}) {
         //
     }
 

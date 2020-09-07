@@ -89,14 +89,10 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
 TEST(CodeGenTest, VisitAllocaInst) {
     ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = test::bootstrap::llvmCodegenPass();
 
-    llvmCodegenPass->visitRegisterAssign(std::make_shared<RegisterAssign>(
-        test::constant::foobar,
-        nullptr
-    ));
-
     std::vector<ionshared::Ptr<Inst>> insts = {
         std::make_shared<AllocaInst>(AllocaInstOpts{
             nullptr,
+            test::constant::foobar,
             TypeFactory::typeInteger(IntegerKind::Int32)
         })
     };
