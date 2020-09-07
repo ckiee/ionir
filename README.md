@@ -5,7 +5,15 @@ borrow checking, optimization, and other important passes except for the macro e
 are present and occur in IonIR. The [Ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
 and emits IonIR constructs which are then processed and emitted through the code generation pass to LLVM IR.
 
-#### Getting started
+#### Requirements
+
+* [zlib](https://zlib.net/)
+* [CMake >=v3.13.X](https://cmake.org/download/)
+* [Python =v2.7](https://www.python.org/download/releases/2.7/)
+* [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) with GNU >=v8.1.0
+* [LLVM >=v9.0.0](https://releases.llvm.org/download.html) (must build from source on Windows, see section below)
+
+#### Building
 
 Prepare the project, initialize and update required Git submodules:
 
@@ -19,7 +27,7 @@ Then, you'd want to invoke CMake to automatically build and compile the project:
 $ cmake --build .
 ```
 
-#### Library usage
+#### Usage
 
 A general usage example for the IonIR library is provided below.
 
@@ -131,13 +139,11 @@ int main() {
 }
 ```
 
-#### Requirements
+#### Running tests
 
-* [zlib](https://zlib.net/)
-* [CMake >=v3.13.X](https://cmake.org/download/)
-* [Python =v2.7](https://www.python.org/download/releases/2.7/)
-* [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) with GNU >=v8.1.0
-* [LLVM >=v9.0.0](https://releases.llvm.org/download.html) (must build from source on Windows, see section below)
+Use the `ctest` command bundled with CMake to run tests.
+
+Alternatively, build project & tests and run the tests executable generated.
 
 #### (Recommended) Automatically building LLVM from source (Windows)
 
@@ -151,7 +157,7 @@ int main() {
 
 4. Run the `install_llvm.bat` file you just copied **as administrator** by right-clicking it then selecting `Run as administrator`.
 
-#### Building LLVM from source (Windows)
+#### Manually building LLVM from source (Windows)
 
 0. Ensure you have _all_ the requirements (excluding LLVM) properly installed, as the build process for LLVM on Windows will require Python, CMake and MinGW.
 
@@ -243,12 +249,6 @@ If CMake is having a hard time finding your LLVM installation, try setting the `
 * In Visual Studio Code, use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
 * When using CMake, first configure the project using `cmake --config Debug .` then build the executable using `cmake --build .`.
 * Alternatively, configure the project using `cmake --config .` then build the executable with the default options using `cmake --build .`.
-
-#### Running tests
-
-Use the `ctest` command bundled with CMake to run tests.
-
-Alternatively, build project & tests and run the tests executable generated.
 
 #### Visual Studio Code notes
 
