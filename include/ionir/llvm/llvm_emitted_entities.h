@@ -13,7 +13,7 @@ namespace ionir {
     public:
         LlvmEmittedEntities();
 
-        bool add(const ionshared::Ptr<Construct> &construct, llvm::Value *llvmValue);
+        void set(const ionshared::Ptr<Construct> &construct, llvm::Value *llvmValue);
 
         [[nodiscard]] bool contains(ionshared::Ptr<Construct> construct) const;
 

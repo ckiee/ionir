@@ -2,6 +2,12 @@
 #include <ionir/passes/semantic/entry_point_check_pass.h>
 
 namespace ionir {
+    EntryPointCheckPass::EntryPointCheckPass() :
+        // TODO: Passing in nullptr temporarily.
+        Pass(PassContext(nullptr)) {
+        //
+    }
+
     void EntryPointCheckPass::finish() {
         /**
          * An entry function could not be found.
@@ -9,10 +15,10 @@ namespace ionir {
         if (!ionshared::util::hasValue(this->entryFunction)) {
             throw std::runtime_error("No suitable entry point could be found");
         }
-            /**
-             * At this point, the entry point exists. Clear up the entry
-             * function as it is no longer needed after the pass has ran.
-             */
+        /**
+         * At this point, the entry point exists. Clear up the entry
+         * function as it is no longer needed after the pass has ran.
+         */
         else {
             this->entryFunction.reset();
         }

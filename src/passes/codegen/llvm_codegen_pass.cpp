@@ -92,6 +92,7 @@ namespace ionir {
     }
 
     LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules) :
+        Pass(PassContext(nullptr)), // TODO: PassContext's noticeStack is nullptr.
         contextBuffer(std::make_shared<Context>()),
         modules(std::move(modules)),
         llvmContextBuffer(std::nullopt),
@@ -103,7 +104,7 @@ namespace ionir {
         typeStack(),
         builderTracker(),
         emittedEntities(),
-        namedValues({}) {
+        namedValues() {
         //
     }
 
@@ -153,7 +154,7 @@ namespace ionir {
         std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
 
         // Emit the entity at this point so visiting children can access it.
-        this->emittedEntities.add(node, llvmBasicBlock);
+        this->emittedEntities.set(node, llvmBasicBlock);
 
         for (const auto &inst : insts) {
             this->visitInst(inst);

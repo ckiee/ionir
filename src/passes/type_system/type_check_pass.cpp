@@ -3,6 +3,12 @@
 #include <ionir/passes/type_system/type_check_pass.h>
 
 namespace ionir {
+    TypeCheckPass::TypeCheckPass() :
+        // TODO: Passing in nullptr temporarily.
+        Pass(PassContext(nullptr)) {
+        //
+    }
+
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
         ionshared::OptPtr<FunctionBody> functionBody = node->getBody();
 

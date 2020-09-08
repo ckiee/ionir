@@ -5,6 +5,8 @@
 namespace ionir {
     class ConstructValidationPass : public Pass {
     public:
+        ConstructValidationPass();
+
         void visit(ionshared::Ptr<Construct> node) override;
     };
 }

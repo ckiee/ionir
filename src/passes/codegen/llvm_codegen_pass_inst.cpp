@@ -18,7 +18,7 @@ namespace ionir {
             this->llvmBuilderBuffer->CreateAlloca(type, (llvm::Value *)nullptr, node->getYieldId());
 
         this->valueStack.push(llvmAllocaInst);
-        this->emittedEntities.add(node, llvmAllocaInst);
+        this->emittedEntities.set(node, llvmAllocaInst);
     }
 
     void LlvmCodegenPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
@@ -160,16 +160,20 @@ namespace ionir {
         this->requireBuilder();
 
         ionshared::Ptr<AllocaInst> target = node->getTarget();
-        std::optional<llvm::Value *> llvmTarget = this->emittedEntities.find(target);
 
-        if (!ionshared::util::hasValue(llvmTarget)) {
+        std::optional<llvm::AllocaInst *> llvmTargetAlloca =
+            this->emittedEntities.find<llvm::AllocaInst>(target);
+
+        if (!ionshared::util::hasValue(llvmTargetAlloca)) {
             throw std::runtime_error("Target could not be retrieved from the emitted entities map");
         }
 
         this->visitValue(node->getValue());
 
         llvm::Value *llvmValue = this->valueStack.pop();
-        llvm::StoreInst *llvmStoreInst = this->llvmBuilderBuffer->CreateStore(llvmValue, *llvmTarget);
+
+        llvm::StoreInst *llvmStoreInst =
+            this->llvmBuilderBuffer->CreateStore(llvmValue, *llvmTargetAlloca);
 
         this->valueStack.push(llvmStoreInst);
 //        this->addToScope(node, llvmStoreInst);

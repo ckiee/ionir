@@ -4,5 +4,8 @@
 
 namespace ionir {
     // TODO
-    class BorrowCheckPass : public Pass {};
+    class BorrowCheckPass : public Pass {
+    public:
+        BorrowCheckPass();
+    };
 }
