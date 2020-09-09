@@ -7,7 +7,7 @@ namespace ionir {
         //
     }
 
-    ionshared::Ptr<BasicBlock> InstBuilder::getSection() const {
+    ionshared::Ptr<BasicBlock> InstBuilder::getBasicBlock() const {
         return this->basicBlock;
     }
 

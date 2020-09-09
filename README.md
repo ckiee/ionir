@@ -51,31 +51,10 @@ A general usage example for the IonIR library is provided below.
 using namespace ionir;
 
 int main() {
-    /**
-     * First off, initialize static constants used within the project.
-     * Usage of components which depend on initialized constants while
-     * the initialization process has not occurred will result in a runtime
-     * error.
-     */
-    StaticInit::init();
-
-    // Create a lexer instance which will scan & tokenize input IonIR code.
-    Lexer lexer = Lexer("module foo { fn main() -> i32 { ret [i32] 0; } }");
-
-    // Tokenize the input.
-    TokenStream stream = lexer.scan();
-
-    /**
-     * Used to parse all applicable top-level constructs
-     * formed from the resulting token stream.
-     */
-    Parser parser = Parser(stream);
-
-    // Create a driver to automatically handle parsing.
-    Driver driver = Driver(stream);
-
     // Invoke the driver and retrieve the resulting AST.
-    Ast ast = driver.invoke();
+    Ast ast = {
+        // ...
+    };
 
     /**
      * Create a PassManager instance and register various passes which

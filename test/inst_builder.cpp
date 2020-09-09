@@ -8,7 +8,7 @@ TEST(InstBuilderTest, GetSection) {
     ionshared::Ptr<BasicBlock> section = Bootstrap::basicBlock();
     ionshared::Ptr<InstBuilder> builder = section->createBuilder();
 
-    EXPECT_EQ(builder->getSection(), section);
+    EXPECT_EQ(builder->getBasicBlock(), section);
 }
 
 TEST(InstBuilderTest, CreateReturn) {

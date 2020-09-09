@@ -347,7 +347,7 @@ namespace ionir {
         this->llvmModuleBuffer = new llvm::Module(node->getId(), **this->llvmContextBuffer);
 
         // Set the module on the modules symbol table.
-        this->modules->insert(node->getId(), *this->llvmModuleBuffer);
+        this->modules->set(node->getId(), *this->llvmModuleBuffer);
 
         // Set the module's context as the context buffer.
         this->contextBuffer = node->getContext();

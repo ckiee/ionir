@@ -20,7 +20,7 @@ namespace ionir {
         template<typename T = llvm::Value>
         [[nodiscard]] std::optional<T *> find(const ionshared::Ptr<Construct> &construct) {
             if (this->contains(construct)) {
-                T *castResult = llvm::dyn_cast<T>(this->entities[construct]);
+                T *castResult = llvm::dyn_cast<T>(*this->entities.lookup(construct));
 
                 if (castResult != nullptr) {
                     return castResult;

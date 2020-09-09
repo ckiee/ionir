@@ -7,7 +7,7 @@ namespace ionir {
     }
 
     void LlvmEmittedEntities::set(const ionshared::Ptr<Construct> &construct, llvm::Value *llvmValue) {
-        this->entities.insert(construct, llvmValue, true);
+        this->entities.set(construct, llvmValue, true);
     }
 
     bool LlvmEmittedEntities::contains(ionshared::Ptr<Construct> construct) const {

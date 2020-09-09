@@ -7,6 +7,8 @@ namespace ionir {
     public:
         TypeCheckPass();
 
+        void initialize(ionshared::PassInfo &info) override;
+
         void visitFunction(ionshared::Ptr<Function> node) override;
 
         void visitReturnInst(ionshared::Ptr<ReturnInst> node) override;

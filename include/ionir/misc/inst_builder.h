@@ -17,7 +17,7 @@ namespace ionir {
     public:
         explicit InstBuilder(ionshared::Ptr<BasicBlock> basicBlock);
 
-        [[nodiscard]] ionshared::Ptr<BasicBlock> getSection() const;
+        [[nodiscard]] ionshared::Ptr<BasicBlock> getBasicBlock() const;
 
         void appendInst(const ionshared::Ptr<Inst> &inst);
 

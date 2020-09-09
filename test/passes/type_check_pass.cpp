@@ -9,7 +9,7 @@ using namespace ionir;
 // TODO: Separate into multiple tests.
 TEST(TypeCheckPassTest, Run) {
     PassManager passManager = PassManager({
-        PassManagerItem{
+        PassManager::Item {
             std::make_shared<TypeCheckPass>()
         }
     });

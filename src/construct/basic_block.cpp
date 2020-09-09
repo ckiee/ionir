@@ -10,7 +10,7 @@ namespace ionir {
         uint32_t order = 0;
 
         for (const auto &inst : this->insts) {
-            this->instOrderMap.insert(inst, order++);
+            this->instOrderMap.set(inst, order++);
         }
     }
 
@@ -60,7 +60,7 @@ namespace ionir {
             throw std::out_of_range("Order is larger than the size of elements in the vector");
         }
 
-        this->instOrderMap[inst] = order;
+        this->instOrderMap.set(inst, order);
         this->insts.insert(this->insts.begin() + order, inst);
 
         // TODO: --- Repeated code below (appendInst). Simplify? Maybe create registerInst() function? ---
@@ -69,7 +69,7 @@ namespace ionir {
 
         // Instruction is named. Register it in the symbol table.
         if (id.has_value()) {
-            this->getSymbolTable()->insert(*id, inst);
+            this->getSymbolTable()->set(*id, inst);
         }
         // ----------------------------------------------------------
     }
@@ -79,7 +79,7 @@ namespace ionir {
          * The order will be whatever the size of the instructions vector
          * before adding the new instruction is.
          */
-        this->instOrderMap[inst] = this->insts.size();
+        this->instOrderMap.set(inst, this->insts.size());
 
         this->insts.push_back(inst);
 
@@ -87,7 +87,7 @@ namespace ionir {
 
         // Instruction is named. Register it in the symbol table.
         if (id.has_value()) {
-            this->getSymbolTable()->insert(*id, inst);
+            this->getSymbolTable()->set(*id, inst);
         }
     }
 
@@ -149,7 +149,7 @@ namespace ionir {
 
     std::optional<uint32_t> BasicBlock::locate(ionshared::Ptr<Inst> inst) {
         if (this->instOrderMap.contains(inst)) {
-            return this->instOrderMap[std::move(inst)];
+            return this->instOrderMap.lookup(std::move(inst));
         }
 
         return std::nullopt;

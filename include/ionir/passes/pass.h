@@ -108,6 +108,4 @@ namespace ionir {
     };
 
     typedef ionshared::BasePassManager<Pass, Construct> PassManager;
-
-    typedef ionshared::PassManagerItem<Pass> PassManagerItem;
 }

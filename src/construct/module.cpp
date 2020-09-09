@@ -32,7 +32,7 @@ namespace ionir {
         std::string functionId = function->getPrototype()->getId();
 
         if (!globalScope->contains(functionId)) {
-            globalScope->insert(
+            globalScope->set(
                 functionId,
                 function
             );
@@ -64,7 +64,7 @@ namespace ionir {
 
         // Attempt to merge global scope.
         for (const auto &[key, construct] : localGlobalScopeMap) {
-            if (!newGlobalScope->insert(key, construct)) {
+            if (!newGlobalScope->set(key, construct)) {
                 return false;
             }
         }

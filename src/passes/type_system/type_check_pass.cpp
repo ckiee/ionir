@@ -1,5 +1,6 @@
 #include <ionir/const/notice.h>
 #include <ionir/type_system/type_util.h>
+#include <ionir/passes/semantic/entry_point_check_pass.h>
 #include <ionir/passes/type_system/type_check_pass.h>
 
 namespace ionir {
@@ -7,6 +8,11 @@ namespace ionir {
         // TODO: Passing in nullptr temporarily.
         Pass(PassContext(nullptr)) {
         //
+    }
+
+    void TypeCheckPass::initialize(ionshared::PassInfo &info) {
+        // TODO
+//        info.addRequirement<EntryPointCheckPass>();
     }
 
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
