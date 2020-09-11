@@ -11,8 +11,7 @@ namespace ionir {
     }
 
     void TypeCheckPass::initialize(ionshared::PassInfo &info) {
-        // TODO
-//        info.addRequirement<EntryPointCheckPass>();
+        info.addRequirement<EntryPointCheckPass>();
     }
 
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {

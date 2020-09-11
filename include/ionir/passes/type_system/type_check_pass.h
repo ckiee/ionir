@@ -5,6 +5,8 @@
 namespace ionir {
     class TypeCheckPass : public Pass {
     public:
+        IONSHARED_PASS_ID;
+
         TypeCheckPass();
 
         void initialize(ionshared::PassInfo &info) override;

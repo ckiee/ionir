@@ -1,4 +1,5 @@
 #include <ionir/passes/type_system/type_check_pass.h>
+#include <ionir/passes/semantic/entry_point_check_pass.h>
 #include <ionir/misc/bootstrap.h>
 #include <ionir/syntax/ast_builder.h>
 #include <ionir/test/const.h>
@@ -8,11 +9,10 @@ using namespace ionir;
 
 // TODO: Separate into multiple tests.
 TEST(TypeCheckPassTest, Run) {
-    PassManager passManager = PassManager({
-        PassManager::Item {
-            std::make_shared<TypeCheckPass>()
-        }
-    });
+    PassManager passManager = PassManager();
+
+    passManager.registerPass(std::make_shared<EntryPointCheckPass>());
+    bool reg = passManager.registerPass(std::make_shared<TypeCheckPass>());
 
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
     ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);

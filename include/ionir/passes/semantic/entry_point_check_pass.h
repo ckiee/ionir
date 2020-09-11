@@ -9,6 +9,8 @@ namespace ionir {
         ionshared::OptPtr<Function> entryFunction;
 
     public:
+        IONSHARED_PASS_ID;
+
         EntryPointCheckPass();
 
         void finish() override;

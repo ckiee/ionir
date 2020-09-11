@@ -3,26 +3,18 @@
 
 using namespace ionir;
 
-TEST(PassManagerTest, InitializeEmpty) {
+TEST(PassManagerTest, Initialize) {
     PassManager passManager = PassManager();
 
     EXPECT_TRUE(passManager.getPasses().empty());
 }
 
-TEST(PassManagerTest, Initialize) {
-    PassManager passManager = PassManager({
-        PassManager::Item{}
-    });
-
-    EXPECT_FALSE(passManager.getPasses().empty());
-}
-
 TEST(PassManagerTest, GetPasses) {
-    PassManager::Item passItem = PassManager::Item{};
-
-    PassManager passManager = PassManager({
-        passItem
-    });
+//    PassManager::Item passItem = PassManager::Item{};
+//
+//    PassManager passManager = PassManager({
+//        passItem
+//    });
 
 //    auto passes = passManager.getPasses();
 //

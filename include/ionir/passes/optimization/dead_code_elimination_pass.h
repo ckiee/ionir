@@ -5,6 +5,8 @@
 namespace ionir {
     class DeadCodeEliminationPass : public Pass {
     public:
+        IONSHARED_PASS_ID;
+
         DeadCodeEliminationPass();
 
         void visitBasicBlock(ionshared::Ptr<BasicBlock> node) override;
