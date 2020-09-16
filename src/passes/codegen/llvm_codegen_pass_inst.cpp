@@ -120,16 +120,9 @@ namespace ionir {
         this->requireModule();
         this->requireBuilder();
 
-        PtrRef<Function> calleeRef = node->getCallee();
-
-        // At this point, callee must have been resolved.
-        if (!calleeRef->isResolved()) {
-            // TODO: Use notices.
-            throw std::runtime_error("Unresolved call instruction callee");
-        }
-
         // Attempt to resolve the callee LLVM-equivalent function.
-        llvm::Function* llvmCallee = (*this->llvmModuleBuffer)->getFunction(calleeRef->getId());
+        llvm::Function* llvmCallee =
+            (*this->llvmModuleBuffer)->getFunction(node->getCallee()->getPrototype()->getId());
 
         // LLVM-equivalent function could not be found. Report an error.
         if (llvmCallee == nullptr) {

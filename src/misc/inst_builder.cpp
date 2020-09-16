@@ -52,8 +52,8 @@ namespace ionir {
     }
 
     ionshared::Ptr<CallInst> InstBuilder::createCall(
-        PtrRef<Function> callee,
-        std::vector<ionshared::Ptr<Construct>> args
+        const ionshared::Ptr<Function> &callee,
+        const std::vector<ionshared::Ptr<Construct>> &args
     ) {
         return this->make<CallInst>(CallInstOpts{
             this->basicBlock,

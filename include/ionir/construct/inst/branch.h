@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <ionir/misc/ref.h>
 
 namespace ionir {
     class Pass;

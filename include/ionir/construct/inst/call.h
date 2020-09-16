@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <ionir/misc/ref.h>
 #include <ionir/construct/inst_yield.h>
 
 namespace ionir {
@@ -10,14 +9,14 @@ namespace ionir {
     class Function;
 
     struct CallInstOpts : InstOpts {
-        PtrRef<Function> callee;
+        ionshared::Ptr<Function> callee;
 
         std::vector<ionshared::Ptr<Construct>> args = {};
     };
 
     class CallInst : public Inst {
     private:
-        PtrRef<Function> callee;
+        ionshared::Ptr<Function> callee;
 
         std::vector<ionshared::Ptr<Construct>> args;
 
@@ -26,9 +25,9 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        [[nodiscard]] PtrRef<Function> getCallee() const;
+        [[nodiscard]] ionshared::Ptr<Function> getCallee() const;
 
-        void setCallee(PtrRef<Function> callee);
+        void setCallee(ionshared::Ptr<Function> callee);
 
         [[nodiscard]] std::vector<ionshared::Ptr<Construct>> getArgs() const noexcept;
 

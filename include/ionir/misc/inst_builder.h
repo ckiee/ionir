@@ -53,8 +53,8 @@ namespace ionir {
         );
 
         ionshared::Ptr<CallInst> createCall(
-            PtrRef<Function> callee,
-            std::vector<ionshared::Ptr<Construct>> args = {}
+            const ionshared::Ptr<Function> &callee,
+            const std::vector<ionshared::Ptr<Construct>> &args = {}
         );
 
         ionshared::Ptr<JumpInst> createJump(

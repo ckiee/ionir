@@ -12,11 +12,11 @@ namespace ionir {
         visitor.visitCallInst(this->dynamicCast<CallInst>());
     }
 
-    PtrRef<Function> CallInst::getCallee() const {
+    ionshared::Ptr<Function> CallInst::getCallee() const {
         return this->callee;
     }
 
-    void CallInst::setCallee(PtrRef<Function> callee) {
+    void CallInst::setCallee(ionshared::Ptr<Function> callee) {
         this->callee = std::move(callee);
     }
 
