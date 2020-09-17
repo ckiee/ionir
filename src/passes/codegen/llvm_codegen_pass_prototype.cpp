@@ -1,6 +1,7 @@
 #include <llvm/ADT/APInt.h>
 #include <llvm/IR/DerivedTypes.h>
 #include <ionir/construct/value.h>
+#include <ionir/error_handling/notice.h>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
@@ -16,17 +17,25 @@ namespace ionir {
     void LlvmCodegenPass::visitExtern(ionshared::Ptr<Extern> node) {
         this->requireModule();
 
-        if (node->getPrototype() == nullptr) {
-            throw std::runtime_error("Unexpected external definition's prototype to be null");
-        }
-        else if ((*this->llvmModuleBuffer)->getFunction(node->getPrototype()->getId()) != nullptr) {
-            throw std::runtime_error("Re-definition of extern not allowed");
+        IONIR_PASS_INTERNAL_ASSERT(node->getPrototype() != nullptr)
+
+        llvm::Function *existingExternDefinition =
+            (*this->llvmModuleBuffer)->getFunction(node->getPrototype()->getId());
+
+        if (existingExternDefinition != nullptr) {
+            this->getPassContext().getDiagnosticBuilder()
+                ->bootstrap(notice::externRedefinition);
+
+            throw std::runtime_error("Awaiting new diagnostic buffer checking");
         }
 
         // Visit the prototype.
         this->visitPrototype(node->getPrototype());
 
-        // No need to push the resulting function onto the stack.
+        /**
+         * No need to push the resulting function onto the stack; This
+         * is done already when visiting the extern's prototype.
+         */
     }
 
     void LlvmCodegenPass::visitPrototype(ionshared::Ptr<Prototype> node) {

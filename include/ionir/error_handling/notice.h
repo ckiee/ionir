@@ -1,5 +1,22 @@
 #pragma once
 
+#include <ionshared/error_handling/diagnostic_builder.h>
+#include <string>
+
+#define IONIR_NOTICE_DEFINE(name, type, message, example) \
+    const static inline ionshared::Diagnostic name = ionshared::Diagnostic{ionshared::Notice(type, message), notice::errorCounter++, example}
+
+namespace ionir::notice {
+    static uint32_t errorCounter = 0;
+
+    IONIR_NOTICE_DEFINE(
+        externRedefinition,
+        ionshared::NoticeType::Error,
+        "Re-definition of extern not allowed",
+        std::nullopt
+    );
+}
+
 // Misc.
 #define IONIR_NOTICE_MISC_UNEXPECTED_TOKEN "Encountered an unexpected token"
 #define IONIR_NOTICE_MISC_UNEXPECTED_EOF "Unexpected end of input"

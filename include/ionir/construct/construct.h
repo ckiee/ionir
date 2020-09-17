@@ -112,7 +112,7 @@ namespace ionir {
 
         virtual void accept(Pass &visitor) = 0;
 
-        virtual Ast getChildNodes();
+        [[nodiscard]] virtual Ast getChildNodes();
 
         [[nodiscard]] virtual bool equals(const ionshared::Ptr<Construct> &other);
 

@@ -22,7 +22,7 @@ namespace ionir {
         ionshared::OptPtr<BasicBlock> entryBasicBlock = functionBody->get()->findEntryBasicBlock();
 
         if (!ionshared::util::hasValue(entryBasicBlock)) {
-            this->getContext().getDiagnosticBuilder()->makeError(
+            this->getPassContext().getDiagnosticBuilder()->makeError(
                 // TODO: Use advanced errors instead of hard-coded string.
                 "Function is missing an entry basic block"
             );
@@ -51,7 +51,7 @@ namespace ionir {
 
             if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
                 // TODO: Use advanced errors instead of hard-coded string.
-                this->getContext().getDiagnosticBuilder()->makeError(
+                this->getPassContext().getDiagnosticBuilder()->makeError(
                     "Function whose prototype's return type is not void must return a value"
                 );
 

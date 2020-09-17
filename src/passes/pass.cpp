@@ -6,7 +6,7 @@ namespace ionir {
         //
     }
 
-    PassContext Pass::getContext() const noexcept {
+    PassContext Pass::getPassContext() const noexcept {
         return this->context;
     }
 

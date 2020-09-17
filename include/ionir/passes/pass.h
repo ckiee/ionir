@@ -32,7 +32,8 @@
 #include <ionir/construct/inst.h>
 #include "pass_context.h"
 
-#define IONIR_PASS_INTERNAL_ASSERT(condition) if (!this->getContext().getDiagnosticBuilder()->internalAssert(condition)) { return; }
+#define IONIR_PASS_INTERNAL_ASSERT(condition) \
+    if (!this->getPassContext().getDiagnosticBuilder()->internalAssert(condition)) { return; }
 
 namespace ionir {
     class Pass : public ionshared::BasePass<Construct> {
@@ -42,7 +43,7 @@ namespace ionir {
     public:
         explicit Pass(PassContext context);
 
-        [[nodiscard]] PassContext getContext() const noexcept;
+        [[nodiscard]] PassContext getPassContext() const noexcept;
 
         void visit(ionshared::Ptr<Construct> node) override;
 
