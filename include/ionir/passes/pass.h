@@ -2,7 +2,7 @@
 
 #include <ionshared/passes/base_pass.h>
 #include <ionshared/passes/base_pass_manager.h>
-#include <ionir/error_handling/notice.h>
+#include <ionir/error_handling/diagnostic.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/value/integer_literal.h>
 #include <ionir/construct/value/char_literal.h>
@@ -31,20 +31,15 @@
 #include <ionir/construct/module.h>
 #include <ionir/construct/value.h>
 #include <ionir/construct/inst.h>
-#include "pass_context.h"
+#include "../../../../ionshared/include/ionshared/passes/pass_context.h"
 
 #define IONIR_PASS_INTERNAL_ASSERT(condition) \
-    if (!this->getPassContext().getDiagnosticBuilder()->internalAssert(condition)) { return; }
+    if (!this->getPassContext()->getDiagnosticBuilder()->internalAssert(condition)) { return; }
 
 namespace ionir {
     class Pass : public ionshared::BasePass<Construct> {
-    private:
-        PassContext context;
-
     public:
-        explicit Pass(PassContext context);
-
-        [[nodiscard]] PassContext getPassContext() const noexcept;
+        explicit Pass(ionshared::Ptr<ionshared::PassContext> context);
 
         void visit(ionshared::Ptr<Construct> node) override;
 

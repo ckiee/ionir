@@ -1,9 +1,10 @@
 #include <ionir/passes/semantic/construct_validation_pass.h>
 
 namespace ionir {
-    ConstructValidationPass::ConstructValidationPass() :
-        // TODO: Passing in nullptr temporarily.
-        Pass(PassContext(nullptr)) {
+    ConstructValidationPass::ConstructValidationPass(
+        ionshared::Ptr<ionshared::PassContext> context
+    ) :
+        Pass(std::move(context)) {
         //
     }
 

@@ -3,42 +3,49 @@
 #include <ionshared/error_handling/diagnostic_builder.h>
 
 #define IONIR_NOTICE_DEFINE(name, type, message, example) \
-    const static inline ionshared::Diagnostic name = ionshared::Diagnostic{ionshared::Notice(type, message), notice::errorCounter++, example}
+    const static inline ionshared::Diagnostic name =\
+        ionshared::Diagnostic{\
+            type,\
+            message,\
+            std::nullopt,\
+            diagnostic::errorCounter++,\
+            example\
+        }
 
-namespace ionir::notice {
+namespace ionir::diagnostic {
     static uint32_t errorCounter = 0;
 
     IONIR_NOTICE_DEFINE(
         externRedefinition,
-        ionshared::NoticeType::Error,
+        ionshared::DiagnosticType::Error,
         "Re-definition of extern not allowed",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
         entryPointRedefinition,
-        ionshared::NoticeType::Error,
+        ionshared::DiagnosticType::Error,
         "Entry point function had already previously been declared",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
         functionMissingEntryBasicBlock,
-        ionshared::NoticeType::Error,
+        ionshared::DiagnosticType::Error,
         "Function is missing an entry basic block",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
         functionMissingReturnValue,
-        ionshared::NoticeType::Error,
+        ionshared::DiagnosticType::Error,
         "Function whose prototype's return type is not void must return a value",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
         functionRedefinitionDiffArgs,
-        ionshared::NoticeType::Error,
+        ionshared::DiagnosticType::Error,
         "Re-definition of function with a different amount arguments",
         std::nullopt
     );

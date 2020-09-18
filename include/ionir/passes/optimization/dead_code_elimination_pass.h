@@ -7,7 +7,9 @@ namespace ionir {
     public:
         IONSHARED_PASS_ID;
 
-        DeadCodeEliminationPass();
+        explicit DeadCodeEliminationPass(
+            ionshared::Ptr<ionshared::PassContext> context
+        );
 
         void visitBasicBlock(ionshared::Ptr<BasicBlock> node) override;
 

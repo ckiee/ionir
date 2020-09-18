@@ -1,13 +1,9 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Pass::Pass(PassContext context) :
-        context(std::move(context)) {
+    Pass::Pass(ionshared::Ptr<ionshared::PassContext> context) :
+        ionshared::BasePass<Construct>(std::move(context)) {
         //
-    }
-
-    PassContext Pass::getPassContext() const noexcept {
-        return this->context;
     }
 
     void Pass::visit(ionshared::Ptr<Construct> node) {

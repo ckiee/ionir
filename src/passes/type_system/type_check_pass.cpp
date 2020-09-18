@@ -3,15 +3,14 @@
 #include <ionir/passes/type_system/type_check_pass.h>
 
 namespace ionir {
-    TypeCheckPass::TypeCheckPass() :
-        // TODO: Passing in nullptr temporarily.
-        Pass(PassContext(nullptr)) {
+    TypeCheckPass::TypeCheckPass(ionshared::Ptr<ionshared::PassContext> context) :
+        Pass(std::move(context)) {
         //
     }
 
     void TypeCheckPass::initialize(ionshared::PassInfo &info) {
         // TODO: Technically, we don't NEED to check for an entry point during type-check.
-        info.addRequirement<EntryPointCheckPass>();
+//        info.addRequirement<EntryPointCheckPass>();
     }
 
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
@@ -22,13 +21,14 @@ namespace ionir {
         ionshared::OptPtr<BasicBlock> entryBasicBlock = functionBody->get()->findEntryBasicBlock();
 
         if (!ionshared::util::hasValue(entryBasicBlock)) {
-            this->getPassContext().getDiagnosticBuilder()
-                ->bootstrap(notice::functionMissingEntryBasicBlock);
+            this->getPassContext()->getDiagnosticBuilder()
+                ->bootstrap(diagnostic::functionMissingEntryBasicBlock);
 
             return;
         }
 
-        TypeKind parentFunctionPrototypeReturnTypeKind = functionBody->get()
+        TypeKind parentFunctionPrototypeReturnTypeKind = functionBody
+            ->get()
             ->getParent()
             ->getPrototype()
             ->getReturnType()
@@ -48,8 +48,8 @@ namespace ionir {
             ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
 
             if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
-                this->getPassContext().getDiagnosticBuilder()
-                    ->bootstrap(notice::functionMissingReturnValue);
+                this->getPassContext()->getDiagnosticBuilder()
+                    ->bootstrap(diagnostic::functionMissingReturnValue);
             }
         }
     }
@@ -70,8 +70,8 @@ namespace ionir {
          * a value to the return instruction.
          */
         if ((functionReturnType->getTypeKind() != TypeKind::Void) && !returnStatementValueSet) {
-            this->getPassContext().getDiagnosticBuilder()
-                ->bootstrap(notice::functionMissingReturnValue);
+            this->getPassContext()->getDiagnosticBuilder()
+                ->bootstrap(diagnostic::functionMissingReturnValue);
 
             // TODO: Can it be made optional/continue?
             return;

@@ -8,6 +8,8 @@ namespace ionir {
     public:
         IONSHARED_PASS_ID;
 
-        BorrowCheckPass();
+        explicit BorrowCheckPass(
+            ionshared::Ptr<ionshared::PassContext> context
+        );
     };
 }

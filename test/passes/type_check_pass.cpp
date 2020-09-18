@@ -1,5 +1,4 @@
 #include <ionir/passes/type_system/type_check_pass.h>
-#include <ionir/passes/semantic/entry_point_check_pass.h>
 #include <ionir/misc/bootstrap.h>
 #include <ionir/syntax/ast_builder.h>
 #include <ionir/test/const.h>
@@ -11,10 +10,10 @@ using namespace ionir;
 TEST(TypeCheckPassTest, Run) {
     PassManager passManager = PassManager();
 
-    passManager.registerPass(std::make_shared<EntryPointCheckPass>());
+    ionshared::Ptr<ionshared::PassContext> passContext =
+        std::make_shared<ionshared::PassContext>(std::make_shared<ionshared::DiagnosticStack>());
 
-    // TODO: Debugging.
-//    bool reg = passManager.registerPass(std::make_shared<TypeCheckPass>());
+    passManager.registerPass(std::make_shared<TypeCheckPass>(passContext));
 
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
     ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);
@@ -32,7 +31,19 @@ TEST(TypeCheckPassTest, Run) {
      * any instructions. Since at least a single terminal instruction
      * is required, the pass should report a semantic error.
      */
-    EXPECT_THROW(passManager.run(ast), std::runtime_error);
+//    EXPECT_THROW(passManager.run(ast), std::runtime_error);
+
+    passManager.run(ast);
+
+    EXPECT_EQ(passContext->getDiagnosticStack()->getSize(), 1);
+
+    ionshared::Diagnostic functionMissingReturnValueDiagnostic =
+        passContext->getDiagnosticStack()->pop();
+
+    EXPECT_EQ(
+        functionMissingReturnValueDiagnostic.code.value(),
+        diagnostic::functionMissingReturnValue.code.value()
+    );
 
     prototype->setReturnType(TypeFactory::typeVoid());
 
@@ -41,6 +52,7 @@ TEST(TypeCheckPassTest, Run) {
 
     instBuilder.createReturn();
 
+    // TODO: Compare diagnostics instead.
     /**
      * After setting the bootstrapped function's prototype's return
      * type to void and inserting a return instruction, the pass
@@ -50,7 +62,10 @@ TEST(TypeCheckPassTest, Run) {
 }
 
 TEST(TypeCheckPassTast, FunctionReturnTypeValueMismatch) {
-    ionshared::Ptr<TypeCheckPass> typeCheckPass = std::make_shared<TypeCheckPass>();
+    ionshared::Ptr<ionshared::PassContext> passContext =
+        std::make_shared<ionshared::PassContext>(std::make_shared<ionshared::DiagnosticStack>());
+
+    ionshared::Ptr<TypeCheckPass> typeCheckPass = std::make_shared<TypeCheckPass>(passContext);
 
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
     ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);

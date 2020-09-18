@@ -7,7 +7,7 @@ namespace ionir {
     public:
         IONSHARED_PASS_ID;
 
-        TypeCheckPass();
+        explicit TypeCheckPass(ionshared::Ptr<ionshared::PassContext> context);
 
         void initialize(ionshared::PassInfo &info) override;
 

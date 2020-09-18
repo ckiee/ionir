@@ -93,6 +93,8 @@ namespace ionir {
         IONSHARED_PASS_ID;
 
         explicit LlvmCodegenPass(
+            ionshared::Ptr<ionshared::PassContext> context,
+
             ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules =
                 std::make_shared<ionshared::SymbolTable<llvm::Module *>>()
         );

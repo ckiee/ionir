@@ -1,9 +1,10 @@
 #include <ionir/passes/optimization/dead_code_elimination_pass.h>
 
 namespace ionir {
-    DeadCodeEliminationPass::DeadCodeEliminationPass() :
-        // TODO: Passing in nullptr temporarily.
-        Pass(PassContext(nullptr)) {
+    DeadCodeEliminationPass::DeadCodeEliminationPass(
+        ionshared::Ptr<ionshared::PassContext> context
+    ) :
+        Pass(std::move(context)) {
     }
 
     void DeadCodeEliminationPass::visitBasicBlock(ionshared::Ptr<BasicBlock> node) {

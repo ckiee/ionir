@@ -15,7 +15,11 @@ namespace ionir::test::bootstrap {
             {module->getId(), module->unwrap()}
         }));
 
-        ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>(modules);
+        // TODO: PassContext isn't associated with the calling scope/function in any way.
+        ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>(
+            std::make_shared<ionshared::PassContext>(std::make_shared<ionshared::DiagnosticStack>()),
+            modules
+        );
 
         if (!llvmCodegenPass->setModuleBuffer(module->getId())) {
             throw std::runtime_error("Could not set active module buffer during bootstrap process");

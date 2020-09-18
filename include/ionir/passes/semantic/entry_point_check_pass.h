@@ -11,7 +11,9 @@ namespace ionir {
     public:
         IONSHARED_PASS_ID;
 
-        EntryPointCheckPass();
+        explicit EntryPointCheckPass(
+            ionshared::Ptr<ionshared::PassContext> context
+        );
 
         void finish() override;
 

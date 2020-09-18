@@ -91,8 +91,11 @@ namespace ionir {
         this->restoreBuilder();
     }
 
-    LlvmCodegenPass::LlvmCodegenPass(ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules) :
-        Pass(PassContext(nullptr)), // TODO: PassContext's noticeStack is nullptr.
+    LlvmCodegenPass::LlvmCodegenPass(
+        ionshared::Ptr<ionshared::PassContext> context,
+        ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules
+    ) :
+        Pass(std::move(context)),
         contextBuffer(std::make_shared<Context>()),
         modules(std::move(modules)),
         llvmContextBuffer(std::nullopt),

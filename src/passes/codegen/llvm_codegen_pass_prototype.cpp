@@ -1,7 +1,7 @@
 #include <llvm/ADT/APInt.h>
 #include <llvm/IR/DerivedTypes.h>
 #include <ionir/construct/value.h>
-#include <ionir/error_handling/notice.h>
+#include <ionir/error_handling/diagnostic.h>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
@@ -23,8 +23,8 @@ namespace ionir {
             (*this->llvmModuleBuffer)->getFunction(node->getPrototype()->getId());
 
         if (existingExternDefinition != nullptr) {
-            this->getPassContext().getDiagnosticBuilder()
-                ->bootstrap(notice::externRedefinition);
+            this->getPassContext()->getDiagnosticBuilder()
+                ->bootstrap(diagnostic::externRedefinition);
 
             throw std::runtime_error("Awaiting new diagnostic buffer checking");
         }
@@ -62,8 +62,8 @@ namespace ionir {
             }
             // If the function takes a different number of arguments, reject.
             else if (llvmFunction->arg_size() != argumentCount) {
-                this->getPassContext().getDiagnosticBuilder()
-                    ->bootstrap(notice::functionRedefinitionDiffArgs);
+                this->getPassContext()->getDiagnosticBuilder()
+                    ->bootstrap(diagnostic::functionRedefinitionDiffArgs);
 
                 throw std::runtime_error("Awaiting new diagnostic buffer checking");
             }

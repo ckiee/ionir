@@ -2,9 +2,10 @@
 #include <ionir/passes/semantic/entry_point_check_pass.h>
 
 namespace ionir {
-    EntryPointCheckPass::EntryPointCheckPass() :
-        // TODO: Passing in nullptr temporarily.
-        Pass(PassContext(nullptr)) {
+    EntryPointCheckPass::EntryPointCheckPass(
+        ionshared::Ptr<ionshared::PassContext> context
+    ) :
+        Pass(std::move(context)) {
         //
     }
 
@@ -33,8 +34,8 @@ namespace ionir {
              * previously encountered.
              */
             if (ionshared::util::hasValue(this->entryFunction)) {
-                this->getPassContext().getDiagnosticBuilder()
-                    ->bootstrap(notice::entryPointRedefinition);
+                this->getPassContext()->getDiagnosticBuilder()
+                    ->bootstrap(diagnostic::entryPointRedefinition);
 
                 return;
             }
