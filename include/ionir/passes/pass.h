@@ -2,6 +2,7 @@
 
 #include <ionshared/passes/base_pass.h>
 #include <ionshared/passes/base_pass_manager.h>
+#include <ionir/error_handling/notice.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/value/integer_literal.h>
 #include <ionir/construct/value/char_literal.h>

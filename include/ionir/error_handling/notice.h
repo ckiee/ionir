@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ionshared/error_handling/diagnostic_builder.h>
-#include <string>
 
 #define IONIR_NOTICE_DEFINE(name, type, message, example) \
     const static inline ionshared::Diagnostic name = ionshared::Diagnostic{ionshared::Notice(type, message), notice::errorCounter++, example}
@@ -13,6 +12,34 @@ namespace ionir::notice {
         externRedefinition,
         ionshared::NoticeType::Error,
         "Re-definition of extern not allowed",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        entryPointRedefinition,
+        ionshared::NoticeType::Error,
+        "Entry point function had already previously been declared",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        functionMissingEntryBasicBlock,
+        ionshared::NoticeType::Error,
+        "Function is missing an entry basic block",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        functionMissingReturnValue,
+        ionshared::NoticeType::Error,
+        "Function whose prototype's return type is not void must return a value",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        functionRedefinitionDiffArgs,
+        ionshared::NoticeType::Error,
+        "Re-definition of function with a different amount arguments",
         std::nullopt
     );
 }

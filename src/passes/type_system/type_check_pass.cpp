@@ -1,4 +1,3 @@
-#include <ionir/const/notice.h>
 #include <ionir/type_system/type_util.h>
 #include <ionir/passes/semantic/entry_point_check_pass.h>
 #include <ionir/passes/type_system/type_check_pass.h>
@@ -11,6 +10,7 @@ namespace ionir {
     }
 
     void TypeCheckPass::initialize(ionshared::PassInfo &info) {
+        // TODO: Technically, we don't NEED to check for an entry point during type-check.
         info.addRequirement<EntryPointCheckPass>();
     }
 
@@ -22,10 +22,8 @@ namespace ionir {
         ionshared::OptPtr<BasicBlock> entryBasicBlock = functionBody->get()->findEntryBasicBlock();
 
         if (!ionshared::util::hasValue(entryBasicBlock)) {
-            this->getPassContext().getDiagnosticBuilder()->makeError(
-                // TODO: Use advanced errors instead of hard-coded string.
-                "Function is missing an entry basic block"
-            );
+            this->getPassContext().getDiagnosticBuilder()
+                ->bootstrap(notice::functionMissingEntryBasicBlock);
 
             return;
         }
@@ -50,12 +48,8 @@ namespace ionir {
             ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
 
             if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
-                // TODO: Use advanced errors instead of hard-coded string.
-                this->getPassContext().getDiagnosticBuilder()->makeError(
-                    "Function whose prototype's return type is not void must return a value"
-                );
-
-                return;
+                this->getPassContext().getDiagnosticBuilder()
+                    ->bootstrap(notice::functionMissingReturnValue);
             }
         }
     }
@@ -64,10 +58,7 @@ namespace ionir {
         ionshared::Ptr<Construct> possibleFunctionParent =
             node->getParent()->getParent()->getParent();
 
-        // TODO: Improve exception.
-        if (possibleFunctionParent->getConstructKind() != ConstructKind::Function) {
-            throw std::runtime_error("Expected construct to be a function");
-        }
+        IONIR_PASS_INTERNAL_ASSERT(possibleFunctionParent->getConstructKind() == ConstructKind::Function)
 
         ionshared::Ptr<Function> function = possibleFunctionParent->dynamicCast<Function>();
         ionshared::Ptr<Type> functionReturnType = function->getPrototype()->getReturnType();
@@ -79,9 +70,11 @@ namespace ionir {
          * a value to the return instruction.
          */
         if ((functionReturnType->getTypeKind() != TypeKind::Void) && !returnStatementValueSet) {
-            throw std::runtime_error(
-                "Function whose prototype's return type is not void must return a corresponding value"
-            );
+            this->getPassContext().getDiagnosticBuilder()
+                ->bootstrap(notice::functionMissingReturnValue);
+
+            // TODO: Can it be made optional/continue?
+            return;
         }
         else if (returnStatementValueSet) {
             switch (returnStatementValue->get()->getConstructKind()) {

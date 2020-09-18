@@ -33,7 +33,10 @@ namespace ionir {
              * previously encountered.
              */
             if (ionshared::util::hasValue(this->entryFunction)) {
-                throw std::runtime_error("Entry point function had already previously been declared");
+                this->getPassContext().getDiagnosticBuilder()
+                    ->bootstrap(notice::entryPointRedefinition);
+
+                return;
             }
 
             this->entryFunction = node;

@@ -12,7 +12,9 @@ TEST(TypeCheckPassTest, Run) {
     PassManager passManager = PassManager();
 
     passManager.registerPass(std::make_shared<EntryPointCheckPass>());
-    bool reg = passManager.registerPass(std::make_shared<TypeCheckPass>());
+
+    // TODO: Debugging.
+//    bool reg = passManager.registerPass(std::make_shared<TypeCheckPass>());
 
     Ast ast = Bootstrap::functionAst(test::constant::foobar);
     ionshared::OptPtr<Function> function = ast[0]->dynamicCast<Module>()->lookupFunction(test::constant::foobar);

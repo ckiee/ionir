@@ -60,9 +60,12 @@ namespace ionir {
             if (llvmFunction->getBasicBlockList().empty()) {
                 throw std::runtime_error("Cannot re-define function");
             }
-                // If the function takes a different number of arguments, reject.
+            // If the function takes a different number of arguments, reject.
             else if (llvmFunction->arg_size() != argumentCount) {
-                throw std::runtime_error("Re-definition of function with a different amount arguments");
+                this->getPassContext().getDiagnosticBuilder()
+                    ->bootstrap(notice::functionRedefinitionDiffArgs);
+
+                throw std::runtime_error("Awaiting new diagnostic buffer checking");
             }
         }
         // Otherwise, function will be created.
@@ -99,8 +102,8 @@ namespace ionir {
             throw std::runtime_error("Expected argument count to be the same as the function's argument count");
         }
 
-        int argCounter = 0;
-        int llvmArgCounter = 0;
+        uint32_t argCounter = 0;
+        uint32_t llvmArgCounter = 0;
 
         // TODO: Simplify method of naming LLVM arguments, as this implementation is inefficient.
         for (const auto &[id, arg] : argsNativeMap) {
