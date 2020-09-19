@@ -11,7 +11,7 @@ TEST(TypeCheckPassTest, Run) {
     PassManager passManager = PassManager();
 
     ionshared::Ptr<ionshared::PassContext> passContext =
-        std::make_shared<ionshared::PassContext>(std::make_shared<ionshared::DiagnosticStack>());
+        std::make_shared<ionshared::PassContext>();
 
     passManager.registerPass(std::make_shared<TypeCheckPass>(passContext));
 
@@ -63,7 +63,7 @@ TEST(TypeCheckPassTest, Run) {
 
 TEST(TypeCheckPassTast, FunctionReturnTypeValueMismatch) {
     ionshared::Ptr<ionshared::PassContext> passContext =
-        std::make_shared<ionshared::PassContext>(std::make_shared<ionshared::DiagnosticStack>());
+        std::make_shared<ionshared::PassContext>();
 
     ionshared::Ptr<TypeCheckPass> typeCheckPass = std::make_shared<TypeCheckPass>(passContext);
 

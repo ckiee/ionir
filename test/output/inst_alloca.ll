@@ -4,4 +4,5 @@ source_filename = "test"
 define void @foobar() {
 entry:
   %foobar = alloca i32
+  ret void
 }

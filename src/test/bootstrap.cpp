@@ -17,7 +17,7 @@ namespace ionir::test::bootstrap {
 
         // TODO: PassContext isn't associated with the calling scope/function in any way.
         ionshared::Ptr<LlvmCodegenPass> llvmCodegenPass = std::make_shared<LlvmCodegenPass>(
-            std::make_shared<ionshared::PassContext>(std::make_shared<ionshared::DiagnosticStack>()),
+            std::make_shared<ionshared::PassContext>(),
             modules
         );
 
