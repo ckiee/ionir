@@ -65,9 +65,9 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() override;
+        [[nodiscard]] Ast getChildNodes() override;
 
-        bool verify() override;
+        [[nodiscard]] bool verify() override;
 
         [[nodiscard]] BasicBlockKind getKind() const noexcept;
 

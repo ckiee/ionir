@@ -25,7 +25,8 @@ namespace ionir {
     }
 
     void BasicBlock::accept(Pass &visitor) {
-        visitor.visitScopeAnchor(this->dynamicCast<ScopeAnchor<>>());
+        // TODO: Casting fails. CRITICAL: This needs to work! LlvmCodegen's contextBuffer depends on it.
+//        visitor.visitScopeAnchor(this->dynamicCast<ScopeAnchor<>>());
         visitor.visitBasicBlock(this->dynamicCast<BasicBlock>());
     }
 

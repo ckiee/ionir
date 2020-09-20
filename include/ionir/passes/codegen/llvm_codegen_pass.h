@@ -30,12 +30,22 @@
 namespace ionir {
     class LlvmCodegenPass : public Pass {
     private:
-        /**
-         * The context buffer is always set. It's constructed as an
-         * independent, empty context, with an empty global scope and
-         * no other scopes.
-         */
-        ionshared::Ptr<Context> contextBuffer;
+        struct Buffers {
+            /**
+             * The context buffer is always set. It's constructed as an
+             * independent, empty context, with an empty global scope and
+             * no other scopes.
+             */
+            ionshared::Ptr<Context> context;
+
+            std::optional<llvm::LLVMContext *> llvmContext = std::nullopt;
+
+            std::optional<llvm::Module *> llvmModule = std::nullopt;
+
+            std::optional<llvm::Function *> llvmFunction = std::nullopt;
+
+            std::optional<llvm::BasicBlock *> llvmBasicBlock = std::nullopt;
+        };
 
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules;
 
@@ -43,27 +53,11 @@ namespace ionir {
 
         ionshared::LlvmStack<llvm::Type> typeStack;
 
-        /**
-         * The currently active LLVM context;
-         */
-        std::optional<llvm::LLVMContext *> llvmContextBuffer;
-
-        /**
-         * The currently active LLVM module.
-         */
-        std::optional<llvm::Module *> llvmModuleBuffer;
-
-        std::optional<llvm::Function *> llvmFunctionBuffer;
-
-        std::optional<llvm::IRBuilder<>> llvmBuilderBuffer;
-
-        std::optional<llvm::BasicBlock *> llvmBasicBlockBuffer;
+        Buffers buffers;
 
         std::map<std::string, llvm::Value *> namedValues;
 
-        ionshared::Stack<llvm::IRBuilder<>> builderTracker;
-
-        LlvmEmittedEntities emittedEntities;
+        LlvmEmittedEntities symbolTable;
 
         /**
          * Ensure that the builder is instantiated, otherwise throws
@@ -77,17 +71,9 @@ namespace ionir {
 
         void requireContext();
 
-        /**
-         * Set the currently active builder if any. Modifying the builder
-         * will also set/update the active LLVM basic block buffer.
-         */
-        void setBuilder(llvm::BasicBlock *basicBlock);
+        void lockBuffers(const std::function<void()> &callback);
 
-        bool saveBuilder();
-
-        bool restoreBuilder();
-
-        void lockBuilder(const std::function<void()> &callback);
+        std::optional<llvm::IRBuilder<>> getLlvmBuilder() noexcept;
 
     public:
         IONSHARED_PASS_ID;

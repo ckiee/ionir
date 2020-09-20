@@ -20,7 +20,7 @@ namespace ionir {
         IONIR_PASS_INTERNAL_ASSERT(node->getPrototype() != nullptr)
 
         llvm::Function *existingExternDefinition =
-            (*this->llvmModuleBuffer)->getFunction(node->getPrototype()->getId());
+            (*this->buffers.llvmModule)->getFunction(node->getPrototype()->getId());
 
         if (existingExternDefinition != nullptr) {
             this->getPassContext()->getDiagnosticBuilder()
@@ -52,7 +52,7 @@ namespace ionir {
         std::vector<llvm::Type *> llvmArgumentTypes = {};
 
         // Attempt to retrieve an existing function.
-        llvm::Function *llvmFunction = (*this->llvmModuleBuffer)->getFunction(node->getId());
+        llvm::Function *llvmFunction = (*this->buffers.llvmModule)->getFunction(node->getId());
 
         // A function with a matching identifier already exists.
         if (llvmFunction != nullptr) {
@@ -90,7 +90,7 @@ namespace ionir {
 
             // Cast the value to a function, since we know getCallee() will return a function.
             llvmFunction = llvm::dyn_cast<llvm::Function>(
-                (*this->llvmModuleBuffer)->getOrInsertFunction(node->getId(), llvmFunctionType).getCallee()
+                (*this->buffers.llvmModule)->getOrInsertFunction(node->getId(), llvmFunctionType).getCallee()
             );
 
             // Set the function's linkage.
@@ -125,12 +125,22 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitFunction(ionshared::Ptr<Function> node) {
+        /**
+         * This function has already been visited/emitted. This is present
+         * because the call instruction requires functions to be present on
+         * the local symbol table in order to emit, and if its callee (this node)
+         * hasn't yet been emitted, it will emit this function early.
+         */
+        if (this->symbolTable.contains(node)) {
+            return;
+        }
+
         this->requireModule();
 
         if (!node->verify()) {
             throw std::runtime_error("Function verification failed");
         }
-        else if ((*this->llvmModuleBuffer)->getFunction(node->getPrototype()->getId()) != nullptr) {
+        else if ((*this->buffers.llvmModule)->getFunction(node->getPrototype()->getId()) != nullptr) {
             throw std::runtime_error("A function with the same identifier has been already previously defined");
         }
 
@@ -144,13 +154,14 @@ namespace ionir {
         llvm::Function *llvmFunction = this->valueStack.popAs<llvm::Function>();
 
         // Set the function buffer.
-        this->llvmFunctionBuffer = llvmFunction;
+        this->buffers.llvmFunction = llvmFunction;
 
         // Visiting the function body's yields no value to the value stack.
         this->visitFunctionBody(node->getBody());
 
         // TODO: Verify the resulting LLVM function (through LLVM)?
 
+        this->symbolTable.set(node, llvmFunction);
         this->valueStack.push(llvmFunction);
     }
 }
