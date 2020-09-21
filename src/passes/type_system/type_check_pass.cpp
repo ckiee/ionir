@@ -99,7 +99,7 @@ namespace ionir {
                     if (!type_util::isSameType(returnInstValueType, functionReturnType)) {
                         throw ionshared::util::quickError(
                             IONIR_NOTICE_FUNCTION_RETURN_TYPE_MISMATCH,
-                            function->getPrototype()->getId()
+                            function->getPrototype()->getName()
                         );
                     }
 

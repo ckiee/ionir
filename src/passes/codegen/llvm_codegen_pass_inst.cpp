@@ -138,7 +138,7 @@ namespace ionir {
 
         // Attempt to resolve the callee LLVM-equivalent function.
         llvm::Function* llvmCallee =
-            (*this->buffers.llvmModule)->getFunction(callee->getPrototype()->getId());
+            (*this->buffers.llvmModule)->getFunction(callee->getPrototype()->getName());
 
         // LLVM-equivalent function could not be found. Report an error.
         if (llvmCallee == nullptr) {
@@ -219,7 +219,7 @@ namespace ionir {
             this->symbolTable.find<llvm::BasicBlock>(basicBlockTarget);
 
         if (!ionshared::util::hasValue(llvmBasicBlockResult)) {
-            throw std::runtime_error("Could not find llvm block in emitted entities: " + basicBlockTarget->getId());
+            throw std::runtime_error("Could not find llvm block in emitted entities: " + basicBlockTarget->getName());
         }
 
         // Create the LLVM branch instruction (with no condition).

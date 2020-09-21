@@ -4,6 +4,7 @@
 #include <ionshared/misc/util.h>
 #include <ionir/tracking/scope_anchor.h>
 #include <ionir/tracking/context.h>
+#include <ionir/misc/identifiable.h>
 #include "type.h"
 #include "construct.h"
 
@@ -12,19 +13,19 @@ namespace ionir {
 
     class Function;
 
-    class Module : public Construct, public ionshared::Named {
+    class Module : public Construct, public Identifiable {
     private:
         ionshared::Ptr<Context> context;
 
     public:
         explicit Module(
-            std::string id,
+            ionshared::Ptr<Identifier> identifier,
             ionshared::Ptr<Context> context = std::make_shared<Context>()
         );
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() override;
+        [[nodiscard]] Ast getChildNodes() override;
 
         [[nodiscard]] ionshared::Ptr<Context> getContext() const noexcept;
 
@@ -33,7 +34,7 @@ namespace ionir {
         // TODO: What about externs/globals/classes/structs? ------------
         bool insertFunction(const ionshared::Ptr<Function> &function);
 
-        [[nodiscard]] ionshared::OptPtr<Function> lookupFunction(std::string id);
+        [[nodiscard]] ionshared::OptPtr<Function> lookupFunction(std::string name);
         // --------------------------------------------------------------
 
         /**

@@ -1,4 +1,5 @@
 #include <ionir/construct/type/void_type.h>
+#include <ionir/construct/identifier.h>
 #include <ionir/syntax/ast_builder.h>
 #include <ionir/const/const.h>
 
@@ -57,7 +58,8 @@ namespace ionir {
     }
 
     AstBuilder &AstBuilder::module(const std::string &id) {
-        ionshared::Ptr<Module> module = std::make_shared<Module>(id);
+        ionshared::Ptr<Module> module =
+            std::make_shared<Module>(std::make_shared<Identifier>(id));
 
         this->clearBuffers();
         this->moduleBuffer = module;

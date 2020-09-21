@@ -58,7 +58,11 @@ namespace ionir {
 
         RegisterAssign,
 
-        ErrorMarker
+        ErrorMarker,
+
+        Identifier,
+
+        Struct
     };
 
     class Construct;

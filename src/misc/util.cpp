@@ -58,15 +58,15 @@ namespace ionir::util {
     std::optional<std::string> getConstructId(const ionshared::Ptr<Construct> &construct) {
         switch (construct->getConstructKind()) {
             case ConstructKind::Function: {
-                return construct->dynamicCast<Function>()->getPrototype()->getId();
+                return construct->dynamicCast<Function>()->getPrototype()->getName();
             }
 
             case ConstructKind::Extern: {
-                return construct->dynamicCast<Extern>()->getPrototype()->getId();
+                return construct->dynamicCast<Extern>()->getPrototype()->getName();
             }
 
             case ConstructKind::Global: {
-                return construct->dynamicCast<Global>()->getId();
+                return construct->dynamicCast<Global>()->getName();
             }
 
             case ConstructKind::Inst: {

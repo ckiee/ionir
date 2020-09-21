@@ -219,4 +219,12 @@ namespace ionir {
     void Pass::visitErrorMarker(ionshared::Ptr<ErrorMarker> node) {
         //
     }
+
+    void Pass::visitIdentifier(ionshared::Ptr<Identifier> node) {
+        //
+    }
+
+    void Pass::visitStruct(ionshared::Ptr<Struct> node) {
+        //
+    }
 }

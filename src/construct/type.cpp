@@ -2,12 +2,12 @@
 
 namespace ionir {
     Type::Type(
-        std::string id,
+        std::string name,
         TypeKind kind,
         ionshared::Ptr<ionshared::Set<TypeQualifier>> qualifiers
     ) :
         Construct(ConstructKind::Type),
-        Named(std::move(id)),
+        Named(std::move(name)),
         kind(kind),
         qualifiers(std::move(qualifiers)) {
         //
@@ -25,7 +25,7 @@ namespace ionir {
         ionshared::Ptr<Type> otherType = other->dynamicCast<Type>();
 
         return otherType->getTypeKind() == this->getTypeKind()
-            && otherType->getId() == this->getId();
+            && otherType->getName() == this->getName();
     }
 
     TypeKind Type::getTypeKind() const noexcept {

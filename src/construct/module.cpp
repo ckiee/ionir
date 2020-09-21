@@ -1,9 +1,9 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Module::Module(std::string id, ionshared::Ptr<Context> context) :
+    Module::Module(ionshared::Ptr<Identifier> identifier, ionshared::Ptr<Context> context) :
         Construct(ConstructKind::Module),
-        Named(std::move(id)),
+        Identifiable(std::move(identifier)),
         context(std::move(context)) {
         //
     }
@@ -29,11 +29,11 @@ namespace ionir {
 
     bool Module::insertFunction(const ionshared::Ptr<Function> &function) {
         Scope globalScope = this->context->getGlobalScope();
-        std::string functionId = function->getPrototype()->getId();
+        std::string functionName = function->getPrototype()->getName();
 
-        if (!globalScope->contains(functionId)) {
+        if (!globalScope->contains(functionName)) {
             globalScope->set(
-                functionId,
+                functionName,
                 function
             );
 
@@ -43,9 +43,9 @@ namespace ionir {
         return false;
     }
 
-    ionshared::OptPtr<Function> Module::lookupFunction(std::string id) {
+    ionshared::OptPtr<Function> Module::lookupFunction(std::string name) {
         ionshared::OptPtr<Construct> functionConstruct =
-            this->context->getGlobalScope()->lookup(std::move(id));
+            this->context->getGlobalScope()->lookup(std::move(name));
 
         if (ionshared::util::hasValue(functionConstruct) && functionConstruct->get()->getConstructKind() == ConstructKind::Function) {
             return functionConstruct->get()->dynamicCast<Function>();

@@ -47,14 +47,14 @@ namespace ionir {
          * only takes 'id' (super class TypeKind::UserDefined).
          */
         explicit Type(
-            std::string id,
+            std::string name,
             TypeKind kind = TypeKind::UserDefined,
             ionshared::Ptr<TypeQualifiers> qualifiers = ionshared::Ptr<TypeQualifiers>()
         );
 
         void accept(Pass &visitor) override;
 
-        bool equals(const ionshared::Ptr<Construct> &other) override;
+        [[nodiscard]] bool equals(const ionshared::Ptr<Construct> &other) override;
 
         [[nodiscard]] TypeKind getTypeKind() const noexcept;
     };

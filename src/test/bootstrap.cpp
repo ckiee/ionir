@@ -52,7 +52,7 @@ namespace ionir::test::bootstrap {
         typedef ionshared::SymbolTable<ionshared::Ptr<BasicBlock>> tt;
 
         auto t1 = std::map<std::string, ionshared::Ptr<BasicBlock>>{
-            {entrySection->getId(), entrySection}
+            {entrySection->getName(), entrySection}
         };
 
         t sections = std::make_shared<tt>(t1);

@@ -1,0 +1,46 @@
+#include <ionir/passes/pass.h>
+
+namespace ionir {
+    Struct::Struct(std::string name, Fields fields) :
+        Construct(ConstructKind::Struct),
+        ionshared::Named(std::move(name)),
+        fields(std::move(fields)) {
+        //
+    }
+
+    void Struct::accept(Pass &visitor) {
+        visitor.visitStruct(this->dynamicCast<Struct>());
+    }
+
+    Ast Struct::getChildNodes() {
+        Ast children = {};
+        auto fieldsMap = this->fields->unwrap();
+
+        // TODO: What about the field name?
+        for (const auto &[name, type] : fieldsMap) {
+            children.push_back(type);
+        }
+
+        return children;
+    }
+
+    Fields Struct::getFields() const noexcept {
+        return this->fields;
+    }
+
+    void Struct::setFields(Fields fields) noexcept {
+        this->fields = std::move(fields);
+    }
+
+    bool Struct::containsField(std::string name) const {
+        return this->fields->contains(std::move(name));
+    }
+
+    ionshared::OptPtr<Type> Struct::lookupField(std::string name) {
+        return this->fields->lookup(std::move(name));
+    }
+
+    void Struct::setField(std::string name, ionshared::Ptr<Type> field) {
+        this->fields->set(std::move(name), std::move(field));
+    }
+}

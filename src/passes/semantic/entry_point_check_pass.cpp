@@ -28,7 +28,7 @@ namespace ionir {
     void EntryPointCheckPass::visitFunction(ionshared::Ptr<Function> node) {
         Pass::visitFunction(node);
 
-        if (node->getPrototype()->getId() == ConstName::main) {
+        if (node->getPrototype()->getName() == ConstName::main) {
             /**
              * Make sure there was not an entry point function
              * previously encountered.

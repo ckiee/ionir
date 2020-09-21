@@ -20,7 +20,7 @@ namespace ionir {
         IONIR_PASS_INTERNAL_ASSERT(node->getPrototype() != nullptr)
 
         llvm::Function *existingExternDefinition =
-            (*this->buffers.llvmModule)->getFunction(node->getPrototype()->getId());
+            (*this->buffers.llvmModule)->getFunction(node->getPrototype()->getName());
 
         if (existingExternDefinition != nullptr) {
             this->getPassContext()->getDiagnosticBuilder()
@@ -52,7 +52,7 @@ namespace ionir {
         std::vector<llvm::Type *> llvmArgumentTypes = {};
 
         // Attempt to retrieve an existing function.
-        llvm::Function *llvmFunction = (*this->buffers.llvmModule)->getFunction(node->getId());
+        llvm::Function *llvmFunction = (*this->buffers.llvmModule)->getFunction(node->getName());
 
         // A function with a matching identifier already exists.
         if (llvmFunction != nullptr) {
@@ -90,7 +90,7 @@ namespace ionir {
 
             // Cast the value to a function, since we know getCallee() will return a function.
             llvmFunction = llvm::dyn_cast<llvm::Function>(
-                (*this->buffers.llvmModule)->getOrInsertFunction(node->getId(), llvmFunctionType).getCallee()
+                (*this->buffers.llvmModule)->getOrInsertFunction(node->getName(), llvmFunctionType).getCallee()
             );
 
             // Set the function's linkage.
@@ -140,7 +140,7 @@ namespace ionir {
         if (!node->verify()) {
             throw std::runtime_error("Function verification failed");
         }
-        else if ((*this->buffers.llvmModule)->getFunction(node->getPrototype()->getId()) != nullptr) {
+        else if ((*this->buffers.llvmModule)->getFunction(node->getPrototype()->getName()) != nullptr) {
             throw std::runtime_error("A function with the same identifier has been already previously defined");
         }
 

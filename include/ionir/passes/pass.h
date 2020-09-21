@@ -31,7 +31,8 @@
 #include <ionir/construct/module.h>
 #include <ionir/construct/value.h>
 #include <ionir/construct/inst.h>
-#include "../../../../ionshared/include/ionshared/passes/pass_context.h"
+#include <ionir/construct/identifier.h>
+#include <ionir/construct/struct.h>
 
 #define IONIR_PASS_INTERNAL_ASSERT(condition) \
     if (!this->getPassContext()->getDiagnosticBuilder()->internalAssert(condition)) { return; }
@@ -102,6 +103,10 @@ namespace ionir {
         virtual void visitScopeAnchor(ionshared::Ptr<ScopeAnchor<>> node);
 
         virtual void visitErrorMarker(ionshared::Ptr<ErrorMarker> node);
+
+        virtual void visitIdentifier(ionshared::Ptr<Identifier> node);
+
+        virtual void visitStruct(ionshared::Ptr<Struct> node);
     };
 
     typedef ionshared::BasePassManager<Pass, Construct> PassManager;

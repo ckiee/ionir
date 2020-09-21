@@ -124,7 +124,7 @@ namespace ionir {
          */
         llvm::BasicBlock *llvmBasicBlock = llvm::BasicBlock::Create(
             **this->buffers.llvmContext,
-            node->getId(),
+            node->getName(),
             *this->buffers.llvmFunction
         );
 
@@ -196,7 +196,7 @@ namespace ionir {
         llvm::Type *type = this->typeStack.pop();
 
         llvm::GlobalVariable *globalVar =
-            llvm::dyn_cast<llvm::GlobalVariable>((*this->buffers.llvmModule)->getOrInsertGlobal(node->getId(), type));
+            llvm::dyn_cast<llvm::GlobalVariable>((*this->buffers.llvmModule)->getOrInsertGlobal(node->getName(), type));
 
         ionshared::OptPtr<Value<>> nodeValue = node->getValue();
 
@@ -321,10 +321,10 @@ namespace ionir {
 
     void LlvmCodegenPass::visitModule(ionshared::Ptr<Module> node) {
         this->buffers.llvmContext = new llvm::LLVMContext();
-        this->buffers.llvmModule = new llvm::Module(node->getId(), **this->buffers.llvmContext);
+        this->buffers.llvmModule = new llvm::Module(**node->getIdentifier(), **this->buffers.llvmContext);
 
         // Set the module on the modules symbol table.
-        this->modules->set(node->getId(), *this->buffers.llvmModule);
+        this->modules->set(**node->getIdentifier(), *this->buffers.llvmModule);
 
         // Set the module's context as the context buffer.
         this->buffers.context = node->getContext();
@@ -342,5 +342,28 @@ namespace ionir {
              */
              this->valueStack.tryPop();
         }
+    }
+
+    void LlvmCodegenPass::visitStruct(ionshared::Ptr<Struct> node) {
+        this->requireModule();
+        this->requireContext();
+
+        auto fieldsMap = node->getFields()->unwrap();
+        std::vector<llvm::Type *> llvmFields = {};
+
+        for (const auto &[name, type] : fieldsMap) {
+            this->visitType(type);
+            llvmFields.push_back(this->typeStack.pop());
+        }
+
+        // TODO: Ensure struct isn't already defined, and doesn't exist on the LLVM module (or locally?).
+
+        llvm::StructType *llvmStruct =
+            llvm::StructType::get(**this->buffers.llvmContext, llvmFields);
+
+        this->valueStack.push(
+            this->buffers.llvmModule.value()
+                ->getOrInsertGlobal(node->getName(), llvmStruct)
+        );
     }
 }
