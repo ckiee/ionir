@@ -73,6 +73,18 @@ namespace ionir {
         return llvm::IRBuilder<>(*this->buffers.llvmBasicBlock);
     }
 
+    llvm::Type *LlvmCodegenPass::processTypeQualifiers(const ionshared::Ptr<TypeQualifiers> &qualifiers, llvm::Type *type) {
+        // TODO: This should be last? Or const?
+        if (qualifiers->contains(TypeQualifier::Pointer)) {
+            // TODO: Address space correct?
+            type = llvm::PointerType::get(type, 0);
+        }
+
+        // TODO: Process other qualifiers.
+
+        return type;
+    }
+
     LlvmCodegenPass::LlvmCodegenPass(
         ionshared::Ptr<ionshared::PassContext> context,
         ionshared::Ptr<ionshared::SymbolTable<llvm::Module *>> modules
@@ -306,17 +318,28 @@ namespace ionir {
             throw std::runtime_error("Expected type to be defined");
         }
 
-        this->typeStack.push(*type);
+        this->typeStack.push(this->processTypeQualifiers(
+            node->getQualifiers(),
+            *type
+        ));
     }
 
     void LlvmCodegenPass::visitBooleanType(ionshared::Ptr<BooleanType> node) {
         this->requireContext();
-        this->typeStack.push(llvm::Type::getInt1Ty(**this->buffers.llvmContext));
+
+        this->typeStack.push(this->processTypeQualifiers(
+            node->getQualifiers(),
+            llvm::Type::getInt1Ty(**this->buffers.llvmContext)
+        ));
     }
 
     void LlvmCodegenPass::visitVoidType(ionshared::Ptr<VoidType> node) {
         this->requireContext();
-        this->typeStack.push(llvm::Type::getVoidTy(**this->buffers.llvmContext));
+
+        this->typeStack.push(this->processTypeQualifiers(
+            node->getQualifiers(),
+            llvm::Type::getVoidTy(**this->buffers.llvmContext)
+        ));
     }
 
     void LlvmCodegenPass::visitModule(ionshared::Ptr<Module> node) {
@@ -358,12 +381,12 @@ namespace ionir {
 
         // TODO: Ensure struct isn't already defined, and doesn't exist on the LLVM module (or locally?).
 
-        llvm::StructType *llvmStruct =
-            llvm::StructType::get(**this->buffers.llvmContext, llvmFields);
-
-        this->valueStack.push(
-            this->buffers.llvmModule.value()
-                ->getOrInsertGlobal(node->getName(), llvmStruct)
+        llvm::StructType *llvmStruct = llvm::StructType::get(
+            **this->buffers.llvmContext,
+            llvmFields
         );
+
+        llvmStruct->setName(node->getName());
+        this->typeStack.push(llvmStruct);
     }
 }

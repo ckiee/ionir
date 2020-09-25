@@ -13,11 +13,9 @@ namespace ionir {
 
     class Function;
 
-    class Module : public Construct, public Identifiable {
-    private:
+    struct Module : public Construct, public Identifiable {
         ionshared::Ptr<Context> context;
 
-    public:
         explicit Module(
             ionshared::Ptr<Identifier> identifier,
             ionshared::Ptr<Context> context = std::make_shared<Context>()
@@ -25,11 +23,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        [[nodiscard]] Ast getChildNodes() override;
-
-        [[nodiscard]] ionshared::Ptr<Context> getContext() const noexcept;
-
-        void setContext(ionshared::Ptr<Context> context) noexcept;
+        [[nodiscard]] Ast getChildrenNodes() override;
 
         // TODO: What about externs/globals/classes/structs? ------------
         bool insertFunction(const ionshared::Ptr<Function> &function);

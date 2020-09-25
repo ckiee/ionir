@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ionshared/error_handling/diagnostic_builder.h>
+#include <ionshared/diagnostics/diagnostic_builder.h>
 
 #define IONIR_NOTICE_DEFINE(name, type, message, example) \
     const static inline ionshared::Diagnostic name =\

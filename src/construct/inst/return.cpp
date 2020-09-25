@@ -11,9 +11,9 @@ namespace ionir {
         visitor.visitReturnInst(this->dynamicCast<ReturnInst>());
     }
 
-    Ast ReturnInst::getChildNodes() {
+    Ast ReturnInst::getChildrenNodes() {
         if (!this->hasValue()) {
-            return Construct::getChildNodes();
+            return Construct::getChildrenNodes();
         }
 
         return {

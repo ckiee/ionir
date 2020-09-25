@@ -3,8 +3,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    class DeadCodeEliminationPass : public Pass {
-    public:
+    struct DeadCodeEliminationPass : public Pass {
         IONSHARED_PASS_ID;
 
         explicit DeadCodeEliminationPass(

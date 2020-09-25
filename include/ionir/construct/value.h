@@ -18,15 +18,13 @@ namespace ionir {
 
     template<typename T = Type>
     class Value : public Construct {
-    private:
-        ValueKind kind;
+        ValueKind valueKind;
 
         ionshared::Ptr<T> type;
 
-    public:
         Value(ValueKind kind, ionshared::Ptr<T> type) :
             Construct(ConstructKind::Value),
-            kind(kind),
+            valueKind(kind),
             type(type) {
             //
         }
@@ -40,14 +38,6 @@ namespace ionir {
              */
              // TODO: Crossed off because cannot import pass.h in a header file! Need forward-decl solution (probably won't be easy!).
 //            visitor.visitValue(this->staticCast<Value<>>());
-        }
-
-        [[nodiscard]] ValueKind getValueKind() const noexcept {
-            return this->kind;
-        }
-
-        [[nodiscard]] ionshared::Ptr<T> getType() const noexcept {
-            return this->type;
         }
 
 //        ionshared::Ptr<Value<>> asValue() const {

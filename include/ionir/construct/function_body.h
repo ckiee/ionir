@@ -13,8 +13,7 @@ namespace ionir {
 
     class Function;
 
-    class FunctionBody : public ChildConstruct<Function>, public ScopeAnchor<BasicBlock> {
-    public:
+    struct FunctionBody : public ChildConstruct<Function>, public ScopeAnchor<BasicBlock> {
         explicit FunctionBody(
             ionshared::Ptr<Function> parent,
 
@@ -24,7 +23,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() override;
+        Ast getChildrenNodes() override;
 
         bool verify() override;
 

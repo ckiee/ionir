@@ -11,7 +11,7 @@ namespace ionir {
         visitor.visitBranchInst(this->dynamicCast<BranchInst>());
     }
 
-    Ast JumpInst::getChildNodes() {
+    Ast JumpInst::getChildrenNodes() {
         // TODO: Should have no children, function bodies should be LINEAR! BRANCH defines inline block! WRONG!
         return {
             this->basicBlockTarget

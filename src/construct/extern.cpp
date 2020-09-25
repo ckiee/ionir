@@ -1,8 +1,11 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    Extern::Extern(ionshared::Ptr<Prototype> prototype) :
-        Construct(ConstructKind::Extern),
+    Extern::Extern(
+        ionshared::Ptr<Module> parent,
+        ionshared::Ptr<Prototype> prototype
+    ) :
+        ChildConstruct<Module>(std::move(parent), ConstructKind::Extern),
         prototype(std::move(prototype)) {
         //
     }
@@ -11,17 +14,9 @@ namespace ionir {
         visitor.visitExtern(this->dynamicCast<Extern>());
     }
 
-    Ast Extern::getChildNodes() {
+    Ast Extern::getChildrenNodes() {
         return {
             this->prototype->nativeCast()
         };
-    }
-
-    ionshared::Ptr<Prototype> Extern::getPrototype() const noexcept {
-        return this->prototype;
-    }
-
-    void Extern::setPrototype(ionshared::Ptr<Prototype> prototype) noexcept {
-        this->prototype = std::move(prototype);
     }
 }

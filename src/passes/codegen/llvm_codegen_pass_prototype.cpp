@@ -7,14 +7,18 @@
 namespace ionir {
     void LlvmCodegenPass::visit(ionshared::Ptr<Construct> node) {
         /**
-         * Only instruct the node to visit this instance and
-         * not its children, since they're already visited by
+         * Only instruct the node to visit this instance and not
+         * its children, since they're already manually visited by
          * the other member methods.
          */
         node->accept(*this);
     }
 
     void LlvmCodegenPass::visitExtern(ionshared::Ptr<Extern> node) {
+        if (this->symbolTable.contains(node)) {
+            return;
+        }
+
         this->requireModule();
 
         IONIR_PASS_INTERNAL_ASSERT(node->getPrototype() != nullptr)
@@ -24,7 +28,8 @@ namespace ionir {
 
         if (existingExternDefinition != nullptr) {
             this->getPassContext()->getDiagnosticBuilder()
-                ->bootstrap(diagnostic::externRedefinition);
+                ->bootstrap(diagnostic::externRedefinition)
+                ->finish();
 
             throw std::runtime_error("Awaiting new diagnostic buffer checking");
         }
@@ -32,10 +37,10 @@ namespace ionir {
         // Visit the prototype.
         this->visitPrototype(node->getPrototype());
 
-        /**
-         * No need to push the resulting function onto the stack; This
-         * is done already when visiting the extern's prototype.
-         */
+        llvm::Function *llvmExtern = this->valueStack.popAs<llvm::Function>();
+
+        this->symbolTable.set(node, llvmExtern);
+        this->valueStack.push(llvmExtern);
     }
 
     void LlvmCodegenPass::visitPrototype(ionshared::Ptr<Prototype> node) {
@@ -63,7 +68,8 @@ namespace ionir {
             // If the function takes a different number of arguments, reject.
             else if (llvmFunction->arg_size() != argumentCount) {
                 this->getPassContext()->getDiagnosticBuilder()
-                    ->bootstrap(diagnostic::functionRedefinitionDiffArgs);
+                    ->bootstrap(diagnostic::functionRedefinitionDiffArgs)
+                    ->finish();
 
                 throw std::runtime_error("Awaiting new diagnostic buffer checking");
             }
@@ -125,12 +131,6 @@ namespace ionir {
     }
 
     void LlvmCodegenPass::visitFunction(ionshared::Ptr<Function> node) {
-        /**
-         * This function has already been visited/emitted. This is present
-         * because the call instruction requires functions to be present on
-         * the local symbol table in order to emit, and if its callee (this node)
-         * hasn't yet been emitted, it will emit this function early.
-         */
         if (this->symbolTable.contains(node)) {
             return;
         }

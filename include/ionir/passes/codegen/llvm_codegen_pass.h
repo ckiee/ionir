@@ -75,6 +75,11 @@ namespace ionir {
 
         std::optional<llvm::IRBuilder<>> getLlvmBuilder() noexcept;
 
+        llvm::Type *processTypeQualifiers(
+            const ionshared::Ptr<TypeQualifiers> &qualifiers,
+            llvm::Type *type
+        );
+
     public:
         IONSHARED_PASS_ID;
 

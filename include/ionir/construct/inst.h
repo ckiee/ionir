@@ -34,11 +34,9 @@ namespace ionir {
         Jump
     };
 
-    class Inst : public ChildConstruct<BasicBlock> {
-    private:
-        InstKind kind;
+    struct Inst : public ChildConstruct<BasicBlock> {
+        InstKind instKind;
 
-    public:
         Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind);
 
         void accept(Pass &visitor) override = 0;

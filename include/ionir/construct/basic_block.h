@@ -49,31 +49,18 @@ namespace ionir {
     };
 
     // TODO: Must be verified to contain a single terminal instruction at the end.
-    class BasicBlock : public ChildConstruct<FunctionBody>, public ScopeAnchor<Inst>, public ionshared::Named {
-    private:
-        BasicBlockKind kind;
+    struct BasicBlock : public ChildConstruct<FunctionBody>, public ScopeAnchor<Inst>, public ionshared::Named {
+        const BasicBlockKind basicBlockKind;
 
         std::vector<ionshared::Ptr<Inst>> insts;
 
-        ionshared::Map<ionshared::Ptr<Inst>, uint32_t> instOrderMap;
-
-        // TODO: Remove renumbering system as it can cause problems.
-        void renumberInsts();
-
-    public:
         explicit BasicBlock(const BasicBlockOpts &opts);
 
         void accept(Pass &visitor) override;
 
-        [[nodiscard]] Ast getChildNodes() override;
+        [[nodiscard]] Ast getChildrenNodes() override;
 
         [[nodiscard]] bool verify() override;
-
-        [[nodiscard]] BasicBlockKind getKind() const noexcept;
-
-        [[nodiscard]] std::vector<ionshared::Ptr<Inst>> &getInsts() noexcept;
-
-        void setInsts(std::vector<ionshared::Ptr<Inst>> insts);
 
         void insertInst(uint32_t order, const ionshared::Ptr<Inst> &inst);
 

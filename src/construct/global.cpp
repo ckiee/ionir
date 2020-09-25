@@ -7,7 +7,7 @@ namespace ionir {
         ionshared::OptPtr<Value<>> value
     ) :
         Construct(ConstructKind::Global),
-        Named(std::move(id)),
+        Named{std::move(id)},
         type(std::move(type)),
         value(std::move(value)) {
         //
@@ -17,7 +17,7 @@ namespace ionir {
         visitor.visitGlobal(this->dynamicCast<Global>());
     }
 
-    Ast Global::getChildNodes() {
+    Ast Global::getChildrenNodes() {
         Ast children = {
             this->type->nativeCast()
         };
@@ -29,21 +29,5 @@ namespace ionir {
         }
 
         return children;
-    }
-
-    ionshared::Ptr<Type> Global::getType() const noexcept {
-        return this->type;
-    }
-
-    void Global::setType(ionshared::Ptr<Type> type) noexcept {
-        this->type = std::move(type);
-    }
-
-    ionshared::OptPtr<Value<>> Global::getValue() const noexcept {
-        return this->value;
-    }
-
-    void Global::setValue(ionshared::OptPtr<Value<>> value) noexcept {
-        this->value = std::move(value);
     }
 }

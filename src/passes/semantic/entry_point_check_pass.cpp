@@ -35,7 +35,8 @@ namespace ionir {
              */
             if (ionshared::util::hasValue(this->entryFunction)) {
                 this->getPassContext()->getDiagnosticBuilder()
-                    ->bootstrap(diagnostic::entryPointRedefinition);
+                    ->bootstrap(diagnostic::entryPointRedefinition)
+                    ->finish();
 
                 return;
             }

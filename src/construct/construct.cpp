@@ -4,17 +4,8 @@
 
 namespace ionir {
     Construct::Construct(ConstructKind kind) :
-        ionshared::BaseConstruct<Construct, ConstructKind>(kind) {
+        ionshared::BaseConstruct<Construct, ConstructKind>{kind} {
         //
-    }
-
-    void Construct::accept(ionshared::BasePass<Construct> visitor) {
-        // TODO
-    }
-
-    Ast Construct::getChildNodes() {
-        // By default, construct contains no children.
-        return {};
     }
 
     bool Construct::equals(const ionshared::Ptr<Construct> &other) {
@@ -22,7 +13,7 @@ namespace ionir {
     }
 
     bool Construct::verify() {
-        const Ast children = this->getChildNodes();
+        const Ast children = this->getChildrenNodes();
 
         for (const auto &child : children) {
             if (!child->verify()) {
@@ -33,7 +24,7 @@ namespace ionir {
         return true;
     }
 
-    std::optional<std::string> Construct::getConstructName() {
-        return Const::getConstructKindName(this->getConstructKind());
+    std::optional<std::string> Construct::getConstructKindName() {
+        return Const::getConstructKindName(this->constructKind);
     }
 }

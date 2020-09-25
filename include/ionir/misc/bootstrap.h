@@ -4,8 +4,7 @@
 #include <ionir/const/const_name.h>
 
 namespace ionir {
-    class Bootstrap {
-    public:
+    struct Bootstrap {
         [[nodiscard]] static Ast functionAst(const std::string &id = ConstName::anonymous);
 
         [[nodiscard]] static ionshared::Ptr<Function> function(const std::string &id = ConstName::anonymous);

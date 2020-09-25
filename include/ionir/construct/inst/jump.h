@@ -20,7 +20,7 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() override;
+        Ast getChildrenNodes() override;
 
         [[nodiscard]] ionshared::Ptr<BasicBlock> getBasicBlockTarget() const noexcept;
 

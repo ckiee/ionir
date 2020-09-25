@@ -15,7 +15,8 @@ TEST(CodeGenTest, VisitExtern) {
     ionshared::Ptr<Prototype> prototype =
         std::make_shared<Prototype>(test::constant::foobar, args, returnType, nullptr);
 
-    ionshared::Ptr<Extern> externConstruct = std::make_shared<Extern>(prototype);
+    // TODO: Nullptr parent.
+    ionshared::Ptr<Extern> externConstruct = std::make_shared<Extern>(nullptr, prototype);
 
     llvmCodegenPass->visitExtern(externConstruct);
 

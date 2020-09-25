@@ -15,7 +15,10 @@ namespace ionir {
 
         Reference,
 
-        Pointer
+        // TODO: With a linear pointer-array qualifier system, how can specify array of pointer or pointer to array?
+        Pointer,
+
+        Array
     };
 
     enum class TypeKind {
@@ -34,13 +37,11 @@ namespace ionir {
 
     typedef ionshared::Set<TypeQualifier> TypeQualifiers;
 
-    class Type : public Construct, public ionshared::Named {
-    private:
-        TypeKind kind;
+    struct Type : public Construct, public ionshared::Named {
+        TypeKind typeKind;
 
         ionshared::Ptr<TypeQualifiers> qualifiers;
 
-    public:
         /**
          * TODO: What if 'id' is atomic type yet kind is UserDefined?
          * Make 'Type' abstract and create UserDefinedType which
@@ -49,13 +50,19 @@ namespace ionir {
         explicit Type(
             std::string name,
             TypeKind kind = TypeKind::UserDefined,
-            ionshared::Ptr<TypeQualifiers> qualifiers = ionshared::Ptr<TypeQualifiers>()
+
+            ionshared::Ptr<TypeQualifiers> qualifiers =
+                ionshared::Ptr<TypeQualifiers>()
         );
 
         void accept(Pass &visitor) override;
 
         [[nodiscard]] bool equals(const ionshared::Ptr<Construct> &other) override;
 
-        [[nodiscard]] TypeKind getTypeKind() const noexcept;
+        [[nodiscard]] bool addQualifier(TypeQualifier qualifier) noexcept;
+
+        [[nodiscard]] bool removeQualifier(TypeQualifier qualifier) noexcept;
+
+        [[nodiscard]] bool hasQualifier(TypeQualifier qualifier) const;
     };
 }

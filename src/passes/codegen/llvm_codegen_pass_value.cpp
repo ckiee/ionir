@@ -48,10 +48,9 @@ namespace ionir {
     void LlvmCodegenPass::visitStringLiteral(ionshared::Ptr<StringLiteral> node) {
         this->requireBuilder();
 
-        // Create the global string pointer.
-        llvm::Constant *value = this->getLlvmBuilder()->CreateGlobalStringPtr(node->getValue());
-
-        this->valueStack.push(value);
+        this->valueStack.push(
+            this->getLlvmBuilder()->CreateGlobalStringPtr(node->getValue())
+        );
 //        this->addToScope(node, value);
     }
 

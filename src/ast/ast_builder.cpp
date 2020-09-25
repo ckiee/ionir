@@ -99,7 +99,7 @@ namespace ionir {
 
     AstBuilder &AstBuilder::functionReturnType(ionshared::Ptr<Type> returnType) {
         this->requireFunction();
-        this->functionBuffer->get()->getPrototype()->setReturnType(std::move(returnType));
+        this->functionBuffer->get()->prototype->returnType = std::move(returnType);
 
         return *this;
     }

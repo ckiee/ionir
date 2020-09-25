@@ -19,7 +19,7 @@ namespace ionir {
         visitor.visitFunctionBody(this->staticCast<FunctionBody>());
     }
 
-    Ast FunctionBody::getChildNodes() {
+    Ast FunctionBody::getChildrenNodes() {
         return Construct::convertChildren(this->getSymbolTable());
     }
 
@@ -37,7 +37,7 @@ namespace ionir {
 
     void FunctionBody::insertBasicBlock(const ionshared::Ptr<BasicBlock> &basicBlock) {
         // TODO: Check if section exists first?
-        this->getSymbolTable()->set(basicBlock->getName(), basicBlock);
+        this->getSymbolTable()->set(basicBlock->name, basicBlock);
 
         // TODO: Consider making symbol table read-only so this is controlled.
         // Update the basic block's parent.

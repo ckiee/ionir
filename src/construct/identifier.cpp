@@ -2,7 +2,7 @@
 namespace ionir {
     Identifier::Identifier(std::string name, std::vector<std::string> scopePath) :
         Construct(ConstructKind::Identifier),
-        ionshared::Named(std::move(name)),
+        ionshared::Named{std::move(name)},
         scopePath(std::move(scopePath)) {
         //
     }
@@ -15,7 +15,7 @@ namespace ionir {
             stream << scopePath << "::";
         }
 
-        stream << this->getName();
+        stream << this->name;
 
         return stream.str();
     }
@@ -26,13 +26,5 @@ namespace ionir {
 
     void Identifier::accept(Pass &visitor) {
         visitor.visitIdentifier(this->dynamicCast<Identifier>());
-    }
-
-    std::vector<std::string> Identifier::getScopePath() const noexcept {
-        return this->scopePath;
-    }
-
-    void Identifier::setScopePath(std::vector<std::string> scopePath) noexcept {
-        this->scopePath = std::move(scopePath);
     }
 }

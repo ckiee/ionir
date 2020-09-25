@@ -8,7 +8,7 @@ namespace ionir {
     ) :
         Construct(ConstructKind::Type),
         Named(std::move(name)),
-        kind(kind),
+        typeKind(kind),
         qualifiers(std::move(qualifiers)) {
         //
     }
@@ -29,6 +29,26 @@ namespace ionir {
     }
 
     TypeKind Type::getTypeKind() const noexcept {
-        return this->kind;
+        return this->typeKind;
+    }
+
+    ionshared::Ptr<TypeQualifiers> Type::getQualifiers() const noexcept {
+        return this->qualifiers;
+    }
+
+    void Type::setQualifiers(ionshared::Ptr<TypeQualifiers> qualifiers) noexcept {
+        this->qualifiers = std::move(qualifiers);
+    }
+
+    bool Type::addQualifier(TypeQualifier qualifier) noexcept {
+        return this->qualifiers->add(qualifier);
+    }
+
+    bool Type::removeQualifier(TypeQualifier qualifier) noexcept {
+        return this->qualifiers->remove(qualifier);
+    }
+
+    bool Type::hasQualifier(TypeQualifier qualifier) const {
+        return this->qualifiers->contains(qualifier);
     }
 }

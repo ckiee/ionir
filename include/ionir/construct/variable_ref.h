@@ -7,8 +7,7 @@
 namespace ionir {
     class Pass;
 
-    class VariableRef : public Construct, public ionshared::Named {
-    public:
+    struct VariableRef : public Construct, public ionshared::Named {
         explicit VariableRef(std::string id);
 
         void accept(Pass &visitor) override;

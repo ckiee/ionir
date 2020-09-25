@@ -22,7 +22,8 @@ namespace ionir {
 
         if (!ionshared::util::hasValue(entryBasicBlock)) {
             this->getPassContext()->getDiagnosticBuilder()
-                ->bootstrap(diagnostic::functionMissingEntryBasicBlock);
+                ->bootstrap(diagnostic::functionMissingEntryBasicBlock)
+                ->finish();
 
             return;
         }
@@ -49,7 +50,8 @@ namespace ionir {
 
             if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
                 this->getPassContext()->getDiagnosticBuilder()
-                    ->bootstrap(diagnostic::functionMissingReturnValue);
+                    ->bootstrap(diagnostic::functionMissingReturnValue)
+                    ->finish();
             }
         }
     }
@@ -71,7 +73,8 @@ namespace ionir {
          */
         if ((functionReturnType->getTypeKind() != TypeKind::Void) && !returnStatementValueSet) {
             this->getPassContext()->getDiagnosticBuilder()
-                ->bootstrap(diagnostic::functionMissingReturnValue);
+                ->bootstrap(diagnostic::functionMissingReturnValue)
+                ->finish();
 
             // TODO: Can it be made optional/continue?
             return;

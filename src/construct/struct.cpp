@@ -12,7 +12,7 @@ namespace ionir {
         visitor.visitStruct(this->dynamicCast<Struct>());
     }
 
-    Ast Struct::getChildNodes() {
+    Ast Struct::getChildrenNodes() {
         Ast children = {};
         auto fieldsMap = this->fields->unwrap();
 

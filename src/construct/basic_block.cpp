@@ -1,26 +1,13 @@
 #include <ionir/misc/inst_builder.h>
 #include <ionir/passes/pass.h>
 
-#include <utility>
-
 namespace ionir {
-    void BasicBlock::renumberInsts() {
-        this->instOrderMap.clear();
-
-        uint32_t order = 0;
-
-        for (const auto &inst : this->insts) {
-            this->instOrderMap.set(inst, order++);
-        }
-    }
-
     BasicBlock::BasicBlock(const BasicBlockOpts &opts) :
         ChildConstruct(opts.parent, ConstructKind::BasicBlock),
         ScopeAnchor<Inst>(opts.symbolTable),
         Named(opts.id),
-        kind(opts.kind),
-        insts(opts.insts),
-        instOrderMap() {
+        basicBlockKind(opts.kind),
+        insts(opts.insts) {
         //
     }
 
@@ -30,7 +17,7 @@ namespace ionir {
         visitor.visitBasicBlock(this->dynamicCast<BasicBlock>());
     }
 
-    Ast BasicBlock::getChildNodes() {
+    Ast BasicBlock::getChildrenNodes() {
         return Construct::convertChildren(this->insts);
     }
 
@@ -40,20 +27,6 @@ namespace ionir {
             && Construct::verify();
     }
 
-    BasicBlockKind BasicBlock::getKind() const noexcept {
-        return this->kind;
-    }
-
-    std::vector<ionshared::Ptr<Inst>> &BasicBlock::getInsts() noexcept {
-        return this->insts;
-    }
-
-    // TODO: SymbolTable must be re-populated after changing insts vector.
-    void BasicBlock::setInsts(std::vector<ionshared::Ptr<Inst>> insts) {
-        this->insts = std::move(insts);
-        this->renumberInsts();
-    }
-
     void BasicBlock::insertInst(uint32_t order, const ionshared::Ptr<Inst> &inst) {
         const uint32_t maxOrder = this->insts.empty() ? 0 : this->insts.size() - 1;
 
@@ -61,7 +34,6 @@ namespace ionir {
             throw std::out_of_range("Order is larger than the size of elements in the vector");
         }
 
-        this->instOrderMap.set(inst, order);
         this->insts.insert(this->insts.begin() + order, inst);
 
         // TODO: --- Repeated code below (appendInst). Simplify? Maybe create registerInst() function? ---
@@ -76,12 +48,6 @@ namespace ionir {
     }
 
     void BasicBlock::appendInst(const ionshared::Ptr<Inst> &inst) {
-        /**
-         * The order will be whatever the size of the instructions vector
-         * before adding the new instruction is.
-         */
-        this->instOrderMap.set(inst, this->insts.size());
-
         this->insts.push_back(inst);
 
         std::optional<std::string> id = util::getInstId(inst);
@@ -100,7 +66,7 @@ namespace ionir {
         uint32_t count = 0;
 
         for (uint32_t i = from; i < this->insts.size(); i++) {
-            target.getInsts().push_back(this->insts[i]);
+            target.insts.push_back(this->insts[i]);
             this->insts.erase(this->insts.begin() + i - 1);
             count++;
         }
@@ -130,7 +96,7 @@ namespace ionir {
 
         ionshared::Ptr<BasicBlock> newBasicBlock = std::make_shared<BasicBlock>(BasicBlockOpts{
             this->getParent(),
-            this->kind,
+            this->basicBlockKind,
             std::move(id),
             insts
         });
@@ -149,11 +115,7 @@ namespace ionir {
     }
 
     std::optional<uint32_t> BasicBlock::locate(ionshared::Ptr<Inst> inst) {
-        if (this->instOrderMap.contains(inst)) {
-            return this->instOrderMap.lookup(std::move(inst));
-        }
-
-        return std::nullopt;
+        return ionshared::util::locateInVector(this->insts, std::move(inst));
     }
 
     ionshared::OptPtr<Inst> BasicBlock::findInstByOrder(uint32_t order) const noexcept {

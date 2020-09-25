@@ -22,7 +22,7 @@ namespace ionir {
 
     void Pass::visitChildren(ionshared::Ptr<Construct> node) {
         // TODO: Will it cause StackOverflow error with large ASTs?
-        Ast children = node->getChildNodes();
+        Ast children = node->getChildrenNodes();
 
         /**
          * After visiting the node, attempt to

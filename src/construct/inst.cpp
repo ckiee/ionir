@@ -4,17 +4,17 @@
 namespace ionir {
     Inst::Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind) :
         ChildConstruct(std::move(parent), ConstructKind::Inst),
-        kind(kind) {
+        instKind(kind) {
         //
     }
 
     InstKind Inst::getInstKind() const noexcept {
-        return this->kind;
+        return this->instKind;
     }
 
     bool Inst::isTerminal() const noexcept {
-        return this->kind == InstKind::Return
-            || this->kind == InstKind::Branch;
+        return this->instKind == InstKind::Return
+            || this->instKind == InstKind::Branch;
     }
 
     uint32_t Inst::getOrder() {

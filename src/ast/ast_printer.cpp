@@ -17,7 +17,7 @@ namespace ionir {
         }
 
         std::string type = node.isLeaf ? IONIR_TREE_LEAF : IONIR_TREE_INTERSECTION;
-        std::optional<std::string> constructName = node.construct->getConstructName();
+        std::optional<std::string> constructName = node.construct->getConstructKindName();
 
         tree << type
             << IONIR_TREE_H_LINE
@@ -66,7 +66,9 @@ namespace ionir {
             queue.pop();
             depth = node.depth;
 
-            for (const auto &child : node.construct->getChildNodes()) {
+            Ast children = node.construct->getChildrenNodes();
+
+            for (const auto &child : children) {
                 queue.push(AstPrinterTreeNode{
                     depth++,
                     child->isLeafNode(),

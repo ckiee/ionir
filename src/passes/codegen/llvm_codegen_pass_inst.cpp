@@ -120,25 +120,43 @@ namespace ionir {
         this->requireModule();
         this->requireBuilder();
 
-        ionshared::Ptr<Function> callee = node->getCallee();
+        ionshared::Ptr<Construct> callee = node->getCallee();
+        ConstructKind calleeConstructKind = callee->getConstructKind();
+
+        if (calleeConstructKind != ConstructKind::Function && calleeConstructKind != ConstructKind::Extern) {
+            // TODO: Use DiagnosticBuilder.
+            throw std::runtime_error("Callee is neither a function nor an extern");
+        }
 
         /**
-         * The callee has not yet been visited/emitted. Visit the callee
-         * at this point, as it is required to be present on the emitted
-         * entities symbol table in order to emit the call instruction.
+         * If the callee function or extern  has not yet been visited/emitted
+         * yet, visit it at this point, as it is required to be present on the
+         * emitted entities symbol table in order to emit the call instruction.
          */
         if (!this->symbolTable.contains(callee)) {
             this->lockBuffers([&, this] {
-                this->visitFunction(callee);
+                this->visit(callee);
             });
 
             // TODO: The function is being discarded here, but what if that function needs to be present in the stack because of the invoking method requires to pop it?
             this->valueStack.tryPop();
         }
 
+        ionshared::Ptr<Prototype> calleePrototype;
+
+        if (calleeConstructKind == ConstructKind::Function) {
+            calleePrototype = callee->dynamicCast<Function>()->getPrototype();
+        }
+        else if (calleeConstructKind == ConstructKind::Extern) {
+            calleePrototype = callee->dynamicCast<Extern>()->getPrototype();
+        }
+        else {
+            throw std::runtime_error("Callee is neither a function nor an extern");
+        }
+
         // Attempt to resolve the callee LLVM-equivalent function.
         llvm::Function* llvmCallee =
-            (*this->buffers.llvmModule)->getFunction(callee->getPrototype()->getName());
+            (*this->buffers.llvmModule)->getFunction(calleePrototype->getName());
 
         // LLVM-equivalent function could not be found. Report an error.
         if (llvmCallee == nullptr) {
@@ -151,8 +169,7 @@ namespace ionir {
         for (const auto &arg : args) {
             this->visit(arg);
 
-            // TODO: What if an arg was a Ref? Would it have emitted a value? No.
-            // TODO: Is .vec() correct? Remember . is copy.
+            // TODO: Is .vec() correct? Remember . is copy. But! It's a vector of pointers.
             llvmArgs.vec().push_back(this->valueStack.pop());
         }
 
@@ -206,14 +223,13 @@ namespace ionir {
 
         this->lockBuffers([&, this] {
             /**
-         * Visit the basic block. A mechanism will prevent it from being
-         * emitted twice. Try popping the resulting value because it might
-         * be processed if it has been previously emitted.
-         */
-                this->visitBasicBlock(basicBlockTarget);
-                this->valueStack.tryPop();
-            }
-        );
+             * Visit the basic block. A mechanism will prevent it from being
+             * emitted twice. Try popping the resulting value because it might
+             * be processed if it has been previously emitted.
+             */
+            this->visitBasicBlock(basicBlockTarget);
+            this->valueStack.tryPop();
+        });
 
         std::optional<llvm::BasicBlock *> llvmBasicBlockResult =
             this->symbolTable.find<llvm::BasicBlock>(basicBlockTarget);

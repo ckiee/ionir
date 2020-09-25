@@ -6,19 +6,16 @@
 namespace ionir {
     class Pass;
 
-    class Extern : public Construct {
-    private:
+    struct Extern : public ChildConstruct<Module> {
         ionshared::Ptr<Prototype> prototype;
 
-    public:
-        explicit Extern(ionshared::Ptr<Prototype> prototype);
+        Extern(
+            ionshared::Ptr<Module> parent,
+            ionshared::Ptr<Prototype> prototype
+        );
 
         void accept(Pass &visitor) override;
 
-        Ast getChildNodes() override;
-
-        [[nodiscard]] ionshared::Ptr<Prototype> getPrototype() const noexcept;
-
-        void setPrototype(ionshared::Ptr<Prototype> prototype) noexcept;
+        [[nodiscard]] Ast getChildrenNodes() override;
     };
 }

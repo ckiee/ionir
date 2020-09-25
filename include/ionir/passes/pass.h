@@ -2,7 +2,7 @@
 
 #include <ionshared/passes/base_pass.h>
 #include <ionshared/passes/base_pass_manager.h>
-#include <ionir/error_handling/diagnostic.h>
+#include <ionir/diagnostics/diagnostic.h>
 #include <ionir/construct/construct.h>
 #include <ionir/construct/value/integer_literal.h>
 #include <ionir/construct/value/char_literal.h>
@@ -38,8 +38,7 @@
     if (!this->getPassContext()->getDiagnosticBuilder()->internalAssert(condition)) { return; }
 
 namespace ionir {
-    class Pass : public ionshared::BasePass<Construct> {
-    public:
+    struct Pass : public ionshared::BasePass<Construct> {
         explicit Pass(ionshared::Ptr<ionshared::PassContext> context);
 
         void visit(ionshared::Ptr<Construct> node) override;

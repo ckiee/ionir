@@ -12,7 +12,7 @@ namespace ionir {
         visitor.visitModule(this->dynamicCast<Module>());
     }
 
-    Ast Module::getChildNodes() {
+    Ast Module::getChildrenNodes() {
         return Construct::convertChildren(
             // TODO: What about normal scopes? Merge that with global scope. Or actually, module just uses global context, right?
             this->context->getGlobalScope()

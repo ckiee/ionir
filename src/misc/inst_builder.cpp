@@ -52,13 +52,13 @@ namespace ionir {
     }
 
     ionshared::Ptr<CallInst> InstBuilder::createCall(
-        const ionshared::Ptr<Function> &callee,
+        const ionshared::Ptr<Construct> &callee,
         const std::vector<ionshared::Ptr<Construct>> &args
     ) {
         return this->make<CallInst>(CallInstOpts{
             this->basicBlock,
-            std::move(callee),
-            std::move(args)
+            callee,
+            args
         });
     }
 

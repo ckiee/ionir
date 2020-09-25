@@ -16,7 +16,7 @@ namespace ionir {
         std::queue<ionshared::Ptr<Construct>> queue = {};
 
         // Push initial items to the queue.
-        for (const auto &item : rootConstruct->getChildNodes()) {
+        for (const auto &item : rootConstruct->getChildrenNodes()) {
             queue.push(item);
         }
 
@@ -26,7 +26,7 @@ namespace ionir {
 
             queue.pop();
 
-            std::vector<ionshared::Ptr<Construct>> children = item->getChildNodes();
+            std::vector<ionshared::Ptr<Construct>> children = item->getChildrenNodes();
 
             for (const auto &child : children) {
                 queue.push(child);

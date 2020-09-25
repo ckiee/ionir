@@ -9,15 +9,9 @@ namespace ionir {
         std::string yieldId;
     };
 
-    class InstYield {
-    private:
+    struct InstYield {
         std::string yieldId;
 
-    public:
         explicit InstYield(std::string yieldId);
-
-        [[nodiscard]] std::string getYieldId() const noexcept;
-
-        void setYieldId(std::string yieldId) noexcept;
     };
 }

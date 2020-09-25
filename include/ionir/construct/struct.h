@@ -8,20 +8,14 @@ namespace ionir {
 
     typedef ionshared::PtrSymbolTable<Type> Fields;
 
-    class Struct : public Construct, public ionshared::Named {
-    private:
+    struct Struct : public Construct, public ionshared::Named {
         Fields fields;
 
-    public:
         Struct(std::string name, Fields fields);
 
         void accept(Pass &visitor) override;
 
-        [[nodiscard]] Ast getChildNodes() override;
-
-        [[nodiscard]] Fields getFields() const noexcept;
-
-        void setFields(Fields fields) noexcept;
+        [[nodiscard]] Ast getChildrenNodes() override;
 
         [[nodiscard]] bool containsField(std::string name) const;
 
