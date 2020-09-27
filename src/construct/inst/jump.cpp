@@ -8,7 +8,7 @@ namespace ionir {
     }
 
     void JumpInst::accept(Pass &visitor) {
-        visitor.visitBranchInst(this->dynamicCast<BranchInst>());
+        visitor.visitJumpInst(this->dynamicCast<JumpInst>());
     }
 
     Ast JumpInst::getChildrenNodes() {
@@ -16,13 +16,5 @@ namespace ionir {
         return {
             this->basicBlockTarget
         };
-    }
-
-    ionshared::Ptr<BasicBlock> JumpInst::getBasicBlockTarget() const noexcept {
-        return this->basicBlockTarget;
-    }
-
-    void JumpInst::setBasicBlockTarget(ionshared::Ptr<BasicBlock> basicBlockTarget) noexcept {
-        this->basicBlockTarget = std::move(basicBlockTarget);
     }
 }

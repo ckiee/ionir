@@ -20,9 +20,9 @@ TEST(TypeCheckPassTest, Run) {
 
     EXPECT_TRUE(ionshared::util::hasValue(function));
 
-    ionshared::Ptr<Prototype> prototype = function->get()->getPrototype();
+    ionshared::Ptr<Prototype> prototype = function->get()->prototype;
 
-    prototype->setReturnType(TypeFactory::typeInteger(IntegerKind::Int32));
+    prototype->returnType = TypeFactory::typeInteger(IntegerKind::Int32);
 
     // TODO: For now it's throwing, but soon instead check for produced semantic error.
 
@@ -35,19 +35,19 @@ TEST(TypeCheckPassTest, Run) {
 
     passManager.run(ast);
 
-    EXPECT_EQ(passContext->getDiagnosticStack()->getSize(), 1);
+    EXPECT_EQ(passContext->diagnostics->getSize(), 1);
 
     ionshared::Diagnostic functionMissingReturnValueDiagnostic =
-        passContext->getDiagnosticStack()->pop();
+        (*passContext->diagnostics.get())[0];
 
     EXPECT_EQ(
         functionMissingReturnValueDiagnostic.code.value(),
         diagnostic::functionMissingReturnValue.code.value()
     );
 
-    prototype->setReturnType(TypeFactory::typeVoid());
+    prototype->returnType = TypeFactory::typeVoid();
 
-    ionshared::Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
+    ionshared::Ptr<BasicBlock> entrySection = *function->get()->body->findEntryBasicBlock();
     InstBuilder instBuilder = InstBuilder(entrySection);
 
     instBuilder.createReturn();
@@ -72,13 +72,11 @@ TEST(TypeCheckPassTast, FunctionReturnTypeValueMismatch) {
 
     EXPECT_TRUE(function.has_value());
 
-    ionshared::Ptr<Prototype> prototype = function->get()->getPrototype();
+    ionshared::Ptr<Prototype> prototype = function->get()->prototype;
 
-    prototype->setReturnType(
-        TypeFactory::typeInteger(IntegerKind::Int32)
-    );
+    prototype->returnType = TypeFactory::typeInteger(IntegerKind::Int32);
 
-    ionshared::Ptr<BasicBlock> entrySection = *function->get()->getBody()->findEntryBasicBlock();
+    ionshared::Ptr<BasicBlock> entrySection = *function->get()->body->findEntryBasicBlock();
     InstBuilder instBuilder = InstBuilder(entrySection);
 
     ionshared::Ptr<ReturnInst> returnInst = instBuilder.createReturn(

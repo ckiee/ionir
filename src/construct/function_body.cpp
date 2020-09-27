@@ -7,7 +7,7 @@ namespace ionir {
         ionshared::Ptr<Function> parent,
         PtrSymbolTable<BasicBlock> symbolTable
     ) :
-        ChildConstruct(std::move(parent),
+        ConstructWithParent(std::move(parent),
         ConstructKind::FunctionBody),
         ScopeAnchor<BasicBlock>(std::move(symbolTable)) {
         //
@@ -41,6 +41,6 @@ namespace ionir {
 
         // TODO: Consider making symbol table read-only so this is controlled.
         // Update the basic block's parent.
-        basicBlock->setParent(this->dynamicCast<FunctionBody>());
+        basicBlock->parent = this->nativeCast();
     }
 }

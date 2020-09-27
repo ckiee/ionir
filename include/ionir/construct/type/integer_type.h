@@ -17,21 +17,13 @@ namespace ionir {
         Int128 = 128
     };
 
-    class IntegerType : public Type {
-    private:
-        IntegerKind kind;
+    struct IntegerType : Type {
+        const IntegerKind integerKind;
 
         bool isSigned;
 
-    public:
         explicit IntegerType(IntegerKind kind, bool isSigned = true);
 
         void accept(Pass &pass) override;
-
-        IntegerKind getIntegerKind() const noexcept;
-
-        bool getIsSigned() const noexcept;
-
-        void setIsSigned(bool isSigned) noexcept;
     };
 }

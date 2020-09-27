@@ -6,7 +6,7 @@ using namespace ionir;
 TEST(PassManagerTest, Initialize) {
     PassManager passManager = PassManager();
 
-    EXPECT_TRUE(passManager.getPasses().empty());
+    EXPECT_TRUE(passManager.passes.empty());
 }
 
 TEST(PassManagerTest, GetPasses) {

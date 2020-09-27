@@ -6,6 +6,14 @@
 namespace ionir {
     class Pass;
 
+    struct CharLiteral;
+
+    struct IntegerLiteral;
+
+    struct StringLiteral;
+
+    struct BooleanLiteral;
+
     enum class ValueKind {
         Integer,
 
@@ -17,8 +25,8 @@ namespace ionir {
     };
 
     template<typename T = Type>
-    class Value : public Construct {
-        ValueKind valueKind;
+    struct Value : Construct {
+        const ValueKind valueKind;
 
         ionshared::Ptr<T> type;
 
@@ -27,17 +35,6 @@ namespace ionir {
             valueKind(kind),
             type(type) {
             //
-        }
-
-        void accept(Pass &visitor) {
-            /**
-             * Must use static pointer cast instead of dynamic pointer case,
-             * otherwise the result will be nullptr. This is likely due to the
-             * template argument which Value takes, and because of that it fails
-             * during the conversion.
-             */
-             // TODO: Crossed off because cannot import pass.h in a header file! Need forward-decl solution (probably won't be easy!).
-//            visitor.visitValue(this->staticCast<Value<>>());
         }
 
 //        ionshared::Ptr<Value<>> asValue() const {

@@ -3,8 +3,8 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Construct::Construct(ConstructKind kind) :
-        ionshared::BaseConstruct<Construct, ConstructKind>{kind} {
+    Construct::Construct(ConstructKind kind, ionshared::OptPtr<Construct> parent) :
+        ionshared::BaseConstruct<Construct, ConstructKind>(kind, std::move(parent)) {
         //
     }
 
@@ -13,9 +13,16 @@ namespace ionir {
     }
 
     bool Construct::verify() {
-        const Ast children = this->getChildrenNodes();
+        Ast children = this->getChildrenNodes();
 
-        for (const auto &child : children) {
+        /**
+         * Loop through the children and verify them. If the verification
+         * function returns false, this construct's verification fails.
+         * If all the children's verification functions return true,
+         * this construct's verification passes, and returns true.
+         */
+        for (auto &child : children) {
+            // NOTE: The verification function is not constant.
             if (!child->verify()) {
                 return false;
             }
@@ -24,7 +31,7 @@ namespace ionir {
         return true;
     }
 
-    std::optional<std::string> Construct::getConstructKindName() {
+    std::optional<std::string> Construct::findConstructKindName() {
         return Const::getConstructKindName(this->constructKind);
     }
 }

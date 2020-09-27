@@ -13,25 +13,15 @@ namespace ionir {
         ionshared::Ptr<AllocaInst> target;
     };
 
-    class StoreInst : public Inst {
-    private:
+    struct StoreInst : Inst {
         ionshared::Ptr<Value<>> value;
 
         ionshared::Ptr<AllocaInst> target;
 
-    public:
         explicit StoreInst(const StoreInstOpts &opts);
 
         void accept(Pass &visitor) override;
 
-        Ast getChildrenNodes() override;
-
-        [[nodiscard]] ionshared::Ptr<Value<>> getValue() const;
-
-        void setValue(ionshared::Ptr<Value<>> value);
-
-        [[nodiscard]] ionshared::Ptr<AllocaInst> getTarget() const;
-
-        void setTarget(ionshared::Ptr<AllocaInst> target);
+        [[nodiscard]] Ast getChildrenNodes() override;
     };
 }

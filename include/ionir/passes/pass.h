@@ -35,10 +35,10 @@
 #include <ionir/construct/struct.h>
 
 #define IONIR_PASS_INTERNAL_ASSERT(condition) \
-    if (!this->getPassContext()->getDiagnosticBuilder()->internalAssert(condition)) { return; }
+    if (!this->context->diagnosticBuilder->internalAssert(condition)) { return; }
 
 namespace ionir {
-    struct Pass : public ionshared::BasePass<Construct> {
+    struct Pass : ionshared::BasePass<Construct> {
         explicit Pass(ionshared::Ptr<ionshared::PassContext> context);
 
         void visit(ionshared::Ptr<Construct> node) override;
@@ -57,8 +57,6 @@ namespace ionir {
 
         virtual void visitVarReference(ionshared::Ptr<VariableRef> node);
 
-        virtual void visitValue(ionshared::Ptr<Value<>> node);
-
         virtual void visitIntegerLiteral(ionshared::Ptr<IntegerLiteral> node);
 
         virtual void visitCharLiteral(ionshared::Ptr<CharLiteral> node);
@@ -66,8 +64,6 @@ namespace ionir {
         virtual void visitStringLiteral(ionshared::Ptr<StringLiteral> node);
 
         virtual void visitBooleanLiteral(ionshared::Ptr<BooleanLiteral> node);
-
-        virtual void visitInst(ionshared::Ptr<Inst> node);
 
         virtual void visitAllocaInst(ionshared::Ptr<AllocaInst> node);
 
@@ -84,8 +80,6 @@ namespace ionir {
         virtual void visitGlobal(ionshared::Ptr<Global> node);
 
         virtual void visitStructDecl(ionshared::Ptr<StructDecl> node);
-
-        virtual void visitType(ionshared::Ptr<Type> node);
 
         virtual void visitIntegerType(ionshared::Ptr<IntegerType> node);
 

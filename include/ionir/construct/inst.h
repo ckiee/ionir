@@ -8,7 +8,9 @@ namespace ionir {
 
     class BasicBlock;
 
-    typedef ChildConstructOpts<BasicBlock> InstOpts;
+    struct InstOpts {
+        const ionshared::Ptr<BasicBlock> parent;
+    };
 
     enum class InstKind {
         Alloca,
@@ -34,8 +36,8 @@ namespace ionir {
         Jump
     };
 
-    struct Inst : public ChildConstruct<BasicBlock> {
-        InstKind instKind;
+    struct Inst : public ConstructWithParent<BasicBlock> {
+        const InstKind instKind;
 
         Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind);
 

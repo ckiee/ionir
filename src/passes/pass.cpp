@@ -8,15 +8,6 @@ namespace ionir {
 
     void Pass::visit(ionshared::Ptr<Construct> node) {
         node->accept(*this);
-
-        // TODO: Hotfix for circular dep.
-        if (node->getConstructKind() == ConstructKind::Value) {
-            this->visitValue(node->staticCast<Value<>>());
-
-            // No need to visit children for this node.
-            return;
-        }
-
         this->visitChildren(node);
     }
 
@@ -58,38 +49,6 @@ namespace ionir {
         //
     }
 
-    void Pass::visitValue(ionshared::Ptr<Value<>> node) {
-        switch (node->getValueKind()) {
-            case ValueKind::Character: {
-                this->visitCharLiteral(node->dynamicCast<CharLiteral>());
-
-                break;
-            }
-
-            case ValueKind::Integer: {
-                this->visitIntegerLiteral(node->dynamicCast<IntegerLiteral>());
-
-                break;
-            }
-
-            case ValueKind::String: {
-                this->visitStringLiteral(node->dynamicCast<StringLiteral>());
-
-                break;
-            }
-
-            case ValueKind::Boolean: {
-                this->visitBooleanLiteral(node->dynamicCast<BooleanLiteral>());
-
-                break;
-            }
-
-            default: {
-                throw std::runtime_error("Unknown value kind");
-            }
-        }
-    }
-
     void Pass::visitIntegerLiteral(ionshared::Ptr<IntegerLiteral> node) {
         //
     }
@@ -104,52 +63,6 @@ namespace ionir {
 
     void Pass::visitBooleanLiteral(ionshared::Ptr<BooleanLiteral> node) {
         //
-    }
-
-    void Pass::visitInst(ionshared::Ptr<Inst> node) {
-        switch (node->getInstKind()) {
-            case InstKind::Alloca: {
-                this->visitAllocaInst(node->dynamicCast<AllocaInst>());
-
-                break;
-            }
-
-            case InstKind::Branch: {
-                this->visitBranchInst(node->dynamicCast<BranchInst>());
-
-                break;
-            }
-
-            // TODO: Missing break inst.
-
-            case InstKind::Return: {
-                this->visitReturnInst(node->dynamicCast<ReturnInst>());
-
-                break;
-            }
-
-            case InstKind::Call: {
-                this->visitCallInst(node->dynamicCast<CallInst>());
-
-                break;
-            }
-
-            case InstKind::Store: {
-                this->visitStoreInst(node->dynamicCast<StoreInst>());
-
-                break;
-            }
-
-            case InstKind::Jump: {
-                this->visitJumpInst(node->dynamicCast<JumpInst>());
-
-                break;
-            }
-
-            default: {
-                throw std::runtime_error("Unknown instruction kind");
-            }
-        }
     }
 
     void Pass::visitAllocaInst(ionshared::Ptr<AllocaInst> node) {
@@ -181,10 +94,6 @@ namespace ionir {
     }
 
     void Pass::visitStructDecl(ionshared::Ptr<StructDecl> node) {
-        //
-    }
-
-    void Pass::visitType(ionshared::Ptr<Type> node) {
         //
     }
 

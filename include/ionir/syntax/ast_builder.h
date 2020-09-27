@@ -23,7 +23,6 @@ namespace ionir {
 
         void setBasicBlockBuffer(const ionshared::OptPtr<BasicBlock> &basicBlockBuffer);
 
-    protected:
         void require(const ionshared::OptPtr<Construct> &construct) const;
 
         void requireModule() const;

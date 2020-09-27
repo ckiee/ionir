@@ -22,6 +22,7 @@ namespace ionir {
         void appendInst(const ionshared::Ptr<Inst> &inst);
 
         template<class TInst, typename... TArgs>
+            requires std::derived_from<TInst, Inst>
         ionshared::Ptr<TInst> make(TArgs... args) {
             // TODO: Ensure T inherits from Inst or derived.
 

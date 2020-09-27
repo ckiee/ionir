@@ -12,7 +12,7 @@ namespace ionir {
     }
 
     void InstBuilder::appendInst(const ionshared::Ptr<Inst> &inst) {
-        this->basicBlock->getInsts().push_back(inst);
+        this->basicBlock->insts.push_back(inst);
     }
 
     ionshared::Ptr<AllocaInst> InstBuilder::createAlloca(const std::string &id, ionshared::Ptr<Type> type) {

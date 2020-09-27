@@ -16,13 +16,22 @@ namespace ionir::util {
 
     class IntegerType;
 
+    template<typename T>
+    struct ParentMixin {
+        T parent;
+    };
+
+    template<typename T = Construct>
+//        requires std::derived_from<T, Construct> // TODO: Cannot work in the current system because ConstructParentMixin<T> is used where T is a forward decl.
+    using ConstructParentMixin = ParentMixin<ionshared::Ptr<T>>;
+
     [[nodiscard]] std::string resolveIntegerKindName(IntegerKind kind);
 
     [[nodiscard]] TypeKind resolveTypeKind(const std::string &id);
 
-    [[nodiscard]] std::optional<std::string> getConstructId(const ionshared::Ptr<Construct> &construct);
+    [[nodiscard]] std::optional<std::string> findConstructId(const ionshared::Ptr<Construct> &construct);
 
-    [[nodiscard]] std::optional<std::string> getInstId(const ionshared::Ptr<ionir::Inst> &inst) noexcept;
+    [[nodiscard]] std::optional<std::string> findInstId(const ionshared::Ptr<ionir::Inst> &inst) noexcept;
 
     [[nodiscard]] std::optional<IntegerKind> findIntegerKindFromBitLength(uint32_t bitLength) noexcept;
 }

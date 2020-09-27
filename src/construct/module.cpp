@@ -19,17 +19,9 @@ namespace ionir {
         );
     }
 
-    ionshared::Ptr<Context> Module::getContext() const noexcept {
-        return this->context;
-    }
-
-    void Module::setContext(ionshared::Ptr<Context> context) noexcept {
-        this->context = std::move(context);
-    }
-
     bool Module::insertFunction(const ionshared::Ptr<Function> &function) {
         Scope globalScope = this->context->getGlobalScope();
-        std::string functionName = function->getPrototype()->getName();
+        std::string functionName = function->prototype->name;
 
         if (!globalScope->contains(functionName)) {
             globalScope->set(
@@ -47,7 +39,7 @@ namespace ionir {
         ionshared::OptPtr<Construct> functionConstruct =
             this->context->getGlobalScope()->lookup(std::move(name));
 
-        if (ionshared::util::hasValue(functionConstruct) && functionConstruct->get()->getConstructKind() == ConstructKind::Function) {
+        if (ionshared::util::hasValue(functionConstruct) && functionConstruct->get()->constructKind == ConstructKind::Function) {
             return functionConstruct->get()->dynamicCast<Function>();
         }
 
@@ -57,8 +49,8 @@ namespace ionir {
     bool Module::mergeInto(const ionshared::Ptr<Module> &module) {
         auto localGlobalScopeMap = this->context->getGlobalScope()->unwrap();
         std::vector<Scope> localScopes = this->context->getScopes();
-        std::vector<Scope> targetScopes = module->getContext()->getScopes();
-        Scope targetGlobalScope = module->getContext()->getGlobalScope();
+        std::vector<Scope> targetScopes = module->context->getScopes();
+        Scope targetGlobalScope = module->context->getGlobalScope();
         Scope newGlobalScope = ionshared::util::makePtrSymbolTable<Construct>();
         ionshared::Ptr<Context> newContext = std::make_shared<Context>(newGlobalScope);
 
@@ -80,7 +72,7 @@ namespace ionir {
         }
 
         // Update the target module's context.
-        module->setContext(newContext);
+        module->context = newContext;
 
         return true;
     }

@@ -1,7 +1,7 @@
 #include <llvm/ADT/APInt.h>
 #include <llvm/IR/DerivedTypes.h>
 #include <ionir/construct/value.h>
-#include <ionir/error_handling/diagnostic.h>
+#include <ionir/diagnostics/diagnostic.h>
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 
 namespace ionir {
@@ -21,13 +21,13 @@ namespace ionir {
 
         this->requireModule();
 
-        IONIR_PASS_INTERNAL_ASSERT(node->getPrototype() != nullptr)
+        IONIR_PASS_INTERNAL_ASSERT(node->prototype != nullptr)
 
         llvm::Function *existingExternDefinition =
-            (*this->buffers.llvmModule)->getFunction(node->getPrototype()->getName());
+            (*this->buffers.llvmModule)->getFunction(node->prototype->name);
 
         if (existingExternDefinition != nullptr) {
-            this->getPassContext()->getDiagnosticBuilder()
+            this->context->diagnosticBuilder
                 ->bootstrap(diagnostic::externRedefinition)
                 ->finish();
 
@@ -35,7 +35,7 @@ namespace ionir {
         }
 
         // Visit the prototype.
-        this->visitPrototype(node->getPrototype());
+        this->visitPrototype(node->prototype);
 
         llvm::Function *llvmExtern = this->valueStack.popAs<llvm::Function>();
 
@@ -47,7 +47,7 @@ namespace ionir {
         this->requireModule();
         this->requireContext();
 
-        auto argsMap = node->getArgs()->getItems();
+        auto argsMap = node->args->getItems();
         auto &argsNativeMap = argsMap->unwrapConst();
 
         // Retrieve argument count from the argument vector.
@@ -57,7 +57,7 @@ namespace ionir {
         std::vector<llvm::Type *> llvmArgumentTypes = {};
 
         // Attempt to retrieve an existing function.
-        llvm::Function *llvmFunction = (*this->buffers.llvmModule)->getFunction(node->getName());
+        llvm::Function *llvmFunction = (*this->buffers.llvmModule)->getFunction(node->name);
 
         // A function with a matching identifier already exists.
         if (llvmFunction != nullptr) {
@@ -67,7 +67,7 @@ namespace ionir {
             }
             // If the function takes a different number of arguments, reject.
             else if (llvmFunction->arg_size() != argumentCount) {
-                this->getPassContext()->getDiagnosticBuilder()
+                this->context->diagnosticBuilder
                     ->bootstrap(diagnostic::functionRedefinitionDiffArgs)
                     ->finish();
 
@@ -77,12 +77,12 @@ namespace ionir {
         // Otherwise, function will be created.
         else {
             for (const auto &[id, arg] : argsNativeMap) {
-                this->visitType(arg.first);
+                arg.first->accept(*this);
                 llvmArgumentTypes.push_back(this->typeStack.pop());
             }
 
             // Visit and pop the return type.
-            this->visitType(node->getReturnType());
+            node->returnType->accept(*this);
 
             llvm::Type *llvmReturnType = this->typeStack.pop();
 
@@ -91,12 +91,12 @@ namespace ionir {
             llvm::FunctionType *llvmFunctionType = llvm::FunctionType::get(
                 llvmReturnType,
                 llvmArgumentTypes,
-                node->getArgs()->getIsVariable()
+                node->args->getIsVariable()
             );
 
             // Cast the value to a function, since we know getCallee() will return a function.
             llvmFunction = llvm::dyn_cast<llvm::Function>(
-                (*this->buffers.llvmModule)->getOrInsertFunction(node->getName(), llvmFunctionType).getCallee()
+                (*this->buffers.llvmModule)->getOrInsertFunction(node->name, llvmFunctionType).getCallee()
             );
 
             // Set the function's linkage.
@@ -140,7 +140,7 @@ namespace ionir {
         if (!node->verify()) {
             throw std::runtime_error("Function verification failed");
         }
-        else if ((*this->buffers.llvmModule)->getFunction(node->getPrototype()->getName()) != nullptr) {
+        else if ((*this->buffers.llvmModule)->getFunction(node->prototype->name) != nullptr) {
             throw std::runtime_error("A function with the same identifier has been already previously defined");
         }
 
@@ -148,7 +148,7 @@ namespace ionir {
         this->namedValues.clear();
 
         // Visit the prototype.
-        this->visitPrototype(node->getPrototype());
+        this->visitPrototype(node->prototype);
 
         // Retrieve the resulting function off the stack.
         llvm::Function *llvmFunction = this->valueStack.popAs<llvm::Function>();
@@ -157,7 +157,7 @@ namespace ionir {
         this->buffers.llvmFunction = llvmFunction;
 
         // Visiting the function body's yields no value to the value stack.
-        this->visitFunctionBody(node->getBody());
+        this->visitFunctionBody(node->body);
 
         // TODO: Verify the resulting LLVM function (through LLVM)?
 

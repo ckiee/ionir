@@ -1,4 +1,5 @@
 #include <ionir/passes/pass.h>
+
 namespace ionir {
     Identifier::Identifier(std::string name, std::vector<std::string> scopePath) :
         Construct(ConstructKind::Identifier),

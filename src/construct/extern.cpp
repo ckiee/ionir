@@ -5,7 +5,7 @@ namespace ionir {
         ionshared::Ptr<Module> parent,
         ionshared::Ptr<Prototype> prototype
     ) :
-        ChildConstruct<Module>(std::move(parent), ConstructKind::Extern),
+        ConstructWithParent<Module>(std::move(parent), ConstructKind::Extern),
         prototype(std::move(prototype)) {
         //
     }

@@ -12,18 +12,12 @@ namespace ionir {
         ionshared::Ptr<Type> type;
     };
 
-    class AllocaInst : public Inst, public InstYield {
-    private:
+    struct AllocaInst : Inst, InstYield {
         ionshared::Ptr<Type> type;
 
-    public:
         // TODO: Missing support for array-type allocas.
         explicit AllocaInst(const AllocaInstOpts &opts);
 
         void accept(Pass &visitor) override;
-
-        [[nodiscard]] ionshared::Ptr<Type> getType() const noexcept;
-
-        void setType(ionshared::Ptr<Type> type) noexcept;
     };
 }

@@ -18,20 +18,4 @@ namespace ionir {
             this->target
         };
     }
-
-    ionshared::Ptr<Value<>> StoreInst::getValue() const {
-        return this->value;
-    }
-
-    void StoreInst::setValue(ionshared::Ptr<Value<>> value) {
-        this->value = std::move(value);
-    }
-
-    ionshared::Ptr<AllocaInst> StoreInst::getTarget() const {
-        return this->target;
-    }
-
-    void StoreInst::setTarget(ionshared::Ptr<AllocaInst> target) {
-        this->target = std::move(target);
-    }
 }

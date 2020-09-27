@@ -8,7 +8,7 @@
 namespace ionir {
     class Pass;
 
-    class Identifier : public Construct, public ionshared::Named {
+    struct Identifier : public Construct, public ionshared::Named {
         std::vector<std::string> scopePath;
 
         explicit Identifier(

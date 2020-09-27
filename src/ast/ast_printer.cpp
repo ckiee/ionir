@@ -17,7 +17,7 @@ namespace ionir {
         }
 
         std::string type = node.isLeaf ? IONIR_TREE_LEAF : IONIR_TREE_INTERSECTION;
-        std::optional<std::string> constructName = node.construct->getConstructKindName();
+        std::optional<std::string> constructName = node.construct->findConstructKindName();
 
         tree << type
             << IONIR_TREE_H_LINE

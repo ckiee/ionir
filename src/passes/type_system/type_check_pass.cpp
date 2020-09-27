@@ -14,14 +14,14 @@ namespace ionir {
     }
 
     void TypeCheckPass::visitFunction(ionshared::Ptr<Function> node) {
-        ionshared::OptPtr<FunctionBody> functionBody = node->getBody();
+        ionshared::OptPtr<FunctionBody> functionBody = node->body;
 
         IONIR_PASS_INTERNAL_ASSERT(ionshared::util::hasValue(functionBody))
 
         ionshared::OptPtr<BasicBlock> entryBasicBlock = functionBody->get()->findEntryBasicBlock();
 
         if (!ionshared::util::hasValue(entryBasicBlock)) {
-            this->getPassContext()->getDiagnosticBuilder()
+            this->context->diagnosticBuilder
                 ->bootstrap(diagnostic::functionMissingEntryBasicBlock)
                 ->finish();
 
@@ -30,10 +30,10 @@ namespace ionir {
 
         TypeKind parentFunctionPrototypeReturnTypeKind = functionBody
             ->get()
-            ->getParent()
-            ->getPrototype()
-            ->getReturnType()
-            ->getTypeKind();
+            ->getUnboxedParent()
+            ->prototype
+            ->returnType
+            ->typeKind;
 
         /**
          * Entry basic blocks must contain at least a single terminal
@@ -43,13 +43,13 @@ namespace ionir {
          * with no value.
          */
         if (parentFunctionPrototypeReturnTypeKind != TypeKind::Void) {
-            std::vector<ionshared::Ptr<Inst>> insts = entryBasicBlock->get()->getInsts();
+            std::vector<ionshared::Ptr<Inst>> insts = entryBasicBlock->get()->insts;
 
             // TODO: CRITICAL! There may be more than a single terminal statement on basic blocks? Technically speaking LLVM does not allow that to EXECUTE, however, it can OCCUR.
             ionshared::OptPtr<Inst> terminalInst = entryBasicBlock->get()->findTerminalInst();
 
             if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
-                this->getPassContext()->getDiagnosticBuilder()
+                this->context->diagnosticBuilder
                     ->bootstrap(diagnostic::functionMissingReturnValue)
                     ->finish();
             }
@@ -58,12 +58,12 @@ namespace ionir {
 
     void TypeCheckPass::visitReturnInst(ionshared::Ptr<ReturnInst> node) {
         ionshared::Ptr<Construct> possibleFunctionParent =
-            node->getParent()->getParent()->getParent();
+            node->getUnboxedParent()->getUnboxedParent()->getUnboxedParent();
 
-        IONIR_PASS_INTERNAL_ASSERT(possibleFunctionParent->getConstructKind() == ConstructKind::Function)
+        IONIR_PASS_INTERNAL_ASSERT(possibleFunctionParent->constructKind == ConstructKind::Function)
 
         ionshared::Ptr<Function> function = possibleFunctionParent->dynamicCast<Function>();
-        ionshared::Ptr<Type> functionReturnType = function->getPrototype()->getReturnType();
+        ionshared::Ptr<Type> functionReturnType = function->prototype->returnType;
         ionshared::OptPtr<Construct> returnStatementValue = node->getValue();
         bool returnStatementValueSet = ionshared::util::hasValue(returnStatementValue);
 
@@ -71,8 +71,8 @@ namespace ionir {
          * Functions whose prototype's return type is non-void must provide
          * a value to the return instruction.
          */
-        if ((functionReturnType->getTypeKind() != TypeKind::Void) && !returnStatementValueSet) {
-            this->getPassContext()->getDiagnosticBuilder()
+        if ((functionReturnType->typeKind != TypeKind::Void) && !returnStatementValueSet) {
+            this->context->diagnosticBuilder
                 ->bootstrap(diagnostic::functionMissingReturnValue)
                 ->finish();
 
@@ -80,7 +80,7 @@ namespace ionir {
             return;
         }
         else if (returnStatementValueSet) {
-            switch (returnStatementValue->get()->getConstructKind()) {
+            switch (returnStatementValue->get()->constructKind) {
                 /**
                  * Return instruction's value is a construct derived from Value<>.
                  * Compare its type to the function's return type.
@@ -91,7 +91,7 @@ namespace ionir {
                      * return value's type construct.
                      */
                     ionshared::Ptr<Type> returnInstValueType =
-                        returnStatementValue->get()->staticCast<Value<>>()->getType();
+                        returnStatementValue->get()->staticCast<Value<>>()->type;
 
                     /**
                      * Function's return type and the return instruction's value's type
@@ -102,7 +102,7 @@ namespace ionir {
                     if (!type_util::isSameType(returnInstValueType, functionReturnType)) {
                         throw ionshared::util::quickError(
                             IONIR_NOTICE_FUNCTION_RETURN_TYPE_MISMATCH,
-                            function->getPrototype()->getName()
+                            function->prototype->name
                         );
                     }
 
@@ -120,6 +120,8 @@ namespace ionir {
                     break;
                 }
 
+                // TODO: What about call instruction? Limit return value to Ref<Value>.
+
                 default: {
                     throw std::runtime_error("Unrecognized return instruction value");
                 }
@@ -128,11 +130,11 @@ namespace ionir {
     }
 
     void TypeCheckPass::visitStoreInst(ionshared::Ptr<StoreInst> node) {
-        TypeKind storeInstValueTypeKind = node->getValue()->getType()->getTypeKind();
-        ionshared::Ptr<AllocaInst> targetValue = node->getTarget();
+        TypeKind storeInstValueTypeKind = node->value->type->typeKind;
+        ionshared::Ptr<AllocaInst> targetValue = node->target;
 
         // Attempting to store a value with a different type than what was allocated.
-        if (storeInstValueTypeKind != targetValue->getType()->getTypeKind()) {
+        if (storeInstValueTypeKind != targetValue->type->typeKind) {
             throw ionshared::util::quickError(
                 IONIR_NOTICE_INST_STORE_TYPE_MISMATCH,
 

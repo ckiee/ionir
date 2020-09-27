@@ -15,7 +15,7 @@ namespace ionir {
     class Type;
 
     template<typename T>
-    class Value;
+    struct Value;
 
     enum class ConstructKind {
         Type,
@@ -109,7 +109,10 @@ namespace ionir {
             return children;
         }
 
-        explicit Construct(ConstructKind kind);
+        explicit Construct(
+            ConstructKind kind,
+            ionshared::OptPtr<Construct> parent = std::nullopt
+        );
 
         virtual void accept(Pass &visitor) = 0;
 
@@ -117,14 +120,14 @@ namespace ionir {
 
         // TODO: Move to BaseConstruct<> in ionshared.
         /**
-         * Verify the members and properties of the node, and it's children
-         * against being nullptr. Without an implementation by the derived
-         * class, this will return true if all the child nodes are successfully
-         * verified. If there are no child nodes, the result will be true by
-         * default.
+         * Verify the members and properties of the node, and it's children to
+         * ensure that this construct is well-formed. Without an implementation
+         * by the derived class (or without being called by it), this will return
+         * true if all the child nodes are successfully verified. If there are no
+         * child nodes, the result will be true by default.
          */
         [[nodiscard]] virtual bool verify();
 
-        [[nodiscard]] std::optional<std::string> getConstructKindName();
+        [[nodiscard]] std::optional<std::string> findConstructKindName();
     };
 }

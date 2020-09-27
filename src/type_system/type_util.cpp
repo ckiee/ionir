@@ -22,8 +22,8 @@ namespace ionir::type_util {
     }
 
     bool isSameType(const ionshared::Ptr<Type> &typeA, const ionshared::Ptr<Type> &typeB) {
-        TypeKind typeAKind = typeA->getTypeKind();
-        TypeKind typeBKind = typeB->getTypeKind();
+        TypeKind typeAKind = typeA->typeKind;
+        TypeKind typeBKind = typeB->typeKind;
 
         if (typeAKind != typeBKind) {
             return false;
@@ -34,7 +34,7 @@ namespace ionir::type_util {
                 ionshared::Ptr<IntegerType> integerTypeA = typeA->dynamicCast<IntegerType>();
                 ionshared::Ptr<IntegerType> integerTypeB = typeB->dynamicCast<IntegerType>();
 
-                return integerTypeA->getIntegerKind() == integerTypeB->getIntegerKind();
+                return integerTypeA->integerKind == integerTypeB->integerKind;
             }
 
             // TODO: Decimal types as well (copy integer code basically).

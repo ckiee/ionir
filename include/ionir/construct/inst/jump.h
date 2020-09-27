@@ -11,19 +11,13 @@ namespace ionir {
         ionshared::Ptr<BasicBlock> basicBlockTarget;
     };
 
-    class JumpInst : public Inst {
-    private:
+    struct JumpInst : Inst {
         ionshared::Ptr<BasicBlock> basicBlockTarget;
 
-    public:
         explicit JumpInst(const JumpInstOpts &opts);
 
         void accept(Pass &visitor) override;
 
-        Ast getChildrenNodes() override;
-
-        [[nodiscard]] ionshared::Ptr<BasicBlock> getBasicBlockTarget() const noexcept;
-
-        void setBasicBlockTarget(ionshared::Ptr<BasicBlock> basicBlockTarget) noexcept;
+        [[nodiscard]] Ast getChildrenNodes() override;
     };
 }

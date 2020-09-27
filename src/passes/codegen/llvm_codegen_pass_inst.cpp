@@ -6,7 +6,7 @@
 namespace ionir {
     void LlvmCodegenPass::visitAllocaInst(ionshared::Ptr<AllocaInst> node) {
         this->requireBuilder();
-        this->visitType(node->getType());
+        node->type->accept(*this);
 
         llvm::Type *type = this->typeStack.pop();
 
@@ -15,7 +15,7 @@ namespace ionir {
          * using the buffered builder.
          */
         llvm::AllocaInst *llvmAllocaInst =
-            this->getLlvmBuilder()->CreateAlloca(type, (llvm::Value *)nullptr, node->getYieldId());
+            this->getLlvmBuilder()->CreateAlloca(type, (llvm::Value *)nullptr, node->yieldId);
 
         this->valueStack.push(llvmAllocaInst);
         this->symbolTable.set(node, llvmAllocaInst);
@@ -32,8 +32,8 @@ namespace ionir {
 
             // TODO: Hotfix. Clean up messy code.
             // Process the value if applicable.
-            if ((*returnInstValue)->getConstructKind() == ConstructKind::Value) {
-                this->visitValue((*returnInstValue)->staticCast<Value<>>());
+            if ((*returnInstValue)->constructKind == ConstructKind::Value) {
+                returnInstValue->get()->accept(*this);
                 llvmValue = this->valueStack.pop();
             }
             // TODO: Ref<> is no longer a construct nor should be used for name resolution (name resolution occurs on Ionlang).
@@ -77,7 +77,7 @@ namespace ionir {
 
     void LlvmCodegenPass::visitBranchInst(ionshared::Ptr<BranchInst> node) {
         this->requireBuilder();
-        this->visit(node->getCondition());
+        this->visit(node->condition);
 
         llvm::Value *condition = this->valueStack.pop();
 
@@ -89,17 +89,17 @@ namespace ionir {
              * resulting value because it might not have been emitted if it was
              * processed already.
              */
-            this->visitBasicBlock(node->getConsequentBasicBlock());
+            this->visitBasicBlock(node->consequentBasicBlock);
             this->valueStack.tryPop();
-            this->visitBasicBlock(node->getAlternativeBasicBlock());
+            this->visitBasicBlock(node->alternativeBasicBlock);
             this->valueStack.tryPop();
         });
 
         std::optional<llvm::BasicBlock *> llvmConsequentBasicBlock =
-            this->symbolTable.find<llvm::BasicBlock>(node->getConsequentBasicBlock());
+            this->symbolTable.find<llvm::BasicBlock>(node->consequentBasicBlock);
 
         std::optional<llvm::BasicBlock *> llvmAlternativeBasicBlock =
-            this->symbolTable.find<llvm::BasicBlock>(node->getAlternativeBasicBlock());
+            this->symbolTable.find<llvm::BasicBlock>(node->alternativeBasicBlock);
 
         if (!ionshared::util::hasValue(llvmConsequentBasicBlock) || !ionshared::util::hasValue(llvmAlternativeBasicBlock)) {
             throw std::runtime_error("Emitted LLVM basic block could not be found");
@@ -121,7 +121,7 @@ namespace ionir {
         this->requireBuilder();
 
         ionshared::Ptr<Construct> callee = node->getCallee();
-        ConstructKind calleeConstructKind = callee->getConstructKind();
+        ConstructKind calleeConstructKind = callee->constructKind;
 
         if (calleeConstructKind != ConstructKind::Function && calleeConstructKind != ConstructKind::Extern) {
             // TODO: Use DiagnosticBuilder.
@@ -145,10 +145,10 @@ namespace ionir {
         ionshared::Ptr<Prototype> calleePrototype;
 
         if (calleeConstructKind == ConstructKind::Function) {
-            calleePrototype = callee->dynamicCast<Function>()->getPrototype();
+            calleePrototype = callee->dynamicCast<Function>()->prototype;
         }
         else if (calleeConstructKind == ConstructKind::Extern) {
-            calleePrototype = callee->dynamicCast<Extern>()->getPrototype();
+            calleePrototype = callee->dynamicCast<Extern>()->prototype;
         }
         else {
             throw std::runtime_error("Callee is neither a function nor an extern");
@@ -156,7 +156,7 @@ namespace ionir {
 
         // Attempt to resolve the callee LLVM-equivalent function.
         llvm::Function* llvmCallee =
-            (*this->buffers.llvmModule)->getFunction(calleePrototype->getName());
+            (*this->buffers.llvmModule)->getFunction(calleePrototype->name);
 
         // LLVM-equivalent function could not be found. Report an error.
         if (llvmCallee == nullptr) {
@@ -164,13 +164,11 @@ namespace ionir {
         }
 
         std::vector<ionshared::Ptr<Construct>> args = node->getArgs();
-        llvm::ArrayRef<llvm::Value *> llvmArgs = {};
+        std::vector<llvm::Value *> llvmArgs;
 
         for (const auto &arg : args) {
             this->visit(arg);
-
-            // TODO: Is .vec() correct? Remember . is copy. But! It's a vector of pointers.
-            llvmArgs.vec().push_back(this->valueStack.pop());
+            llvmArgs.push_back(this->valueStack.pop());
         }
 
         // Otherwise, create the LLVM call instruction.
@@ -185,7 +183,7 @@ namespace ionir {
         this->requireFunction();
         this->requireBuilder();
 
-        ionshared::Ptr<AllocaInst> target = node->getTarget();
+        ionshared::Ptr<AllocaInst> target = node->target;
 
         std::optional<llvm::AllocaInst *> llvmTargetAlloca =
             this->symbolTable.find<llvm::AllocaInst>(target);
@@ -194,7 +192,7 @@ namespace ionir {
             throw std::runtime_error("Target could not be retrieved from the emitted entities map");
         }
 
-        this->visitValue(node->getValue());
+        node->value->accept(*this);
 
         llvm::Value *llvmValue = this->valueStack.pop();
 
@@ -219,7 +217,7 @@ namespace ionir {
         // ------------------------------------------------------------------
         this->requireBuilder();
 
-        ionshared::Ptr<BasicBlock> basicBlockTarget = node->getBasicBlockTarget();
+        ionshared::Ptr<BasicBlock> basicBlockTarget = node->basicBlockTarget;
 
         this->lockBuffers([&, this] {
             /**
@@ -235,7 +233,8 @@ namespace ionir {
             this->symbolTable.find<llvm::BasicBlock>(basicBlockTarget);
 
         if (!ionshared::util::hasValue(llvmBasicBlockResult)) {
-            throw std::runtime_error("Could not find llvm block in emitted entities: " + basicBlockTarget->getName());
+            // TODO: Throw as internal error (DiagnosticBuilder).
+            throw std::runtime_error("Could not find llvm block in emitted entities: " + basicBlockTarget->name);
         }
 
         // Create the LLVM branch instruction (with no condition).

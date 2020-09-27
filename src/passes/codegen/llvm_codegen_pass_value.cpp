@@ -12,14 +12,14 @@ namespace ionir {
          * wrapper.
          */
         llvm::APInt apInt = llvm::APInt(
-            (unsigned)node->getType()->getIntegerKind(),
-            node->getValue(),
-            node->getType()->getIsSigned()
+            (unsigned)node->type->integerKind,
+            node->value,
+            node->type->isSigned
         );
 
-        ionshared::Ptr<Type> nodeType = node->getType();
+        ionshared::Ptr<Type> nodeType = node->type;
 
-        if (nodeType->getTypeKind() != TypeKind::Integer) {
+        if (nodeType->typeKind != TypeKind::Integer) {
             throw std::runtime_error("Integer value's type must be integer type");
         }
 
@@ -39,7 +39,7 @@ namespace ionir {
         this->requireBuilder();
 
         llvm::Type *charType = llvm::Type::getInt8Ty(**this->buffers.llvmContext);
-        llvm::Constant *value = llvm::ConstantInt::get(charType, node->getValue());
+        llvm::Constant *value = llvm::ConstantInt::get(charType, node->value);
 
         this->valueStack.push(value);
 //        this->addToScope(node, value);
@@ -49,7 +49,7 @@ namespace ionir {
         this->requireBuilder();
 
         this->valueStack.push(
-            this->getLlvmBuilder()->CreateGlobalStringPtr(node->getValue())
+            this->getLlvmBuilder()->CreateGlobalStringPtr(node->value)
         );
 //        this->addToScope(node, value);
     }
@@ -59,7 +59,7 @@ namespace ionir {
 
         // Create the boolean type along with the LLVM value.
         llvm::IntegerType *type = llvm::Type::getInt1Ty(**this->buffers.llvmContext);
-        llvm::Constant *value = llvm::ConstantInt::get(type, llvm::APInt(1, node->getValue(), false));
+        llvm::Constant *value = llvm::ConstantInt::get(type, llvm::APInt(1, node->value, false));
 
         this->valueStack.push(value);
 //        this->addToScope(node, value);

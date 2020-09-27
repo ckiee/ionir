@@ -6,7 +6,7 @@
 namespace ionir {
     class Pass;
 
-    struct Extern : public ChildConstruct<Module> {
+    struct Extern : public ConstructWithParent<Module> {
         ionshared::Ptr<Prototype> prototype;
 
         Extern(

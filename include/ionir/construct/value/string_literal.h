@@ -6,17 +6,11 @@
 namespace ionir {
     class Pass;
 
-    class StringLiteral : public Value<> {
-    private:
+    struct StringLiteral : Value<> {
         std::string value;
 
-    public:
         explicit StringLiteral(std::string value);
 
         void accept(Pass &visitor) override;
-
-        [[nodiscard]] std::string getValue() const noexcept;
-
-        void setValue(std::string value) noexcept;
     };
 }

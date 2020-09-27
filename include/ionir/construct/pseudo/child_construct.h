@@ -3,29 +3,20 @@
 #include <ionir/construct/construct.h>
 
 namespace ionir {
-    template<typename T>
-    struct ChildConstructOpts {
-        ionshared::Ptr<T> parent;
-    };
-
-    template<class T = Construct>
-    class ChildConstruct : public Construct {
-    private:
-        ionshared::Ptr<T> parent;
-
-    public:
-        ChildConstruct(ionshared::Ptr<T> parent, ConstructKind kind) :
-            Construct(kind),
-            parent(parent) {
+    template<typename T = Construct>
+//        requires std::derived_from<T, Construct> // TODO: Cannot work in the current system because ConstructWithParent<T> is used where T is a forward decl.
+    struct ConstructWithParent : public Construct {
+        ConstructWithParent(ionshared::Ptr<T> parent, ConstructKind kind) :
+            Construct(kind, parent) {
             //
         }
 
-        ionshared::Ptr<T> getParent() const noexcept {
-            return this->parent;
-        }
+        ionshared::Ptr<T> getUnboxedParent() {
+            if (!ionshared::util::hasValue(this->parent)) {
+                throw std::runtime_error("Parent is nullptr");
+            }
 
-        void setParent(ionshared::Ptr<T> parent) noexcept {
-            this->parent = parent;
+            return this->parent->get()->template dynamicCast<T>();
         }
     };
 }

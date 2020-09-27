@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <ionir/construct/construct.h>
-#include "helpers.h"
 
 namespace ionir {
     template<class T = Construct>

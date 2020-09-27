@@ -56,7 +56,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
 
     ionshared::Ptr<Function> function = std::make_shared<Function>(prototype, body);
 
-    body->setParent(function);
+    body->parent = function;
     llvmCodegenPass->visitFunction(function);
 
     EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "function_empty"));

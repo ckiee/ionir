@@ -28,13 +28,13 @@ namespace ionir {
     void EntryPointCheckPass::visitFunction(ionshared::Ptr<Function> node) {
         Pass::visitFunction(node);
 
-        if (node->getPrototype()->getName() == ConstName::main) {
+        if (node->prototype->name == ConstName::main) {
             /**
              * Make sure there was not an entry point function
              * previously encountered.
              */
             if (ionshared::util::hasValue(this->entryFunction)) {
-                this->getPassContext()->getDiagnosticBuilder()
+                this->context->diagnosticBuilder
                     ->bootstrap(diagnostic::entryPointRedefinition)
                     ->finish();
 

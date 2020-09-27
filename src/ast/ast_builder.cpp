@@ -89,7 +89,7 @@ namespace ionir {
         ionshared::Ptr<Function> function = std::make_shared<Function>(prototype, functionBody);
 
         // Fill in the function body's parent.
-        functionBody->setParent(function);
+        functionBody->parent = function;
         
         this->functionBuffer = function;
         this->moduleBuffer->get()->insertFunction(function);

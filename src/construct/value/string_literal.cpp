@@ -10,12 +10,4 @@ namespace ionir {
     void StringLiteral::accept(Pass &visitor) {
         visitor.visitStringLiteral(this->dynamicCast<StringLiteral>());
     }
-
-    std::string StringLiteral::getValue() const noexcept {
-        return this->value;
-    }
-
-    void StringLiteral::setValue(std::string value) noexcept {
-        this->value = std::move(value);
-    }
 }

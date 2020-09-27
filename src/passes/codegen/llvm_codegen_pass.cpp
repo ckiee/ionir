@@ -136,19 +136,19 @@ namespace ionir {
          */
         llvm::BasicBlock *llvmBasicBlock = llvm::BasicBlock::Create(
             **this->buffers.llvmContext,
-            node->getName(),
+            node->name,
             *this->buffers.llvmFunction
         );
 
         this->buffers.llvmBasicBlock = llvmBasicBlock;
 
-        std::vector<ionshared::Ptr<Inst>> insts = node->getInsts();
+        std::vector<ionshared::Ptr<Inst>> insts = node->insts;
 
         // Emit the entity at this point so visiting children can access it.
         this->symbolTable.set(node, llvmBasicBlock);
 
         for (const auto &inst : insts) {
-            this->visitInst(inst);
+            inst->accept(*this);
 
             // Discard the resulting instruction, as it is not needed.
             this->valueStack.pop();
@@ -179,7 +179,8 @@ namespace ionir {
             throw std::runtime_error("No entry basic block exists for block");
         }
 
-        TypeKind parentFunctionPrototypeReturnKind = node->getParent()->getPrototype()->getReturnType()->getTypeKind();
+        TypeKind parentFunctionPrototypeReturnKind =
+            node->getUnboxedParent()->prototype->returnType->typeKind;
 
         /**
          * The function body's entry basic block contains no terminal instruction.
@@ -203,18 +204,20 @@ namespace ionir {
 
     void LlvmCodegenPass::visitGlobal(ionshared::Ptr<Global> node) {
         this->requireModule();
-        this->visitType(node->getType());
+        node->type->accept(*this);
 
         llvm::Type *type = this->typeStack.pop();
 
         llvm::GlobalVariable *globalVar =
-            llvm::dyn_cast<llvm::GlobalVariable>((*this->buffers.llvmModule)->getOrInsertGlobal(node->getName(), type));
+            llvm::dyn_cast<llvm::GlobalVariable>(
+                (*this->buffers.llvmModule)->getOrInsertGlobal(node->name, type)
+            );
 
-        ionshared::OptPtr<Value<>> nodeValue = node->getValue();
+        ionshared::OptPtr<Value<>> nodeValue = node->value;
 
         // Assign value if applicable.
         if (ionshared::util::hasValue(nodeValue)) {
-            this->visitValue(*nodeValue);
+            nodeValue->get()->accept(*this);
 
             llvm::Value *value = this->valueStack.pop();
 
@@ -230,44 +233,6 @@ namespace ionir {
         // TODO: Apply LLVM entity to the node.
     }
 
-    void LlvmCodegenPass::visitType(ionshared::Ptr<Type> node) {
-        switch (node->getTypeKind()) {
-            case TypeKind::Void: {
-                return this->visitVoidType(node->staticCast<VoidType>());
-            }
-
-            case TypeKind::Integer: {
-                return this->visitIntegerType(node->staticCast<IntegerType>());
-            }
-
-            case TypeKind::Boolean: {
-                return this->visitBooleanType(node->staticCast<BooleanType>());
-            }
-
-            case TypeKind::String: {
-                // TODO
-
-                throw std::runtime_error("Not implemented");
-            }
-
-            case TypeKind::Pointer: {
-                // TODO
-
-                throw std::runtime_error("Not implemented");
-            }
-
-            case TypeKind::UserDefined: {
-                // TODO
-
-                throw std::runtime_error("Not implemented");
-            }
-
-            default: {
-                throw std::runtime_error("Could not identify type kind");
-            }
-        }
-    }
-
     void LlvmCodegenPass::visitIntegerType(ionshared::Ptr<IntegerType> node) {
         this->requireContext();
 
@@ -277,7 +242,7 @@ namespace ionir {
          * Create the corresponding LLVM integer type based off the
          * node's integer kind.
          */
-        switch (node->getIntegerKind()) {
+        switch (node->integerKind) {
             case IntegerKind::Int8: {
                 type = llvm::Type::getInt8Ty(**this->buffers.llvmContext);
 
@@ -319,7 +284,7 @@ namespace ionir {
         }
 
         this->typeStack.push(this->processTypeQualifiers(
-            node->getQualifiers(),
+            node->qualifiers,
             *type
         ));
     }
@@ -328,7 +293,7 @@ namespace ionir {
         this->requireContext();
 
         this->typeStack.push(this->processTypeQualifiers(
-            node->getQualifiers(),
+            node->qualifiers,
             llvm::Type::getInt1Ty(**this->buffers.llvmContext)
         ));
     }
@@ -337,20 +302,20 @@ namespace ionir {
         this->requireContext();
 
         this->typeStack.push(this->processTypeQualifiers(
-            node->getQualifiers(),
+            node->qualifiers,
             llvm::Type::getVoidTy(**this->buffers.llvmContext)
         ));
     }
 
     void LlvmCodegenPass::visitModule(ionshared::Ptr<Module> node) {
         this->buffers.llvmContext = new llvm::LLVMContext();
-        this->buffers.llvmModule = new llvm::Module(**node->getIdentifier(), **this->buffers.llvmContext);
+        this->buffers.llvmModule = new llvm::Module(**node->identifier, **this->buffers.llvmContext);
 
         // Set the module on the modules symbol table.
-        this->modules->set(**node->getIdentifier(), *this->buffers.llvmModule);
+        this->modules->set(**node->identifier, *this->buffers.llvmModule);
 
         // Set the module's context as the context buffer.
-        this->buffers.context = node->getContext();
+        this->buffers.context = node->context;
 
         // Proceed to visit all the module's children (top-level constructs).
         std::map<std::string, ionshared::Ptr<Construct>> moduleSymbolTable =
@@ -371,11 +336,11 @@ namespace ionir {
         this->requireModule();
         this->requireContext();
 
-        auto fieldsMap = node->getFields()->unwrap();
+        auto fieldsNativeMap = node->fields->unwrap();
         std::vector<llvm::Type *> llvmFields = {};
 
-        for (const auto &[name, type] : fieldsMap) {
-            this->visitType(type);
+        for (const auto &[name, type] : fieldsNativeMap) {
+            type->accept(*this);
             llvmFields.push_back(this->typeStack.pop());
         }
 
@@ -386,7 +351,7 @@ namespace ionir {
             llvmFields
         );
 
-        llvmStruct->setName(node->getName());
+        llvmStruct->setName(node->name);
         this->typeStack.push(llvmStruct);
     }
 }

@@ -37,7 +37,7 @@ namespace ionir {
 
     typedef ionshared::Set<TypeQualifier> TypeQualifiers;
 
-    struct Type : public Construct, public ionshared::Named {
+    struct Type : Construct, ionshared::Named {
         TypeKind typeKind;
 
         ionshared::Ptr<TypeQualifiers> qualifiers;
@@ -52,10 +52,8 @@ namespace ionir {
             TypeKind kind = TypeKind::UserDefined,
 
             ionshared::Ptr<TypeQualifiers> qualifiers =
-                ionshared::Ptr<TypeQualifiers>()
+                std::make_shared<TypeQualifiers>()
         );
-
-        void accept(Pass &visitor) override;
 
         [[nodiscard]] bool equals(const ionshared::Ptr<Construct> &other) override;
 

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <ionir/misc/type_factory.h>
+#include <ionir/misc/util.h>
 #include <ionir/tracking/scope_anchor.h>
 #include <ionir/construct/pseudo/child_construct.h>
 #include "pseudo/args.h"
@@ -38,10 +39,10 @@ namespace ionir {
         Internal
     };
 
-    struct BasicBlockOpts : ChildConstructOpts<FunctionBody> {
-        BasicBlockKind kind;
+    struct BasicBlockOpts : util::ConstructParentMixin<FunctionBody> {
+        const BasicBlockKind kind;
 
-        std::string id;
+        const std::string id;
 
         std::vector<ionshared::Ptr<Inst>> insts = {};
 
@@ -49,7 +50,7 @@ namespace ionir {
     };
 
     // TODO: Must be verified to contain a single terminal instruction at the end.
-    struct BasicBlock : public ChildConstruct<FunctionBody>, public ScopeAnchor<Inst>, public ionshared::Named {
+    struct BasicBlock : ConstructWithParent<FunctionBody>, ScopeAnchor<Inst>, ionshared::Named {
         const BasicBlockKind basicBlockKind;
 
         std::vector<ionshared::Ptr<Inst>> insts;

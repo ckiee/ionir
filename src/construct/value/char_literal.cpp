@@ -10,12 +10,4 @@ namespace ionir {
     void CharLiteral::accept(Pass &visitor) {
         visitor.visitCharLiteral(this->dynamicCast<CharLiteral>());
     }
-
-    char CharLiteral::getValue() const noexcept {
-        return this->value;
-    }
-
-    void CharLiteral::setValue(char value) noexcept {
-        this->value = value;
-    }
 }

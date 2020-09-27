@@ -3,9 +3,9 @@
 
 namespace ionir {
     BasicBlock::BasicBlock(const BasicBlockOpts &opts) :
-        ChildConstruct(opts.parent, ConstructKind::BasicBlock),
+        ConstructWithParent(opts.parent, ConstructKind::BasicBlock),
         ScopeAnchor<Inst>(opts.symbolTable),
-        Named(opts.id),
+        Named{opts.id},
         basicBlockKind(opts.kind),
         insts(opts.insts) {
         //
@@ -22,8 +22,8 @@ namespace ionir {
     }
 
     bool BasicBlock::verify() {
-        return ionshared::util::hasValue(this->findTerminalInst())
-            && this->getParent() != nullptr
+        return this->hasTerminalInst()
+            && ionshared::util::hasValue(this->parent)
             && Construct::verify();
     }
 
@@ -38,7 +38,7 @@ namespace ionir {
 
         // TODO: --- Repeated code below (appendInst). Simplify? Maybe create registerInst() function? ---
 
-        const std::optional<std::string> id = util::getInstId(inst);
+        const std::optional<std::string> id = util::findInstId(inst);
 
         // Instruction is named. Register it in the symbol table.
         if (id.has_value()) {
@@ -50,7 +50,7 @@ namespace ionir {
     void BasicBlock::appendInst(const ionshared::Ptr<Inst> &inst) {
         this->insts.push_back(inst);
 
-        std::optional<std::string> id = util::getInstId(inst);
+        std::optional<std::string> id = util::findInstId(inst);
 
         // Instruction is named. Register it in the symbol table.
         if (id.has_value()) {
@@ -76,7 +76,7 @@ namespace ionir {
 
     ionshared::Ptr<BasicBlock> BasicBlock::split(uint32_t atOrder, std::string id) {
         // TODO: If insts are empty, atOrder parameter is ignored (useless). Address that.
-        // TODO: Symbol table is not being relocated.
+        // TODO: Symbol table is not being relocated/split.
 
         if (!this->insts.empty() && (atOrder < 0 || atOrder > this->insts.size() - 1)) {
             throw std::out_of_range("Provided order is outsize of bounds");
@@ -95,7 +95,7 @@ namespace ionir {
         }
 
         ionshared::Ptr<BasicBlock> newBasicBlock = std::make_shared<BasicBlock>(BasicBlockOpts{
-            this->getParent(),
+            this->getUnboxedParent(),
             this->basicBlockKind,
             std::move(id),
             insts
@@ -105,7 +105,7 @@ namespace ionir {
          * Register the newly created basic block on the parent's
          * symbol table (parent is a function body).
          */
-        this->getParent()->insertBasicBlock(newBasicBlock);
+        this->getUnboxedParent()->insertBasicBlock(newBasicBlock);
 
         return newBasicBlock;
     }
