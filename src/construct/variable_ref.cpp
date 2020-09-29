@@ -3,7 +3,7 @@
 namespace ionir {
     VariableRef::VariableRef(std::string id) :
         Construct(ConstructKind::VariableRef),
-        Named(std::move(id)) {
+        ionshared::Named{std::move(id)} {
         //
     }
 
