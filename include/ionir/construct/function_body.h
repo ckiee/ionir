@@ -21,9 +21,9 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildrenNodes() override;
+        [[nodiscard]] Ast getChildrenNodes() override;
 
-        bool verify() override;
+        [[nodiscard ]]bool verify() override;
 
         [[nodiscard]] ionshared::OptPtr<BasicBlock> findEntryBasicBlock();
 

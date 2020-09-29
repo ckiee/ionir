@@ -9,7 +9,7 @@
 namespace ionir {
     class Pass;
 
-    struct Function : public Construct {
+    struct Function : Construct {
         ionshared::Ptr<Prototype> prototype;
 
         ionshared::Ptr<FunctionBody> body;
@@ -23,8 +23,8 @@ namespace ionir {
 
         void accept(Pass &visitor) override;
 
-        Ast getChildrenNodes() override;
+        [[nodiscard]] Ast getChildrenNodes() override;
 
-        bool verify() override;
+        [[nodiscard]] bool verify() override;
     };
 }

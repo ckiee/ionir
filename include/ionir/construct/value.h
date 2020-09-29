@@ -6,14 +6,6 @@
 namespace ionir {
     class Pass;
 
-    struct CharLiteral;
-
-    struct IntegerLiteral;
-
-    struct StringLiteral;
-
-    struct BooleanLiteral;
-
     enum class ValueKind {
         Integer,
 
@@ -36,10 +28,5 @@ namespace ionir {
             type(type) {
             //
         }
-
-//        ionshared::Ptr<Value<>> asValue() const {
-//            // TODO: Causing error, but no highlight locally.
-//            return this->dynamicCast<Value<>>();
-//        }
     };
 }
