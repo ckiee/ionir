@@ -148,8 +148,10 @@ Use the `ctest` command bundled with CMake to run tests.
 Alternatively, build project & tests and run the tests executable generated.
 
 ---
+### Developer notes
+
 <details>
-    <summary>Developer notes</summary>
+    <summary>Building & installing LLVM</summary>
 
 #### (Recommended) Automatically building LLVM from source (Windows)
 
@@ -246,9 +248,10 @@ Simply use [Homebrew](https://brew.sh/) to install LLVM:
 $ brew install llvm@9
 ```
 
-#### LLVM notes
+#### Additional notes
 
 If CMake is having a hard time finding your LLVM installation, try setting the `LLVM_DIR` environment variable to the root folder of the installation. Example: If you build LLVM from source and have it located on your Downloads folder.
+</details>
 
 #### Building project
 
@@ -290,11 +293,15 @@ $ sudo update-alternatives --config c++
 
 Then selecting `/usr/bin/clang++`.
 
+<details>
+    <summary>Resources</summary>
+    
 #### Type theory resources
 
 1. [LEAN tutorial](https://leanprover.github.io/tutorial/tutorial.pdf)
 2. [LEAN tutorial playground](https://leanprover.github.io/tutorial/)
 3. [LEAN web editor](https://leanprover.github.io/live/latest/)
+</details>
 
 #### Common problems
 
@@ -319,4 +326,3 @@ sudo ln /usr/bin/g++-8 /usr/bin/g++
 #### Style guide
 
 This project partially adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
-</details>
