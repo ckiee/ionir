@@ -37,11 +37,11 @@ $ cmake --install .
 ```
 
 ---
-1. _Make sure you've selected the correct branch that you're intending to
+¹ _Make sure you've selected the correct branch that you're intending to
 build (`dev` for latest changes, `master` for stable), and initialized
 git submodules after cloning the repository and prior to building._
 
-2. _Installing the library might require administrator (or super-user)
+² _Installing the library might require administrator (or super-user)
 permissions, as the installed files will likely be placed under restricted
 paths. If you're using Windows, re-open the Command prompt (or PowerShell)
 as Administrator. If you're on a Unix-like system, simple prepend `sudo` to
@@ -286,13 +286,13 @@ $ sudo update-alternatives --config c++
 
 Then selecting `/usr/bin/clang++`.
 
-### Type theory resources
+#### Type theory resources
 
 1. [LEAN tutorial](https://leanprover.github.io/tutorial/tutorial.pdf)
 2. [LEAN tutorial playground](https://leanprover.github.io/tutorial/)
 3. [LEAN web editor](https://leanprover.github.io/live/latest/)
 
-### Common problems
+#### Common problems
 
 * Linux: `/usr/bin/ld: cannot find -ledit`:
 
@@ -312,6 +312,6 @@ sudo rm /usr/bin/g++
 sudo ln /usr/bin/g++-8 /usr/bin/g++
 ```
 
-### Style guide
+#### Style guide
 
 This project partially adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
