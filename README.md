@@ -111,7 +111,7 @@ int main() {
     LlvmModule module = LlvmModule(llvmCodegenPass->getModule());
 
     // Since we're targeting LLVM IR, print out the resulting LLVM IR code.
-    std::cout << module.getAsString() << std::endl;
+    std::cout << module.makeIr() << std::endl;
 
     // Finish program.
     return 0;
