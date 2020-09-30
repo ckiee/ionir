@@ -2,7 +2,9 @@
 
 ionir is a collection of in-memory intermediate representation constructs used by the Ion compiler. Type-checking,
 borrow checking, optimization, and other important passes except for the macro expansion and name resolution passes
-are present and occur in ionir. The [ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
+are present and occur in ionir.
+
+The [ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
 and emits ionir constructs which are then processed and emitted through the code generation pass to LLVM IR.
 
 ### Requirements
@@ -37,11 +39,11 @@ $ cmake --install .
 ```
 
 ---
-¹ _Make sure you've selected the correct branch that you're intending to
+1. _Make sure you've selected the correct branch that you're intending to
 build (`dev` for latest changes, `master` for stable), and initialized
 git submodules after cloning the repository and prior to building._
 
-² _Installing the library might require administrator (or super-user)
+2. _Installing the library might require administrator (or super-user)
 permissions, as the installed files will likely be placed under restricted
 paths. If you're using Windows, re-open the Command prompt (or PowerShell)
 as Administrator. If you're on a Unix-like system, simple prepend `sudo` to
@@ -145,7 +147,11 @@ Use the `ctest` command bundled with CMake to run tests.
 
 Alternatively, build project & tests and run the tests executable generated.
 
-### (Recommended) Automatically building LLVM from source (Windows)
+---
+<details>
+    <summary>Developer notes</summary>
+
+#### (Recommended) Automatically building LLVM from source (Windows)
 
 0. Ensure you have _all_ the requirements (excluding LLVM) properly installed, as the build process for LLVM on Windows will require Python, CMake and MinGW.
 
@@ -157,7 +163,7 @@ Alternatively, build project & tests and run the tests executable generated.
 
 4. Run the `install_llvm.bat` file you just copied **as administrator** by right-clicking it then selecting `Run as administrator`.
 
-### Manually building LLVM from source (Windows)
+#### Manually building LLVM from source (Windows)
 
 0. Ensure you have _all_ the requirements (excluding LLVM) properly installed, as the build process for LLVM on Windows will require Python, CMake and MinGW.
 
@@ -228,11 +234,11 @@ target_link_libraries(${PROJECT_NAME} ${llvm_libs})
 
 For additional information on building LLVM with CMake, [view the LLVM docs on building with CMake](https://llvm.org/docs/CMake.html).
 
-### Installing LLVM (Linux)
+#### Installing LLVM (Linux)
 
 Please refer to [this link](http://apt.llvm.org/) for instructions on installing LLVM on Linux systems. It is recommended to use the automatic installation script provided there.
 
-### Installing LLVM (macOS)
+#### Installing LLVM (macOS)
 
 Simply use [Homebrew](https://brew.sh/) to install LLVM:
 
@@ -240,25 +246,23 @@ Simply use [Homebrew](https://brew.sh/) to install LLVM:
 $ brew install llvm@9
 ```
 
-### LLVM notes
+#### LLVM notes
 
 If CMake is having a hard time finding your LLVM installation, try setting the `LLVM_DIR` environment variable to the root folder of the installation. Example: If you build LLVM from source and have it located on your Downloads folder.
 
-### Building project
+#### Building project
 
 * In Visual Studio Code, use `Clang X.0.0 for MSVC with Visual Studio Community 2019 (amd64)` as the build/compiler tool.
 * When using CMake, first configure the project using `cmake --config Debug .` then build the executable using `cmake --build .`.
 * Alternatively, configure the project using `cmake --config .` then build the executable with the default options using `cmake --build .`.
 
-### Visual Studio Code notes
+#### Visual Studio Code notes
 
 If intelli-sense is failing in Visual Studio Code, there may be a few reasons behind it:
 
 * Try re-installing plugin (usually fixes the problem).
 * Compile project and its dependencies in your platform (ex. avoid using WSL on Windows).
 * Ensure dependencies are properly installed and have correct versions.
-
-### Developer notes
 
 1. Additional tools
 
@@ -315,3 +319,4 @@ sudo ln /usr/bin/g++-8 /usr/bin/g++
 #### Style guide
 
 This project partially adopts [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
+</details>
