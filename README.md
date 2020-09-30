@@ -1,35 +1,56 @@
-#### IonIR
+#### ionir
 
-IonIR is a collection of in-memory intermediate representation constructs used by the Ion compiler. Type-checking,
+ionir is a collection of in-memory intermediate representation constructs used by the Ion compiler. Type-checking,
 borrow checking, optimization, and other important passes except for the macro expansion and name resolution passes
-are present and occur in IonIR. The [Ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
-and emits IonIR constructs which are then processed and emitted through the code generation pass to LLVM IR.
+are present and occur in ionir. The [ionlang project](https://github.com/ionlang/ionlang) (the Ion compiler) consumes
+and emits ionir constructs which are then processed and emitted through the code generation pass to LLVM IR.
 
 #### Requirements
 
+* [ionshared](https://github.com/ionlang/ionshared)
 * [zlib](https://zlib.net/)
-* [CMake >=v3.13.X](https://cmake.org/download/)
-* [Python =v2.7](https://www.python.org/download/releases/2.7/)
+* [CMake](https://cmake.org/download/) `>=v3.13.X`
+* [Python](https://www.python.org/download/releases/2.7/) `=v2.7`
 * [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) with GNU >=v8.1.0
-* [LLVM >=v9.0.0](https://releases.llvm.org/download.html) (must build from source on Windows, see section below)
+* [LLVM](https://releases.llvm.org/download.html)¹ `=v9.0.0`
 
-#### Building
+---
+1. _LLVM must be built from source on Windows. A different, close version of LLVM
+might work, but you will need to modify `CMakeLists.txt`, specifically where
+`find_package(LLVM X.0.0 REQUIRED CONFIG)` occurs._
 
-Prepare the project, initialize and update required Git submodules:
-
-```shell
-$ git submodule update --init --recursive
-```
-
-Then, you'd want to invoke CMake to automatically build and compile the project:
+#### Building & installing
 
 ```shell
+# Clone the repository.¹
+$ git clone https://github.com/ionir
+$ cd ionir
+
+# Generate Makefiles and build.
+$ mkdir build
+$ cd build
+$ cmake ..
 $ cmake --build .
+
+# Install the library. Might require additional permissions.²
+$ cmake --install .
 ```
 
-#### Usage
+---
+1. _Make sure you've selected the correct branch that you're intending to
+build (`dev` for latest changes, `master` for stable), and initialized
+git submodules after cloning the repository and prior to building._
 
-A general usage example for the IonIR library is provided below.
+2. _Installing the library might require administrator (or super-user)
+permissions, as the installed files will likely be placed under restricted
+paths. If you're using Windows, re-open the Command prompt (or PowerShell)
+as Administrator. If you're on a Unix-like system, simple prepend `sudo` to
+the install command._
+
+#### Usage examples
+
+<details>
+    <summary>Registering & running passes</summary>
 
 ```cpp
 #include <iostream>
@@ -51,7 +72,6 @@ A general usage example for the IonIR library is provided below.
 using namespace ionir;
 
 int main() {
-    // Invoke the driver and retrieve the resulting AST.
     Ast ast = {
         // ...
     };
@@ -117,6 +137,7 @@ int main() {
     return 0;
 }
 ```
+</details>
 
 #### Running tests
 
