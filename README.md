@@ -13,7 +13,8 @@ and emits ionir constructs which are then processed and emitted through the code
 * [zlib](https://zlib.net/)
 * [CMake](https://cmake.org/download/) `>=v3.13.X`
 * [Python](https://www.python.org/download/releases/2.7/) `=v2.7`
-* [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) with GNU >=v8.1.0
+* [MinGW-w64 (Windows)](https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe)
+    * with GNU `>=v8.1.0`
 * [LLVM](https://releases.llvm.org/download.html)¹ `=v9.0.0`
 
 ---
