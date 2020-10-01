@@ -21,19 +21,11 @@ namespace ionir {
         };
     }
 
-    ionshared::OptPtr<Construct> ReturnInst::getValue() const noexcept {
-        return this->value;
-    }
-
-    void ReturnInst::setValue(ionshared::OptPtr<Construct> value) noexcept {
-        this->value = std::move(value);
-    }
-
     bool ReturnInst::hasValue() noexcept {
         return ionshared::util::hasValue(this->value);
     }
 
     void ReturnInst::removeValue() noexcept {
-        this->setValue(std::nullopt);
+        this->value = std::nullopt;
     }
 }

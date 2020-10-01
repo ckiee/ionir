@@ -66,7 +66,7 @@ namespace ionir {
 
         ionshared::Ptr<Function> function = possibleFunctionParent->dynamicCast<Function>();
         ionshared::Ptr<Type> functionReturnType = function->prototype->returnType;
-        ionshared::OptPtr<Construct> returnStatementValue = node->getValue();
+        ionshared::OptPtr<Construct> returnStatementValue = node->value;
         bool returnStatementValueSet = ionshared::util::hasValue(returnStatementValue);
 
         /**
