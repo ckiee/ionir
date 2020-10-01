@@ -11,20 +11,14 @@ namespace ionir {
         ionshared::OptPtr<Construct> value = std::nullopt;
     };
 
-    class ReturnInst : public Inst {
-    private:
+    struct ReturnInst : Inst {
         ionshared::OptPtr<Construct> value;
 
-    public:
         explicit ReturnInst(const ReturnInstOpts &opts);
 
         void accept(Pass &visitor) override;
 
-        Ast getChildrenNodes() override;
-
-        [[nodiscard]] ionshared::OptPtr<Construct> getValue() const noexcept;
-
-        void setValue(ionshared::OptPtr<Construct> value) noexcept;
+        [[nodiscard]] Ast getChildrenNodes() override;
 
         [[nodiscard]] bool hasValue() noexcept;
 

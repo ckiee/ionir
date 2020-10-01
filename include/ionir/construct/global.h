@@ -9,7 +9,7 @@
 namespace ionir {
     class Pass;
 
-    struct Global : public Construct, public ionshared::Named {
+    struct Global : Construct, ionshared::Named {
         ionshared::Ptr<Type> type;
 
         ionshared::OptPtr<Value<>> value;

@@ -8,7 +8,7 @@ namespace ionir {
 
     typedef ionshared::PtrSymbolTable<Type> Fields;
 
-    struct Struct : public Construct, public ionshared::Named {
+    struct Struct : Construct, ionshared::Named {
         Fields fields;
 
         Struct(std::string name, Fields fields);

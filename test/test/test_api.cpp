@@ -1,5 +1,5 @@
 #include <ionir/test/util.h>
-#include <ionir/test/compare.h>
+#include <ionir/test/comparison.h>
 #include <ionir/test/filesystem.h>
 
 using namespace ionir::test;
@@ -22,12 +22,12 @@ TEST(TestApiTest, RightTrimString) {
 
 TEST(TestApiTest, CompareStrings) {
     // Compare strings without extra spacing.
-    EXPECT_TRUE(compare::strings("test", "test"));
-    EXPECT_FALSE(compare::strings("hello", "world"));
+    EXPECT_TRUE(comparison::strings("test", "test"));
+    EXPECT_FALSE(comparison::strings("hello", "world"));
 
     // Compare strings with extra spacing.
-    EXPECT_TRUE(compare::strings("  test  ", "test"));
-    EXPECT_TRUE(compare::strings("test", "  test  "));
+    EXPECT_TRUE(comparison::strings("  test  ", "test"));
+    EXPECT_TRUE(comparison::strings("test", "  test  "));
 }
 
 TEST(TestApiTest, JoinPaths) {

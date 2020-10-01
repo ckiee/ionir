@@ -2,11 +2,11 @@
 #define IONIR_TESTS_OUTPUT_FOLDER_PATH "output"
 
 #include <ionshared/llvm/llvm_module.h>
-#include <ionir/test/compare.h>
+#include <ionir/test/comparison.h>
 #include <ionir/test/filesystem.h>
 #include <ionir/test/bootstrap.h>
 
-namespace ionir::test::compare {
+namespace ionir::test::comparison {
     bool strings(std::string stringA, std::string stringB) {
         return util::trim(std::move(stringA)) == util::trim(std::move(stringB));
     }
@@ -36,6 +36,6 @@ namespace ionir::test::compare {
             throw std::runtime_error("Module buffer in LlvmCodegenPass is not set");
         }
 
-        return compare::ir(ionshared::LlvmModule(*llvmModuleBuffer).makeIr(), fileName);
+        return comparison::ir(ionshared::LlvmModule(*llvmModuleBuffer).makeIr(), fileName);
     }
 }

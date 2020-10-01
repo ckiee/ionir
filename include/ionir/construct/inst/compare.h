@@ -11,9 +11,8 @@ namespace ionir {
         // TODO
     };
 
-    class IcmpInst : public Inst {
-    public:
-        explicit IcmpInst(const IcmpInstOpts &opts);
+    struct CompareInst : Inst {
+        explicit CompareInst(const IcmpInstOpts &opts);
 
         void accept(Pass &visitor) override;
     };

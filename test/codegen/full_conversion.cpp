@@ -1,5 +1,5 @@
 #include <vector>
-#include <ionir/test/compare.h>
+#include <ionir/test/comparison.h>
 
 using namespace ionir;
 

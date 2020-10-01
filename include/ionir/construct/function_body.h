@@ -11,7 +11,7 @@
 namespace ionir {
     class Pass;
 
-    struct FunctionBody : public ConstructWithParent<Function>, public ScopeAnchor<BasicBlock> {
+    struct FunctionBody : ConstructWithParent<Function>, ScopeAnchor<BasicBlock> {
         explicit FunctionBody(
             ionshared::Ptr<Function> parent,
 

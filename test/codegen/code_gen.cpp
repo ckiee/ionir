@@ -2,7 +2,7 @@
 #include <ionir/passes/codegen/llvm_codegen_pass.h>
 #include <ionir/const/const.h>
 #include <ionir/test/bootstrap.h>
-#include <ionir/test/compare.h>
+#include <ionir/test/comparison.h>
 #include <ionir/test/const.h>
 
 using namespace ionir;
@@ -20,7 +20,7 @@ TEST(CodeGenTest, VisitExtern) {
 
     llvmCodegenPass->visitExtern(externConstruct);
 
-    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "extern_simple"));
+    EXPECT_TRUE(test::comparison::ir(llvmCodegenPass, "extern_simple"));
 }
 
 TEST(CodeGenTest, VisitEmptyFunction) {
@@ -59,7 +59,7 @@ TEST(CodeGenTest, VisitEmptyFunction) {
     body->parent = function;
     llvmCodegenPass->visitFunction(function);
 
-    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "function_empty"));
+    EXPECT_TRUE(test::comparison::ir(llvmCodegenPass, "function_empty"));
 }
 
 TEST(CodeGenTest, VisitEmptyGlobal) {
@@ -69,7 +69,7 @@ TEST(CodeGenTest, VisitEmptyGlobal) {
 
     llvmCodegenPass->visitGlobal(globalVar);
 
-    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "global_empty"));
+    EXPECT_TRUE(test::comparison::ir(llvmCodegenPass, "global_empty"));
 }
 
 TEST(CodeGenTest, VisitGlobalWithValue) {
@@ -84,7 +84,7 @@ TEST(CodeGenTest, VisitGlobalWithValue) {
 
     llvmCodegenPass->visitGlobal(globalVar);
 
-    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "global_init"));
+    EXPECT_TRUE(test::comparison::ir(llvmCodegenPass, "global_init"));
 }
 
 TEST(CodeGenTest, VisitAllocaInst) {
@@ -102,7 +102,7 @@ TEST(CodeGenTest, VisitAllocaInst) {
 
     llvmCodegenPass->visitFunction(function);
 
-    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "inst_alloca"));
+    EXPECT_TRUE(test::comparison::ir(llvmCodegenPass, "inst_alloca"));
 }
 
 TEST(CodeGenTest, VisitReturnInst) {
@@ -119,7 +119,7 @@ TEST(CodeGenTest, VisitReturnInst) {
 
     llvmCodegenPass->visitFunction(function);
 
-    EXPECT_TRUE(test::compare::ir(llvmCodegenPass, "inst_return_i32"));
+    EXPECT_TRUE(test::comparison::ir(llvmCodegenPass, "inst_return_i32"));
 }
 
 // TODO: Migrated NameResolutionPass.

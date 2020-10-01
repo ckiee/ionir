@@ -5,7 +5,7 @@
 #include "inst.h"
 
 namespace ionir {
-    struct InstYieldOpts : public InstOpts {
+    struct InstYieldOpts : InstOpts {
         std::string yieldId;
     };
 

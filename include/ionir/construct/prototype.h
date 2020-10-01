@@ -11,7 +11,7 @@
 namespace ionir {
     class Pass;
 
-    struct Prototype : public ConstructWithParent<Module>, public ionshared::Named {
+    struct Prototype : ConstructWithParent<Module>, ionshared::Named {
         std::string id;
 
         ionshared::Ptr<Args> args;

@@ -7,7 +7,7 @@
 #include "util.h"
 #include "../../../test/pch.h"
 
-namespace ionir::test::compare {
+namespace ionir::test::comparison {
     /**
      * Compare 2 strings. Both strings are trimmed before
      * comparison.

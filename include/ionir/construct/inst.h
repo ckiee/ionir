@@ -25,13 +25,7 @@ namespace ionir {
 
         Branch,
 
-        PtrToInt,
-
-        Zext,
-
-        Trunc,
-
-        Icmp,
+        Compare,
 
         Jump
     };
