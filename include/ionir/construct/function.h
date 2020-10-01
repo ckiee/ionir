@@ -14,8 +14,6 @@ namespace ionir {
 
         ionshared::Ptr<FunctionBody> body;
 
-        PtrSymbolTable<LocalVariableDescriptor> localVariables;
-
         Function(
             ionshared::Ptr<Prototype> prototype,
             ionshared::Ptr<FunctionBody> body
