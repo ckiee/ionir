@@ -37,12 +37,12 @@ TEST(TypeCheckPassTest, Run) {
 
     EXPECT_EQ(passContext->diagnostics->getSize(), 1);
 
-    ionshared::Diagnostic functionMissingReturnValueDiagnostic =
+    ionshared::Diagnostic functionReturnValueMissingDiagnostic =
         (*passContext->diagnostics.get())[0];
 
     EXPECT_EQ(
-        functionMissingReturnValueDiagnostic.code.value(),
-        diagnostic::functionMissingReturnValue.code.value()
+        functionReturnValueMissingDiagnostic.code.value(),
+        diagnostic::functionReturnValueMissing.code.value()
     );
 
     prototype->returnType = TypeFactory::typeVoid();

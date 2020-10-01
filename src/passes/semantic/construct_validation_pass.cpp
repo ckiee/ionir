@@ -10,8 +10,10 @@ namespace ionir {
 
     void ConstructValidationPass::visit(ionshared::Ptr<Construct> node) {
         if (!node->verify()) {
-            // TODO: Append to stack trace instead of raising an error.
-            throw std::runtime_error("Unable to validate node");
+            this->context->diagnosticBuilder
+                ->bootstrap(diagnostic::constructFailedVerification)
+                ->setSourceLocation(node->sourceLocation)
+                ->finish();
         }
     }
 }

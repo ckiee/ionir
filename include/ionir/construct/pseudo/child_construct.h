@@ -5,9 +5,9 @@
 namespace ionir {
     template<typename T = Construct>
 //        requires std::derived_from<T, Construct> // TODO: Cannot work in the current system because ConstructWithParent<T> is used where T is a forward decl.
-    struct ConstructWithParent : public Construct {
+    struct ConstructWithParent : Construct {
         ConstructWithParent(ionshared::Ptr<T> parent, ConstructKind kind) :
-            Construct(kind, parent) {
+            Construct(kind, std::nullopt, parent) {
             //
         }
 

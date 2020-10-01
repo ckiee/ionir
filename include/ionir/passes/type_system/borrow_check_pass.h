@@ -4,7 +4,7 @@
 
 namespace ionir {
     // TODO
-    struct BorrowCheckPass : public Pass {
+    struct BorrowCheckPass : Pass {
         IONSHARED_PASS_ID;
 
         explicit BorrowCheckPass(

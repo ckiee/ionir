@@ -3,7 +3,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    struct ConstructValidationPass : public Pass {
+    struct ConstructValidationPass : Pass {
         IONSHARED_PASS_ID;
 
         explicit ConstructValidationPass(

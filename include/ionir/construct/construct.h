@@ -69,7 +69,7 @@ namespace ionir {
 
     typedef ionshared::Ast<Construct> Ast;
 
-    struct Construct : public ionshared::BaseConstruct<Construct, ConstructKind> {
+    struct Construct : ionshared::BaseConstruct<Construct, ConstructKind> {
         template<class T>
         static Ast convertChildren(std::vector<ionshared::Ptr<T>> vector) {
             // TODO: Ensure T is child of AstNode.
@@ -111,6 +111,7 @@ namespace ionir {
 
         explicit Construct(
             ConstructKind kind,
+            std::optional<ionshared::SourceLocation> sourceLocation = std::nullopt,
             ionshared::OptPtr<Construct> parent = std::nullopt
         );
 

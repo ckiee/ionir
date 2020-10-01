@@ -21,7 +21,10 @@ namespace ionir::type_util {
         return true;
     }
 
-    bool isSameType(const ionshared::Ptr<Type> &typeA, const ionshared::Ptr<Type> &typeB) {
+    bool isSameType(
+        const ionshared::Ptr<Type> &typeA,
+        const ionshared::Ptr<Type> &typeB
+    ) {
         TypeKind typeAKind = typeA->typeKind;
         TypeKind typeBKind = typeB->typeKind;
 
@@ -51,5 +54,16 @@ namespace ionir::type_util {
                 return true;
             }
         }
+    }
+
+    bool isIntegerType(
+        ionshared::Ptr<Type> type,
+        IntegerKind integerKind
+    ) {
+        if (type->typeKind != TypeKind::Integer) {
+            return false;
+        }
+
+        return type->dynamicCast<IntegerType>()->integerKind == integerKind;
     }
 }

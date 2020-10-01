@@ -3,8 +3,12 @@
 #include <ionir/const/const.h>
 
 namespace ionir {
-    Construct::Construct(ConstructKind kind, ionshared::OptPtr<Construct> parent) :
-        ionshared::BaseConstruct<Construct, ConstructKind>(kind, std::move(parent)) {
+    Construct::Construct(
+        ConstructKind kind,
+        std::optional<ionshared::SourceLocation> sourceLocation,
+        ionshared::OptPtr<Construct> parent
+    ) :
+        ionshared::BaseConstruct<Construct, ConstructKind>(kind, sourceLocation, std::move(parent)) {
         //
     }
 

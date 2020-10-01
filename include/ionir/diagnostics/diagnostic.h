@@ -2,10 +2,10 @@
 
 #include <ionshared/diagnostics/diagnostic_builder.h>
 
-#define IONIR_NOTICE_DEFINE(name, type, message, example) \
+#define IONIR_NOTICE_DEFINE(name, kind, message, example) \
     const static inline ionshared::Diagnostic name =\
         ionshared::Diagnostic{\
-            type,\
+            kind,\
             message,\
             std::nullopt,\
             diagnostic::errorCounter++,\
@@ -17,36 +17,71 @@ namespace ionir::diagnostic {
 
     IONIR_NOTICE_DEFINE(
         externRedefinition,
-        ionshared::DiagnosticType::Error,
+        ionshared::DiagnosticKind::Error,
         "Re-definition of extern not allowed",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
         entryPointRedefinition,
-        ionshared::DiagnosticType::Error,
+        ionshared::DiagnosticKind::Error,
         "Entry point function had already previously been declared",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
+        entryPointMissing,
+        ionshared::DiagnosticKind::Error,
+        "No suitable entry point could be found",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        entryPointInvalidSignature,
+        ionshared::DiagnosticKind::Error,
+        "Entry point function has an invalid signature",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
         functionMissingEntryBasicBlock,
-        ionshared::DiagnosticType::Error,
+        ionshared::DiagnosticKind::Error,
         "Function is missing an entry basic block",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
-        functionMissingReturnValue,
-        ionshared::DiagnosticType::Error,
-        "Function whose prototype's return type is not void must return a value",
+        functionReturnValueMissing,
+        ionshared::DiagnosticKind::Error,
+        "Function '%s' must return a value",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        functionReturnValueTypeMismatch,
+        ionshared::DiagnosticKind::Error,
+        "Function '%s' return type '%s' and return value type '%s' mismatch",
         std::nullopt
     );
 
     IONIR_NOTICE_DEFINE(
         functionRedefinitionDiffArgs,
-        ionshared::DiagnosticType::Error,
+        ionshared::DiagnosticKind::Error,
         "Re-definition of function with a different amount arguments",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        instStoreTypeMismatch,
+        ionshared::DiagnosticKind::Error,
+        "Cannot store value type '%s' into target with type '%s'",
+        std::nullopt
+    );
+
+    IONIR_NOTICE_DEFINE(
+        constructFailedVerification,
+        ionshared::DiagnosticKind::InternalError,
+        "Construct failed verification",
         std::nullopt
     );
 }

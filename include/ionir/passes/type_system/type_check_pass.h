@@ -3,7 +3,7 @@
 #include <ionir/passes/pass.h>
 
 namespace ionir {
-    struct TypeCheckPass : public Pass {
+    struct TypeCheckPass : Pass {
         IONSHARED_PASS_ID;
 
         explicit TypeCheckPass(ionshared::Ptr<ionshared::PassContext> context);

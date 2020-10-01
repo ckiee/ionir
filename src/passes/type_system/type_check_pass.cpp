@@ -50,7 +50,7 @@ namespace ionir {
 
             if (insts.empty() || !ionshared::util::hasValue(terminalInst)) {
                 this->context->diagnosticBuilder
-                    ->bootstrap(diagnostic::functionMissingReturnValue)
+                    ->bootstrap(diagnostic::functionReturnValueMissing)
                     ->finish();
             }
         }
@@ -60,7 +60,9 @@ namespace ionir {
         ionshared::Ptr<Construct> possibleFunctionParent =
             node->getUnboxedParent()->getUnboxedParent()->getUnboxedParent();
 
-        IONIR_PASS_INTERNAL_ASSERT(possibleFunctionParent->constructKind == ConstructKind::Function)
+        IONIR_PASS_INTERNAL_ASSERT(
+            possibleFunctionParent->constructKind == ConstructKind::Function
+        )
 
         ionshared::Ptr<Function> function = possibleFunctionParent->dynamicCast<Function>();
         ionshared::Ptr<Type> functionReturnType = function->prototype->returnType;
@@ -73,7 +75,11 @@ namespace ionir {
          */
         if ((functionReturnType->typeKind != TypeKind::Void) && !returnStatementValueSet) {
             this->context->diagnosticBuilder
-                ->bootstrap(diagnostic::functionMissingReturnValue)
+                ->bootstrap(diagnostic::functionReturnValueMissing)
+
+                // TODO: Fill in format.
+                ->formatMessage("pending")
+
                 ->finish();
 
             // TODO: Can it be made optional/continue?
@@ -100,10 +106,13 @@ namespace ionir {
                      * are made by the compiler (everything on the IR language must be explicit).
                      */
                     if (!type_util::isSameType(returnInstValueType, functionReturnType)) {
-                        throw ionshared::util::quickError(
-                            IONIR_NOTICE_FUNCTION_RETURN_TYPE_MISMATCH,
-                            function->prototype->name
-                        );
+                        this->context->diagnosticBuilder
+                            ->bootstrap(diagnostic::functionReturnValueTypeMismatch)
+
+                            // TODO: Format-in return types.
+                            ->formatMessage(function->prototype->name, "pending", "pending")
+
+                            ->finish();
                     }
 
                     break;
@@ -135,12 +144,14 @@ namespace ionir {
 
         // Attempting to store a value with a different type than what was allocated.
         if (storeInstValueTypeKind != targetValue->type->typeKind) {
-            throw ionshared::util::quickError(
-                IONIR_NOTICE_INST_STORE_TYPE_MISMATCH,
+            this->context->diagnosticBuilder
+                ->bootstrap(diagnostic::instStoreTypeMismatch)
 
-                // TODO
-                "FIX_ME_NAME"
-            );
+                // TODO: Get names for types to display on the error message.
+                ->formatMessage("pending", "pending")
+
+                ->setSourceLocation(node->sourceLocation)
+                ->finish();
         }
     }
 }

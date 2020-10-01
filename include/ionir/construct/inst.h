@@ -36,7 +36,7 @@ namespace ionir {
         Jump
     };
 
-    struct Inst : public ConstructWithParent<BasicBlock> {
+    struct Inst : ConstructWithParent<BasicBlock> {
         const InstKind instKind;
 
         Inst(ionshared::Ptr<BasicBlock> parent, InstKind kind);
